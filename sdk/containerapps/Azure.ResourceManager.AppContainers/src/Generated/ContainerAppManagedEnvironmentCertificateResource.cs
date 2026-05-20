@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppManagedEnvironmentCertificateResource : ArmResource
     {
-        private readonly ClientDiagnostics _containerAppManagedEnvironmentCertificatesClientDiagnostics;
-        private readonly ContainerAppManagedEnvironmentCertificates _containerAppManagedEnvironmentCertificatesRestClient;
+        private readonly ClientDiagnostics _certificatesClientDiagnostics;
+        private readonly Certificates _certificatesRestClient;
         private readonly ContainerAppCertificateData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/certificates";
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.AppContainers
         internal ContainerAppManagedEnvironmentCertificateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string containerAppManagedEnvironmentCertificateApiVersion);
-            _containerAppManagedEnvironmentCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppManagedEnvironmentCertificatesRestClient = new ContainerAppManagedEnvironmentCertificates(_containerAppManagedEnvironmentCertificatesClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentCertificateApiVersion ?? "2025-10-02-preview");
+            _certificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            _certificatesRestClient = new Certificates(_certificatesClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentCertificateApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedEnvironmentCertificates_GetCertificates. </description>
+        /// <description> Certificates_GetCertificates. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContainerAppManagedEnvironmentCertificateResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppManagedEnvironmentCertificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.Get");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.Get");
             scope.Start();
             try
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppCertificateData> response = Response.FromValue(ContainerAppCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedEnvironmentCertificates_GetCertificates. </description>
+        /// <description> Certificates_GetCertificates. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContainerAppManagedEnvironmentCertificateResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppManagedEnvironmentCertificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.Get");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.Get");
             scope.Start();
             try
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppCertificateData> response = Response.FromValue(ContainerAppCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedEnvironmentCertificates_UpdateCertificates. </description>
+        /// <description> Certificates_UpdateCertificates. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentCertificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.Update");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.Update");
             scope.Start();
             try
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentCertificatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppCertificatePatch.ToRequestContent(patch), context);
+                HttpMessage message = _certificatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppCertificatePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppCertificateData> response = Response.FromValue(ContainerAppCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedEnvironmentCertificates_UpdateCertificates. </description>
+        /// <description> Certificates_UpdateCertificates. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentCertificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.Update");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.Update");
             scope.Start();
             try
             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentCertificatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppCertificatePatch.ToRequestContent(patch), context);
+                HttpMessage message = _certificatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppCertificatePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppCertificateData> response = Response.FromValue(ContainerAppCertificateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedEnvironmentCertificates_DeleteCertificates. </description>
+        /// <description> Certificates_DeleteCertificates. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppManagedEnvironmentCertificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.Delete");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.Delete");
             scope.Start();
             try
             {
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentCertificatesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _certificatesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedEnvironmentCertificates_DeleteCertificates. </description>
+        /// <description> Certificates_DeleteCertificates. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppManagedEnvironmentCertificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.Delete");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.Delete");
             scope.Start();
             try
             {
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentCertificatesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _certificatesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentCertificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.AddTag");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.AddTag");
             scope.Start();
             try
             {
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _containerAppManagedEnvironmentCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerAppCertificateData> response = Response.FromValue(ContainerAppCertificateData.FromResponse(result), result);
                     return Response.FromValue(new ContainerAppManagedEnvironmentCertificateResource(Client, response.Value), response.GetRawResponse());
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentCertificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.AddTag");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.AddTag");
             scope.Start();
             try
             {
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _containerAppManagedEnvironmentCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerAppCertificateData> response = Response.FromValue(ContainerAppCertificateData.FromResponse(result), result);
                     return Response.FromValue(new ContainerAppManagedEnvironmentCertificateResource(Client, response.Value), response.GetRawResponse());
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentCertificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.SetTags");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.SetTags");
             scope.Start();
             try
             {
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _containerAppManagedEnvironmentCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerAppCertificateData> response = Response.FromValue(ContainerAppCertificateData.FromResponse(result), result);
                     return Response.FromValue(new ContainerAppManagedEnvironmentCertificateResource(Client, response.Value), response.GetRawResponse());
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentCertificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.SetTags");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.SetTags");
             scope.Start();
             try
             {
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _containerAppManagedEnvironmentCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerAppCertificateData> response = Response.FromValue(ContainerAppCertificateData.FromResponse(result), result);
                     return Response.FromValue(new ContainerAppManagedEnvironmentCertificateResource(Client, response.Value), response.GetRawResponse());
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentCertificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.RemoveTag");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.RemoveTag");
             scope.Start();
             try
             {
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _containerAppManagedEnvironmentCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ContainerAppCertificateData> response = Response.FromValue(ContainerAppCertificateData.FromResponse(result), result);
                     return Response.FromValue(new ContainerAppManagedEnvironmentCertificateResource(Client, response.Value), response.GetRawResponse());
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentCertificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.RemoveTag");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentCertificateResource.RemoveTag");
             scope.Start();
             try
             {
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.AppContainers
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _containerAppManagedEnvironmentCertificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ContainerAppCertificateData> response = Response.FromValue(ContainerAppCertificateData.FromResponse(result), result);
                     return Response.FromValue(new ContainerAppManagedEnvironmentCertificateResource(Client, response.Value), response.GetRawResponse());

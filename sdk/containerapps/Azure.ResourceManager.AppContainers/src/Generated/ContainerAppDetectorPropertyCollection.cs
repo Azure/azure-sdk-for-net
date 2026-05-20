@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppContainers
 {
     internal partial class ContainerAppDetectorPropertyCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _containerAppDetectorPropertiesClientDiagnostics;
-        private readonly ContainerAppDetectorProperties _containerAppDetectorPropertiesRestClient;
+        private readonly ClientDiagnostics _containerAppsDiagnosticsClientDiagnostics;
+        private readonly ContainerAppsDiagnostics _containerAppsDiagnosticsRestClient;
 
         /// <summary> Initializes a new instance of ContainerAppDetectorPropertyCollection for mocking. </summary>
         protected ContainerAppDetectorPropertyCollection()
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.AppContainers
         internal ContainerAppDetectorPropertyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ContainerAppDetectorPropertyResource.ResourceType, out string containerAppDetectorPropertyApiVersion);
-            _containerAppDetectorPropertiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppDetectorPropertyResource.ResourceType.Namespace, Diagnostics);
-            _containerAppDetectorPropertiesRestClient = new ContainerAppDetectorProperties(_containerAppDetectorPropertiesClientDiagnostics, Pipeline, Endpoint, containerAppDetectorPropertyApiVersion ?? "2025-10-02-preview");
+            _containerAppsDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppDetectorPropertyResource.ResourceType.Namespace, Diagnostics);
+            _containerAppsDiagnosticsRestClient = new ContainerAppsDiagnostics(_containerAppsDiagnosticsClientDiagnostics, Pipeline, Endpoint, containerAppDetectorPropertyApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppDetectorProperties_GetRoot. </description>
+        /// <description> ContainerAppsDiagnostics_GetRoot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContainerAppDetectorPropertyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppDetectorPropertyCollection.Get");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyCollection.Get");
             scope.Start();
             try
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorPropertiesRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppData> response = Response.FromValue(ContainerAppData.FromResponse(result), result);
                 if (response.Value == null)
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppDetectorProperties_GetRoot. </description>
+        /// <description> ContainerAppsDiagnostics_GetRoot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContainerAppDetectorPropertyResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppDetectorPropertyCollection.Get");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyCollection.Get");
             scope.Start();
             try
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorPropertiesRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppData> response = Response.FromValue(ContainerAppData.FromResponse(result), result);
                 if (response.Value == null)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppDetectorProperties_GetRoot. </description>
+        /// <description> ContainerAppsDiagnostics_GetRoot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppDetectorPropertyCollection.Exists");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyCollection.Exists");
             scope.Start();
             try
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorPropertiesRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppData> response = default;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppDetectorProperties_GetRoot. </description>
+        /// <description> ContainerAppsDiagnostics_GetRoot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppDetectorPropertyCollection.Exists");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyCollection.Exists");
             scope.Start();
             try
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorPropertiesRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppData> response = default;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppDetectorProperties_GetRoot. </description>
+        /// <description> ContainerAppsDiagnostics_GetRoot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<ContainerAppDetectorPropertyResource>> GetIfExistsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppDetectorPropertyCollection.GetIfExists");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorPropertiesRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppData> response = default;
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppDetectorProperties_GetRoot. </description>
+        /// <description> ContainerAppsDiagnostics_GetRoot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<ContainerAppDetectorPropertyResource> GetIfExists(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppDetectorPropertyCollection.GetIfExists");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorPropertiesRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppData> response = default;

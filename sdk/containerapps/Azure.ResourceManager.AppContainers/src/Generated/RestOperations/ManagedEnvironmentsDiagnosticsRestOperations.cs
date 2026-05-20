@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    internal partial class JobDetectorProperties
+    internal partial class ManagedEnvironmentsDiagnostics
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of JobDetectorProperties for mocking. </summary>
-        protected JobDetectorProperties()
+        /// <summary> Initializes a new instance of ManagedEnvironmentsDiagnostics for mocking. </summary>
+        protected ManagedEnvironmentsDiagnostics()
         {
         }
 
-        /// <summary> Initializes a new instance of JobDetectorProperties. </summary>
+        /// <summary> Initializes a new instance of ManagedEnvironmentsDiagnostics. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal JobDetectorProperties(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ManagedEnvironmentsDiagnostics(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string jobName, string apiName, RequestContext context)
+        internal HttpMessage CreateGetRootRequest(Guid subscriptionId, string resourceGroupName, string environmentName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -49,10 +49,9 @@ namespace Azure.ResourceManager.AppContainers
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.App/jobs/", false);
-            uri.AppendPath(jobName, true);
-            uri.AppendPath("/detectorProperties/", false);
-            uri.AppendPath(apiName, true);
+            uri.AppendPath("/providers/Microsoft.App/managedEnvironments/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/detectorProperties/rootApi/", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

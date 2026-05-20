@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppJobDetectorCollection : ArmCollection, IEnumerable<ContainerAppJobDetectorResource>, IAsyncEnumerable<ContainerAppJobDetectorResource>
     {
-        private readonly ClientDiagnostics _containerAppJobDetectorsClientDiagnostics;
-        private readonly ContainerAppJobDetectors _containerAppJobDetectorsRestClient;
+        private readonly ClientDiagnostics _containerAppJobsClientDiagnostics;
+        private readonly ContainerAppJobs _containerAppJobsRestClient;
 
         /// <summary> Initializes a new instance of ContainerAppJobDetectorCollection for mocking. </summary>
         protected ContainerAppJobDetectorCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.AppContainers
         internal ContainerAppJobDetectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ContainerAppJobDetectorResource.ResourceType, out string containerAppJobDetectorApiVersion);
-            _containerAppJobDetectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobDetectorResource.ResourceType.Namespace, Diagnostics);
-            _containerAppJobDetectorsRestClient = new ContainerAppJobDetectors(_containerAppJobDetectorsClientDiagnostics, Pipeline, Endpoint, containerAppJobDetectorApiVersion ?? "2025-10-02-preview");
+            _containerAppJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobDetectorResource.ResourceType.Namespace, Diagnostics);
+            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Endpoint, containerAppJobDetectorApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> JobDetectors_GetDetector. </description>
+        /// <description> Jobs_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using DiagnosticScope scope = _containerAppJobDetectorsClientDiagnostics.CreateScope("ContainerAppJobDetectorCollection.Get");
+            using DiagnosticScope scope = _containerAppJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorCollection.Get");
             scope.Start();
             try
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                HttpMessage message = _containerAppJobsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppDiagnosticData> response = Response.FromValue(ContainerAppDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> JobDetectors_GetDetector. </description>
+        /// <description> Jobs_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using DiagnosticScope scope = _containerAppJobDetectorsClientDiagnostics.CreateScope("ContainerAppJobDetectorCollection.Get");
+            using DiagnosticScope scope = _containerAppJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorCollection.Get");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                HttpMessage message = _containerAppJobsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppDiagnosticData> response = Response.FromValue(ContainerAppDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> JobDetectors_ListDetectors. </description>
+        /// <description> Jobs_ListDetectors. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -177,8 +177,8 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppDiagnosticData, ContainerAppJobDetectorResource>(new ContainerAppJobDetectorsGetDetectorsAsyncCollectionResultOfT(
-                _containerAppJobDetectorsRestClient,
+            return new AsyncPageableWrapper<ContainerAppDiagnosticData, ContainerAppJobDetectorResource>(new ContainerAppJobsGetDetectorsAsyncCollectionResultOfT(
+                _containerAppJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> JobDetectors_ListDetectors. </description>
+        /// <description> Jobs_ListDetectors. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -211,8 +211,8 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppDiagnosticData, ContainerAppJobDetectorResource>(new ContainerAppJobDetectorsGetDetectorsCollectionResultOfT(
-                _containerAppJobDetectorsRestClient,
+            return new PageableWrapper<ContainerAppDiagnosticData, ContainerAppJobDetectorResource>(new ContainerAppJobsGetDetectorsCollectionResultOfT(
+                _containerAppJobsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> JobDetectors_GetDetector. </description>
+        /// <description> Jobs_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using DiagnosticScope scope = _containerAppJobDetectorsClientDiagnostics.CreateScope("ContainerAppJobDetectorCollection.Exists");
+            using DiagnosticScope scope = _containerAppJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorCollection.Exists");
             scope.Start();
             try
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                HttpMessage message = _containerAppJobsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppDiagnosticData> response = default;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> JobDetectors_GetDetector. </description>
+        /// <description> Jobs_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using DiagnosticScope scope = _containerAppJobDetectorsClientDiagnostics.CreateScope("ContainerAppJobDetectorCollection.Exists");
+            using DiagnosticScope scope = _containerAppJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorCollection.Exists");
             scope.Start();
             try
             {
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                HttpMessage message = _containerAppJobsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppDiagnosticData> response = default;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> JobDetectors_GetDetector. </description>
+        /// <description> Jobs_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using DiagnosticScope scope = _containerAppJobDetectorsClientDiagnostics.CreateScope("ContainerAppJobDetectorCollection.GetIfExists");
+            using DiagnosticScope scope = _containerAppJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                HttpMessage message = _containerAppJobsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppDiagnosticData> response = default;
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> JobDetectors_GetDetector. </description>
+        /// <description> Jobs_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using DiagnosticScope scope = _containerAppJobDetectorsClientDiagnostics.CreateScope("ContainerAppJobDetectorCollection.GetIfExists");
+            using DiagnosticScope scope = _containerAppJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                HttpMessage message = _containerAppJobsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppDiagnosticData> response = default;

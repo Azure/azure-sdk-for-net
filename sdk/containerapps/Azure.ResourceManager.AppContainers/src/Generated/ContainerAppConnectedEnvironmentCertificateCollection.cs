@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConnectedEnvironmentCertificates_CreateOrUpdate. </description>
+        /// <description> Certificates_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConnectedEnvironmentCertificates_CreateOrUpdate. </description>
+        /// <description> Certificates_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConnectedEnvironmentCertificates_Get. </description>
+        /// <description> Certificates_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConnectedEnvironmentCertificates_Get. </description>
+        /// <description> Certificates_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConnectedEnvironmentCertificates_List. </description>
+        /// <description> Certificates_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConnectedEnvironmentCertificates_List. </description>
+        /// <description> Certificates_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConnectedEnvironmentCertificates_Get. </description>
+        /// <description> Certificates_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConnectedEnvironmentCertificates_Get. </description>
+        /// <description> Certificates_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConnectedEnvironmentCertificates_Get. </description>
+        /// <description> Certificates_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConnectedEnvironmentCertificates_Get. </description>
+        /// <description> Certificates_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

@@ -11,7 +11,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Custom OpenID Connect client credential method extensible enum. </summary>
+    /// <summary> C# compatibility custom OpenID Connect client credential method extensible enum. </summary>
     public readonly partial struct ContainerAppOpenIdConnectClientCredentialMethod : IEquatable<ContainerAppOpenIdConnectClientCredentialMethod>
     {
         private readonly string _value;

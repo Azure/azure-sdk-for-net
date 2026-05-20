@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppJobDetectorResource : ArmResource
     {
-        private readonly ClientDiagnostics _containerAppJobDetectorsClientDiagnostics;
-        private readonly ContainerAppJobDetectors _containerAppJobDetectorsRestClient;
+        private readonly ClientDiagnostics _containerAppJobsClientDiagnostics;
+        private readonly ContainerAppJobs _containerAppJobsRestClient;
         private readonly ContainerAppDiagnosticData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/jobs/detectors";
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppContainers
         internal ContainerAppJobDetectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string containerAppJobDetectorApiVersion);
-            _containerAppJobDetectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppJobDetectorsRestClient = new ContainerAppJobDetectors(_containerAppJobDetectorsClientDiagnostics, Pipeline, Endpoint, containerAppJobDetectorApiVersion ?? "2025-10-02-preview");
+            _containerAppJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Endpoint, containerAppJobDetectorApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> JobDetectors_GetDetector. </description>
+        /// <description> Jobs_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContainerAppJobDetectorResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppJobDetectorsClientDiagnostics.CreateScope("ContainerAppJobDetectorResource.Get");
+            using DiagnosticScope scope = _containerAppJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorResource.Get");
             scope.Start();
             try
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _containerAppJobsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppDiagnosticData> response = Response.FromValue(ContainerAppDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> JobDetectors_GetDetector. </description>
+        /// <description> Jobs_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContainerAppJobDetectorResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppJobDetectorsClientDiagnostics.CreateScope("ContainerAppJobDetectorResource.Get");
+            using DiagnosticScope scope = _containerAppJobsClientDiagnostics.CreateScope("ContainerAppJobDetectorResource.Get");
             scope.Start();
             try
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppJobDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _containerAppJobsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppDiagnosticData> response = Response.FromValue(ContainerAppDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)

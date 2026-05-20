@@ -11,7 +11,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Usage unit extensible enum. </summary>
+    /// <summary> C# compatibility usage unit extensible enum. </summary>
     public readonly partial struct ContainerAppUsageUnit : IEquatable<ContainerAppUsageUnit>
     {
         private readonly string _value;

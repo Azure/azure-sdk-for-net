@@ -363,15 +363,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return new ContainerAppJobExecutionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ContainerAppJobDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppJobDetectorResource"/> object. </returns>
-        public virtual ContainerAppJobDetectorResource GetContainerAppJobDetectorResource(ResourceIdentifier id)
-        {
-            ContainerAppJobDetectorResource.ValidateResourceId(id);
-            return new ContainerAppJobDetectorResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="ContainerAppJobDetectorPropertyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerAppJobDetectorPropertyResource"/> object. </returns>
@@ -379,6 +370,15 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             ContainerAppJobDetectorPropertyResource.ValidateResourceId(id);
             return new ContainerAppJobDetectorPropertyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppJobDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppJobDetectorResource"/> object. </returns>
+        public virtual ContainerAppJobDetectorResource GetContainerAppJobDetectorResource(ResourceIdentifier id)
+        {
+            ContainerAppJobDetectorResource.ValidateResourceId(id);
+            return new ContainerAppJobDetectorResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ContainerAppDetectorPropertyRevisionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -390,15 +390,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return new ContainerAppDetectorPropertyRevisionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ContainerAppDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerAppDetectorResource"/> object. </returns>
-        public virtual ContainerAppDetectorResource GetContainerAppDetectorResource(ResourceIdentifier id)
-        {
-            ContainerAppDetectorResource.ValidateResourceId(id);
-            return new ContainerAppDetectorResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="ContainerAppDetectorPropertyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContainerAppDetectorPropertyResource"/> object. </returns>
@@ -406,6 +397,15 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         {
             ContainerAppDetectorPropertyResource.ValidateResourceId(id);
             return new ContainerAppDetectorPropertyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerAppDetectorResource"/> object. </returns>
+        public virtual ContainerAppDetectorResource GetContainerAppDetectorResource(ResourceIdentifier id)
+        {
+            ContainerAppDetectorResource.ValidateResourceId(id);
+            return new ContainerAppDetectorResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> along with the instance operations that can be performed on it but with no data. </summary>

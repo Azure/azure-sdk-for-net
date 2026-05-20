@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppManagedEnvironmentDetectorResourcePropertyResource : ArmResource
     {
-        private readonly ClientDiagnostics _containerAppManagedEnvironmentDetectorResourcePropertiesClientDiagnostics;
-        private readonly ContainerAppManagedEnvironmentDetectorResourceProperties _containerAppManagedEnvironmentDetectorResourcePropertiesRestClient;
+        private readonly ClientDiagnostics _managedEnvironmentsDiagnosticsClientDiagnostics;
+        private readonly ManagedEnvironmentsDiagnostics _managedEnvironmentsDiagnosticsRestClient;
         private readonly ContainerAppManagedEnvironmentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/detectorProperties";
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppContainers
         internal ContainerAppManagedEnvironmentDetectorResourcePropertyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string containerAppManagedEnvironmentDetectorResourcePropertyApiVersion);
-            _containerAppManagedEnvironmentDetectorResourcePropertiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppManagedEnvironmentDetectorResourcePropertiesRestClient = new ContainerAppManagedEnvironmentDetectorResourceProperties(_containerAppManagedEnvironmentDetectorResourcePropertiesClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentDetectorResourcePropertyApiVersion ?? "2025-10-02-preview");
+            _managedEnvironmentsDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            _managedEnvironmentsDiagnosticsRestClient = new ManagedEnvironmentsDiagnostics(_managedEnvironmentsDiagnosticsClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentDetectorResourcePropertyApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppManagedEnvironmentDetectorResourceProperties_GetRoot. </description>
+        /// <description> ManagedEnvironmentsDiagnostics_GetRoot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContainerAppManagedEnvironmentDetectorResourcePropertyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDetectorResourcePropertiesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyResource.Get");
+            using DiagnosticScope scope = _managedEnvironmentsDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDetectorResourcePropertiesRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _managedEnvironmentsDiagnosticsRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppManagedEnvironmentData> response = Response.FromValue(ContainerAppManagedEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppManagedEnvironmentDetectorResourceProperties_GetRoot. </description>
+        /// <description> ManagedEnvironmentsDiagnostics_GetRoot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContainerAppManagedEnvironmentDetectorResourcePropertyResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDetectorResourcePropertiesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyResource.Get");
+            using DiagnosticScope scope = _managedEnvironmentsDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyResource.Get");
             scope.Start();
             try
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDetectorResourcePropertiesRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _managedEnvironmentsDiagnosticsRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppManagedEnvironmentData> response = Response.FromValue(ContainerAppManagedEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)

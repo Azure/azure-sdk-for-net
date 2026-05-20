@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppDetectorPropertyResource : ArmResource
     {
-        private readonly ClientDiagnostics _containerAppDetectorPropertiesClientDiagnostics;
-        private readonly ContainerAppDetectorProperties _containerAppDetectorPropertiesRestClient;
+        private readonly ClientDiagnostics _containerAppsDiagnosticsClientDiagnostics;
+        private readonly ContainerAppsDiagnostics _containerAppsDiagnosticsRestClient;
         private readonly ContainerAppData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/detectorProperties";
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppContainers
         internal ContainerAppDetectorPropertyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string containerAppDetectorPropertyApiVersion);
-            _containerAppDetectorPropertiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppDetectorPropertiesRestClient = new ContainerAppDetectorProperties(_containerAppDetectorPropertiesClientDiagnostics, Pipeline, Endpoint, containerAppDetectorPropertyApiVersion ?? "2025-10-02-preview");
+            _containerAppsDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            _containerAppsDiagnosticsRestClient = new ContainerAppsDiagnostics(_containerAppsDiagnosticsClientDiagnostics, Pipeline, Endpoint, containerAppDetectorPropertyApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppDetectorProperties_GetRoot. </description>
+        /// <description> ContainerAppsDiagnostics_GetRoot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContainerAppDetectorPropertyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppDetectorPropertyResource.Get");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorPropertiesRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppData> response = Response.FromValue(ContainerAppData.FromResponse(result), result);
                 if (response.Value == null)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppDetectorProperties_GetRoot. </description>
+        /// <description> ContainerAppsDiagnostics_GetRoot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContainerAppDetectorPropertyResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppDetectorPropertiesClientDiagnostics.CreateScope("ContainerAppDetectorPropertyResource.Get");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyResource.Get");
             scope.Start();
             try
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorPropertiesRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppData> response = Response.FromValue(ContainerAppData.FromResponse(result), result);
                 if (response.Value == null)

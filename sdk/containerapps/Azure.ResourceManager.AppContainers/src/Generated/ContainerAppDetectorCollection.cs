@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppDetectorCollection : ArmCollection, IEnumerable<ContainerAppDetectorResource>, IAsyncEnumerable<ContainerAppDetectorResource>
     {
-        private readonly ClientDiagnostics _containerAppDetectorsClientDiagnostics;
-        private readonly ContainerAppDetectors _containerAppDetectorsRestClient;
+        private readonly ClientDiagnostics _containerAppsDiagnosticsClientDiagnostics;
+        private readonly ContainerAppsDiagnostics _containerAppsDiagnosticsRestClient;
 
         /// <summary> Initializes a new instance of ContainerAppDetectorCollection for mocking. </summary>
         protected ContainerAppDetectorCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.AppContainers
         internal ContainerAppDetectorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ContainerAppDetectorResource.ResourceType, out string containerAppDetectorApiVersion);
-            _containerAppDetectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppDetectorResource.ResourceType.Namespace, Diagnostics);
-            _containerAppDetectorsRestClient = new ContainerAppDetectors(_containerAppDetectorsClientDiagnostics, Pipeline, Endpoint, containerAppDetectorApiVersion ?? "2025-10-02-preview");
+            _containerAppsDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppDetectorResource.ResourceType.Namespace, Diagnostics);
+            _containerAppsDiagnosticsRestClient = new ContainerAppsDiagnostics(_containerAppsDiagnosticsClientDiagnostics, Pipeline, Endpoint, containerAppDetectorApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppDetectors_GetDetector. </description>
+        /// <description> ContainerAppsDiagnostics_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using DiagnosticScope scope = _containerAppDetectorsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.Get");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.Get");
             scope.Start();
             try
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppDiagnosticData> response = Response.FromValue(ContainerAppDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppDetectors_GetDetector. </description>
+        /// <description> ContainerAppsDiagnostics_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using DiagnosticScope scope = _containerAppDetectorsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.Get");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.Get");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppDiagnosticData> response = Response.FromValue(ContainerAppDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppDetectors_ListDetectors. </description>
+        /// <description> ContainerAppsDiagnostics_ListDetectors. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -177,8 +177,8 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppDiagnosticData, ContainerAppDetectorResource>(new ContainerAppDetectorsGetDetectorsAsyncCollectionResultOfT(
-                _containerAppDetectorsRestClient,
+            return new AsyncPageableWrapper<ContainerAppDiagnosticData, ContainerAppDetectorResource>(new ContainerAppsDiagnosticsGetDetectorsAsyncCollectionResultOfT(
+                _containerAppsDiagnosticsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppDetectors_ListDetectors. </description>
+        /// <description> ContainerAppsDiagnostics_ListDetectors. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -211,8 +211,8 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppDiagnosticData, ContainerAppDetectorResource>(new ContainerAppDetectorsGetDetectorsCollectionResultOfT(
-                _containerAppDetectorsRestClient,
+            return new PageableWrapper<ContainerAppDiagnosticData, ContainerAppDetectorResource>(new ContainerAppsDiagnosticsGetDetectorsCollectionResultOfT(
+                _containerAppsDiagnosticsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppDetectors_GetDetector. </description>
+        /// <description> ContainerAppsDiagnostics_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using DiagnosticScope scope = _containerAppDetectorsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.Exists");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.Exists");
             scope.Start();
             try
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppDiagnosticData> response = default;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppDetectors_GetDetector. </description>
+        /// <description> ContainerAppsDiagnostics_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using DiagnosticScope scope = _containerAppDetectorsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.Exists");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.Exists");
             scope.Start();
             try
             {
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppDiagnosticData> response = default;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppDetectors_GetDetector. </description>
+        /// <description> ContainerAppsDiagnostics_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using DiagnosticScope scope = _containerAppDetectorsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.GetIfExists");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppDiagnosticData> response = default;
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppDetectors_GetDetector. </description>
+        /// <description> ContainerAppsDiagnostics_GetDetector. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
 
-            using DiagnosticScope scope = _containerAppDetectorsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.GetIfExists");
+            using DiagnosticScope scope = _containerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppDetectorsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                HttpMessage message = _containerAppsDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppDiagnosticData> response = default;

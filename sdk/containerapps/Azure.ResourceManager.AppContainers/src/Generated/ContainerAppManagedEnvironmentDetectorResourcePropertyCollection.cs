@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppContainers
 {
     internal partial class ContainerAppManagedEnvironmentDetectorResourcePropertyCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _containerAppManagedEnvironmentDetectorResourcePropertiesClientDiagnostics;
-        private readonly ContainerAppManagedEnvironmentDetectorResourceProperties _containerAppManagedEnvironmentDetectorResourcePropertiesRestClient;
+        private readonly ClientDiagnostics _managedEnvironmentsDiagnosticsClientDiagnostics;
+        private readonly ManagedEnvironmentsDiagnostics _managedEnvironmentsDiagnosticsRestClient;
 
         /// <summary> Initializes a new instance of ContainerAppManagedEnvironmentDetectorResourcePropertyCollection for mocking. </summary>
         protected ContainerAppManagedEnvironmentDetectorResourcePropertyCollection()
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.AppContainers
         internal ContainerAppManagedEnvironmentDetectorResourcePropertyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ContainerAppManagedEnvironmentDetectorResourcePropertyResource.ResourceType, out string containerAppManagedEnvironmentDetectorResourcePropertyApiVersion);
-            _containerAppManagedEnvironmentDetectorResourcePropertiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentDetectorResourcePropertyResource.ResourceType.Namespace, Diagnostics);
-            _containerAppManagedEnvironmentDetectorResourcePropertiesRestClient = new ContainerAppManagedEnvironmentDetectorResourceProperties(_containerAppManagedEnvironmentDetectorResourcePropertiesClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentDetectorResourcePropertyApiVersion ?? "2025-10-02-preview");
+            _managedEnvironmentsDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentDetectorResourcePropertyResource.ResourceType.Namespace, Diagnostics);
+            _managedEnvironmentsDiagnosticsRestClient = new ManagedEnvironmentsDiagnostics(_managedEnvironmentsDiagnosticsClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentDetectorResourcePropertyApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppManagedEnvironmentDetectorResourceProperties_GetRoot. </description>
+        /// <description> ManagedEnvironmentsDiagnostics_GetRoot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContainerAppManagedEnvironmentDetectorResourcePropertyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDetectorResourcePropertiesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyCollection.Get");
+            using DiagnosticScope scope = _managedEnvironmentsDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyCollection.Get");
             scope.Start();
             try
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDetectorResourcePropertiesRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _managedEnvironmentsDiagnosticsRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppManagedEnvironmentData> response = Response.FromValue(ContainerAppManagedEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppManagedEnvironmentDetectorResourceProperties_GetRoot. </description>
+        /// <description> ManagedEnvironmentsDiagnostics_GetRoot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContainerAppManagedEnvironmentDetectorResourcePropertyResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDetectorResourcePropertiesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyCollection.Get");
+            using DiagnosticScope scope = _managedEnvironmentsDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyCollection.Get");
             scope.Start();
             try
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDetectorResourcePropertiesRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _managedEnvironmentsDiagnosticsRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppManagedEnvironmentData> response = Response.FromValue(ContainerAppManagedEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppManagedEnvironmentDetectorResourceProperties_GetRoot. </description>
+        /// <description> ManagedEnvironmentsDiagnostics_GetRoot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDetectorResourcePropertiesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyCollection.Exists");
+            using DiagnosticScope scope = _managedEnvironmentsDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyCollection.Exists");
             scope.Start();
             try
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDetectorResourcePropertiesRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _managedEnvironmentsDiagnosticsRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppManagedEnvironmentData> response = default;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppManagedEnvironmentDetectorResourceProperties_GetRoot. </description>
+        /// <description> ManagedEnvironmentsDiagnostics_GetRoot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDetectorResourcePropertiesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyCollection.Exists");
+            using DiagnosticScope scope = _managedEnvironmentsDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyCollection.Exists");
             scope.Start();
             try
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDetectorResourcePropertiesRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _managedEnvironmentsDiagnosticsRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppManagedEnvironmentData> response = default;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppManagedEnvironmentDetectorResourceProperties_GetRoot. </description>
+        /// <description> ManagedEnvironmentsDiagnostics_GetRoot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<ContainerAppManagedEnvironmentDetectorResourcePropertyResource>> GetIfExistsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDetectorResourcePropertiesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyCollection.GetIfExists");
+            using DiagnosticScope scope = _managedEnvironmentsDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDetectorResourcePropertiesRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _managedEnvironmentsDiagnosticsRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppManagedEnvironmentData> response = default;
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ContainerAppManagedEnvironmentDetectorResourceProperties_GetRoot. </description>
+        /// <description> ManagedEnvironmentsDiagnostics_GetRoot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<ContainerAppManagedEnvironmentDetectorResourcePropertyResource> GetIfExists(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDetectorResourcePropertiesClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyCollection.GetIfExists");
+            using DiagnosticScope scope = _managedEnvironmentsDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentDetectorResourcePropertiesRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _managedEnvironmentsDiagnosticsRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppManagedEnvironmentData> response = default;

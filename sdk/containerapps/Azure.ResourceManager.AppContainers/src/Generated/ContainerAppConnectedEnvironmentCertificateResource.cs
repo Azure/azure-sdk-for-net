@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConnectedEnvironmentCertificates_Get. </description>
+        /// <description> Certificates_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConnectedEnvironmentCertificates_Get. </description>
+        /// <description> Certificates_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConnectedEnvironmentCertificates_Update. </description>
+        /// <description> Certificates_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConnectedEnvironmentCertificates_Update. </description>
+        /// <description> Certificates_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConnectedEnvironmentCertificates_Delete. </description>
+        /// <description> Certificates_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ConnectedEnvironmentCertificates_Delete. </description>
+        /// <description> Certificates_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
