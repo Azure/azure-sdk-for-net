@@ -18,15 +18,14 @@ network:
     - dotnet
     - github
 safe-outputs:
+  report-failure-as-issue: false
   create-pull-request-review-comment:
     max: 40
     target: "${{ github.event.pull_request.number }}"
   submit-pull-request-review:
     max: 1
     footer: "if-body"
-  mark-pull-request-as-ready-for-review:
-    max: 1
-    target: "${{ github.event.pull_request.number }}"
+    allowed-events: [COMMENT, REQUEST_CHANGES]
   noop:
     report-as-issue: false
   messages:
@@ -38,7 +37,7 @@ tools:
   github:
     toolsets: [context, repos, pull_requests, actions]
   bash: true
-timeout-minutes: 45
+timeout-minutes: 25
 concurrency: mgmt-review-${{ github.event.pull_request.number }}
 ---
 
@@ -59,11 +58,12 @@ This workflow runs when the `mgmt-review-needed` label is applied to a pull requ
 2. It is safe to fetch trusted scripts from the base branch and run them against temporary text files fetched from the GitHub API. For example, you may fetch `.github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1` from the base branch and run it against API surface text fetched from the PR head.
 3. All GitHub writes must use safe-output tools. Do not use `gh api`, GitHub MCP write calls, or direct REST calls to post comments, reviews, labels, or PR updates.
 4. Avoid duplicate feedback. Fetch existing PR review comments and reviews before posting, then suppress any finding already covered by another reviewer.
-5. Never approve the PR. If there are blocking findings, submit `REQUEST_CHANGES`; otherwise submit a neutral `COMMENT` review.
+5. Never approve the PR. Do not use the `APPROVE` event. If there are blocking findings, submit `REQUEST_CHANGES`; otherwise submit a neutral `COMMENT` review.
+6. Do not modify the pull request state — do not mark as ready for review, merge, close, or convert from draft. If the PR is a draft, skip it entirely.
 
-## Step 0 - Prepare the PR
+## Step 0 - Validate the PR
 
-Fetch the pull request details. If the PR is in draft state, use `mark_pull_request_as_ready_for_review` before continuing, matching the management SDK release workflow pattern. Include a concise `reason`, such as `Management SDK review requested by label`.
+Fetch the pull request details. If the PR is in draft state, use `noop` and stop — draft PRs are not ready for review and should not have their state modified.
 
 ## Step 1 - Determine review scope
 
