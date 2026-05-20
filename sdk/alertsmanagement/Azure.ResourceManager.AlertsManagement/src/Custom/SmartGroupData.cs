@@ -15,7 +15,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    /// <summary> Backward compatibility stub. The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release. </summary>
+    /// <summary> A class representing the SmartGroup data model. Set of related alerts grouped together smartly by AMS. </summary>
     [Obsolete("The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SmartGroupData : ResourceData, IJsonModel<SmartGroupData>, IPersistableModel<SmartGroupData>

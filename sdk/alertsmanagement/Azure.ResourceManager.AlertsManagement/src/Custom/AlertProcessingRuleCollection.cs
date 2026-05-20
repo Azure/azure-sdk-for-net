@@ -15,7 +15,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    /// <summary> Backward compatibility stub. The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead. </summary>
+    /// <summary> A class representing a collection of <see cref="AlertProcessingRuleResource"/> and their operations. </summary>
     [Obsolete("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AlertProcessingRuleCollection : ArmCollection, IEnumerable<AlertProcessingRuleResource>, IAsyncEnumerable<AlertProcessingRuleResource>

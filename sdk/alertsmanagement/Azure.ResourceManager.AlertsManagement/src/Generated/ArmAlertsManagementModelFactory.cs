@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServiceAlertProperties ServiceAlertProperties(ServiceAlertEssentials essentials, BinaryData context, BinaryData egressConfig)
         {
-            return ServiceAlertProperties(essentials: essentials, context: context, egressConfig: egressConfig, customProperties: default);
+            return ServiceAlertProperties(essentials, context, egressConfig, customProperties: default);
         }
     }
 }

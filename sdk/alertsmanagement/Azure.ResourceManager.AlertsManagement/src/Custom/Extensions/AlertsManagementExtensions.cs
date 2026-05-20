@@ -1,6 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
+using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -21,9 +25,19 @@ namespace Azure.ResourceManager.AlertsManagement
     //    GetServiceAlertResource(ArmClient, ResourceIdentifier) factory twice (CS0111 duplicate member).
     //    The CodeGenSuppress below removes both generator-emitted overloads and we add a single
     //    canonical GetServiceAlertResource manually to match the v1.1.1 API surface.
+    // 3. The obsolete members below are stubs for APIs removed in this migration:
+    //    - AlertProcessingRule*: moved to the 'Azure.ResourceManager.AlertProcessingRules' package.
+    //    - SmartGroup*: moved to Legacy in the spec repo; the APIs still exist in Azure and will be
+    //      shipped from a separate package in a future release.
+    //    - GetServiceAlert(Guid) on SubscriptionResource: replaced by ArmClient.GetServiceAlertResource(id) /
+    //      ServiceAlertCollection.Get(alertId.ToString()).
     [CodeGenSuppress("GetServiceAlertResource", typeof(ArmClient), typeof(ResourceIdentifier))]
     public static partial class AlertsManagementExtensions
     {
+        private const string AlertProcessingRuleRemovedMessage = "The AlertProcessingRule APIs have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions, MockableAlertProcessingRulesArmClient, MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource, ArmAlertProcessingRulesModelFactory) instead.";
+        private const string SmartGroupRemovedMessage = "The SmartGroup APIs have been removed from this package and will be shipped in a separate package in a future release.";
+        private const string GetServiceAlertGuidReplacedMessage = "Use ArmClient.GetServiceAlertResource(id) or ServiceAlertCollection.Get(alertId.ToString()) instead.";
+
         /// <summary>
         /// Gets an object representing a <see cref="ServiceAlertResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ServiceAlertResource.CreateResourceIdentifier" /> to create a <see cref="ServiceAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -107,21 +121,124 @@ namespace Azure.ResourceManager.AlertsManagement
             return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetServiceAlertSummary(groupby, includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, timeRange, customTimeRange, cancellationToken);
         }
 
+        /// <summary> Get a summarized count of your alerts grouped by various parameters. </summary>
+        /// <param name="subscriptionResource"> The subscription. </param>
+        /// <param name="options"> The options. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
         public static Task<Response<ServiceAlertSummary>> GetServiceAlertSummaryAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {
             return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetServiceAlertSummaryAsync(options, cancellationToken);
         }
 
+        /// <summary> Get a summarized count of your alerts grouped by various parameters. </summary>
+        /// <param name="subscriptionResource"> The subscription. </param>
+        /// <param name="options"> The options. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
         public static Response<ServiceAlertSummary> GetServiceAlertSummary(this SubscriptionResource subscriptionResource, SubscriptionResourceGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {
             return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetServiceAlertSummary(options, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServiceAlertCollection in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         public static ServiceAlertCollection GetServiceAlerts(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
             return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetServiceAlerts();
         }
+
+        /// <summary> Gets an alert processing rule resource. </summary>
+        /// <param name="client"> The client. </param>
+        /// <param name="id"> The resource identifier. </param>
+        [Obsolete(AlertProcessingRuleRemovedMessage, true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AlertProcessingRuleResource GetAlertProcessingRuleResource(this ArmClient client, ResourceIdentifier id) { throw new NotSupportedException(AlertProcessingRuleRemovedMessage); }
+
+        /// <summary> Gets an alert processing rule. </summary>
+        /// <param name="resourceGroupResource"> The resource group. </param>
+        /// <param name="alertProcessingRuleName"> The name. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        [ForwardsClientCalls]
+        [Obsolete(AlertProcessingRuleRemovedMessage, true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Response<AlertProcessingRuleResource> GetAlertProcessingRule(this ResourceGroupResource resourceGroupResource, string alertProcessingRuleName, CancellationToken cancellationToken = default) { throw new NotSupportedException(AlertProcessingRuleRemovedMessage); }
+
+        /// <summary> Gets an alert processing rule async. </summary>
+        /// <param name="resourceGroupResource"> The resource group. </param>
+        /// <param name="alertProcessingRuleName"> The name. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        [ForwardsClientCalls]
+        [Obsolete(AlertProcessingRuleRemovedMessage, true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Task<Response<AlertProcessingRuleResource>> GetAlertProcessingRuleAsync(this ResourceGroupResource resourceGroupResource, string alertProcessingRuleName, CancellationToken cancellationToken = default) { throw new NotSupportedException(AlertProcessingRuleRemovedMessage); }
+
+        /// <summary> Gets alert processing rules collection. </summary>
+        /// <param name="resourceGroupResource"> The resource group. </param>
+        [Obsolete(AlertProcessingRuleRemovedMessage, true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AlertProcessingRuleCollection GetAlertProcessingRules(this ResourceGroupResource resourceGroupResource) { throw new NotSupportedException(AlertProcessingRuleRemovedMessage); }
+
+        /// <summary> Gets all alert processing rules. </summary>
+        /// <param name="subscriptionResource"> The subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        [Obsolete(AlertProcessingRuleRemovedMessage, true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Pageable<AlertProcessingRuleResource> GetAlertProcessingRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default) { throw new NotSupportedException(AlertProcessingRuleRemovedMessage); }
+
+        /// <summary> Gets all alert processing rules async. </summary>
+        /// <param name="subscriptionResource"> The subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        [Obsolete(AlertProcessingRuleRemovedMessage, true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AsyncPageable<AlertProcessingRuleResource> GetAlertProcessingRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default) { throw new NotSupportedException(AlertProcessingRuleRemovedMessage); }
+
+        /// <summary> Gets a service alert by Guid (use ArmClient.GetServiceAlertResource(id) instead). </summary>
+        /// <param name="subscriptionResource"> The subscription. </param>
+        /// <param name="alertId"> The alert ID. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        [ForwardsClientCalls]
+        [Obsolete(GetServiceAlertGuidReplacedMessage, true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Response<ServiceAlertResource> GetServiceAlert(this SubscriptionResource subscriptionResource, Guid alertId, CancellationToken cancellationToken = default) { throw new NotSupportedException(GetServiceAlertGuidReplacedMessage); }
+
+        /// <summary> Gets a service alert by Guid async (use ArmClient.GetServiceAlertResource(id) instead). </summary>
+        /// <param name="subscriptionResource"> The subscription. </param>
+        /// <param name="alertId"> The alert ID. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        [ForwardsClientCalls]
+        [Obsolete(GetServiceAlertGuidReplacedMessage, true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Task<Response<ServiceAlertResource>> GetServiceAlertAsync(this SubscriptionResource subscriptionResource, Guid alertId, CancellationToken cancellationToken = default) { throw new NotSupportedException(GetServiceAlertGuidReplacedMessage); }
+
+        /// <summary> Gets a smart group. </summary>
+        /// <param name="subscriptionResource"> The subscription. </param>
+        /// <param name="smartGroupId"> The smart group ID. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        [ForwardsClientCalls]
+        [Obsolete(SmartGroupRemovedMessage, true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Response<SmartGroupResource> GetSmartGroup(this SubscriptionResource subscriptionResource, Guid smartGroupId, CancellationToken cancellationToken = default) { throw new NotSupportedException(SmartGroupRemovedMessage); }
+
+        /// <summary> Gets a smart group async. </summary>
+        /// <param name="subscriptionResource"> The subscription. </param>
+        /// <param name="smartGroupId"> The smart group ID. </param>
+        /// <param name="cancellationToken"> The cancellation token. </param>
+        [ForwardsClientCalls]
+        [Obsolete(SmartGroupRemovedMessage, true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Task<Response<SmartGroupResource>> GetSmartGroupAsync(this SubscriptionResource subscriptionResource, Guid smartGroupId, CancellationToken cancellationToken = default) { throw new NotSupportedException(SmartGroupRemovedMessage); }
+
+        /// <summary> Gets a smart group resource. </summary>
+        /// <param name="client"> The client. </param>
+        /// <param name="id"> The resource identifier. </param>
+        [Obsolete(SmartGroupRemovedMessage, true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SmartGroupResource GetSmartGroupResource(this ArmClient client, ResourceIdentifier id) { throw new NotSupportedException(SmartGroupRemovedMessage); }
+
+        /// <summary> Gets smart groups. </summary>
+        /// <param name="subscriptionResource"> The subscription. </param>
+        [Obsolete(SmartGroupRemovedMessage, true)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SmartGroupCollection GetSmartGroups(this SubscriptionResource subscriptionResource) { throw new NotSupportedException(SmartGroupRemovedMessage); }
     }
 }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Backward compatibility stub. The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release. </summary>
+    /// <summary> Alert Modification details. </summary>
     [Obsolete("The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SmartGroupModification : ResourceData, IJsonModel<SmartGroupModification>, IPersistableModel<SmartGroupModification>

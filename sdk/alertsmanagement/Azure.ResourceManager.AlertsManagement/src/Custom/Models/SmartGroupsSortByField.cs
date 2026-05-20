@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Backward compatibility stub. The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release. </summary>
+    /// <summary> Sort the query results by input field. </summary>
     [Obsolete("The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct SmartGroupsSortByField : IEquatable<SmartGroupsSortByField>

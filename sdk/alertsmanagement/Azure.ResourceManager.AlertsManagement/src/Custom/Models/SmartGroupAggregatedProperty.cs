@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Backward compatibility stub. The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release. </summary>
+    /// <summary> Aggregated property of each type. </summary>
     [Obsolete("The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SmartGroupAggregatedProperty : IJsonModel<SmartGroupAggregatedProperty>, IPersistableModel<SmartGroupAggregatedProperty>

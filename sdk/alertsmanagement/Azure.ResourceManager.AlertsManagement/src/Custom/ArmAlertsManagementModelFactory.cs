@@ -1,7 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Backward compatibility stub: these members were removed in the TypeSpec migration.
+// Backward compatibility stubs for model-factory helpers that built types removed in this migration.
+//  - AlertProcessingRuleData: moved to the 'Azure.ResourceManager.AlertProcessingRules' package.
+//  - SmartGroupData/SmartGroupModification/SmartGroupModificationProperties: moved to Legacy in the
+//    spec repo; the APIs still exist in Azure and will be shipped from a separate package in a future
+//    release.
 
 #nullable disable
 
@@ -15,7 +19,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     public static partial class ArmAlertsManagementModelFactory
     {
-        /// <summary> Creates AlertProcessingRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleData"/>. </summary>
         /// <param name="id"> The resource ID. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resource type. </param>
@@ -27,7 +31,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AlertProcessingRuleData AlertProcessingRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AlertProcessingRuleProperties properties = null) { throw new NotSupportedException(); }
 
-        /// <summary> Creates SmartGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupData"/>. </summary>
         /// <param name="id"> The resource ID. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resource type. </param>
@@ -50,7 +54,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SmartGroupData SmartGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? alertsCount = null, SmartGroupState? smartGroupState = null, ServiceAlertSeverity? severity = null, DateTimeOffset? startOn = null, DateTimeOffset? lastModifiedOn = null, string lastModifiedBy = null, IEnumerable<SmartGroupAggregatedProperty> resources = null, IEnumerable<SmartGroupAggregatedProperty> resourceTypes = null, IEnumerable<SmartGroupAggregatedProperty> resourceGroups = null, IEnumerable<SmartGroupAggregatedProperty> monitorServices = null, IEnumerable<SmartGroupAggregatedProperty> monitorConditions = null, IEnumerable<SmartGroupAggregatedProperty> alertStates = null, IEnumerable<SmartGroupAggregatedProperty> alertSeverities = null, string nextLink = null) { throw new NotSupportedException(); }
 
-        /// <summary> Creates SmartGroupModification. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupModification"/>. </summary>
         /// <param name="id"> The resource ID. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resource type. </param>
@@ -60,7 +64,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SmartGroupModification SmartGroupModification(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SmartGroupModificationProperties properties = null) { throw new NotSupportedException(); }
 
-        /// <summary> Creates SmartGroupModificationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupModificationProperties"/>. </summary>
         /// <param name="smartGroupId"> The smart group ID. </param>
         /// <param name="modifications"> The modifications. </param>
         /// <param name="nextLink"> The next link. </param>

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    /// <summary> Backward compatibility stub. The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead. </summary>
+    /// <summary> A class representing the AlertProcessingRule data model. Alert processing rule object containing target scopes, conditions and scheduling logic. </summary>
     [Obsolete("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AlertProcessingRuleData : TrackedResourceData, IJsonModel<AlertProcessingRuleData>, IPersistableModel<AlertProcessingRuleData>

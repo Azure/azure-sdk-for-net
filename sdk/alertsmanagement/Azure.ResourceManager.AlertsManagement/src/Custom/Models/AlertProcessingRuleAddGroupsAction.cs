@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Backward compatibility stub. The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead. </summary>
+    /// <summary> Add action groups to alert processing rule. </summary>
     [Obsolete("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AlertProcessingRuleAddGroupsAction : AlertProcessingRuleAction, IJsonModel<AlertProcessingRuleAddGroupsAction>, IPersistableModel<AlertProcessingRuleAddGroupsAction>
