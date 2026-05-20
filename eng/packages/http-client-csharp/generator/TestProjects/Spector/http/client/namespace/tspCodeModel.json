@@ -40,7 +40,7 @@
     {
       "$id": "4",
       "kind": "constant",
-      "name": "getFirstContentType",
+      "name": "GetFirstAccept",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -56,7 +56,7 @@
     {
       "$id": "6",
       "kind": "constant",
-      "name": "getSecondContentType",
+      "name": "GetFirstAccept1",
       "namespace": "",
       "usage": "None",
       "valueType": {

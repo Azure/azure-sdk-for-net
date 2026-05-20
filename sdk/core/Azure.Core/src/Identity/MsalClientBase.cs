@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Microsoft.Identity.Client;
+using Microsoft.Identity.Client.Extensibility;
 
 namespace Azure.Identity
 {
@@ -22,6 +23,9 @@ namespace Azure.Identity
         private readonly AsyncLockWithValue<(TClient Client, TokenCache Cache)> _clientWithCaeAsyncLock;
         private readonly bool _logAccountDetails;
         private readonly TokenCachePersistenceOptions _tokenCachePersistenceOptions;
+#pragma warning disable AZID0003 // TokenRequestCallback is experimental
+        private readonly Action<TokenRequestCallbackContext> _onBeforeTokenRequestCallback;
+#pragma warning restore AZID0003
         protected internal bool IsSupportLoggingEnabled { get; }
         protected internal bool DisableInstanceDiscovery { get; }
         protected internal IReadOnlyDictionary<string, (string Value, bool IncludeInCacheKey)> AdditionalQueryParameters { get; }
@@ -57,6 +61,9 @@ namespace Azure.Identity
                 ? new ReadOnlyDictionary<string, (string Value, bool IncludeInCacheKey)>(new Dictionary<string, (string Value, bool IncludeInCacheKey)>(options.AdditionalQueryParameters))
                 : null;
 #pragma warning restore AZID0001
+#pragma warning disable AZID0003 // TokenRequestCallback is experimental
+            _onBeforeTokenRequestCallback = (options as ISupportsTokenRequestCallback)?.TokenRequestCallback;
+#pragma warning restore AZID0003
             Pipeline = pipeline;
             TenantId = tenantId;
             ClientId = clientId;
@@ -109,6 +116,22 @@ namespace Azure.Identity
             {
                 var accountDetails = TokenHelper.ParseAccountInfoFromToken(result.AccessToken);
                 AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? result.TenantId, accountDetails.Upn ?? result.Account?.Username, accountDetails.ObjectId ?? result.UniqueId);
+            }
+        }
+
+        protected void ApplyTokenRequestCallback<T>(AbstractAcquireTokenParameterBuilder<T> builder)
+            where T : AbstractAcquireTokenParameterBuilder<T>
+        {
+            if (_onBeforeTokenRequestCallback != null)
+            {
+                var callback = _onBeforeTokenRequestCallback;
+#pragma warning disable AZID0003 // TokenRequestCallback is experimental
+                builder.OnBeforeTokenRequest(data =>
+                {
+                    callback(new TokenRequestCallbackContext(data));
+                    return Task.CompletedTask;
+                });
+#pragma warning restore AZID0003
             }
         }
 

@@ -484,6 +484,17 @@ namespace Azure.ResourceManager.EventHubs.Models
                 location);
         }
 
+        /// <summary> Paged collection of NetworkRuleSet items. </summary>
+        /// <param name="value"> The NetworkRuleSet items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.NetworkRuleSetListResult"/> instance for mocking. </returns>
+        public static NetworkRuleSetListResult NetworkRuleSetListResult(IEnumerable<EventHubsNetworkRuleSetData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<EventHubsNetworkRuleSetData>();
+
+            return new NetworkRuleSetListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

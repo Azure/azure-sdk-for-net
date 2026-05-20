@@ -40,20 +40,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            if (Optional.IsDefined(VlanId))
+            if (VlanId != null)
             {
                 writer.WritePropertyName("vlanId"u8);
                 writer.WriteNumberValue(VlanId.Value);
+            }
+            else
+            {
+                writer.WriteNull("vlanId");
             }
             if (options.Format != "W" && Optional.IsDefined(FabricAsn))
             {
                 writer.WritePropertyName("fabricASN"u8);
                 writer.WriteNumberValue(FabricAsn.Value);
             }
-            if (Optional.IsDefined(PeerAsn))
+            if (PeerAsn != null)
             {
                 writer.WritePropertyName("peerASN"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
+            }
+            else
+            {
+                writer.WriteNull("peerASN");
             }
             if (Optional.IsDefined(BfdConfiguration))
             {
@@ -65,10 +73,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("ingressAclId"u8);
                 writer.WriteStringValue(IngressAclId);
             }
+            if (Optional.IsDefined(BmpConfiguration))
+            {
+                writer.WritePropertyName("bmpConfiguration"u8);
+                writer.WriteObjectValue(BmpConfiguration, options);
+            }
             if (Optional.IsDefined(EgressAclId))
             {
                 writer.WritePropertyName("egressAclId"u8);
                 writer.WriteStringValue(EgressAclId);
+            }
+            if (Optional.IsDefined(V4OverV6BgpSession))
+            {
+                writer.WritePropertyName("v4OverV6BgpSession"u8);
+                writer.WriteStringValue(V4OverV6BgpSession.Value.ToString());
+            }
+            if (Optional.IsDefined(V6OverV4BgpSession))
+            {
+                writer.WritePropertyName("v6OverV4BgpSession"u8);
+                writer.WriteStringValue(V6OverV4BgpSession.Value.ToString());
+            }
+            if (Optional.IsDefined(NativeIPv4PrefixLimit))
+            {
+                writer.WritePropertyName("nativeIpv4PrefixLimit"u8);
+                writer.WriteObjectValue(NativeIPv4PrefixLimit, options);
+            }
+            if (Optional.IsDefined(NativeIPv6PrefixLimit))
+            {
+                writer.WritePropertyName("nativeIpv6PrefixLimit"u8);
+                writer.WriteObjectValue(NativeIPv6PrefixLimit, options);
             }
         }
 
@@ -98,7 +131,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             long? peerAsn = default;
             BfdConfiguration bfdConfiguration = default;
             ResourceIdentifier ingressAclId = default;
+            ExternalNetworkBmpProperties bmpConfiguration = default;
             ResourceIdentifier egressAclId = default;
+            NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default;
+            NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default;
+            NativeIPv4PrefixLimitProperties nativeIPv4PrefixLimit = default;
+            NativeIPv6PrefixLimitProperties nativeIPv6PrefixLimit = default;
             string primaryIPv4Prefix = default;
             string primaryIPv6Prefix = default;
             string secondaryIPv4Prefix = default;
@@ -120,6 +158,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        vlanId = null;
                         continue;
                     }
                     vlanId = property.Value.GetInt32();
@@ -138,6 +177,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        peerAsn = null;
                         continue;
                     }
                     peerAsn = property.Value.GetInt64();
@@ -161,6 +201,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     ingressAclId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("bmpConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bmpConfiguration = ExternalNetworkBmpProperties.DeserializeExternalNetworkBmpProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("egressAclId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -168,6 +217,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         continue;
                     }
                     egressAclId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("v4OverV6BgpSession"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    v4OverV6BgpSession = new NetworkFabricV4OverV6BgpSessionState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("v6OverV4BgpSession"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    v6OverV4BgpSession = new NetworkFabricV6OverV4BgpSessionState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("nativeIpv4PrefixLimit"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nativeIPv4PrefixLimit = NativeIPv4PrefixLimitProperties.DeserializeNativeIPv4PrefixLimitProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("nativeIpv6PrefixLimit"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nativeIPv6PrefixLimit = NativeIPv6PrefixLimitProperties.DeserializeNativeIPv6PrefixLimitProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("primaryIpv4Prefix"u8))
@@ -208,7 +293,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 peerAsn,
                 bfdConfiguration,
                 ingressAclId,
-                egressAclId);
+                bmpConfiguration,
+                egressAclId,
+                v4OverV6BgpSession,
+                v6OverV4BgpSession,
+                nativeIPv4PrefixLimit,
+                nativeIPv6PrefixLimit);
         }
 
         BinaryData IPersistableModel<ExternalNetworkOptionAProperties>.Write(ModelReaderWriterOptions options)
