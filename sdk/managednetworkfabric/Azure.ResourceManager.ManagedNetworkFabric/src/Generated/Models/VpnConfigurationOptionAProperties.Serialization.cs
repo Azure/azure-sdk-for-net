@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string primaryIPv6Prefix = default;
             string secondaryIPv4Prefix = default;
             string secondaryIPv6Prefix = default;
-            int? mtu = default;
-            int? vlanId = default;
             long? peerAsn = default;
+            int? vlanId = default;
+            int? mtu = default;
             BfdConfiguration bfdConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -109,13 +109,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     secondaryIPv6Prefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mtu"u8))
+                if (property.NameEquals("peerASN"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mtu = property.Value.GetInt32();
+                    peerAsn = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("vlanId"u8))
@@ -127,13 +127,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     vlanId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("peerASN"u8))
+                if (property.NameEquals("mtu"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    peerAsn = property.Value.GetInt64();
+                    mtu = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("bfdConfiguration"u8))
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new VpnConfigurationOptionAProperties(
-                mtu,
-                vlanId,
                 peerAsn,
+                vlanId,
+                mtu,
                 bfdConfiguration,
                 serializedAdditionalRawData,
                 primaryIPv4Prefix,
