@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.HybridCompute;
-using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridCompute.Mocking
@@ -102,66 +101,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         public virtual HybridComputeMachineCollection GetHybridComputeMachines()
         {
             return GetCachedClient(client => new HybridComputeMachineCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves information about the model view or the instance view of a hybrid machine.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Machines_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="machineName"> The name of the hybrid machine. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<HybridComputeMachineResource>> GetHybridComputeMachineAsync(string machineName, InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
-
-            return await GetHybridComputeMachines().GetAsync(machineName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves information about the model view or the instance view of a hybrid machine.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Machines_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="machineName"> The name of the hybrid machine. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<HybridComputeMachineResource> GetHybridComputeMachine(string machineName, InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
-
-            return GetHybridComputeMachines().Get(machineName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of ArcGateways in the <see cref="ResourceGroupResource"/>. </summary>

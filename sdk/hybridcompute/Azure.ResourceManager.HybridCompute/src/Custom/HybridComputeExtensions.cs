@@ -127,11 +127,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary>
         /// Gets a hybrid machine.
         /// This overload includes a string <paramref name="expand"/> parameter for backward compatibility.
-        /// Use <see cref="GetHybridComputeMachineAsync(ResourceGroupResource, string, InstanceViewTypes?, CancellationToken)"/> instead.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-        public static Task<Response<HybridComputeMachineResource>> GetHybridComputeMachineAsync(this ResourceGroupResource resourceGroupResource, string machineName, string expand, CancellationToken cancellationToken = default)
+        public static Task<Response<HybridComputeMachineResource>> GetHybridComputeMachineAsync(this ResourceGroupResource resourceGroupResource, string machineName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
             return GetMockableHybridComputeResourceGroupResource(resourceGroupResource).GetHybridComputeMachineAsync(machineName, expand, cancellationToken);
@@ -140,11 +139,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary>
         /// Gets a hybrid machine.
         /// This overload includes a string <paramref name="expand"/> parameter for backward compatibility.
-        /// Use <see cref="GetHybridComputeMachine(ResourceGroupResource, string, InstanceViewTypes?, CancellationToken)"/> instead.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-        public static Response<HybridComputeMachineResource> GetHybridComputeMachine(this ResourceGroupResource resourceGroupResource, string machineName, string expand, CancellationToken cancellationToken = default)
+        public static Response<HybridComputeMachineResource> GetHybridComputeMachine(this ResourceGroupResource resourceGroupResource, string machineName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
             return GetMockableHybridComputeResourceGroupResource(resourceGroupResource).GetHybridComputeMachine(machineName, expand, cancellationToken);

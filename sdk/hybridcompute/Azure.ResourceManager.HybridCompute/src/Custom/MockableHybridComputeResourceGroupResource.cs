@@ -55,21 +55,19 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <summary>
         /// Gets a hybrid machine.
         /// This overload includes a string <paramref name="expand"/> parameter for backward compatibility.
-        /// Use <see cref="GetHybridComputeMachine(string, InstanceViewTypes?, CancellationToken)"/> instead.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-        public virtual Task<Response<HybridComputeMachineResource>> GetHybridComputeMachineAsync(string machineName, string expand, CancellationToken cancellationToken = default)
-            => GetHybridComputeMachineAsync(machineName, string.IsNullOrEmpty(expand) ? default(InstanceViewTypes?) : new InstanceViewTypes(expand), cancellationToken);
+        public virtual Task<Response<HybridComputeMachineResource>> GetHybridComputeMachineAsync(string machineName, string expand = default, CancellationToken cancellationToken = default)
+            => GetHybridComputeMachines().GetAsync(machineName, expand, cancellationToken);
 
         /// <summary>
         /// Gets a hybrid machine.
         /// This overload includes a string <paramref name="expand"/> parameter for backward compatibility.
-        /// Use <see cref="GetHybridComputeMachine(string, InstanceViewTypes?, CancellationToken)"/> instead.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-        public virtual Response<HybridComputeMachineResource> GetHybridComputeMachine(string machineName, string expand, CancellationToken cancellationToken = default)
-            => GetHybridComputeMachine(machineName, string.IsNullOrEmpty(expand) ? default(InstanceViewTypes?) : new InstanceViewTypes(expand), cancellationToken);
+        public virtual Response<HybridComputeMachineResource> GetHybridComputeMachine(string machineName, string expand = default, CancellationToken cancellationToken = default)
+            => GetHybridComputeMachines().Get(machineName, expand, cancellationToken);
     }
 }
