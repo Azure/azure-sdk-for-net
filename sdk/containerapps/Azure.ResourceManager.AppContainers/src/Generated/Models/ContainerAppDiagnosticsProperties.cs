@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticsProperties"/>. </summary>
-        internal ContainerAppDiagnosticsProperties()
+        public ContainerAppDiagnosticsProperties()
         {
             Dataset = new ChangeTrackingList<ContainerAppDiagnosticsDataApiResult>();
         }
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Metadata of the diagnostics response. </summary>
         [WirePath("metadata")]
-        public ContainerAppDiagnosticsMetadata Metadata { get; }
+        public ContainerAppDiagnosticsMetadata Metadata { get; set; }
 
         /// <summary> Set of data collections associated with the response. </summary>
         [WirePath("dataset")]
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Status of the diagnostics response. </summary>
         [WirePath("status")]
-        public ContainerAppDiagnosticsStatus Status { get; }
+        public ContainerAppDiagnosticsStatus Status { get; set; }
 
         /// <summary> List of data providers' metadata. </summary>
         [WirePath("dataProviderMetadata")]
-        public ContainerAppDiagnosticDataProviderMetadata DataProviderMetadata { get; }
+        public ContainerAppDiagnosticDataProviderMetadata DataProviderMetadata { get; set; }
     }
 }

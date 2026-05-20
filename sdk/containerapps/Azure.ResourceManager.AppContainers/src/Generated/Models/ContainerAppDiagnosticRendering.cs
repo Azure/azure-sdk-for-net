@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticRendering"/>. </summary>
-        internal ContainerAppDiagnosticRendering()
+        public ContainerAppDiagnosticRendering()
         {
         }
 
@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Rendering type. </summary>
         [WirePath("type")]
-        public int? DiagnosticRenderingType { get; }
+        public int? DiagnosticRenderingType { get; set; }
 
         /// <summary> Title of the table. </summary>
         [WirePath("title")]
-        public string Title { get; }
+        public string Title { get; set; }
 
         /// <summary> Description of the table. </summary>
         [WirePath("description")]
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> Flag if the table should be rendered. </summary>
         [WirePath("isVisible")]
-        public bool? IsVisible { get; }
+        public bool? IsVisible { get; set; }
     }
 }

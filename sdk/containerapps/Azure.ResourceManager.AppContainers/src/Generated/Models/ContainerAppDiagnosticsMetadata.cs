@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticsMetadata"/>. </summary>
-        internal ContainerAppDiagnosticsMetadata()
+        public ContainerAppDiagnosticsMetadata()
         {
             SupportTopicList = new ChangeTrackingList<ContainerAppDiagnosticSupportTopic>();
             AnalysisTypes = new ChangeTrackingList<string>();

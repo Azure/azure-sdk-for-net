@@ -14,8 +14,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Session pool collection Azure resource. </summary>
-    public partial class SessionPoolCollection : IJsonModel<SessionPoolCollection>
+    internal partial class SessionPoolCollection : IJsonModel<SessionPoolCollection>
     {
         /// <summary> Initializes a new instance of <see cref="SessionPoolCollection"/> for deserialization. </summary>
         internal SessionPoolCollection()

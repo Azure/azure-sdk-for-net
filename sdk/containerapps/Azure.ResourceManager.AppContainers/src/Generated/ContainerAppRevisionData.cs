@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppRevisionData"/>. </summary>
-        internal ContainerAppRevisionData()
+        public ContainerAppRevisionData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Revision resource specific properties. </summary>
         [WirePath("properties")]
-        internal RevisionProperties Properties { get; }
+        internal RevisionProperties Properties { get; set; }
 
         /// <summary>
         /// Timestamp describing when the revision was created
@@ -124,7 +124,11 @@ namespace Azure.ResourceManager.AppContainers
         {
             get
             {
-                return Properties is null ? default : Properties.Labels;
+                if (Properties is null)
+                {
+                    Properties = new RevisionProperties();
+                }
+                return Properties.Labels;
             }
         }
 

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataColumn"/>. </summary>
-        internal ContainerAppDiagnosticDataColumn()
+        public ContainerAppDiagnosticDataColumn()
         {
         }
 
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Column name. </summary>
         [WirePath("columnName")]
-        public string ColumnName { get; }
+        public string ColumnName { get; set; }
 
         /// <summary> Data type of the column. </summary>
         [WirePath("dataType")]
-        public string DataType { get; }
+        public string DataType { get; set; }
 
         /// <summary> Column type. </summary>
         [WirePath("columnType")]
-        public string ColumnType { get; }
+        public string ColumnType { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppReplicaData"/>. </summary>
-        internal ContainerAppReplicaData()
+        public ContainerAppReplicaData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Replica resource specific properties. </summary>
         [WirePath("properties")]
-        internal ReplicaProperties Properties { get; }
+        internal ReplicaProperties Properties { get; set; }
 
         /// <summary> Timestamp describing when the pod was created by controller. </summary>
         [WirePath("properties.createdTime")]
@@ -77,7 +77,11 @@ namespace Azure.ResourceManager.AppContainers
         {
             get
             {
-                return Properties is null ? default : Properties.Containers;
+                if (Properties is null)
+                {
+                    Properties = new ReplicaProperties();
+                }
+                return Properties.Containers;
             }
         }
 
@@ -87,7 +91,11 @@ namespace Azure.ResourceManager.AppContainers
         {
             get
             {
-                return Properties is null ? default : Properties.InitContainers;
+                if (Properties is null)
+                {
+                    Properties = new ReplicaProperties();
+                }
+                return Properties.InitContainers;
             }
         }
     }

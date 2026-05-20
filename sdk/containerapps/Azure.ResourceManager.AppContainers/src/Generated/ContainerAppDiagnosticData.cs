@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticData"/>. </summary>
-        internal ContainerAppDiagnosticData()
+        public ContainerAppDiagnosticData()
         {
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        public ContainerAppDiagnosticsProperties Properties { get; }
+        public ContainerAppDiagnosticsProperties Properties { get; set; }
     }
 }

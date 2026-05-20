@@ -14,8 +14,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Collection of AppResiliency policies. </summary>
-    public partial class AppResiliencyCollection : IJsonModel<AppResiliencyCollection>
+    internal partial class AppResiliencyCollection : IJsonModel<AppResiliencyCollection>
     {
         /// <summary> Initializes a new instance of <see cref="AppResiliencyCollection"/> for deserialization. </summary>
         internal AppResiliencyCollection()

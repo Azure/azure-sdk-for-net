@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataTableResult"/>. </summary>
-        internal ContainerAppDiagnosticDataTableResult()
+        public ContainerAppDiagnosticDataTableResult()
         {
             Columns = new ChangeTrackingList<ContainerAppDiagnosticDataColumn>();
             Rows = new ChangeTrackingList<BinaryData>();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Table name. </summary>
         [WirePath("tableName")]
-        public string TableName { get; }
+        public string TableName { get; set; }
 
         /// <summary> Columns in the table. </summary>
         [WirePath("columns")]

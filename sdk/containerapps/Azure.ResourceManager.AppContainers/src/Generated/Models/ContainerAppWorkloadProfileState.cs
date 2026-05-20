@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppWorkloadProfileState"/>. </summary>
-        internal ContainerAppWorkloadProfileState()
+        public ContainerAppWorkloadProfileState()
         {
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Workload Profile resource specific properties. </summary>
         [WirePath("properties")]
-        public ContainerAppWorkloadProfileStateProperties Properties { get; }
+        public ContainerAppWorkloadProfileStateProperties Properties { get; set; }
     }
 }

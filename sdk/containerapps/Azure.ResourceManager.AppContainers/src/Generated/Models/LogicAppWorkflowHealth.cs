@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="LogicAppWorkflowHealth"/>. </summary>
         /// <param name="state"> Gets or sets the workflow health state. </param>
-        internal LogicAppWorkflowHealth(LogicAppWorkflowHealthState state)
+        public LogicAppWorkflowHealth(LogicAppWorkflowHealthState state)
         {
             State = state;
         }
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Gets or sets the workflow health state. </summary>
         [WirePath("state")]
-        public LogicAppWorkflowHealthState State { get; }
+        public LogicAppWorkflowHealthState State { get; set; }
 
         /// <summary> Gets or sets the workflow error. </summary>
         [WirePath("error")]
-        public WorkflowErrorEntity Error { get; }
+        public WorkflowErrorEntity Error { get; set; }
     }
 }

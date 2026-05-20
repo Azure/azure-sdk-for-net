@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppWorkloadProfileStateProperties"/>. </summary>
-        internal ContainerAppWorkloadProfileStateProperties()
+        public ContainerAppWorkloadProfileStateProperties()
         {
         }
 
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Minimum count of instances. </summary>
         [WirePath("minimumCount")]
-        public int? MinimumCount { get; }
+        public int? MinimumCount { get; set; }
 
         /// <summary> Maximum count of nodes. </summary>
         [WirePath("maximumCount")]
-        public int? MaximumCount { get; }
+        public int? MaximumCount { get; set; }
 
         /// <summary> Current count of nodes. </summary>
         [WirePath("currentCount")]
-        public int? CurrentCount { get; }
+        public int? CurrentCount { get; set; }
     }
 }

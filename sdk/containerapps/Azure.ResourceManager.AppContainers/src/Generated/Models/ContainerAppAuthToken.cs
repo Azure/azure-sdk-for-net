@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppAuthToken"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ContainerAppAuthToken(AzureLocation location) : base(location)
+        public ContainerAppAuthToken(AzureLocation location) : base(location)
         {
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Container App auth token resource specific properties. </summary>
         [WirePath("properties")]
-        internal ContainerAppAuthTokenProperties Properties { get; }
+        internal ContainerAppAuthTokenProperties Properties { get; set; }
 
         /// <summary> Auth token value. </summary>
         [WirePath("properties.token")]

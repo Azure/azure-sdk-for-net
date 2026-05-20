@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppAvailableWorkloadProfile"/>. </summary>
-        internal ContainerAppAvailableWorkloadProfile()
+        public ContainerAppAvailableWorkloadProfile()
         {
         }
 
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Region of the workload profile. </summary>
         [WirePath("location")]
-        public AzureLocation? Location { get; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> Revision resource specific properties. </summary>
         [WirePath("properties")]
-        public ContainerAppAvailableWorkloadProfileProperties Properties { get; }
+        public ContainerAppAvailableWorkloadProfileProperties Properties { get; set; }
     }
 }
