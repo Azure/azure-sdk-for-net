@@ -37,17 +37,5 @@ namespace Azure.ResourceManager.Avs.Models
             Hosts = hosts;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The cluster size. </summary>
-        public int? ClusterSize { get; set; }
-
-        /// <summary> The state of the cluster provisioning. </summary>
-        public AvsPrivateCloudClusterProvisioningState? ProvisioningState { get; }
-
-        /// <summary> The identity. </summary>
-        public int? ClusterId { get; }
-
-        /// <summary> The hosts. </summary>
-        public IList<string> Hosts { get; }
     }
 }
