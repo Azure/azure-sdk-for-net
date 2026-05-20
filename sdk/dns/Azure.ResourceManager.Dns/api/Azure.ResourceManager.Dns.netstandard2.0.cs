@@ -879,8 +879,10 @@ namespace Azure.ResourceManager.Dns.Models
     public enum DnsRecordType
     {
         A = 0,
+        AAAA = 1,
         Aaaa = 1,
         CAA = 2,
+        CNAME = 3,
         Cname = 3,
         MX = 4,
         NS = 5,
@@ -888,8 +890,10 @@ namespace Azure.ResourceManager.Dns.Models
         SOA = 7,
         SRV = 8,
         TXT = 9,
+        TLSA = 10,
         Tlsa = 10,
         DS = 11,
+        NAPTR = 12,
         Naptr = 12,
     }
     public partial class DnsResourceReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsResourceReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsResourceReference>

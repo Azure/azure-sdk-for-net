@@ -14,36 +14,36 @@ namespace Azure.ResourceManager.Dns.Models
         public static string ToSerialString(this DnsRecordType value) => value switch
         {
             DnsRecordType.A => "A",
-            DnsRecordType.Aaaa => "AAAA",
+            DnsRecordType.AAAA => "AAAA",
             DnsRecordType.CAA => "CAA",
-            DnsRecordType.Cname => "CNAME",
+            DnsRecordType.CNAME => "CNAME",
             DnsRecordType.MX => "MX",
             DnsRecordType.NS => "NS",
             DnsRecordType.PTR => "PTR",
             DnsRecordType.SOA => "SOA",
             DnsRecordType.SRV => "SRV",
             DnsRecordType.TXT => "TXT",
-            DnsRecordType.Tlsa => "TLSA",
+            DnsRecordType.TLSA => "TLSA",
             DnsRecordType.DS => "DS",
-            DnsRecordType.Naptr => "NAPTR",
+            DnsRecordType.NAPTR => "NAPTR",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DnsRecordType value.")
         };
 
         public static DnsRecordType ToDnsRecordType(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "A")) return DnsRecordType.A;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AAAA")) return DnsRecordType.Aaaa;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AAAA")) return DnsRecordType.AAAA;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "CAA")) return DnsRecordType.CAA;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CNAME")) return DnsRecordType.Cname;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CNAME")) return DnsRecordType.CNAME;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "MX")) return DnsRecordType.MX;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "NS")) return DnsRecordType.NS;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "PTR")) return DnsRecordType.PTR;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "SOA")) return DnsRecordType.SOA;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "SRV")) return DnsRecordType.SRV;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "TXT")) return DnsRecordType.TXT;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLSA")) return DnsRecordType.Tlsa;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TLSA")) return DnsRecordType.TLSA;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "DS")) return DnsRecordType.DS;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NAPTR")) return DnsRecordType.Naptr;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NAPTR")) return DnsRecordType.NAPTR;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DnsRecordType value.");
         }
     }

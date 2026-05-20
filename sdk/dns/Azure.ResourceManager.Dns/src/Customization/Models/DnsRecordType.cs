@@ -1,36 +1,50 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> The DnsRecordType. </summary>
     public enum DnsRecordType
     {
         /// <summary> A. </summary>
-        A,
+        A = 0,
         /// <summary> AAAA. </summary>
-        Aaaa,
+        AAAA = 1,
         /// <summary> CAA. </summary>
-        CAA,
+        CAA = 2,
         /// <summary> CNAME. </summary>
-        Cname,
+        CNAME = 3,
         /// <summary> MX. </summary>
-        MX,
+        MX = 4,
         /// <summary> NS. </summary>
-        NS,
+        NS = 5,
         /// <summary> PTR. </summary>
-        PTR,
+        PTR = 6,
         /// <summary> SOA. </summary>
-        SOA,
+        SOA = 7,
         /// <summary> SRV. </summary>
-        SRV,
+        SRV = 8,
         /// <summary> TXT. </summary>
-        TXT,
+        TXT = 9,
         /// <summary> TLSA. </summary>
-        Tlsa,
+        TLSA = 10,
         /// <summary> DS. </summary>
-        DS,
+        DS = 11,
         /// <summary> NAPTR. </summary>
-        Naptr
+        NAPTR = 12,
+        /// <summary> AAAA. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        Aaaa = 1,
+        /// <summary> CNAME. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        Cname = 3,
+        /// <summary> TLSA. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        Tlsa = 10,
+        /// <summary> NAPTR. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        Naptr = 12,
     }
 }

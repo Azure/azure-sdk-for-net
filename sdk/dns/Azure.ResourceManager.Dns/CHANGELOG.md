@@ -4,11 +4,15 @@
 
 ### Features Added
 
+- Added correctly-named enum values `AAAA`, `CNAME`, `TLSA`, and `NAPTR` to `DnsRecordType` to follow naming conventions.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Marked old enum values `Aaaa`, `Cname`, `Tlsa`, and `Naptr` in `DnsRecordType` as `EditorBrowsable(Never)` for backward compatibility.
 
 ## 1.2.0-beta.3 (2026-04-16)
 
