@@ -208,12 +208,33 @@ foreach ($pkg in $selectedPackages) {
         throw "assets.json at $assetsJson has an invalid Tag '$($assetData.Tag)' (rejected by 'git check-ref-format refs/tags/<tag>')."
     }
 
+    # Compute the sparse-checkout path: the package's own subtree inside the
+    # assets repo. Tags in Azure/azure-sdk-assets contain the full repo layout
+    # (every package), so without sparse-checkout each package's `.assets`
+    # directory would materialize the entire repo - tens of thousands of files
+    # per package, and on Windows the deep paths blow past MAX_PATH (260 chars)
+    # and `git checkout` aborts with "Filename too long". Sparse-checkout limits
+    # materialization to <AssetsRepoPrefixPath>/<DirectoryPath>, matching what
+    # `test-proxy restore` writes.
+    $prefix = ''
+    if ($assetData.PSObject.Properties.Match('AssetsRepoPrefixPath').Count) {
+        $prefix = "$($assetData.AssetsRepoPrefixPath)"
+    }
+    $sparseSegments = @($prefix, $pkg.DirectoryPath) |
+        ForEach-Object { ($_ -replace '\\', '/').Trim('/') } |
+        Where-Object { $_ }
+    $sparsePath = $sparseSegments -join '/'
+    if (-not $sparsePath) {
+        throw "assets.json at $assetsJson + package '$($pkg.ArtifactName)' produced an empty sparse-checkout path (AssetsRepoPrefixPath='$prefix', DirectoryPath='$($pkg.DirectoryPath)')."
+    }
+
     $assetEntries.Add([pscustomobject]@{
             Artifact   = $pkg.ArtifactName
             AssetsJson = $assetsJson
             AssetsDir  = Join-Path (Split-Path -Parent $assetsJson) ".assets"
             AssetsRepo = $assetData.AssetsRepo
             Tag        = $assetData.Tag
+            SparsePath = $sparsePath
         }) | Out-Null
 }
 
@@ -282,6 +303,12 @@ foreach ($repoGroup in $entriesByRepo) {
             -FailMessage "git remote add origin $repoUrl failed for $sharedRepo" | Out-Null
     }
 
+    # Ensure core.longpaths is set on the shared clone (idempotent - applied to
+    # both freshly-initialized and reused clones). Required on Windows because
+    # paths inside Azure/azure-sdk-assets tags can exceed MAX_PATH (260 chars).
+    Invoke-GitCommand -GitArgs @('-C', $sharedRepo, 'config', 'core.longpaths', 'true') `
+        -FailMessage "git config core.longpaths failed for $sharedRepo" | Out-Null
+
     # --- 2b. Determine which tags are missing from the shared clone ----------
 
     $uniqueTags = @($repoGroup.Group | Select-Object -ExpandProperty Tag -Unique)
@@ -330,10 +357,23 @@ foreach ($repoGroup in $entriesByRepo) {
             New-Item -ItemType Directory -Path $parent -Force | Out-Null
         }
 
-        Invoke-GitCommand -GitArgs @('clone', '--local', '--shared', '--no-checkout', '--quiet', $sharedRepo, $entry.AssetsDir) `
+        Invoke-GitCommand -GitArgs @('-c', 'core.longpaths=true', 'clone', '--local', '--shared', '--no-checkout', '--quiet', $sharedRepo, $entry.AssetsDir) `
             -FailMessage "git clone --local --shared failed for $($entry.Artifact)" | Out-Null
 
-        Invoke-GitCommand -GitArgs @('-C', $entry.AssetsDir, 'checkout', '--quiet', "refs/tags/$($entry.Tag)", '--', '.') `
+        # Set core.longpaths on the per-package clone (Windows MAX_PATH defense)
+        # and configure sparse-checkout so only the package's own subtree is
+        # materialized - matches `test-proxy restore` semantics, ~100x less data
+        # on disk per package, and avoids the deep-path checkout failures that
+        # used to abort the build on Windows agents.
+        Invoke-GitCommand -GitArgs @('-C', $entry.AssetsDir, 'config', 'core.longpaths', 'true') `
+            -FailMessage "git config core.longpaths failed for $($entry.Artifact)" | Out-Null
+
+        Invoke-GitCommand -GitArgs @('-C', $entry.AssetsDir, 'sparse-checkout', 'init', '--cone') `
+            -FailMessage "git sparse-checkout init failed for $($entry.Artifact)" | Out-Null
+        Invoke-GitCommand -GitArgs @('-C', $entry.AssetsDir, 'sparse-checkout', 'set', $entry.SparsePath) `
+            -FailMessage "git sparse-checkout set $($entry.SparsePath) failed for $($entry.Artifact)" | Out-Null
+
+        Invoke-GitCommand -GitArgs @('-c', 'core.longpaths=true', '-C', $entry.AssetsDir, 'checkout', '--quiet', "refs/tags/$($entry.Tag)") `
             -FailMessage "git checkout refs/tags/$($entry.Tag) failed for $($entry.Artifact)" | Out-Null
     }
     $swMaterialize.Stop()
