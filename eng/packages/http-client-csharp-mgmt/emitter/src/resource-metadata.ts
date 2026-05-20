@@ -7,7 +7,9 @@ import {
   SdkHttpOperation,
   SdkMethod
 } from "@azure-tools/typespec-client-generator-core";
+import { NoTarget, Program } from "@typespec/compiler";
 import pluralize from "pluralize";
+import { $lib } from "./lib/lib.js";
 
 type SdkHttpOperationParameter = SdkHttpOperation["parameters"][number];
 type SdkHttpOperationEnumPathParameter = SdkHttpOperationParameter & {
@@ -507,11 +509,11 @@ export type ResourceNameOverride = string | Map<string, string>;
  * - `undefined` if the decorator is not set or the value is malformed.
  *
  * Malformed values (mixed types, empty strings, empty maps) are reported via
- * the optional `diagnosticReporter` and treated as if the decorator was absent.
+ * the optional `program` and treated as if the decorator was absent.
  */
 export function extractResourceNameOverride(
   operation: DecoratedType | undefined,
-  diagnosticReporter?: (message: string) => void
+  program?: Program
 ): ResourceNameOverride | undefined {
   if (!operation) return undefined;
   const value = getClientOptions(operation, resourceNameKey);
@@ -519,9 +521,13 @@ export function extractResourceNameOverride(
 
   if (typeof value === "string") {
     if (value.length === 0) {
-      diagnosticReporter?.(
-        `@@clientOption(..., "${resourceNameKey}", ...) value is an empty string and will be ignored.`
-      );
+      if (program) {
+        $lib.reportDiagnostic(program, {
+          code: "resource-name-empty-string",
+          format: {},
+          target: NoTarget
+        });
+      }
       return undefined;
     }
     return value;
@@ -532,25 +538,37 @@ export function extractResourceNameOverride(
     const map = new Map<string, string>();
     for (const [key, v] of Object.entries(record)) {
       if (typeof v !== "string" || v.length === 0 || key.length === 0) {
-        diagnosticReporter?.(
-          `@@clientOption(..., "${resourceNameKey}", ...) entry '${key}' is not a non-empty string and will be ignored.`
-        );
+        if (program) {
+          $lib.reportDiagnostic(program, {
+            code: "resource-name-bad-entry",
+            format: { key },
+            target: NoTarget
+          });
+        }
         continue;
       }
       map.set(key, v);
     }
     if (map.size === 0) {
-      diagnosticReporter?.(
-        `@@clientOption(..., "${resourceNameKey}", ...) value is an empty record and will be ignored.`
-      );
+      if (program) {
+        $lib.reportDiagnostic(program, {
+          code: "resource-name-empty-record",
+          format: {},
+          target: NoTarget
+        });
+      }
       return undefined;
     }
     return map;
   }
 
-  diagnosticReporter?.(
-    `@@clientOption(..., "${resourceNameKey}", ...) value must be a string or a Record<enumValue, string>; received ${typeof value}.`
-  );
+  if (program) {
+    $lib.reportDiagnostic(program, {
+      code: "resource-name-bad-type",
+      format: { actualType: typeof value },
+      target: NoTarget
+    });
+  }
   return undefined;
 }
 

@@ -163,15 +163,17 @@ export function buildArmProviderSchema(
     let resourceNameOverrideMap: Map<string, string> | undefined;
     const clientOptionOverride = extractResourceNameOverride(
       sdkMethod,
-      reportWarning
+      sdkContext.program
     );
     if (clientOptionOverride !== undefined) {
       const isExpandable = detectDynamicTypeSegments(path).length > 0;
       if (typeof clientOptionOverride === "string") {
         if (isExpandable) {
-          reportWarning(
-            `@@clientOption(..., "resource-name", "${clientOptionOverride}", ...) is a plain string but its Read operation's path '${path.path}' contains a {parentType} segment (expandable). Use a Record<enumValue, string> map form instead.`
-          );
+          $lib.reportDiagnostic(sdkContext.program, {
+            code: "resource-name-string-on-expandable",
+            format: { value: clientOptionOverride, path: path.path },
+            target: NoTarget
+          });
         } else {
           // Plain string override on an ordinary Read op. Folds into the
           // existing explicit-name mechanism so it's applied uniformly with
@@ -180,9 +182,11 @@ export function buildArmProviderSchema(
         }
       } else {
         if (!isExpandable) {
-          reportWarning(
-            `@@clientOption(..., "resource-name", ...) value is a Record but its Read operation's path '${path.path}' does not contain a {parentType} segment (non-expandable). Use a plain string instead.`
-          );
+          $lib.reportDiagnostic(sdkContext.program, {
+            code: "resource-name-map-on-non-expandable",
+            format: { path: path.path },
+            target: NoTarget
+          });
         } else {
           resourceNameOverrideMap = clientOptionOverride;
         }
