@@ -45,10 +45,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsDefined(ConfigurationType))
+            if (ConfigurationType != null)
             {
                 writer.WritePropertyName("configurationType"u8);
                 writer.WriteStringValue(ConfigurationType.Value.ToString());
+            }
+            else
+            {
+                writer.WriteNull("configurationType");
             }
             if (Optional.IsDefined(AclsUri))
             {
@@ -84,6 +88,51 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 writer.WritePropertyName("lastSyncedTime"u8);
                 writer.WriteStringValue(LastSyncedOn.Value, "O");
+            }
+            if (Optional.IsDefined(AclType))
+            {
+                writer.WritePropertyName("aclType"u8);
+                writer.WriteStringValue(AclType.Value.ToString());
+            }
+            if (Optional.IsDefined(DeviceRole))
+            {
+                writer.WritePropertyName("deviceRole"u8);
+                writer.WriteStringValue(DeviceRole.Value.ToString());
+            }
+            if (Optional.IsDefined(GlobalAccessControlListActions))
+            {
+                writer.WritePropertyName("globalAccessControlListActions"u8);
+                writer.WriteObjectValue(GlobalAccessControlListActions, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastOperation))
+            {
+                writer.WritePropertyName("lastOperation"u8);
+                writer.WriteObjectValue(LastOperation, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkFabricIds))
+            {
+                writer.WritePropertyName("networkFabricIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in NetworkFabricIds)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ControlPlaneAclConfiguration))
+            {
+                writer.WritePropertyName("controlPlaneAclConfiguration"u8);
+                writer.WriteStartArray();
+                foreach (var item in ControlPlaneAclConfiguration)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
@@ -136,6 +185,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             IList<AccessControlListMatchConfiguration> matchConfigurations = default;
             IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
             DateTimeOffset? lastSyncedTime = default;
+            NetworkFabricAclType? aclType = default;
+            NetworkFabricDeviceRole? deviceRole = default;
+            GlobalAccessControlListActionProperties globalAccessControlListActions = default;
+            LastOperationProperties lastOperation = default;
+            IReadOnlyList<ResourceIdentifier> networkFabricIds = default;
+            IList<ControlPlaneAclProperties> controlPlaneAclConfiguration = default;
             NetworkFabricConfigurationState? configurationState = default;
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
@@ -204,6 +259,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                configurationType = null;
                                 continue;
                             }
                             configurationType = new NetworkFabricConfigurationType(property0.Value.GetString());
@@ -264,6 +320,77 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             lastSyncedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("aclType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            aclType = new NetworkFabricAclType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("deviceRole"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            deviceRole = new NetworkFabricDeviceRole(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("globalAccessControlListActions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            globalAccessControlListActions = GlobalAccessControlListActionProperties.DeserializeGlobalAccessControlListActionProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("lastOperation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("networkFabricIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
+                            }
+                            networkFabricIds = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("controlPlaneAclConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ControlPlaneAclProperties> array = new List<ControlPlaneAclProperties>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ControlPlaneAclProperties.DeserializeControlPlaneAclProperties(item, options));
+                            }
+                            controlPlaneAclConfiguration = array;
+                            continue;
+                        }
                         if (property0.NameEquals("configurationState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -314,6 +441,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>(),
                 dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>(),
                 lastSyncedTime,
+                aclType,
+                deviceRole,
+                globalAccessControlListActions,
+                lastOperation,
+                networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                controlPlaneAclConfiguration ?? new ChangeTrackingList<ControlPlaneAclProperties>(),
                 configurationState,
                 provisioningState,
                 administrativeState,
