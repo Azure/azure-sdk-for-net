@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(default); /* TODO(#59298): Deserialize is not implemented; stub until generator fix */
+                        array.Add(default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */);
                     }
                     linkedServices = array;
                     continue;

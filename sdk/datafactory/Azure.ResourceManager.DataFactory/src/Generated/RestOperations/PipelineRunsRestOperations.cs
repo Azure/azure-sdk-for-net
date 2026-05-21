@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string runId, RequestContext context)
+        internal HttpMessage CreateGetPipelineRunRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string runId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory
             return message;
         }
 
-        internal HttpMessage CreateCancelRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string runId, bool? isRecursive, RequestContext context)
+        internal HttpMessage CreateCancelPipelineRunRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string runId, bool? isRecursive, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

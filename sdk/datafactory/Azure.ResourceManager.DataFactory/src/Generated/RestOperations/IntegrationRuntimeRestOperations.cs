@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateEnableInteractiveQueryRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateEnableInteractiveQueryIntegrationRuntimeRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory
             return message;
         }
 
-        internal HttpMessage CreateDisableInteractiveQueryRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, RequestContext context)
+        internal HttpMessage CreateDisableInteractiveQueryIntegrationRuntimeRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

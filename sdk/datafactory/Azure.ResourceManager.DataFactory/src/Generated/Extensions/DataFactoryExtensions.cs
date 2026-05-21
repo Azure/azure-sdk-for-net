@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DataFactory
         /// Updates a factory's repo information.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataFactorySubscriptionResource.ConfigureFactoryRepoAsync(AzureLocation, FactoryRepoContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataFactorySubscriptionResource.ConfigureFactoryRepoInformationAsync(AzureLocation, FactoryRepoContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -377,18 +377,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<DataFactoryResource>> ConfigureFactoryRepoAsync(this SubscriptionResource subscriptionResource, AzureLocation locationId, FactoryRepoContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataFactoryResource>> ConfigureFactoryRepoInformationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationId, FactoryRepoContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableDataFactorySubscriptionResource(subscriptionResource).ConfigureFactoryRepoAsync(locationId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataFactorySubscriptionResource(subscriptionResource).ConfigureFactoryRepoInformationAsync(locationId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Updates a factory's repo information.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataFactorySubscriptionResource.ConfigureFactoryRepo(AzureLocation, FactoryRepoContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataFactorySubscriptionResource.ConfigureFactoryRepoInformation(AzureLocation, FactoryRepoContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -396,18 +396,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<DataFactoryResource> ConfigureFactoryRepo(this SubscriptionResource subscriptionResource, AzureLocation locationId, FactoryRepoContent content, CancellationToken cancellationToken = default)
+        public static Response<DataFactoryResource> ConfigureFactoryRepoInformation(this SubscriptionResource subscriptionResource, AzureLocation locationId, FactoryRepoContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDataFactorySubscriptionResource(subscriptionResource).ConfigureFactoryRepo(locationId, content, cancellationToken);
+            return GetMockableDataFactorySubscriptionResource(subscriptionResource).ConfigureFactoryRepoInformation(locationId, content, cancellationToken);
         }
 
         /// <summary>
         /// Get exposure control feature for specific location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataFactorySubscriptionResource.GetFeatureValueAsync(AzureLocation, ExposureControlContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataFactorySubscriptionResource.GetFeatureValueExposureControlAsync(AzureLocation, ExposureControlContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -415,18 +415,18 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ExposureControlResult>> GetFeatureValueAsync(this SubscriptionResource subscriptionResource, AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ExposureControlResult>> GetFeatureValueExposureControlAsync(this SubscriptionResource subscriptionResource, AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableDataFactorySubscriptionResource(subscriptionResource).GetFeatureValueAsync(locationId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataFactorySubscriptionResource(subscriptionResource).GetFeatureValueExposureControlAsync(locationId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get exposure control feature for specific location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataFactorySubscriptionResource.GetFeatureValue(AzureLocation, ExposureControlContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataFactorySubscriptionResource.GetFeatureValueExposureControl(AzureLocation, ExposureControlContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -434,11 +434,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ExposureControlResult> GetFeatureValue(this SubscriptionResource subscriptionResource, AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
+        public static Response<ExposureControlResult> GetFeatureValueExposureControl(this SubscriptionResource subscriptionResource, AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDataFactorySubscriptionResource(subscriptionResource).GetFeatureValue(locationId, content, cancellationToken);
+            return GetMockableDataFactorySubscriptionResource(subscriptionResource).GetFeatureValueExposureControl(locationId, content, cancellationToken);
         }
     }
 }

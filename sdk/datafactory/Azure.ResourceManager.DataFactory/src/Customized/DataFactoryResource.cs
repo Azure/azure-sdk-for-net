@@ -148,5 +148,192 @@ namespace Azure.ResourceManager.DataFactory
         {
             return GetDataFactoryChangeDataCapture(changeDataCaptureName, ifNoneMatch != null ? new ETag(ifNoneMatch) : (ETag?)null, cancellationToken);
         }
+
+        /// <summary> Gets a collection of DataFactoryManagedIdentityCredentials in the DataFactoryResource. </summary>
+        /// <returns> An object representing collection of DataFactoryManagedIdentityCredentials and their operations over a DataFactoryManagedIdentityCredentialResource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual DataFactoryManagedIdentityCredentialCollection GetDataFactoryManagedIdentityCredentials()
+        {
+            return GetCachedClient(client => new DataFactoryManagedIdentityCredentialCollection(client, Id));
+        }
+
+        /// <summary> Gets a credential. </summary>
+        /// <param name="credentialName"> Credential name. </param>
+        /// <param name="ifNoneMatch"> ETag of the credential entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<DataFactoryManagedIdentityCredentialResource>> GetDataFactoryManagedIdentityCredentialAsync(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            return await GetDataFactoryManagedIdentityCredentials().GetAsync(credentialName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a credential. </summary>
+        /// <param name="credentialName"> Credential name. </param>
+        /// <param name="ifNoneMatch"> ETag of the credential entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<DataFactoryManagedIdentityCredentialResource> GetDataFactoryManagedIdentityCredential(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            return GetDataFactoryManagedIdentityCredentials().Get(credentialName, ifNoneMatch, cancellationToken);
+        }
+
+        /// <summary> Get activity runs by query criteria. </summary>
+        public virtual Pageable<PipelineActivityRunInformation> GetActivityRun(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            var response = GetActivityRunInternal(runId, content, cancellationToken);
+            return new SinglePagePageable<PipelineActivityRunInformation>(System.Linq.Enumerable.ToList(response.Value.Value), response.GetRawResponse());
+        }
+
+        /// <summary> Get activity runs by query criteria. </summary>
+        public virtual AsyncPageable<PipelineActivityRunInformation> GetActivityRunAsync(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            return new InternalActivityRunAsyncPageable(this, runId, content, cancellationToken);
+        }
+
+        private sealed class InternalActivityRunAsyncPageable : AsyncPageable<PipelineActivityRunInformation>
+        {
+            private readonly DataFactoryResource _parent;
+            private readonly string _runId;
+            private readonly RunFilterContent _content;
+            private readonly CancellationToken _cancellationToken;
+            public InternalActivityRunAsyncPageable(DataFactoryResource parent, string runId, RunFilterContent content, CancellationToken cancellationToken)
+            {
+                _parent = parent; _runId = runId; _content = content; _cancellationToken = cancellationToken;
+            }
+            public override async System.Collections.Generic.IAsyncEnumerable<Page<PipelineActivityRunInformation>> AsPages(string continuationToken = null, int? pageSizeHint = null)
+            {
+                var response = await _parent.GetActivityRunInternalAsync(_runId, _content, _cancellationToken).ConfigureAwait(false);
+                yield return Page<PipelineActivityRunInformation>.FromValues(System.Linq.Enumerable.ToList(response.Value.Value), null, response.GetRawResponse());
+            }
+        }
+
+        /// <summary> Query pipeline runs in the factory by criteria. </summary>
+        public virtual Pageable<DataFactoryPipelineRunInfo> GetPipelineRuns(RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            var response = GetPipelineRunsInternal(content, cancellationToken);
+            return new SinglePagePageable<DataFactoryPipelineRunInfo>(System.Linq.Enumerable.ToList(response.Value.Value), response.GetRawResponse());
+        }
+
+        /// <summary> Query pipeline runs in the factory by criteria. </summary>
+        public virtual AsyncPageable<DataFactoryPipelineRunInfo> GetPipelineRunsAsync(RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            return new InternalPipelineRunsAsyncPageable(this, content, cancellationToken);
+        }
+
+        private sealed class InternalPipelineRunsAsyncPageable : AsyncPageable<DataFactoryPipelineRunInfo>
+        {
+            private readonly DataFactoryResource _parent;
+            private readonly RunFilterContent _content;
+            private readonly CancellationToken _cancellationToken;
+            public InternalPipelineRunsAsyncPageable(DataFactoryResource parent, RunFilterContent content, CancellationToken cancellationToken)
+            {
+                _parent = parent; _content = content; _cancellationToken = cancellationToken;
+            }
+            public override async System.Collections.Generic.IAsyncEnumerable<Page<DataFactoryPipelineRunInfo>> AsPages(string continuationToken = null, int? pageSizeHint = null)
+            {
+                var response = await _parent.GetPipelineRunsInternalAsync(_content, _cancellationToken).ConfigureAwait(false);
+                yield return Page<DataFactoryPipelineRunInfo>.FromValues(System.Linq.Enumerable.ToList(response.Value.Value), null, response.GetRawResponse());
+            }
+        }
+
+        /// <summary> Gets the private link resources. </summary>
+        public virtual Pageable<DataFactoryPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        {
+            var response = GetPrivateLinkResourcesInternal(cancellationToken);
+            return new SinglePagePageable<DataFactoryPrivateLinkResource>(System.Linq.Enumerable.ToList(response.Value.Value), response.GetRawResponse());
+        }
+
+        /// <summary> Gets the private link resources. </summary>
+        public virtual AsyncPageable<DataFactoryPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            return new InternalPrivateLinkResourcesAsyncPageable(this, cancellationToken);
+        }
+
+        private sealed class InternalPrivateLinkResourcesAsyncPageable : AsyncPageable<DataFactoryPrivateLinkResource>
+        {
+            private readonly DataFactoryResource _parent;
+            private readonly CancellationToken _cancellationToken;
+            public InternalPrivateLinkResourcesAsyncPageable(DataFactoryResource parent, CancellationToken cancellationToken)
+            {
+                _parent = parent; _cancellationToken = cancellationToken;
+            }
+            public override async System.Collections.Generic.IAsyncEnumerable<Page<DataFactoryPrivateLinkResource>> AsPages(string continuationToken = null, int? pageSizeHint = null)
+            {
+                var response = await _parent.GetPrivateLinkResourcesInternalAsync(_cancellationToken).ConfigureAwait(false);
+                yield return Page<DataFactoryPrivateLinkResource>.FromValues(System.Linq.Enumerable.ToList(response.Value.Value), null, response.GetRawResponse());
+            }
+        }
+
+        /// <summary> Query trigger runs by query criteria. </summary>
+        public virtual Pageable<DataFactoryTriggerRun> GetTriggerRuns(RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            var response = GetTriggerRunsInternal(content, cancellationToken);
+            return new SinglePagePageable<DataFactoryTriggerRun>(System.Linq.Enumerable.ToList(response.Value.Value), response.GetRawResponse());
+        }
+
+        /// <summary> Query trigger runs by query criteria. </summary>
+        public virtual AsyncPageable<DataFactoryTriggerRun> GetTriggerRunsAsync(RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            return new InternalTriggerRunsAsyncPageable(this, content, cancellationToken);
+        }
+
+        private sealed class InternalTriggerRunsAsyncPageable : AsyncPageable<DataFactoryTriggerRun>
+        {
+            private readonly DataFactoryResource _parent;
+            private readonly RunFilterContent _content;
+            private readonly CancellationToken _cancellationToken;
+            public InternalTriggerRunsAsyncPageable(DataFactoryResource parent, RunFilterContent content, CancellationToken cancellationToken)
+            {
+                _parent = parent; _content = content; _cancellationToken = cancellationToken;
+            }
+            public override async System.Collections.Generic.IAsyncEnumerable<Page<DataFactoryTriggerRun>> AsPages(string continuationToken = null, int? pageSizeHint = null)
+            {
+                var response = await _parent.GetTriggerRunsInternalAsync(_content, _cancellationToken).ConfigureAwait(false);
+                yield return Page<DataFactoryTriggerRun>.FromValues(System.Linq.Enumerable.ToList(response.Value.Value), null, response.GetRawResponse());
+            }
+        }
+
+        /// <summary> Query triggers in the factory by criteria. </summary>
+        public virtual Pageable<DataFactoryTriggerResource> GetTriggers(TriggerFilterContent content, CancellationToken cancellationToken = default)
+        {
+            var response = GetTriggersInternal(content, cancellationToken);
+            var items = new System.Collections.Generic.List<DataFactoryTriggerResource>();
+            foreach (var data in response.Value.Value)
+            {
+                items.Add(new DataFactoryTriggerResource(Client, data));
+            }
+            return new SinglePagePageable<DataFactoryTriggerResource>(items, response.GetRawResponse());
+        }
+
+        /// <summary> Query triggers in the factory by criteria. </summary>
+        public virtual AsyncPageable<DataFactoryTriggerResource> GetTriggersAsync(TriggerFilterContent content, CancellationToken cancellationToken = default)
+        {
+            return new InternalTriggersAsyncPageable(this, content, cancellationToken);
+        }
+
+        private sealed class InternalTriggersAsyncPageable : AsyncPageable<DataFactoryTriggerResource>
+        {
+            private readonly DataFactoryResource _parent;
+            private readonly TriggerFilterContent _content;
+            private readonly CancellationToken _cancellationToken;
+            public InternalTriggersAsyncPageable(DataFactoryResource parent, TriggerFilterContent content, CancellationToken cancellationToken)
+            {
+                _parent = parent; _content = content; _cancellationToken = cancellationToken;
+            }
+            public override async System.Collections.Generic.IAsyncEnumerable<Page<DataFactoryTriggerResource>> AsPages(string continuationToken = null, int? pageSizeHint = null)
+            {
+                var response = await _parent.GetTriggersInternalAsync(_content, _cancellationToken).ConfigureAwait(false);
+                var items = new System.Collections.Generic.List<DataFactoryTriggerResource>();
+                foreach (var data in response.Value.Value)
+                {
+                    items.Add(new DataFactoryTriggerResource(_parent.Client, data));
+                }
+                yield return Page<DataFactoryTriggerResource>.FromValues(items, null, response.GetRawResponse());
+            }
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         private readonly string _value;
         /// <summary> SQL. </summary>
-        private const string SQLValue = "SQL";
+        private const string SqlValue = "SQL";
         /// <summary> Windows. </summary>
         private const string WindowsValue = "Windows";
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> SQL. </summary>
-        public static AmazonRdsForSqlAuthenticationType SQL { get; } = new AmazonRdsForSqlAuthenticationType(SQLValue);
+        public static AmazonRdsForSqlAuthenticationType Sql { get; } = new AmazonRdsForSqlAuthenticationType(SqlValue);
 
         /// <summary> Windows. </summary>
         public static AmazonRdsForSqlAuthenticationType Windows { get; } = new AmazonRdsForSqlAuthenticationType(WindowsValue);

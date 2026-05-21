@@ -449,11 +449,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Data flow debug session definition with debug content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DataFactoryDataFlowStartDebugSessionResult>> AddDataFlowAsync(DataFactoryDataFlowDebugPackageContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryDataFlowStartDebugSessionResult>> AddDataFlowToDebugSessionAsync(DataFactoryDataFlowDebugPackageContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _dataFlowDebugSessionClientDiagnostics.CreateScope("DataFactoryResource.AddDataFlow");
+            using DiagnosticScope scope = _dataFlowDebugSessionClientDiagnostics.CreateScope("DataFactoryResource.AddDataFlowToDebugSession");
             scope.Start();
             try
             {
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataFlowDebugSessionRestClient.CreateAddDataFlowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataFactoryDataFlowDebugPackageContent.ToRequestContent(content), context);
+                HttpMessage message = _dataFlowDebugSessionRestClient.CreateAddDataFlowToDebugSessionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataFactoryDataFlowDebugPackageContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataFactoryDataFlowStartDebugSessionResult> response = Response.FromValue(DataFactoryDataFlowStartDebugSessionResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -501,11 +501,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Data flow debug session definition with debug content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DataFactoryDataFlowStartDebugSessionResult> AddDataFlow(DataFactoryDataFlowDebugPackageContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryDataFlowStartDebugSessionResult> AddDataFlowToDebugSession(DataFactoryDataFlowDebugPackageContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _dataFlowDebugSessionClientDiagnostics.CreateScope("DataFactoryResource.AddDataFlow");
+            using DiagnosticScope scope = _dataFlowDebugSessionClientDiagnostics.CreateScope("DataFactoryResource.AddDataFlowToDebugSession");
             scope.Start();
             try
             {
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataFlowDebugSessionRestClient.CreateAddDataFlowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataFactoryDataFlowDebugPackageContent.ToRequestContent(content), context);
+                HttpMessage message = _dataFlowDebugSessionRestClient.CreateAddDataFlowToDebugSessionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataFactoryDataFlowDebugPackageContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataFactoryDataFlowStartDebugSessionResult> response = Response.FromValue(DataFactoryDataFlowStartDebugSessionResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -555,11 +555,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> CancelAsync(string runId, bool? isRecursive = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CancelPipelineRunAsync(string runId, bool? isRecursive = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using DiagnosticScope scope = _pipelineRunsClientDiagnostics.CreateScope("DataFactoryResource.Cancel");
+            using DiagnosticScope scope = _pipelineRunsClientDiagnostics.CreateScope("DataFactoryResource.CancelPipelineRun");
             scope.Start();
             try
             {
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelineRunsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runId, isRecursive, context);
+                HttpMessage message = _pipelineRunsRestClient.CreateCancelPipelineRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runId, isRecursive, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -604,11 +604,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response Cancel(string runId, bool? isRecursive = default, CancellationToken cancellationToken = default)
+        public virtual Response CancelPipelineRun(string runId, bool? isRecursive = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using DiagnosticScope scope = _pipelineRunsClientDiagnostics.CreateScope("DataFactoryResource.Cancel");
+            using DiagnosticScope scope = _pipelineRunsClientDiagnostics.CreateScope("DataFactoryResource.CancelPipelineRun");
             scope.Start();
             try
             {
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _pipelineRunsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runId, isRecursive, context);
+                HttpMessage message = _pipelineRunsRestClient.CreateCancelPipelineRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runId, isRecursive, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -652,11 +652,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Data flow debug session definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataFactoryDataFlowCreateDebugSessionResult>> CreateAsync(WaitUntil waitUntil, DataFactoryDataFlowDebugSessionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataFactoryDataFlowCreateDebugSessionResult>> CreateDataFlowDebugSessionAsync(WaitUntil waitUntil, DataFactoryDataFlowDebugSessionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _dataFlowDebugSessionClientDiagnostics.CreateScope("DataFactoryResource.Create");
+            using DiagnosticScope scope = _dataFlowDebugSessionClientDiagnostics.CreateScope("DataFactoryResource.CreateDataFlowDebugSession");
             scope.Start();
             try
             {
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataFlowDebugSessionRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataFactoryDataFlowDebugSessionContent.ToRequestContent(content), context);
+                HttpMessage message = _dataFlowDebugSessionRestClient.CreateCreateDataFlowDebugSessionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataFactoryDataFlowDebugSessionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataFactoryArmOperation<DataFactoryDataFlowCreateDebugSessionResult> operation = new DataFactoryArmOperation<DataFactoryDataFlowCreateDebugSessionResult>(
                     new DataFactoryDataFlowCreateDebugSessionResultOperationSource(),
@@ -711,11 +711,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Data flow debug session definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<DataFactoryDataFlowCreateDebugSessionResult> Create(WaitUntil waitUntil, DataFactoryDataFlowDebugSessionContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataFactoryDataFlowCreateDebugSessionResult> CreateDataFlowDebugSession(WaitUntil waitUntil, DataFactoryDataFlowDebugSessionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _dataFlowDebugSessionClientDiagnostics.CreateScope("DataFactoryResource.Create");
+            using DiagnosticScope scope = _dataFlowDebugSessionClientDiagnostics.CreateScope("DataFactoryResource.CreateDataFlowDebugSession");
             scope.Start();
             try
             {
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataFlowDebugSessionRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataFactoryDataFlowDebugSessionContent.ToRequestContent(content), context);
+                HttpMessage message = _dataFlowDebugSessionRestClient.CreateCreateDataFlowDebugSessionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataFactoryDataFlowDebugSessionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataFactoryArmOperation<DataFactoryDataFlowCreateDebugSessionResult> operation = new DataFactoryArmOperation<DataFactoryDataFlowCreateDebugSessionResult>(
                     new DataFactoryDataFlowCreateDebugSessionResultOperationSource(),
@@ -769,11 +769,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Data flow debug session definition for deletion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> DeleteAsync(DeleteDataFlowDebugSessionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteDataFlowDebugSessionAsync(DeleteDataFlowDebugSessionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _dataFlowDebugSessionClientDiagnostics.CreateScope("DataFactoryResource.Delete");
+            using DiagnosticScope scope = _dataFlowDebugSessionClientDiagnostics.CreateScope("DataFactoryResource.DeleteDataFlowDebugSession");
             scope.Start();
             try
             {
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataFlowDebugSessionRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeleteDataFlowDebugSessionContent.ToRequestContent(content), context);
+                HttpMessage message = _dataFlowDebugSessionRestClient.CreateDeleteDataFlowDebugSessionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeleteDataFlowDebugSessionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -816,11 +816,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Data flow debug session definition for deletion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response Delete(DeleteDataFlowDebugSessionContent content, CancellationToken cancellationToken = default)
+        public virtual Response DeleteDataFlowDebugSession(DeleteDataFlowDebugSessionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _dataFlowDebugSessionClientDiagnostics.CreateScope("DataFactoryResource.Delete");
+            using DiagnosticScope scope = _dataFlowDebugSessionClientDiagnostics.CreateScope("DataFactoryResource.DeleteDataFlowDebugSession");
             scope.Start();
             try
             {
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataFlowDebugSessionRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeleteDataFlowDebugSessionContent.ToRequestContent(content), context);
+                HttpMessage message = _dataFlowDebugSessionRestClient.CreateDeleteDataFlowDebugSessionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeleteDataFlowDebugSessionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -940,11 +940,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Data flow debug command definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataFactoryDataFlowDebugCommandResult>> ExecuteCommandAsync(WaitUntil waitUntil, DataFlowDebugCommandContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataFactoryDataFlowDebugCommandResult>> ExecuteDataFlowDebugSessionCommandAsync(WaitUntil waitUntil, DataFlowDebugCommandContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _dataFlowDebugSessionClientDiagnostics.CreateScope("DataFactoryResource.ExecuteCommand");
+            using DiagnosticScope scope = _dataFlowDebugSessionClientDiagnostics.CreateScope("DataFactoryResource.ExecuteDataFlowDebugSessionCommand");
             scope.Start();
             try
             {
@@ -952,7 +952,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataFlowDebugSessionRestClient.CreateExecuteCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataFlowDebugCommandContent.ToRequestContent(content), context);
+                HttpMessage message = _dataFlowDebugSessionRestClient.CreateExecuteDataFlowDebugSessionCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataFlowDebugCommandContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataFactoryArmOperation<DataFactoryDataFlowDebugCommandResult> operation = new DataFactoryArmOperation<DataFactoryDataFlowDebugCommandResult>(
                     new DataFactoryDataFlowDebugCommandResultOperationSource(),
@@ -999,11 +999,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Data flow debug command definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<DataFactoryDataFlowDebugCommandResult> ExecuteCommand(WaitUntil waitUntil, DataFlowDebugCommandContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataFactoryDataFlowDebugCommandResult> ExecuteDataFlowDebugSessionCommand(WaitUntil waitUntil, DataFlowDebugCommandContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _dataFlowDebugSessionClientDiagnostics.CreateScope("DataFactoryResource.ExecuteCommand");
+            using DiagnosticScope scope = _dataFlowDebugSessionClientDiagnostics.CreateScope("DataFactoryResource.ExecuteDataFlowDebugSessionCommand");
             scope.Start();
             try
             {
@@ -1011,7 +1011,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataFlowDebugSessionRestClient.CreateExecuteCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataFlowDebugCommandContent.ToRequestContent(content), context);
+                HttpMessage message = _dataFlowDebugSessionRestClient.CreateExecuteDataFlowDebugSessionCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataFlowDebugCommandContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataFactoryArmOperation<DataFactoryDataFlowDebugCommandResult> operation = new DataFactoryArmOperation<DataFactoryDataFlowDebugCommandResult>(
                     new DataFactoryDataFlowDebugCommandResultOperationSource(),
@@ -1161,11 +1161,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The exposure control request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ExposureControlResult>> GetFeatureValueByFactoryAsync(ExposureControlContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExposureControlResult>> GetExposureControlFeatureAsync(ExposureControlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _exposureControlClientDiagnostics.CreateScope("DataFactoryResource.GetFeatureValueByFactory");
+            using DiagnosticScope scope = _exposureControlClientDiagnostics.CreateScope("DataFactoryResource.GetExposureControlFeature");
             scope.Start();
             try
             {
@@ -1173,7 +1173,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exposureControlRestClient.CreateGetFeatureValueByFactoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExposureControlContent.ToRequestContent(content), context);
+                HttpMessage message = _exposureControlRestClient.CreateGetExposureControlFeatureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExposureControlContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExposureControlResult> response = Response.FromValue(ExposureControlResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1213,11 +1213,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The exposure control request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ExposureControlResult> GetFeatureValueByFactory(ExposureControlContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ExposureControlResult> GetExposureControlFeature(ExposureControlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _exposureControlClientDiagnostics.CreateScope("DataFactoryResource.GetFeatureValueByFactory");
+            using DiagnosticScope scope = _exposureControlClientDiagnostics.CreateScope("DataFactoryResource.GetExposureControlFeature");
             scope.Start();
             try
             {
@@ -1225,7 +1225,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exposureControlRestClient.CreateGetFeatureValueByFactoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExposureControlContent.ToRequestContent(content), context);
+                HttpMessage message = _exposureControlRestClient.CreateGetExposureControlFeatureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExposureControlContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExposureControlResult> response = Response.FromValue(ExposureControlResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1346,6 +1346,112 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary>
+        /// Get a pipeline run by its run ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelineruns/{runId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_PipelineRunsGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DataFactoryPipelineRunInfo>> GetPipelineRunAsync(string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using DiagnosticScope scope = _pipelineRunsClientDiagnostics.CreateScope("DataFactoryResource.GetPipelineRun");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelineRunsRestClient.CreateGetPipelineRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataFactoryPipelineRunInfo> response = Response.FromValue(DataFactoryPipelineRunInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a pipeline run by its run ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelineruns/{runId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_PipelineRunsGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DataFactoryPipelineRunInfo> GetPipelineRun(string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using DiagnosticScope scope = _pipelineRunsClientDiagnostics.CreateScope("DataFactoryResource.GetPipelineRun");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _pipelineRunsRestClient.CreateGetPipelineRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataFactoryPipelineRunInfo> response = Response.FromValue(DataFactoryPipelineRunInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets the private link resources
         /// <list type="bullet">
         /// <item>
@@ -1367,9 +1473,9 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateLinkResourcesWrapper>> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<PrivateLinkResourcesWrapper>> GetPrivateLinkResourcesInternalAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("DataFactoryResource.GetPrivateLinkResources");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("DataFactoryResource.GetPrivateLinkResourcesInternal");
             scope.Start();
             try
             {
@@ -1415,9 +1521,9 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateLinkResourcesWrapper> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        internal virtual Response<PrivateLinkResourcesWrapper> GetPrivateLinkResourcesInternal(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("DataFactoryResource.GetPrivateLinkResources");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("DataFactoryResource.GetPrivateLinkResourcesInternal");
             scope.Start();
             try
             {
@@ -1465,11 +1571,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DataFactoryPipelineRunsQueryResult>> GetPipelineRunsAsync(RunFilterContent content, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<DataFactoryPipelineRunsQueryResult>> GetPipelineRunsInternalAsync(RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _pipelineRunsClientDiagnostics.CreateScope("DataFactoryResource.GetPipelineRuns");
+            using DiagnosticScope scope = _pipelineRunsClientDiagnostics.CreateScope("DataFactoryResource.GetPipelineRunsInternal");
             scope.Start();
             try
             {
@@ -1517,11 +1623,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DataFactoryPipelineRunsQueryResult> GetPipelineRuns(RunFilterContent content, CancellationToken cancellationToken = default)
+        internal virtual Response<DataFactoryPipelineRunsQueryResult> GetPipelineRunsInternal(RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _pipelineRunsClientDiagnostics.CreateScope("DataFactoryResource.GetPipelineRuns");
+            using DiagnosticScope scope = _pipelineRunsClientDiagnostics.CreateScope("DataFactoryResource.GetPipelineRunsInternal");
             scope.Start();
             try
             {
@@ -1571,12 +1677,12 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PipelineActivityRunsResult>> QueryByPipelineRunAsync(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<PipelineActivityRunsResult>> GetActivityRunInternalAsync(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _activityRunsClientDiagnostics.CreateScope("DataFactoryResource.QueryByPipelineRun");
+            using DiagnosticScope scope = _activityRunsClientDiagnostics.CreateScope("DataFactoryResource.GetActivityRunInternal");
             scope.Start();
             try
             {
@@ -1584,7 +1690,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _activityRunsRestClient.CreateQueryByPipelineRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runId, RunFilterContent.ToRequestContent(content), context);
+                HttpMessage message = _activityRunsRestClient.CreateGetActivityRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runId, RunFilterContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PipelineActivityRunsResult> response = Response.FromValue(PipelineActivityRunsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1626,12 +1732,12 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PipelineActivityRunsResult> QueryByPipelineRun(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        internal virtual Response<PipelineActivityRunsResult> GetActivityRunInternal(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _activityRunsClientDiagnostics.CreateScope("DataFactoryResource.QueryByPipelineRun");
+            using DiagnosticScope scope = _activityRunsClientDiagnostics.CreateScope("DataFactoryResource.GetActivityRunInternal");
             scope.Start();
             try
             {
@@ -1639,7 +1745,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _activityRunsRestClient.CreateQueryByPipelineRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runId, RunFilterContent.ToRequestContent(content), context);
+                HttpMessage message = _activityRunsRestClient.CreateGetActivityRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runId, RunFilterContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PipelineActivityRunsResult> response = Response.FromValue(PipelineActivityRunsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1679,11 +1785,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The exposure control request for list of features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ExposureControlBatchResult>> QueryFeatureValuesByFactoryAsync(ExposureControlBatchContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExposureControlBatchResult>> GetExposureControlFeaturesAsync(ExposureControlBatchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _exposureControlClientDiagnostics.CreateScope("DataFactoryResource.QueryFeatureValuesByFactory");
+            using DiagnosticScope scope = _exposureControlClientDiagnostics.CreateScope("DataFactoryResource.GetExposureControlFeatures");
             scope.Start();
             try
             {
@@ -1691,7 +1797,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exposureControlRestClient.CreateQueryFeatureValuesByFactoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExposureControlBatchContent.ToRequestContent(content), context);
+                HttpMessage message = _exposureControlRestClient.CreateGetExposureControlFeaturesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExposureControlBatchContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExposureControlBatchResult> response = Response.FromValue(ExposureControlBatchResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1731,11 +1837,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The exposure control request for list of features. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ExposureControlBatchResult> QueryFeatureValuesByFactory(ExposureControlBatchContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ExposureControlBatchResult> GetExposureControlFeatures(ExposureControlBatchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _exposureControlClientDiagnostics.CreateScope("DataFactoryResource.QueryFeatureValuesByFactory");
+            using DiagnosticScope scope = _exposureControlClientDiagnostics.CreateScope("DataFactoryResource.GetExposureControlFeatures");
             scope.Start();
             try
             {
@@ -1743,7 +1849,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _exposureControlRestClient.CreateQueryFeatureValuesByFactoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExposureControlBatchContent.ToRequestContent(content), context);
+                HttpMessage message = _exposureControlRestClient.CreateGetExposureControlFeaturesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExposureControlBatchContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExposureControlBatchResult> response = Response.FromValue(ExposureControlBatchResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1783,11 +1889,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DataFactoryTriggerRunsQueryResult>> GetTriggerRunsAsync(RunFilterContent content, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<DataFactoryTriggerRunsQueryResult>> GetTriggerRunsInternalAsync(RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryResource.GetTriggerRuns");
+            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryResource.GetTriggerRunsInternal");
             scope.Start();
             try
             {
@@ -1835,11 +1941,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DataFactoryTriggerRunsQueryResult> GetTriggerRuns(RunFilterContent content, CancellationToken cancellationToken = default)
+        internal virtual Response<DataFactoryTriggerRunsQueryResult> GetTriggerRunsInternal(RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryResource.GetTriggerRuns");
+            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryResource.GetTriggerRunsInternal");
             scope.Start();
             try
             {
@@ -1887,11 +1993,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Parameters to filter the triggers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DataFactoryTriggerQueryResult>> QueryByFactoryAsync(TriggerFilterContent content, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<DataFactoryTriggerQueryResult>> GetTriggersInternalAsync(TriggerFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryResource.QueryByFactory");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryResource.GetTriggersInternal");
             scope.Start();
             try
             {
@@ -1899,7 +2005,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triggersRestClient.CreateQueryByFactoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TriggerFilterContent.ToRequestContent(content), context);
+                HttpMessage message = _triggersRestClient.CreateGetTriggersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TriggerFilterContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataFactoryTriggerQueryResult> response = Response.FromValue(DataFactoryTriggerQueryResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1939,11 +2045,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Parameters to filter the triggers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DataFactoryTriggerQueryResult> QueryByFactory(TriggerFilterContent content, CancellationToken cancellationToken = default)
+        internal virtual Response<DataFactoryTriggerQueryResult> GetTriggersInternal(TriggerFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryResource.QueryByFactory");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryResource.GetTriggersInternal");
             scope.Start();
             try
             {
@@ -1951,7 +2057,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triggersRestClient.CreateQueryByFactoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TriggerFilterContent.ToRequestContent(content), context);
+                HttpMessage message = _triggersRestClient.CreateGetTriggersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TriggerFilterContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataFactoryTriggerQueryResult> response = Response.FromValue(DataFactoryTriggerQueryResult.FromResponse(result), result);
                 if (response.Value == null)

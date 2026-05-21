@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, RequestContext context)
+        internal HttpMessage CreateGetIntegrationRuntimeNodeRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, RequestContext context)
+        internal HttpMessage CreateDeleteIntegrationRuntimeNodeRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateIntegrationRuntimeNodeRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string nodeName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

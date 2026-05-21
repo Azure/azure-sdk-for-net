@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("endpoint"u8);
             writer.WriteObjectValue(Endpoint, options);
             writer.WritePropertyName("marketplaceID"u8);
-            writer.WriteObjectValue(MarketplaceID, options);
+            writer.WriteObjectValue(MarketplaceId, options);
             writer.WritePropertyName("sellerID"u8);
-            writer.WriteObjectValue(SellerID, options);
+            writer.WriteObjectValue(SellerId, options);
             writer.WritePropertyName("accessKeyId"u8);
             writer.WriteObjectValue(AccessKeyId, options);
             if (Optional.IsDefined(UseEncryptedEndpoints))
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> endpoint = default;
-            DataFactoryElement<string> marketplaceID = default;
-            DataFactoryElement<string> sellerID = default;
+            DataFactoryElement<string> marketplaceId = default;
+            DataFactoryElement<string> sellerId = default;
             DataFactoryElement<string> accessKeyId = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             DataFactoryElement<bool> useHostVerification = default;
@@ -168,12 +168,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("marketplaceID"u8))
                 {
-                    marketplaceID = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    marketplaceId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("sellerID"u8))
                 {
-                    sellerID = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    sellerId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("accessKeyId"u8))
@@ -220,8 +220,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return new AmazonMWSLinkedServiceTypeProperties(
                 endpoint,
-                marketplaceID,
-                sellerID,
+                marketplaceId,
+                sellerId,
                 accessKeyId,
                 useEncryptedEndpoints,
                 useHostVerification,

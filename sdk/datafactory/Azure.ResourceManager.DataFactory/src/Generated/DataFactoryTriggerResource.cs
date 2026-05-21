@@ -321,11 +321,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> CancelAsync(string runId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CancelTriggerRunAsync(string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.Cancel");
+            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.CancelTriggerRun");
             scope.Start();
             try
             {
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triggerRunsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, runId, context);
+                HttpMessage message = _triggerRunsRestClient.CreateCancelTriggerRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, runId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -369,11 +369,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response Cancel(string runId, CancellationToken cancellationToken = default)
+        public virtual Response CancelTriggerRun(string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.Cancel");
+            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.CancelTriggerRun");
             scope.Start();
             try
             {
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triggerRunsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, runId, context);
+                HttpMessage message = _triggerRunsRestClient.CreateCancelTriggerRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, runId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -513,11 +513,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> RerunAsync(string runId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RerunTriggerRunAsync(string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.Rerun");
+            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.RerunTriggerRun");
             scope.Start();
             try
             {
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triggerRunsRestClient.CreateRerunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, runId, context);
+                HttpMessage message = _triggerRunsRestClient.CreateRerunTriggerRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, runId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -561,11 +561,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response Rerun(string runId, CancellationToken cancellationToken = default)
+        public virtual Response RerunTriggerRun(string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.Rerun");
+            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryTriggerResource.RerunTriggerRun");
             scope.Start();
             try
             {
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triggerRunsRestClient.CreateRerunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, runId, context);
+                HttpMessage message = _triggerRunsRestClient.CreateRerunTriggerRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, runId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

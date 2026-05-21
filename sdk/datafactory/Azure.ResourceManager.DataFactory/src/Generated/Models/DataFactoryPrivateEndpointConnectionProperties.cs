@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary> Gets the Id. </summary>
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

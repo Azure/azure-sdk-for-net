@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DataFactoryResource>> ConfigureFactoryRepoAsync(AzureLocation locationId, FactoryRepoContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryResource>> ConfigureFactoryRepoInformationAsync(AzureLocation locationId, FactoryRepoContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = FactoriesClientDiagnostics.CreateScope("MockableDataFactorySubscriptionResource.ConfigureFactoryRepo");
+            using DiagnosticScope scope = FactoriesClientDiagnostics.CreateScope("MockableDataFactorySubscriptionResource.ConfigureFactoryRepoInformation");
             scope.Start();
             try
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FactoriesRestClient.CreateConfigureFactoryRepoRequest(Guid.Parse(Id.SubscriptionId), locationId, FactoryRepoContent.ToRequestContent(content), context);
+                HttpMessage message = FactoriesRestClient.CreateConfigureFactoryRepoInformationRequest(Guid.Parse(Id.SubscriptionId), locationId, FactoryRepoContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataFactoryData> response = Response.FromValue(DataFactoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DataFactoryResource> ConfigureFactoryRepo(AzureLocation locationId, FactoryRepoContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryResource> ConfigureFactoryRepoInformation(AzureLocation locationId, FactoryRepoContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = FactoriesClientDiagnostics.CreateScope("MockableDataFactorySubscriptionResource.ConfigureFactoryRepo");
+            using DiagnosticScope scope = FactoriesClientDiagnostics.CreateScope("MockableDataFactorySubscriptionResource.ConfigureFactoryRepoInformation");
             scope.Start();
             try
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FactoriesRestClient.CreateConfigureFactoryRepoRequest(Guid.Parse(Id.SubscriptionId), locationId, FactoryRepoContent.ToRequestContent(content), context);
+                HttpMessage message = FactoriesRestClient.CreateConfigureFactoryRepoInformationRequest(Guid.Parse(Id.SubscriptionId), locationId, FactoryRepoContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataFactoryData> response = Response.FromValue(DataFactoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,11 +221,11 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ExposureControlResult>> GetFeatureValueAsync(AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExposureControlResult>> GetFeatureValueExposureControlAsync(AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ExposureControlClientDiagnostics.CreateScope("MockableDataFactorySubscriptionResource.GetFeatureValue");
+            using DiagnosticScope scope = ExposureControlClientDiagnostics.CreateScope("MockableDataFactorySubscriptionResource.GetFeatureValueExposureControl");
             scope.Start();
             try
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ExposureControlRestClient.CreateGetFeatureValueRequest(Guid.Parse(Id.SubscriptionId), locationId, ExposureControlContent.ToRequestContent(content), context);
+                HttpMessage message = ExposureControlRestClient.CreateGetFeatureValueExposureControlRequest(Guid.Parse(Id.SubscriptionId), locationId, ExposureControlContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExposureControlResult> response = Response.FromValue(ExposureControlResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -270,11 +270,11 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ExposureControlResult> GetFeatureValue(AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ExposureControlResult> GetFeatureValueExposureControl(AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ExposureControlClientDiagnostics.CreateScope("MockableDataFactorySubscriptionResource.GetFeatureValue");
+            using DiagnosticScope scope = ExposureControlClientDiagnostics.CreateScope("MockableDataFactorySubscriptionResource.GetFeatureValueExposureControl");
             scope.Start();
             try
             {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DataFactory.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ExposureControlRestClient.CreateGetFeatureValueRequest(Guid.Parse(Id.SubscriptionId), locationId, ExposureControlContent.ToRequestContent(content), context);
+                HttpMessage message = ExposureControlRestClient.CreateGetFeatureValueExposureControlRequest(Guid.Parse(Id.SubscriptionId), locationId, ExposureControlContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExposureControlResult> response = Response.FromValue(ExposureControlResult.FromResponse(result), result);
                 if (response.Value == null)

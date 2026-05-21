@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetFeatureValueByFactoryRequest(Guid subscriptionId, string resourceGroupName, string factoryName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetExposureControlFeatureRequest(Guid subscriptionId, string resourceGroupName, string factoryName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory
             return message;
         }
 
-        internal HttpMessage CreateQueryFeatureValuesByFactoryRequest(Guid subscriptionId, string resourceGroupName, string factoryName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetExposureControlFeaturesRequest(Guid subscriptionId, string resourceGroupName, string factoryName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory
             return message;
         }
 
-        internal HttpMessage CreateGetFeatureValueRequest(Guid subscriptionId, AzureLocation locationId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetFeatureValueExposureControlRequest(Guid subscriptionId, AzureLocation locationId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

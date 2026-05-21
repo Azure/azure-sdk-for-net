@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateQueryByFactoryRequest(Guid subscriptionId, string resourceGroupName, string factoryName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetTriggersRequest(Guid subscriptionId, string resourceGroupName, string factoryName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

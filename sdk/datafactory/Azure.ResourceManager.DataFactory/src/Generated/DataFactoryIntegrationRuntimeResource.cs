@@ -535,9 +535,9 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<DataFactoryIntegrationRuntimeResource>> DisableInteractiveQueryAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataFactoryIntegrationRuntimeResource>> DisableInteractiveQueryIntegrationRuntimeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _integrationRuntimeClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.DisableInteractiveQuery");
+            using DiagnosticScope scope = _integrationRuntimeClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.DisableInteractiveQueryIntegrationRuntime");
             scope.Start();
             try
             {
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeRestClient.CreateDisableInteractiveQueryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _integrationRuntimeRestClient.CreateDisableInteractiveQueryIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource> operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(
                     new DataFactoryIntegrationRuntimeOperationSource(Client),
@@ -590,9 +590,9 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DataFactoryIntegrationRuntimeResource> DisableInteractiveQuery(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataFactoryIntegrationRuntimeResource> DisableInteractiveQueryIntegrationRuntime(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _integrationRuntimeClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.DisableInteractiveQuery");
+            using DiagnosticScope scope = _integrationRuntimeClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.DisableInteractiveQueryIntegrationRuntime");
             scope.Start();
             try
             {
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeRestClient.CreateDisableInteractiveQueryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _integrationRuntimeRestClient.CreateDisableInteractiveQueryIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource> operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(
                     new DataFactoryIntegrationRuntimeOperationSource(Client),
@@ -647,11 +647,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The enable interactive authoring integration runtime properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataFactoryIntegrationRuntimeResource>> EnableInteractiveQueryAsync(WaitUntil waitUntil, EnableInteractiveQueryContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataFactoryIntegrationRuntimeResource>> EnableInteractiveQueryIntegrationRuntimeAsync(WaitUntil waitUntil, EnableInteractiveQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _integrationRuntimeClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.EnableInteractiveQuery");
+            using DiagnosticScope scope = _integrationRuntimeClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.EnableInteractiveQueryIntegrationRuntime");
             scope.Start();
             try
             {
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeRestClient.CreateEnableInteractiveQueryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EnableInteractiveQueryContent.ToRequestContent(content), context);
+                HttpMessage message = _integrationRuntimeRestClient.CreateEnableInteractiveQueryIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EnableInteractiveQueryContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource> operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(
                     new DataFactoryIntegrationRuntimeOperationSource(Client),
@@ -706,11 +706,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> The enable interactive authoring integration runtime properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<DataFactoryIntegrationRuntimeResource> EnableInteractiveQuery(WaitUntil waitUntil, EnableInteractiveQueryContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataFactoryIntegrationRuntimeResource> EnableInteractiveQueryIntegrationRuntime(WaitUntil waitUntil, EnableInteractiveQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _integrationRuntimeClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.EnableInteractiveQuery");
+            using DiagnosticScope scope = _integrationRuntimeClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.EnableInteractiveQueryIntegrationRuntime");
             scope.Start();
             try
             {
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeRestClient.CreateEnableInteractiveQueryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EnableInteractiveQueryContent.ToRequestContent(content), context);
+                HttpMessage message = _integrationRuntimeRestClient.CreateEnableInteractiveQueryIntegrationRuntimeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EnableInteractiveQueryContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource> operation = new DataFactoryArmOperation<DataFactoryIntegrationRuntimeResource>(
                     new DataFactoryIntegrationRuntimeOperationSource(Client),
@@ -1159,11 +1159,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> DeleteAsync(string nodeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteIntegrationRuntimeNodeAsync(string nodeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
-            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.Delete");
+            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.DeleteIntegrationRuntimeNode");
             scope.Start();
             try
             {
@@ -1171,7 +1171,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
+                HttpMessage message = _integrationRuntimeNodesRestClient.CreateDeleteIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1207,11 +1207,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response Delete(string nodeName, CancellationToken cancellationToken = default)
+        public virtual Response DeleteIntegrationRuntimeNode(string nodeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
-            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.Delete");
+            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.DeleteIntegrationRuntimeNode");
             scope.Start();
             try
             {
@@ -1219,8 +1219,114 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
+                HttpMessage message = _integrationRuntimeNodesRestClient.CreateDeleteIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a self-hosted integration runtime node.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/nodes/{nodeName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IntegrationRuntimeResources_IntegrationRuntimeNodesGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryIntegrationRuntimeResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="nodeName"> The integration runtime node name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SelfHostedIntegrationRuntimeNode>> GetIntegrationRuntimeNodeAsync(string nodeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
+
+            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetIntegrationRuntimeNode");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _integrationRuntimeNodesRestClient.CreateGetIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SelfHostedIntegrationRuntimeNode> response = Response.FromValue(SelfHostedIntegrationRuntimeNode.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a self-hosted integration runtime node.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/nodes/{nodeName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IntegrationRuntimeResources_IntegrationRuntimeNodesGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryIntegrationRuntimeResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="nodeName"> The integration runtime node name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SelfHostedIntegrationRuntimeNode> GetIntegrationRuntimeNode(string nodeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
+
+            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetIntegrationRuntimeNode");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _integrationRuntimeNodesRestClient.CreateGetIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SelfHostedIntegrationRuntimeNode> response = Response.FromValue(SelfHostedIntegrationRuntimeNode.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1256,12 +1362,12 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SelfHostedIntegrationRuntimeNode>> UpdateAsync(string nodeName, UpdateIntegrationRuntimeNodeContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SelfHostedIntegrationRuntimeNode>> UpdateIntegrationRuntimeNodeAsync(string nodeName, UpdateIntegrationRuntimeNodeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.Update");
+            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.UpdateIntegrationRuntimeNode");
             scope.Start();
             try
             {
@@ -1269,7 +1375,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, UpdateIntegrationRuntimeNodeContent.ToRequestContent(content), context);
+                HttpMessage message = _integrationRuntimeNodesRestClient.CreateUpdateIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, UpdateIntegrationRuntimeNodeContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SelfHostedIntegrationRuntimeNode> response = Response.FromValue(SelfHostedIntegrationRuntimeNode.FromResponse(result), result);
                 if (response.Value == null)
@@ -1311,12 +1417,12 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SelfHostedIntegrationRuntimeNode> Update(string nodeName, UpdateIntegrationRuntimeNodeContent content, CancellationToken cancellationToken = default)
+        public virtual Response<SelfHostedIntegrationRuntimeNode> UpdateIntegrationRuntimeNode(string nodeName, UpdateIntegrationRuntimeNodeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.Update");
+            using DiagnosticScope scope = _integrationRuntimeNodesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.UpdateIntegrationRuntimeNode");
             scope.Start();
             try
             {
@@ -1324,7 +1430,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeNodesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, UpdateIntegrationRuntimeNodeContent.ToRequestContent(content), context);
+                HttpMessage message = _integrationRuntimeNodesRestClient.CreateUpdateIntegrationRuntimeNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, nodeName, UpdateIntegrationRuntimeNodeContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SelfHostedIntegrationRuntimeNode> response = Response.FromValue(SelfHostedIntegrationRuntimeNode.FromResponse(result), result);
                 if (response.Value == null)
@@ -1363,9 +1469,9 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="content"> The parameters for getting a SSIS object metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SsisObjectMetadataListResult>> GetAsync(GetSsisObjectMetadataContent content = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<SsisObjectMetadataListResult>> GetAllIntegrationRuntimeObjectMetadataInternalAsync(GetSsisObjectMetadataContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.Get");
+            using DiagnosticScope scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadataInternal");
             scope.Start();
             try
             {
@@ -1373,7 +1479,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeObjectMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GetSsisObjectMetadataContent.ToRequestContent(content), context);
+                HttpMessage message = _integrationRuntimeObjectMetadataRestClient.CreateGetAllIntegrationRuntimeObjectMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GetSsisObjectMetadataContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SsisObjectMetadataListResult> response = Response.FromValue(SsisObjectMetadataListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1412,9 +1518,9 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="content"> The parameters for getting a SSIS object metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SsisObjectMetadataListResult> Get(GetSsisObjectMetadataContent content = default, CancellationToken cancellationToken = default)
+        internal virtual Response<SsisObjectMetadataListResult> GetAllIntegrationRuntimeObjectMetadataInternal(GetSsisObjectMetadataContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.Get");
+            using DiagnosticScope scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadataInternal");
             scope.Start();
             try
             {
@@ -1422,7 +1528,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeObjectMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GetSsisObjectMetadataContent.ToRequestContent(content), context);
+                HttpMessage message = _integrationRuntimeObjectMetadataRestClient.CreateGetAllIntegrationRuntimeObjectMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GetSsisObjectMetadataContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SsisObjectMetadataListResult> response = Response.FromValue(SsisObjectMetadataListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1556,9 +1662,9 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IntegrationRuntimeOutboundNetworkDependenciesResult>> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<IntegrationRuntimeOutboundNetworkDependenciesResult>> GetOutboundNetworkDependenciesInternalAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _integrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetOutboundNetworkDependenciesEndpoints");
+            using DiagnosticScope scope = _integrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetOutboundNetworkDependenciesInternal");
             scope.Start();
             try
             {
@@ -1566,7 +1672,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateGetOutboundNetworkDependenciesEndpointsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _integrationRuntimesRestClient.CreateGetOutboundNetworkDependenciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IntegrationRuntimeOutboundNetworkDependenciesResult> response = Response.FromValue(IntegrationRuntimeOutboundNetworkDependenciesResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1604,9 +1710,9 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IntegrationRuntimeOutboundNetworkDependenciesResult> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
+        internal virtual Response<IntegrationRuntimeOutboundNetworkDependenciesResult> GetOutboundNetworkDependenciesInternal(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _integrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetOutboundNetworkDependenciesEndpoints");
+            using DiagnosticScope scope = _integrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetOutboundNetworkDependenciesInternal");
             scope.Start();
             try
             {
@@ -1614,7 +1720,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimesRestClient.CreateGetOutboundNetworkDependenciesEndpointsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _integrationRuntimesRestClient.CreateGetOutboundNetworkDependenciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IntegrationRuntimeOutboundNetworkDependenciesResult> response = Response.FromValue(IntegrationRuntimeOutboundNetworkDependenciesResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1653,9 +1759,9 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<SsisObjectMetadataStatusResult>> RefreshAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SsisObjectMetadataStatusResult>> RefreshIntegrationRuntimeObjectMetadataAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.Refresh");
+            using DiagnosticScope scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.RefreshIntegrationRuntimeObjectMetadata");
             scope.Start();
             try
             {
@@ -1663,7 +1769,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _integrationRuntimeObjectMetadataRestClient.CreateRefreshIntegrationRuntimeObjectMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataFactoryArmOperation<SsisObjectMetadataStatusResult> operation = new DataFactoryArmOperation<SsisObjectMetadataStatusResult>(
                     new SsisObjectMetadataStatusResultOperationSource(),
@@ -1708,9 +1814,9 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<SsisObjectMetadataStatusResult> Refresh(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SsisObjectMetadataStatusResult> RefreshIntegrationRuntimeObjectMetadata(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.Refresh");
+            using DiagnosticScope scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.RefreshIntegrationRuntimeObjectMetadata");
             scope.Start();
             try
             {
@@ -1718,7 +1824,7 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _integrationRuntimeObjectMetadataRestClient.CreateRefreshIntegrationRuntimeObjectMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataFactoryArmOperation<SsisObjectMetadataStatusResult> operation = new DataFactoryArmOperation<SsisObjectMetadataStatusResult>(
                     new SsisObjectMetadataStatusResultOperationSource(),

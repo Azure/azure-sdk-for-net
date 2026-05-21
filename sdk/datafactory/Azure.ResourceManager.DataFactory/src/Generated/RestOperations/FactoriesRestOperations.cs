@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DataFactory
             return message;
         }
 
-        internal HttpMessage CreateConfigureFactoryRepoRequest(Guid subscriptionId, AzureLocation locationId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateConfigureFactoryRepoInformationRequest(Guid subscriptionId, AzureLocation locationId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

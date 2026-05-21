@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory
             return message;
         }
 
-        internal HttpMessage CreateRerunRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string triggerName, string runId, RequestContext context)
+        internal HttpMessage CreateRerunTriggerRunRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string triggerName, string runId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory
             return message;
         }
 
-        internal HttpMessage CreateCancelRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string triggerName, string runId, RequestContext context)
+        internal HttpMessage CreateCancelTriggerRunRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string triggerName, string runId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

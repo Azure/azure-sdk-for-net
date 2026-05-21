@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> Purview resource id. </summary>
-        public string PurviewResourceId
+        public ResourceIdentifier PurviewResourceId
         {
             get
             {

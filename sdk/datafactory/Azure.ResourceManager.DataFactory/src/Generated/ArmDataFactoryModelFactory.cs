@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Managed service identity of the factory. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryData"/> instance for mocking. </returns>
-        public static DataFactoryData DataFactoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string provisioningState = default, DateTimeOffset? createdOn = default, string version = default, FactoryRepoConfiguration repoConfiguration = default, IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters = default, DataFactoryEncryptionConfiguration encryption = default, DataFactoryPublicNetworkAccess? publicNetworkAccess = default, string purviewResourceId = default, ETag? eTag = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static DataFactoryData DataFactoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string provisioningState = default, DateTimeOffset? createdOn = default, string version = default, FactoryRepoConfiguration repoConfiguration = default, IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters = default, DataFactoryEncryptionConfiguration encryption = default, DataFactoryPublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier purviewResourceId = default, ETag? eTag = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -7445,15 +7445,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="endpoint"> The endpoint of the Amazon MWS server, (i.e. mws.amazonservices.com). </param>
-        /// <param name="marketplaceID"> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </param>
-        /// <param name="sellerID"> The Amazon seller ID. </param>
+        /// <param name="marketplaceId"> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </param>
+        /// <param name="sellerId"> The Amazon seller ID. </param>
         /// <param name="accessKeyId"> The access key id used to access data. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.AmazonMwsLinkedService"/> instance for mocking. </returns>
-        public static AmazonMwsLinkedService AmazonMwsLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> endpoint = default, DataFactoryElement<string> marketplaceID = default, DataFactoryElement<string> sellerID = default, DataFactoryElement<string> accessKeyId = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
+        public static AmazonMwsLinkedService AmazonMwsLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> endpoint = default, DataFactoryElement<string> marketplaceId = default, DataFactoryElement<string> sellerId = default, DataFactoryElement<string> accessKeyId = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -7469,8 +7469,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties,
                 new AmazonMWSLinkedServiceTypeProperties(
                     endpoint,
-                    marketplaceID,
-                    sellerID,
+                    marketplaceId,
+                    sellerId,
                     accessKeyId,
                     useEncryptedEndpoints,
                     useHostVerification,
@@ -9596,7 +9596,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 id,
                 name,
                 @type,
-                eTag,
+                eTag?.ToString(),
                 additionalBinaryDataProperties: null,
                 properties);
         }
@@ -17552,7 +17552,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="privateEndpointId"> Gets the Id. </param>
         /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
         /// <returns> A new <see cref="Models.DataFactoryPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static DataFactoryPrivateEndpointConnectionProperties DataFactoryPrivateEndpointConnectionProperties(string provisioningState = default, string privateEndpointId = default, PrivateLinkConnectionState privateLinkServiceConnectionState = default)
+        public static DataFactoryPrivateEndpointConnectionProperties DataFactoryPrivateEndpointConnectionProperties(string provisioningState = default, ResourceIdentifier privateEndpointId = default, PrivateLinkConnectionState privateLinkServiceConnectionState = default)
         {
             return new DataFactoryPrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new ArmIdWrapper(privateEndpointId, null), privateLinkServiceConnectionState, additionalBinaryDataProperties: null);
         }
@@ -17734,11 +17734,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 location,
-                provisioningState is null && createdOn is null && version is null && repoConfiguration is null && globalParameters is null && encryption is null && publicNetworkAccess is null ? default : new FactoryProperties(
+                provisioningState is null && createdOn is null && version is null && purviewResourceId is null && repoConfiguration is null && globalParameters is null && encryption is null && publicNetworkAccess is null ? default : new FactoryProperties(
                     provisioningState,
                     createdOn,
                     version,
-                    default,
+                    new PurviewConfiguration(purviewResourceId, default),
                     repoConfiguration,
                     globalParameters ?? new ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>(),
                     encryption,

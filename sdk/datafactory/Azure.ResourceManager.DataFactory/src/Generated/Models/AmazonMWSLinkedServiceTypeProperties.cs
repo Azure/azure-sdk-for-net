@@ -20,38 +20,38 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="AmazonMWSLinkedServiceTypeProperties"/>. </summary>
         /// <param name="endpoint"> The endpoint of the Amazon MWS server, (i.e. mws.amazonservices.com). </param>
-        /// <param name="marketplaceID"> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </param>
-        /// <param name="sellerID"> The Amazon seller ID. </param>
+        /// <param name="marketplaceId"> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </param>
+        /// <param name="sellerId"> The Amazon seller ID. </param>
         /// <param name="accessKeyId"> The access key id used to access data. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="marketplaceID"/>, <paramref name="sellerID"/> or <paramref name="accessKeyId"/> is null. </exception>
-        public AmazonMWSLinkedServiceTypeProperties(DataFactoryElement<string> endpoint, DataFactoryElement<string> marketplaceID, DataFactoryElement<string> sellerID, DataFactoryElement<string> accessKeyId)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="marketplaceId"/>, <paramref name="sellerId"/> or <paramref name="accessKeyId"/> is null. </exception>
+        public AmazonMWSLinkedServiceTypeProperties(DataFactoryElement<string> endpoint, DataFactoryElement<string> marketplaceId, DataFactoryElement<string> sellerId, DataFactoryElement<string> accessKeyId)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(marketplaceID, nameof(marketplaceID));
-            Argument.AssertNotNull(sellerID, nameof(sellerID));
+            Argument.AssertNotNull(marketplaceId, nameof(marketplaceId));
+            Argument.AssertNotNull(sellerId, nameof(sellerId));
             Argument.AssertNotNull(accessKeyId, nameof(accessKeyId));
 
             Endpoint = endpoint;
-            MarketplaceID = marketplaceID;
-            SellerID = sellerID;
+            MarketplaceId = marketplaceId;
+            SellerId = sellerId;
             AccessKeyId = accessKeyId;
         }
 
         /// <summary> Initializes a new instance of <see cref="AmazonMWSLinkedServiceTypeProperties"/>. </summary>
         /// <param name="endpoint"> The endpoint of the Amazon MWS server, (i.e. mws.amazonservices.com). </param>
-        /// <param name="marketplaceID"> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </param>
-        /// <param name="sellerID"> The Amazon seller ID. </param>
+        /// <param name="marketplaceId"> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </param>
+        /// <param name="sellerId"> The Amazon seller ID. </param>
         /// <param name="accessKeyId"> The access key id used to access data. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AmazonMWSLinkedServiceTypeProperties(DataFactoryElement<string> endpoint, DataFactoryElement<string> marketplaceID, DataFactoryElement<string> sellerID, DataFactoryElement<string> accessKeyId, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AmazonMWSLinkedServiceTypeProperties(DataFactoryElement<string> endpoint, DataFactoryElement<string> marketplaceId, DataFactoryElement<string> sellerId, DataFactoryElement<string> accessKeyId, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
-            MarketplaceID = marketplaceID;
-            SellerID = sellerID;
+            MarketplaceId = marketplaceId;
+            SellerId = sellerId;
             AccessKeyId = accessKeyId;
             UseEncryptedEndpoints = useEncryptedEndpoints;
             UseHostVerification = useHostVerification;
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> Endpoint { get; set; }
 
         /// <summary> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </summary>
-        public DataFactoryElement<string> MarketplaceID { get; set; }
+        public DataFactoryElement<string> MarketplaceId { get; set; }
 
         /// <summary> The Amazon seller ID. </summary>
-        public DataFactoryElement<string> SellerID { get; set; }
+        public DataFactoryElement<string> SellerId { get; set; }
 
         /// <summary> The access key id used to access data. </summary>
         public DataFactoryElement<string> AccessKeyId { get; set; }

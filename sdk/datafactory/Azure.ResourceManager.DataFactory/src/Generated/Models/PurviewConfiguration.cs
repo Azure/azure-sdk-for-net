@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="PurviewConfiguration"/>. </summary>
         /// <param name="purviewResourceId"> Purview resource id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewConfiguration(string purviewResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PurviewConfiguration(ResourceIdentifier purviewResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PurviewResourceId = purviewResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Purview resource id. </summary>
-        public string PurviewResourceId { get; set; }
+        public ResourceIdentifier PurviewResourceId { get; set; }
     }
 }

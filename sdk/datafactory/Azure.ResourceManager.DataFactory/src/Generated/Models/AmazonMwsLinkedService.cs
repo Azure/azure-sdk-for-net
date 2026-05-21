@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Initializes a new instance of <see cref="AmazonMwsLinkedService"/>. </summary>
         /// <param name="endpoint"> The endpoint of the Amazon MWS server, (i.e. mws.amazonservices.com). </param>
-        /// <param name="marketplaceID"> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </param>
-        /// <param name="sellerID"> The Amazon seller ID. </param>
+        /// <param name="marketplaceId"> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </param>
+        /// <param name="sellerId"> The Amazon seller ID. </param>
         /// <param name="accessKeyId"> The access key id used to access data. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="marketplaceID"/>, <paramref name="sellerID"/> or <paramref name="accessKeyId"/> is null. </exception>
-        public AmazonMwsLinkedService(DataFactoryElement<string> endpoint, DataFactoryElement<string> marketplaceID, DataFactoryElement<string> sellerID, DataFactoryElement<string> accessKeyId) : base("AmazonMWS")
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="marketplaceId"/>, <paramref name="sellerId"/> or <paramref name="accessKeyId"/> is null. </exception>
+        public AmazonMwsLinkedService(DataFactoryElement<string> endpoint, DataFactoryElement<string> marketplaceId, DataFactoryElement<string> sellerId, DataFactoryElement<string> accessKeyId) : base("AmazonMWS")
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(marketplaceID, nameof(marketplaceID));
-            Argument.AssertNotNull(sellerID, nameof(sellerID));
+            Argument.AssertNotNull(marketplaceId, nameof(marketplaceId));
+            Argument.AssertNotNull(sellerId, nameof(sellerId));
             Argument.AssertNotNull(accessKeyId, nameof(accessKeyId));
 
-            TypeProperties = new AmazonMWSLinkedServiceTypeProperties(endpoint, marketplaceID, sellerID, accessKeyId);
+            TypeProperties = new AmazonMWSLinkedServiceTypeProperties(endpoint, marketplaceId, sellerId, accessKeyId);
         }
 
         /// <summary> Initializes a new instance of <see cref="AmazonMwsLinkedService"/>. </summary>
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </summary>
-        public DataFactoryElement<string> MarketplaceID
+        public DataFactoryElement<string> MarketplaceId
         {
             get
             {
-                return TypeProperties is null ? default : TypeProperties.MarketplaceID;
+                return TypeProperties is null ? default : TypeProperties.MarketplaceId;
             }
             set
             {
@@ -78,16 +78,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     TypeProperties = new AmazonMWSLinkedServiceTypeProperties();
                 }
-                TypeProperties.MarketplaceID = value;
+                TypeProperties.MarketplaceId = value;
             }
         }
 
         /// <summary> The Amazon seller ID. </summary>
-        public DataFactoryElement<string> SellerID
+        public DataFactoryElement<string> SellerId
         {
             get
             {
-                return TypeProperties is null ? default : TypeProperties.SellerID;
+                return TypeProperties is null ? default : TypeProperties.SellerId;
             }
             set
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     TypeProperties = new AmazonMWSLinkedServiceTypeProperties();
                 }
-                TypeProperties.SellerID = value;
+                TypeProperties.SellerId = value;
             }
         }
 

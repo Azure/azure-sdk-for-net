@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary> Purview resource id. </summary>
-        public string PurviewResourceId
+        public ResourceIdentifier PurviewResourceId
         {
             get
             {

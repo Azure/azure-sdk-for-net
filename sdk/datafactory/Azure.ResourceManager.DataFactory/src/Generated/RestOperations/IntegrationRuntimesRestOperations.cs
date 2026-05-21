@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataFactory
             return message;
         }
 
-        internal HttpMessage CreateGetOutboundNetworkDependenciesEndpointsRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, RequestContext context)
+        internal HttpMessage CreateGetOutboundNetworkDependenciesRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

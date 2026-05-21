@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateCreateRequest(Guid subscriptionId, string resourceGroupName, string factoryName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateDataFlowDebugSessionRequest(Guid subscriptionId, string resourceGroupName, string factoryName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory
             return message;
         }
 
-        internal HttpMessage CreateAddDataFlowRequest(Guid subscriptionId, string resourceGroupName, string factoryName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateAddDataFlowToDebugSessionRequest(Guid subscriptionId, string resourceGroupName, string factoryName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string factoryName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateDeleteDataFlowDebugSessionRequest(Guid subscriptionId, string resourceGroupName, string factoryName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory
             return message;
         }
 
-        internal HttpMessage CreateExecuteCommandRequest(Guid subscriptionId, string resourceGroupName, string factoryName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateExecuteDataFlowDebugSessionCommandRequest(Guid subscriptionId, string resourceGroupName, string factoryName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

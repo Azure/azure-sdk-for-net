@@ -18,6 +18,16 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class AmazonRdsForOracleLinkedService
     {
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleLinkedService"/>. </summary>
+        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
+        public AmazonRdsForOracleLinkedService(DataFactoryElement<string> connectionString) : this()
+        {
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
+
+            ConnectionString = connectionString;
+        }
+
         /// <summary> Property restored as workaround for issue #59298. </summary>
         public DataFactorySecret Password { get; set; }
     }
