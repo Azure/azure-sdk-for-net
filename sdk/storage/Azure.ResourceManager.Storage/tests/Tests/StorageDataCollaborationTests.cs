@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 StorageConnectorDataSourceType.AzureDataShare,
                 new DataShareSource(
                     new DataShareConnection(dataShare.Data.Properties.DataShareUri),
-                    new ManagedIdentityAuthProperties()));
+                    new StorageConnectorManagedIdentityAuth()));
             connectorProperties.Description = "Test connector";
 
             var connectorData = new StorageConnectorData(canaryLocation, connectorProperties);
@@ -229,8 +229,8 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsTrue(allConnectors.Any(c => c.Data.Name == connectorName));
 
             //test existing connection
-            var testContent = new TestExistingConnectionContent(connector.Data.Properties.UniqueId);
-            TestConnectionResult testResult = (await connector.TestExistingConnectionAsync(WaitUntil.Completed, testContent)).Value;
+            var testContent = new StorageConnectorTestExistingConnectionContent(connector.Data.Properties.UniqueId);
+            StorageConnectorTestConnectionResult testResult = (await connector.TestExistingConnectionAsync(WaitUntil.Completed, testContent)).Value;
             Assert.IsNotNull(testResult.StorageConnectorMethodName);
             Assert.IsNotNull(testResult.StorageConnectorRequestId);
 
