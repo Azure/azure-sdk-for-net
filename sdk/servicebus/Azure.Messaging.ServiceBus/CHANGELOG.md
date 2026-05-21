@@ -10,7 +10,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Features Added
 
-- Added `GetMessageSessionsAsync` overloads on `ServiceBusClient` for queues and subscriptions. Returns session IDs with active messages in the entity. Implements the `com.microsoft:get-message-sessions` AMQP management operation. ([#58761](https://github.com/Azure/azure-sdk-for-net/pull/58761))
+- Added `GetMessageSessionsAsync` overloads on `ServiceBusClient` for queues and subscriptions. The no-filter overload returns session IDs with active messages, and the `updatedAfter` overload returns session IDs whose state was updated after the specified timestamp. Implements the `com.microsoft:get-message-sessions` AMQP management operation. ([#58761](https://github.com/Azure/azure-sdk-for-net/pull/58761))
 
 ### Breaking Changes
 

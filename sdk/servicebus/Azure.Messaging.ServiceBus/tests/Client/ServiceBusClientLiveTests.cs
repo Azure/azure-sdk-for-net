@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Security;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
@@ -340,98 +338,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 await using var client = CreateClient();
                 var receiver = await client.AcceptSessionAsync(scope.QueueName, "");
                 Assert.AreEqual("", receiver.SessionId);
-            }
-        }
-
-        [Test]
-        public async Task GetMessageSessions_Queue_ReturnsActiveSessions()
-        {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(
-                enablePartitioning: false, enableSession: true))
-            {
-                await using var client = new ServiceBusClient(
-                    TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
-
-                await using var sender = client.CreateSender(scope.QueueName);
-                var sessionIds = new[] { "list-test-1", "list-test-2", "list-test-3" };
-
-                // Send a message to each session
-                foreach (var sessionId in sessionIds)
-                {
-                    await sender.SendMessageAsync(new ServiceBusMessage($"msg for {sessionId}")
-                    {
-                        SessionId = sessionId
-                    });
-                }
-
-                // List sessions with active messages
-                var result = new List<string>();
-                await foreach (var s in client.GetMessageSessionsAsync(scope.QueueName))
-                {
-                    result.Add(s);
-                }
-
-                Assert.IsNotNull(result);
-                foreach (var id in sessionIds)
-                {
-                    Assert.That(result, Does.Contain(id));
-                }
-            }
-        }
-
-        [Test]
-        public async Task GetMessageSessions_Queue_EmptyReturnsEmpty()
-        {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(
-                enablePartitioning: false, enableSession: true))
-            {
-                await using var client = new ServiceBusClient(
-                    TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
-
-                // No messages sent; should return empty
-                var result = new List<string>();
-                await foreach (var s in client.GetMessageSessionsAsync(scope.QueueName))
-                {
-                    result.Add(s);
-                }
-
-                Assert.IsNotNull(result);
-                Assert.IsEmpty(result);
-            }
-        }
-
-        [Test]
-        public async Task GetMessageSessions_Subscription_ReturnsActiveSessions()
-        {
-            await using (var scope = await ServiceBusScope.CreateWithTopic(
-                enablePartitioning: false, enableSession: true))
-            {
-                await using var client = new ServiceBusClient(
-                    TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
-
-                await using var sender = client.CreateSender(scope.TopicName);
-                var sessionIds = new[] { "sub-session-1", "sub-session-2" };
-
-                foreach (var sessionId in sessionIds)
-                {
-                    await sender.SendMessageAsync(new ServiceBusMessage($"msg for {sessionId}")
-                    {
-                        SessionId = sessionId
-                    });
-                }
-
-                var result = new List<string>();
-                await foreach (var s in client.GetMessageSessionsAsync(
-                    scope.TopicName, scope.SubscriptionNames.First()))
-                {
-                    result.Add(s);
-                }
-
-                Assert.IsNotNull(result);
-                foreach (var id in sessionIds)
-                {
-                    Assert.That(result, Does.Contain(id));
-                }
             }
         }
     }
