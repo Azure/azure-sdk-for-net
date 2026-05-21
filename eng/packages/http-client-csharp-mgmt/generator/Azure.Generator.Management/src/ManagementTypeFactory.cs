@@ -140,6 +140,11 @@ namespace Azure.Generator.Management
                 return null;
             }
 
+            if (ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
+            {
+                return new ResourceDataModelProvider(model);
+            }
+
             // For custom Azure resource models (root, intermediate, and resource data models),
             // let the base implementation create regular ModelProviders.
             // This preserves the full custom resource hierarchy without replacing intermediate
