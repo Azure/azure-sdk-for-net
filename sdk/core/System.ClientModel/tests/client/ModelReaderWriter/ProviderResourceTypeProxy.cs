@@ -14,7 +14,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
     /// Overrides the default serialization and deserialization of <see cref="ProviderResourceType"/>.
     /// The only change is the property name "resourceType" to "resourceTypex".
     /// </summary>
-    public partial class ProviderResourceTypeProxy : ModelProxy<ProviderResourceType>, IJsonModel<ProviderResourceType>
+    public partial class ProviderResourceTypeProxy : IJsonModel<ProviderResourceType>
     {
         internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element, ModelReaderWriterOptions options = default)
         {
@@ -253,19 +253,19 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
             return DeserializeProviderResourceType(doc.RootElement, options);
         }
 
-        public override ProviderResourceType Create(BinaryData data, ModelReaderWriterOptions options)
+        ProviderResourceType IPersistableModel<ProviderResourceType>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeProviderResourceType(doc.RootElement, options);
         }
 
-        public override BinaryData Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ProviderResourceType>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProviderResourceType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -45,7 +45,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var options = new ModelReaderWriterOptions(format);
             var proxy = new JsonModelProxy();
-            options.AddProxy(proxy);
+            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy);
             var newOptions = new ModelReaderWriterOptions(options);
             var model = new JsonModel();
             _optionsMap.Add(proxy, newOptions);
@@ -58,10 +58,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var options = new ModelReaderWriterOptions(format);
             var proxy = new JsonModelProxy();
-            options.AddProxy(proxy);
+            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy);
             var model = new JsonModel();
             _optionsMap.Add(proxy, options);
-            ModelReaderWriter.Write(proxy, options);
+            ModelReaderWriter.Write(model, options);
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var options = new ModelReaderWriterOptions(format);
             var proxy = new JsonModelProxy();
-            options.AddProxy(proxy);
+            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy);
             var newOptions = new ModelReaderWriterOptions(options);
             _optionsMap.Add(proxy, newOptions);
             ModelReaderWriter.Read<JsonModel>(BinaryData.Empty, newOptions);
@@ -97,7 +97,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var options = new ModelReaderWriterOptions(format);
             var proxy = new JsonModelProxy();
-            options.AddProxy(proxy);
+            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy);
             _optionsMap.Add(proxy, options);
             ModelReaderWriter.Read<JsonModel>(BinaryData.Empty, options);
         }
@@ -116,12 +116,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 var optionProxies = GetProxies(options);
                 Assert.IsNotNull(passedInProxies);
                 Assert.IsNotNull(optionProxies);
-                Assert.AreEqual(passedInProxies!.Count, optionProxies!.Count);
-                foreach (var key in passedInProxies.Keys)
-                {
-                    Assert.IsTrue(optionProxies.ContainsKey(key));
-                    Assert.AreEqual(passedInProxies[key], optionProxies[key]);
-                }
+                // Proxies dictionary is shared by reference between original and copy
+                Assert.AreSame(passedInProxies, optionProxies);
             }
             else
             {
@@ -129,26 +125,27 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             }
         }
 
-        private static Dictionary<Type, List<object>>? GetProxies(ModelReaderWriterOptions passedInOptions)
+        private static object? GetProxies(ModelReaderWriterOptions passedInOptions)
         {
-            return passedInOptions.GetType().GetField("_proxies", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(passedInOptions) as Dictionary<Type, List<object>>;
+            return passedInOptions.GetType().GetField("_proxies", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(passedInOptions);
         }
 
-        private class JsonModelProxy : ModelProxy<JsonModel>, IJsonModel<JsonModel>
+        private class JsonModelProxy : IJsonModel<JsonModel>
         {
             JsonModel IJsonModel<JsonModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
                 AssertOptions(this, options);
+                using var doc = JsonDocument.ParseValue(ref reader);
                 return new JsonModel();
             }
 
-            public override JsonModel Create(BinaryData data, ModelReaderWriterOptions options)
+            JsonModel IPersistableModel<JsonModel>.Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 AssertOptions(this, options);
                 return new JsonModel();
             }
 
-            public override string GetFormatFromOptions(ModelReaderWriterOptions options)
+            string IPersistableModel<JsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
             {
                 return "J";
             }
@@ -156,24 +153,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             void IJsonModel<JsonModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             {
                 AssertOptions(this, options);
-
                 writer.WriteStartObject();
                 writer.WriteEndObject();
             }
 
-            public override BinaryData Write(ModelReaderWriterOptions options)
+            BinaryData IPersistableModel<JsonModel>.Write(ModelReaderWriterOptions options)
             {
                 AssertOptions(this, options);
-
-                var format = options.Format == "W" ? GetFormatFromOptions(options) : options.Format;
-
-                switch (format)
-                {
-                    case "J":
-                        return ModelReaderWriter.Write(this, options);
-                    default:
-                        throw new FormatException($"The model {nameof(JsonModel)} does not support writing '{options.Format}' format.");
-                }
+                return BinaryData.FromString("{}");
             }
         }
 
@@ -184,13 +171,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var proxy1 = new JsonModelProxy();
             var proxy2 = new JsonModelProxy();
 
-            options.AddProxy<JsonModel>(proxy1);
-            options.AddProxy<JsonModel>(proxy2);
+            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy1);
+            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy2);
 
-            // HasProxy confirms proxies are registered
-            Assert.IsTrue(options.HasProxy<JsonModel>());
-
-            // ResolveProxy returns first (FIFO)
             var model = new JsonModel();
             var resolved = options.ResolveProxy<JsonModel>((IPersistableModel<JsonModel>)model);
             Assert.AreSame(proxy1, resolved);
@@ -203,8 +186,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var proxy1 = new JsonModelProxy();
             var proxy2 = new JsonModelProxy();
 
-            options.AddProxy<JsonModel>(proxy1);
-            options.AddProxy<JsonModel>(proxy2);
+            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy1);
+            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy2);
 
             var model = new JsonModel();
             var resolved = options.ResolveProxy<JsonModel>((IPersistableModel<JsonModel>)model);
@@ -219,8 +202,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var proxy1 = new JsonModelProxy();
             var proxy2 = new JsonModelProxy();
 
-            options.AddProxy<JsonModel>(proxy1);
-            options.AddProxy<JsonModel>(proxy2);
+            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy1);
+            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy2);
 
             var model = new JsonModel();
             var resolved = options.ResolveProxy<JsonModel>((IJsonModel<JsonModel>)model);
@@ -244,9 +227,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var options = new ModelReaderWriterOptions("J");
             var proxy = new JsonModelProxy();
 
-            options.AddProxy<JsonModel>(proxy);
-
-            Assert.IsTrue(options.HasProxy<JsonModel>());
+            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy);
 
             var model = new JsonModel();
             var resolvedFromModel = options.ResolveProxy<JsonModel>((IPersistableModel<JsonModel>)model);
@@ -258,7 +239,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var options = new ModelReaderWriterOptions("J");
 
-            Assert.IsFalse(options.HasProxy<JsonModel>());
+            Assert.IsFalse(options.TryGetProxy<JsonModel>(BinaryData.Empty, out IPersistableModel<JsonModel>? proxy));
+            Assert.IsNull(proxy);
         }
 
         [Test]
@@ -268,13 +250,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var proxy1 = new JsonModelProxy();
             var proxy2 = new JsonModelProxy();
 
-            options.AddProxy<JsonModel>(proxy1);
-            options.AddProxy<JsonModel>(proxy2);
+            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy1);
+            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy2);
 
-            // Internal copy shares the same proxy chain
             var copied = new ModelReaderWriterOptions(options);
             Assert.IsTrue(copied.HasProxies);
-            Assert.IsTrue(copied.HasProxy<JsonModel>());
+            Assert.AreSame(GetProxies(options), GetProxies(copied));
         }
 
         [TestCase("J")]
@@ -285,11 +266,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var proxy1 = new JsonModelProxy();
             var proxy2 = new JsonModelProxy();
 
-            options.AddProxy<JsonModel>(proxy1);
-            options.AddProxy<JsonModel>(proxy2);
+            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy1);
+            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy2);
 
             _optionsMap.Add(proxy1, options);
-            ModelReaderWriter.Write(proxy1, options);
+            ModelReaderWriter.Write(new JsonModel(), options);
         }
 
         [TestCase("J")]
@@ -300,8 +281,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var proxy1 = new JsonModelProxy();
             var proxy2 = new JsonModelProxy();
 
-            options.AddProxy<JsonModel>(proxy1);
-            options.AddProxy<JsonModel>(proxy2);
+            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy1);
+            options.AddProxy<JsonModel>((IJsonModel<JsonModel>)proxy2);
 
             _optionsMap.Add(proxy1, options);
             ModelReaderWriter.Read<JsonModel>(BinaryData.Empty, options);
@@ -482,7 +463,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             // so the first registered (proxy1) is used since it's checked first (FIFO).
             var model = new SimpleModel();
             var resolved = options.ResolveProxy<SimpleModel>((IPersistableModel<SimpleModel>)model);
-            Assert.AreSame(proxy1, resolved);
+            Assert.AreSame(proxy1.Model, resolved);
         }
 
         /// <summary>
@@ -491,7 +472,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         private class SimpleModel : IJsonModel<SimpleModel>
         {
             SimpleModel IJsonModel<SimpleModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-                => new SimpleModel();
+            {
+                using var doc = JsonDocument.ParseValue(ref reader);
+                return new SimpleModel();
+            }
 
             SimpleModel IPersistableModel<SimpleModel>.Create(BinaryData data, ModelReaderWriterOptions options)
                 => new SimpleModel();
@@ -508,113 +492,114 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 => ModelReaderWriter.Write(this, options);
         }
 
+        private class TrackingModel : IJsonModel<SimpleModel>
+        {
+            public bool CreateWasCalled { get; private set; }
+            public bool WriteWasCalled { get; private set; }
+            public object? CapturedProxiedModelOnBinaryCreate { get; private set; }
+            public object? CapturedProxiedModelOnReaderCreate { get; private set; }
+            public object? CapturedProxiedModelOnWrite { get; private set; }
+
+            public void Reset()
+            {
+                CreateWasCalled = false;
+                WriteWasCalled = false;
+                CapturedProxiedModelOnBinaryCreate = null;
+                CapturedProxiedModelOnReaderCreate = null;
+                CapturedProxiedModelOnWrite = null;
+            }
+
+            SimpleModel IPersistableModel<SimpleModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            {
+                CreateWasCalled = true;
+                CapturedProxiedModelOnBinaryCreate = options.ProxiedModel;
+                return new SimpleModel();
+            }
+
+            SimpleModel IJsonModel<SimpleModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            {
+                CreateWasCalled = true;
+                CapturedProxiedModelOnReaderCreate = options.ProxiedModel;
+                using var doc = JsonDocument.ParseValue(ref reader);
+                return new SimpleModel();
+            }
+
+            void IJsonModel<SimpleModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                WriteWasCalled = true;
+                CapturedProxiedModelOnWrite = options.ProxiedModel;
+                writer.WriteStartObject();
+                writer.WriteEndObject();
+            }
+
+            BinaryData IPersistableModel<SimpleModel>.Write(ModelReaderWriterOptions options)
+            {
+                WriteWasCalled = true;
+                CapturedProxiedModelOnWrite = options.ProxiedModel;
+                return BinaryData.FromString("{}");
+            }
+
+            string IPersistableModel<SimpleModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        }
+
         /// <summary>
         /// A proxy that can be configured to handle or decline reads.
-        /// The _handleRead flag controls CanHandle(BinaryData, options) — returning false means "I can't handle this."
         /// </summary>
-        private class ChainProxy : ModelProxy<SimpleModel>, IJsonModel<SimpleModel>
+        private class ChainProxy : ConditionalModelProxy<SimpleModel>
         {
             private readonly bool _handleRead;
-            public bool CreateWasCalled { get; private set; }
-            public object? CapturedProxiedModelOnCreate { get; private set; }
+            public bool CreateWasCalled => ((TrackingModel)Model).CreateWasCalled;
+            public bool WriteWasCalled => ((TrackingModel)Model).WriteWasCalled;
+            public object? CapturedProxiedModelOnCreate => ((TrackingModel)Model).CapturedProxiedModelOnBinaryCreate ?? ((TrackingModel)Model).CapturedProxiedModelOnReaderCreate;
 
             public ChainProxy(bool handleRead)
+                : base(new TrackingModel())
             {
                 _handleRead = handleRead;
             }
 
-            public override bool CanHandle(BinaryData data, ModelReaderWriterOptions options)
-            {
-                return _handleRead;
-            }
+            public override bool CanHandle(SimpleModel model) => true;
 
-            public void Reset()
-            {
-                CreateWasCalled = false;
-                CapturedProxiedModelOnCreate = null;
-            }
+            public override bool CanHandle(BinaryData data) => _handleRead;
 
-            public override SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
-            {
-                CreateWasCalled = true;
-                CapturedProxiedModelOnCreate = options.ProxiedModel;
-                return new SimpleModel();
-            }
+            public override bool CanHandle(ref Utf8JsonReader reader) => _handleRead;
 
-            SimpleModel IJsonModel<SimpleModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-            {
-                CreateWasCalled = true;
-                CapturedProxiedModelOnCreate = options.ProxiedModel;
-                using var doc = JsonDocument.ParseValue(ref reader);
-                return new SimpleModel();
-            }
-
-            void IJsonModel<SimpleModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            {
-                writer.WriteStartObject();
-                writer.WriteEndObject();
-            }
-
-            public override BinaryData Write(ModelReaderWriterOptions options)
-                => ModelReaderWriter.Write(this, options);
-
-            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            public void Reset() => ((TrackingModel)Model).Reset();
         }
 
         /// <summary>
         /// A proxy that peeks at the data to check for a discriminator value.
-        /// Returns false from CanHandle(BinaryData, options) if the discriminator doesn't match.
         /// </summary>
-        private class DiscriminatorProxy : ModelProxy<SimpleModel>, IJsonModel<SimpleModel>
+        private class DiscriminatorProxy : ConditionalModelProxy<SimpleModel>
         {
             private readonly string _discriminatorValue;
-            public bool CreateWasCalled { get; private set; }
+            public bool CreateWasCalled => ((TrackingModel)Model).CreateWasCalled;
 
             public DiscriminatorProxy(string discriminatorValue)
+                : base(new TrackingModel())
             {
                 _discriminatorValue = discriminatorValue;
             }
 
-            public override bool CanHandle(BinaryData data, ModelReaderWriterOptions options)
+            public override bool CanHandle(BinaryData data)
             {
                 return data.ToString().Contains($"\"type\":\"{_discriminatorValue}\"");
             }
 
-            public void Reset()
+            public override bool CanHandle(ref Utf8JsonReader reader)
             {
-                CreateWasCalled = false;
+                using var document = JsonDocument.ParseValue(ref reader);
+                return document.RootElement.TryGetProperty("type", out var type) && type.GetString() == _discriminatorValue;
             }
 
-            public override SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
-            {
-                CreateWasCalled = true;
-                return new SimpleModel();
-            }
-
-            SimpleModel IJsonModel<SimpleModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-            {
-                CreateWasCalled = true;
-                using var doc = JsonDocument.ParseValue(ref reader);
-                return new SimpleModel();
-            }
-
-            void IJsonModel<SimpleModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            {
-                writer.WriteStartObject();
-                writer.WriteEndObject();
-            }
-
-            public override BinaryData Write(ModelReaderWriterOptions options)
-                => ModelReaderWriter.Write(this, options);
-
-            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            public void Reset() => ((TrackingModel)Model).Reset();
         }
 
         /// <summary>
         /// A proxy that captures ProxiedModel at every interaction point (Write, Create(BinaryData), Create(ref reader)).
         /// Used to verify the ProxiedModel contract.
         /// </summary>
-        private class ProxiedModelCapturingProxy : ModelProxy<SimpleModel>, IJsonModel<SimpleModel>
+        private class ProxiedModelCapturingProxy : IJsonModel<SimpleModel>
         {
             public object? CapturedOnWrite { get; private set; }
             public object? CapturedOnCreateBinaryData { get; private set; }
@@ -636,7 +621,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 writer.WriteEndObject();
             }
 
-            public override SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
+            SimpleModel IPersistableModel<SimpleModel>.Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 CapturedOnCreateBinaryData = options.ProxiedModel;
                 return new SimpleModel();
@@ -650,13 +635,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 return new SimpleModel();
             }
 
-            public override BinaryData Write(ModelReaderWriterOptions options)
+            BinaryData IPersistableModel<SimpleModel>.Write(ModelReaderWriterOptions options)
             {
                 CapturedOnWrite = options.ProxiedModel;
                 return BinaryData.FromString("{}");
             }
 
-            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            string IPersistableModel<SimpleModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
 
         #region ProxiedModel Contract Tests
@@ -666,7 +651,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy = new ProxiedModelCapturingProxy();
-            options.AddProxy<SimpleModel>(proxy);
+            options.AddProxy<SimpleModel>((IJsonModel<SimpleModel>)proxy);
 
             var model = new SimpleModel();
             ModelReaderWriter.Write(model, options);
@@ -681,7 +666,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy = new ProxiedModelCapturingProxy();
-            options.AddProxy<SimpleModel>(proxy);
+            options.AddProxy<SimpleModel>((IJsonModel<SimpleModel>)proxy);
 
             var model = new SimpleModel();
             var data = BinaryData.FromString("{}");
@@ -697,17 +682,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy = new ProxiedModelCapturingProxy();
-            options.AddProxy<SimpleModel>(proxy);
+            options.AddProxy<SimpleModel>((IJsonModel<SimpleModel>)proxy);
 
             var model = new SimpleModel();
             var jsonBytes = System.Text.Encoding.UTF8.GetBytes("{}");
             var reader = new Utf8JsonReader(jsonBytes);
-            reader.Read(); // advance to StartObject
+            reader.Read();
             options.ReadWithChain<SimpleModel>((IJsonModel<SimpleModel>)model, ref reader);
 
-            // ReadWithChain for reader path now reads into BinaryData and calls Create(BinaryData, options)
-            Assert.AreSame(model, proxy.CapturedOnCreateBinaryData,
-                "ProxiedModel must be set to the original model when proxy.Create(BinaryData) is called " +
+            Assert.AreSame(model, proxy.CapturedOnCreateReader,
+                "ProxiedModel must be set to the original model when proxy.Create(ref reader) is called " +
                 "via the reader-based ReadWithChain path.");
         }
 
@@ -731,14 +715,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy = new ProxiedModelCapturingProxy();
-            options.AddProxy<SimpleModel>(proxy);
+            options.AddProxy<SimpleModel>((IJsonModel<SimpleModel>)proxy);
 
             var model = new SimpleModel();
             var data = BinaryData.FromString("{}");
             options.ReadWithChain<SimpleModel>((IPersistableModel<SimpleModel>)model, data);
 
-            // After a proxy handles the read, ProxiedModel should still reference the model
-            // since the proxy may need post-processing access.
             Assert.AreSame(model, options.ProxiedModel,
                 "ProxiedModel must remain set to the original model after a proxy successfully handles a read, " +
                 "because downstream code may still need to reference the original model.");
@@ -766,8 +748,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ProxiedModel_IsCorrectForEachProxy_InChain()
         {
             var options = new ModelReaderWriterOptions("J");
-            var proxy1 = new ChainProxy(handleRead: true);   // will handle (tried first, FIFO)
-            var proxy2 = new ChainProxy(handleRead: false);  // never reached
+            var proxy1 = new ChainProxy(handleRead: true);
+            var proxy2 = new ChainProxy(handleRead: false);
 
             options.AddProxy<SimpleModel>(proxy1);
             options.AddProxy<SimpleModel>(proxy2);
@@ -778,7 +760,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             Assert.IsNull(proxy2.CapturedProxiedModelOnCreate,
                 "proxy2 was never reached because proxy1 handled — CapturedProxiedModelOnCreate must be null.");
-
             Assert.AreSame(model, proxy1.CapturedProxiedModelOnCreate,
                 "ProxiedModel must be set to the original model when the proxy that handles the read " +
                 "is called. ProxiedModel must not leak state between chain attempts.");
@@ -788,8 +769,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ProxiedModel_IsCorrectForEachProxy_InChain_ReaderPath()
         {
             var options = new ModelReaderWriterOptions("J");
-            var proxy1 = new ChainProxy(handleRead: true);   // will handle (tried first, FIFO)
-            var proxy2 = new ChainProxy(handleRead: false);  // never reached
+            var proxy1 = new ChainProxy(handleRead: true);
+            var proxy2 = new ChainProxy(handleRead: false);
 
             options.AddProxy<SimpleModel>(proxy1);
             options.AddProxy<SimpleModel>(proxy2);
@@ -797,12 +778,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var model = new SimpleModel();
             var jsonBytes = System.Text.Encoding.UTF8.GetBytes("{}");
             var reader = new Utf8JsonReader(jsonBytes);
-            reader.Read(); // advance to StartObject
+            reader.Read();
             options.ReadWithChain<SimpleModel>((IJsonModel<SimpleModel>)model, ref reader);
 
             Assert.IsNull(proxy2.CapturedProxiedModelOnCreate,
                 "proxy2 was never reached because proxy1 handled — CapturedProxiedModelOnCreate must be null.");
-
             Assert.AreSame(model, proxy1.CapturedProxiedModelOnCreate,
                 "ProxiedModel must be set to the original model when the proxy that handles the read " +
                 "in the reader-based chain is called.");
@@ -813,17 +793,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var options = new ModelReaderWriterOptions("J");
             var proxy = new ProxiedModelCapturingProxy();
-            options.AddProxy<SimpleModel>(proxy);
+            options.AddProxy<SimpleModel>((IJsonModel<SimpleModel>)proxy);
 
-            // Read a JSON array with 3 elements — each element should set ProxiedModel
             var json = "[{},{},{}]";
             var jsonBytes = System.Text.Encoding.UTF8.GetBytes(json);
             var reader = new Utf8JsonReader(jsonBytes);
-            reader.Read(); // advance to StartArray
+            reader.Read();
 
-            // Simulate what JsonCollectionReader does per element:
-            // For each StartObject, call ReadWithChain with reader-based chain.
-            // ReadWithChain now reads element into BinaryData and calls Create(BinaryData, options).
             int elementCount = 0;
             while (reader.Read())
             {
@@ -833,7 +809,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                     options.ReadWithChain<SimpleModel>((IJsonModel<SimpleModel>)model, ref reader);
                     elementCount++;
 
-                    Assert.IsNotNull(proxy.CapturedOnCreateBinaryData,
+                    Assert.IsNotNull(proxy.CapturedOnCreateReader,
                         $"ProxiedModel must be set when reading element {elementCount} of a collection. " +
                         "Each element must independently set ProxiedModel for the proxy.");
                 }
@@ -952,8 +928,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ResolveProxy_Write_FirstDeclinesSecondHandles()
         {
             var options = new ModelReaderWriterOptions("J");
-            var proxy1 = new SelectiveWriteProxy(canWrite: false);  // CanHandle(model) = false
-            var proxy2 = new SelectiveWriteProxy(canWrite: true);   // CanHandle(model) = true
+            var proxy1 = new SelectiveWriteProxy(canWrite: false);
+            var proxy2 = new SelectiveWriteProxy(canWrite: true);
 
             options.AddProxy<SimpleModel>(proxy1);
             options.AddProxy<SimpleModel>(proxy2);
@@ -961,8 +937,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var model = new SimpleModel();
             var resolved = options.ResolveProxy<SimpleModel>((IPersistableModel<SimpleModel>)model);
 
-            Assert.AreSame(proxy2, resolved,
-                "ResolveProxy should skip proxy1 (CanHandle=false) and return proxy2.");
+            Assert.AreSame(proxy2.Model, resolved,
+                "ResolveProxy should skip proxy1 (CanHandle=false) and return proxy2's model.");
         }
 
         [Test]
@@ -995,8 +971,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             var model = new SimpleModel();
             var resolved = options.ResolveProxy<SimpleModel>((IJsonModel<SimpleModel>)model);
 
-            Assert.AreSame(proxy2, resolved,
-                "IJsonModel ResolveProxy should skip proxy1 (CanHandle=false) and return proxy2.");
+            Assert.AreSame((IJsonModel<SimpleModel>)proxy2.Model, resolved,
+                "IJsonModel ResolveProxy should skip proxy1 (CanHandle=false) and return proxy2's model.");
         }
 
         #endregion
@@ -1075,41 +1051,18 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         /// A proxy that can be configured to accept or decline write via CanHandle(model).
         /// Used to test the write-path chain-of-responsibility where first proxy declines.
         /// </summary>
-        private class SelectiveWriteProxy : ModelProxy<SimpleModel>, IJsonModel<SimpleModel>
+        private class SelectiveWriteProxy : ConditionalModelProxy<SimpleModel>
         {
             private readonly bool _canWrite;
-            public bool WriteWasCalled { get; private set; }
+            public bool WriteWasCalled => ((TrackingModel)Model).WriteWasCalled;
 
             public SelectiveWriteProxy(bool canWrite)
+                : base(new TrackingModel())
             {
                 _canWrite = canWrite;
             }
 
-            public override bool CanHandle(SimpleModel model, ModelReaderWriterOptions options) => _canWrite;
-
-            void IJsonModel<SimpleModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            {
-                WriteWasCalled = true;
-                writer.WriteStartObject();
-                writer.WriteEndObject();
-            }
-
-            SimpleModel IJsonModel<SimpleModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-            {
-                using var doc = JsonDocument.ParseValue(ref reader);
-                return new SimpleModel();
-            }
-
-            public override SimpleModel Create(BinaryData data, ModelReaderWriterOptions options)
-                => new SimpleModel();
-
-            public override BinaryData Write(ModelReaderWriterOptions options)
-            {
-                WriteWasCalled = true;
-                return BinaryData.FromString("{}");
-            }
-
-            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            public override bool CanHandle(SimpleModel model) => _canWrite;
         }
 
         #endregion

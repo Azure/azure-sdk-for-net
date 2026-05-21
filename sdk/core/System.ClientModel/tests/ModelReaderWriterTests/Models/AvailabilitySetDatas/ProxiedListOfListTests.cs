@@ -18,7 +18,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySet
     {
         protected override string CollectionTypeName => "List<List<AvailabilitySetData>>";
 
-        protected override ModelProxy<AvailabilitySetData>? Proxy => new AvailabilitySetDataProxy();
+        protected override IJsonModel<AvailabilitySetData>? Proxy => new AvailabilitySetDataProxy();
 
 #if SOURCE_GENERATOR
         protected override ModelReaderWriterContext Context => BasicContext.Default;
