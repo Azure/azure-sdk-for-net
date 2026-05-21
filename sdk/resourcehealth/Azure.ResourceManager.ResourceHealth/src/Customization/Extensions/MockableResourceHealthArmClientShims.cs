@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesAsync(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken = default)
         {
             AsyncPageable<AvailabilityStatusData> inner = GetAllAsync(scope, filter, expand, cancellationToken);
-            return new MappedAsyncPageable<AvailabilityStatusData, ResourceHealthAvailabilityStatus>(inner, ResourceHealthAvailabilityStatus.FromData);
+            return new AsyncPageableWrapper<AvailabilityStatusData, ResourceHealthAvailabilityStatus>(inner, ResourceHealthAvailabilityStatus.FromData);
         }
 
         /// <summary> Lists availability statuses for a resource. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatuses(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken = default)
         {
             Pageable<AvailabilityStatusData> inner = GetAll(scope, filter, expand, cancellationToken);
-            return new MappedPageable<AvailabilityStatusData, ResourceHealthAvailabilityStatus>(inner, ResourceHealthAvailabilityStatus.FromData);
+            return new PageableWrapper<AvailabilityStatusData, ResourceHealthAvailabilityStatus>(inner, ResourceHealthAvailabilityStatus.FromData);
         }
 
         /// <summary> Lists child resource availability statuses. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResourcesAsync(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken = default)
         {
             AsyncPageable<AvailabilityStatusData> inner = GetAllAsync(scope, filter, expand, cancellationToken);
-            return new MappedAsyncPageable<AvailabilityStatusData, ResourceHealthAvailabilityStatus>(inner, ResourceHealthAvailabilityStatus.FromData);
+            return new AsyncPageableWrapper<AvailabilityStatusData, ResourceHealthAvailabilityStatus>(inner, ResourceHealthAvailabilityStatus.FromData);
         }
 
         /// <summary> Lists child resource availability statuses. </summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResources(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken = default)
         {
             Pageable<AvailabilityStatusData> inner = GetAll(scope, filter, expand, cancellationToken);
-            return new MappedPageable<AvailabilityStatusData, ResourceHealthAvailabilityStatus>(inner, ResourceHealthAvailabilityStatus.FromData);
+            return new PageableWrapper<AvailabilityStatusData, ResourceHealthAvailabilityStatus>(inner, ResourceHealthAvailabilityStatus.FromData);
         }
 
         /// <summary> Lists historical availability statuses of child resources. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResourceAsync(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken = default)
         {
             AsyncPageable<AvailabilityStatusData> inner = GetAllAsync(scope, filter, expand, cancellationToken);
-            return new MappedAsyncPageable<AvailabilityStatusData, ResourceHealthAvailabilityStatus>(inner, ResourceHealthAvailabilityStatus.FromData);
+            return new AsyncPageableWrapper<AvailabilityStatusData, ResourceHealthAvailabilityStatus>(inner, ResourceHealthAvailabilityStatus.FromData);
         }
 
         /// <summary> Lists historical availability statuses of child resources. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         public virtual Pageable<ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResource(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken = default)
         {
             Pageable<AvailabilityStatusData> inner = GetAll(scope, filter, expand, cancellationToken);
-            return new MappedPageable<AvailabilityStatusData, ResourceHealthAvailabilityStatus>(inner, ResourceHealthAvailabilityStatus.FromData);
+            return new PageableWrapper<AvailabilityStatusData, ResourceHealthAvailabilityStatus>(inner, ResourceHealthAvailabilityStatus.FromData);
         }
 
         /// <summary> Gets current availability status for a single resource. </summary>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroupAsync(string filter, string expand, CancellationToken cancellationToken = default)
         {
             AsyncPageable<AvailabilityStatusResource> inner = GetAvailabilityStatusesAsync(filter, expand, cancellationToken);
-            return new MappedAsyncPageable<AvailabilityStatusResource, ResourceHealthAvailabilityStatus>(inner, r => ResourceHealthAvailabilityStatus.FromData(r.Data));
+            return new AsyncPageableWrapper<AvailabilityStatusResource, ResourceHealthAvailabilityStatus>(inner, r => ResourceHealthAvailabilityStatus.FromData(r.Data));
         }
 
         /// <summary> Lists the current availability status for all the resources in the resource group. </summary>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroup(string filter, string expand, CancellationToken cancellationToken = default)
         {
             Pageable<AvailabilityStatusResource> inner = GetAvailabilityStatuses(filter, expand, cancellationToken);
-            return new MappedPageable<AvailabilityStatusResource, ResourceHealthAvailabilityStatus>(inner, r => ResourceHealthAvailabilityStatus.FromData(r.Data));
+            return new PageableWrapper<AvailabilityStatusResource, ResourceHealthAvailabilityStatus>(inner, r => ResourceHealthAvailabilityStatus.FromData(r.Data));
         }
     }
 }
