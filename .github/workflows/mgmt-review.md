@@ -76,9 +76,9 @@ Fetch the pull request details. If the PR is in draft state, use `noop` and stop
 
 Then check CI status: list the check runs and commit statuses for the PR head commit.
 
-- If the required CI checks (e.g., the Azure Pipelines build) have not yet completed (status is still `queued` or `in_progress`), use `noop` with a message like "CI checks have not completed yet — review will run on the next trigger after CI finishes."
 - If CI checks have failed, apply the CI failure analysis skill (`.github/skills/analyze-ci-failures/SKILL.md`) to diagnose failures. Use its check-name mapping and log-symptom tables to classify each failure, fetch job logs for details, and include actionable fix instructions in your review. Link to failed check run URLs so authors can navigate directly to the failure logs.
-- If CI checks have passed, proceed with the review.
+- If CI checks have passed, proceed with the review normally.
+- If CI checks are still in progress (`queued` or `in_progress`), proceed with the naming and API review but note in the review summary that CI results are pending and cannot be analyzed yet.
 
 ## Step 1 - Determine review scope
 
