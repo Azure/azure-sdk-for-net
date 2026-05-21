@@ -98,15 +98,25 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             return;
         }
 
-        var basePropertyNames = EnumerateRegularBaseModelProperties(model.BaseModelProvider!);
+        var baseProperties = EnumerateRegularBaseModelProperties(model.BaseModelProvider!);
         var removedPropertyNames = new HashSet<string>();
         var remainingProperties = new List<PropertyProvider>();
 
         foreach (var prop in model.Properties)
         {
-            if (prop.Modifiers.HasFlag(MethodSignatureModifiers.New) || basePropertyNames.Contains(prop.Name))
+            var serializedName = prop.WireInfo?.SerializedName;
+            string? inheritedPropertyName = null;
+            var matchesInheritedWireName = serializedName is not null &&
+                baseProperties.SerializedNameToPropertyName.TryGetValue(serializedName, out inheritedPropertyName);
+            if (prop.Modifiers.HasFlag(MethodSignatureModifiers.New)
+                || baseProperties.PropertyNames.Contains(prop.Name)
+                || matchesInheritedWireName)
             {
                 removedPropertyNames.Add(prop.Name);
+                if (inheritedPropertyName is not null)
+                {
+                    removedPropertyNames.Add(inheritedPropertyName);
+                }
             }
             else
             {
@@ -120,19 +130,24 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         _regularUpdated.Add(model);
     }
 
-    private static HashSet<string> EnumerateRegularBaseModelProperties(ModelProvider baseModel)
+    private static (HashSet<string> PropertyNames, Dictionary<string, string> SerializedNameToPropertyName) EnumerateRegularBaseModelProperties(ModelProvider baseModel)
     {
-        var basePropertyNames = new HashSet<string>();
+        var basePropertyNames = new HashSet<string>(StringComparer.Ordinal);
+        var baseSerializedNameToPropertyName = new Dictionary<string, string>(StringComparer.Ordinal);
         ModelProvider? currentModel = baseModel;
         while (currentModel != null)
         {
             foreach (var property in currentModel.Properties)
             {
                 basePropertyNames.Add(property.Name);
+                if (property.WireInfo?.SerializedName is { } serializedName)
+                {
+                    baseSerializedNameToPropertyName.TryAdd(serializedName, property.Name);
+                }
             }
             currentModel = currentModel.BaseModelProvider;
         }
-        return basePropertyNames;
+        return (basePropertyNames, baseSerializedNameToPropertyName);
     }
 
     private static void StripOrphanedVirtualModifiers(ModelProvider baseModel, HashSet<string> removedPropertyNames)
