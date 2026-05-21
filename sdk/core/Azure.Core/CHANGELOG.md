@@ -1,6 +1,6 @@
 # Release History
 
-## 1.57.0-beta.1 (Unreleased)
+## 1.57.0 (2026-05-21)
 
 ### Features Added
 
@@ -15,10 +15,6 @@
 ### Breaking Changes
 
 - Removed experimental (`SCME0002`) `WithAzureCredential` extension methods on `ClientSettings` and `IClientBuilder`. For DI, use `AddAzureClient<TClient, TSettings>` / `AddKeyedAzureClient<TClient, TSettings>` (which register `AzureCredentialResolver` automatically), or call `AddAzureCredentialResolver()` followed by `AddClient<TClient, TSettings>` / `AddKeyedClient<TClient, TSettings>`. For standalone scenarios, use `IConfiguration.GetAzureClientSettings<T>(...)` or `IConfiguration.GetAzureCredentialSettings(...)`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.56.0 (2026-05-14)
 
