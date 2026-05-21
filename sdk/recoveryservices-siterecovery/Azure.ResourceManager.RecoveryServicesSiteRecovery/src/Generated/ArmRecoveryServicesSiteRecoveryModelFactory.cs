@@ -2904,6 +2904,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new UpdateApplianceForReplicationProtectedItemProperties(targetApplianceId, providerSpecificDetails, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Represents applicable recovery vm sizes. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The custom data. </param>
+        /// <returns> A new <see cref="Models.TargetComputeSize"/> instance for mocking. </returns>
+        public static TargetComputeSize TargetComputeSize(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TargetComputeSizeProperties properties = default)
+        {
+            return new TargetComputeSize(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
         /// <summary> Represents applicable recovery vm sizes properties. </summary>
         /// <param name="name"> Target compute size name. </param>
         /// <param name="friendlyName"> Target compute size display name. </param>
@@ -7524,24 +7542,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static CurrentScenarioDetails CurrentScenarioDetails(string scenarioName, ResourceIdentifier jobId, DateTimeOffset? startOn)
         {
             return new CurrentScenarioDetails(scenarioName, jobId, startOn, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TargetComputeSize"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The custom data. </param>
-        /// <returns> A new <see cref="Models.TargetComputeSize"/> instance for mocking. </returns>
-        public static TargetComputeSize TargetComputeSize(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TargetComputeSizeProperties properties = default)
-        {
-            return new TargetComputeSize(
-                id,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                name,
-                properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.A2AVmManagedDiskDetails"/>. </summary>
