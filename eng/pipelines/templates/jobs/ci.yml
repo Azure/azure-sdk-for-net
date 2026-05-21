@@ -48,7 +48,7 @@ jobs:
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
         GenerateJobName: generate_build_matrix
-        JobTemplatePath: /eng/pipelines/templates/jobs/batched-build-analyze.yml
+        JobTemplatePath: /eng/pipelines/templates/jobs/batched-build.yml
         Pools: # eng/pipelines/templates/stages/build-matrix.json only contains windows OS currently so only pass the Windows pool to avoid the other OS's being marked skipped in DevOps
           - name: Windows
             filter: .*Windows.*Pool$
@@ -78,6 +78,43 @@ jobs:
               ForceDirect: true
               ExcludePaths: ${{ parameters.ExcludePaths }}
               EnableBuildWeighting: true
+              LocTargetSeconds: 700000
+              PublishArtifact: true
+
+    - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
+      parameters:
+        GenerateJobName: generate_analyze_matrix
+        JobTemplatePath: /eng/pipelines/templates/jobs/batched-analyze.yml
+        Pools: # build-matrix.json only contains Windows entries; analyze job overrides pool to Linux internally
+          - name: Windows
+            filter: .*Windows.*Pool$
+            os: windows
+        MatrixConfigs:
+        - Name: NET_ci_analyze_base
+          Path: eng/pipelines/templates/stages/build-matrix.json
+          Selection: sparse
+          GenerateVMJobs: true
+        SparseCheckoutPaths:
+          - "/*"
+          - "!SessionRecords"
+        EnablePRGeneration: true
+        PRMatrixSetting: ProjectNames
+        PRJobBatchSize: 1
+        AdditionalParameters:
+          Artifacts: ${{ parameters.Artifacts }}
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          SDKType: ${{ parameters.SDKType }}
+          BuildSnippets: ${{ parameters.BuildSnippets }}
+        PreGenerationSteps:
+          - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
+            parameters:
+              ServiceDirectory: ${{ parameters.ServiceDirectory }}
+              PublishingArtifactName: BuildPackagesArtifact
+              ForceDirect: true
+              ExcludePaths: ${{ parameters.ExcludePaths }}
+              EnableBuildWeighting: true
+              LocTargetSeconds: 350000
+              PublishArtifact: false
 
   - ${{ else }}:
     - job: Build
