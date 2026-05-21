@@ -15,6 +15,12 @@ parameters:
   - name: EnableBuildWeighting
     type: boolean
     default: false
+  - name: LocTargetSeconds
+    type: number
+    default: 474000
+  - name: PublishArtifact
+    type: boolean
+    default: true
 
 steps:
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
@@ -34,10 +40,11 @@ steps:
         | Copy-Item -Destination "$(Build.ArtifactStagingDirectory)/PackageInfo/$($_.Name)" -Force
     displayName: Copy ArtifactInfo from Publishing Directory
 
-  - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
-    parameters:
-      ArtifactName: '${{ parameters.PublishingArtifactName }}'
-      ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfoPublishing'
+  - ${{ if eq(parameters.PublishArtifact, true) }}:
+    - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+      parameters:
+        ArtifactName: '${{ parameters.PublishingArtifactName }}'
+        ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfoPublishing'
 
   - pwsh: |
       $packageInfos = Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfo" -Filter "*.json" -Recurse `
@@ -100,7 +107,7 @@ steps:
         eng/scripts/Apply-WeightedBatching.ps1 `
           -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
           -WeightsFile "$(Build.ArtifactStagingDirectory)/loc-weights.json" `
-          -TargetSeconds 474000
-      displayName: Apply LOC-weighted batching for build/analyze
+          -TargetSeconds ${{ parameters.LocTargetSeconds }}
+      displayName: Apply LOC-weighted batching (target ${{ parameters.LocTargetSeconds }})
       condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
 
