@@ -78,7 +78,7 @@ jobs:
               ForceDirect: true
               ExcludePaths: ${{ parameters.ExcludePaths }}
               EnableBuildWeighting: true
-              LocTargetSeconds: 1000000
+              LocTargetSeconds: 1200000
               PublishArtifact: true
 
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
@@ -113,7 +113,7 @@ jobs:
               ForceDirect: true
               ExcludePaths: ${{ parameters.ExcludePaths }}
               EnableBuildWeighting: true
-              LocTargetSeconds: 350000
+              LocTargetSeconds: 300000
               PublishArtifact: false
 
   - ${{ else }}:
