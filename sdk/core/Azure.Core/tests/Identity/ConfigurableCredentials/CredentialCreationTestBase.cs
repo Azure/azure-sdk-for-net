@@ -121,7 +121,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
         }
 
         /// <summary>
-        /// Verifies that without WithAzureCredential, CredentialProvider is null
+        /// Verifies that without an Azure credential resolver registered, CredentialProvider is null
         /// and AuthenticationPolicy.Create throws the appropriate error.
         /// </summary>
         [Test]
