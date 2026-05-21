@@ -1,5 +1,5 @@
 {
   "apiVersions": {
-    "Microsoft.Kubernetes": "2026-05-01"
+    "Microsoft.Kubernetes": "2025-12-01-preview"
   }
 }

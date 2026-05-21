@@ -32,7 +32,7 @@ This example demonstrates how to define an Azure Arc-enabled Kubernetes connecte
 Infrastructure infra = new();
 
 ConnectedCluster cluster =
-    new(nameof(cluster), ConnectedCluster.ResourceVersions.V2026_05_01)
+    new(nameof(cluster), ConnectedCluster.ResourceVersions.V2025_12_01_PREVIEW)
     {
         Properties = new ConnectedClusterProperties
         {

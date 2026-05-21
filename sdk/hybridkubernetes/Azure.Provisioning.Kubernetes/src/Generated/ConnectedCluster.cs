@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Authorization;
@@ -31,7 +32,7 @@ namespace Azure.Provisioning.Kubernetes
         /// <summary> Creates a new ConnectedCluster. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ConnectedCluster(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Kubernetes/connectedClusters", resourceVersion ?? "2026-05-01")
+        public ConnectedCluster(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Kubernetes/connectedClusters", resourceVersion ?? "2025-12-01-preview")
         {
         }
 
@@ -211,8 +212,15 @@ namespace Azure.Provisioning.Kubernetes
         /// <summary></summary>
         public static partial class ResourceVersions
         {
-            /// <summary> API version "2026-05-01". </summary>
-            public static readonly string V2026_05_01 = "2026-05-01";
+            /// <summary> API version "2025-12-01-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2025_12_01_PREVIEW = "2025-12-01-preview";
+            /// <summary> API version "2025-08-01-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2025_08_01_PREVIEW = "2025-08-01-preview";
+            /// <summary> API version "2024-12-01-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2024_12_01_PREVIEW = "2024-12-01-preview";
         }
     }
 }

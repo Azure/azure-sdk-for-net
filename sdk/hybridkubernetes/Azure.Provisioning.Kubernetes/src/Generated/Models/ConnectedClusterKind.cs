@@ -11,6 +11,10 @@ namespace Azure.Provisioning.Kubernetes
     public enum ConnectedClusterKind
     {
         /// <summary> ProvisionedCluster. </summary>
-        ProvisionedCluster
+        ProvisionedCluster,
+        /// <summary> AWS. </summary>
+        AWS,
+        /// <summary> Represents a connected cluster hosted on Google Cloud Platform (GCP). </summary>
+        GCP
     }
 }

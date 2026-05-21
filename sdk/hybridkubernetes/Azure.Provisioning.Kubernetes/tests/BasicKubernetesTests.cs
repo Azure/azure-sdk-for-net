@@ -19,7 +19,7 @@ public class BasicKubernetesTests
                 Infrastructure infra = new();
 
                 ConnectedCluster cluster =
-                    new(nameof(cluster), ConnectedCluster.ResourceVersions.V2026_05_01)
+                    new(nameof(cluster), ConnectedCluster.ResourceVersions.V2025_12_01_PREVIEW)
                     {
                         Properties = new ConnectedClusterProperties
                         {
@@ -46,7 +46,7 @@ public class BasicKubernetesTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource cluster 'Microsoft.Kubernetes/connectedClusters@2026-05-01' = {
+            resource cluster 'Microsoft.Kubernetes/connectedClusters@2025-12-01-preview' = {
               name: take('cluster${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {

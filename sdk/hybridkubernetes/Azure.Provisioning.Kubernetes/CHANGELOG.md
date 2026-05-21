@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Regenerated with the TypeSpec-based provisioning generator using the `2026-05-01` API version.
+- Regenerated with the TypeSpec-based provisioning generator using the `2025-12-01-preview` API version.
 
 ### Breaking Changes
 

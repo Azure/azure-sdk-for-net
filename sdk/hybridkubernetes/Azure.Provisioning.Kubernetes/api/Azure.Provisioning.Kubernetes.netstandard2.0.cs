@@ -63,12 +63,16 @@ namespace Azure.Provisioning.Kubernetes
         public static Azure.Provisioning.Kubernetes.ConnectedCluster FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2026_05_01;
+            public static readonly string V2024_12_01_PREVIEW;
+            public static readonly string V2025_08_01_PREVIEW;
+            public static readonly string V2025_12_01_PREVIEW;
         }
     }
     public enum ConnectedClusterKind
     {
         ProvisionedCluster = 0,
+        AWS = 1,
+        GCP = 2,
     }
     public partial class ConnectedClusterProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
