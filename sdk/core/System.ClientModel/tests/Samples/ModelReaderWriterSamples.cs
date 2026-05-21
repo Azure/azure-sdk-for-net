@@ -65,9 +65,11 @@ internal class ModelReaderWriterSamples
         InputModel model = new InputModel();
 
         ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
-        options.AddProxy(new InputModelProxy());
+        options.AddProxy<InputModel>((IJsonModel<InputModel>)new InputModelProxy());
 
-        BinaryData data = ModelReaderWriter.Write(model, options);
+        // ResolveProxy returns the proxy if one is registered, otherwise the model itself.
+        IJsonModel<InputModel> resolved = options.ResolveProxy((IJsonModel<InputModel>)model);
+        BinaryData data = ModelReaderWriter.Write((IPersistableModel<InputModel>)resolved, options);
         #endregion
     }
 
@@ -81,7 +83,7 @@ internal class ModelReaderWriterSamples
             }";
 
         ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
-        options.AddProxy(new OutputModelProxy());
+        options.AddProxy<OutputModel>((IJsonModel<OutputModel>)new OutputModelProxy());
 
         OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
         #endregion

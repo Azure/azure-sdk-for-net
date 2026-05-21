@@ -53,7 +53,7 @@ public class ModelReaderWriterOptions
     /// <summary>
     /// Registers an <see cref="IPersistableModel{T}"/> as a proxy for the specified type.
     /// Proxies are consulted in FIFO order (first registered is consulted first).
-    /// For writes, the first proxy is used. For reads, the first whose Create produces a result is used.
+    /// Direct (non-conditional) proxies always match — the first registered one wins.
     /// </summary>
     /// <param name="proxy">The proxy implementation.</param>
     public void AddProxy<T>(IPersistableModel<T> proxy)
@@ -70,7 +70,7 @@ public class ModelReaderWriterOptions
     /// <summary>
     /// Registers an <see cref="IJsonModel{T}"/> as a proxy for the specified type.
     /// Proxies are consulted in FIFO order (first registered is consulted first).
-    /// For writes, the first proxy is used. For reads, the first whose Create produces a result is used.
+    /// Direct (non-conditional) proxies always match — the first registered one wins.
     /// </summary>
     /// <param name="proxy">The proxy implementation.</param>
     public void AddProxy<T>(IJsonModel<T> proxy)
