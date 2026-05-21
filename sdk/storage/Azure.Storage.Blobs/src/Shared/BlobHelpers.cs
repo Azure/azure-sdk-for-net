@@ -8,6 +8,10 @@ namespace Azure.Storage.Blobs
 {
     internal static class BlobHelpers
     {
+#if NETSTANDARD2_0
+        private static readonly RandomNumberGenerator s_rng = RandomNumberGenerator.Create();
+#endif
+
         /// <summary>
         /// Generates a unique, randomly generated block ID as a Base64 string.
         /// Block ID must be a valid Base64 string with length &lt;= 64 characters.
@@ -16,10 +20,14 @@ namespace Azure.Storage.Blobs
         public static string GenerateBlockId()
         {
             byte[] id = new byte[48];
-            using (var rng = RandomNumberGenerator.Create())
+#if NETSTANDARD2_0
+            lock (s_rng)
             {
-                rng.GetBytes(id);
+                s_rng.GetBytes(id);
             }
+#else
+            RandomNumberGenerator.Fill(id);
+#endif
             return Convert.ToBase64String(id);
         }
     }
