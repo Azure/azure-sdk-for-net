@@ -3,8 +3,11 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.Extensions.OpenAI;
 
+[Experimental("AAIP001")]
 [CodeGenType("WorkflowActionOutputItem")]
 public partial class AgentWorkflowPreviewActionResponseItem
 {

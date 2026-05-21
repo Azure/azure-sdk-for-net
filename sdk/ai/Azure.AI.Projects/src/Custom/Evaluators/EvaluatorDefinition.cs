@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation;
 
 /// <summary> The EvaluatorDefinition. </summary>
+[Experimental("AAIP001")]
 [CodeGenType("EvaluatorDefinition")]
 public partial class EvaluatorDefinition
 {

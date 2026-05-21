@@ -3,10 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Evaluation;
 
+[Experimental("AAIP001")]
 [CodeGenType("WeeklyRecurrenceSchedule")]
 public partial class WeeklyRecurrenceSchedule : RecurrenceSchedule
 {

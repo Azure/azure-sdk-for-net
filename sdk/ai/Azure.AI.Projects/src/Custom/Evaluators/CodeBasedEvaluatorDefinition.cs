@@ -3,9 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation;
 
+[Experimental("AAIP001")]
 [CodeGenType("CodeBasedEvaluatorDefinition")]
 public partial class CodeBasedEvaluatorDefinition
 {

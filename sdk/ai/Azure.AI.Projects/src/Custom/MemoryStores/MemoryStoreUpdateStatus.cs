@@ -1,9 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.Projects.Memory;
 
 /// <summary> Status of a memory store update operation. </summary>
+[Experimental("AAIP001")]
 [CodeGenType("MemoryStoreUpdateStatus")]
 public enum MemoryStoreUpdateStatus
 {

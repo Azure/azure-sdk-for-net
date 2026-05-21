@@ -3,11 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Memory;
 
+[Experimental("AAIP001")]
 public partial class MemoryUpdateOptions : IJsonModel<MemoryUpdateOptions>
 {
     public IList<ResponseItem> Items { get; private set; }
