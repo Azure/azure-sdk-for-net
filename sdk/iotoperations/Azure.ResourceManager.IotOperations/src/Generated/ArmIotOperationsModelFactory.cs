@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -994,6 +995,80 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static AkriConnectorAllocatedDevice AkriConnectorAllocatedDevice(string deviceInboundEndpointName = default, string deviceName = default)
         {
             return new AkriConnectorAllocatedDevice(deviceInboundEndpointName, deviceName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IotOperationsDataflowEndpointProperties"/>. </summary>
+        /// <param name="endpointType"> Endpoint Type. </param>
+        /// <param name="dataExplorerSettings"> Azure Data Explorer endpoint. </param>
+        /// <param name="dataLakeStorageSettings"> Azure Data Lake endpoint. </param>
+        /// <param name="fabricOneLakeSettings"> Microsoft Fabric endpoint. </param>
+        /// <param name="kafkaSettings"> Kafka endpoint. </param>
+        /// <param name="localStoragePersistentVolumeClaimRef"> Local persistent volume endpoint. </param>
+        /// <param name="mqttSettings"> Broker endpoint. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.IotOperationsDataflowEndpointProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsDataflowEndpointProperties IotOperationsDataflowEndpointProperties(DataflowEndpointType endpointType, DataflowEndpointDataExplorer dataExplorerSettings, DataflowEndpointDataLakeStorage dataLakeStorageSettings, DataflowEndpointFabricOneLake fabricOneLakeSettings, DataflowEndpointKafka kafkaSettings, string localStoragePersistentVolumeClaimRef, DataflowEndpointMqtt mqttSettings, IotOperationsProvisioningState? provisioningState)
+        {
+            return IotOperationsDataflowEndpointProperties(endpointType: endpointType, hostType: default, dataExplorerSettings: dataExplorerSettings, dataLakeStorageSettings: dataLakeStorageSettings, fabricOneLakeSettings: fabricOneLakeSettings, kafkaSettings: kafkaSettings, localStoragePersistentVolumeClaimRef: localStoragePersistentVolumeClaimRef, mqttSettings: mqttSettings, openTelemetrySettings: default, provisioningState: provisioningState, healthState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IotOperationsDataflowProperties"/>. </summary>
+        /// <param name="mode"> Mode for Dataflow. Optional; defaults to Enabled. </param>
+        /// <param name="operations"> List of operations including source and destination references as well as transformation. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.IotOperationsDataflowProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsDataflowProperties IotOperationsDataflowProperties(IotOperationsOperationalMode? mode, IEnumerable<DataflowOperationProperties> operations, IotOperationsProvisioningState? provisioningState)
+        {
+            return IotOperationsDataflowProperties(mode: mode, requestDiskPersistence: default, operations: operations, provisioningState: provisioningState, healthState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IotOperationsBrokerAuthorizationProperties"/>. </summary>
+        /// <param name="authorizationPolicies"> The list of authorization policies supported by the Authorization Resource. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.IotOperationsBrokerAuthorizationProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsBrokerAuthorizationProperties IotOperationsBrokerAuthorizationProperties(BrokerAuthorizationConfig authorizationPolicies, IotOperationsProvisioningState? provisioningState)
+        {
+            return IotOperationsBrokerAuthorizationProperties(authorizationPolicies: authorizationPolicies, provisioningState: provisioningState, healthState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IotOperationsBrokerAuthenticationProperties"/>. </summary>
+        /// <param name="authenticationMethods"> Defines a set of Broker authentication methods to be used on `BrokerListeners`. For each array element one authenticator type supported. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.IotOperationsBrokerAuthenticationProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsBrokerAuthenticationProperties IotOperationsBrokerAuthenticationProperties(IEnumerable<BrokerAuthenticatorMethods> authenticationMethods, IotOperationsProvisioningState? provisioningState)
+        {
+            return IotOperationsBrokerAuthenticationProperties(authenticationMethods: authenticationMethods, provisioningState: provisioningState, healthState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IotOperationsBrokerProperties"/>. </summary>
+        /// <param name="advanced"> Advanced settings of Broker. </param>
+        /// <param name="cardinality"> The cardinality details of the broker. </param>
+        /// <param name="diagnostics"> Spec defines the desired identities of Broker diagnostics settings. </param>
+        /// <param name="diskBackedMessageBuffer"> Settings of Disk Backed Message Buffer. </param>
+        /// <param name="generateResourceLimitsCpu"> This setting controls whether Kubernetes CPU resource limits are requested. Increasing the number of replicas or workers proportionally increases the amount of CPU resources requested. If this setting is enabled and there are insufficient CPU resources, an error will be emitted. </param>
+        /// <param name="memoryProfile"> Memory profile of Broker. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.IotOperationsBrokerProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsBrokerProperties IotOperationsBrokerProperties(BrokerAdvancedSettings advanced, BrokerCardinality cardinality, BrokerDiagnostics diagnostics, DiskBackedMessageBuffer diskBackedMessageBuffer, IotOperationsOperationalMode? generateResourceLimitsCpu, BrokerMemoryProfile? memoryProfile, IotOperationsProvisioningState? provisioningState)
+        {
+            return IotOperationsBrokerProperties(advanced: advanced, cardinality: cardinality, diagnostics: diagnostics, diskBackedMessageBuffer: diskBackedMessageBuffer, generateResourceLimitsCpu: generateResourceLimitsCpu, memoryProfile: memoryProfile, persistence: default, provisioningState: provisioningState, healthState: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IotOperationsInstanceProperties"/>. </summary>
+        /// <param name="description"> Detailed description of the Instance. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="version"> The Azure IoT Operations version. </param>
+        /// <param name="schemaRegistryRefResourceId"> The reference to the Schema Registry for this AIO Instance. </param>
+        /// <returns> A new <see cref="Models.IotOperationsInstanceProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsInstanceProperties IotOperationsInstanceProperties(string description, IotOperationsProvisioningState? provisioningState, string version, ResourceIdentifier schemaRegistryRefResourceId)
+        {
+            return IotOperationsInstanceProperties(description: description, provisioningState: provisioningState, version: version, schemaRegistryRefResourceId: schemaRegistryRefResourceId, defaultSecretProviderClassRefResourceId: default, features: default, adrNamespaceRefResourceId: default, healthState: default);
         }
     }
 }
