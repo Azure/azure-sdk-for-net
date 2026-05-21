@@ -8,11 +8,15 @@ using Azure.ResourceManager.AlertsManagement.Models;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    // Backward compatibility: the old SDK (AutoRest-based, v1.1.1) exposed
-    // ChangeState(ServiceAlertState newState, string comment, CancellationToken) where the comment
-    // was a plain string. The new TypeSpec spec wraps the comment in a ServiceAlertComments model.
-    // These overloads convert the string into ServiceAlertComments and delegate to the generated
-    // method, preserving the old API surface.
+    // Backward compatibility additions for the tenant-scope ServiceAlertResource:
+    //  1. ChangeState(ServiceAlertState, string, ...) - the old AutoRest SDK accepted a plain
+    //     string for the comment; the new TypeSpec spec wraps it in a ServiceAlertComments model.
+    //     These overloads convert the string into ServiceAlertComments and delegate.
+    //  2. GetEnrichments / GetEnrichmentsAsync - the new spec binds the getEnrichments operation
+    //     to the extension-scope ScopedServiceAlertResource only (because it carries the @list
+    //     decorator). The old SDK exposed the same operation on the tenant-scope resource, so
+    //     we restore it here by forwarding to a ScopedServiceAlertResource constructed with the
+    //     tenant alert Id (which yields the same wire path).
     public partial class ServiceAlertResource
     {
         /// <summary> Change the state of an alert. </summary>
@@ -35,6 +39,22 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             var comments = comment != null ? new ServiceAlertComments { Comments = comment } : default(ServiceAlertComments);
             return ChangeState(newState, comments, cancellationToken);
+        }
+
+        /// <summary> Get the enrichments of an alert. It returns a collection of one object named default. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<AlertEnrichmentResult> GetEnrichments(CancellationToken cancellationToken = default)
+        {
+            return Client.GetCachedClient(client => new ScopedServiceAlertResource(client, Id)).GetEnrichments(cancellationToken);
+        }
+
+        /// <summary> Get the enrichments of an alert. It returns a collection of one object named default. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<AlertEnrichmentResult> GetEnrichmentsAsync(CancellationToken cancellationToken = default)
+        {
+            return Client.GetCachedClient(client => new ScopedServiceAlertResource(client, Id)).GetEnrichmentsAsync(cancellationToken);
         }
     }
 }

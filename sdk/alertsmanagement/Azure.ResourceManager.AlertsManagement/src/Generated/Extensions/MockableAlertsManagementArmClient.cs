@@ -39,12 +39,50 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
 
         private ServiceAlert ServiceAlertRestClient => _serviceAlertRestClient ??= new ServiceAlert(ServiceAlertClientDiagnostics, Pipeline, Endpoint, "2025-05-25-preview");
 
-        /// <summary> Gets a collection of <see cref="ServiceAlertCollection"/> objects within the specified scope. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="ServiceAlertResource"/> objects. </returns>
-        public virtual ServiceAlertCollection GetServiceAlerts(ResourceIdentifier scope)
+        /// <summary> Gets an object representing a <see cref="ServiceAlertResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceAlertResource"/> object. </returns>
+        public virtual ServiceAlertResource GetServiceAlertResource(ResourceIdentifier id)
         {
-            return new ServiceAlertCollection(Client, scope);
+            ServiceAlertResource.ValidateResourceId(id);
+            return new ServiceAlertResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ScopedServiceAlertResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScopedServiceAlertResource"/> object. </returns>
+        public virtual ScopedServiceAlertResource GetScopedServiceAlertResource(ResourceIdentifier id)
+        {
+            ScopedServiceAlertResource.ValidateResourceId(id);
+            return new ScopedServiceAlertResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ScopedServiceAlertCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ScopedServiceAlertResource"/> objects. </returns>
+        public virtual ScopedServiceAlertCollection GetScopedServiceAlerts(ResourceIdentifier scope)
+        {
+            return new ScopedServiceAlertCollection(Client, scope);
+        }
+
+        /// <summary> Get information related to a specific alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to get alert by id then use parent resource of scope. So in this example get alert by id call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}'. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="alertId"> Unique ID of an alert instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ScopedServiceAlertResource> GetScopedServiceAlert(ResourceIdentifier scope, Guid alertId, CancellationToken cancellationToken = default)
+        {
+            return GetScopedServiceAlerts(scope).Get(alertId, cancellationToken);
+        }
+
+        /// <summary> Get information related to a specific alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to get alert by id then use parent resource of scope. So in this example get alert by id call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}'. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="alertId"> Unique ID of an alert instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ScopedServiceAlertResource>> GetScopedServiceAlertAsync(ResourceIdentifier scope, Guid alertId, CancellationToken cancellationToken = default)
+        {
+            return await GetScopedServiceAlerts(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

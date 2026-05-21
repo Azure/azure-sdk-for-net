@@ -44,7 +44,57 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <returns> An object representing collection of ServiceAlerts and their operations over a ServiceAlertResource. </returns>
         public virtual ServiceAlertCollection GetServiceAlerts()
         {
-            return this.GetCachedClient(client => new ServiceAlertCollection(client, Id));
+            return GetCachedClient(client => new ServiceAlertCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get information related to a specific alert.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Alerts_GetByIdTenant. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="alertId"> Unique ID of an alert instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceAlertResource>> GetServiceAlertAsync(Guid alertId, CancellationToken cancellationToken = default)
+        {
+            return await GetServiceAlerts().GetAsync(alertId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get information related to a specific alert.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Alerts_GetByIdTenant. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="alertId"> Unique ID of an alert instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceAlertResource> GetServiceAlert(Guid alertId, CancellationToken cancellationToken = default)
+        {
+            return GetServiceAlerts().Get(alertId, cancellationToken);
         }
 
         /// <summary>

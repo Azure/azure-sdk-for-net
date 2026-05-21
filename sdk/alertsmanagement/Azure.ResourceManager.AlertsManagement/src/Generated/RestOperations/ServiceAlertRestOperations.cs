@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AlertsManagement
             return message;
         }
 
-        internal HttpMessage CreateGetHistoryTenantRequest(Guid alertId, RequestContext context)
+        internal HttpMessage CreateGetHistoryRequest(Guid alertId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AlertsManagement
             return message;
         }
 
-        internal HttpMessage CreateChangeStateTenantRequest(Guid alertId, string newState, RequestContent content, RequestContext context)
+        internal HttpMessage CreateChangeStateRequest(Guid alertId, string newState, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

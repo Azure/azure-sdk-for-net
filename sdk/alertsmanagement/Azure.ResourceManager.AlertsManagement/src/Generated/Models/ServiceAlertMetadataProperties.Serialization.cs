@@ -16,9 +16,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// alert meta data property bag
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MonitorServiceList"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownAlertsMetaDataProperties))]
+    [PersistableModelProxy(typeof(UnknownServiceAlertMetadataProperties))]
     public abstract partial class ServiceAlertMetadataProperties : IJsonModel<ServiceAlertMetadataProperties>
     {
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertMetadataProperties"/> for deserialization. </summary>
+        internal ServiceAlertMetadataProperties()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ServiceAlertMetadataProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -129,7 +134,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return MonitorServiceList.DeserializeMonitorServiceList(element, options);
                 }
             }
-            return UnknownAlertsMetaDataProperties.DeserializeUnknownAlertsMetaDataProperties(element, options);
+            return UnknownServiceAlertMetadataProperties.DeserializeUnknownServiceAlertMetadataProperties(element, options);
         }
     }
 }

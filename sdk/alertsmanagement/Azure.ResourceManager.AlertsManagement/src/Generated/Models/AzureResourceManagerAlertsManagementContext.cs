@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.AlertsManagement
     [ModelReaderWriterBuildable(typeof(PrometheusRangeQuery))]
     [ModelReaderWriterBuildable(typeof(PropertyChangeDetails))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(ScopedServiceAlertResource))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertActionStatus))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertComments))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertData))]
@@ -50,8 +51,8 @@ namespace Azure.ResourceManager.AlertsManagement
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownAlertEnrichmentItem))]
     [ModelReaderWriterBuildable(typeof(UnknownAlertsManagementBaseDetails))]
-    [ModelReaderWriterBuildable(typeof(UnknownAlertsMetaDataProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownPrometheusEnrichmentItem))]
+    [ModelReaderWriterBuildable(typeof(UnknownServiceAlertMetadataProperties))]
     public partial class AzureResourceManagerAlertsManagementContext : ModelReaderWriterContext
     {
     }

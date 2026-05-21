@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    internal partial class UnknownAlertsMetaDataProperties : ServiceAlertMetadataProperties
+    internal partial class UnknownServiceAlertMetadataProperties : ServiceAlertMetadataProperties
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAlertsMetaDataProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownServiceAlertMetadataProperties"/>. </summary>
         /// <param name="metadataIdentifier"> Identification of the information to be retrieved by API call. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAlertsMetaDataProperties(ServiceAlertMetadataIdentifier metadataIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(metadataIdentifier != default ? metadataIdentifier : "unknown", additionalBinaryDataProperties)
+        internal UnknownServiceAlertMetadataProperties(ServiceAlertMetadataIdentifier metadataIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(metadataIdentifier != default ? metadataIdentifier : "unknown", additionalBinaryDataProperties)
         {
         }
     }

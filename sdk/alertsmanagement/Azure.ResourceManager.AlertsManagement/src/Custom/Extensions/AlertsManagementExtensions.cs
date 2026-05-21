@@ -14,43 +14,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    // Backward compatibility:
-    // 1. The old SDK (AutoRest-based, v1.1.1) exposed GetServiceAlertSummary/GetServiceAlertSummaryAsync
-    //    (with both individual-parameter and Options overloads) and GetServiceAlerts on
-    //    SubscriptionResource. The new TypeSpec generator places GetSummary/GetServiceAlerts on ArmClient
-    //    (scope-based). These extension methods re-introduce the old SubscriptionResource extension method
-    //    signatures to keep binary/source compatibility, delegating through MockableAlertsManagementSubscriptionResource.
-    // 2. The TypeSpec spec defines two @armResourceOperations interfaces (Alerts and AlertGetAllTenantOperation)
-    //    that both bind to the Alert resource model, so the MPG generator emits an identical
-    //    GetServiceAlertResource(ArmClient, ResourceIdentifier) factory twice (CS0111 duplicate member).
-    //    The CodeGenSuppress below removes both generator-emitted overloads and we add a single
-    //    canonical GetServiceAlertResource manually to match the v1.1.1 API surface.
-    // 3. The obsolete members below are stubs for APIs removed in this migration:
-    //    - AlertProcessingRule*: moved to the 'Azure.ResourceManager.AlertProcessingRules' package.
-    //    - SmartGroup*: moved to Legacy in the spec repo; the APIs still exist in Azure and will be
-    //      shipped from a separate package in a future release.
-    //    - GetServiceAlert(Guid) on SubscriptionResource: replaced by ArmClient.GetServiceAlertResource(id) /
-    //      ServiceAlertCollection.Get(alertId.ToString()).
-    [CodeGenSuppress("GetServiceAlertResource", typeof(ArmClient), typeof(ResourceIdentifier))]
     public static partial class AlertsManagementExtensions
     {
         private const string AlertProcessingRuleRemovedMessage = "The AlertProcessingRule APIs have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions, MockableAlertProcessingRulesArmClient, MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource, ArmAlertProcessingRulesModelFactory) instead.";
         private const string SmartGroupRemovedMessage = "The SmartGroup APIs have been removed from this package and will be shipped in a separate package in a future release.";
         private const string GetServiceAlertGuidReplacedMessage = "Use ArmClient.GetServiceAlertResource(id) or ServiceAlertCollection.Get(alertId.ToString()) instead.";
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ServiceAlertResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceAlertResource.CreateResourceIdentifier" /> to create a <see cref="ServiceAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceAlertResource" /> object. </returns>
-        public static ServiceAlertResource GetServiceAlertResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return client.GetCachedClient(client0 => new Mocking.MockableAlertsManagementArmClient(client0, ResourceIdentifier.Root)).GetServiceAlertResource(id);
-        }
 
         private static Mocking.MockableAlertsManagementSubscriptionResource GetMockableAlertsManagementSubscriptionResource(SubscriptionResource subscriptionResource)
         {

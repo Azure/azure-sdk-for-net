@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <summary> Gets a collection of ServiceAlertCollection in the SubscriptionResource. </summary>
         public virtual ServiceAlertCollection GetServiceAlerts()
         {
-            return GetMockableAlertsManagementArmClient().GetServiceAlerts(Id);
+            return Client.GetCachedClient(client => new ServiceAlertCollection(client, Id));
         }
 
         /// <summary>
