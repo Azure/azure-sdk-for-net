@@ -151,21 +151,21 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataMigrationServiceTaskResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ServiceServiceTaskResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDataMigrationServiceTaskResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetServiceServiceTaskResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataMigrationServiceTaskResource"/> object. </returns>
-        public static DataMigrationServiceTaskResource GetDataMigrationServiceTaskResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceServiceTaskResource"/> object. </returns>
+        public static ServiceServiceTaskResource GetServiceServiceTaskResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDataMigrationArmClient(client).GetDataMigrationServiceTaskResource(id);
+            return GetMockableDataMigrationArmClient(client).GetServiceServiceTaskResource(id);
         }
 
         /// <summary>
@@ -521,21 +521,21 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TaskResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DataMigrationServiceTaskResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetTaskResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDataMigrationServiceTaskResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TaskResource"/> object. </returns>
-        public static TaskResource GetTaskResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataMigrationServiceTaskResource"/> object. </returns>
+        public static DataMigrationServiceTaskResource GetDataMigrationServiceTaskResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDataMigrationArmClient(client).GetTaskResource(id);
+            return GetMockableDataMigrationArmClient(client).GetDataMigrationServiceTaskResource(id);
         }
 
         /// <summary>

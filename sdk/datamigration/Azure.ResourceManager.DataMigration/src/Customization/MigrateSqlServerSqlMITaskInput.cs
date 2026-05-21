@@ -10,16 +10,16 @@ using System.Linq;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ValidateMigrationInputSqlServerSqlMITaskInput
+    public partial class MigrateSqlServerSqlMITaskInput
     {
         /// <summary> Backward-compatible constructor with backupBlobShare parameter. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ValidateMigrationInputSqlServerSqlMITaskInput(
+        public MigrateSqlServerSqlMITaskInput(
             DataMigrationSqlConnectionInfo sourceConnectionInfo,
             DataMigrationSqlConnectionInfo targetConnectionInfo,
             IEnumerable<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases,
             DataMigrationBlobShare backupBlobShare)
-            : this(sourceConnectionInfo, targetConnectionInfo, selectedDatabases?.ToList(), new ChangeTrackingList<string>(), null, backupBlobShare, null, null)
+            : this(sourceConnectionInfo, targetConnectionInfo, null, selectedDatabases?.ToList(), null, new ChangeTrackingList<string>(), new ChangeTrackingList<string>(), null, backupBlobShare, null, null, null)
         {
             Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Backward-compatible 3-param public constructor. </summary>
-        public ValidateMigrationInputSqlServerSqlMITaskInput(
+        public MigrateSqlServerSqlMITaskInput(
             DataMigrationSqlConnectionInfo sourceConnectionInfo,
             DataMigrationSqlConnectionInfo targetConnectionInfo,
             IEnumerable<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases)
-            : this(sourceConnectionInfo, targetConnectionInfo, selectedDatabases?.ToList(), new ChangeTrackingList<string>(), null, null, null, null)
+            : this(sourceConnectionInfo, targetConnectionInfo, null, selectedDatabases?.ToList(), null, new ChangeTrackingList<string>(), new ChangeTrackingList<string>(), null, null, null, null, null)
         {
             Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));

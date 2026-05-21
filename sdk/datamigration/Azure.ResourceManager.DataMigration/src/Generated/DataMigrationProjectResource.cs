@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.DataMigration
                 else
                 {
                     DataMigrationProjectData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DataMigrationProjectData patch = new DataMigrationProjectData();
+                    DataMigrationProjectData patch = new DataMigrationProjectData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.DataMigration
                 else
                 {
                     DataMigrationProjectData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DataMigrationProjectData patch = new DataMigrationProjectData();
+                    DataMigrationProjectData patch = new DataMigrationProjectData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.DataMigration
                 else
                 {
                     DataMigrationProjectData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DataMigrationProjectData patch = new DataMigrationProjectData();
+                    DataMigrationProjectData patch = new DataMigrationProjectData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<DataMigrationProjectResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.DataMigration
                 else
                 {
                     DataMigrationProjectData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DataMigrationProjectData patch = new DataMigrationProjectData();
+                    DataMigrationProjectData patch = new DataMigrationProjectData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<DataMigrationProjectResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.DataMigration
                 else
                 {
                     DataMigrationProjectData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DataMigrationProjectData patch = new DataMigrationProjectData();
+                    DataMigrationProjectData patch = new DataMigrationProjectData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.DataMigration
                 else
                 {
                     DataMigrationProjectData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DataMigrationProjectData patch = new DataMigrationProjectData();
+                    DataMigrationProjectData patch = new DataMigrationProjectData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -672,10 +672,10 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary> Gets a collection of Tasks in the <see cref="DataMigrationProjectResource"/>. </summary>
-        /// <returns> An object representing collection of Tasks and their operations over a TaskResource. </returns>
-        public virtual TaskCollection GetTasks()
+        /// <returns> An object representing collection of Tasks and their operations over a DataMigrationServiceTaskResource. </returns>
+        public virtual DataMigrationServiceTaskCollection GetTasks()
         {
-            return GetCachedClient(client => new TaskCollection(client, Id));
+            return GetCachedClient(client => new DataMigrationServiceTaskCollection(client, Id));
         }
 
         /// <summary> The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The GET method retrieves information about a task. </summary>
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TaskResource>> GetTaskAsync(string taskName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataMigrationServiceTaskResource>> GetTaskAsync(string taskName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TaskResource> GetTask(string taskName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DataMigrationServiceTaskResource> GetTask(string taskName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 

@@ -93,13 +93,13 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             return new SqlMigrationServiceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DataMigrationServiceTaskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ServiceServiceTaskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataMigrationServiceTaskResource"/> object. </returns>
-        public virtual DataMigrationServiceTaskResource GetDataMigrationServiceTaskResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceServiceTaskResource"/> object. </returns>
+        public virtual ServiceServiceTaskResource GetServiceServiceTaskResource(ResourceIdentifier id)
         {
-            DataMigrationServiceTaskResource.ValidateResourceId(id);
-            return new DataMigrationServiceTaskResource(Client, id);
+            ServiceServiceTaskResource.ValidateResourceId(id);
+            return new ServiceServiceTaskResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DataMigrationProjectResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -312,13 +312,13 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             return new DataMigrationServiceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="TaskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DataMigrationServiceTaskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TaskResource"/> object. </returns>
-        public virtual TaskResource GetTaskResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataMigrationServiceTaskResource"/> object. </returns>
+        public virtual DataMigrationServiceTaskResource GetDataMigrationServiceTaskResource(ResourceIdentifier id)
         {
-            TaskResource.ValidateResourceId(id);
-            return new TaskResource(Client, id);
+            DataMigrationServiceTaskResource.ValidateResourceId(id);
+            return new DataMigrationServiceTaskResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DataMigrationProjectFileResource"/> along with the instance operations that can be performed on it but with no data. </summary>

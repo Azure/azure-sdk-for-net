@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary></summary>
-    public partial class DataMigrationServiceTaskResource : IJsonModel<DataMigrationProjectTaskData>
+    public partial class ServiceServiceTaskResource : IJsonModel<DataMigrationProjectTaskData>
     {
         private static IJsonModel<DataMigrationProjectTaskData> s_dataDeserializationInstance;
 

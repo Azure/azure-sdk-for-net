@@ -49,5 +49,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 Input = new MigrateMISyncCompleteCommandInput(value);
             }
         }
+
+        /// <summary> List of errors that happened during the command execution. </summary>
+        public IList<DataMigrationReportableException> OutputErrors
+        {
+            get
+            {
+                return Output is null ? default : Output.Errors;
+            }
+        }
     }
 }

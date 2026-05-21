@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TaskResource"/> and their operations.
-    /// Each <see cref="TaskResource"/> in the collection will belong to the same instance of <see cref="DataMigrationProjectResource"/>.
-    /// To get a <see cref="TaskCollection"/> instance call the GetTasks method from an instance of <see cref="DataMigrationProjectResource"/>.
+    /// A class representing a collection of <see cref="ServiceServiceTaskResource"/> and their operations.
+    /// Each <see cref="ServiceServiceTaskResource"/> in the collection will belong to the same instance of <see cref="DataMigrationServiceResource"/>.
+    /// To get a <see cref="ServiceServiceTaskCollection"/> instance call the GetDataMigrationServiceTasks method from an instance of <see cref="DataMigrationServiceResource"/>.
     /// </summary>
-    public partial class TaskCollection : ArmCollection, IEnumerable<TaskResource>, IAsyncEnumerable<TaskResource>
+    public partial class ServiceServiceTaskCollection : ArmCollection, IEnumerable<ServiceServiceTaskResource>, IAsyncEnumerable<ServiceServiceTaskResource>
     {
-        private readonly ClientDiagnostics _tasksClientDiagnostics;
-        private readonly Tasks _tasksRestClient;
+        private readonly ClientDiagnostics _dataMigrationServiceTasksClientDiagnostics;
+        private readonly DataMigrationServiceTasks _dataMigrationServiceTasksRestClient;
 
-        /// <summary> Initializes a new instance of TaskCollection for mocking. </summary>
-        protected TaskCollection()
+        /// <summary> Initializes a new instance of ServiceServiceTaskCollection for mocking. </summary>
+        protected ServiceServiceTaskCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TaskCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceServiceTaskCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TaskCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ServiceServiceTaskCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(TaskResource.ResourceType, out string taskApiVersion);
-            _tasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", TaskResource.ResourceType.Namespace, Diagnostics);
-            _tasksRestClient = new Tasks(_tasksClientDiagnostics, Pipeline, Endpoint, taskApiVersion ?? "2025-09-01-preview");
+            TryGetApiVersion(ServiceServiceTaskResource.ResourceType, out string dataMigrationServiceTaskApiVersion);
+            _dataMigrationServiceTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", ServiceServiceTaskResource.ResourceType.Namespace, Diagnostics);
+            _dataMigrationServiceTasksRestClient = new DataMigrationServiceTasks(_dataMigrationServiceTasksClientDiagnostics, Pipeline, Endpoint, dataMigrationServiceTaskApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -48,22 +48,22 @@ namespace Azure.ResourceManager.DataMigration
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DataMigrationProjectResource.ResourceType)
+            if (id.ResourceType != DataMigrationServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataMigrationProjectResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataMigrationServiceResource.ResourceType), nameof(id));
             }
         }
 
         /// <summary>
-        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The PUT method creates a new task or updates an existing one, although since tasks have no mutable custom properties, there is little reason to update an existing one.
+        /// The service tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The PUT method creates a new service task or updates an existing one, although since service tasks have no mutable custom properties, there is little reason to update an existing one.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ProjectTasks_CreateOrUpdate. </description>
+        /// <description> ServiceTasks_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<TaskResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string taskName, DataMigrationProjectTaskData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServiceServiceTaskResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string taskName, DataMigrationProjectTaskData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("TaskCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _dataMigrationServiceTasksClientDiagnostics.CreateScope("ServiceServiceTaskCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, taskName, DataMigrationProjectTaskData.ToRequestContent(data), context);
+                HttpMessage message = _dataMigrationServiceTasksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, taskName, DataMigrationProjectTaskData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataMigrationProjectTaskData> response = Response.FromValue(DataMigrationProjectTaskData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                DataMigrationArmOperation<TaskResource> operation = new DataMigrationArmOperation<TaskResource>(Response.FromValue(new TaskResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                DataMigrationArmOperation<ServiceServiceTaskResource> operation = new DataMigrationArmOperation<ServiceServiceTaskResource>(Response.FromValue(new ServiceServiceTaskResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -110,15 +110,15 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The PUT method creates a new task or updates an existing one, although since tasks have no mutable custom properties, there is little reason to update an existing one.
+        /// The service tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The PUT method creates a new service task or updates an existing one, although since service tasks have no mutable custom properties, there is little reason to update an existing one.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ProjectTasks_CreateOrUpdate. </description>
+        /// <description> ServiceTasks_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<TaskResource> CreateOrUpdate(WaitUntil waitUntil, string taskName, DataMigrationProjectTaskData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceServiceTaskResource> CreateOrUpdate(WaitUntil waitUntil, string taskName, DataMigrationProjectTaskData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("TaskCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _dataMigrationServiceTasksClientDiagnostics.CreateScope("ServiceServiceTaskCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, taskName, DataMigrationProjectTaskData.ToRequestContent(data), context);
+                HttpMessage message = _dataMigrationServiceTasksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, taskName, DataMigrationProjectTaskData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataMigrationProjectTaskData> response = Response.FromValue(DataMigrationProjectTaskData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                DataMigrationArmOperation<TaskResource> operation = new DataMigrationArmOperation<TaskResource>(Response.FromValue(new TaskResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                DataMigrationArmOperation<ServiceServiceTaskResource> operation = new DataMigrationArmOperation<ServiceServiceTaskResource>(Response.FromValue(new ServiceServiceTaskResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -165,15 +165,15 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The GET method retrieves information about a task.
+        /// The service tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The GET method retrieves information about a service task.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ProjectTasks_Get. </description>
+        /// <description> ServiceTasks_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -186,11 +186,11 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<TaskResource>> GetAsync(string taskName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceServiceTaskResource>> GetAsync(string taskName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("TaskCollection.Get");
+            using DiagnosticScope scope = _dataMigrationServiceTasksClientDiagnostics.CreateScope("ServiceServiceTaskCollection.Get");
             scope.Start();
             try
             {
@@ -198,14 +198,14 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, taskName, expand, context);
+                HttpMessage message = _dataMigrationServiceTasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, taskName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataMigrationProjectTaskData> response = Response.FromValue(DataMigrationProjectTaskData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new TaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,15 +215,15 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The GET method retrieves information about a task.
+        /// The service tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The GET method retrieves information about a service task.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ProjectTasks_Get. </description>
+        /// <description> ServiceTasks_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -236,11 +236,11 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<TaskResource> Get(string taskName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceServiceTaskResource> Get(string taskName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("TaskCollection.Get");
+            using DiagnosticScope scope = _dataMigrationServiceTasksClientDiagnostics.CreateScope("ServiceServiceTaskCollection.Get");
             scope.Start();
             try
             {
@@ -248,14 +248,14 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, taskName, expand, context);
+                HttpMessage message = _dataMigrationServiceTasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, taskName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataMigrationProjectTaskData> response = Response.FromValue(DataMigrationProjectTaskData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new TaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -265,15 +265,15 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The services resource is the top-level resource that represents the Azure Database Migration Service (classic). This method returns a list of tasks owned by a service resource. Some tasks may have a status of Unknown, which indicates that an error occurred while querying the status of that task.
+        /// The services resource is the top-level resource that represents the Azure Database Migration Service (classic). This method returns a list of service level tasks owned by a service resource. Some tasks may have a status of Unknown, which indicates that an error occurred while querying the status of that task.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ProjectTasks_List. </description>
+        /// <description> ServiceTasks_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -283,34 +283,33 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="taskType"> Filter tasks by task type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TaskResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TaskResource> GetAllAsync(string taskType = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceServiceTaskResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceServiceTaskResource> GetAllAsync(string taskType = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataMigrationProjectTaskData, TaskResource>(new TasksGetAllAsyncCollectionResultOfT(
-                _tasksRestClient,
+            return new AsyncPageableWrapper<DataMigrationProjectTaskData, ServiceServiceTaskResource>(new DataMigrationServiceTasksGetAllAsyncCollectionResultOfT(
+                _dataMigrationServiceTasksRestClient,
                 Guid.Parse(Id.SubscriptionId),
-                Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
                 taskType,
                 context,
-                "TaskCollection.GetAll"), data => new TaskResource(Client, data));
+                "ServiceServiceTaskCollection.GetAll"), data => new ServiceServiceTaskResource(Client, data));
         }
 
         /// <summary>
-        /// The services resource is the top-level resource that represents the Azure Database Migration Service (classic). This method returns a list of tasks owned by a service resource. Some tasks may have a status of Unknown, which indicates that an error occurred while querying the status of that task.
+        /// The services resource is the top-level resource that represents the Azure Database Migration Service (classic). This method returns a list of service level tasks owned by a service resource. Some tasks may have a status of Unknown, which indicates that an error occurred while querying the status of that task.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ProjectTasks_List. </description>
+        /// <description> ServiceTasks_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -320,22 +319,21 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="taskType"> Filter tasks by task type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TaskResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TaskResource> GetAll(string taskType = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceServiceTaskResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceServiceTaskResource> GetAll(string taskType = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataMigrationProjectTaskData, TaskResource>(new TasksGetAllCollectionResultOfT(
-                _tasksRestClient,
+            return new PageableWrapper<DataMigrationProjectTaskData, ServiceServiceTaskResource>(new DataMigrationServiceTasksGetAllCollectionResultOfT(
+                _dataMigrationServiceTasksRestClient,
                 Guid.Parse(Id.SubscriptionId),
-                Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
                 taskType,
                 context,
-                "TaskCollection.GetAll"), data => new TaskResource(Client, data));
+                "ServiceServiceTaskCollection.GetAll"), data => new ServiceServiceTaskResource(Client, data));
         }
 
         /// <summary>
@@ -343,11 +341,11 @@ namespace Azure.ResourceManager.DataMigration
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ProjectTasks_Get. </description>
+        /// <description> ServiceTasks_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -364,7 +362,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("TaskCollection.Exists");
+            using DiagnosticScope scope = _dataMigrationServiceTasksClientDiagnostics.CreateScope("ServiceServiceTaskCollection.Exists");
             scope.Start();
             try
             {
@@ -372,7 +370,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, taskName, expand, context);
+                HttpMessage message = _dataMigrationServiceTasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, taskName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataMigrationProjectTaskData> response = default;
@@ -401,11 +399,11 @@ namespace Azure.ResourceManager.DataMigration
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ProjectTasks_Get. </description>
+        /// <description> ServiceTasks_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -422,7 +420,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("TaskCollection.Exists");
+            using DiagnosticScope scope = _dataMigrationServiceTasksClientDiagnostics.CreateScope("ServiceServiceTaskCollection.Exists");
             scope.Start();
             try
             {
@@ -430,7 +428,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, taskName, expand, context);
+                HttpMessage message = _dataMigrationServiceTasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, taskName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataMigrationProjectTaskData> response = default;
@@ -459,11 +457,11 @@ namespace Azure.ResourceManager.DataMigration
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ProjectTasks_Get. </description>
+        /// <description> ServiceTasks_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -476,11 +474,11 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<TaskResource>> GetIfExistsAsync(string taskName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ServiceServiceTaskResource>> GetIfExistsAsync(string taskName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("TaskCollection.GetIfExists");
+            using DiagnosticScope scope = _dataMigrationServiceTasksClientDiagnostics.CreateScope("ServiceServiceTaskCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -488,7 +486,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, taskName, expand, context);
+                HttpMessage message = _dataMigrationServiceTasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, taskName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DataMigrationProjectTaskData> response = default;
@@ -505,9 +503,9 @@ namespace Azure.ResourceManager.DataMigration
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<TaskResource>(response.GetRawResponse());
+                    return new NoValueResponse<ServiceServiceTaskResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new TaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -521,11 +519,11 @@ namespace Azure.ResourceManager.DataMigration
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks/{taskName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ProjectTasks_Get. </description>
+        /// <description> ServiceTasks_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -538,11 +536,11 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<TaskResource> GetIfExists(string taskName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ServiceServiceTaskResource> GetIfExists(string taskName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("TaskCollection.GetIfExists");
+            using DiagnosticScope scope = _dataMigrationServiceTasksClientDiagnostics.CreateScope("ServiceServiceTaskCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -550,7 +548,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, taskName, expand, context);
+                HttpMessage message = _dataMigrationServiceTasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, taskName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DataMigrationProjectTaskData> response = default;
@@ -567,9 +565,9 @@ namespace Azure.ResourceManager.DataMigration
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<TaskResource>(response.GetRawResponse());
+                    return new NoValueResponse<ServiceServiceTaskResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new TaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -578,7 +576,7 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
-        IEnumerator<TaskResource> IEnumerable<TaskResource>.GetEnumerator()
+        IEnumerator<ServiceServiceTaskResource> IEnumerable<ServiceServiceTaskResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -589,7 +587,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<TaskResource> IAsyncEnumerable<TaskResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ServiceServiceTaskResource> IAsyncEnumerable<ServiceServiceTaskResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

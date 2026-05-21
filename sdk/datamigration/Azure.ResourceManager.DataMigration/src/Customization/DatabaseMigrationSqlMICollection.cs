@@ -8,67 +8,48 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    // Backward-compatible overloads for GA collection APIs.
+    // Backward-compat justification: the GA collection accepted the parent managed instance name and Guid migration operation ID.
     public partial class DatabaseMigrationSqlMICollection
     {
-        // Backward-compatible overload. The parent name parameter is no longer needed.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<ArmOperation<DatabaseMigrationSqlMIResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedInstanceName, string targetDbName, DatabaseMigrationSqlMIData data, CancellationToken cancellationToken)
-        {
-            return CreateOrUpdateAsync(waitUntil, targetDbName, data, cancellationToken);
-        }
+        private const string CompatPlaceholderManagedInstanceName = "__compat_rg_scope__";
 
-        // Backward-compatible overload. The parent name parameter is no longer needed.
+        private DatabaseMigrationSqlMICollection GetCompatCollection(string managedInstanceName)
+            => Id.Name == CompatPlaceholderManagedInstanceName ? new DatabaseMigrationSqlMICollection(Client, new ResourceIdentifier($"/subscriptions/{Id.SubscriptionId}/resourceGroups/{Id.ResourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}")) : this;
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<DatabaseMigrationSqlMIResource> CreateOrUpdate(WaitUntil waitUntil, string managedInstanceName, string targetDbName, DatabaseMigrationSqlMIData data, CancellationToken cancellationToken)
-        {
-            return CreateOrUpdate(waitUntil, targetDbName, data, cancellationToken);
-        }
+        public virtual Task<ArmOperation<DatabaseMigrationSqlMIResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedInstanceName, string targetDBName, DatabaseMigrationSqlMIData data, CancellationToken cancellationToken = default)
+            => GetCompatCollection(managedInstanceName).CreateOrUpdateAsync(waitUntil, targetDBName, data, cancellationToken);
 
-        // Backward-compatible overload. The parent name parameter is no longer needed.
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<DatabaseMigrationSqlMIResource>> GetAsync(string managedInstanceName, string targetDbName, Guid? migrationOperationId, string expand, CancellationToken cancellationToken)
-        {
-            return GetAsync(targetDbName, migrationOperationId?.ToString(), expand, cancellationToken);
-        }
+        public virtual ArmOperation<DatabaseMigrationSqlMIResource> CreateOrUpdate(WaitUntil waitUntil, string managedInstanceName, string targetDBName, DatabaseMigrationSqlMIData data, CancellationToken cancellationToken = default)
+            => GetCompatCollection(managedInstanceName).CreateOrUpdate(waitUntil, targetDBName, data, cancellationToken);
 
-        // Backward-compatible overload. The parent name parameter is no longer needed.
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<DatabaseMigrationSqlMIResource> Get(string managedInstanceName, string targetDbName, Guid? migrationOperationId, string expand, CancellationToken cancellationToken)
-        {
-            return Get(targetDbName, migrationOperationId?.ToString(), expand, cancellationToken);
-        }
+        public virtual Task<Response<bool>> ExistsAsync(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+            => GetCompatCollection(managedInstanceName).ExistsAsync(targetDBName, migrationOperationId?.ToString(), expand, cancellationToken);
 
-        // Backward-compatible overload. The parent name parameter is no longer needed.
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<bool>> ExistsAsync(string managedInstanceName, string targetDbName, Guid? migrationOperationId, string expand, CancellationToken cancellationToken)
-        {
-            return ExistsAsync(targetDbName, migrationOperationId?.ToString(), expand, cancellationToken);
-        }
+        public virtual Response<bool> Exists(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+            => GetCompatCollection(managedInstanceName).Exists(targetDBName, migrationOperationId?.ToString(), expand, cancellationToken);
 
-        // Backward-compatible overload. The parent name parameter is no longer needed.
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<bool> Exists(string managedInstanceName, string targetDbName, Guid? migrationOperationId, string expand, CancellationToken cancellationToken)
-        {
-            return Exists(targetDbName, migrationOperationId?.ToString(), expand, cancellationToken);
-        }
+        public virtual Task<Response<DatabaseMigrationSqlMIResource>> GetAsync(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+            => GetCompatCollection(managedInstanceName).GetAsync(targetDBName, migrationOperationId?.ToString(), expand, cancellationToken);
 
-        // Backward-compatible overload. The parent name parameter is no longer needed.
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<NullableResponse<DatabaseMigrationSqlMIResource>> GetIfExistsAsync(string managedInstanceName, string targetDbName, Guid? migrationOperationId, string expand, CancellationToken cancellationToken)
-        {
-            return GetIfExistsAsync(targetDbName, migrationOperationId?.ToString(), expand, cancellationToken);
-        }
+        public virtual Response<DatabaseMigrationSqlMIResource> Get(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+            => GetCompatCollection(managedInstanceName).Get(targetDBName, migrationOperationId?.ToString(), expand, cancellationToken);
 
-        // Backward-compatible overload. The parent name parameter is no longer needed.
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual NullableResponse<DatabaseMigrationSqlMIResource> GetIfExists(string managedInstanceName, string targetDbName, Guid? migrationOperationId, string expand, CancellationToken cancellationToken)
-        {
-            return GetIfExists(targetDbName, migrationOperationId?.ToString(), expand, cancellationToken);
-        }
+        public virtual Task<NullableResponse<DatabaseMigrationSqlMIResource>> GetIfExistsAsync(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+            => GetCompatCollection(managedInstanceName).GetIfExistsAsync(targetDBName, migrationOperationId?.ToString(), expand, cancellationToken);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual NullableResponse<DatabaseMigrationSqlMIResource> GetIfExists(string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+            => GetCompatCollection(managedInstanceName).GetIfExists(targetDBName, migrationOperationId?.ToString(), expand, cancellationToken);
     }
 }
