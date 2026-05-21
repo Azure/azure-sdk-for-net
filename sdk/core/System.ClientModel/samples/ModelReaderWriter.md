@@ -59,12 +59,16 @@ OutputModel? model = JsonSerializer.Deserialize<OutputModel>(json, options);
 
 In more advanced scenarios a library user might want to override the behavior of how a model is read or written.
 In this case you can implement your own class which implements the same interface, either `IPersistableModel<T>` or `IJsonModel<T>`, and register it with the `ModelReaderWriterOptions`.
-Unlike the `PersistableModelProxy` attribute the proxy is only valid for a single instance of `ModelReaderWriterOptions` giving you more flexibility to turn it on or off.
+The proxy is only valid for a single instance of `ModelReaderWriterOptions` giving you more flexibility to turn it on or off.
+
+### Direct Proxy (unconditional override)
+
+A direct proxy always handles the type it's registered for. Simply implement `IJsonModel<T>` (or `IPersistableModel<T>`) and register it.
 
 Using a proxy with the following definition
 
 ```C# Snippet:Readme_Read_Proxy_ClassStub
-public class OutputModelProxy : ModelProxy<OutputModel>, IJsonModel<OutputModel>
+public class OutputModelProxy : IJsonModel<OutputModel>
 ```
 
 The example below shows how to read JSON to create a strongly-typed model instance using a proxy.
@@ -77,7 +81,7 @@ string json = @"{
     }";
 
 ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
-options.AddProxy(new OutputModelProxy());
+options.AddProxy<OutputModel>((IJsonModel<OutputModel>)new OutputModelProxy());
 
 OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
 ```
@@ -85,18 +89,42 @@ OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(j
 Using a proxy with the following definition
 
 ```C# Snippet:Readme_Write_Proxy_ClassStub
-public class InputModelProxy : ModelProxy<InputModel>, IJsonModel<InputModel>
+public class InputModelProxy : IJsonModel<InputModel>
 ```
 
-The example below shows how to write a persistable model using a proxy to `BinaryData`
+The example below shows how to write a persistable model using a proxy to `BinaryData`.
+On the write path, call `ResolveProxy` to get the proxy (or the model itself if none matches),
+then write through the returned interface.
 
 ```C# Snippet:Readme_Write_Proxy
 InputModel model = new InputModel();
 
 ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
-options.AddProxy(new InputModelProxy());
+options.AddProxy<InputModel>((IJsonModel<InputModel>)new InputModelProxy());
 
-BinaryData data = ModelReaderWriter.Write(model, options);
+// ResolveProxy returns the proxy if one is registered, otherwise the model itself.
+IJsonModel<InputModel> resolved = options.ResolveProxy((IJsonModel<InputModel>)model);
+BinaryData data = ModelReaderWriter.Write((IPersistableModel<InputModel>)resolved, options);
+```
+
+### Conditional Proxy (discriminator routing)
+
+A conditional proxy inspects the data before deciding whether to handle it.
+Extend `ConditionalModelProxy<T>` and override `CanHandle` to implement discriminator-based routing.
+
+```C# Snippet:Readme_ConditionalProxy_ClassStub
+public class DerivedModelProxy : ConditionalModelProxy<BaseModel>
+{
+    // Only handle if the JSON contains "kind": "derived"
+    public override bool CanHandle(ReadOnlyMemory<byte> data)
+    {
+        using var doc = JsonDocument.Parse(data);
+        return doc.RootElement.TryGetProperty("kind", out var kind)
+            && kind.GetString() == "derived";
+    }
+
+    public override bool CanHandle(BaseModel model) => model is DerivedModel;
+}
 ```
 
 ### Proxy Chain of Responsibility
@@ -104,16 +132,13 @@ BinaryData data = ModelReaderWriter.Write(model, options);
 Multiple proxies can be registered for the same model type to form a chain of responsibility.
 Proxies are stored in FIFO order — the **first registered** proxy has the highest priority.
 
-**Write path:** Proxies are consulted first-to-last. Each proxy's `CanHandle(model)` method
-is called — the first proxy that returns `true` handles the write. If all proxies decline,
-the model serializes itself.
+**Write path:** Call `options.ResolveProxy(model)` — proxies are consulted first-to-last.
+Each conditional proxy's `CanHandle(model)` method is called; the first that returns `true`
+handles the write. Direct proxies always match. If nothing matches, the model itself is returned.
 
-**Read path:** Proxies are consulted first-to-last. Each proxy's `CanHandle(ReadOnlyMemory<byte>)`
-method is called — the first proxy that returns `true` handles the read via `Create`.
-If all proxies decline, the model itself handles the read as a terminal fallback.
-
-This enables advanced scenarios such as discriminator-based routing, where a proxy can
-inspect the incoming data and decide whether it can handle the deserialization.
+**Read path:** Use `ModelReaderWriter.Read<T>(data, options)` — proxies are consulted
+first-to-last internally. Each conditional proxy's `CanHandle(ReadOnlyMemory<byte>)` is called;
+the first that returns `true` handles the read. If all proxies decline, the model deserializes itself.
 
 ```C# Snippet:Readme_Proxy_Chain
 string json = @"{
@@ -124,10 +149,10 @@ string json = @"{
 ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
 
 // Higher-priority proxy registered first — consulted first in the chain
-options.AddProxy(new OutputModelProxyOverride());
+options.AddProxy(new DerivedModelProxy());
 
 // Base library registers a fallback proxy
-options.AddProxy(new OutputModelProxy());
+options.AddProxy(new OtherDerivedModelProxy());
 
-OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
+BaseModel? model = ModelReaderWriter.Read<BaseModel>(BinaryData.FromString(json), options);
 ```
