@@ -180,6 +180,20 @@ namespace Azure.ResourceManager.Storage
             return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
+        // Backward-compatible singleton resource accessor.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual StorageAccountManagementPolicyResource GetStorageAccountManagementPolicy()
+        {
+            return new StorageAccountManagementPolicyResource(Client, Id.AppendChildResource("managementPolicies", "default"));
+        }
+
+        // Backward-compatible singleton resource accessor.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual BlobInventoryPolicyResource GetBlobInventoryPolicy()
+        {
+            return new BlobInventoryPolicyResource(Client, Id.AppendChildResource("inventoryPolicies", "default"));
+        }
+
         /// <summary>
         /// Restore blobs in the specified blob ranges
         /// <list type="bullet">
