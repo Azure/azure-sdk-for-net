@@ -7,9 +7,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
+    // Backward-compat justification: restore the GA-era protected constructor suppressed by the new generator for ApiCompat.
     public abstract partial class MigrateSqlServerSqlMITaskOutput
     {
-        /// <summary> Backward-compatible protected constructor for ApiCompat. </summary>
+        // Backward-compatible protected constructor for ApiCompat.
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected MigrateSqlServerSqlMITaskOutput() : this(default(string)) { }
     }

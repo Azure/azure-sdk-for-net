@@ -10,9 +10,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
+    // Backward-compat justification: restore GA-era constructor overloads that accepted backupBlobShare and 3-param signatures.
     public partial class MigrateSqlServerSqlMITaskInput
     {
-        /// <summary> Backward-compatible constructor with backupBlobShare parameter. </summary>
+        // Backward-compatible constructor with backupBlobShare parameter.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public MigrateSqlServerSqlMITaskInput(
             DataMigrationSqlConnectionInfo sourceConnectionInfo,
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Argument.AssertNotNull(selectedDatabases, nameof(selectedDatabases));
         }
 
-        /// <summary> Backward-compatible 3-param public constructor. </summary>
+        // Backward-compatible 3-param public constructor.
         public MigrateSqlServerSqlMITaskInput(
             DataMigrationSqlConnectionInfo sourceConnectionInfo,
             DataMigrationSqlConnectionInfo targetConnectionInfo,

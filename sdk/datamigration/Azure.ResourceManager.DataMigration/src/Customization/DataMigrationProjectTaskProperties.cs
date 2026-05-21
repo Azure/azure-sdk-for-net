@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     [CodeGenSuppress("DataMigrationProjectTaskProperties")]
     public abstract partial class DataMigrationProjectTaskProperties
     {
-        /// <summary> Backward-compatible protected constructor for ApiCompat. </summary>
+        // Backward-compatible protected constructor for ApiCompat.
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected DataMigrationProjectTaskProperties() : this(default(DataMigrationTaskType)) { }
     }
