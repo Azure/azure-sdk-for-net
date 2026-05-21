@@ -785,11 +785,27 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> Gets an object representing a <see cref="CredentialResource"/> along with the instance operations that can be performed on it in the <see cref="DeviceRegistryNamespaceResource"/>. </summary>
-        /// <returns> Returns a <see cref="CredentialResource"/> object. </returns>
-        public virtual CredentialResource GetCredential()
+        /// <summary> Gets a collection of Credentials in the <see cref="DeviceRegistryNamespaceResource"/>. </summary>
+        /// <returns> An object representing collection of Credentials and their operations over a CredentialResource. </returns>
+        public virtual CredentialCollection GetCredentials()
         {
-            return new CredentialResource(Client, Id.AppendChildResource("credentials", "default"));
+            return GetCachedClient(client => new CredentialCollection(client, Id));
+        }
+
+        /// <summary> Get a Credential. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CredentialResource>> GetCredentialAsync(CancellationToken cancellationToken = default)
+        {
+            return await GetCredentials().GetAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a Credential. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<CredentialResource> GetCredential(CancellationToken cancellationToken = default)
+        {
+            return GetCredentials().Get(cancellationToken);
         }
 
         /// <summary> Gets a collection of DeviceRegistryNamespaceAssets in the <see cref="DeviceRegistryNamespaceResource"/>. </summary>

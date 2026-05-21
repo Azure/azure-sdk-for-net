@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.TrafficManager
     /// <summary>
     /// A class representing a TrafficManagerGeographicHierarchy along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TrafficManagerGeographicHierarchyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTrafficManagerGeographicHierarchy method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTrafficManagerGeographicHierarchies method.
     /// </summary>
     public partial class TrafficManagerGeographicHierarchyResource : ArmResource
     {

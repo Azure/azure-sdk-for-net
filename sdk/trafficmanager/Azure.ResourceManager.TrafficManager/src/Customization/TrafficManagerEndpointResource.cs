@@ -4,9 +4,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
