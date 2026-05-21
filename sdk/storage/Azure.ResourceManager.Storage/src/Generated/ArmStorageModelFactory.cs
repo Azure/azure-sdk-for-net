@@ -1399,10 +1399,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Test existing connection request properties. </summary>
         /// <param name="uniqueId"> The uniqueId of the storage connector as returned by the server. </param>
-        /// <returns> A new <see cref="Models.TestExistingConnectionContent"/> instance for mocking. </returns>
-        public static TestExistingConnectionContent TestExistingConnectionContent(string uniqueId = default)
+        /// <returns> A new <see cref="Models.StorageConnectorTestExistingConnectionContent"/> instance for mocking. </returns>
+        public static StorageConnectorTestExistingConnectionContent StorageConnectorTestExistingConnectionContent(string uniqueId = default)
         {
-            return new TestExistingConnectionContent(uniqueId, additionalBinaryDataProperties: null);
+            return new StorageConnectorTestExistingConnectionContent(uniqueId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Test connection response properties. </summary>
@@ -1416,10 +1416,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// The error message will be empty if the connection was successful.
         /// </param>
         /// <param name="storageConnectorRequestId"> The request Id associated with the request sent to the backing data store for validation. </param>
-        /// <returns> A new <see cref="Models.TestConnectionResult"/> instance for mocking. </returns>
-        public static TestConnectionResult TestConnectionResult(string storageConnectorMethodName = default, string storageConnectorErrorMessage = default, string storageConnectorRequestId = default)
+        /// <returns> A new <see cref="Models.StorageConnectorTestConnectionResult"/> instance for mocking. </returns>
+        public static StorageConnectorTestConnectionResult StorageConnectorTestConnectionResult(string storageConnectorMethodName = default, string storageConnectorErrorMessage = default, string storageConnectorRequestId = default)
         {
-            return new TestConnectionResult(storageConnectorMethodName, storageConnectorErrorMessage, storageConnectorRequestId, additionalBinaryDataProperties: null);
+            return new StorageConnectorTestConnectionResult(storageConnectorMethodName, storageConnectorErrorMessage, storageConnectorRequestId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A DataShare is a tracked ARM resource modeled as a sub-resource of a Storage Account. </summary>

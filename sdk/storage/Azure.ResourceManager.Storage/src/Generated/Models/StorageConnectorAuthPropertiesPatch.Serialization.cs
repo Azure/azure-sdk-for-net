@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary>
     /// The authentication properties of the backing data source
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManagedIdentityAuthPropertiesPatch"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StorageConnectorManagedIdentityAuthPatch"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownStorageConnectorAuthPropertiesPatch))]
     public abstract partial class StorageConnectorAuthPropertiesPatch : IJsonModel<StorageConnectorAuthPropertiesPatch>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Models
                 switch (discriminator.GetString())
                 {
                     case "ManagedIdentity":
-                        return ManagedIdentityAuthPropertiesPatch.DeserializeManagedIdentityAuthPropertiesPatch(element, options);
+                        return StorageConnectorManagedIdentityAuthPatch.DeserializeStorageConnectorManagedIdentityAuthPatch(element, options);
                 }
             }
             return UnknownStorageConnectorAuthPropertiesPatch.DeserializeUnknownStorageConnectorAuthPropertiesPatch(element, options);
