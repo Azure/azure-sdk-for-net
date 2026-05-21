@@ -890,6 +890,20 @@ namespace Azure.AI.Extensions.OpenAI
             return new AgentReference("agent_reference", name, version, additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// The AgentResponseItem.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.AgentStructuredOutputsResponseItem"/>, <see cref="OpenAI.AgentWorkflowPreviewActionResponseItem"/>, <see cref="OpenAI.OAuthConsentRequestResponseItem"/>, <see cref="OpenAI.MemorySearchToolCallResponseItem"/>, <see cref="OpenAI.BingGroundingToolCall"/>, <see cref="OpenAI.BingGroundingToolCallOutput"/>, <see cref="OpenAI.SharepointGroundingToolCall"/>, <see cref="OpenAI.SharepointGroundingToolCallOutput"/>, <see cref="OpenAI.AzureAISearchToolCall"/>, <see cref="OpenAI.AzureAISearchToolCallOutput"/>, <see cref="OpenAI.BingCustomSearchToolCall"/>, <see cref="OpenAI.BingCustomSearchToolCallOutput"/>, <see cref="OpenAI.OpenApiToolCall"/>, <see cref="OpenAI.OpenApiToolCallOutput"/>, <see cref="OpenAI.BrowserAutomationToolCall"/>, <see cref="OpenAI.BrowserAutomationToolCallOutput"/>, <see cref="OpenAI.FabricDataAgentToolCall"/>, <see cref="OpenAI.FabricDataAgentToolCallOutput"/>, <see cref="OpenAI.AzureFunctionToolCall"/>, <see cref="OpenAI.AzureFunctionToolCallOutput"/>, <see cref="OpenAI.A2AToolCall"/>, <see cref="OpenAI.A2AToolCallOutput"/>, <see cref="OpenAI.OutputItemFunctionToolCallOutput"/>, <see cref="OpenAI.OutputItemComputerToolCallOutput"/>, <see cref="OpenAI.OutputItemToolSearchCall"/>, <see cref="OpenAI.OutputItemToolSearchOutput"/>, <see cref="OpenAI.OutputItemLocalShellToolCallOutput"/>, <see cref="OpenAI.OutputItemMcpApprovalResponseResource"/>, and <see cref="OpenAI.OutputItemCustomToolCallOutputResource"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
+        /// <returns> A new <see cref="OpenAI.AgentResponseItem"/> instance for mocking. </returns>
+        public static AgentResponseItem AgentResponseItem(string @type = default, string id = default, AgentReference agentReference = default, string responseId = default)
+        {
+            return new UnknownAgentResponseItem(new AgentResponseItemKind(@type), id, agentReference, responseId, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The AgentStructuredOutputsResponseItem. </summary>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
@@ -905,20 +919,6 @@ namespace Azure.AI.Extensions.OpenAI
                 responseId,
                 additionalBinaryDataProperties: null,
                 output);
-        }
-
-        /// <summary>
-        /// The AgentResponseItem.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.AgentStructuredOutputsResponseItem"/>, <see cref="OpenAI.AgentWorkflowPreviewActionResponseItem"/>, <see cref="OpenAI.OAuthConsentRequestResponseItem"/>, <see cref="OpenAI.MemorySearchToolCallResponseItem"/>, <see cref="OpenAI.BingGroundingToolCall"/>, <see cref="OpenAI.BingGroundingToolCallOutput"/>, <see cref="OpenAI.SharepointGroundingToolCall"/>, <see cref="OpenAI.SharepointGroundingToolCallOutput"/>, <see cref="OpenAI.AzureAISearchToolCall"/>, <see cref="OpenAI.AzureAISearchToolCallOutput"/>, <see cref="OpenAI.BingCustomSearchToolCall"/>, <see cref="OpenAI.BingCustomSearchToolCallOutput"/>, <see cref="OpenAI.OpenApiToolCall"/>, <see cref="OpenAI.OpenApiToolCallOutput"/>, <see cref="OpenAI.BrowserAutomationToolCall"/>, <see cref="OpenAI.BrowserAutomationToolCallOutput"/>, <see cref="OpenAI.FabricDataAgentToolCall"/>, <see cref="OpenAI.FabricDataAgentToolCallOutput"/>, <see cref="OpenAI.AzureFunctionToolCall"/>, <see cref="OpenAI.AzureFunctionToolCallOutput"/>, <see cref="OpenAI.A2AToolCall"/>, <see cref="OpenAI.A2AToolCallOutput"/>, <see cref="OpenAI.OutputItemFunctionToolCallOutput"/>, <see cref="OpenAI.OutputItemComputerToolCallOutput"/>, <see cref="OpenAI.OutputItemToolSearchCall"/>, <see cref="OpenAI.OutputItemToolSearchOutput"/>, <see cref="OpenAI.OutputItemLocalShellToolCallOutput"/>, <see cref="OpenAI.OutputItemMcpApprovalResponseResource"/>, and <see cref="OpenAI.OutputItemCustomToolCallOutputResource"/>.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <returns> A new <see cref="OpenAI.AgentResponseItem"/> instance for mocking. </returns>
-        public static AgentResponseItem AgentResponseItem(string @type = default, string id = default, AgentReference agentReference = default, string responseId = default)
-        {
-            return new UnknownAgentResponseItem(new AgentResponseItemKind(@type), id, agentReference, responseId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
