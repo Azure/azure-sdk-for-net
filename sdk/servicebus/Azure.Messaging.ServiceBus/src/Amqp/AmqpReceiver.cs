@@ -1592,7 +1592,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Lists the IDs of sessions that have active messages or whose state was updated since the given time.
         /// </summary>
         public override async Task<IReadOnlyList<string>> GetMessageSessionsAsync(
-            DateTime lastUpdatedTime, int skip, int top, CancellationToken cancellationToken)
+            DateTime lastUpdatedTime,
+            int skip,
+            int top,
+            CancellationToken cancellationToken)
         {
             return await _retryPolicy.RunOperation(
                 static async (args, timeout, _) =>

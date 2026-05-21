@@ -28,6 +28,9 @@ namespace Azure.Messaging.ServiceBus
     ///</remarks>
     public class ServiceBusClient : IAsyncDisposable
     {
+        /// <summary>The number of session IDs to request per management call when listing sessions.</summary>
+        private const int SessionBrowsePageSize = 100;
+
         private readonly ServiceBusClientOptions _options;
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
@@ -584,29 +587,6 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Lists the IDs of sessions whose state was updated after the specified time in a session-enabled queue.
-        /// </summary>
-        ///
-        /// <param name="queueName">The name of the session-enabled queue.</param>
-        /// <param name="updatedAfter">Only sessions whose session state was updated after this time are returned.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>An <see cref="IAsyncEnumerable{T}"/> of session ID strings that can be iterated with <c>await foreach</c>.</returns>
-        public virtual async IAsyncEnumerable<string> GetMessageSessionsAsync(
-            string queueName,
-            DateTimeOffset updatedAfter,
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
-        {
-            ValidateEntityName(queueName);
-            await foreach (var sessionId in GetMessageSessionsCoreAsync(
-                queueName, updatedAfter.UtcDateTime,
-                cancellationToken).ConfigureAwait(false))
-            {
-                yield return sessionId;
-            }
-        }
-
-        /// <summary>
         /// Lists the IDs of sessions with active messages in a session-enabled subscription.
         /// </summary>
         ///
@@ -625,32 +605,6 @@ namespace Azure.Messaging.ServiceBus
             await foreach (var sessionId in GetMessageSessionsCoreAsync(
                 entityPath,
                 DateTime.SpecifyKind(DateTime.MaxValue, DateTimeKind.Utc),
-                cancellationToken).ConfigureAwait(false))
-            {
-                yield return sessionId;
-            }
-        }
-
-        /// <summary>
-        /// Lists the IDs of sessions whose state was updated after the specified time in a session-enabled subscription.
-        /// </summary>
-        ///
-        /// <param name="topicName">The name of the topic.</param>
-        /// <param name="subscriptionName">The name of the subscription.</param>
-        /// <param name="updatedAfter">Only sessions whose session state was updated after this time are returned.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>An <see cref="IAsyncEnumerable{T}"/> of session ID strings that can be iterated with <c>await foreach</c>.</returns>
-        public virtual async IAsyncEnumerable<string> GetMessageSessionsAsync(
-            string topicName,
-            string subscriptionName,
-            DateTimeOffset updatedAfter,
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
-        {
-            ValidateEntityName(topicName);
-            var entityPath = EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName);
-            await foreach (var sessionId in GetMessageSessionsCoreAsync(
-                entityPath, updatedAfter.UtcDateTime,
                 cancellationToken).ConfigureAwait(false))
             {
                 yield return sessionId;
@@ -678,13 +632,12 @@ namespace Azure.Messaging.ServiceBus
 
             try
             {
-                int skip = 0;
-                const int pageSize = 100;
+                var skip = 0;
 
                 while (true)
                 {
                     var page = await transportReceiver.GetMessageSessionsAsync(
-                        lastUpdatedTime, skip, pageSize, cancellationToken).ConfigureAwait(false);
+                        lastUpdatedTime, skip, SessionBrowsePageSize, cancellationToken).ConfigureAwait(false);
 
                     if (page == null)
                     {
@@ -705,7 +658,7 @@ namespace Azure.Messaging.ServiceBus
                         yield return sessionId;
                     }
 
-                    if (page.Count < pageSize)
+                    if (page.Count < SessionBrowsePageSize)
                     {
                         break;
                     }
