@@ -2894,7 +2894,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class ManagedIdentityAuthProperties : Azure.ResourceManager.Storage.Models.StorageConnectorAuthProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagedIdentityAuthProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagedIdentityAuthProperties>
     {
         public ManagedIdentityAuthProperties() { }
-        public Azure.Core.ResourceIdentifier IdentityResourceId { get { throw null; } set { } }
+        public string IdentityResourceId { get { throw null; } set { } }
         protected override Azure.ResourceManager.Storage.Models.StorageConnectorAuthProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.Storage.Models.StorageConnectorAuthProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2908,7 +2908,7 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class ManagedIdentityAuthPropertiesPatch : Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ManagedIdentityAuthPropertiesPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ManagedIdentityAuthPropertiesPatch>
     {
         public ManagedIdentityAuthPropertiesPatch() { }
-        public Azure.Core.ResourceIdentifier IdentityResourceId { get { throw null; } set { } }
+        public string IdentityResourceId { get { throw null; } set { } }
         protected override Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

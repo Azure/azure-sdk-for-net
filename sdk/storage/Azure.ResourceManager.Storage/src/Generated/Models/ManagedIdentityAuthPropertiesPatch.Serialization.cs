@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             StorageConnectorAuthType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResourceIdentifier identityResourceId = default;
+            string identityResourceId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -120,11 +119,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("identityResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identityResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    identityResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
