@@ -527,8 +527,6 @@ namespace System.ClientModel.Primitives
         public void AddProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> proxy) { }
         public System.ClientModel.Primitives.IJsonModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IJsonModel<T> model) { throw null; }
         public System.ClientModel.Primitives.IPersistableModel<T> ResolveProxy<T>(System.ClientModel.Primitives.IPersistableModel<T> model) { throw null; }
-        public bool TryGetProxy<T>(System.ReadOnlyMemory<byte> data, out System.ClientModel.Primitives.IPersistableModel<T>? proxy) { throw null; }
-        public bool TryGetProxy<T>(ref System.Text.Json.Utf8JsonReader reader, out System.ClientModel.Primitives.IJsonModel<T>? proxy) { throw null; }
     }
     public abstract partial class ModelReaderWriterTypeBuilder
     {

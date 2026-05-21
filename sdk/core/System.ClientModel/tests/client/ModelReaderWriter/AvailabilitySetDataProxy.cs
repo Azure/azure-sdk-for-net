@@ -39,7 +39,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             if (OptionalProperty.IsDefined(aset.Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(aset.Sku);
+                options.ResolveProxy((IJsonModel<ComputeSku>)aset.Sku).Write(writer, options);
             }
             if (OptionalProperty.IsCollectionDefined(aset.Tags))
             {
@@ -72,14 +72,14 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in aset.VirtualMachines)
                 {
-                    writer.WriteObjectValue(item, options);
+                    options.ResolveProxy((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (OptionalProperty.IsDefined(aset.ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
-                writer.WriteObjectValue(aset.ProximityPlacementGroup, options);
+                options.ResolveProxy((IJsonModel<WritableSubResource>)aset.ProximityPlacementGroup).Write(writer, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("extra"u8);

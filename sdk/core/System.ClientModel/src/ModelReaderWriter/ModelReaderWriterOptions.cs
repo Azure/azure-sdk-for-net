@@ -181,7 +181,7 @@ public class ModelReaderWriterOptions
     /// <param name="data">The data to inspect.</param>
     /// <param name="proxy">When this method returns true, the proxy to use for deserialization.</param>
     /// <returns>True if a proxy was found; otherwise, false.</returns>
-    public bool TryGetProxy<T>(ReadOnlyMemory<byte> data, out IPersistableModel<T>? proxy)
+    internal bool TryGetProxy<T>(ReadOnlyMemory<byte> data, out IPersistableModel<T>? proxy)
     {
         proxy = null;
         if (_proxies is null || !_proxies.TryGetValue(typeof(T), out List<object>? list) || list.Count == 0)
@@ -222,7 +222,7 @@ public class ModelReaderWriterOptions
     /// <param name="reader">The JSON reader positioned at the start of the element.</param>
     /// <param name="proxy">When this method returns true, the proxy to use for deserialization.</param>
     /// <returns>True if a proxy was found; otherwise, false.</returns>
-    public bool TryGetProxy<T>(ref Utf8JsonReader reader, out IJsonModel<T>? proxy)
+    internal bool TryGetProxy<T>(ref Utf8JsonReader reader, out IJsonModel<T>? proxy)
     {
         proxy = null;
         if (_proxies is null || !_proxies.TryGetValue(typeof(T), out List<object>? list) || list.Count == 0)
