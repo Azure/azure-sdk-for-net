@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("deleteRetentionPolicy"u8);
                 writer.WriteObjectValue(DeleteRetentionPolicy, options);
             }
+            if (Optional.IsDefined(StaticWebsite))
+            {
+                writer.WritePropertyName("staticWebsite"u8);
+                writer.WriteObjectValue(StaticWebsite, options);
+            }
             if (Optional.IsDefined(IsVersioningEnabled))
             {
                 writer.WritePropertyName("isVersioningEnabled"u8);
@@ -164,6 +169,7 @@ namespace Azure.ResourceManager.Storage.Models
             StorageCorsRules cors = default;
             string defaultServiceVersion = default;
             DeleteRetentionPolicy deleteRetentionPolicy = default;
+            StaticWebsite staticWebsite = default;
             bool? isVersioningEnabled = default;
             bool? isAutomaticSnapshotPolicyEnabled = default;
             BlobServiceChangeFeed changeFeed = default;
@@ -194,6 +200,15 @@ namespace Azure.ResourceManager.Storage.Models
                         continue;
                     }
                     deleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("staticWebsite"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    staticWebsite = StaticWebsite.DeserializeStaticWebsite(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("isVersioningEnabled"u8))
@@ -259,6 +274,7 @@ namespace Azure.ResourceManager.Storage.Models
                 cors,
                 defaultServiceVersion,
                 deleteRetentionPolicy,
+                staticWebsite,
                 isVersioningEnabled,
                 isAutomaticSnapshotPolicyEnabled,
                 changeFeed,
