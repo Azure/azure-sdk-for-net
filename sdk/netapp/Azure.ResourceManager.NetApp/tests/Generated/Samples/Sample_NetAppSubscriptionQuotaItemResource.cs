@@ -30,10 +30,9 @@ namespace Azure.ResourceManager.NetApp.Samples
             // this example assumes you already have this NetAppSubscriptionQuotaItemResource created on azure
             // for more information of creating NetAppSubscriptionQuotaItemResource, please refer to the document of NetAppSubscriptionQuotaItemResource
             string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
-            string resourceGroupName = "myRG";
-            string accountName = "myAccount";
+            AzureLocation location = new AzureLocation("eastus");
             string quotaLimitName = "poolsPerAccount";
-            ResourceIdentifier netAppSubscriptionQuotaItemResourceId = NetAppSubscriptionQuotaItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, quotaLimitName);
+            ResourceIdentifier netAppSubscriptionQuotaItemResourceId = NetAppSubscriptionQuotaItemResource.CreateResourceIdentifier(subscriptionId, location, quotaLimitName);
             NetAppSubscriptionQuotaItemResource netAppSubscriptionQuotaItem = client.GetNetAppSubscriptionQuotaItemResource(netAppSubscriptionQuotaItemResourceId);
 
             // invoke the operation

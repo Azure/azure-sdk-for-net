@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
@@ -439,6 +440,130 @@ namespace Azure.Core.Tests
                 {
                     pool.Return(array);
                 }
+            }
+        }
+
+        [Test]
+        public void BinaryContentAdapter_WriteTo_CopiesPayload()
+        {
+            byte[] payload = Encoding.UTF8.GetBytes("scm binary content payload");
+            using BinaryContent binaryContent = BinaryContent.Create(new BinaryData(payload));
+            using RequestContent content = RequestContent.Create(binaryContent);
+
+            using var destination = new MemoryStream();
+            content.WriteTo(destination, default);
+
+            CollectionAssert.AreEqual(payload, destination.ToArray());
+        }
+
+        [Test]
+        public async Task BinaryContentAdapter_WriteToAsync_CopiesPayload()
+        {
+            byte[] payload = Encoding.UTF8.GetBytes("scm binary content async payload");
+            using BinaryContent binaryContent = BinaryContent.Create(new BinaryData(payload));
+            using RequestContent content = RequestContent.Create(binaryContent);
+
+            using var destination = new MemoryStream();
+            await content.WriteToAsync(destination, default);
+
+            CollectionAssert.AreEqual(payload, destination.ToArray());
+        }
+
+        [Test]
+        public void BinaryContentAdapter_TryComputeLength_DelegatesToInner()
+        {
+            byte[] payload = new byte[123];
+            using BinaryContent binaryContent = BinaryContent.Create(new BinaryData(payload));
+            using RequestContent content = RequestContent.Create(binaryContent);
+
+            Assert.IsTrue(content.TryComputeLength(out long length));
+            Assert.AreEqual(payload.Length, length);
+        }
+
+        [Test]
+        public void BinaryContentAdapter_Dispose_DisposesInnerOnce()
+        {
+            var inner = new TrackingBinaryContent();
+            RequestContent content = RequestContent.Create(inner);
+
+            content.Dispose();
+            content.Dispose();
+
+            Assert.AreEqual(1, inner.DisposeCount);
+        }
+
+        [Test]
+        public void BinaryContentAdapter_WriteTo_ForwardsCancellation()
+        {
+            var inner = new TrackingBinaryContent();
+            using RequestContent content = RequestContent.Create(inner);
+
+            using var cts = new CancellationTokenSource();
+            content.WriteTo(new MemoryStream(), cts.Token);
+
+            Assert.AreEqual(cts.Token, inner.LastWriteToToken);
+        }
+
+        [Test]
+        public async Task BinaryContentAdapter_WriteToAsync_ForwardsCancellation()
+        {
+            var inner = new TrackingBinaryContent();
+            using RequestContent content = RequestContent.Create(inner);
+
+            using var cts = new CancellationTokenSource();
+            await content.WriteToAsync(new MemoryStream(), cts.Token);
+
+            Assert.AreEqual(cts.Token, inner.LastWriteToAsyncToken);
+        }
+
+        [Test]
+        public async Task BinaryContentAdapter_PersistableModelRoundtrip()
+        {
+            var model = new TestPersistableModel { Name = "via-adapter", Value = 7 };
+            using BinaryContent binaryContent = BinaryContent.Create(model);
+            using RequestContent content = RequestContent.Create(binaryContent);
+
+            using var destination = new MemoryStream();
+            await content.WriteToAsync(destination, default);
+            destination.Position = 0;
+
+            using var document = JsonDocument.Parse(destination);
+            Assert.AreEqual("via-adapter", document.RootElement.GetProperty("name").GetString());
+            Assert.AreEqual(7, document.RootElement.GetProperty("value").GetInt32());
+        }
+
+        [Test]
+        public void BinaryContentAdapter_TryComputeLength_PropagatesFalse()
+        {
+            var inner = new TrackingBinaryContent { TryComputeLengthReturnValue = false };
+            using RequestContent content = RequestContent.Create(inner);
+
+            Assert.IsFalse(content.TryComputeLength(out long length));
+            Assert.AreEqual(0, length);
+        }
+
+        private sealed class TrackingBinaryContent : BinaryContent
+        {
+            public int DisposeCount { get; private set; }
+            public CancellationToken LastWriteToToken { get; private set; }
+            public CancellationToken LastWriteToAsyncToken { get; private set; }
+            public bool TryComputeLengthReturnValue { get; set; } = true;
+
+            public override void Dispose() => DisposeCount++;
+
+            public override bool TryComputeLength(out long length)
+            {
+                length = 0;
+                return TryComputeLengthReturnValue;
+            }
+
+            public override void WriteTo(Stream stream, CancellationToken cancellationToken)
+                => LastWriteToToken = cancellationToken;
+
+            public override Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
+            {
+                LastWriteToAsyncToken = cancellationToken;
+                return Task.CompletedTask;
             }
         }
     }

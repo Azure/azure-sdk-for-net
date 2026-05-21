@@ -1132,6 +1132,23 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new RebalanceLoadBalancersContent(loadBalancerNames.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="agentPoolVersions"> List of versions available for agent pool. </param>
+        /// <returns> A new <see cref="Models.AgentPoolAvailableVersions"/> instance for mocking. </returns>
+        public static AgentPoolAvailableVersions AgentPoolAvailableVersions(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<AgentPoolAvailableVersion> agentPoolVersions = default)
+        {
+            return new AgentPoolAvailableVersions(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                new AgentPoolAvailableVersionsProperties((agentPoolVersions ?? new ChangeTrackingList<AgentPoolAvailableVersion>()).ToList(), null));
+        }
+
         /// <summary> Available version information for an agent pool. </summary>
         /// <param name="isDefault"> Whether this version is the default agent pool version. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
@@ -2253,8 +2270,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                     scaleSetPriority,
                     scaleSetEvictionPolicy,
                     spotMaxPrice,
-                    tags,
-                    nodeLabels,
+                    tags ?? new ChangeTrackingDictionary<string, string>(),
+                    nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
                     (nodeTaints ?? new ChangeTrackingList<string>()).ToList(),
                     default,
                     proximityPlacementGroupId,
@@ -2343,7 +2360,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
             nodeLabels ??= new ChangeTrackingDictionary<string, string>();
             nodeTaints ??= new ChangeTrackingList<string>();
-            virtualMachinesScaleManual ??= new ChangeTrackingList<ManualScaleProfile>();
             virtualMachineNodesStatus ??= new ChangeTrackingList<AgentPoolVirtualMachineNodes>();
 
             return new ManagedClusterAgentPoolProfileProperties(
@@ -2402,7 +2418,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 gpuDriver is null ? default : new AgentPoolGpuProfile(gpuDriver, default, default, default),
                 gatewayPublicIPPrefixSize is null ? default : new AgentPoolGatewayProfile(gatewayPublicIPPrefixSize, default),
                 default,
-                minCount is null && maxCount is null ? default : new VirtualMachinesProfile(new AgentPoolScaleProfile(default, new AgentPoolAutoScaleProfile(default, minCount, maxCount, default), default), default),
+                virtualMachinesScaleManual is null ? default : new VirtualMachinesProfile(new AgentPoolScaleProfile((virtualMachinesScaleManual ?? new ChangeTrackingList<ManualScaleProfile>()).ToList(), default, default), default),
                 virtualMachineNodesStatus.ToList(),
                 statusProvisioningError is null ? default : new AgentPoolStatus(statusProvisioningError, default),
                 localDnsProfile,
@@ -2515,7 +2531,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     linuxProfile,
                     windowsProfile,
                     servicePrincipalProfile,
-                    addonProfiles,
+                    addonProfiles ?? new ChangeTrackingDictionary<string, ManagedClusterAddonProfile>(),
                     podIdentityProfile,
                     oidcIssuerProfile,
                     nodeResourceGroup,
@@ -2530,7 +2546,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     autoScalerProfile,
                     apiServerAccessProfile,
                     diskEncryptionSetId,
-                    identityProfile,
+                    identityProfile ?? new ChangeTrackingDictionary<string, ContainerServiceUserAssignedIdentity>(),
                     (privateLinkResources ?? new ChangeTrackingList<ContainerServicePrivateLinkResourceData>()).ToList(),
                     isLocalAccountsDisabled,
                     httpProxyConfig,
@@ -2621,7 +2637,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
             nodeLabels ??= new ChangeTrackingDictionary<string, string>();
             nodeTaints ??= new ChangeTrackingList<string>();
-            virtualMachinesScaleManual ??= new ChangeTrackingList<ManualScaleProfile>();
             virtualMachineNodesStatus ??= new ChangeTrackingList<AgentPoolVirtualMachineNodes>();
 
             return new ManagedClusterAgentPoolProfile(
@@ -2680,7 +2695,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 gpuDriver is null ? default : new AgentPoolGpuProfile(gpuDriver, default, default, default),
                 gatewayPublicIPPrefixSize is null ? default : new AgentPoolGatewayProfile(gatewayPublicIPPrefixSize, default),
                 default,
-                minCount is null && maxCount is null ? default : new VirtualMachinesProfile(new AgentPoolScaleProfile(default, new AgentPoolAutoScaleProfile(default, minCount, maxCount, default), default), default),
+                virtualMachinesScaleManual is null ? default : new VirtualMachinesProfile(new AgentPoolScaleProfile((virtualMachinesScaleManual ?? new ChangeTrackingList<ManualScaleProfile>()).ToList(), default, default), default),
                 virtualMachineNodesStatus.ToList(),
                 statusProvisioningError is null ? default : new AgentPoolStatus(statusProvisioningError, default),
                 localDnsProfile,
@@ -2894,7 +2909,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     linuxProfile,
                     windowsProfile,
                     servicePrincipalProfile,
-                    addonProfiles,
+                    addonProfiles ?? new ChangeTrackingDictionary<string, ManagedClusterAddonProfile>(),
                     podIdentityProfile,
                     oidcIssuerProfile,
                     nodeResourceGroup,
@@ -2909,7 +2924,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     autoScalerProfile,
                     apiServerAccessProfile,
                     diskEncryptionSetId,
-                    identityProfile,
+                    identityProfile ?? new ChangeTrackingDictionary<string, ContainerServiceUserAssignedIdentity>(),
                     (privateLinkResources ?? new ChangeTrackingList<ContainerServicePrivateLinkResourceData>()).ToList(),
                     default,
                     httpProxyConfig,
@@ -3031,7 +3046,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     linuxProfile,
                     windowsProfile,
                     servicePrincipalProfile,
-                    addonProfiles,
+                    addonProfiles ?? new ChangeTrackingDictionary<string, ManagedClusterAddonProfile>(),
                     podIdentityProfile,
                     oidcIssuerProfile,
                     nodeResourceGroup,
@@ -3046,7 +3061,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     autoScalerProfile,
                     apiServerAccessProfile,
                     diskEncryptionSetId,
-                    identityProfile,
+                    identityProfile ?? new ChangeTrackingDictionary<string, ContainerServiceUserAssignedIdentity>(),
                     (privateLinkResources ?? new ChangeTrackingList<ContainerServicePrivateLinkResourceData>()).ToList(),
                     default,
                     httpProxyConfig,
@@ -3228,8 +3243,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                     scaleSetPriority,
                     scaleSetEvictionPolicy,
                     spotMaxPrice,
-                    tags,
-                    nodeLabels,
+                    tags ?? new ChangeTrackingDictionary<string, string>(),
+                    nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
                     (nodeTaints ?? new ChangeTrackingList<string>()).ToList(),
                     default,
                     proximityPlacementGroupId,
@@ -3254,26 +3269,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                     localDnsProfile,
                     default,
                     default));
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AgentPoolAvailableVersions"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="agentPoolVersions"> List of versions available for agent pool. </param>
-        /// <returns> A new <see cref="Models.AgentPoolAvailableVersions"/> instance for mocking. </returns>
-        public static AgentPoolAvailableVersions AgentPoolAvailableVersions(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<AgentPoolAvailableVersion> agentPoolVersions = default)
-        {
-            agentPoolVersions ??= new ChangeTrackingList<AgentPoolAvailableVersion>();
-
-            return new AgentPoolAvailableVersions(
-                id,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                name,
-                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerService.ContainerServicePrivateEndpointConnectionData"/>. </summary>
@@ -3481,7 +3476,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 default,
                 default,
                 default,
-                minCount is null && maxCount is null ? default : new VirtualMachinesProfile(new AgentPoolScaleProfile(default, new AgentPoolAutoScaleProfile(default, minCount, maxCount, default), default), default),
+                default,
                 new ChangeTrackingList<AgentPoolVirtualMachineNodes>(),
                 default,
                 default,
@@ -3599,7 +3594,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 default,
                 default,
                 default,
-                minCount is null && maxCount is null ? default : new VirtualMachinesProfile(new AgentPoolScaleProfile(default, new AgentPoolAutoScaleProfile(default, minCount, maxCount, default), default), default),
+                default,
                 new ChangeTrackingList<AgentPoolVirtualMachineNodes>(),
                 default,
                 default,
@@ -3702,8 +3697,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                     scaleSetPriority,
                     scaleSetEvictionPolicy,
                     spotMaxPrice,
-                    tags,
-                    nodeLabels,
+                    tags ?? new ChangeTrackingDictionary<string, string>(),
+                    nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
                     (nodeTaints ?? new ChangeTrackingList<string>()).ToList(),
                     default,
                     proximityPlacementGroupId,

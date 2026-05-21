@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "inputToInputOutputContentType",
+      "name": "InputToInputOutputContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -22,7 +22,7 @@
     {
       "$id": "3",
       "kind": "constant",
-      "name": "outputToInputOutputContentType",
+      "name": "InputToInputOutputContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -38,7 +38,7 @@
     {
       "$id": "5",
       "kind": "constant",
-      "name": "modelInReadOnlyPropertyContentType",
+      "name": "InputToInputOutputContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -54,7 +54,7 @@
     {
       "$id": "7",
       "kind": "constant",
-      "name": "modelInReadOnlyPropertyContentType1",
+      "name": "InputToInputOutputContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -70,7 +70,7 @@
     {
       "$id": "9",
       "kind": "constant",
-      "name": "orphanModelSerializableContentType",
+      "name": "InputToInputOutputContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
