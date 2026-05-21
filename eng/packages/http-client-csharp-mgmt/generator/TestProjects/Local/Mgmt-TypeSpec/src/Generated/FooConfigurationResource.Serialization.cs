@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    public partial class FooSettingsResource : IJsonModel<FooSettingsData>
+    public partial class FooConfigurationResource : IJsonModel<FooSettingsData>
     {
         private static IJsonModel<FooSettingsData> s_dataDeserializationInstance;
 
