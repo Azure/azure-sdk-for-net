@@ -292,15 +292,15 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="modifiedOn"> Date and time in UTC of the last modification that was made to this graph query definition. </param>
         /// <param name="description"> The description of a graph query. </param>
         /// <param name="query"> KQL query that will be graph. </param>
         /// <param name="resultKind"> Enum indicating a type of graph query. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="eTag"> This will be used to handle Optimistic Concurrency. If not present, it will always overwrite the existing resource without checking conflict. </param>
+        /// <param name="etag"> This will be used to handle Optimistic Concurrency. If not present, it will always overwrite the existing resource without checking conflict. </param>
         /// <returns> A new <see cref="ResourceGraph.ResourceGraphQueryData"/> instance for mocking. </returns>
-        public static ResourceGraphQueryData ResourceGraphQueryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, DateTimeOffset? modifiedOn = default, string description = default, string query = default, ResultKind? resultKind = default, IDictionary<string, string> tags = default, ETag? eTag = default)
+        public static ResourceGraphQueryData ResourceGraphQueryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? modifiedOn = default, string description = default, string query = default, ResultKind? resultKind = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -310,10 +310,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 modifiedOn is null && description is null && query is null && resultKind is null ? default : new GraphQueryProperties(modifiedOn, description, query, resultKind, null),
-                tags,
-                eTag);
+                etag);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -326,36 +326,6 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ResourceGraphQueryPatch(tags, eTag, description is null && query is null ? default : new GraphQueryPropertiesUpdateParameters(description, query, null), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceGraph.ResourceGraphQueryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="modifiedOn"> Date and time in UTC of the last modification that was made to this graph query definition. </param>
-        /// <param name="description"> The description of a graph query. </param>
-        /// <param name="query"> KQL query that will be graph. </param>
-        /// <param name="resultKind"> Enum indicating a type of graph query. </param>
-        /// <param name="etag"> This will be used to handle Optimistic Concurrency. If not present, it will always overwrite the existing resource without checking conflict. </param>
-        /// <returns> A new <see cref="ResourceGraph.ResourceGraphQueryData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ResourceGraphQueryData ResourceGraphQueryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? modifiedOn, string description, string query, ResultKind? resultKind, ETag? etag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ResourceGraphQueryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                modifiedOn is null && description is null && query is null && resultKind is null ? default : new GraphQueryProperties(modifiedOn, description, query, resultKind, default),
-                tags,
-                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourcesHistoryRequestOptions"/>. </summary>
