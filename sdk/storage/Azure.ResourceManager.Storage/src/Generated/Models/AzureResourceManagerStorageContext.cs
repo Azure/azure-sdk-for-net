@@ -97,6 +97,7 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(LegalHold))]
     [ModelReaderWriterBuildable(typeof(LegalHoldProperties))]
     [ModelReaderWriterBuildable(typeof(LegalHoldTag))]
+    [ModelReaderWriterBuildable(typeof(ListBlobInventoryPolicy))]
     [ModelReaderWriterBuildable(typeof(ListContainerItems))]
     [ModelReaderWriterBuildable(typeof(ListQueueResource))]
     [ModelReaderWriterBuildable(typeof(ListQueueServices))]
