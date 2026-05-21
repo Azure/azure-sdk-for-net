@@ -14,7 +14,7 @@ on:
         type: string
 if: |
   github.event_name == 'workflow_dispatch' ||
-  (github.event_name == 'check_run' && github.event.check_run.name == 'net - pullrequest' && github.event.check_run.pull_requests[0]) ||
+  (github.event_name == 'check_run' && github.event.check_run.name == 'net - pullrequest' && github.event.check_run.conclusion == 'failure' && github.event.check_run.pull_requests[0]) ||
   (github.event.pull_request && !github.event.pull_request.draft)
 description: "Review Azure SDK for .NET management-plane PRs using the mgmt PR review skill"
 checkout:
