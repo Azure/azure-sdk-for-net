@@ -73,7 +73,11 @@ This workflow runs automatically when a pull request modifies files under an `Az
 
 Fetch the pull request details. If the PR is in draft state, use `noop` and stop — draft PRs are not ready for review and should not have their state modified.
 
-Then check CI status: list the check runs and commit statuses for the PR head commit. If the required CI checks (e.g., the Azure Pipelines build) have not yet completed (status is still `queued` or `in_progress`), use `noop` with a message like "CI checks have not completed yet — review will run on the next trigger after CI finishes." This avoids reviewing code that may still have build or test failures pending.
+Then check CI status: list the check runs and commit statuses for the PR head commit.
+
+- If the required CI checks (e.g., the Azure Pipelines build) have not yet completed (status is still `queued` or `in_progress`), use `noop` with a message like "CI checks have not completed yet — review will run on the next trigger after CI finishes."
+- If CI checks have failed, fetch the failure details (check run name, conclusion, and output summary/text). Include relevant CI failures in your review — for example, build errors, ApiCompat violations, or test failures. Link to the failed check run URL so authors can navigate directly to the failure logs.
+- If CI checks have passed, proceed with the review.
 
 ## Step 1 - Determine review scope
 
@@ -109,7 +113,7 @@ Apply all relevant phases from the skill files, with these workflow-specific adj
 
 1. Phase 1 versioning findings are blocking.
 2. Phase 2 API review findings should focus on new or changed public API surface only.
-3. Phase 3 breaking-change detection must use existing CI/check results and API diffs. Do not run `dotnet build` in this workflow because that would execute untrusted PR code. If CI reports ApiCompat failures, surface them with links to the real check or Azure DevOps target URL. If CI has not completed, note that ApiCompat status is pending rather than guessing.
+3. Phase 3 breaking-change detection must use the CI failure details fetched in Step 0 and API diffs. Do not run `dotnet build` in this workflow because that would execute untrusted PR code. If CI reports ApiCompat failures or build errors, surface them with links to the failed check run URL or Azure DevOps target URL.
 4. For migration PRs, apply Phases 4 and 5 from the migration skill. Treat manual edits to `src/Generated/` as blocking unless there is clear evidence they are generated output rather than hand edits.
 
 ## Step 4 - Submit one PR review
