@@ -3465,7 +3465,7 @@ namespace Azure.Storage.Blobs.Specialized
                         cancellationToken).ConfigureAwait(false),
                 Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName
                     ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(Storage.Blobs.BlobClient.Upload)}"),
-                GenerateBlockId = BlobExtensions.GenerateBlockId
+                GenerateBlockId = BlobHelpers.GenerateBlockId
             };
         }
         #endregion

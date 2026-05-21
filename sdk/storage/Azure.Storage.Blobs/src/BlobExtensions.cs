@@ -1802,19 +1802,5 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion
-
-        #region GenerateBlockId
-        public static string GenerateBlockId()
-        {
-            // Block ID must be a valid Base64 string with length <= 64 characters (before URL-encoding).
-            // 48 raw bytes => 64 character Base64 string.
-            byte[] id = new byte[48];
-            using (var rng = System.Security.Cryptography.RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(id);
-            }
-            return Convert.ToBase64String(id);
-        }
-        #endregion GenerateBlockId
     }
 }

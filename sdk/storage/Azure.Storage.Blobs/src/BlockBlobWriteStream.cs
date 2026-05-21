@@ -56,7 +56,7 @@ namespace Azure.Storage.Blobs
             {
                 _buffer.Position = 0;
 
-                string blockId = BlobExtensions.GenerateBlockId();
+                string blockId = BlobHelpers.GenerateBlockId();
 
                 // Stage Block only supports LeaseId.
                 BlobRequestConditions conditions = null;
