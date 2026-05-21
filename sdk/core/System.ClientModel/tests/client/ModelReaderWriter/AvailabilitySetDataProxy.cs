@@ -72,14 +72,14 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in aset.VirtualMachines)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (OptionalProperty.IsDefined(aset.ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
-                JsonSerializer.Serialize(writer, aset.ProximityPlacementGroup);
+                writer.WriteObjectValue(aset.ProximityPlacementGroup, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("extra"u8);
@@ -159,7 +159,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(property.Value.GetUtf8Bytes(), options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -198,7 +198,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(item.GetUtf8Bytes(), options));
                             }
                             virtualMachines = array;
                             continue;
@@ -209,7 +209,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            proximityPlacementGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            proximityPlacementGroup = ModelReaderWriter.Read<WritableSubResource>(property0.Value.GetUtf8Bytes(), options);
                             continue;
                         }
                         if (property0.NameEquals("statuses"u8))
