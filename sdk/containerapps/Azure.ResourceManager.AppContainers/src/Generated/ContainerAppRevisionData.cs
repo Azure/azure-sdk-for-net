@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary>
-    /// A class representing the ContainerAppRevision data model.
-    /// Container App Revision.
-    /// </summary>
+    /// <summary> Container App Revision. </summary>
     public partial class ContainerAppRevisionData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppRevisionData"/>. </summary>
         public ContainerAppRevisionData()
@@ -57,84 +25,151 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppRevisionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="createdOn">
-        /// Timestamp describing when the revision was created
-        /// by controller
-        /// </param>
-        /// <param name="lastActiveOn"> Timestamp describing when the revision was last active. Only meaningful when revision is inactive. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the revision. </param>
-        /// <param name="template">
-        /// Container App Revision Template with all possible settings and the
-        /// defaults if user did not provide them. The defaults are populated
-        /// as they were at the creation time
-        /// </param>
-        /// <param name="isActive"> Boolean describing if the Revision is Active. </param>
-        /// <param name="replicas"> Number of pods currently running for this revision. </param>
-        /// <param name="trafficWeight"> Traffic weight assigned to this revision. </param>
-        /// <param name="provisioningError"> Optional Field - Platform Error Message. </param>
-        /// <param name="healthState"> Current health State of the revision. </param>
-        /// <param name="provisioningState"> Current provisioning State of the revision. </param>
-        /// <param name="runningState"> Current running state of the revision. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastActiveOn, string fqdn, ContainerAppTemplate template, bool? isActive, int? replicas, int? trafficWeight, string provisioningError, ContainerAppRevisionHealthState? healthState, ContainerAppRevisionProvisioningState? provisioningState, RevisionRunningState? runningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Revision resource specific properties. </param>
+        internal ContainerAppRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RevisionProperties properties) : base(id, name, resourceType, systemData)
         {
-            CreatedOn = createdOn;
-            LastActiveOn = lastActiveOn;
-            Fqdn = fqdn;
-            Template = template;
-            IsActive = isActive;
-            Replicas = replicas;
-            TrafficWeight = trafficWeight;
-            ProvisioningError = provisioningError;
-            HealthState = healthState;
-            ProvisioningState = provisioningState;
-            RunningState = runningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Revision resource specific properties. </summary>
+        [WirePath("properties")]
+        internal RevisionProperties Properties { get; set; }
 
         /// <summary>
         /// Timestamp describing when the revision was created
         /// by controller
         /// </summary>
         [WirePath("properties.createdTime")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> Timestamp describing when the revision was last active. Only meaningful when revision is inactive. </summary>
         [WirePath("properties.lastActiveTime")]
-        public DateTimeOffset? LastActiveOn { get; }
+        public DateTimeOffset? LastActiveOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastActiveOn;
+            }
+        }
+
         /// <summary> Fully qualified domain name of the revision. </summary>
         [WirePath("properties.fqdn")]
-        public string Fqdn { get; }
+        public string Fqdn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Fqdn;
+            }
+        }
+
         /// <summary>
         /// Container App Revision Template with all possible settings and the
         /// defaults if user did not provide them. The defaults are populated
         /// as they were at the creation time
         /// </summary>
         [WirePath("properties.template")]
-        public ContainerAppTemplate Template { get; }
+        public ContainerAppTemplate Template
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Template;
+            }
+        }
+
         /// <summary> Boolean describing if the Revision is Active. </summary>
         [WirePath("properties.active")]
-        public bool? IsActive { get; }
+        public bool? IsActive
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsActive;
+            }
+        }
+
         /// <summary> Number of pods currently running for this revision. </summary>
         [WirePath("properties.replicas")]
-        public int? Replicas { get; }
+        public int? Replicas
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Replicas;
+            }
+        }
+
         /// <summary> Traffic weight assigned to this revision. </summary>
         [WirePath("properties.trafficWeight")]
-        public int? TrafficWeight { get; }
+        public int? TrafficWeight
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TrafficWeight;
+            }
+        }
+
+        /// <summary> List of labels assigned to this revision. </summary>
+        [WirePath("properties.labels")]
+        public IReadOnlyList<string> Labels
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RevisionProperties();
+                }
+                return Properties.Labels;
+            }
+        }
+
         /// <summary> Optional Field - Platform Error Message. </summary>
         [WirePath("properties.provisioningError")]
-        public string ProvisioningError { get; }
+        public string ProvisioningError
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningError;
+            }
+        }
+
         /// <summary> Current health State of the revision. </summary>
         [WirePath("properties.healthState")]
-        public ContainerAppRevisionHealthState? HealthState { get; }
+        public ContainerAppRevisionHealthState? HealthState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HealthState;
+            }
+        }
+
         /// <summary> Current provisioning State of the revision. </summary>
         [WirePath("properties.provisioningState")]
-        public ContainerAppRevisionProvisioningState? ProvisioningState { get; }
+        public ContainerAppRevisionProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Current running state of the revision. </summary>
         [WirePath("properties.runningState")]
-        public RevisionRunningState? RunningState { get; }
+        public RevisionRunningState? RunningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RunningState;
+            }
+        }
     }
 }

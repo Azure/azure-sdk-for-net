@@ -45,15 +45,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsCollectionDefined(IPPrefixRules))
+            if (options.Format != "W" && Optional.IsDefined(NetworkFabricId))
             {
-                writer.WritePropertyName("ipPrefixRules"u8);
-                writer.WriteStartArray();
-                foreach (var item in IPPrefixRules)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("networkFabricId"u8);
+                writer.WriteStringValue(NetworkFabricId);
+            }
+            writer.WritePropertyName("ipPrefixRules"u8);
+            writer.WriteStartArray();
+            foreach (var item in IPPrefixRules)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+            if (options.Format != "W" && Optional.IsDefined(LastOperation))
+            {
+                writer.WritePropertyName("lastOperation"u8);
+                writer.WriteObjectValue(LastOperation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
@@ -100,7 +107,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceType type = default;
             SystemData systemData = default;
             string annotation = default;
+            ResourceIdentifier networkFabricId = default;
             IList<IPPrefixRule> ipPrefixRules = default;
+            LastOperationProperties lastOperation = default;
             NetworkFabricConfigurationState? configurationState = default;
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
@@ -165,18 +174,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             annotation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("ipPrefixRules"u8))
+                        if (property0.NameEquals("networkFabricId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
+                            networkFabricId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("ipPrefixRules"u8))
+                        {
                             List<IPPrefixRule> array = new List<IPPrefixRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
                                 array.Add(IPPrefixRule.DeserializeIPPrefixRule(item, options));
                             }
                             ipPrefixRules = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("lastOperation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("configurationState"u8))
@@ -223,7 +246,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 annotation,
-                ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>(),
+                networkFabricId,
+                ipPrefixRules,
+                lastOperation,
                 configurationState,
                 provisioningState,
                 administrativeState,

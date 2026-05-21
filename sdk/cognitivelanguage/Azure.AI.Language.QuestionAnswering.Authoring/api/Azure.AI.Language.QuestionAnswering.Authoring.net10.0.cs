@@ -66,6 +66,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType left, Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType (string value) { throw null; }
+        public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType left, Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -398,6 +399,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public virtual Azure.Response UpdateSynonyms(string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateSynonymsAsync(string projectName, Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateSynonymsAsync(string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class QuestionAnsweringAuthoringClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedQuestionAnsweringAuthoringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedQuestionAnsweringAuthoringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddQuestionAnsweringAuthoringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddQuestionAnsweringAuthoringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClientSettings> configureSettings) { throw null; }
     }
     public partial class QuestionAnsweringAuthoringClientOptions : Azure.Core.ClientOptions
     {

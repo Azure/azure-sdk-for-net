@@ -51,9 +51,41 @@ namespace Azure.ResourceManager.NetApp.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_VolumesGet()
+        public async Task Get_VolumesGet_20250901Preview()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/Volumes_Get.json
+            // this example is just showing the usage of "Volumes_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetAppVolumeResource created on azure
+            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
+            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string resourceGroupName = "myRG";
+            string accountName = "account1";
+            string poolName = "pool1";
+            string volumeName = "volume1";
+            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
+
+            // invoke the operation
+            NetAppVolumeResource result = await netAppVolume.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            NetAppVolumeData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_VolumesGet()
+        {
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-09-01-preview/examples/Volumes_Get.json
             // this example is just showing the usage of "Volumes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,7 +164,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            NetAppVolumePatch patch = new NetAppVolumePatch(default);
+            NetAppVolumePatch patch = new NetAppVolumePatch();
             ArmOperation<NetAppVolumeResource> lro = await netAppVolume.UpdateAsync(WaitUntil.Completed, patch);
             NetAppVolumeResource result = lro.Value;
 
@@ -166,7 +198,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            NetAppVolumeBackupStatus result = await netAppVolume.GetLatestStatusBackupAsync();
+            NetAppVolumeBackupStatus result = await netAppVolume.GetLatestStatusAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -194,7 +226,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            NetAppRestoreStatus result = await netAppVolume.GetVolumeLatestRestoreStatusBackupAsync();
+            NetAppRestoreStatus result = await netAppVolume.GetVolumeLatestRestoreStatusAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -563,7 +595,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task PoolChange_VolumesPoolChange()
+        public async Task PoolChange_VolumesAuthorizeReplication()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/preview/2025-12-15-preview/examples/Volumes_PoolChange.json
             // this example is just showing the usage of "Volumes_PoolChange" operation, for the dependent resources, they will have to be created separately.
@@ -821,7 +853,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             NetAppVolumeRevertContent content = new NetAppVolumeRevertContent
             {
-                SnapshotId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1/volumes/volume1/snapshots/snapshot1",
+                SnapshotId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1/volumes/volume1/snapshots/snapshot1"),
             };
             await netAppVolume.RevertAsync(WaitUntil.Completed, content);
 
@@ -912,8 +944,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            BackupsMigrationContent content = new BackupsMigrationContent("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/backupVaults/backupVault1");
-            await netAppVolume.MigrateBackupsBackupsUnderVolumeAsync(WaitUntil.Completed, content);
+            BackupsMigrationContent content = new BackupsMigrationContent(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/backupVaults/backupVault1"));
+            await netAppVolume.MigrateBackupsAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
         }

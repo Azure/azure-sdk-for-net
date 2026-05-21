@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
             ResourceGroupResource rg = lro.Value;
             string deployName = Recording.GenerateAssetName("deployEx-C-");
             var deploymentData = CreateDeploymentData(CreateDeploymentProperties());
-            ArmDeploymentResource deployment = (await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
+            ArmDeploymentResource deployment = (await Client.GetArmDeployments(rg.Id).CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
             Assert.AreEqual(deployName, deployment.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, null, deploymentData));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.GetArmDeployments(rg.Id).CreateOrUpdateAsync(WaitUntil.Completed, null, deploymentData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.GetArmDeployments(rg.Id).CreateOrUpdateAsync(WaitUntil.Completed, deployName, null));
         }
 
         [TestCase]
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             string deployName = Recording.GenerateAssetName("deployEx-C-");
             var deploymentData = CreateDeploymentData(CreateDeploymentPropertiesAtSub(), AzureLocation.JapanEast);
-            ArmDeploymentResource deployment = (await subscription.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
+            ArmDeploymentResource deployment = (await Client.GetArmDeployments(subscription.Id).CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
             Assert.AreEqual(deployName, deployment.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, null, deploymentData));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await subscription.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.GetArmDeployments(subscription.Id).CreateOrUpdateAsync(WaitUntil.Completed, null, deploymentData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.GetArmDeployments(subscription.Id).CreateOrUpdateAsync(WaitUntil.Completed, deployName, null));
         }
 
         [TestCase]
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
             ResourceGroupResource rg = lro.Value;
             string deployExName = Recording.GenerateAssetName("deployEx-C-");
             var deploymentData = CreateDeploymentData(CreateDeploymentPropertiesUsingString());
-            ArmDeploymentResource deployment = (await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployExName, deploymentData)).Value;
+            ArmDeploymentResource deployment = (await Client.GetArmDeployments(rg.Id).CreateOrUpdateAsync(WaitUntil.Completed, deployExName, deploymentData)).Value;
             Assert.AreEqual(deployExName, deployment.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, null, deploymentData));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployExName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.GetArmDeployments(rg.Id).CreateOrUpdateAsync(WaitUntil.Completed, null, deploymentData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.GetArmDeployments(rg.Id).CreateOrUpdateAsync(WaitUntil.Completed, deployExName, null));
         }
 
         [TestCase]
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
             ResourceGroupResource rg = lro.Value;
             string deployExName = Recording.GenerateAssetName("deployEx-C-");
             var deploymentData = CreateDeploymentData(CreateDeploymentPropertiesUsingJsonElement());
-            ArmDeploymentResource deployment = (await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployExName, deploymentData)).Value;
+            ArmDeploymentResource deployment = (await Client.GetArmDeployments(rg.Id).CreateOrUpdateAsync(WaitUntil.Completed, deployExName, deploymentData)).Value;
             Assert.AreEqual(deployExName, deployment.Data.Name);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, null, deploymentData));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployExName, null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.GetArmDeployments(rg.Id).CreateOrUpdateAsync(WaitUntil.Completed, null, deploymentData));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await Client.GetArmDeployments(rg.Id).CreateOrUpdateAsync(WaitUntil.Completed, deployExName, null));
         }
 
         [TestCase]
@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
             ResourceGroupResource rg = lro.Value;
             string deployName = Recording.GenerateAssetName("deployEx-L-");
             var deploymentData = CreateDeploymentData(CreateDeploymentProperties());
-            _ = await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData);
+            _ = await Client.GetArmDeployments(rg.Id).CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData);
             int count = 0;
-            await foreach (var tempDeployment in rg.GetArmDeployments().GetAllAsync())
+            await foreach (var tempDeployment in Client.GetArmDeployments(rg.Id).GetAllAsync())
             {
                 count++;
             }
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
             ResourceGroupResource rg = lro.Value;
             string deployName = Recording.GenerateAssetName("deployEx-G-");
             var deploymentData = CreateDeploymentData(CreateDeploymentProperties());
-            ArmDeploymentResource deployment = (await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
-            ArmDeploymentResource getDeployment = await rg.GetArmDeployments().GetAsync(deployName);
+            ArmDeploymentResource deployment = (await Client.GetArmDeployments(rg.Id).CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
+            ArmDeploymentResource getDeployment = await Client.GetArmDeployments(rg.Id).GetAsync(deployName);
             AssertValidDeployment(deployment, getDeployment);
         }
 

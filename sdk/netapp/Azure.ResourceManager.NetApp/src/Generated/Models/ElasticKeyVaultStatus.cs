@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct ElasticKeyVaultStatus : IEquatable<ElasticKeyVaultStatus>
     {
         private readonly string _value;
+        /// <summary> KeyVault connection created but not in use. </summary>
+        private const string CreatedValue = "Created";
+        /// <summary> KeyVault connection in use by SMB Volume. </summary>
+        private const string InUseValue = "InUse";
+        /// <summary> KeyVault connection Deleted. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> Error with the KeyVault connection. </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> KeyVault connection Updating. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="ElasticKeyVaultStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ElasticKeyVaultStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatedValue = "Created";
-        private const string InUseValue = "InUse";
-        private const string DeletedValue = "Deleted";
-        private const string ErrorValue = "Error";
-        private const string UpdatingValue = "Updating";
+            _value = value;
+        }
 
         /// <summary> KeyVault connection created but not in use. </summary>
         public static ElasticKeyVaultStatus Created { get; } = new ElasticKeyVaultStatus(CreatedValue);
+
         /// <summary> KeyVault connection in use by SMB Volume. </summary>
         public static ElasticKeyVaultStatus InUse { get; } = new ElasticKeyVaultStatus(InUseValue);
+
         /// <summary> KeyVault connection Deleted. </summary>
         public static ElasticKeyVaultStatus Deleted { get; } = new ElasticKeyVaultStatus(DeletedValue);
+
         /// <summary> Error with the KeyVault connection. </summary>
         public static ElasticKeyVaultStatus Error { get; } = new ElasticKeyVaultStatus(ErrorValue);
+
         /// <summary> KeyVault connection Updating. </summary>
         public static ElasticKeyVaultStatus Updating { get; } = new ElasticKeyVaultStatus(UpdatingValue);
+
         /// <summary> Determines if two <see cref="ElasticKeyVaultStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElasticKeyVaultStatus left, ElasticKeyVaultStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ElasticKeyVaultStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElasticKeyVaultStatus left, ElasticKeyVaultStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticKeyVaultStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ElasticKeyVaultStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ElasticKeyVaultStatus(string value) => new ElasticKeyVaultStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ElasticKeyVaultStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ElasticKeyVaultStatus?(string value) => value == null ? null : new ElasticKeyVaultStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElasticKeyVaultStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ElasticKeyVaultStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

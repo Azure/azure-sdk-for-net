@@ -31,20 +31,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            NetworkFabricNeighborGroupData data = new NetworkFabricNeighborGroupData(new AzureLocation("eastus"))
+            NetworkFabricNeighborGroupData data = new NetworkFabricNeighborGroupData(new AzureLocation("eastus"), new NeighborGroupDestination()
             {
-                Annotation = "annotation",
-                Destination = new NeighborGroupDestination()
-                {
-                    IPv4Addresses =
+                IPv4Addresses =
                     {
                         IPAddress.Parse("10.10.10.10"),IPAddress.Parse("20.10.10.10"),IPAddress.Parse("30.10.10.10"),IPAddress.Parse("40.10.10.10"),IPAddress.Parse("50.10.10.10"),IPAddress.Parse("60.10.10.10"),IPAddress.Parse("70.10.10.10"),IPAddress.Parse("80.10.10.10"),IPAddress.Parse("90.10.10.10")
                     },
-                    IPv6Addresses =
+                IPv6Addresses =
                     {
                     "2F::/100"
                     },
-                },
+            })
+            {
+                Annotation = "annotation",
                 Tags =
                 {
                     ["key8107"] = "1234",

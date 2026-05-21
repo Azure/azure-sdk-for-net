@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetApp
 {
+    /// <summary></summary>
     public partial class NetAppElasticSnapshotPolicyResource : IJsonModel<NetAppElasticSnapshotPolicyData>
     {
-        private static NetAppElasticSnapshotPolicyData s_dataDeserializationInstance;
-        private static NetAppElasticSnapshotPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetAppElasticSnapshotPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetAppElasticSnapshotPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppElasticSnapshotPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetAppElasticSnapshotPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticSnapshotPolicyData>)Data).Write(writer, options);
 
-        NetAppElasticSnapshotPolicyData IJsonModel<NetAppElasticSnapshotPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticSnapshotPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetAppElasticSnapshotPolicyData IJsonModel<NetAppElasticSnapshotPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetAppElasticSnapshotPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppElasticSnapshotPolicyData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetAppElasticSnapshotPolicyData IPersistableModel<NetAppElasticSnapshotPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppElasticSnapshotPolicyData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<NetAppElasticSnapshotPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppElasticSnapshotPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetAppElasticSnapshotPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

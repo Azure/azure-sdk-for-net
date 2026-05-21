@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     {
         private readonly ClientDiagnostics _backupJobClientDiagnostics;
         private readonly BackupJob _backupJobRestClient;
-        private readonly ClientDiagnostics _backupJobsClientDiagnostics;
-        private readonly BackupJobs _backupJobsRestClient;
         private readonly ClientDiagnostics _jobCancellationsClientDiagnostics;
         private readonly JobCancellations _jobCancellationsRestClient;
         private readonly BackupJobData _data;
@@ -55,11 +53,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             TryGetApiVersion(ResourceType, out string backupJobApiVersion);
             _backupJobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _backupJobRestClient = new BackupJob(_backupJobClientDiagnostics, Pipeline, Endpoint, backupJobApiVersion ?? "2026-01-01-preview");
-            _backupJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _backupJobsRestClient = new BackupJobs(_backupJobsClientDiagnostics, Pipeline, Endpoint, backupJobApiVersion ?? "2026-01-01-preview");
+            _backupJobRestClient = new BackupJob(_backupJobClientDiagnostics, Pipeline, Endpoint, backupJobApiVersion ?? "2026-01-31-preview");
             _jobCancellationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _jobCancellationsRestClient = new JobCancellations(_jobCancellationsClientDiagnostics, Pipeline, Endpoint, backupJobApiVersion ?? "2026-01-01-preview");
+            _jobCancellationsRestClient = new JobCancellations(_jobCancellationsClientDiagnostics, Pipeline, Endpoint, backupJobApiVersion ?? "2026-01-31-preview");
             ValidateResourceId(id);
         }
 
@@ -113,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -161,7 +157,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -210,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

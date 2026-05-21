@@ -60,6 +60,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             long? peerAsn = default;
             int? vlanId = default;
             long? fabricAsn = default;
+            IList<string> peLoopbackIPAddress = default;
+            NniBmpProperties bmpConfiguration = default;
+            IList<OptionBLayer3PrefixLimitProperties> prefixLimits = default;
             string primaryIPv4Prefix = default;
             string primaryIPv6Prefix = default;
             string secondaryIPv4Prefix = default;
@@ -72,6 +75,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        peerAsn = null;
                         continue;
                     }
                     peerAsn = property.Value.GetInt64();
@@ -81,6 +85,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        vlanId = null;
                         continue;
                     }
                     vlanId = property.Value.GetInt32();
@@ -93,6 +98,43 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         continue;
                     }
                     fabricAsn = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("peLoopbackIpAddress"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    peLoopbackIPAddress = array;
+                    continue;
+                }
+                if (property.NameEquals("bmpConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bmpConfiguration = NniBmpProperties.DeserializeNniBmpProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("prefixLimits"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<OptionBLayer3PrefixLimitProperties> array = new List<OptionBLayer3PrefixLimitProperties>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(OptionBLayer3PrefixLimitProperties.DeserializeOptionBLayer3PrefixLimitProperties(item, options));
+                    }
+                    prefixLimits = array;
                     continue;
                 }
                 if (property.NameEquals("primaryIpv4Prefix"u8))
@@ -129,7 +171,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 serializedAdditionalRawData,
                 peerAsn,
                 vlanId,
-                fabricAsn);
+                fabricAsn,
+                peLoopbackIPAddress ?? new ChangeTrackingList<string>(),
+                bmpConfiguration,
+                prefixLimits ?? new ChangeTrackingList<OptionBLayer3PrefixLimitProperties>());
         }
 
         BinaryData IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>.Write(ModelReaderWriterOptions options)

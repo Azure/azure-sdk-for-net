@@ -1,36 +1,53 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> The DnsRecordType. </summary>
     public enum DnsRecordType
     {
         /// <summary> A. </summary>
-        A,
+        A = 0,
         /// <summary> AAAA. </summary>
-        Aaaa,
+        Aaaa = 1,
         /// <summary> CAA. </summary>
-        CAA,
+        Caa = 2,
         /// <summary> CNAME. </summary>
-        Cname,
+        Cname = 3,
         /// <summary> MX. </summary>
-        MX,
+        MX = 4,
         /// <summary> NS. </summary>
-        NS,
+        NS = 5,
         /// <summary> PTR. </summary>
-        PTR,
+        Ptr = 6,
         /// <summary> SOA. </summary>
-        SOA,
+        Soa = 7,
         /// <summary> SRV. </summary>
-        SRV,
+        Srv = 8,
         /// <summary> TXT. </summary>
-        TXT,
+        Txt = 9,
         /// <summary> TLSA. </summary>
-        Tlsa,
+        Tlsa = 10,
         /// <summary> DS. </summary>
-        DS,
+        DS = 11,
         /// <summary> NAPTR. </summary>
-        Naptr
+        Naptr = 12,
+        /// <summary> CAA. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        CAA = 2,
+        /// <summary> PTR. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        PTR = 6,
+        /// <summary> SOA. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        SOA = 7,
+        /// <summary> SRV. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        SRV = 8,
+        /// <summary> TXT. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        TXT = 9,
     }
 }

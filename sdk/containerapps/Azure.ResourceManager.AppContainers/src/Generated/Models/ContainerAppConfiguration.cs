@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Non versioned Container App configuration properties that define the mutable settings of a Container app. </summary>
     public partial class ContainerAppConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppConfiguration"/>. </summary>
         public ContainerAppConfiguration()
@@ -55,80 +27,143 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppConfiguration"/>. </summary>
         /// <param name="secrets"> Collection of secrets used by a Container app. </param>
-        /// <param name="activeRevisionsMode">
-        /// ActiveRevisionsMode controls how active revisions are handled for the Container app:
-        /// &lt;list&gt;&lt;item&gt;Multiple: multiple revisions can be active.&lt;/item&gt;&lt;item&gt;Single: Only one revision can be active at a time. Revision weights can not be used in this mode. If no value if provided, this is the default.&lt;/item&gt;&lt;/list&gt;
-        /// </param>
+        /// <param name="activeRevisionsMode"> Controls how active revisions are handled for the Container app. </param>
+        /// <param name="targetLabel"> Required in labels revisions mode. Label to apply to newly created revision. </param>
         /// <param name="ingress"> Ingress configurations. </param>
         /// <param name="registries"> Collection of private container registry credentials for containers used by the Container app. </param>
         /// <param name="dapr"> Dapr configuration for the Container App. </param>
         /// <param name="runtime"> App runtime configuration for the Container App. </param>
         /// <param name="maxInactiveRevisions"> Optional. Max inactive revisions a Container App can have. </param>
+        /// <param name="revisionTransitionThreshold"> Optional. The percent of the total number of replicas that must be brought up before revision transition occurs. Defaults to 100 when none is given. Value must be greater than 0 and less than or equal to 100. </param>
         /// <param name="service"> Container App to be a dev Container App Service. </param>
         /// <param name="identitySettings"> Optional settings for Managed Identities that are assigned to the Container App. If a Managed Identity is not specified here, default settings will be used. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, ContainerAppIngressConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprConfiguration dapr, Runtime runtime, int? maxInactiveRevisions, Service service, IList<ContainerAppIdentitySettings> identitySettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, string targetLabel, ContainerAppIngressConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprConfiguration dapr, Runtime runtime, int? maxInactiveRevisions, int? revisionTransitionThreshold, Service service, IList<ContainerAppIdentitySettings> identitySettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Secrets = secrets;
             ActiveRevisionsMode = activeRevisionsMode;
+            TargetLabel = targetLabel;
             Ingress = ingress;
             Registries = registries;
             Dapr = dapr;
             Runtime = runtime;
             MaxInactiveRevisions = maxInactiveRevisions;
+            RevisionTransitionThreshold = revisionTransitionThreshold;
             Service = service;
             IdentitySettings = identitySettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Collection of secrets used by a Container app. </summary>
         [WirePath("secrets")]
         public IList<ContainerAppWritableSecret> Secrets { get; }
-        /// <summary>
-        /// ActiveRevisionsMode controls how active revisions are handled for the Container app:
-        /// &lt;list&gt;&lt;item&gt;Multiple: multiple revisions can be active.&lt;/item&gt;&lt;item&gt;Single: Only one revision can be active at a time. Revision weights can not be used in this mode. If no value if provided, this is the default.&lt;/item&gt;&lt;/list&gt;
-        /// </summary>
+
+        /// <summary> Controls how active revisions are handled for the Container app. </summary>
         [WirePath("activeRevisionsMode")]
         public ContainerAppActiveRevisionsMode? ActiveRevisionsMode { get; set; }
+
+        /// <summary> Required in labels revisions mode. Label to apply to newly created revision. </summary>
+        [WirePath("targetLabel")]
+        public string TargetLabel { get; set; }
+
         /// <summary> Ingress configurations. </summary>
         [WirePath("ingress")]
         public ContainerAppIngressConfiguration Ingress { get; set; }
+
         /// <summary> Collection of private container registry credentials for containers used by the Container app. </summary>
         [WirePath("registries")]
         public IList<ContainerAppRegistryCredentials> Registries { get; }
+
         /// <summary> Dapr configuration for the Container App. </summary>
         [WirePath("dapr")]
         public ContainerAppDaprConfiguration Dapr { get; set; }
+
         /// <summary> App runtime configuration for the Container App. </summary>
+        [WirePath("runtime")]
         internal Runtime Runtime { get; set; }
-        /// <summary> Enable jmx core metrics for the java app. </summary>
-        [WirePath("runtime.java.enableMetrics")]
-        public bool? EnableMetrics
-        {
-            get => Runtime is null ? default : Runtime.EnableMetrics;
-            set
-            {
-                if (Runtime is null)
-                    Runtime = new Runtime();
-                Runtime.EnableMetrics = value;
-            }
-        }
 
         /// <summary> Optional. Max inactive revisions a Container App can have. </summary>
         [WirePath("maxInactiveRevisions")]
         public int? MaxInactiveRevisions { get; set; }
+
+        /// <summary> Optional. The percent of the total number of replicas that must be brought up before revision transition occurs. Defaults to 100 when none is given. Value must be greater than 0 and less than or equal to 100. </summary>
+        [WirePath("revisionTransitionThreshold")]
+        public int? RevisionTransitionThreshold { get; set; }
+
         /// <summary> Container App to be a dev Container App Service. </summary>
+        [WirePath("service")]
         internal Service Service { get; set; }
-        /// <summary> Dev ContainerApp service type. </summary>
-        [WirePath("service.type")]
-        public string ServiceType
-        {
-            get => Service is null ? default : Service.ServiceType;
-            set => Service = new Service(value);
-        }
 
         /// <summary> Optional settings for Managed Identities that are assigned to the Container App. If a Managed Identity is not specified here, default settings will be used. </summary>
         [WirePath("identitySettings")]
         public IList<ContainerAppIdentitySettings> IdentitySettings { get; }
+
+        /// <summary> Enable jmx core metrics for the java app. </summary>
+        [WirePath("runtime.java.enableMetrics")]
+        public bool? EnableMetrics
+        {
+            get
+            {
+                return Runtime is null ? default : Runtime.EnableMetrics;
+            }
+            set
+            {
+                if (Runtime is null)
+                {
+                    Runtime = new Runtime();
+                }
+                Runtime.EnableMetrics = value;
+            }
+        }
+
+        /// <summary> Diagnostic capabilities achieved by java agent. </summary>
+        [WirePath("runtime.java.javaAgent")]
+        public ContainerAppRuntimeJavaAgent JavaAgent
+        {
+            get
+            {
+                return Runtime is null ? default : Runtime.JavaAgent;
+            }
+            set
+            {
+                if (Runtime is null)
+                {
+                    Runtime = new Runtime();
+                }
+                Runtime.JavaAgent = value;
+            }
+        }
+
+        /// <summary> Auto configure the ASP.NET Core Data Protection feature. </summary>
+        [WirePath("runtime.dotnet.autoConfigureDataProtection")]
+        public bool? AutoConfigureDataProtection
+        {
+            get
+            {
+                return Runtime is null ? default : Runtime.AutoConfigureDataProtection;
+            }
+            set
+            {
+                if (Runtime is null)
+                {
+                    Runtime = new Runtime();
+                }
+                Runtime.AutoConfigureDataProtection = value;
+            }
+        }
+
+        /// <summary> Dev ContainerApp service type. </summary>
+        [WirePath("service.type")]
+        public string ServiceType
+        {
+            get
+            {
+                return Service is null ? default : Service.Type;
+            }
+            set
+            {
+                Service = new Service(value);
+            }
+        }
     }
 }

@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, IEnumerable<LocationProfile> additionalLocationsLocationProfiles, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId)
         {
-            return ComputeFleetProperties(provisioningState, spotPriorityProfile, regularPriorityProfile, vmSizesProfile, vmAttributes, additionalLocationsLocationProfiles, computeProfile, createdOn, uniqueId, mode: default, capacityType: default, zoneAllocationPolicy: default);
+            return ComputeFleetProperties(provisioningState: provisioningState, spotPriorityProfile: spotPriorityProfile, regularPriorityProfile: regularPriorityProfile, vmSizesProfile: vmSizesProfile, vmAttributes: vmAttributes, additionalLocationsLocationProfiles: additionalLocationsLocationProfiles, computeProfile: computeProfile, createdOn: createdOn, uniqueId: uniqueId, mode: default, capacityType: default, zoneAllocationPolicy: default);
         }
     }
 }

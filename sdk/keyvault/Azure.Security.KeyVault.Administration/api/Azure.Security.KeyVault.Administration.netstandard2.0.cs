@@ -59,6 +59,13 @@ namespace Azure.Security.KeyVault.Administration
         public virtual Azure.Pageable<Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition> GetRoleDefinitions(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Security.KeyVault.Administration.KeyVaultRoleDefinition> GetRoleDefinitionsAsync(Azure.Security.KeyVault.Administration.KeyVaultRoleScope roleScope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class KeyVaultAccessControlClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedKeyVaultAccessControlClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedKeyVaultAccessControlClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Security.KeyVault.Administration.KeyVaultAccessControlClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyVaultAccessControlClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyVaultAccessControlClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Security.KeyVault.Administration.KeyVaultAccessControlClientSettings> configureSettings) { throw null; }
+    }
     public partial class KeyVaultAccessControlClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public KeyVaultAccessControlClientSettings() { }

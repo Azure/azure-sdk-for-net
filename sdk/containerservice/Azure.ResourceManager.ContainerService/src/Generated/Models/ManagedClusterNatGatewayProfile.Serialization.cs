@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.ContainerService;
 using Azure.ResourceManager.Resources.Models;
@@ -86,6 +87,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (WritableSubResource item in EffectiveOutboundIPs)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
@@ -166,7 +172,23 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (prop.NameEquals("effectiveOutboundIPs"u8))
                 {
-                    DeserializeEffectiveOutboundIPs(prop, ref effectiveOutboundIPs);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerServiceContext.Default));
+                        }
+                    }
+                    effectiveOutboundIPs = array;
                     continue;
                 }
                 if (prop.NameEquals("outboundIPPrefixes"u8))

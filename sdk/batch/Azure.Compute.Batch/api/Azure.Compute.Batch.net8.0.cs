@@ -494,6 +494,14 @@ namespace Azure.Compute.Batch
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Compute.Batch.UploadBatchServiceLogsResult>> UploadNodeLogsAsync(string poolId, string nodeId, Azure.Compute.Batch.UploadBatchServiceLogsOptions uploadOptions, System.TimeSpan? timeout = default(System.TimeSpan?), System.DateTimeOffset? requestDate = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UploadNodeLogsAsync(string poolId, string nodeId, Azure.Core.RequestContent content, System.TimeSpan? timeout = default(System.TimeSpan?), System.DateTimeOffset? requestDate = default(System.DateTimeOffset?), Azure.RequestContext context = null) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class BatchClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddBatchClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddBatchClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Compute.Batch.BatchClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedBatchClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedBatchClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Compute.Batch.BatchClientSettings> configureSettings) { throw null; }
+    }
     public partial class BatchClientOptions : Azure.Core.ClientOptions
     {
         public BatchClientOptions(Azure.Compute.Batch.BatchClientOptions.ServiceVersion version = Azure.Compute.Batch.BatchClientOptions.ServiceVersion.V2025_06_01) { }
@@ -758,7 +766,7 @@ namespace Azure.Compute.Batch
     {
         internal BatchFileProperties() { }
         public System.DateTime CreationTime { get { throw null; } }
-        public string FileUrl { get { throw null; } }
+        public System.Uri FileUri { get { throw null; } }
         public bool IsDirectory { get { throw null; } }
         public string Mode { get { throw null; } }
     }
@@ -3091,7 +3099,7 @@ namespace Azure.Compute.Batch
         public static Azure.Compute.Batch.ContainerHostBatchBindMountEntry ContainerHostBatchBindMountEntry(Azure.Compute.Batch.ContainerHostDataPath? source = default(Azure.Compute.Batch.ContainerHostDataPath?), bool? isReadOnly = default(bool?)) { throw null; }
         public static Azure.Compute.Batch.ContainerRegistryReference ContainerRegistryReference(string username = null, string password = null, System.Uri registryServerUri = null, Azure.Compute.Batch.BatchNodeIdentityReference identityReference = null) { throw null; }
         public static Azure.Compute.Batch.DataDisk DataDisk(int logicalUnitNumber = 0, Azure.Compute.Batch.CachingType? caching = default(Azure.Compute.Batch.CachingType?), int diskSizeGb = 0, Azure.Compute.Batch.ManagedDisk managedDisk = null) { throw null; }
-        public static Azure.Compute.Batch.DiskCustomerManagedKey DiskCustomerManagedKey(Azure.Compute.Batch.BatchPoolIdentityReference identityReference = null, System.Uri keyUrl = null, bool? rotationToLatestKeyVersionEnabled = default(bool?)) { throw null; }
+        public static Azure.Compute.Batch.DiskCustomerManagedKey DiskCustomerManagedKey(Azure.Compute.Batch.BatchPoolIdentityReference identityReference = null, System.Uri keyUri = null, bool? rotationToLatestKeyVersionEnabled = default(bool?)) { throw null; }
         public static Azure.Compute.Batch.DiskEncryptionConfiguration DiskEncryptionConfiguration(Azure.Compute.Batch.DiskCustomerManagedKey customerManagedKey = null, System.Collections.Generic.IEnumerable<Azure.Compute.Batch.DiskEncryptionTarget> targets = null) { throw null; }
         public static Azure.Compute.Batch.DiskEncryptionSetParameters DiskEncryptionSetParameters(Azure.Core.ResourceIdentifier id = null) { throw null; }
         public static Azure.Compute.Batch.EnvironmentSetting EnvironmentSetting(string name = null, string value = null) { throw null; }
@@ -3390,7 +3398,7 @@ namespace Azure.Compute.Batch
     {
         public DiskCustomerManagedKey() { }
         public Azure.Compute.Batch.BatchPoolIdentityReference IdentityReference { get { throw null; } set { } }
-        public System.Uri KeyUrl { get { throw null; } set { } }
+        public System.Uri KeyUri { get { throw null; } set { } }
         public bool? RotationToLatestKeyVersionEnabled { get { throw null; } set { } }
         protected virtual Azure.Compute.Batch.DiskCustomerManagedKey JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
