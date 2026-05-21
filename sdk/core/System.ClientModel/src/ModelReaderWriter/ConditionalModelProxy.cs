@@ -13,7 +13,7 @@ namespace System.ClientModel.Primitives;
 /// (or <see cref="IJsonModel{T}"/> if applicable) provided at construction time.
 /// </summary>
 /// <typeparam name="T">The model type this proxy handles.</typeparam>
-public abstract class ConditionalModelProxy<T>
+public abstract class ConditionalModelProxy<T> : IConditionalProxy
 {
     /// <summary>
     /// Gets the model implementation used for reading and writing when this proxy handles the request.
@@ -65,4 +65,28 @@ public abstract class ConditionalModelProxy<T>
     /// <param name="reader">The JSON reader positioned at the start of the element.</param>
     /// <returns>True if this proxy can handle the data; otherwise, false.</returns>
     public virtual bool CanHandle(ref Utf8JsonReader reader) => false;
+
+    // Explicit IConditionalProxy implementation — bridges non-generic dispatch
+    bool IConditionalProxy.CanHandleData(BinaryData data) => CanHandle(data);
+    bool IConditionalProxy.CanHandleReader(ref Utf8JsonReader reader) => CanHandle(ref reader);
+    bool IConditionalProxy.CanHandleModel(object model) => model is T typed && CanHandle(typed);
+    bool IConditionalProxy.HasJsonModel => Model is IJsonModel<T>;
+    IPersistableModel<object> IConditionalProxy.GetModel() => (IPersistableModel<object>)Model;
+
+    object? IConditionalProxy.CreateFromData(BinaryData data, ModelReaderWriterOptions options)
+        => Model.Create(data, options);
+
+    object? IConditionalProxy.CreateFromReader(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+    {
+        if (Model is IJsonModel<T> jsonModel)
+            return jsonModel.Create(ref reader, options);
+        throw new InvalidOperationException($"Conditional proxy model for {typeof(T).Name} does not support JSON reader path.");
+    }
+
+    IJsonModel<object> IConditionalProxy.AsJsonModelOfObject(object originalModel)
+    {
+        if (Model is IJsonModel<T>)
+            return new ModelReaderWriterOptions.JsonModelObjectAdapter<T>(Model, originalModel);
+        throw new InvalidOperationException($"Conditional proxy model for {typeof(T).Name} does not implement IJsonModel.");
+    }
 }
