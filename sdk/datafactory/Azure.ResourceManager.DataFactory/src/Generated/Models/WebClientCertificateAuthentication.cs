@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -16,14 +17,19 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Initializes a new instance of <see cref="WebClientCertificateAuthentication"/>. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
+        public WebClientCertificateAuthentication(DataFactoryElement<string> uri) : base(uri, WebAuthenticationType.ClientCertificate)
+        {
+            Argument.AssertNotNull(uri, nameof(uri));
+
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebClientCertificateAuthentication"/>. </summary>
+        /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="pfx"> Base64-encoded contents of a PFX file. </param>
-        /// <param name="password"> Password for the PFX file. </param>
-        internal WebClientCertificateAuthentication(DataFactoryElement<string> uri, WebAuthenticationType authenticationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactorySecret pfx, DataFactorySecret password) : base(uri, authenticationType, additionalBinaryDataProperties)
+        internal WebClientCertificateAuthentication(DataFactoryElement<string> uri, WebAuthenticationType authenticationType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(uri, authenticationType, additionalBinaryDataProperties)
         {
-            Pfx = pfx;
-            Password = password;
         }
     }
 }

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Custom setup script properties for a managed dedicated integration runtime. </summary>
-    public partial class IntegrationRuntimeCustomSetupScriptProperties
+    internal partial class IntegrationRuntimeCustomSetupScriptProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -24,12 +23,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeCustomSetupScriptProperties"/>. </summary>
         /// <param name="blobContainerUri"> The URI of the Azure blob container that contains the custom setup script. </param>
-        /// <param name="sasToken"> The SAS token of the Azure blob container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IntegrationRuntimeCustomSetupScriptProperties(Uri blobContainerUri, DataFactorySecretString sasToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IntegrationRuntimeCustomSetupScriptProperties(Uri blobContainerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlobContainerUri = blobContainerUri;
-            SasToken = sasToken;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

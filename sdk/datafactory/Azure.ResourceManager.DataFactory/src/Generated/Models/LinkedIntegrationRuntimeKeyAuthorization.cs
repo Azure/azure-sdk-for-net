@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -15,12 +14,15 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class LinkedIntegrationRuntimeKeyAuthorization : LinkedIntegrationRuntimeType
     {
         /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeKeyAuthorization"/>. </summary>
+        public LinkedIntegrationRuntimeKeyAuthorization() : base("Key")
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeKeyAuthorization"/>. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="key"> The key used for authorization. </param>
-        internal LinkedIntegrationRuntimeKeyAuthorization(string authorizationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactorySecretString key) : base(authorizationType, additionalBinaryDataProperties)
+        internal LinkedIntegrationRuntimeKeyAuthorization(string authorizationType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(authorizationType, additionalBinaryDataProperties)
         {
-            Key = key;
         }
     }
 }

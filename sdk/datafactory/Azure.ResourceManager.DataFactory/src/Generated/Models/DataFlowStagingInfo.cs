@@ -23,12 +23,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFlowStagingInfo"/>. </summary>
-        /// <param name="linkedService"> Staging linked service reference. </param>
         /// <param name="folderPath"> Folder path for staging blob. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataFlowStagingInfo(DataFactoryLinkedServiceReference linkedService, DataFactoryElement<string> folderPath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataFlowStagingInfo(DataFactoryElement<string> folderPath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LinkedService = linkedService;
             FolderPath = folderPath;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

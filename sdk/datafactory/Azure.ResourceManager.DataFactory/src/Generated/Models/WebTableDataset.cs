@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -15,17 +16,26 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class WebTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of <see cref="WebTableDataset"/>. </summary>
+        /// <param name="index"> The zero-based index of the table in the web page. Type: integer (or Expression with resultType integer), minimum: 0. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="index"/> is null. </exception>
+        public WebTableDataset(DataFactoryElement<int> index) : base("WebTable")
+        {
+            Argument.AssertNotNull(index, nameof(index));
+
+            TypeProperties = new WebTableDatasetTypeProperties(index);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebTableDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> Web table dataset properties. </param>
-        internal WebTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, WebTableDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal WebTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, WebTableDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, parameters, annotations, folder, additionalProperties)
         {
             TypeProperties = typeProperties;
         }

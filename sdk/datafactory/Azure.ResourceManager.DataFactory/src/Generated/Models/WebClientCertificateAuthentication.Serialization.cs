@@ -81,10 +81,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(WebClientCertificateAuthentication)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("pfx"u8);
-            writer.WriteObjectValue(Pfx, options);
-            writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -115,8 +111,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> uri = default;
             WebAuthenticationType authenticationType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DataFactorySecret pfx = default;
-            DataFactorySecret password = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("url"u8))
@@ -129,22 +123,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     authenticationType = new WebAuthenticationType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("pfx"u8))
-                {
-                    pfx = default /* TODO(#59298): DeserializeDataFactorySecret is not implemented; stub until generator fix */;
-                    continue;
-                }
-                if (prop.NameEquals("password"u8))
-                {
-                    password = default /* TODO(#59298): DeserializeDataFactorySecret is not implemented; stub until generator fix */;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WebClientCertificateAuthentication(uri, authenticationType, additionalBinaryDataProperties, pfx, password);
+            return new WebClientCertificateAuthentication(uri, authenticationType, additionalBinaryDataProperties);
         }
     }
 }

@@ -87,11 +87,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("servicePrincipalId"u8);
                 writer.WriteObjectValue(ServicePrincipalId, options);
             }
-            if (Optional.IsDefined(ServicePrincipalKey))
-            {
-                writer.WritePropertyName("servicePrincipalKey"u8);
-                writer.WriteObjectValue(ServicePrincipalKey, options);
-            }
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
@@ -141,7 +136,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType = default;
             DataFactoryElement<string> servicePrincipalId = default;
-            DataFactorySecret servicePrincipalKey = default;
             DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -160,15 +154,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                     servicePrincipalId = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
-                if (prop.NameEquals("servicePrincipalKey"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    servicePrincipalKey = default /* TODO(#59298): DeserializeDataFactorySecret is not implemented; stub until generator fix */;
-                    continue;
-                }
                 if (prop.NameEquals("credential"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -183,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SqlAlwaysEncryptedProperties(alwaysEncryptedAkvAuthType, servicePrincipalId, servicePrincipalKey, credential, additionalBinaryDataProperties);
+            return new SqlAlwaysEncryptedProperties(alwaysEncryptedAkvAuthType, servicePrincipalId, credential, additionalBinaryDataProperties);
         }
     }
 }

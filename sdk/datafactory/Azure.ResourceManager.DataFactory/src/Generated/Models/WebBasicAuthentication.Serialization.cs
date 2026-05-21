@@ -83,8 +83,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("username"u8);
             writer.WriteObjectValue(Username, options);
-            writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -116,7 +114,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             WebAuthenticationType authenticationType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataFactoryElement<string> username = default;
-            DataFactorySecret password = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("url"u8))
@@ -134,17 +131,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     username = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
-                if (prop.NameEquals("password"u8))
-                {
-                    password = default /* TODO(#59298): DeserializeDataFactorySecret is not implemented; stub until generator fix */;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WebBasicAuthentication(uri, authenticationType, additionalBinaryDataProperties, username, password);
+            return new WebBasicAuthentication(uri, authenticationType, additionalBinaryDataProperties, username);
         }
     }
 }

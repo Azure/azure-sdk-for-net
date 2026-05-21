@@ -37,10 +37,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="typeProperties"> Azure Function activity properties. </param>
-        internal AzureFunctionActivity(string name, string @type, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, AzureFunctionActivityTypeProperties typeProperties) : base(name, @type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal AzureFunctionActivity(string name, string @type, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, PipelineActivityPolicy policy, AzureFunctionActivityTypeProperties typeProperties) : base(name, @type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, policy)
         {
             TypeProperties = typeProperties;
         }

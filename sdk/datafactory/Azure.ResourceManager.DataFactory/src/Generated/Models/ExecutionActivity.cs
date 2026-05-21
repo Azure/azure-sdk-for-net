@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -33,11 +32,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
-        internal ExecutionActivity(string name, string @type, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy) : base(name, @type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
+        internal ExecutionActivity(string name, string @type, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, PipelineActivityPolicy policy) : base(name, @type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
-            LinkedServiceName = linkedServiceName;
             Policy = policy;
         }
 

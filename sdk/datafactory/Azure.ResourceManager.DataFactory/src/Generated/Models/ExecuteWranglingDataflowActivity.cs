@@ -186,6 +186,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
+        /// <summary> Folder path for staging blob. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> StagingFolderPath
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.StagingFolderPath;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExecutePowerQueryActivityTypeProperties();
+                }
+                TypeProperties.StagingFolderPath = value;
+            }
+        }
+
         /// <summary> (Deprecated. Please use Queries). List of Power Query activity sinks mapped to a queryName. </summary>
         public IDictionary<string, PowerQuerySink> Sinks
         {

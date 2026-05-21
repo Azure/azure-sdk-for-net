@@ -75,11 +75,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 throw new FormatException($"The model {nameof(DataFlowStagingInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(LinkedService))
-            {
-                writer.WritePropertyName("linkedService"u8);
-                writer.WriteObjectValue(LinkedService, options);
-            }
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
@@ -127,20 +122,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DataFactoryLinkedServiceReference linkedService = default;
             DataFactoryElement<string> folderPath = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("linkedService"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    linkedService = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
-                    continue;
-                }
                 if (prop.NameEquals("folderPath"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -155,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataFlowStagingInfo(linkedService, folderPath, additionalBinaryDataProperties);
+            return new DataFlowStagingInfo(folderPath, additionalBinaryDataProperties);
         }
     }
 }

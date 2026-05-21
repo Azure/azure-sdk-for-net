@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryElement<string>> array = new List<DataFactoryElement<string>>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */);
+                        array.Add(default); /* TODO(#59298): Deserialize is not implemented; stub until generator fix */
                     }
                     operators = array;
                     continue;

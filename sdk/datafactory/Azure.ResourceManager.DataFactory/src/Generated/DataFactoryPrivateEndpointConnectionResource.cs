@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.DataFactory
     {
         private readonly ClientDiagnostics _privateEndpointConnectionClientDiagnostics;
         private readonly PrivateEndpointConnection _privateEndpointConnectionRestClient;
-        private readonly ClientDiagnostics _privateEndPointConnectionsClientDiagnostics;
-        private readonly PrivateEndPointConnections _privateEndPointConnectionsRestClient;
         private readonly DataFactoryPrivateEndpointConnectionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/privateEndpointConnections";
@@ -54,8 +52,6 @@ namespace Azure.ResourceManager.DataFactory
             TryGetApiVersion(ResourceType, out string dataFactoryPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
             _privateEndpointConnectionRestClient = new PrivateEndpointConnection(_privateEndpointConnectionClientDiagnostics, Pipeline, Endpoint, dataFactoryPrivateEndpointConnectionApiVersion ?? "2018-06-01");
-            _privateEndPointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _privateEndPointConnectionsRestClient = new PrivateEndPointConnections(_privateEndPointConnectionsClientDiagnostics, Pipeline, Endpoint, dataFactoryPrivateEndpointConnectionApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 

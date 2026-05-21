@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> FolderPath { get; set; }
 
         /// <summary> Reference objects. </summary>
-        public CustomActivityReferenceObject ReferenceObjects { get; set; }
+        internal CustomActivityReferenceObject ReferenceObjects { get; set; }
 
         /// <summary>
         /// User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined.
@@ -116,5 +116,18 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double). </summary>
         public DataFactoryElement<string> AutoUserSpecification { get; set; }
+
+        /// <summary> Dataset references. </summary>
+        public IList<DatasetReference> ReferenceObjectsDatasets
+        {
+            get
+            {
+                if (ReferenceObjects is null)
+                {
+                    ReferenceObjects = new CustomActivityReferenceObject();
+                }
+                return ReferenceObjects.Datasets;
+            }
+        }
     }
 }

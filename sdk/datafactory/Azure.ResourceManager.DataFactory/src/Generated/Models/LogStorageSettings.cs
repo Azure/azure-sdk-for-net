@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,14 +19,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LogStorageSettings"/>. </summary>
-        /// <param name="linkedServiceName"> Log storage linked service reference. </param>
+        public LogStorageSettings()
+        {
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogStorageSettings"/>. </summary>
         /// <param name="path"> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </param>
         /// <param name="logLevel"> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </param>
         /// <param name="enableReliableLogging"> Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
-        internal LogStorageSettings(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path, DataFactoryElement<string> logLevel, DataFactoryElement<bool> enableReliableLogging, IDictionary<string, BinaryData> additionalProperties)
+        internal LogStorageSettings(DataFactoryElement<string> path, DataFactoryElement<string> logLevel, DataFactoryElement<bool> enableReliableLogging, IDictionary<string, BinaryData> additionalProperties)
         {
-            LinkedServiceName = linkedServiceName;
             Path = path;
             LogLevel = logLevel;
             EnableReliableLogging = enableReliableLogging;

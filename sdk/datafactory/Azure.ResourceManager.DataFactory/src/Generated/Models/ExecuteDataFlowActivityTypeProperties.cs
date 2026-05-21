@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFlowReference DataFlow { get; set; }
 
         /// <summary> Staging info for execute data flow activity. </summary>
-        public DataFlowStagingInfo Staging { get; set; }
+        internal DataFlowStagingInfo Staging { get; set; }
 
         /// <summary> The integration runtime reference. </summary>
         public IntegrationRuntimeReference IntegrationRuntime { get; set; }
@@ -79,5 +79,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> SourceStagingConcurrency { get; set; }
+
+        /// <summary> Folder path for staging blob. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> StagingFolderPath
+        {
+            get
+            {
+                return Staging is null ? default : Staging.FolderPath;
+            }
+            set
+            {
+                if (Staging is null)
+                {
+                    Staging = new DataFlowStagingInfo();
+                }
+                Staging.FolderPath = value;
+            }
+        }
     }
 }

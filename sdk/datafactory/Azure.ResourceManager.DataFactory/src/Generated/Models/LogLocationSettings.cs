@@ -12,18 +12,21 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Log location settings. </summary>
-    public partial class LogLocationSettings
+    internal partial class LogLocationSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LogLocationSettings"/>. </summary>
-        /// <param name="linkedServiceName"> Log storage linked service reference. </param>
+        public LogLocationSettings()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogLocationSettings"/>. </summary>
         /// <param name="path"> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogLocationSettings(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogLocationSettings(DataFactoryElement<string> path, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LinkedServiceName = linkedServiceName;
             Path = path;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

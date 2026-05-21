@@ -84,8 +84,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteObjectValue(Domain, options);
             writer.WritePropertyName("userName"u8);
             writer.WriteObjectValue(UserName, options);
-            writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -130,7 +128,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> domain = default;
             DataFactoryElement<string> userName = default;
-            DataFactorySecret password = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,17 +141,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     userName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
                     continue;
                 }
-                if (prop.NameEquals("password"u8))
-                {
-                    password = default /* TODO(#59298): DeserializeDataFactorySecret is not implemented; stub until generator fix */;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SsisAccessCredential(domain, userName, password, additionalBinaryDataProperties);
+            return new SsisAccessCredential(domain, userName, additionalBinaryDataProperties);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -28,13 +27,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Transformation name. </param>
         /// <param name="description"> Transformation description. </param>
         /// <param name="dataset"> Dataset reference. </param>
-        /// <param name="linkedService"> Linked service reference. </param>
         /// <param name="flowlet"> Flowlet Reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="schemaLinkedService"> Schema linked service reference. </param>
-        /// <param name="rejectedDataLinkedService"> Rejected data linked service reference. </param>
         /// <param name="script"> sink script. </param>
-        internal PowerQuerySink(string name, string description, DatasetReference dataset, DataFactoryLinkedServiceReference linkedService, DataFlowReference flowlet, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryLinkedServiceReference schemaLinkedService, DataFactoryLinkedServiceReference rejectedDataLinkedService, string script) : base(name, description, dataset, linkedService, flowlet, additionalBinaryDataProperties, schemaLinkedService, rejectedDataLinkedService)
+        internal PowerQuerySink(string name, string description, DatasetReference dataset, DataFlowReference flowlet, IDictionary<string, BinaryData> additionalBinaryDataProperties, string script) : base(name, description, dataset, flowlet, additionalBinaryDataProperties)
         {
             Script = script;
         }

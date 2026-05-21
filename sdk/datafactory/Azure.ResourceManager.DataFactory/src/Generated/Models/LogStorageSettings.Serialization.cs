@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> (Deprecated. Please use LogSettings) Log storage settings. </summary>
     public partial class LogStorageSettings : IJsonModel<LogStorageSettings>
     {
-        /// <summary> Initializes a new instance of <see cref="LogStorageSettings"/> for deserialization. </summary>
-        internal LogStorageSettings()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual LogStorageSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -80,8 +75,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 throw new FormatException($"The model {nameof(LogStorageSettings)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName, options);
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
@@ -136,18 +129,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DataFactoryLinkedServiceReference linkedServiceName = default;
             DataFactoryElement<string> path = default;
             DataFactoryElement<string> logLevel = default;
             DataFactoryElement<bool> enableReliableLogging = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("linkedServiceName"u8))
-                {
-                    linkedServiceName = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
-                    continue;
-                }
                 if (prop.NameEquals("path"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -177,7 +164,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new LogStorageSettings(linkedServiceName, path, logLevel, enableReliableLogging, additionalProperties);
+            return new LogStorageSettings(path, logLevel, enableReliableLogging, additionalProperties);
         }
     }
 }

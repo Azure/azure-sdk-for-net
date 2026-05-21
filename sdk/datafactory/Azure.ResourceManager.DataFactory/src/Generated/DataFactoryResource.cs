@@ -1473,9 +1473,9 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<PrivateLinkResourcesWrapper>> GetPrivateLinkResourcesInternalAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateLinkResourcesWrapper>> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("DataFactoryResource.GetPrivateLinkResourcesInternal");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("DataFactoryResource.GetPrivateLinkResources");
             scope.Start();
             try
             {
@@ -1521,9 +1521,9 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<PrivateLinkResourcesWrapper> GetPrivateLinkResourcesInternal(CancellationToken cancellationToken = default)
+        public virtual Response<PrivateLinkResourcesWrapper> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("DataFactoryResource.GetPrivateLinkResourcesInternal");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("DataFactoryResource.GetPrivateLinkResources");
             scope.Start();
             try
             {
@@ -1571,11 +1571,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        internal virtual async Task<Response<DataFactoryPipelineRunsQueryResult>> GetPipelineRunsInternalAsync(RunFilterContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryPipelineRunsQueryResult>> GetPipelineRunsAsync(RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _pipelineRunsClientDiagnostics.CreateScope("DataFactoryResource.GetPipelineRunsInternal");
+            using DiagnosticScope scope = _pipelineRunsClientDiagnostics.CreateScope("DataFactoryResource.GetPipelineRuns");
             scope.Start();
             try
             {
@@ -1623,11 +1623,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        internal virtual Response<DataFactoryPipelineRunsQueryResult> GetPipelineRunsInternal(RunFilterContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryPipelineRunsQueryResult> GetPipelineRuns(RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _pipelineRunsClientDiagnostics.CreateScope("DataFactoryResource.GetPipelineRunsInternal");
+            using DiagnosticScope scope = _pipelineRunsClientDiagnostics.CreateScope("DataFactoryResource.GetPipelineRuns");
             scope.Start();
             try
             {
@@ -1677,12 +1677,12 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<PipelineActivityRunsResult>> GetActivityRunInternalAsync(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PipelineActivityRunsResult>> GetActivityRunAsync(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _activityRunsClientDiagnostics.CreateScope("DataFactoryResource.GetActivityRunInternal");
+            using DiagnosticScope scope = _activityRunsClientDiagnostics.CreateScope("DataFactoryResource.GetActivityRun");
             scope.Start();
             try
             {
@@ -1732,12 +1732,12 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<PipelineActivityRunsResult> GetActivityRunInternal(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PipelineActivityRunsResult> GetActivityRun(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _activityRunsClientDiagnostics.CreateScope("DataFactoryResource.GetActivityRunInternal");
+            using DiagnosticScope scope = _activityRunsClientDiagnostics.CreateScope("DataFactoryResource.GetActivityRun");
             scope.Start();
             try
             {
@@ -1889,11 +1889,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        internal virtual async Task<Response<DataFactoryTriggerRunsQueryResult>> GetTriggerRunsInternalAsync(RunFilterContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryTriggerRunsQueryResult>> GetTriggerRunsAsync(RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryResource.GetTriggerRunsInternal");
+            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryResource.GetTriggerRuns");
             scope.Start();
             try
             {
@@ -1941,11 +1941,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        internal virtual Response<DataFactoryTriggerRunsQueryResult> GetTriggerRunsInternal(RunFilterContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryTriggerRunsQueryResult> GetTriggerRuns(RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryResource.GetTriggerRunsInternal");
+            using DiagnosticScope scope = _triggerRunsClientDiagnostics.CreateScope("DataFactoryResource.GetTriggerRuns");
             scope.Start();
             try
             {
@@ -1993,11 +1993,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Parameters to filter the triggers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        internal virtual async Task<Response<DataFactoryTriggerQueryResult>> GetTriggersInternalAsync(TriggerFilterContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataFactoryTriggerQueryResult>> GetTriggersAsync(TriggerFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryResource.GetTriggersInternal");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryResource.GetTriggers");
             scope.Start();
             try
             {
@@ -2045,11 +2045,11 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="content"> Parameters to filter the triggers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        internal virtual Response<DataFactoryTriggerQueryResult> GetTriggersInternal(TriggerFilterContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DataFactoryTriggerQueryResult> GetTriggers(TriggerFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryResource.GetTriggersInternal");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("DataFactoryResource.GetTriggers");
             scope.Start();
             try
             {

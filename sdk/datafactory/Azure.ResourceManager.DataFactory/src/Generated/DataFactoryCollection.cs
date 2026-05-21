@@ -28,20 +28,6 @@ namespace Azure.ResourceManager.DataFactory
     {
         private readonly ClientDiagnostics _factoriesClientDiagnostics;
         private readonly Factories _factoriesRestClient;
-        private readonly ClientDiagnostics _dataFlowDebugSessionClientDiagnostics;
-        private readonly DataFlowDebugSession _dataFlowDebugSessionRestClient;
-        private readonly ClientDiagnostics _pipelineRunsClientDiagnostics;
-        private readonly PipelineRuns _pipelineRunsRestClient;
-        private readonly ClientDiagnostics _exposureControlClientDiagnostics;
-        private readonly ExposureControl _exposureControlRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
-        private readonly ClientDiagnostics _activityRunsClientDiagnostics;
-        private readonly ActivityRuns _activityRunsRestClient;
-        private readonly ClientDiagnostics _triggerRunsClientDiagnostics;
-        private readonly TriggerRuns _triggerRunsRestClient;
-        private readonly ClientDiagnostics _triggersClientDiagnostics;
-        private readonly Triggers _triggersRestClient;
 
         /// <summary> Initializes a new instance of DataFactoryCollection for mocking. </summary>
         protected DataFactoryCollection()
@@ -56,20 +42,6 @@ namespace Azure.ResourceManager.DataFactory
             TryGetApiVersion(DataFactoryResource.ResourceType, out string dataFactoryApiVersion);
             _factoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryResource.ResourceType.Namespace, Diagnostics);
             _factoriesRestClient = new Factories(_factoriesClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
-            _dataFlowDebugSessionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryResource.ResourceType.Namespace, Diagnostics);
-            _dataFlowDebugSessionRestClient = new DataFlowDebugSession(_dataFlowDebugSessionClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
-            _pipelineRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryResource.ResourceType.Namespace, Diagnostics);
-            _pipelineRunsRestClient = new PipelineRuns(_pipelineRunsClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
-            _exposureControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryResource.ResourceType.Namespace, Diagnostics);
-            _exposureControlRestClient = new ExposureControl(_exposureControlClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
-            _activityRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryResource.ResourceType.Namespace, Diagnostics);
-            _activityRunsRestClient = new ActivityRuns(_activityRunsClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
-            _triggerRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryResource.ResourceType.Namespace, Diagnostics);
-            _triggerRunsRestClient = new TriggerRuns(_triggerRunsClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
-            _triggersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryResource.ResourceType.Namespace, Diagnostics);
-            _triggersRestClient = new Triggers(_triggersClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 

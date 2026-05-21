@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="type"> The resource type. </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubResource(string id, string name, string @type, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubResource(string id, string name, string @type, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -46,6 +47,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string Type { get; }
 
         /// <summary> Etag identifies change in the resource. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
     }
 }

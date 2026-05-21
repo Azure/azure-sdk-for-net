@@ -36,10 +36,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="typeProperties"> Custom activity properties. </param>
-        internal CustomActivity(string name, string @type, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, CustomActivityTypeProperties typeProperties) : base(name, @type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal CustomActivity(string name, string @type, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, PipelineActivityPolicy policy, CustomActivityTypeProperties typeProperties) : base(name, @type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, policy)
         {
             TypeProperties = typeProperties;
         }
@@ -125,6 +124,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                     TypeProperties = new CustomActivityTypeProperties();
                 }
                 TypeProperties.AutoUserSpecification = value;
+            }
+        }
+
+        /// <summary> Dataset references. </summary>
+        public IList<DatasetReference> ReferenceObjectsDatasets
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CustomActivityTypeProperties();
+                }
+                return TypeProperties.ReferenceObjectsDatasets;
             }
         }
     }

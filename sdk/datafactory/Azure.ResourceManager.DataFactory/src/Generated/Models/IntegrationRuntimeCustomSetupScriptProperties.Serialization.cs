@@ -9,13 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Custom setup script properties for a managed dedicated integration runtime. </summary>
-    public partial class IntegrationRuntimeCustomSetupScriptProperties : IJsonModel<IntegrationRuntimeCustomSetupScriptProperties>
+    internal partial class IntegrationRuntimeCustomSetupScriptProperties : IJsonModel<IntegrationRuntimeCustomSetupScriptProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -80,11 +79,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("blobContainerUri"u8);
                 writer.WriteStringValue(BlobContainerUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SasToken))
-            {
-                writer.WritePropertyName("sasToken"u8);
-                writer.WriteObjectValue(SasToken, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,7 +122,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Uri blobContainerUri = default;
-            DataFactorySecretString sasToken = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,21 +134,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     blobContainerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (prop.NameEquals("sasToken"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sasToken = default /* TODO(#59298): DeserializeDataFactorySecretString is not implemented; stub until generator fix */;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IntegrationRuntimeCustomSetupScriptProperties(blobContainerUri, sasToken, additionalBinaryDataProperties);
+            return new IntegrationRuntimeCustomSetupScriptProperties(blobContainerUri, additionalBinaryDataProperties);
         }
     }
 }

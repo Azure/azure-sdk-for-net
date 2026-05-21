@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -17,11 +16,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The key authorization type integration runtime. </summary>
     public partial class LinkedIntegrationRuntimeKeyAuthorization : LinkedIntegrationRuntimeType, IJsonModel<LinkedIntegrationRuntimeKeyAuthorization>
     {
-        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeKeyAuthorization"/> for deserialization. </summary>
-        internal LinkedIntegrationRuntimeKeyAuthorization()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override LinkedIntegrationRuntimeType PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -81,8 +75,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeKeyAuthorization)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("key"u8);
-            writer.WriteObjectValue(Key, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -112,7 +104,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string authorizationType = "Key";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DataFactorySecretString key = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("authorizationType"u8))
@@ -120,17 +111,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     authorizationType = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("key"u8))
-                {
-                    key = default /* TODO(#59298): DeserializeDataFactorySecretString is not implemented; stub until generator fix */;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LinkedIntegrationRuntimeKeyAuthorization(authorizationType, additionalBinaryDataProperties, key);
+            return new LinkedIntegrationRuntimeKeyAuthorization(authorizationType, additionalBinaryDataProperties);
         }
     }
 }

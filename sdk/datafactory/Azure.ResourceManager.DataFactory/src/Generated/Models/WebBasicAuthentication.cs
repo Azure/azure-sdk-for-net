@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -16,14 +17,24 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         /// <summary> Initializes a new instance of <see cref="WebBasicAuthentication"/>. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
+        /// <param name="username"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> or <paramref name="username"/> is null. </exception>
+        public WebBasicAuthentication(DataFactoryElement<string> uri, DataFactoryElement<string> username) : base(uri, WebAuthenticationType.Basic)
+        {
+            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNull(username, nameof(username));
+
+            Username = username;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebBasicAuthentication"/>. </summary>
+        /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="username"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> The password for Basic authentication. </param>
-        internal WebBasicAuthentication(DataFactoryElement<string> uri, WebAuthenticationType authenticationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryElement<string> username, DataFactorySecret password) : base(uri, authenticationType, additionalBinaryDataProperties)
+        internal WebBasicAuthentication(DataFactoryElement<string> uri, WebAuthenticationType authenticationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryElement<string> username) : base(uri, authenticationType, additionalBinaryDataProperties)
         {
             Username = username;
-            Password = password;
         }
 
         /// <summary> User name for Basic authentication. Type: string (or Expression with resultType string). </summary>

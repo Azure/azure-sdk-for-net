@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.Models;
@@ -93,6 +94,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -126,6 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             PrivateLinkConnectionApprovalRequest properties = default;
+            ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -169,6 +176,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     properties = PrivateLinkConnectionApprovalRequest.DeserializePrivateLinkConnectionApprovalRequest(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("etag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -180,7 +196,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties);
+                properties,
+                eTag);
         }
     }
 }

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public IntegrationRuntimeLicenseType? LicenseType { get; set; }
 
         /// <summary> Custom setup script properties for a managed dedicated integration runtime. </summary>
-        public IntegrationRuntimeCustomSetupScriptProperties CustomSetupScriptProperties { get; set; }
+        internal IntegrationRuntimeCustomSetupScriptProperties CustomSetupScriptProperties { get; set; }
 
         /// <summary> Data proxy properties for a managed dedicated integration runtime. </summary>
         public IntegrationRuntimeDataProxyProperties DataProxyProperties { get; set; }
@@ -74,5 +74,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+
+        /// <summary> The URI of the Azure blob container that contains the custom setup script. </summary>
+        public Uri CustomSetupScriptBlobContainerUri
+        {
+            get
+            {
+                return CustomSetupScriptProperties is null ? default : CustomSetupScriptProperties.BlobContainerUri;
+            }
+            set
+            {
+                if (CustomSetupScriptProperties is null)
+                {
+                    CustomSetupScriptProperties = new IntegrationRuntimeCustomSetupScriptProperties();
+                }
+                CustomSetupScriptProperties.BlobContainerUri = value;
+            }
+        }
     }
 }

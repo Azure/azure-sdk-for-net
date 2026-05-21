@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -30,13 +31,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Core resource properties. </param>
-        internal DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkConnectionApprovalRequest properties) : base(id, name, resourceType, systemData)
+        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        internal DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateLinkConnectionApprovalRequest properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            ETag = eTag;
         }
 
         /// <summary> Core resource properties. </summary>
         public PrivateLinkConnectionApprovalRequest Properties { get; set; }
+
+        /// <summary> Etag identifies change in the resource. </summary>
+        public ETag? ETag { get; }
     }
 }

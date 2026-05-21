@@ -106,15 +106,15 @@ namespace Azure.ResourceManager.DataFactory
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
         }
 
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.DataFactory
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             FactoryProperties properties = default;
-            ETag? eTag = default;
-            IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
+            ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -187,29 +187,6 @@ namespace Azure.ResourceManager.DataFactory
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = FactoryProperties.DeserializeFactoryProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("eTag"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -231,6 +208,20 @@ namespace Azure.ResourceManager.DataFactory
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = FactoryProperties.DeserializeFactoryProperties(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("identity"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -238,6 +229,15 @@ namespace Azure.ResourceManager.DataFactory
                         continue;
                     }
                     identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("eTag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -251,11 +251,11 @@ namespace Azure.ResourceManager.DataFactory
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                eTag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                identity);
+                identity,
+                eTag);
         }
     }
 }

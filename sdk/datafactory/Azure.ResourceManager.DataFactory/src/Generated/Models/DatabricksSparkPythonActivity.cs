@@ -36,10 +36,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="typeProperties"> Databricks SparkPython activity properties. </param>
-        internal DatabricksSparkPythonActivity(string name, string @type, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DatabricksSparkPythonActivityTypeProperties typeProperties) : base(name, @type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal DatabricksSparkPythonActivity(string name, string @type, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, PipelineActivityPolicy policy, DatabricksSparkPythonActivityTypeProperties typeProperties) : base(name, @type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, policy)
         {
             TypeProperties = typeProperties;
         }

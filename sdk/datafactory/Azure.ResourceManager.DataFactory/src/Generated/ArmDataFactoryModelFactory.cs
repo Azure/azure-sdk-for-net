@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> Factory provisioning state, example Succeeded. </param>
         /// <param name="createdOn"> Time the factory was created in ISO8601 format. </param>
@@ -35,11 +36,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encryption"> Properties to enable Customer Managed Key for the factory. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
         /// <param name="purviewResourceId"> Purview resource id. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Managed service identity of the factory. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="DataFactory.DataFactoryData"/> instance for mocking. </returns>
-        public static DataFactoryData DataFactoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string provisioningState = default, DateTimeOffset? createdOn = default, string version = default, FactoryRepoConfiguration repoConfiguration = default, IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters = default, DataFactoryEncryptionConfiguration encryption = default, DataFactoryPublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier purviewResourceId = default, ETag? eTag = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static DataFactoryData DataFactoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, DateTimeOffset? createdOn = default, string version = default, FactoryRepoConfiguration repoConfiguration = default, IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters = default, DataFactoryEncryptionConfiguration encryption = default, DataFactoryPublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier purviewResourceId = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 provisioningState is null && createdOn is null && version is null && repoConfiguration is null && globalParameters is null && encryption is null && publicNetworkAccess is null && purviewResourceId is null ? default : new FactoryProperties(
                     provisioningState,
@@ -60,9 +61,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                     encryption,
                     publicNetworkAccess,
                     null),
-                eTag,
-                tags,
-                identity);
+                identity,
+                eTag);
         }
 
         /// <param name="tags"> The resource tags. </param>
@@ -789,10 +789,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new PipelineExternalComputeScaleProperties(timeToLive, numberOfPipelineNodes, numberOfExternalNodes, additionalProperties);
         }
 
-        /// <summary> SSIS properties for managed integration runtime. </summary>
         /// <param name="catalogInfo"> Catalog information for managed dedicated integration runtime. </param>
         /// <param name="licenseType"> License type for bringing your own license scenario. </param>
-        /// <param name="customSetupScriptProperties"> Custom setup script properties for a managed dedicated integration runtime. </param>
+        /// <param name="customSetupScriptBlobContainerUri"> The URI of the Azure blob container that contains the custom setup script. </param>
         /// <param name="dataProxyProperties"> Data proxy properties for a managed dedicated integration runtime. </param>
         /// <param name="edition"> The edition for the SSIS Integration Runtime. </param>
         /// <param name="expressCustomSetupProperties"> Custom setup without script properties for a SSIS integration runtime. </param>
@@ -800,7 +799,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeSsisProperties"/> instance for mocking. </returns>
-        public static IntegrationRuntimeSsisProperties IntegrationRuntimeSsisProperties(IntegrationRuntimeSsisCatalogInfo catalogInfo = default, IntegrationRuntimeLicenseType? licenseType = default, IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties = default, IntegrationRuntimeDataProxyProperties dataProxyProperties = default, IntegrationRuntimeEdition? edition = default, IEnumerable<CustomSetupBase> expressCustomSetupProperties = default, IEnumerable<DataFactoryPackageStore> packageStores = default, DataFactoryCredentialReference credential = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static IntegrationRuntimeSsisProperties IntegrationRuntimeSsisProperties(IntegrationRuntimeSsisCatalogInfo catalogInfo = default, IntegrationRuntimeLicenseType? licenseType = default, Uri customSetupScriptBlobContainerUri = default, IntegrationRuntimeDataProxyProperties dataProxyProperties = default, IntegrationRuntimeEdition? edition = default, IEnumerable<CustomSetupBase> expressCustomSetupProperties = default, IEnumerable<DataFactoryPackageStore> packageStores = default, DataFactoryCredentialReference credential = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             expressCustomSetupProperties ??= new ChangeTrackingList<CustomSetupBase>();
             packageStores ??= new ChangeTrackingList<DataFactoryPackageStore>();
@@ -809,7 +808,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new IntegrationRuntimeSsisProperties(
                 catalogInfo,
                 licenseType,
-                customSetupScriptProperties,
+                customSetupScriptBlobContainerUri is null ? default : new IntegrationRuntimeCustomSetupScriptProperties(customSetupScriptBlobContainerUri, null),
                 dataProxyProperties,
                 edition,
                 expressCustomSetupProperties.ToList(),
@@ -821,22 +820,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Catalog information for managed dedicated integration runtime. </summary>
         /// <param name="catalogServerEndpoint"> The catalog database server URL. </param>
         /// <param name="catalogAdminUserName"> The administrator user name of catalog database. </param>
-        /// <param name="catalogAdminPassword"> The password of the administrator user account of the catalog database. </param>
         /// <param name="catalogPricingTier"> The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. </param>
         /// <param name="dualStandbyPairName"> The dual standby pair name of Azure-SSIS Integration Runtimes to support SSISDB failover. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeSsisCatalogInfo"/> instance for mocking. </returns>
-        public static IntegrationRuntimeSsisCatalogInfo IntegrationRuntimeSsisCatalogInfo(string catalogServerEndpoint = default, string catalogAdminUserName = default, DataFactorySecretString catalogAdminPassword = default, IntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier = default, string dualStandbyPairName = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static IntegrationRuntimeSsisCatalogInfo IntegrationRuntimeSsisCatalogInfo(string catalogServerEndpoint = default, string catalogAdminUserName = default, IntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier = default, string dualStandbyPairName = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new IntegrationRuntimeSsisCatalogInfo(
-                catalogServerEndpoint,
-                catalogAdminUserName,
-                catalogAdminPassword,
-                catalogPricingTier,
-                dualStandbyPairName,
-                additionalProperties);
+            return new IntegrationRuntimeSsisCatalogInfo(catalogServerEndpoint, catalogAdminUserName, catalogPricingTier, dualStandbyPairName, additionalProperties);
         }
 
         /// <summary> Credential reference type. </summary>
@@ -910,17 +902,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties);
         }
 
-        /// <summary> Request body structure for starting data flow debug session. </summary>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
         /// <param name="dataFlow"> Data flow instance. </param>
         /// <param name="dataFlows"> List of Data flows. </param>
         /// <param name="datasets"> List of datasets. </param>
         /// <param name="linkedServices"> List of linked services. </param>
-        /// <param name="staging"> Staging info for debug session. </param>
+        /// <param name="stagingFolderPath"> Folder path for staging blob. Type: string (or Expression with resultType string). </param>
         /// <param name="debugSettings"> Data flow debug settings. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.DataFactoryDataFlowDebugPackageContent"/> instance for mocking. </returns>
-        public static DataFactoryDataFlowDebugPackageContent DataFactoryDataFlowDebugPackageContent(Guid? sessionId = default, DataFactoryDataFlowDebugInfo dataFlow = default, IEnumerable<DataFactoryDataFlowDebugInfo> dataFlows = default, IEnumerable<DataFactoryDatasetDebugInfo> datasets = default, IEnumerable<DataFactoryLinkedServiceDebugInfo> linkedServices = default, DataFlowStagingInfo staging = default, DataFlowDebugPackageDebugSettings debugSettings = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static DataFactoryDataFlowDebugPackageContent DataFactoryDataFlowDebugPackageContent(Guid? sessionId = default, DataFactoryDataFlowDebugInfo dataFlow = default, IEnumerable<DataFactoryDataFlowDebugInfo> dataFlows = default, IEnumerable<DataFactoryDatasetDebugInfo> datasets = default, IEnumerable<DataFactoryLinkedServiceDebugInfo> linkedServices = default, DataFactoryElement<string> stagingFolderPath = default, DataFlowDebugPackageDebugSettings debugSettings = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             dataFlows ??= new ChangeTrackingList<DataFactoryDataFlowDebugInfo>();
             datasets ??= new ChangeTrackingList<DataFactoryDatasetDebugInfo>();
@@ -933,7 +924,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dataFlows.ToList(),
                 datasets.ToList(),
                 linkedServices.ToList(),
-                staging,
+                stagingFolderPath is null ? default : new DataFlowStagingInfo(stagingFolderPath, null),
                 debugSettings,
                 additionalProperties);
         }
@@ -1075,13 +1066,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.DataFactoryDatasetProperties"/> instance for mocking. </returns>
-        public static DataFactoryDatasetProperties DataFactoryDatasetProperties(string datasetType = default, string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static DataFactoryDatasetProperties DataFactoryDatasetProperties(string datasetType = default, string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -1092,11 +1082,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
                 additionalProperties);
+        }
+
+        /// <summary> Columns that define the structure of the dataset. </summary>
+        /// <param name="columnName"> Name of the column. Type: string (or Expression with resultType string). </param>
+        /// <param name="columnType"> Type of the column. Type: string (or Expression with resultType string). </param>
+        /// <returns> A new <see cref="Models.DatasetDataElement"/> instance for mocking. </returns>
+        public static DatasetDataElement DatasetDataElement(DataFactoryElement<string> columnName = default, DataFactoryElement<string> columnType = default)
+        {
+            return new DatasetDataElement(columnName, columnType, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Columns that define the physical type schema of the dataset. </summary>
@@ -1114,7 +1112,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -1128,7 +1125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="format"> The format of files. </param>
         /// <param name="compression"> The data compression method used for the Amazon S3 object. </param>
         /// <returns> A new <see cref="Models.AmazonS3Dataset"/> instance for mocking. </returns>
-        public static AmazonS3Dataset AmazonS3Dataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> bucketName = default, DataFactoryElement<string> key = default, DataFactoryElement<string> prefix = default, DataFactoryElement<string> version = default, DataFactoryElement<string> modifiedDatetimeStart = default, DataFactoryElement<string> modifiedDatetimeEnd = default, DatasetStorageFormat format = default, DatasetCompression compression = default)
+        public static AmazonS3Dataset AmazonS3Dataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> bucketName = default, DataFactoryElement<string> key = default, DataFactoryElement<string> prefix = default, DataFactoryElement<string> version = default, DataFactoryElement<string> modifiedDatetimeStart = default, DataFactoryElement<string> modifiedDatetimeEnd = default, DatasetStorageFormat format = default, DatasetCompression compression = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -1139,7 +1136,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -1283,7 +1279,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -1292,7 +1287,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="avroCompressionCodec"> The data avroCompressionCodec. Type: string (or Expression with resultType string). </param>
         /// <param name="avroCompressionLevel"> Gets or sets the AvroCompressionLevel. </param>
         /// <returns> A new <see cref="Models.AvroDataset"/> instance for mocking. </returns>
-        public static AvroDataset AvroDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DatasetLocation dataLocation = default, DataFactoryElement<string> avroCompressionCodec = default, int? avroCompressionLevel = default)
+        public static AvroDataset AvroDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DatasetLocation dataLocation = default, DataFactoryElement<string> avroCompressionCodec = default, int? avroCompressionLevel = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -1303,7 +1298,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -1533,7 +1527,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -1546,7 +1539,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="compression"> The data compression method used for the json dataset. </param>
         /// <param name="nullValue"> The null value string. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.ExcelDataset"/> instance for mocking. </returns>
-        public static ExcelDataset ExcelDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DatasetLocation dataLocation = default, DataFactoryElement<string> sheetName = default, DataFactoryElement<int> sheetIndex = default, DataFactoryElement<string> range = default, DataFactoryElement<bool> firstRowAsHeader = default, DatasetCompression compression = default, DataFactoryElement<string> nullValue = default)
+        public static ExcelDataset ExcelDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DatasetLocation dataLocation = default, DataFactoryElement<string> sheetName = default, DataFactoryElement<int> sheetIndex = default, DataFactoryElement<string> range = default, DataFactoryElement<bool> firstRowAsHeader = default, DatasetCompression compression = default, DataFactoryElement<string> nullValue = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -1557,7 +1550,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -1576,7 +1568,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -1584,7 +1575,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dataLocation"> The location of the parquet storage. </param>
         /// <param name="compressionCodec"> The data compressionCodec. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.ParquetDataset"/> instance for mocking. </returns>
-        public static ParquetDataset ParquetDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DatasetLocation dataLocation = default, DataFactoryElement<string> compressionCodec = default)
+        public static ParquetDataset ParquetDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DatasetLocation dataLocation = default, DataFactoryElement<string> compressionCodec = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -1595,7 +1586,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -1606,7 +1596,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -1622,7 +1611,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="firstRowAsHeader"> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="nullValue"> The null value string. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.DelimitedTextDataset"/> instance for mocking. </returns>
-        public static DelimitedTextDataset DelimitedTextDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DatasetLocation dataLocation = default, DataFactoryElement<string> columnDelimiter = default, DataFactoryElement<string> rowDelimiter = default, DataFactoryElement<string> encodingName = default, DataFactoryElement<string> compressionCodec = default, DataFactoryElement<string> compressionLevel = default, DataFactoryElement<string> quoteChar = default, DataFactoryElement<string> escapeChar = default, DataFactoryElement<bool> firstRowAsHeader = default, DataFactoryElement<string> nullValue = default)
+        public static DelimitedTextDataset DelimitedTextDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DatasetLocation dataLocation = default, DataFactoryElement<string> columnDelimiter = default, DataFactoryElement<string> rowDelimiter = default, DataFactoryElement<string> encodingName = default, DataFactoryElement<string> compressionCodec = default, DataFactoryElement<string> compressionLevel = default, DataFactoryElement<string> quoteChar = default, DataFactoryElement<string> escapeChar = default, DataFactoryElement<bool> firstRowAsHeader = default, DataFactoryElement<string> nullValue = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -1633,7 +1622,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -1655,7 +1643,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -1664,7 +1651,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encodingName"> The code page name of the preferred encoding. If not specified, the default value is UTF-8, unless BOM denotes another Unicode encoding. Refer to the name column of the table in the following link to set supported values: https://msdn.microsoft.com/library/system.text.encoding.aspx. Type: string (or Expression with resultType string). </param>
         /// <param name="compression"> The data compression method used for the json dataset. </param>
         /// <returns> A new <see cref="Models.JsonDataset"/> instance for mocking. </returns>
-        public static JsonDataset JsonDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DatasetLocation dataLocation = default, DataFactoryElement<string> encodingName = default, DatasetCompression compression = default)
+        public static JsonDataset JsonDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DatasetLocation dataLocation = default, DataFactoryElement<string> encodingName = default, DatasetCompression compression = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -1675,7 +1662,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -1686,7 +1672,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -1696,7 +1681,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="nullValue"> The null value string. Type: string (or Expression with resultType string). </param>
         /// <param name="compression"> The data compression method used for the json dataset. </param>
         /// <returns> A new <see cref="Models.XmlDataset"/> instance for mocking. </returns>
-        public static XmlDataset XmlDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DatasetLocation dataLocation = default, DataFactoryElement<string> encodingName = default, DataFactoryElement<string> nullValue = default, DatasetCompression compression = default)
+        public static XmlDataset XmlDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DatasetLocation dataLocation = default, DataFactoryElement<string> encodingName = default, DataFactoryElement<string> nullValue = default, DatasetCompression compression = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -1707,7 +1692,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -1718,7 +1702,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -1726,7 +1709,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dataLocation"> The location of the ORC data storage. </param>
         /// <param name="orcCompressionCodec"> The data orcCompressionCodec. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.OrcDataset"/> instance for mocking. </returns>
-        public static OrcDataset OrcDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DatasetLocation dataLocation = default, DataFactoryElement<string> orcCompressionCodec = default)
+        public static OrcDataset OrcDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DatasetLocation dataLocation = default, DataFactoryElement<string> orcCompressionCodec = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -1737,7 +1720,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -1748,7 +1730,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -1756,7 +1737,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dataLocation"> The location of the Binary storage. </param>
         /// <param name="compression"> The data compression method used for the binary dataset. </param>
         /// <returns> A new <see cref="Models.BinaryDataset"/> instance for mocking. </returns>
-        public static BinaryDataset BinaryDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DatasetLocation dataLocation = default, DatasetCompression compression = default)
+        public static BinaryDataset BinaryDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DatasetLocation dataLocation = default, DatasetCompression compression = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -1767,7 +1748,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -1778,14 +1758,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="location"> The location of the iceberg storage. Setting a file name is not allowed for iceberg format. </param>
         /// <returns> A new <see cref="Models.IcebergDataset"/> instance for mocking. </returns>
-        public static IcebergDataset IcebergDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DatasetLocation location = default)
+        public static IcebergDataset IcebergDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DatasetLocation location = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -1796,7 +1775,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -1807,7 +1785,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -1820,7 +1797,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="format"> The format of the Azure Blob storage. </param>
         /// <param name="compression"> The data compression method used for the blob storage. </param>
         /// <returns> A new <see cref="Models.AzureBlobDataset"/> instance for mocking. </returns>
-        public static AzureBlobDataset AzureBlobDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> folderPath = default, DataFactoryElement<string> tableRootLocation = default, DataFactoryElement<string> fileName = default, DataFactoryElement<string> modifiedDatetimeStart = default, DataFactoryElement<string> modifiedDatetimeEnd = default, DatasetStorageFormat format = default, DatasetCompression compression = default)
+        public static AzureBlobDataset AzureBlobDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> folderPath = default, DataFactoryElement<string> tableRootLocation = default, DataFactoryElement<string> fileName = default, DataFactoryElement<string> modifiedDatetimeStart = default, DataFactoryElement<string> modifiedDatetimeEnd = default, DatasetStorageFormat format = default, DatasetCompression compression = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -1831,7 +1808,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -1850,14 +1826,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name of the Azure Table storage. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.AzureTableDataset"/> instance for mocking. </returns>
-        public static AzureTableDataset AzureTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static AzureTableDataset AzureTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -1868,7 +1843,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -1879,7 +1853,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -1888,7 +1861,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Azure SQL database. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of the Azure SQL database. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.AzureSqlTableDataset"/> instance for mocking. </returns>
-        public static AzureSqlTableDataset AzureSqlTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
+        public static AzureSqlTableDataset AzureSqlTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -1899,7 +1872,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -1910,7 +1882,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -1919,7 +1890,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Azure SQL Managed Instance. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of the Azure SQL Managed Instance dataset. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.AzureSqlMITableDataset"/> instance for mocking. </returns>
-        public static AzureSqlMITableDataset AzureSqlMITableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
+        public static AzureSqlMITableDataset AzureSqlMITableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -1930,7 +1901,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -1941,7 +1911,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -1950,7 +1919,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.AzureSqlDWTableDataset"/> instance for mocking. </returns>
-        public static AzureSqlDWTableDataset AzureSqlDWTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
+        public static AzureSqlDWTableDataset AzureSqlDWTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -1961,7 +1930,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -1972,7 +1940,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -1980,7 +1947,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="tableName"> The table name of the Cassandra database. Type: string (or Expression with resultType string). </param>
         /// <param name="keyspace"> The keyspace of the Cassandra database. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.CassandraTableDataset"/> instance for mocking. </returns>
-        public static CassandraTableDataset CassandraTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> keyspace = default)
+        public static CassandraTableDataset CassandraTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> keyspace = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -1991,7 +1958,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2002,14 +1968,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> Custom dataset properties. </param>
         /// <returns> A new <see cref="Models.CustomDataset"/> instance for mocking. </returns>
-        public static CustomDataset CustomDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData typeProperties = default)
+        public static CustomDataset CustomDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData typeProperties = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2020,7 +1985,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2031,14 +1995,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="collectionName"> CosmosDB (SQL API) collection name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.CosmosDBSqlApiCollectionDataset"/> instance for mocking. </returns>
-        public static CosmosDBSqlApiCollectionDataset CosmosDBSqlApiCollectionDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> collectionName = default)
+        public static CosmosDBSqlApiCollectionDataset CosmosDBSqlApiCollectionDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> collectionName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2049,7 +2012,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2060,14 +2022,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="collectionName"> Document Database collection name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.DocumentDBCollectionDataset"/> instance for mocking. </returns>
-        public static DocumentDBCollectionDataset DocumentDBCollectionDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> collectionName = default)
+        public static DocumentDBCollectionDataset DocumentDBCollectionDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> collectionName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2078,7 +2039,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2089,14 +2049,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="entityName"> The logical name of the entity. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.DynamicsEntityDataset"/> instance for mocking. </returns>
-        public static DynamicsEntityDataset DynamicsEntityDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> entityName = default)
+        public static DynamicsEntityDataset DynamicsEntityDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> entityName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2107,7 +2066,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2118,14 +2076,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="entityName"> The logical name of the entity. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.DynamicsCrmEntityDataset"/> instance for mocking. </returns>
-        public static DynamicsCrmEntityDataset DynamicsCrmEntityDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> entityName = default)
+        public static DynamicsCrmEntityDataset DynamicsCrmEntityDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> entityName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2136,7 +2093,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2147,14 +2103,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="entityName"> The logical name of the entity. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.CommonDataServiceForAppsEntityDataset"/> instance for mocking. </returns>
-        public static CommonDataServiceForAppsEntityDataset CommonDataServiceForAppsEntityDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> entityName = default)
+        public static CommonDataServiceForAppsEntityDataset CommonDataServiceForAppsEntityDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> entityName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2165,7 +2120,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2176,7 +2130,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -2186,7 +2139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="format"> The format of the Data Lake Store. </param>
         /// <param name="compression"> The data compression method used for the item(s) in the Azure Data Lake Store. </param>
         /// <returns> A new <see cref="Models.AzureDataLakeStoreDataset"/> instance for mocking. </returns>
-        public static AzureDataLakeStoreDataset AzureDataLakeStoreDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> folderPath = default, DataFactoryElement<string> fileName = default, DatasetStorageFormat format = default, DatasetCompression compression = default)
+        public static AzureDataLakeStoreDataset AzureDataLakeStoreDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> folderPath = default, DataFactoryElement<string> fileName = default, DatasetStorageFormat format = default, DatasetCompression compression = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2197,7 +2150,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2208,7 +2160,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -2218,7 +2169,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="format"> The format of the Azure Data Lake Storage Gen2 storage. </param>
         /// <param name="compression"> The data compression method used for the blob storage. </param>
         /// <returns> A new <see cref="Models.AzureBlobFSDataset"/> instance for mocking. </returns>
-        public static AzureBlobFSDataset AzureBlobFSDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> folderPath = default, DataFactoryElement<string> fileName = default, DatasetStorageFormat format = default, DatasetCompression compression = default)
+        public static AzureBlobFSDataset AzureBlobFSDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> folderPath = default, DataFactoryElement<string> fileName = default, DatasetStorageFormat format = default, DatasetCompression compression = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2229,7 +2180,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2240,7 +2190,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -2248,7 +2197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="tableName"> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </param>
         /// <param name="predicate"> A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.Office365Dataset"/> instance for mocking. </returns>
-        public static Office365Dataset Office365Dataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> predicate = default)
+        public static Office365Dataset Office365Dataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> predicate = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2259,7 +2208,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2270,7 +2218,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -2283,7 +2230,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="fileFilter"> Specify a filter to be used to select a subset of files in the folderPath rather than all files. Type: string (or Expression with resultType string). </param>
         /// <param name="compression"> The data compression method used for the file system. </param>
         /// <returns> A new <see cref="Models.FileShareDataset"/> instance for mocking. </returns>
-        public static FileShareDataset FileShareDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> folderPath = default, DataFactoryElement<string> fileName = default, DataFactoryElement<string> modifiedDatetimeStart = default, DataFactoryElement<string> modifiedDatetimeEnd = default, DatasetStorageFormat format = default, DataFactoryElement<string> fileFilter = default, DatasetCompression compression = default)
+        public static FileShareDataset FileShareDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> folderPath = default, DataFactoryElement<string> fileName = default, DataFactoryElement<string> modifiedDatetimeStart = default, DataFactoryElement<string> modifiedDatetimeEnd = default, DatasetStorageFormat format = default, DataFactoryElement<string> fileFilter = default, DatasetCompression compression = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2294,7 +2241,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2313,14 +2259,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="collectionName"> The table name of the MongoDB database. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.MongoDBCollectionDataset"/> instance for mocking. </returns>
-        public static MongoDBCollectionDataset MongoDBCollectionDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> collectionName = default)
+        public static MongoDBCollectionDataset MongoDBCollectionDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> collectionName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2331,7 +2276,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2342,14 +2286,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="collection"> The collection name of the MongoDB Atlas database. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.MongoDBAtlasCollectionDataset"/> instance for mocking. </returns>
-        public static MongoDBAtlasCollectionDataset MongoDBAtlasCollectionDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> collection = default)
+        public static MongoDBAtlasCollectionDataset MongoDBAtlasCollectionDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> collection = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2360,7 +2303,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2371,14 +2313,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="collection"> The collection name of the MongoDB database. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.MongoDBV2CollectionDataset"/> instance for mocking. </returns>
-        public static MongoDBV2CollectionDataset MongoDBV2CollectionDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> collection = default)
+        public static MongoDBV2CollectionDataset MongoDBV2CollectionDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> collection = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2389,7 +2330,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2400,14 +2340,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="collection"> The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.CosmosDBMongoDBApiCollectionDataset"/> instance for mocking. </returns>
-        public static CosmosDBMongoDBApiCollectionDataset CosmosDBMongoDBApiCollectionDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> collection = default)
+        public static CosmosDBMongoDBApiCollectionDataset CosmosDBMongoDBApiCollectionDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> collection = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2418,7 +2357,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2429,14 +2367,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="path"> The OData resource path. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.ODataResourceDataset"/> instance for mocking. </returns>
-        public static ODataResourceDataset ODataResourceDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> path = default)
+        public static ODataResourceDataset ODataResourceDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> path = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2447,7 +2384,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2458,7 +2394,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -2467,7 +2402,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schemaTypePropertiesSchema"> The schema name of the on-premises Oracle database. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of the on-premises Oracle database. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.OracleTableDataset"/> instance for mocking. </returns>
-        public static OracleTableDataset OracleTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
+        public static OracleTableDataset OracleTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2478,7 +2413,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2489,7 +2423,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -2497,7 +2430,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schemaTypePropertiesSchema"> The schema name of the AmazonRdsForOracle database. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of the AmazonRdsForOracle database. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.AmazonRdsForOracleTableDataset"/> instance for mocking. </returns>
-        public static AmazonRdsForOracleTableDataset AmazonRdsForOracleTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
+        public static AmazonRdsForOracleTableDataset AmazonRdsForOracleTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2508,7 +2441,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2519,7 +2451,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -2527,7 +2458,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="database"> The database name of Teradata. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of Teradata. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.TeradataTableDataset"/> instance for mocking. </returns>
-        public static TeradataTableDataset TeradataTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> database = default, DataFactoryElement<string> table = default)
+        public static TeradataTableDataset TeradataTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> database = default, DataFactoryElement<string> table = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2538,7 +2469,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2549,7 +2479,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -2557,7 +2486,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="tableName"> The Azure MySQL database table name. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The name of Azure MySQL database table. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.AzureMySqlTableDataset"/> instance for mocking. </returns>
-        public static AzureMySqlTableDataset AzureMySqlTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> table = default)
+        public static AzureMySqlTableDataset AzureMySqlTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> table = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2568,7 +2497,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2579,7 +2507,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -2588,7 +2515,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="table"> The Amazon Redshift table name. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaTypePropertiesSchema"> The Amazon Redshift schema name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.AmazonRedshiftTableDataset"/> instance for mocking. </returns>
-        public static AmazonRedshiftTableDataset AmazonRedshiftTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
+        public static AmazonRedshiftTableDataset AmazonRedshiftTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2599,7 +2526,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2610,7 +2536,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -2619,7 +2544,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schemaTypePropertiesSchema"> The Db2 schema name. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The Db2 table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.Db2TableDataset"/> instance for mocking. </returns>
-        public static Db2TableDataset Db2TableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
+        public static Db2TableDataset Db2TableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2630,7 +2555,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2641,14 +2565,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The relational table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.RelationalTableDataset"/> instance for mocking. </returns>
-        public static RelationalTableDataset RelationalTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static RelationalTableDataset RelationalTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2659,7 +2582,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2670,14 +2592,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The Informix table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.InformixTableDataset"/> instance for mocking. </returns>
-        public static InformixTableDataset InformixTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static InformixTableDataset InformixTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2688,7 +2609,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2699,14 +2619,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The ODBC table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.OdbcTableDataset"/> instance for mocking. </returns>
-        public static OdbcTableDataset OdbcTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static OdbcTableDataset OdbcTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2717,7 +2636,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2728,14 +2646,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The MySQL table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.MySqlTableDataset"/> instance for mocking. </returns>
-        public static MySqlTableDataset MySqlTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static MySqlTableDataset MySqlTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2746,7 +2663,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2757,7 +2673,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -2766,7 +2681,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="table"> The PostgreSQL table name. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaTypePropertiesSchema"> The PostgreSQL schema name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.PostgreSqlTableDataset"/> instance for mocking. </returns>
-        public static PostgreSqlTableDataset PostgreSqlTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
+        public static PostgreSqlTableDataset PostgreSqlTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2777,7 +2692,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2788,7 +2702,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -2796,7 +2709,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="table"> The PostgreSQL table name. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaTypePropertiesSchema"> The PostgreSQL schema name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.PostgreSqlV2TableDataset"/> instance for mocking. </returns>
-        public static PostgreSqlV2TableDataset PostgreSqlV2TableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
+        public static PostgreSqlV2TableDataset PostgreSqlV2TableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2807,7 +2720,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2818,14 +2730,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The Microsoft Access table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.MicrosoftAccessTableDataset"/> instance for mocking. </returns>
-        public static MicrosoftAccessTableDataset MicrosoftAccessTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static MicrosoftAccessTableDataset MicrosoftAccessTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2836,7 +2747,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2847,14 +2757,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="objectApiName"> The Salesforce object API name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SalesforceObjectDataset"/> instance for mocking. </returns>
-        public static SalesforceObjectDataset SalesforceObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> objectApiName = default)
+        public static SalesforceObjectDataset SalesforceObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> objectApiName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2865,7 +2774,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2876,14 +2784,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="objectApiName"> The Salesforce Service Cloud object API name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SalesforceServiceCloudObjectDataset"/> instance for mocking. </returns>
-        public static SalesforceServiceCloudObjectDataset SalesforceServiceCloudObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> objectApiName = default)
+        public static SalesforceServiceCloudObjectDataset SalesforceServiceCloudObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> objectApiName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2894,7 +2801,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2905,14 +2811,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The Sybase table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SybaseTableDataset"/> instance for mocking. </returns>
-        public static SybaseTableDataset SybaseTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static SybaseTableDataset SybaseTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2923,7 +2828,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2934,13 +2838,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.SapBWCubeDataset"/> instance for mocking. </returns>
-        public static SapBWCubeDataset SapBWCubeDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static SapBWCubeDataset SapBWCubeDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2951,7 +2854,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2961,14 +2863,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="path"> The path of the SAP Cloud for Customer OData entity. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SapCloudForCustomerResourceDataset"/> instance for mocking. </returns>
-        public static SapCloudForCustomerResourceDataset SapCloudForCustomerResourceDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> path = default)
+        public static SapCloudForCustomerResourceDataset SapCloudForCustomerResourceDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> path = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -2979,7 +2880,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -2990,14 +2890,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="path"> The path of the SAP ECC OData entity. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SapEccResourceDataset"/> instance for mocking. </returns>
-        public static SapEccResourceDataset SapEccResourceDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> path = default)
+        public static SapEccResourceDataset SapEccResourceDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> path = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3008,7 +2907,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3019,7 +2917,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -3027,7 +2924,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schemaTypePropertiesSchema"> The schema name of SAP HANA. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of SAP HANA. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SapHanaTableDataset"/> instance for mocking. </returns>
-        public static SapHanaTableDataset SapHanaTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
+        public static SapHanaTableDataset SapHanaTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3038,7 +2935,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3049,7 +2945,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -3058,7 +2953,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="excludeLastRequest"> Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="baseRequestId"> The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ). </param>
         /// <returns> A new <see cref="Models.SapOpenHubTableDataset"/> instance for mocking. </returns>
-        public static SapOpenHubTableDataset SapOpenHubTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> openHubDestinationName = default, DataFactoryElement<bool> excludeLastRequest = default, DataFactoryElement<int> baseRequestId = default)
+        public static SapOpenHubTableDataset SapOpenHubTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> openHubDestinationName = default, DataFactoryElement<bool> excludeLastRequest = default, DataFactoryElement<int> baseRequestId = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3069,7 +2964,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3080,7 +2974,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -3089,7 +2982,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schemaTypePropertiesSchema"> The schema name of the SQL Server dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of the SQL Server dataset. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SqlServerTableDataset"/> instance for mocking. </returns>
-        public static SqlServerTableDataset SqlServerTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
+        public static SqlServerTableDataset SqlServerTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3100,7 +2993,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3111,7 +3003,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -3119,7 +3010,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schemaTypePropertiesSchema"> The schema name of the SQL Server dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of the SQL Server dataset. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.AmazonRdsForSqlServerTableDataset"/> instance for mocking. </returns>
-        public static AmazonRdsForSqlServerTableDataset AmazonRdsForSqlServerTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
+        public static AmazonRdsForSqlServerTableDataset AmazonRdsForSqlServerTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3130,7 +3021,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3141,7 +3031,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -3152,7 +3041,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalHeaders"> The additional HTTP headers in the request to the RESTful API. </param>
         /// <param name="paginationRules"> The pagination rules to compose next page requests. </param>
         /// <returns> A new <see cref="Models.RestResourceDataset"/> instance for mocking. </returns>
-        public static RestResourceDataset RestResourceDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> relativeUri = default, DataFactoryElement<string> requestMethod = default, DataFactoryElement<string> requestBody = default, IDictionary<string, BinaryData> additionalHeaders = default, IDictionary<string, BinaryData> paginationRules = default)
+        public static RestResourceDataset RestResourceDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> relativeUri = default, DataFactoryElement<string> requestMethod = default, DataFactoryElement<string> requestBody = default, IDictionary<string, BinaryData> additionalHeaders = default, IDictionary<string, BinaryData> paginationRules = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3163,7 +3052,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3180,14 +3068,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The name of the SAP Table. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SapTableResourceDataset"/> instance for mocking. </returns>
-        public static SapTableResourceDataset SapTableResourceDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static SapTableResourceDataset SapTableResourceDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3198,7 +3085,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3209,7 +3095,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -3217,7 +3102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="context"> The context of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
         /// <param name="objectName"> The name of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SapOdpResourceDataset"/> instance for mocking. </returns>
-        public static SapOdpResourceDataset SapOdpResourceDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> context = default, DataFactoryElement<string> objectName = default)
+        public static SapOdpResourceDataset SapOdpResourceDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> context = default, DataFactoryElement<string> objectName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3228,7 +3113,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3239,7 +3123,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -3247,7 +3130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="index"> The zero-based index of the table in the web page. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="path"> The relative URL to the web page from the linked service URL. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.WebTableDataset"/> instance for mocking. </returns>
-        public static WebTableDataset WebTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<int> index = default, DataFactoryElement<string> path = default)
+        public static WebTableDataset WebTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<int> index = default, DataFactoryElement<string> path = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3258,7 +3141,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3269,14 +3151,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="indexName"> The name of the Azure Search Index. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.AzureSearchIndexDataset"/> instance for mocking. </returns>
-        public static AzureSearchIndexDataset AzureSearchIndexDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> indexName = default)
+        public static AzureSearchIndexDataset AzureSearchIndexDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> indexName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3287,7 +3168,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3298,7 +3178,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -3314,7 +3193,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="format"> The format of files. </param>
         /// <param name="compression"> The data compression method used on files. </param>
         /// <returns> A new <see cref="Models.DataFactoryHttpDataset"/> instance for mocking. </returns>
-        public static DataFactoryHttpDataset DataFactoryHttpDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> relativeUri = default, DataFactoryElement<string> requestMethod = default, DataFactoryElement<string> requestBody = default, DataFactoryElement<string> additionalHeaders = default, DatasetStorageFormat format = default, DatasetCompression compression = default)
+        public static DataFactoryHttpDataset DataFactoryHttpDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> relativeUri = default, DataFactoryElement<string> requestMethod = default, DataFactoryElement<string> requestBody = default, DataFactoryElement<string> additionalHeaders = default, DatasetStorageFormat format = default, DatasetCompression compression = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3325,7 +3204,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3343,14 +3221,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.AmazonMwsObjectDataset"/> instance for mocking. </returns>
-        public static AmazonMwsObjectDataset AmazonMwsObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static AmazonMwsObjectDataset AmazonMwsObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3361,7 +3238,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3372,7 +3248,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -3381,7 +3256,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="table"> The table name of the Azure PostgreSQL database. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Azure PostgreSQL database. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.AzurePostgreSqlTableDataset"/> instance for mocking. </returns>
-        public static AzurePostgreSqlTableDataset AzurePostgreSqlTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
+        public static AzurePostgreSqlTableDataset AzurePostgreSqlTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3392,7 +3267,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3403,14 +3277,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.ConcurObjectDataset"/> instance for mocking. </returns>
-        public static ConcurObjectDataset ConcurObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static ConcurObjectDataset ConcurObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3421,7 +3294,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3432,14 +3304,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.CouchbaseTableDataset"/> instance for mocking. </returns>
-        public static CouchbaseTableDataset CouchbaseTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static CouchbaseTableDataset CouchbaseTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3450,7 +3321,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3461,7 +3331,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -3470,7 +3339,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="table"> The table name of the Drill. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Drill. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.DrillTableDataset"/> instance for mocking. </returns>
-        public static DrillTableDataset DrillTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
+        public static DrillTableDataset DrillTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3481,7 +3350,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3492,14 +3360,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.EloquaObjectDataset"/> instance for mocking. </returns>
-        public static EloquaObjectDataset EloquaObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static EloquaObjectDataset EloquaObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3510,7 +3377,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3521,7 +3387,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -3530,7 +3395,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="table"> The table name of the Google BigQuery. Type: string (or Expression with resultType string). </param>
         /// <param name="dataset"> The database name of the Google BigQuery. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.GoogleBigQueryObjectDataset"/> instance for mocking. </returns>
-        public static GoogleBigQueryObjectDataset GoogleBigQueryObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> dataset = default)
+        public static GoogleBigQueryObjectDataset GoogleBigQueryObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> dataset = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3541,7 +3406,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3552,7 +3416,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -3560,7 +3423,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="table"> The table name of the Google BigQuery. Type: string (or Expression with resultType string). </param>
         /// <param name="dataset"> The database name of the Google BigQuery. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.GoogleBigQueryV2ObjectDataset"/> instance for mocking. </returns>
-        public static GoogleBigQueryV2ObjectDataset GoogleBigQueryV2ObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> table = default, DataFactoryElement<string> dataset = default)
+        public static GoogleBigQueryV2ObjectDataset GoogleBigQueryV2ObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> table = default, DataFactoryElement<string> dataset = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3571,7 +3434,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3582,7 +3444,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -3591,7 +3452,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="table"> The table name of Greenplum. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaTypePropertiesSchema"> The schema name of Greenplum. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.GreenplumTableDataset"/> instance for mocking. </returns>
-        public static GreenplumTableDataset GreenplumTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
+        public static GreenplumTableDataset GreenplumTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3602,7 +3463,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3613,14 +3473,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.HBaseObjectDataset"/> instance for mocking. </returns>
-        public static HBaseObjectDataset HBaseObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static HBaseObjectDataset HBaseObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3631,7 +3490,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3642,7 +3500,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -3651,7 +3508,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="table"> The table name of the Hive. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Hive. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.HiveObjectDataset"/> instance for mocking. </returns>
-        public static HiveObjectDataset HiveObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
+        public static HiveObjectDataset HiveObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3662,7 +3519,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3673,14 +3529,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.HubspotObjectDataset"/> instance for mocking. </returns>
-        public static HubspotObjectDataset HubspotObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static HubspotObjectDataset HubspotObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3691,7 +3546,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3702,7 +3556,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -3711,7 +3564,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="table"> The table name of the Impala. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Impala. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.ImpalaObjectDataset"/> instance for mocking. </returns>
-        public static ImpalaObjectDataset ImpalaObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
+        public static ImpalaObjectDataset ImpalaObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3722,7 +3575,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3733,7 +3585,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -3742,7 +3593,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Jira, applies only for Jira V2 dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of the Jira, applies only for Jira V2 dataset. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.JiraObjectDataset"/> instance for mocking. </returns>
-        public static JiraObjectDataset JiraObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
+        public static JiraObjectDataset JiraObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3753,7 +3604,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3764,14 +3614,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.MagentoObjectDataset"/> instance for mocking. </returns>
-        public static MagentoObjectDataset MagentoObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static MagentoObjectDataset MagentoObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3782,7 +3631,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3793,14 +3641,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.MariaDBTableDataset"/> instance for mocking. </returns>
-        public static MariaDBTableDataset MariaDBTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static MariaDBTableDataset MariaDBTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3811,7 +3658,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3822,14 +3668,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.AzureMariaDBTableDataset"/> instance for mocking. </returns>
-        public static AzureMariaDBTableDataset AzureMariaDBTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static AzureMariaDBTableDataset AzureMariaDBTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3840,7 +3685,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3851,14 +3695,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.MarketoObjectDataset"/> instance for mocking. </returns>
-        public static MarketoObjectDataset MarketoObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static MarketoObjectDataset MarketoObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3869,7 +3712,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3880,14 +3722,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.PaypalObjectDataset"/> instance for mocking. </returns>
-        public static PaypalObjectDataset PaypalObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static PaypalObjectDataset PaypalObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3898,7 +3739,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3909,7 +3749,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -3918,7 +3757,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="table"> The table name of the Phoenix. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Phoenix. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.PhoenixObjectDataset"/> instance for mocking. </returns>
-        public static PhoenixObjectDataset PhoenixObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
+        public static PhoenixObjectDataset PhoenixObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3929,7 +3768,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3940,7 +3778,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -3949,7 +3786,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="table"> The table name of the Presto. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Presto. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.PrestoObjectDataset"/> instance for mocking. </returns>
-        public static PrestoObjectDataset PrestoObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
+        public static PrestoObjectDataset PrestoObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3960,7 +3797,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -3971,14 +3807,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.QuickBooksObjectDataset"/> instance for mocking. </returns>
-        public static QuickBooksObjectDataset QuickBooksObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static QuickBooksObjectDataset QuickBooksObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -3989,7 +3824,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4000,14 +3834,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.ServiceNowObjectDataset"/> instance for mocking. </returns>
-        public static ServiceNowObjectDataset ServiceNowObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static ServiceNowObjectDataset ServiceNowObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4018,7 +3851,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4029,14 +3861,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.ShopifyObjectDataset"/> instance for mocking. </returns>
-        public static ShopifyObjectDataset ShopifyObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static ShopifyObjectDataset ShopifyObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4047,7 +3878,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4058,7 +3888,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -4067,7 +3896,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="table"> The table name of the Spark. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Spark. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SparkObjectDataset"/> instance for mocking. </returns>
-        public static SparkObjectDataset SparkObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
+        public static SparkObjectDataset SparkObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4078,7 +3907,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4089,14 +3917,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SquareObjectDataset"/> instance for mocking. </returns>
-        public static SquareObjectDataset SquareObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static SquareObjectDataset SquareObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4107,7 +3934,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4118,14 +3944,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.XeroObjectDataset"/> instance for mocking. </returns>
-        public static XeroObjectDataset XeroObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static XeroObjectDataset XeroObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4136,7 +3961,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4147,14 +3971,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.ZohoObjectDataset"/> instance for mocking. </returns>
-        public static ZohoObjectDataset ZohoObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static ZohoObjectDataset ZohoObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4165,7 +3988,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4176,7 +3998,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -4185,7 +4006,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="table"> The table name of the Netezza. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Netezza. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.NetezzaTableDataset"/> instance for mocking. </returns>
-        public static NetezzaTableDataset NetezzaTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
+        public static NetezzaTableDataset NetezzaTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4196,7 +4017,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4207,7 +4027,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -4216,7 +4035,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="table"> The table name of the Vertica. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Vertica. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.VerticaTableDataset"/> instance for mocking. </returns>
-        public static VerticaTableDataset VerticaTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
+        public static VerticaTableDataset VerticaTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData tableName = default, DataFactoryElement<string> table = default, DataFactoryElement<string> schemaTypePropertiesSchema = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4227,7 +4046,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4238,14 +4056,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SalesforceMarketingCloudObjectDataset"/> instance for mocking. </returns>
-        public static SalesforceMarketingCloudObjectDataset SalesforceMarketingCloudObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static SalesforceMarketingCloudObjectDataset SalesforceMarketingCloudObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4256,7 +4073,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4267,14 +4083,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.ResponsysObjectDataset"/> instance for mocking. </returns>
-        public static ResponsysObjectDataset ResponsysObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static ResponsysObjectDataset ResponsysObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4285,7 +4100,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4296,14 +4110,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="path"> The path of the Dynamics AX OData entity. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.DynamicsAXResourceDataset"/> instance for mocking. </returns>
-        public static DynamicsAXResourceDataset DynamicsAXResourceDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> path = default)
+        public static DynamicsAXResourceDataset DynamicsAXResourceDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> path = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4314,7 +4127,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4325,14 +4137,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.OracleServiceCloudObjectDataset"/> instance for mocking. </returns>
-        public static OracleServiceCloudObjectDataset OracleServiceCloudObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static OracleServiceCloudObjectDataset OracleServiceCloudObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4343,7 +4154,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4354,14 +4164,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="table"> The table name of the Azure Data Explorer database. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.AzureDataExplorerTableDataset"/> instance for mocking. </returns>
-        public static AzureDataExplorerTableDataset AzureDataExplorerTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> table = default)
+        public static AzureDataExplorerTableDataset AzureDataExplorerTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> table = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4372,7 +4181,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4383,14 +4191,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.GoogleAdWordsObjectDataset"/> instance for mocking. </returns>
-        public static GoogleAdWordsObjectDataset GoogleAdWordsObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
+        public static GoogleAdWordsObjectDataset GoogleAdWordsObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4401,7 +4208,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4412,7 +4218,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -4420,7 +4225,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Snowflake database. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of the Snowflake database. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SnowflakeDataset"/> instance for mocking. </returns>
-        public static SnowflakeDataset SnowflakeDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
+        public static SnowflakeDataset SnowflakeDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4431,7 +4236,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4442,7 +4246,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -4450,7 +4253,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Snowflake database. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of the Snowflake database. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SnowflakeV2Dataset"/> instance for mocking. </returns>
-        public static SnowflakeV2Dataset SnowflakeV2Dataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
+        public static SnowflakeV2Dataset SnowflakeV2Dataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4461,7 +4264,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4472,14 +4274,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="listName"> The name of the SharePoint Online list. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SharePointOnlineListResourceDataset"/> instance for mocking. </returns>
-        public static SharePointOnlineListResourceDataset SharePointOnlineListResourceDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> listName = default)
+        public static SharePointOnlineListResourceDataset SharePointOnlineListResourceDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> listName = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4490,7 +4291,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4501,7 +4301,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -4509,7 +4308,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="table"> The name of delta table. Type: string (or Expression with resultType string). </param>
         /// <param name="database"> The database name of delta table. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.AzureDatabricksDeltaLakeDataset"/> instance for mocking. </returns>
-        public static AzureDatabricksDeltaLakeDataset AzureDatabricksDeltaLakeDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> table = default, DataFactoryElement<string> database = default)
+        public static AzureDatabricksDeltaLakeDataset AzureDatabricksDeltaLakeDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> table = default, DataFactoryElement<string> database = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4520,7 +4319,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4531,7 +4329,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -4539,7 +4336,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schemaTypePropertiesSchema"> The schema name of Microsoft Fabric Lakehouse Table. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The name of Microsoft Fabric Lakehouse Table. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.LakeHouseTableDataset"/> instance for mocking. </returns>
-        public static LakeHouseTableDataset LakeHouseTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
+        public static LakeHouseTableDataset LakeHouseTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4550,7 +4347,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4561,7 +4357,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -4569,7 +4364,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="objectApiName"> The Salesforce V2 object API name. Type: string (or Expression with resultType string). </param>
         /// <param name="reportId"> The Salesforce V2 report Id. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SalesforceV2ObjectDataset"/> instance for mocking. </returns>
-        public static SalesforceV2ObjectDataset SalesforceV2ObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> objectApiName = default, DataFactoryElement<string> reportId = default)
+        public static SalesforceV2ObjectDataset SalesforceV2ObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> objectApiName = default, DataFactoryElement<string> reportId = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4580,7 +4375,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4591,7 +4385,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -4599,7 +4392,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="objectApiName"> The Salesforce Service Cloud V2 object API name. Type: string (or Expression with resultType string). </param>
         /// <param name="reportId"> The Salesforce Service Cloud V2 reportId. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SalesforceServiceCloudV2ObjectDataset"/> instance for mocking. </returns>
-        public static SalesforceServiceCloudV2ObjectDataset SalesforceServiceCloudV2ObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> objectApiName = default, DataFactoryElement<string> reportId = default)
+        public static SalesforceServiceCloudV2ObjectDataset SalesforceServiceCloudV2ObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> objectApiName = default, DataFactoryElement<string> reportId = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4610,7 +4403,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4621,7 +4413,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -4629,7 +4420,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schemaTypePropertiesSchema"> The schema name of the Microsoft Fabric Warehouse. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The table name of the Microsoft Fabric Warehouse. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.WarehouseTableDataset"/> instance for mocking. </returns>
-        public static WarehouseTableDataset WarehouseTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
+        public static WarehouseTableDataset WarehouseTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> schemaTypePropertiesSchema = default, DataFactoryElement<string> table = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4640,7 +4431,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -4651,7 +4441,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
         /// <param name="schema"> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
@@ -4659,7 +4448,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
         /// <param name="valueType"> Type of value copied from source. </param>
         /// <returns> A new <see cref="Models.ServiceNowV2ObjectDataset"/> instance for mocking. </returns>
-        public static ServiceNowV2ObjectDataset ServiceNowV2ObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DatasetSourceValueType? valueType = default)
+        public static ServiceNowV2ObjectDataset ServiceNowV2ObjectDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DatasetSourceValueType? valueType = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4670,7 +4459,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
-                linkedServiceName,
                 parameters,
                 annotations.ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, null),
@@ -9590,13 +9378,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <param name="properties"> Core resource properties. </param>
         /// <returns> A new <see cref="Models.DataFactoryPrivateLinkResource"/> instance for mocking. </returns>
-        public static DataFactoryPrivateLinkResource DataFactoryPrivateLinkResource(string id = default, string name = default, string @type = default, string eTag = default, DataFactoryPrivateLinkResourceProperties properties = default)
+        public static DataFactoryPrivateLinkResource DataFactoryPrivateLinkResource(string id = default, string name = default, string @type = default, ETag? eTag = default, DataFactoryPrivateLinkResourceProperties properties = default)
         {
             return new DataFactoryPrivateLinkResource(
                 id,
                 name,
                 @type,
-                eTag?.ToString(),
+                eTag,
                 additionalBinaryDataProperties: null,
                 properties);
         }
@@ -9620,7 +9408,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="type"> The resource type. </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <returns> A new <see cref="Models.SubResource"/> instance for mocking. </returns>
-        public static SubResource SubResource(string id = default, string name = default, string @type = default, string eTag = default)
+        public static SubResource SubResource(string id = default, string name = default, string @type = default, ETag? eTag = default)
         {
             return new SubResource(id, name, @type, eTag, additionalBinaryDataProperties: null);
         }
@@ -10701,10 +10489,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <returns> A new <see cref="Models.ExecutionActivity"/> instance for mocking. </returns>
-        public static ExecutionActivity ExecutionActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default)
+        public static ExecutionActivity ExecutionActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -10719,7 +10506,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy);
         }
 
@@ -10751,7 +10537,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="source"> Copy activity source. </param>
         /// <param name="sink"> Copy activity sink. </param>
@@ -10771,7 +10556,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="inputs"> List of inputs for the activity. </param>
         /// <param name="outputs"> List of outputs for the activity. </param>
         /// <returns> A new <see cref="Models.CopyActivity"/> instance for mocking. </returns>
-        public static CopyActivity CopyActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, CopyActivitySource source = default, CopySink sink = default, BinaryData translator = default, DataFactoryElement<bool> enableStaging = default, StagingSettings stagingSettings = default, DataFactoryElement<int> parallelCopies = default, DataFactoryElement<int> dataIntegrationUnits = default, DataFactoryElement<bool> enableSkipIncompatibleRow = default, RedirectIncompatibleRowSettings redirectIncompatibleRowSettings = default, LogStorageSettings logStorageSettings = default, DataFactoryLogSettings logSettings = default, IEnumerable<BinaryData> preserveRules = default, IEnumerable<BinaryData> preserve = default, DataFactoryElement<bool> validateDataConsistency = default, SkipErrorFile skipErrorFile = default, IEnumerable<DatasetReference> inputs = default, IEnumerable<DatasetReference> outputs = default)
+        public static CopyActivity CopyActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, CopyActivitySource source = default, CopySink sink = default, BinaryData translator = default, DataFactoryElement<bool> enableStaging = default, StagingSettings stagingSettings = default, DataFactoryElement<int> parallelCopies = default, DataFactoryElement<int> dataIntegrationUnits = default, DataFactoryElement<bool> enableSkipIncompatibleRow = default, RedirectIncompatibleRowSettings redirectIncompatibleRowSettings = default, LogStorageSettings logStorageSettings = default, DataFactoryLogSettings logSettings = default, IEnumerable<BinaryData> preserveRules = default, IEnumerable<BinaryData> preserve = default, DataFactoryElement<bool> validateDataConsistency = default, SkipErrorFile skipErrorFile = default, IEnumerable<DatasetReference> inputs = default, IEnumerable<DatasetReference> outputs = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -10788,7 +10573,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new CopyActivityTypeProperties(
                     source,
@@ -13374,7 +13158,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
-        /// <summary> A copy activity source for Amazon Redshift Source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -13383,9 +13166,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
         /// <param name="query"> Database query. Type: string (or Expression with resultType string). </param>
-        /// <param name="redshiftUnloadSettings"> The Amazon S3 settings needed for the interim Amazon S3 when copying from Amazon Redshift with unload. With this, data from Amazon Redshift source will be unloaded into S3 first and then copied into the targeted sink from the interim S3. </param>
+        /// <param name="redshiftUnloadBucketName"> The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.AmazonRedshiftSource"/> instance for mocking. </returns>
-        public static AmazonRedshiftSource AmazonRedshiftSource(DataFactoryElement<int> sourceRetryCount = default, DataFactoryElement<string> sourceRetryWait = default, DataFactoryElement<int> maxConcurrentConnections = default, DataFactoryElement<bool> disableMetricsCollection = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> queryTimeout = default, BinaryData additionalColumns = default, DataFactoryElement<string> query = default, RedshiftUnloadSettings redshiftUnloadSettings = default)
+        public static AmazonRedshiftSource AmazonRedshiftSource(DataFactoryElement<int> sourceRetryCount = default, DataFactoryElement<string> sourceRetryWait = default, DataFactoryElement<int> maxConcurrentConnections = default, DataFactoryElement<bool> disableMetricsCollection = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> queryTimeout = default, BinaryData additionalColumns = default, DataFactoryElement<string> query = default, DataFactoryElement<string> redshiftUnloadBucketName = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -13399,7 +13182,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 queryTimeout,
                 additionalColumns,
                 query,
-                redshiftUnloadSettings);
+                redshiftUnloadBucketName is null ? default : new RedshiftUnloadSettings(redshiftUnloadBucketName, null));
         }
 
         /// <summary> A copy activity Microsoft Fabric Warehouse source. </summary>
@@ -14128,6 +13911,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 startOn,
                 endOn,
                 outputColumns);
+        }
+
+        /// <summary> The columns to be read out from the Office 365 table. </summary>
+        /// <param name="name"> Name of the table column. Type: string. </param>
+        /// <returns> A new <see cref="Models.Office365TableOutputColumn"/> instance for mocking. </returns>
+        public static Office365TableOutputColumn Office365TableOutputColumn(string name = default)
+        {
+            return new Office365TableOutputColumn(name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A copy activity Azure Data Lake source. </summary>
@@ -16162,16 +15953,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Staging settings. </summary>
-        /// <param name="linkedServiceName"> Staging linked service reference. </param>
         /// <param name="path"> The path to storage for storing the interim data. Type: string (or Expression with resultType string). </param>
         /// <param name="enableCompression"> Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.StagingSettings"/> instance for mocking. </returns>
-        public static StagingSettings StagingSettings(DataFactoryLinkedServiceReference linkedServiceName = default, DataFactoryElement<string> path = default, DataFactoryElement<bool> enableCompression = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static StagingSettings StagingSettings(DataFactoryElement<string> path = default, DataFactoryElement<bool> enableCompression = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new StagingSettings(linkedServiceName, path, enableCompression, additionalProperties);
+            return new StagingSettings(path, enableCompression, additionalProperties);
         }
 
         /// <summary> Redirect incompatible row settings. </summary>
@@ -16187,17 +15977,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> (Deprecated. Please use LogSettings) Log storage settings. </summary>
-        /// <param name="linkedServiceName"> Log storage linked service reference. </param>
         /// <param name="path"> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </param>
         /// <param name="logLevel"> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </param>
         /// <param name="enableReliableLogging"> Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.LogStorageSettings"/> instance for mocking. </returns>
-        public static LogStorageSettings LogStorageSettings(DataFactoryLinkedServiceReference linkedServiceName = default, DataFactoryElement<string> path = default, DataFactoryElement<string> logLevel = default, DataFactoryElement<bool> enableReliableLogging = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static LogStorageSettings LogStorageSettings(DataFactoryElement<string> path = default, DataFactoryElement<string> logLevel = default, DataFactoryElement<bool> enableReliableLogging = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new LogStorageSettings(linkedServiceName, path, logLevel, enableReliableLogging, additionalProperties);
+            return new LogStorageSettings(path, logLevel, enableReliableLogging, additionalProperties);
         }
 
         /// <param name="name"> Activity name. </param>
@@ -16207,7 +15996,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="arguments"> User specified arguments to HDInsightActivity. </param>
         /// <param name="getDebugInfo"> Debug info option. </param>
@@ -16216,7 +16004,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="variables"> User specified arguments under hivevar namespace. </param>
         /// <param name="queryTimeout"> Query timeout value (in minutes).  Effective when the HDInsight cluster is with ESP (Enterprise Security Package). </param>
         /// <returns> A new <see cref="Models.HDInsightHiveActivity"/> instance for mocking. </returns>
-        public static HDInsightHiveActivity HDInsightHiveActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryElement<string> scriptPath = default, IDictionary<string, BinaryData> defines = default, IDictionary<string, BinaryData> variables = default, int? queryTimeout = default)
+        public static HDInsightHiveActivity HDInsightHiveActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryElement<string> scriptPath = default, IDictionary<string, BinaryData> defines = default, IDictionary<string, BinaryData> variables = default, int? queryTimeout = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16231,7 +16019,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new HDInsightHiveActivityTypeProperties(
                     (arguments ?? new ChangeTrackingList<BinaryData>()).ToList(),
@@ -16250,14 +16037,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="arguments"> User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array). </param>
         /// <param name="getDebugInfo"> Debug info option. </param>
         /// <param name="scriptPath"> Script path. Type: string (or Expression with resultType string). </param>
         /// <param name="defines"> Allows user to specify defines for Pig job request. </param>
         /// <returns> A new <see cref="Models.HDInsightPigActivity"/> instance for mocking. </returns>
-        public static HDInsightPigActivity HDInsightPigActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<IList<string>> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryElement<string> scriptPath = default, IDictionary<string, BinaryData> defines = default)
+        public static HDInsightPigActivity HDInsightPigActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, DataFactoryElement<IList<string>> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryElement<string> scriptPath = default, IDictionary<string, BinaryData> defines = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16272,7 +16058,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new HDInsightPigActivityTypeProperties(arguments, getDebugInfo, scriptPath, defines, null));
         }
@@ -16284,7 +16069,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="arguments"> User specified arguments to HDInsightActivity. </param>
         /// <param name="getDebugInfo"> Debug info option. </param>
@@ -16293,7 +16077,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="jarLibs"> Jar libs. </param>
         /// <param name="defines"> Allows user to specify defines for the MapReduce job request. </param>
         /// <returns> A new <see cref="Models.HDInsightMapReduceActivity"/> instance for mocking. </returns>
-        public static HDInsightMapReduceActivity HDInsightMapReduceActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryElement<string> className = default, DataFactoryElement<string> jarFilePath = default, IEnumerable<BinaryData> jarLibs = default, IDictionary<string, BinaryData> defines = default)
+        public static HDInsightMapReduceActivity HDInsightMapReduceActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryElement<string> className = default, DataFactoryElement<string> jarFilePath = default, IEnumerable<BinaryData> jarLibs = default, IDictionary<string, BinaryData> defines = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16308,7 +16092,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new HDInsightMapReduceActivityTypeProperties(
                     (arguments ?? new ChangeTrackingList<BinaryData>()).ToList(),
@@ -16327,7 +16110,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="arguments"> User specified arguments to HDInsightActivity. </param>
         /// <param name="getDebugInfo"> Debug info option. </param>
@@ -16340,7 +16122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="commandEnvironment"> Command line environment values. </param>
         /// <param name="defines"> Allows user to specify defines for streaming job request. </param>
         /// <returns> A new <see cref="Models.HDInsightStreamingActivity"/> instance for mocking. </returns>
-        public static HDInsightStreamingActivity HDInsightStreamingActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryElement<string> mapper = default, DataFactoryElement<string> reducer = default, DataFactoryElement<string> input = default, DataFactoryElement<string> output = default, IEnumerable<BinaryData> filePaths = default, DataFactoryElement<string> combiner = default, IEnumerable<BinaryData> commandEnvironment = default, IDictionary<string, BinaryData> defines = default)
+        public static HDInsightStreamingActivity HDInsightStreamingActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryElement<string> mapper = default, DataFactoryElement<string> reducer = default, DataFactoryElement<string> input = default, DataFactoryElement<string> output = default, IEnumerable<BinaryData> filePaths = default, DataFactoryElement<string> combiner = default, IEnumerable<BinaryData> commandEnvironment = default, IDictionary<string, BinaryData> defines = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16355,7 +16137,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new HDInsightStreamingActivityTypeProperties(
                     (arguments ?? new ChangeTrackingList<BinaryData>()).ToList(),
@@ -16378,7 +16159,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="rootPath"> The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string). </param>
         /// <param name="entryFilePath"> The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string). </param>
@@ -16388,7 +16168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="proxyUser"> The user to impersonate that will execute the job. Type: string (or Expression with resultType string). </param>
         /// <param name="sparkConfig"> Spark configuration property. </param>
         /// <returns> A new <see cref="Models.HDInsightSparkActivity"/> instance for mocking. </returns>
-        public static HDInsightSparkActivity HDInsightSparkActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> rootPath = default, DataFactoryElement<string> entryFilePath = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, string className = default, DataFactoryElement<string> proxyUser = default, IDictionary<string, BinaryData> sparkConfig = default)
+        public static HDInsightSparkActivity HDInsightSparkActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> rootPath = default, DataFactoryElement<string> entryFilePath = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, string className = default, DataFactoryElement<string> proxyUser = default, IDictionary<string, BinaryData> sparkConfig = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16403,7 +16183,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new HDInsightSparkActivityTypeProperties(
                     rootPath,
@@ -16423,7 +16202,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="packageLocation"> SSIS package location. </param>
         /// <param name="runtime"> Specifies the runtime to execute SSIS package. The value should be "x86" or "x64". Type: string (or Expression with resultType string). </param>
@@ -16438,7 +16216,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="propertyOverrides"> The property overrides to execute the SSIS package. </param>
         /// <param name="logLocation"> SSIS package execution log location. </param>
         /// <returns> A new <see cref="Models.ExecuteSsisPackageActivity"/> instance for mocking. </returns>
-        public static ExecuteSsisPackageActivity ExecuteSsisPackageActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, SsisPackageLocation packageLocation = default, DataFactoryElement<string> runtime = default, DataFactoryElement<string> loggingLevel = default, DataFactoryElement<string> environmentPath = default, SsisExecutionCredential executionCredential = default, IntegrationRuntimeReference connectVia = default, IDictionary<string, SsisExecutionParameter> projectParameters = default, IDictionary<string, SsisExecutionParameter> packageParameters = default, IDictionary<string, IDictionary<string, SsisExecutionParameter>> projectConnectionManagers = default, IDictionary<string, IDictionary<string, SsisExecutionParameter>> packageConnectionManagers = default, IDictionary<string, SsisPropertyOverride> propertyOverrides = default, SsisLogLocation logLocation = default)
+        public static ExecuteSsisPackageActivity ExecuteSsisPackageActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, SsisPackageLocation packageLocation = default, DataFactoryElement<string> runtime = default, DataFactoryElement<string> loggingLevel = default, DataFactoryElement<string> environmentPath = default, SsisExecutionCredential executionCredential = default, IntegrationRuntimeReference connectVia = default, IDictionary<string, SsisExecutionParameter> projectParameters = default, IDictionary<string, SsisExecutionParameter> packageParameters = default, IDictionary<string, IDictionary<string, SsisExecutionParameter>> projectConnectionManagers = default, IDictionary<string, IDictionary<string, SsisExecutionParameter>> packageConnectionManagers = default, IDictionary<string, SsisPropertyOverride> propertyOverrides = default, SsisLogLocation logLocation = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16453,7 +16231,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new ExecuteSsisPackageActivityTypeProperties(
                     packageLocation,
@@ -16478,16 +16255,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="command"> Command for custom activity Type: string (or Expression with resultType string). </param>
         /// <param name="folderPath"> Folder path for resource files Type: string (or Expression with resultType string). </param>
-        /// <param name="referenceObjects"> Reference objects. </param>
         /// <param name="extendedProperties"> User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined. </param>
         /// <param name="retentionTimeInDays"> The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double). </param>
         /// <param name="autoUserSpecification"> Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double). </param>
+        /// <param name="referenceObjectsDatasets"> Dataset references. </param>
         /// <returns> A new <see cref="Models.CustomActivity"/> instance for mocking. </returns>
-        public static CustomActivity CustomActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> command = default, DataFactoryElement<string> folderPath = default, CustomActivityReferenceObject referenceObjects = default, IDictionary<string, BinaryData> extendedProperties = default, BinaryData retentionTimeInDays = default, DataFactoryElement<string> autoUserSpecification = default)
+        public static CustomActivity CustomActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> command = default, DataFactoryElement<string> folderPath = default, IDictionary<string, BinaryData> extendedProperties = default, BinaryData retentionTimeInDays = default, DataFactoryElement<string> autoUserSpecification = default, IEnumerable<DatasetReference> referenceObjectsDatasets = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16502,28 +16278,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new CustomActivityTypeProperties(
                     command,
                     folderPath,
-                    referenceObjects,
+                    new CustomActivityReferenceObject((referenceObjectsDatasets ?? new ChangeTrackingList<DatasetReference>()).ToList(), null),
                     extendedProperties,
                     retentionTimeInDays,
                     autoUserSpecification,
                     null));
-        }
-
-        /// <summary> Reference objects for custom activity. </summary>
-        /// <param name="linkedServices"> Linked service references. </param>
-        /// <param name="datasets"> Dataset references. </param>
-        /// <returns> A new <see cref="Models.CustomActivityReferenceObject"/> instance for mocking. </returns>
-        public static CustomActivityReferenceObject CustomActivityReferenceObject(IEnumerable<DataFactoryLinkedServiceReference> linkedServices = default, IEnumerable<DatasetReference> datasets = default)
-        {
-            linkedServices ??= new ChangeTrackingList<DataFactoryLinkedServiceReference>();
-            datasets ??= new ChangeTrackingList<DatasetReference>();
-
-            return new CustomActivityReferenceObject(linkedServices.ToList(), datasets.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="name"> Activity name. </param>
@@ -16533,12 +16296,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="storedProcedureName"> Stored procedure name. Type: string (or Expression with resultType string). </param>
         /// <param name="storedProcedureParameters"> Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}". </param>
         /// <returns> A new <see cref="Models.SqlServerStoredProcedureActivity"/> instance for mocking. </returns>
-        public static SqlServerStoredProcedureActivity SqlServerStoredProcedureActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> storedProcedureName = default, BinaryData storedProcedureParameters = default)
+        public static SqlServerStoredProcedureActivity SqlServerStoredProcedureActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> storedProcedureName = default, BinaryData storedProcedureParameters = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16553,7 +16315,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new SqlServerStoredProcedureActivityTypeProperties(storedProcedureName, storedProcedureParameters, null));
         }
@@ -16565,7 +16326,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="recursive"> If true, files or sub-folders under current folder path will be deleted recursively. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="maxConcurrentConnections"> The max concurrent connections to connect data source at the same time. </param>
@@ -16574,7 +16334,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dataset"> Delete activity dataset reference. </param>
         /// <param name="storeSettings"> Delete activity store settings. </param>
         /// <returns> A new <see cref="Models.DeleteActivity"/> instance for mocking. </returns>
-        public static DeleteActivity DeleteActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<bool> recursive = default, int? maxConcurrentConnections = default, DataFactoryElement<bool> enableLogging = default, LogStorageSettings logStorageSettings = default, DatasetReference dataset = default, StoreReadSettings storeSettings = default)
+        public static DeleteActivity DeleteActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, DataFactoryElement<bool> recursive = default, int? maxConcurrentConnections = default, DataFactoryElement<bool> enableLogging = default, LogStorageSettings logStorageSettings = default, DatasetReference dataset = default, StoreReadSettings storeSettings = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16589,7 +16349,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new DeleteActivityTypeProperties(
                     recursive,
@@ -16608,12 +16367,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="command"> A control command, according to the Azure Data Explorer command syntax. Type: string (or Expression with resultType string). </param>
         /// <param name="commandTimeout"> Control command timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))..). </param>
         /// <returns> A new <see cref="Models.AzureDataExplorerCommandActivity"/> instance for mocking. </returns>
-        public static AzureDataExplorerCommandActivity AzureDataExplorerCommandActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> command = default, DataFactoryElement<string> commandTimeout = default)
+        public static AzureDataExplorerCommandActivity AzureDataExplorerCommandActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> command = default, DataFactoryElement<string> commandTimeout = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16628,7 +16386,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new AzureDataExplorerCommandActivityTypeProperties(command, commandTimeout, null));
         }
@@ -16640,14 +16397,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="source"> Dataset-specific source properties, same as copy activity source. </param>
         /// <param name="dataset"> Lookup activity dataset reference. </param>
         /// <param name="firstRowOnly"> Whether to return first row or all rows. Default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="treatDecimalAsString"> Indicates whether to treat decimal values as strings to avoid value overflow issue. This option is enabled for SnowflakeV2 connector only. Type: boolean (or Expression with resultType boolean). </param>
         /// <returns> A new <see cref="Models.LookupActivity"/> instance for mocking. </returns>
-        public static LookupActivity LookupActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, CopyActivitySource source = default, DatasetReference dataset = default, DataFactoryElement<bool> firstRowOnly = default, DataFactoryElement<bool> treatDecimalAsString = default)
+        public static LookupActivity LookupActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, CopyActivitySource source = default, DatasetReference dataset = default, DataFactoryElement<bool> firstRowOnly = default, DataFactoryElement<bool> treatDecimalAsString = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16662,7 +16418,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new LookupActivityTypeProperties(source, dataset, firstRowOnly, treatDecimalAsString, null));
         }
@@ -16674,7 +16429,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="method"> Rest API method for target endpoint. </param>
         /// <param name="uri"> Web activity target endpoint and path. Type: string (or Expression with resultType string). </param>
@@ -16687,7 +16441,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="datasets"> List of datasets passed to web endpoint. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <returns> A new <see cref="Models.WebActivity"/> instance for mocking. </returns>
-        public static WebActivity WebActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, WebActivityMethod @method = default, DataFactoryElement<string> uri = default, IDictionary<string, BinaryData> requestHeaders = default, DataFactoryElement<string> body = default, WebActivityAuthentication authentication = default, bool? disableCertValidation = default, DataFactoryElement<string> httpRequestTimeout = default, bool? turnOffAsync = default, IEnumerable<DatasetReference> datasets = default, IntegrationRuntimeReference connectVia = default)
+        public static WebActivity WebActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, WebActivityMethod @method = default, DataFactoryElement<string> uri = default, IDictionary<string, BinaryData> requestHeaders = default, DataFactoryElement<string> body = default, WebActivityAuthentication authentication = default, bool? disableCertValidation = default, DataFactoryElement<string> httpRequestTimeout = default, bool? turnOffAsync = default, IEnumerable<DatasetReference> datasets = default, IntegrationRuntimeReference connectVia = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16702,7 +16456,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new WebActivityTypeProperties(
                     @method,
@@ -16725,14 +16478,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="dataset"> GetMetadata activity dataset reference. </param>
         /// <param name="fieldList"> Fields of metadata to get from dataset. </param>
         /// <param name="storeSettings"> GetMetadata activity store settings. </param>
         /// <param name="formatSettings"> GetMetadata activity format settings. </param>
         /// <returns> A new <see cref="Models.GetDatasetMetadataActivity"/> instance for mocking. </returns>
-        public static GetDatasetMetadataActivity GetDatasetMetadataActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DatasetReference dataset = default, IEnumerable<BinaryData> fieldList = default, StoreReadSettings storeSettings = default, FormatReadSettings formatSettings = default)
+        public static GetDatasetMetadataActivity GetDatasetMetadataActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, DatasetReference dataset = default, IEnumerable<BinaryData> fieldList = default, StoreReadSettings storeSettings = default, FormatReadSettings formatSettings = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16747,7 +16499,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new GetMetadataActivityTypeProperties(dataset, (fieldList ?? new ChangeTrackingList<BinaryData>()).ToList(), storeSettings, formatSettings, null));
         }
@@ -16759,13 +16510,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="globalParameters"> Key,Value pairs to be passed to the Azure ML Batch Execution Service endpoint. Keys must match the names of web service parameters defined in the published Azure ML web service. Values will be passed in the GlobalParameters property of the Azure ML batch execution request. </param>
         /// <param name="webServiceOutputs"> Key,Value pairs, mapping the names of Azure ML endpoint's Web Service Outputs to AzureMLWebServiceFile objects specifying the output Blob locations. This information will be passed in the WebServiceOutputs property of the Azure ML batch execution request. </param>
         /// <param name="webServiceInputs"> Key,Value pairs, mapping the names of Azure ML endpoint's Web Service Inputs to AzureMLWebServiceFile objects specifying the input Blob locations.. This information will be passed in the WebServiceInputs property of the Azure ML batch execution request. </param>
         /// <returns> A new <see cref="Models.AzureMLBatchExecutionActivity"/> instance for mocking. </returns>
-        public static AzureMLBatchExecutionActivity AzureMLBatchExecutionActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, IDictionary<string, BinaryData> globalParameters = default, IDictionary<string, AzureMLWebServiceFile> webServiceOutputs = default, IDictionary<string, AzureMLWebServiceFile> webServiceInputs = default)
+        public static AzureMLBatchExecutionActivity AzureMLBatchExecutionActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, IDictionary<string, BinaryData> globalParameters = default, IDictionary<string, AzureMLWebServiceFile> webServiceOutputs = default, IDictionary<string, AzureMLWebServiceFile> webServiceInputs = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16780,7 +16530,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new AzureMLBatchExecutionActivityTypeProperties(globalParameters, webServiceOutputs, webServiceInputs, null));
         }
@@ -16792,12 +16541,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="trainedModelName"> Name of the Trained Model module in the Web Service experiment to be updated. Type: string (or Expression with resultType string). </param>
         /// <param name="trainedModelFilePath"> The relative file path in trainedModelLinkedService to represent the .ilearner file that will be uploaded by the update operation.  Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.AzureMLUpdateResourceActivity"/> instance for mocking. </returns>
-        public static AzureMLUpdateResourceActivity AzureMLUpdateResourceActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> trainedModelName = default, DataFactoryElement<string> trainedModelFilePath = default)
+        public static AzureMLUpdateResourceActivity AzureMLUpdateResourceActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> trainedModelName = default, DataFactoryElement<string> trainedModelFilePath = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16812,7 +16560,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new AzureMLUpdateResourceActivityTypeProperties(trainedModelName, trainedModelFilePath, null));
         }
@@ -16824,7 +16571,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="mlPipelineId"> ID of the published Azure ML pipeline. Type: string (or Expression with resultType string). </param>
         /// <param name="mlPipelineEndpointId"> ID of the published Azure ML pipeline endpoint. Type: string (or Expression with resultType string). </param>
@@ -16835,7 +16581,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="mlParentRunId"> The parent Azure ML Service pipeline run id. This information will be passed in the ParentRunId property of the published pipeline execution request. Type: string (or Expression with resultType string). </param>
         /// <param name="continueOnStepFailure"> Whether to continue execution of other steps in the PipelineRun if a step fails. This information will be passed in the continueOnStepFailure property of the published pipeline execution request. Type: boolean (or Expression with resultType boolean). </param>
         /// <returns> A new <see cref="Models.AzureMLExecutePipelineActivity"/> instance for mocking. </returns>
-        public static AzureMLExecutePipelineActivity AzureMLExecutePipelineActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> mlPipelineId = default, DataFactoryElement<string> mlPipelineEndpointId = default, DataFactoryElement<string> version = default, DataFactoryElement<string> experimentName = default, DataFactoryElement<IDictionary<string, string>> mlPipelineParameters = default, BinaryData dataPathAssignments = default, DataFactoryElement<string> mlParentRunId = default, DataFactoryElement<bool> continueOnStepFailure = default)
+        public static AzureMLExecutePipelineActivity AzureMLExecutePipelineActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> mlPipelineId = default, DataFactoryElement<string> mlPipelineEndpointId = default, DataFactoryElement<string> version = default, DataFactoryElement<string> experimentName = default, DataFactoryElement<IDictionary<string, string>> mlPipelineParameters = default, BinaryData dataPathAssignments = default, DataFactoryElement<string> mlParentRunId = default, DataFactoryElement<bool> continueOnStepFailure = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16850,7 +16596,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new AzureMLExecutePipelineActivityTypeProperties(
                     mlPipelineId,
@@ -16871,7 +16616,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="scriptPath"> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </param>
         /// <param name="degreeOfParallelism"> The maximum number of nodes simultaneously used to run the job. Default value is 1. Type: integer (or Expression with resultType integer), minimum: 1. </param>
@@ -16880,7 +16624,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="runtimeVersion"> Runtime version of the U-SQL engine to use. Type: string (or Expression with resultType string). </param>
         /// <param name="compilationMode"> Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.DataLakeAnalyticsUsqlActivity"/> instance for mocking. </returns>
-        public static DataLakeAnalyticsUsqlActivity DataLakeAnalyticsUsqlActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> scriptPath = default, DataFactoryElement<int> degreeOfParallelism = default, DataFactoryElement<int> priority = default, IDictionary<string, BinaryData> parameters = default, DataFactoryElement<string> runtimeVersion = default, DataFactoryElement<string> compilationMode = default)
+        public static DataLakeAnalyticsUsqlActivity DataLakeAnalyticsUsqlActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> scriptPath = default, DataFactoryElement<int> degreeOfParallelism = default, DataFactoryElement<int> priority = default, IDictionary<string, BinaryData> parameters = default, DataFactoryElement<string> runtimeVersion = default, DataFactoryElement<string> compilationMode = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16895,7 +16639,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new DataLakeAnalyticsUSQLActivityTypeProperties(
                     scriptPath,
@@ -16914,13 +16657,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="notebookPath"> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </param>
         /// <param name="baseParameters"> Base parameters to be used for each run of this job.If the notebook takes a parameter that is not specified, the default value from the notebook will be used. </param>
         /// <param name="libraries"> A list of libraries to be installed on the cluster that will execute the job. </param>
         /// <returns> A new <see cref="Models.DatabricksNotebookActivity"/> instance for mocking. </returns>
-        public static DatabricksNotebookActivity DatabricksNotebookActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> notebookPath = default, IDictionary<string, BinaryData> baseParameters = default, IEnumerable<IDictionary<string, BinaryData>> libraries = default)
+        public static DatabricksNotebookActivity DatabricksNotebookActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> notebookPath = default, IDictionary<string, BinaryData> baseParameters = default, IEnumerable<IDictionary<string, BinaryData>> libraries = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16935,7 +16677,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new DatabricksNotebookActivityTypeProperties(notebookPath, baseParameters, (libraries ?? new ChangeTrackingList<IDictionary<string, BinaryData>>()).ToList(), null));
         }
@@ -16947,13 +16688,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="mainClassName"> The full name of the class containing the main method to be executed. This class must be contained in a JAR provided as a library. Type: string (or Expression with resultType string). </param>
         /// <param name="parameters"> Parameters that will be passed to the main method. </param>
         /// <param name="libraries"> A list of libraries to be installed on the cluster that will execute the job. </param>
         /// <returns> A new <see cref="Models.DatabricksSparkJarActivity"/> instance for mocking. </returns>
-        public static DatabricksSparkJarActivity DatabricksSparkJarActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> mainClassName = default, IEnumerable<BinaryData> parameters = default, IEnumerable<IDictionary<string, BinaryData>> libraries = default)
+        public static DatabricksSparkJarActivity DatabricksSparkJarActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> mainClassName = default, IEnumerable<BinaryData> parameters = default, IEnumerable<IDictionary<string, BinaryData>> libraries = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -16968,7 +16708,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new DatabricksSparkJarActivityTypeProperties(mainClassName, (parameters ?? new ChangeTrackingList<BinaryData>()).ToList(), (libraries ?? new ChangeTrackingList<IDictionary<string, BinaryData>>()).ToList(), null));
         }
@@ -16980,13 +16719,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="pythonFile"> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </param>
         /// <param name="parameters"> Command line parameters that will be passed to the Python file. </param>
         /// <param name="libraries"> A list of libraries to be installed on the cluster that will execute the job. </param>
         /// <returns> A new <see cref="Models.DatabricksSparkPythonActivity"/> instance for mocking. </returns>
-        public static DatabricksSparkPythonActivity DatabricksSparkPythonActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> pythonFile = default, IEnumerable<BinaryData> parameters = default, IEnumerable<IDictionary<string, BinaryData>> libraries = default)
+        public static DatabricksSparkPythonActivity DatabricksSparkPythonActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> pythonFile = default, IEnumerable<BinaryData> parameters = default, IEnumerable<IDictionary<string, BinaryData>> libraries = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -17001,7 +16739,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new DatabricksSparkPythonActivityTypeProperties(pythonFile, (parameters ?? new ChangeTrackingList<BinaryData>()).ToList(), (libraries ?? new ChangeTrackingList<IDictionary<string, BinaryData>>()).ToList(), null));
         }
@@ -17013,12 +16750,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="jobId"> The Id of the Databricks Job to be executed. Type: string (or Expression with resultType string). </param>
         /// <param name="jobParameters"> Job parameters to be used for each run of this job. If the job takes a parameter that is not specified, the default value from the job will be used. </param>
         /// <returns> A new <see cref="Models.DatabricksJobActivity"/> instance for mocking. </returns>
-        public static DatabricksJobActivity DatabricksJobActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> jobId = default, IDictionary<string, BinaryData> jobParameters = default)
+        public static DatabricksJobActivity DatabricksJobActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> jobId = default, IDictionary<string, BinaryData> jobParameters = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -17033,7 +16769,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new DatabricksJobActivityTypeProperties(jobId, jobParameters, null));
         }
@@ -17045,14 +16780,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="method"> Rest API method for target endpoint. </param>
         /// <param name="functionName"> Name of the Function that the Azure Function Activity will call. Type: string (or Expression with resultType string). </param>
         /// <param name="requestHeaders"> Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us", "Content-Type": "application/json" }. Type: string (or Expression with resultType string). </param>
         /// <param name="body"> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.AzureFunctionActivity"/> instance for mocking. </returns>
-        public static AzureFunctionActivity AzureFunctionActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, AzureFunctionActivityMethod @method = default, DataFactoryElement<string> functionName = default, IDictionary<string, BinaryData> requestHeaders = default, DataFactoryElement<string> body = default)
+        public static AzureFunctionActivity AzureFunctionActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, AzureFunctionActivityMethod @method = default, DataFactoryElement<string> functionName = default, IDictionary<string, BinaryData> requestHeaders = default, DataFactoryElement<string> body = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -17067,7 +16801,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new AzureFunctionActivityTypeProperties(@method, functionName, requestHeaders, body, null));
         }
@@ -17079,10 +16812,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="dataFlow"> Data flow reference. </param>
-        /// <param name="staging"> Staging info for execute data flow activity. </param>
         /// <param name="integrationRuntime"> The integration runtime reference. </param>
         /// <param name="continuationSettings"> Continuation settings for execute data flow activity. </param>
         /// <param name="compute"> Compute properties for data flow activity. </param>
@@ -17090,8 +16821,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="continueOnError"> Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="runConcurrently"> Concurrent run setting used for data flow execution. Allows sinks with the same save order to be processed concurrently. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="sourceStagingConcurrency"> Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="stagingFolderPath"> Folder path for staging blob. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.ExecuteDataFlowActivity"/> instance for mocking. </returns>
-        public static ExecuteDataFlowActivity ExecuteDataFlowActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFlowReference dataFlow = default, DataFlowStagingInfo staging = default, IntegrationRuntimeReference integrationRuntime = default, ContinuationSettingsReference continuationSettings = default, ExecuteDataFlowActivityComputeType compute = default, DataFactoryElement<string> traceLevel = default, DataFactoryElement<bool> continueOnError = default, DataFactoryElement<bool> runConcurrently = default, DataFactoryElement<int> sourceStagingConcurrency = default)
+        public static ExecuteDataFlowActivity ExecuteDataFlowActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, DataFlowReference dataFlow = default, IntegrationRuntimeReference integrationRuntime = default, ContinuationSettingsReference continuationSettings = default, ExecuteDataFlowActivityComputeType compute = default, DataFactoryElement<string> traceLevel = default, DataFactoryElement<bool> continueOnError = default, DataFactoryElement<bool> runConcurrently = default, DataFactoryElement<int> sourceStagingConcurrency = default, DataFactoryElement<string> stagingFolderPath = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -17106,11 +16838,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new ExecuteDataFlowActivityTypeProperties(
                     dataFlow,
-                    staging,
+                    new DataFlowStagingInfo(stagingFolderPath, null),
                     integrationRuntime,
                     continuationSettings,
                     compute,
@@ -17128,7 +16859,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="scriptBlockExecutionTimeout"> ScriptBlock execution timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="scripts"> Array of script blocks. Type: array. </param>
@@ -17136,7 +16866,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="returnMultistatementResult"> Enable to retrieve result sets from multiple SQL statements and the number of rows affected by the DML statement. Supported connector: SnowflakeV2. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="treatDecimalAsString"> Indicates whether to treat decimal values as strings to avoid value overflow issue. This option is enabled for SnowflakeV2 connector only. Type: boolean (or Expression with resultType boolean). </param>
         /// <returns> A new <see cref="Models.DataFactoryScriptActivity"/> instance for mocking. </returns>
-        public static DataFactoryScriptActivity DataFactoryScriptActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> scriptBlockExecutionTimeout = default, IEnumerable<ScriptActivityScriptBlock> scripts = default, ScriptActivityTypeLogSettings logSettings = default, DataFactoryElement<bool> returnMultistatementResult = default, DataFactoryElement<bool> treatDecimalAsString = default)
+        public static DataFactoryScriptActivity DataFactoryScriptActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> scriptBlockExecutionTimeout = default, IEnumerable<ScriptActivityScriptBlock> scripts = default, ScriptActivityTypeLogSettings logSettings = default, DataFactoryElement<bool> returnMultistatementResult = default, DataFactoryElement<bool> treatDecimalAsString = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -17151,7 +16881,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new ScriptActivityTypeProperties(
                     scriptBlockExecutionTimeout,
@@ -17181,7 +16910,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="notebook"> Synapse notebook reference. </param>
         /// <param name="sparkPool"> The name of the big data pool which will be used to execute the notebook. </param>
@@ -17194,7 +16922,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="targetSparkConfiguration"> The spark configuration of the spark job. </param>
         /// <param name="sparkConfig"> Spark configuration property. </param>
         /// <returns> A new <see cref="Models.SynapseNotebookActivity"/> instance for mocking. </returns>
-        public static SynapseNotebookActivity SynapseNotebookActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, SynapseNotebookReference notebook = default, BigDataPoolParametrizationReference sparkPool = default, IDictionary<string, NotebookParameter> parameters = default, DataFactoryElement<string> executorSize = default, BinaryData conf = default, DataFactoryElement<string> driverSize = default, DataFactoryElement<int> numExecutors = default, DataFactorySparkConfigurationType? configurationType = default, SparkConfigurationParametrizationReference targetSparkConfiguration = default, IDictionary<string, BinaryData> sparkConfig = default)
+        public static SynapseNotebookActivity SynapseNotebookActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, SynapseNotebookReference notebook = default, BigDataPoolParametrizationReference sparkPool = default, IDictionary<string, NotebookParameter> parameters = default, DataFactoryElement<string> executorSize = default, BinaryData conf = default, DataFactoryElement<string> driverSize = default, DataFactoryElement<int> numExecutors = default, DataFactorySparkConfigurationType? configurationType = default, SparkConfigurationParametrizationReference targetSparkConfiguration = default, IDictionary<string, BinaryData> sparkConfig = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -17209,7 +16937,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new SynapseNotebookActivityTypeProperties(
                     notebook,
@@ -17232,7 +16959,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="sparkJob"> Synapse spark job reference. </param>
         /// <param name="arguments"> User specified arguments to SynapseSparkJobDefinitionActivity. </param>
@@ -17251,7 +16977,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="targetSparkConfiguration"> The spark configuration of the spark job. </param>
         /// <param name="sparkConfig"> Spark configuration property. </param>
         /// <returns> A new <see cref="Models.SynapseSparkJobDefinitionActivity"/> instance for mocking. </returns>
-        public static SynapseSparkJobDefinitionActivity SynapseSparkJobDefinitionActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, SynapseSparkJobReference sparkJob = default, IEnumerable<BinaryData> arguments = default, DataFactoryElement<string> @file = default, DataFactoryElement<bool> scanFolder = default, DataFactoryElement<string> className = default, IEnumerable<BinaryData> files = default, IEnumerable<BinaryData> pythonCodeReference = default, IEnumerable<BinaryData> filesV2 = default, BigDataPoolParametrizationReference targetBigDataPool = default, DataFactoryElement<string> executorSize = default, BinaryData conf = default, DataFactoryElement<string> driverSize = default, DataFactoryElement<int> numExecutors = default, DataFactorySparkConfigurationType? configurationType = default, SparkConfigurationParametrizationReference targetSparkConfiguration = default, IDictionary<string, BinaryData> sparkConfig = default)
+        public static SynapseSparkJobDefinitionActivity SynapseSparkJobDefinitionActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, PipelineActivityPolicy policy = default, SynapseSparkJobReference sparkJob = default, IEnumerable<BinaryData> arguments = default, DataFactoryElement<string> @file = default, DataFactoryElement<bool> scanFolder = default, DataFactoryElement<string> className = default, IEnumerable<BinaryData> files = default, IEnumerable<BinaryData> pythonCodeReference = default, IEnumerable<BinaryData> filesV2 = default, BigDataPoolParametrizationReference targetBigDataPool = default, DataFactoryElement<string> executorSize = default, BinaryData conf = default, DataFactoryElement<string> driverSize = default, DataFactoryElement<int> numExecutors = default, DataFactorySparkConfigurationType? configurationType = default, SparkConfigurationParametrizationReference targetSparkConfiguration = default, IDictionary<string, BinaryData> sparkConfig = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -17266,7 +16992,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn.ToList(),
                 userProperties.ToList(),
                 additionalProperties,
-                linkedServiceName,
                 policy,
                 new SynapseSparkJobActivityTypeProperties(
                     sparkJob,
@@ -17296,7 +17021,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="dataFlow"> Data flow reference. </param>
-        /// <param name="staging"> Staging info for execute data flow activity. </param>
         /// <param name="integrationRuntime"> The integration runtime reference. </param>
         /// <param name="continuationSettings"> Continuation settings for execute data flow activity. </param>
         /// <param name="compute"> Compute properties for data flow activity. </param>
@@ -17304,11 +17028,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="continueOnError"> Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="runConcurrently"> Concurrent run setting used for data flow execution. Allows sinks with the same save order to be processed concurrently. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="sourceStagingConcurrency"> Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="stagingFolderPath"> Folder path for staging blob. Type: string (or Expression with resultType string). </param>
         /// <param name="sinks"> (Deprecated. Please use Queries). List of Power Query activity sinks mapped to a queryName. </param>
         /// <param name="queries"> List of mapping for Power Query mashup query to sink dataset(s). </param>
         /// <param name="policy"> Activity policy. </param>
         /// <returns> A new <see cref="Models.ExecuteWranglingDataflowActivity"/> instance for mocking. </returns>
-        public static ExecuteWranglingDataflowActivity ExecuteWranglingDataflowActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFlowReference dataFlow = default, DataFlowStagingInfo staging = default, IntegrationRuntimeReference integrationRuntime = default, ContinuationSettingsReference continuationSettings = default, ExecuteDataFlowActivityComputeType compute = default, DataFactoryElement<string> traceLevel = default, DataFactoryElement<bool> continueOnError = default, DataFactoryElement<bool> runConcurrently = default, DataFactoryElement<int> sourceStagingConcurrency = default, IDictionary<string, PowerQuerySink> sinks = default, IEnumerable<PowerQuerySinkMapping> queries = default, PipelineActivityPolicy policy = default)
+        public static ExecuteWranglingDataflowActivity ExecuteWranglingDataflowActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFlowReference dataFlow = default, IntegrationRuntimeReference integrationRuntime = default, ContinuationSettingsReference continuationSettings = default, ExecuteDataFlowActivityComputeType compute = default, DataFactoryElement<string> traceLevel = default, DataFactoryElement<bool> continueOnError = default, DataFactoryElement<bool> runConcurrently = default, DataFactoryElement<int> sourceStagingConcurrency = default, DataFactoryElement<string> stagingFolderPath = default, IDictionary<string, PowerQuerySink> sinks = default, IEnumerable<PowerQuerySinkMapping> queries = default, PipelineActivityPolicy policy = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -17325,7 +17050,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties,
                 new ExecutePowerQueryActivityTypeProperties(
                     dataFlow,
-                    staging,
+                    new DataFlowStagingInfo(stagingFolderPath, null),
                     integrationRuntime,
                     continuationSettings,
                     compute,
@@ -17563,8 +17288,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Core resource properties. </param>
+        /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <returns> A new <see cref="Models.DataFactoryPrivateEndpointConnectionCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static DataFactoryPrivateEndpointConnectionCreateOrUpdateContent DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateLinkConnectionApprovalRequest properties = default)
+        public static DataFactoryPrivateEndpointConnectionCreateOrUpdateContent DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateLinkConnectionApprovalRequest properties = default, ETag? eTag = default)
         {
             return new DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(
                 id,
@@ -17572,7 +17298,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                eTag);
         }
 
         /// <summary> Global parameters resource type. </summary>
@@ -17642,23 +17369,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Source connection details. </summary>
-        /// <param name="linkedService"> Linked service reference. </param>
         /// <param name="linkedServiceType"> Type of the linked service e.g.: AzureBlobFS. </param>
         /// <param name="connectionType"> Type of connection via linked service or dataset. </param>
         /// <param name="isInlineDataset"> A boolean indicating whether linked service is of type inline dataset. Currently only inline datasets are supported. </param>
         /// <param name="commonDslConnectorProperties"> List of name/value pairs for connection properties. </param>
         /// <returns> A new <see cref="Models.MapperConnection"/> instance for mocking. </returns>
-        public static MapperConnection MapperConnection(DataFactoryLinkedServiceReference linkedService = default, string linkedServiceType = default, MapperConnectionType connectionType = default, bool? isInlineDataset = default, IEnumerable<MapperDslConnectorProperties> commonDslConnectorProperties = default)
+        public static MapperConnection MapperConnection(string linkedServiceType = default, MapperConnectionType connectionType = default, bool? isInlineDataset = default, IEnumerable<MapperDslConnectorProperties> commonDslConnectorProperties = default)
         {
             commonDslConnectorProperties ??= new ChangeTrackingList<MapperDslConnectorProperties>();
 
-            return new MapperConnection(
-                linkedService,
-                linkedServiceType,
-                connectionType,
-                isInlineDataset,
-                commonDslConnectorProperties.ToList(),
-                additionalBinaryDataProperties: null);
+            return new MapperConnection(linkedServiceType, connectionType, isInlineDataset, commonDslConnectorProperties.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A object which contains list of tables and connection details for a target connection. </summary>
@@ -17733,6 +17453,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 provisioningState is null && createdOn is null && version is null && purviewResourceId is null && repoConfiguration is null && globalParameters is null && encryption is null && publicNetworkAccess is null ? default : new FactoryProperties(
                     provisioningState,
@@ -17744,9 +17465,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                     encryption,
                     publicNetworkAccess,
                     default),
-                eTag,
-                tags,
-                identity);
+                identity,
+                eTag);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactory.DataFactoryPipelineData"/>. </summary>
@@ -17795,26 +17515,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 eTag);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataFactoryPrivateEndpointConnectionCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Core resource properties. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
-        /// <returns> A new <see cref="Models.DataFactoryPrivateEndpointConnectionCreateOrUpdateContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataFactoryPrivateEndpointConnectionCreateOrUpdateContent DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateLinkConnectionApprovalRequest properties, ETag? eTag)
-        {
-            return new DataFactoryPrivateEndpointConnectionCreateOrUpdateContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.DataFactoryPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -17830,7 +17530,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 id,
                 name,
                 default,
-                eTag?.ToString(),
+                eTag,
                 additionalBinaryDataProperties: null,
                 properties);
         }

@@ -23,8 +23,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
         public AzureMLWebServiceFile(DataFactoryElement<string> filePath, DataFactoryLinkedServiceReference linkedServiceName)
-            : this(filePath, linkedServiceName, new ChangeTrackingDictionary<string, BinaryData>())
+            : this(filePath)
         {
+            LinkedServiceName = linkedServiceName;
         }
     }
 }

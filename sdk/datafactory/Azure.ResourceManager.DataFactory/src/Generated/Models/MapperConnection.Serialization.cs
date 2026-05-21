@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -80,11 +79,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 throw new FormatException($"The model {nameof(MapperConnection)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(LinkedService))
-            {
-                writer.WritePropertyName("linkedService"u8);
-                writer.WriteObjectValue(LinkedService, options);
-            }
             if (Optional.IsDefined(LinkedServiceType))
             {
                 writer.WritePropertyName("linkedServiceType"u8);
@@ -149,7 +143,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            DataFactoryLinkedServiceReference linkedService = default;
             string linkedServiceType = default;
             MapperConnectionType connectionType = default;
             bool? isInlineDataset = default;
@@ -157,15 +150,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("linkedService"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    linkedService = default /* TODO(#59298): DeserializeDataFactoryLinkedServiceReference is not implemented; stub until generator fix */;
-                    continue;
-                }
                 if (prop.NameEquals("linkedServiceType"u8))
                 {
                     linkedServiceType = prop.Value.GetString();
@@ -204,13 +188,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MapperConnection(
-                linkedService,
-                linkedServiceType,
-                connectionType,
-                isInlineDataset,
-                commonDslConnectorProperties ?? new ChangeTrackingList<MapperDslConnectorProperties>(),
-                additionalBinaryDataProperties);
+            return new MapperConnection(linkedServiceType, connectionType, isInlineDataset, commonDslConnectorProperties ?? new ChangeTrackingList<MapperDslConnectorProperties>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -63,12 +64,29 @@ namespace Azure.ResourceManager.DataFactory.Models
         public IList<DataFactoryLinkedServiceDebugInfo> LinkedServices { get; }
 
         /// <summary> Staging info for debug session. </summary>
-        public DataFlowStagingInfo Staging { get; set; }
+        internal DataFlowStagingInfo Staging { get; set; }
 
         /// <summary> Data flow debug settings. </summary>
         public DataFlowDebugPackageDebugSettings DebugSettings { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+
+        /// <summary> Folder path for staging blob. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> StagingFolderPath
+        {
+            get
+            {
+                return Staging is null ? default : Staging.FolderPath;
+            }
+            set
+            {
+                if (Staging is null)
+                {
+                    Staging = new DataFlowStagingInfo();
+                }
+                Staging.FolderPath = value;
+            }
+        }
     }
 }

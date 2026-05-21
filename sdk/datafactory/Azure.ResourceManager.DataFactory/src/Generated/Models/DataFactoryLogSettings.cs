@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,13 +18,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryLogSettings"/>. </summary>
-        /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logLocationSettings"/> is null. </exception>
-        public DataFactoryLogSettings(LogLocationSettings logLocationSettings)
+        public DataFactoryLogSettings()
         {
-            Argument.AssertNotNull(logLocationSettings, nameof(logLocationSettings));
 
-            LogLocationSettings = logLocationSettings;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryLogSettings"/>. </summary>
@@ -48,6 +43,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         public CopyActivityLogSettings CopyActivityLogSettings { get; set; }
 
         /// <summary> Log location settings customer needs to provide when enabling log. </summary>
-        public LogLocationSettings LogLocationSettings { get; set; }
+        internal LogLocationSettings LogLocationSettings { get; set; }
+
+        /// <summary> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> LogLocationPath
+        {
+            get
+            {
+                return LogLocationSettings is null ? default : LogLocationSettings.Path;
+            }
+            set
+            {
+                if (LogLocationSettings is null)
+                {
+                    LogLocationSettings = new LogLocationSettings();
+                }
+                LogLocationSettings.Path = value;
+            }
+        }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -27,15 +26,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeSsisCatalogInfo"/>. </summary>
         /// <param name="catalogServerEndpoint"> The catalog database server URL. </param>
         /// <param name="catalogAdminUserName"> The administrator user name of catalog database. </param>
-        /// <param name="catalogAdminPassword"> The password of the administrator user account of the catalog database. </param>
         /// <param name="catalogPricingTier"> The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. </param>
         /// <param name="dualStandbyPairName"> The dual standby pair name of Azure-SSIS Integration Runtimes to support SSISDB failover. </param>
         /// <param name="additionalProperties"></param>
-        internal IntegrationRuntimeSsisCatalogInfo(string catalogServerEndpoint, string catalogAdminUserName, DataFactorySecretString catalogAdminPassword, IntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier, string dualStandbyPairName, IDictionary<string, BinaryData> additionalProperties)
+        internal IntegrationRuntimeSsisCatalogInfo(string catalogServerEndpoint, string catalogAdminUserName, IntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier, string dualStandbyPairName, IDictionary<string, BinaryData> additionalProperties)
         {
             CatalogServerEndpoint = catalogServerEndpoint;
             CatalogAdminUserName = catalogAdminUserName;
-            CatalogAdminPassword = catalogAdminPassword;
             CatalogPricingTier = catalogPricingTier;
             DualStandbyPairName = dualStandbyPairName;
             _additionalBinaryDataProperties = additionalProperties;
