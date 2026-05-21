@@ -12,16 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.ResourceGraph
 {
-    internal partial class ResourceGraphApiClient
+    internal partial class ResourceHistoryOperations
     {
-        private readonly string _apiVersion;
         private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
+        /// <summary> Initializes a new instance of ResourceHistoryOperations for mocking. </summary>
+        protected ResourceHistoryOperations()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ResourceHistoryOperations. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"> The API version to use for this client. </param>
-        public ResourceGraphApiClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="apiVersion"></param>
+        internal ResourceHistoryOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -29,22 +35,17 @@ namespace Azure.ResourceManager.ResourceGraph
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Initializes a new instance of ResourceGraphApiClient for mocking. </summary>
-        protected ResourceGraphApiClient()
-        {
-        }
-
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetResourcesRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetResourcesHistoryRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.ResourceGraph/resources", false);
+            uri.AppendPath("/providers/Microsoft.ResourceGraph/resourcesHistory", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

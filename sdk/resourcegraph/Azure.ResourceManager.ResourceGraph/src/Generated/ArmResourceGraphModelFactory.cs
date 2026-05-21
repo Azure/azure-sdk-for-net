@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -18,6 +19,150 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmResourceGraphModelFactory
     {
+
+        /// <summary> Error details. </summary>
+        /// <param name="code"> Error code identifying the specific error. </param>
+        /// <param name="message"> A human readable error message. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="Models.FacetErrorDetails"/> instance for mocking. </returns>
+        public static FacetErrorDetails FacetErrorDetails(string code = default, string message = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new FacetErrorDetails(code, message, additionalProperties);
+        }
+
+        /// <summary> The parameters for a specific changes request. </summary>
+        /// <param name="resourceIds"> Specifies the list of resources for a changes request. </param>
+        /// <param name="subscriptionId"> The subscription id of resources to query the changes from. </param>
+        /// <param name="interval"> Specifies the date and time interval for a changes request. </param>
+        /// <param name="skipToken"> Acts as the continuation token for paged responses. </param>
+        /// <param name="top"> The maximum number of changes the client can accept in a paged response. </param>
+        /// <param name="table"> The table name to query resources from. </param>
+        /// <param name="fetchPropertyChanges"> The flag if set to true will fetch property changes. </param>
+        /// <param name="fetchSnapshots"> The flag if set to true will fetch change snapshots. </param>
+        /// <returns> A new <see cref="Models.ResourceChangesRequestParameters"/> instance for mocking. </returns>
+        public static ResourceChangesRequestParameters ResourceChangesRequestParameters(IEnumerable<string> resourceIds = default, string subscriptionId = default, ResourceChangesRequestParametersInterval interval = default, string skipToken = default, int? top = default, string table = default, bool? fetchPropertyChanges = default, bool? fetchSnapshots = default)
+        {
+            resourceIds ??= new ChangeTrackingList<string>();
+
+            return new ResourceChangesRequestParameters(
+                resourceIds.ToList(),
+                subscriptionId,
+                interval,
+                skipToken,
+                top,
+                table,
+                fetchPropertyChanges,
+                fetchSnapshots,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A list of changes associated with a resource over a specific time interval. </summary>
+        /// <param name="changes">
+        /// The pageable value returned by the operation, i.e. a list of changes to the resource.
+        /// <list type="bullet"><item><description>The list is ordered from the most recent changes to the least recent changes.</description></item><item><description>This list will be empty if there were no changes during the requested interval.</description></item><item><description>The `Before` snapshot timestamp value of the oldest change can be outside of the specified time interval.</description></item></list>
+        /// </param>
+        /// <param name="skipToken"> Skip token that encodes the skip information while executing the current request. </param>
+        /// <returns> A new <see cref="Models.ResourceChangeList"/> instance for mocking. </returns>
+        public static ResourceChangeList ResourceChangeList(IEnumerable<ResourceChangeData> changes = default, BinaryData skipToken = default)
+        {
+            changes ??= new ChangeTrackingList<ResourceChangeData>();
+
+            return new ResourceChangeList(changes.ToList(), skipToken, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Data on a specific change, represented by a pair of before and after resource snapshots. </summary>
+        /// <param name="resourceId"> The resource for a change. </param>
+        /// <param name="changeId"> The change ID. Valid and unique within the specified resource only. </param>
+        /// <param name="beforeSnapshot"> The snapshot before the change. </param>
+        /// <param name="afterSnapshot"> The snapshot after the change. </param>
+        /// <param name="changeType"> The change type for snapshot. PropertyChanges will be provided in case of Update change type. </param>
+        /// <param name="propertyChanges"> An array of resource property change. </param>
+        /// <returns> A new <see cref="Models.ResourceChangeData"/> instance for mocking. </returns>
+        public static ResourceChangeData ResourceChangeData(string resourceId = default, string changeId = default, ResourceChangeDataBeforeSnapshot beforeSnapshot = default, ResourceChangeDataAfterSnapshot afterSnapshot = default, ChangeType? changeType = default, IEnumerable<ResourcePropertyChange> propertyChanges = default)
+        {
+            propertyChanges ??= new ChangeTrackingList<ResourcePropertyChange>();
+
+            return new ResourceChangeData(
+                resourceId,
+                changeId,
+                beforeSnapshot,
+                afterSnapshot,
+                changeType,
+                propertyChanges.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The snapshot before the change. </summary>
+        /// <param name="snapshotId"> The ID of the snapshot. </param>
+        /// <param name="timestamp">
+        /// The time when the snapshot was created.
+        /// The snapshot timestamp provides an approximation as to when a modification to a resource was detected.  There can be a difference between the actual modification time and the detection time.  This is due to differences in how operations that modify a resource are processed, versus how operation that record resource snapshots are processed.
+        /// </param>
+        /// <param name="content"> The resource snapshot content (in resourceChangeDetails response only). </param>
+        /// <returns> A new <see cref="Models.ResourceChangeDataBeforeSnapshot"/> instance for mocking. </returns>
+        public static ResourceChangeDataBeforeSnapshot ResourceChangeDataBeforeSnapshot(string snapshotId = default, DateTimeOffset timestamp = default, BinaryData content = default)
+        {
+            return new ResourceChangeDataBeforeSnapshot(snapshotId, timestamp, content, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Data on a specific resource snapshot. </summary>
+        /// <param name="snapshotId"> The ID of the snapshot. </param>
+        /// <param name="timestamp">
+        /// The time when the snapshot was created.
+        /// The snapshot timestamp provides an approximation as to when a modification to a resource was detected.  There can be a difference between the actual modification time and the detection time.  This is due to differences in how operations that modify a resource are processed, versus how operation that record resource snapshots are processed.
+        /// </param>
+        /// <param name="content"> The resource snapshot content (in resourceChangeDetails response only). </param>
+        /// <returns> A new <see cref="Models.ResourceSnapshotData"/> instance for mocking. </returns>
+        public static ResourceSnapshotData ResourceSnapshotData(string snapshotId = default, DateTimeOffset timestamp = default, BinaryData content = default)
+        {
+            return new ResourceSnapshotData(snapshotId, timestamp, content, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The snapshot after the change. </summary>
+        /// <param name="snapshotId"> The ID of the snapshot. </param>
+        /// <param name="timestamp">
+        /// The time when the snapshot was created.
+        /// The snapshot timestamp provides an approximation as to when a modification to a resource was detected.  There can be a difference between the actual modification time and the detection time.  This is due to differences in how operations that modify a resource are processed, versus how operation that record resource snapshots are processed.
+        /// </param>
+        /// <param name="content"> The resource snapshot content (in resourceChangeDetails response only). </param>
+        /// <returns> A new <see cref="Models.ResourceChangeDataAfterSnapshot"/> instance for mocking. </returns>
+        public static ResourceChangeDataAfterSnapshot ResourceChangeDataAfterSnapshot(string snapshotId = default, DateTimeOffset timestamp = default, BinaryData content = default)
+        {
+            return new ResourceChangeDataAfterSnapshot(snapshotId, timestamp, content, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The resource property change. </summary>
+        /// <param name="propertyName"> The property name. </param>
+        /// <param name="beforeValue"> The property value in before snapshot. </param>
+        /// <param name="afterValue"> The property value in after snapshot. </param>
+        /// <param name="changeCategory"> The change category. </param>
+        /// <param name="propertyChangeType"> The property change Type. </param>
+        /// <returns> A new <see cref="Models.ResourcePropertyChange"/> instance for mocking. </returns>
+        public static ResourcePropertyChange ResourcePropertyChange(string propertyName = default, string beforeValue = default, string afterValue = default, ChangeCategory changeCategory = default, PropertyChangeType propertyChangeType = default)
+        {
+            return new ResourcePropertyChange(
+                propertyName,
+                beforeValue,
+                afterValue,
+                changeCategory,
+                propertyChangeType,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The parameters for a specific change details request. </summary>
+        /// <param name="resourceIds"> Specifies the list of resources for a change details request. </param>
+        /// <param name="changeIds"> Specifies the list of change IDs for a change details request. </param>
+        /// <returns> A new <see cref="Models.ResourceChangeDetailsRequestParameters"/> instance for mocking. </returns>
+        public static ResourceChangeDetailsRequestParameters ResourceChangeDetailsRequestParameters(IEnumerable<string> resourceIds = default, IEnumerable<string> changeIds = default)
+        {
+            resourceIds ??= new ChangeTrackingList<string>();
+            changeIds ??= new ChangeTrackingList<string>();
+
+            return new ResourceChangeDetailsRequestParameters(resourceIds.ToList(), changeIds.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Describes a query to be executed. </summary>
         /// <param name="subscriptions"> Azure subscriptions against which to execute the query. </param>
         /// <param name="managementGroups"> Azure management groups against which to execute the query. Example: [ 'mg1', 'mg2' ]. </param>
@@ -111,31 +256,33 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new FacetError(expression, "FacetError", additionalBinaryDataProperties: null, errors.ToList());
         }
 
-        /// <summary> Error details. </summary>
-        /// <param name="code"> Error code identifying the specific error. </param>
-        /// <param name="message"> A human readable error message. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.FacetErrorDetails"/> instance for mocking. </returns>
-        public static FacetErrorDetails FacetErrorDetails(string code = default, string message = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        /// <summary> Describes a history request to be executed. </summary>
+        /// <param name="subscriptions"> Azure subscriptions against which to execute the query. </param>
+        /// <param name="query"> The resources query. </param>
+        /// <param name="options"> The history request evaluation options. </param>
+        /// <param name="managementGroups"> Azure management groups against which to execute the query. Example: [ 'mg1', 'mg2' ]. </param>
+        /// <returns> A new <see cref="Models.ResourcesHistoryRequest"/> instance for mocking. </returns>
+        public static ResourcesHistoryRequest ResourcesHistoryRequest(IEnumerable<string> subscriptions = default, string query = default, ResourcesHistoryRequestOptions options = default, IEnumerable<string> managementGroups = default)
         {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+            subscriptions ??= new ChangeTrackingList<string>();
+            managementGroups ??= new ChangeTrackingList<string>();
 
-            return new FacetErrorDetails(code, message, additionalProperties);
+            return new ResourcesHistoryRequest(subscriptions.ToList(), query, options, managementGroups.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="modifiedOn"> Date and time in UTC of the last modification that was made to this graph query definition. </param>
         /// <param name="description"> The description of a graph query. </param>
         /// <param name="query"> KQL query that will be graph. </param>
         /// <param name="resultKind"> Enum indicating a type of graph query. </param>
-        /// <param name="etag"> This will be used to handle Optimistic Concurrency. If not present, it will always overwrite the existing resource without checking conflict. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="eTag"> This will be used to handle Optimistic Concurrency. If not present, it will always overwrite the existing resource without checking conflict. </param>
         /// <returns> A new <see cref="ResourceGraph.ResourceGraphQueryData"/> instance for mocking. </returns>
-        public static ResourceGraphQueryData ResourceGraphQueryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? modifiedOn = default, string description = default, string query = default, ResultKind? resultKind = default, ETag? etag = default)
+        public static ResourceGraphQueryData ResourceGraphQueryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, DateTimeOffset? modifiedOn = default, string description = default, string query = default, ResultKind? resultKind = default, IDictionary<string, string> tags = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -145,10 +292,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
                 modifiedOn is null && description is null && query is null && resultKind is null ? default : new GraphQueryProperties(modifiedOn, description, query, resultKind, null),
-                etag);
+                tags,
+                eTag);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -161,6 +308,36 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ResourceGraphQueryPatch(tags, eTag, description is null && query is null ? default : new GraphQueryPropertiesUpdateParameters(description, query, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceGraph.ResourceGraphQueryData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="modifiedOn"> Date and time in UTC of the last modification that was made to this graph query definition. </param>
+        /// <param name="description"> The description of a graph query. </param>
+        /// <param name="query"> KQL query that will be graph. </param>
+        /// <param name="resultKind"> Enum indicating a type of graph query. </param>
+        /// <param name="etag"> This will be used to handle Optimistic Concurrency. If not present, it will always overwrite the existing resource without checking conflict. </param>
+        /// <returns> A new <see cref="ResourceGraph.ResourceGraphQueryData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ResourceGraphQueryData ResourceGraphQueryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? modifiedOn, string description, string query, ResultKind? resultKind, ETag? etag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ResourceGraphQueryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                modifiedOn is null && description is null && query is null && resultKind is null ? default : new GraphQueryProperties(modifiedOn, description, query, resultKind, default),
+                tags,
+                etag);
         }
     }
 }
