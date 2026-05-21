@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.Chaos
         ChaosScenarioValidationData IOperationSource<ChaosScenarioValidationData>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ChaosScenarioValidationData result = ChaosScenarioValidationData.DeserializeChaosScenarioValidationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return ChaosScenarioValidationData.DeserializeChaosScenarioValidationData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.Chaos
         async ValueTask<ChaosScenarioValidationData> IOperationSource<ChaosScenarioValidationData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ChaosScenarioValidationData result = ChaosScenarioValidationData.DeserializeChaosScenarioValidationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return ChaosScenarioValidationData.DeserializeChaosScenarioValidationData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
