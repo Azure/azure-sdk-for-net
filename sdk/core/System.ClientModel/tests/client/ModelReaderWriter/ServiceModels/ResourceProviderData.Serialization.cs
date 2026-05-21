@@ -63,7 +63,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         var data = BinaryData.FromString(item.GetRawText());
-                        if (options.TryGetProxy<ProviderResourceType>(data, out _))
+                        if (options.TryGetProxy<ProviderResourceType>(data.ToMemory(), out _))
                         {
                             array.Add(ModelReaderWriter.Read<ProviderResourceType>(data, options));
                         }

@@ -146,59 +146,63 @@ namespace System.ClientModel.Tests.Internal.Perf
 
         // ── Proxy that can be configured to handle or decline ──
 
-        private class BenchmarkProxy : ModelProxy<BenchmarkModel>, IJsonModel<BenchmarkModel>
+        private class BenchmarkProxy : ConditionalModelProxy<BenchmarkModel>
         {
             private readonly bool _canHandle;
 
-            public BenchmarkProxy(bool canHandle)
+            public BenchmarkProxy(bool canHandle) : base(new BenchmarkProxyModel())
             {
                 _canHandle = canHandle;
             }
 
-            public override bool CanHandle(BenchmarkModel model, ModelReaderWriterOptions options) => _canHandle;
-            public override bool CanHandle(BinaryData data, ModelReaderWriterOptions options) => _canHandle;
+            public override bool CanHandle(BenchmarkModel model) => _canHandle;
+            public override bool CanHandle(ReadOnlyMemory<byte> data) => _canHandle;
+            public override bool CanHandle(ref Utf8JsonReader reader) => _canHandle;
 
-            void IJsonModel<BenchmarkModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            private class BenchmarkProxyModel : IJsonModel<BenchmarkModel>
             {
-                var model = (BenchmarkModel)options.ProxiedModel!;
-                writer.WriteStartObject();
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(model.Value);
-                writer.WritePropertyName("proxied"u8);
-                writer.WriteBooleanValue(true);
-                writer.WriteEndObject();
-            }
+                void IJsonModel<BenchmarkModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+                {
+                    var model = (BenchmarkModel)options.ProxiedModel!;
+                    writer.WriteStartObject();
+                    writer.WritePropertyName("value"u8);
+                    writer.WriteStringValue(model.Value);
+                    writer.WritePropertyName("proxied"u8);
+                    writer.WriteBooleanValue(true);
+                    writer.WriteEndObject();
+                }
 
-            BenchmarkModel IJsonModel<BenchmarkModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-            {
-                using var doc = JsonDocument.ParseValue(ref reader);
-                string val = doc.RootElement.TryGetProperty("value", out var v) ? v.GetString()! : "";
-                return new BenchmarkModel { Value = val };
-            }
+                BenchmarkModel IJsonModel<BenchmarkModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+                {
+                    using var doc = JsonDocument.ParseValue(ref reader);
+                    string val = doc.RootElement.TryGetProperty("value", out var v) ? v.GetString()! : "";
+                    return new BenchmarkModel { Value = val };
+                }
 
-            public override BenchmarkModel Create(BinaryData data, ModelReaderWriterOptions options)
-            {
-                using var doc = JsonDocument.Parse(data);
-                string val = doc.RootElement.TryGetProperty("value", out var v) ? v.GetString()! : "";
-                return new BenchmarkModel { Value = val };
-            }
+                BenchmarkModel IPersistableModel<BenchmarkModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+                {
+                    using var doc = JsonDocument.Parse(data);
+                    string val = doc.RootElement.TryGetProperty("value", out var v) ? v.GetString()! : "";
+                    return new BenchmarkModel { Value = val };
+                }
 
-            public override BinaryData Write(ModelReaderWriterOptions options)
-            {
-                var model = (BenchmarkModel)options.ProxiedModel!;
-                using var stream = new System.IO.MemoryStream();
-                using var writer = new Utf8JsonWriter(stream);
-                writer.WriteStartObject();
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(model.Value);
-                writer.WritePropertyName("proxied"u8);
-                writer.WriteBooleanValue(true);
-                writer.WriteEndObject();
-                writer.Flush();
-                return BinaryData.FromBytes(stream.ToArray());
-            }
+                BinaryData IPersistableModel<BenchmarkModel>.Write(ModelReaderWriterOptions options)
+                {
+                    var model = (BenchmarkModel)options.ProxiedModel!;
+                    using var stream = new System.IO.MemoryStream();
+                    using var writer = new Utf8JsonWriter(stream);
+                    writer.WriteStartObject();
+                    writer.WritePropertyName("value"u8);
+                    writer.WriteStringValue(model.Value);
+                    writer.WritePropertyName("proxied"u8);
+                    writer.WriteBooleanValue(true);
+                    writer.WriteEndObject();
+                    writer.Flush();
+                    return BinaryData.FromBytes(stream.ToArray());
+                }
 
-            public override string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+                string IPersistableModel<BenchmarkModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            }
         }
 
         // ── STJ Read benchmarks (Utf8JsonReader snapshot path) ──

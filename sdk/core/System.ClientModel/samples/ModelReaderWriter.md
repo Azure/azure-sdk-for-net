@@ -108,7 +108,7 @@ Proxies are stored in FIFO order — the **first registered** proxy has the high
 is called — the first proxy that returns `true` handles the write. If all proxies decline,
 the model serializes itself.
 
-**Read path:** Proxies are consulted first-to-last. Each proxy's `CanHandle(BinaryData, options)`
+**Read path:** Proxies are consulted first-to-last. Each proxy's `CanHandle(ReadOnlyMemory<byte>)`
 method is called — the first proxy that returns `true` handles the read via `Create`.
 If all proxies decline, the model itself handles the read as a terminal fallback.
 

@@ -12,7 +12,7 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 internal interface IConditionalProxy
 {
-    bool CanHandleData(BinaryData data);
+    bool CanHandleData(ReadOnlyMemory<byte> data);
     bool CanHandleReader(ref Utf8JsonReader reader);
     bool CanHandleModel(object model);
     bool HasJsonModel { get; }

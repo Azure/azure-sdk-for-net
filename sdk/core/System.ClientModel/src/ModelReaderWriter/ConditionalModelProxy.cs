@@ -7,7 +7,7 @@ namespace System.ClientModel.Primitives;
 
 /// <summary>
 /// A proxy that conditionally handles reading and writing for a model type based on
-/// <see cref="CanHandle(T)"/>, <see cref="CanHandle(BinaryData)"/>, and
+/// <see cref="CanHandle(T)"/>, <see cref="CanHandle(ReadOnlyMemory{byte})"/>, and
 /// <see cref="CanHandle(ref Utf8JsonReader)"/> checks.
 /// When <c>CanHandle</c> returns true, the proxy delegates to the <see cref="IPersistableModel{T}"/>
 /// (or <see cref="IJsonModel{T}"/> if applicable) provided at construction time.
@@ -45,7 +45,7 @@ public abstract class ConditionalModelProxy<T> : IConditionalProxy
     /// </summary>
     /// <param name="data">The data to inspect.</param>
     /// <returns>True if this proxy can handle the data; otherwise, false.</returns>
-    public virtual bool CanHandle(BinaryData data) => false;
+    public virtual bool CanHandle(ReadOnlyMemory<byte> data) => false;
 
     /// <summary>
     /// Determines whether this proxy can handle reading from the specified JSON reader.
@@ -67,7 +67,7 @@ public abstract class ConditionalModelProxy<T> : IConditionalProxy
     public virtual bool CanHandle(ref Utf8JsonReader reader) => false;
 
     // Explicit IConditionalProxy implementation — bridges non-generic dispatch
-    bool IConditionalProxy.CanHandleData(BinaryData data) => CanHandle(data);
+    bool IConditionalProxy.CanHandleData(ReadOnlyMemory<byte> data) => CanHandle(data);
     bool IConditionalProxy.CanHandleReader(ref Utf8JsonReader reader) => CanHandle(ref reader);
     bool IConditionalProxy.CanHandleModel(object model) => model is T typed && CanHandle(typed);
     bool IConditionalProxy.HasJsonModel => Model is IJsonModel<T>;

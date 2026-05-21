@@ -174,14 +174,14 @@ public class ModelReaderWriterOptions
     }
 
     /// <summary>
-    /// Attempts to find a proxy for reading from <see cref="BinaryData"/>, walking the proxy list in FIFO order.
+    /// Attempts to find a proxy for reading from binary data, walking the proxy list in FIFO order.
     /// For <see cref="ConditionalModelProxy{T}"/>, calls <c>CanHandle(data)</c>; skips if false.
     /// For plain <see cref="IPersistableModel{T}"/> proxies, returns immediately (first wins).
     /// </summary>
     /// <param name="data">The data to inspect.</param>
     /// <param name="proxy">When this method returns true, the proxy to use for deserialization.</param>
     /// <returns>True if a proxy was found; otherwise, false.</returns>
-    public bool TryGetProxy<T>(BinaryData data, out IPersistableModel<T>? proxy)
+    public bool TryGetProxy<T>(ReadOnlyMemory<byte> data, out IPersistableModel<T>? proxy)
     {
         proxy = null;
         if (_proxies is null || !_proxies.TryGetValue(typeof(T), out List<object>? list) || list.Count == 0)
@@ -257,7 +257,7 @@ public class ModelReaderWriterOptions
     /// </summary>
     internal T? ReadWithChain<T>(IPersistableModel<T> model, BinaryData data)
     {
-        if (TryGetProxy<T>(data, out IPersistableModel<T>? proxy))
+        if (TryGetProxy<T>(data.ToMemory(), out IPersistableModel<T>? proxy))
         {
             ProxiedModel = model;
             return proxy!.Create(data, this);
@@ -300,11 +300,12 @@ public class ModelReaderWriterOptions
             return model.Create(data, this);
         }
 
+        ReadOnlyMemory<byte> memory = data.ToMemory();
         foreach (var entry in list)
         {
             if (entry is IConditionalProxy conditional)
             {
-                if (conditional.CanHandleData(data))
+                if (conditional.CanHandleData(memory))
                 {
                     ProxiedModel = model;
                     return conditional.CreateFromData(data, this);

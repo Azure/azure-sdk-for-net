@@ -239,7 +239,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             var options = new ModelReaderWriterOptions("J");
 
-            Assert.IsFalse(options.TryGetProxy<JsonModel>(BinaryData.Empty, out IPersistableModel<JsonModel>? proxy));
+            Assert.IsFalse(options.TryGetProxy<JsonModel>(ReadOnlyMemory<byte>.Empty, out IPersistableModel<JsonModel>? proxy));
             Assert.IsNull(proxy);
         }
 
@@ -560,7 +560,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             public override bool CanHandle(SimpleModel model) => true;
 
-            public override bool CanHandle(BinaryData data) => _handleRead;
+            public override bool CanHandle(ReadOnlyMemory<byte> data) => _handleRead;
 
             public override bool CanHandle(ref Utf8JsonReader reader) => _handleRead;
 
@@ -581,9 +581,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 _discriminatorValue = discriminatorValue;
             }
 
-            public override bool CanHandle(BinaryData data)
+            public override bool CanHandle(ReadOnlyMemory<byte> data)
             {
-                return data.ToString().Contains($"\"type\":\"{_discriminatorValue}\"");
+                return BinaryData.FromBytes(data).ToString().Contains($"\"type\":\"{_discriminatorValue}\"");
             }
 
             public override bool CanHandle(ref Utf8JsonReader reader)
