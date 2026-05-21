@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Kusto
 {
-    internal class KustoClusterOperationSource : IOperationSource<KustoClusterResource>
+    /// <summary></summary>
+    internal partial class KustoClusterOperationSource : IOperationSource<KustoClusterResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal KustoClusterOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         KustoClusterResource IOperationSource<KustoClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KustoClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            KustoClusterData data = KustoClusterData.DeserializeKustoClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new KustoClusterResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<KustoClusterResource> IOperationSource<KustoClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KustoClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
-            return await Task.FromResult(new KustoClusterResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            KustoClusterData data = KustoClusterData.DeserializeKustoClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new KustoClusterResource(_client, data);
         }
     }
 }

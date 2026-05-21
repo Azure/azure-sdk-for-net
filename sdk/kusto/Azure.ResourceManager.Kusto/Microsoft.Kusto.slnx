@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Microsoft.Kusto.csproj" />
+  <Project Path="tests/Microsoft.Kusto.Tests.csproj" />
+</Solution>

@@ -10,16 +10,75 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    public partial class KustoClusterPrincipalAssignmentData : IUtf8JsonSerializable, IJsonModel<KustoClusterPrincipalAssignmentData>
+    /// <summary> Class representing a cluster principal assignment. </summary>
+    public partial class KustoClusterPrincipalAssignmentData : ResourceData, IJsonModel<KustoClusterPrincipalAssignmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoClusterPrincipalAssignmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KustoClusterPrincipalAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKustoClusterPrincipalAssignmentData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KustoClusterPrincipalAssignmentData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KustoClusterPrincipalAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KustoClusterPrincipalAssignmentData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KustoClusterPrincipalAssignmentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoClusterPrincipalAssignmentData IPersistableModel<KustoClusterPrincipalAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (KustoClusterPrincipalAssignmentData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KustoClusterPrincipalAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="kustoClusterPrincipalAssignmentData"> The <see cref="KustoClusterPrincipalAssignmentData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(KustoClusterPrincipalAssignmentData kustoClusterPrincipalAssignmentData)
+        {
+            if (kustoClusterPrincipalAssignmentData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(kustoClusterPrincipalAssignmentData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KustoClusterPrincipalAssignmentData"/> from. </param>
+        internal static KustoClusterPrincipalAssignmentData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeKustoClusterPrincipalAssignmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KustoClusterPrincipalAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,458 +90,105 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoClusterPrincipalAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KustoClusterPrincipalAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KustoClusterPrincipalAssignmentData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterPrincipalId))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("principalId"u8);
-                writer.WriteStringValue(ClusterPrincipalId);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Role))
-            {
-                writer.WritePropertyName("role"u8);
-                writer.WriteStringValue(Role.Value.ToString());
-            }
-            if (Optional.IsDefined(TenantId))
-            {
-                writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
-            }
-            if (Optional.IsDefined(PrincipalType))
-            {
-                writer.WritePropertyName("principalType"u8);
-                writer.WriteStringValue(PrincipalType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(TenantName))
-            {
-                writer.WritePropertyName("tenantName"u8);
-                writer.WriteStringValue(TenantName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(PrincipalName))
-            {
-                writer.WritePropertyName("principalName"u8);
-                writer.WriteStringValue(PrincipalName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(AadObjectId))
-            {
-                writer.WritePropertyName("aadObjectId"u8);
-                writer.WriteStringValue(AadObjectId.Value);
-            }
-            writer.WriteEndObject();
         }
 
-        KustoClusterPrincipalAssignmentData IJsonModel<KustoClusterPrincipalAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoClusterPrincipalAssignmentData IJsonModel<KustoClusterPrincipalAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KustoClusterPrincipalAssignmentData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoClusterPrincipalAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KustoClusterPrincipalAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KustoClusterPrincipalAssignmentData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKustoClusterPrincipalAssignmentData(document.RootElement, options);
         }
 
-        internal static KustoClusterPrincipalAssignmentData DeserializeKustoClusterPrincipalAssignmentData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KustoClusterPrincipalAssignmentData DeserializeKustoClusterPrincipalAssignmentData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string principalId = default;
-            KustoClusterPrincipalRole? role = default;
-            Guid? tenantId = default;
-            KustoPrincipalAssignmentType? principalType = default;
-            string tenantName = default;
-            string principalName = default;
-            KustoProvisioningState? provisioningState = default;
-            Guid? aadObjectId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ClusterPrincipalProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKustoContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("principalId"u8))
-                        {
-                            principalId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("role"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            role = new KustoClusterPrincipalRole(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("tenantId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            tenantId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("principalType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            principalType = new KustoPrincipalAssignmentType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("tenantName"u8))
-                        {
-                            tenantName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("principalName"u8))
-                        {
-                            principalName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new KustoProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("aadObjectId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            aadObjectId = property0.Value.GetGuid();
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKustoContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ClusterPrincipalProperties.DeserializeClusterPrincipalProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new KustoClusterPrincipalAssignmentData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                principalId,
-                role,
-                tenantId,
-                principalType,
-                tenantName,
-                principalName,
-                provisioningState,
-                aadObjectId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterPrincipalId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    principalId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClusterPrincipalId))
-                {
-                    builder.Append("    principalId: ");
-                    if (ClusterPrincipalId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClusterPrincipalId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClusterPrincipalId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Role), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    role: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Role))
-                {
-                    builder.Append("    role: ");
-                    builder.AppendLine($"'{Role.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    tenantId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TenantId))
-                {
-                    builder.Append("    tenantId: ");
-                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    principalType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrincipalType))
-                {
-                    builder.Append("    principalType: ");
-                    builder.AppendLine($"'{PrincipalType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    tenantName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TenantName))
-                {
-                    builder.Append("    tenantName: ");
-                    if (TenantName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TenantName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TenantName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    principalName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrincipalName))
-                {
-                    builder.Append("    principalName: ");
-                    if (PrincipalName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrincipalName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrincipalName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadObjectId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    aadObjectId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AadObjectId))
-                {
-                    builder.Append("    aadObjectId: ");
-                    builder.AppendLine($"'{AadObjectId.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<KustoClusterPrincipalAssignmentData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoClusterPrincipalAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(KustoClusterPrincipalAssignmentData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        KustoClusterPrincipalAssignmentData IPersistableModel<KustoClusterPrincipalAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoClusterPrincipalAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKustoClusterPrincipalAssignmentData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KustoClusterPrincipalAssignmentData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<KustoClusterPrincipalAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

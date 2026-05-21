@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoCalloutPolicy : IUtf8JsonSerializable, IJsonModel<KustoCalloutPolicy>
+    /// <summary> Configuration for external callout policies, including URI patterns, access types, and service types. </summary>
+    public partial class KustoCalloutPolicy : IJsonModel<KustoCalloutPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoCalloutPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KustoCalloutPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KustoCalloutPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKustoCalloutPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KustoCalloutPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KustoCalloutPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KustoCalloutPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KustoCalloutPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoCalloutPolicy IPersistableModel<KustoCalloutPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KustoCalloutPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KustoCalloutPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoCalloutPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KustoCalloutPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KustoCalloutPolicy)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(CalloutUriRegex))
             {
                 writer.WritePropertyName("calloutUriRegex"u8);
@@ -55,15 +94,15 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("calloutId"u8);
                 writer.WriteStringValue(CalloutId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -72,22 +111,27 @@ namespace Azure.ResourceManager.Kusto.Models
             }
         }
 
-        KustoCalloutPolicy IJsonModel<KustoCalloutPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoCalloutPolicy IJsonModel<KustoCalloutPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KustoCalloutPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoCalloutPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KustoCalloutPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KustoCalloutPolicy)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKustoCalloutPolicy(document.RootElement, options);
         }
 
-        internal static KustoCalloutPolicy DeserializeKustoCalloutPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KustoCalloutPolicy DeserializeKustoCalloutPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,169 +140,43 @@ namespace Azure.ResourceManager.Kusto.Models
             KustoCalloutPolicyCalloutType? calloutType = default;
             KustoCalloutPolicyOutboundAccess? outboundAccess = default;
             string calloutId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("calloutUriRegex"u8))
+                if (prop.NameEquals("calloutUriRegex"u8))
                 {
-                    calloutUriRegex = property.Value.GetString();
+                    calloutUriRegex = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("calloutType"u8))
+                if (prop.NameEquals("calloutType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    calloutType = new KustoCalloutPolicyCalloutType(property.Value.GetString());
+                    calloutType = new KustoCalloutPolicyCalloutType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("outboundAccess"u8))
+                if (prop.NameEquals("outboundAccess"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    outboundAccess = new KustoCalloutPolicyOutboundAccess(property.Value.GetString());
+                    outboundAccess = new KustoCalloutPolicyOutboundAccess(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("calloutId"u8))
+                if (prop.NameEquals("calloutId"u8))
                 {
-                    calloutId = property.Value.GetString();
+                    calloutId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new KustoCalloutPolicy(calloutUriRegex, calloutType, outboundAccess, calloutId, serializedAdditionalRawData);
+            return new KustoCalloutPolicy(calloutUriRegex, calloutType, outboundAccess, calloutId, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CalloutUriRegex), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  calloutUriRegex: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CalloutUriRegex))
-                {
-                    builder.Append("  calloutUriRegex: ");
-                    if (CalloutUriRegex.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CalloutUriRegex}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CalloutUriRegex}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CalloutType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  calloutType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CalloutType))
-                {
-                    builder.Append("  calloutType: ");
-                    builder.AppendLine($"'{CalloutType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutboundAccess), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  outboundAccess: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OutboundAccess))
-                {
-                    builder.Append("  outboundAccess: ");
-                    builder.AppendLine($"'{OutboundAccess.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CalloutId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  calloutId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CalloutId))
-                {
-                    builder.Append("  calloutId: ");
-                    if (CalloutId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CalloutId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CalloutId}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<KustoCalloutPolicy>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoCalloutPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(KustoCalloutPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        KustoCalloutPolicy IPersistableModel<KustoCalloutPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoCalloutPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKustoCalloutPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KustoCalloutPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<KustoCalloutPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

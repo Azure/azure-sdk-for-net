@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,80 +15,132 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct KustoEventGridDataFormat : IEquatable<KustoEventGridDataFormat>
     {
         private readonly string _value;
+        /// <summary> MULTIJSON. </summary>
+        private const string MultiJsonValue = "MULTIJSON";
+        /// <summary> JSON. </summary>
+        private const string JsonValue = "JSON";
+        /// <summary> CSV. </summary>
+        private const string CsvValue = "CSV";
+        /// <summary> TSV. </summary>
+        private const string TsvValue = "TSV";
+        /// <summary> SCSV. </summary>
+        private const string ScsvValue = "SCSV";
+        /// <summary> SOHSV. </summary>
+        private const string SohsvValue = "SOHSV";
+        /// <summary> PSV. </summary>
+        private const string PsvValue = "PSV";
+        /// <summary> TXT. </summary>
+        private const string TxtValue = "TXT";
+        /// <summary> RAW. </summary>
+        private const string RawValue = "RAW";
+        /// <summary> SINGLEJSON. </summary>
+        private const string SingleJsonValue = "SINGLEJSON";
+        /// <summary> AVRO. </summary>
+        private const string AvroValue = "AVRO";
+        /// <summary> TSVE. </summary>
+        private const string TsveValue = "TSVE";
+        /// <summary> PARQUET. </summary>
+        private const string ParquetValue = "PARQUET";
+        /// <summary> ORC. </summary>
+        private const string OrcValue = "ORC";
+        /// <summary> APACHEAVRO. </summary>
+        private const string ApacheAvroValue = "APACHEAVRO";
+        /// <summary> W3CLOGFILE. </summary>
+        private const string W3CLogFileValue = "W3CLOGFILE";
+        /// <summary> AZMONSTREAM. </summary>
+        private const string AzmonStreamValue = "AZMONSTREAM";
 
         /// <summary> Initializes a new instance of <see cref="KustoEventGridDataFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoEventGridDataFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MultiJsonValue = "MULTIJSON";
-        private const string JsonValue = "JSON";
-        private const string CsvValue = "CSV";
-        private const string TsvValue = "TSV";
-        private const string ScsvValue = "SCSV";
-        private const string SohsvValue = "SOHSV";
-        private const string PsvValue = "PSV";
-        private const string TxtValue = "TXT";
-        private const string RawValue = "RAW";
-        private const string SingleJsonValue = "SINGLEJSON";
-        private const string AvroValue = "AVRO";
-        private const string TsveValue = "TSVE";
-        private const string ParquetValue = "PARQUET";
-        private const string OrcValue = "ORC";
-        private const string ApacheAvroValue = "APACHEAVRO";
-        private const string W3CLogFileValue = "W3CLOGFILE";
+            _value = value;
+        }
 
         /// <summary> MULTIJSON. </summary>
         public static KustoEventGridDataFormat MultiJson { get; } = new KustoEventGridDataFormat(MultiJsonValue);
+
         /// <summary> JSON. </summary>
         public static KustoEventGridDataFormat Json { get; } = new KustoEventGridDataFormat(JsonValue);
+
         /// <summary> CSV. </summary>
         public static KustoEventGridDataFormat Csv { get; } = new KustoEventGridDataFormat(CsvValue);
+
         /// <summary> TSV. </summary>
         public static KustoEventGridDataFormat Tsv { get; } = new KustoEventGridDataFormat(TsvValue);
+
         /// <summary> SCSV. </summary>
         public static KustoEventGridDataFormat Scsv { get; } = new KustoEventGridDataFormat(ScsvValue);
+
         /// <summary> SOHSV. </summary>
         public static KustoEventGridDataFormat Sohsv { get; } = new KustoEventGridDataFormat(SohsvValue);
+
         /// <summary> PSV. </summary>
         public static KustoEventGridDataFormat Psv { get; } = new KustoEventGridDataFormat(PsvValue);
+
         /// <summary> TXT. </summary>
         public static KustoEventGridDataFormat Txt { get; } = new KustoEventGridDataFormat(TxtValue);
+
         /// <summary> RAW. </summary>
         public static KustoEventGridDataFormat Raw { get; } = new KustoEventGridDataFormat(RawValue);
+
         /// <summary> SINGLEJSON. </summary>
         public static KustoEventGridDataFormat SingleJson { get; } = new KustoEventGridDataFormat(SingleJsonValue);
+
         /// <summary> AVRO. </summary>
         public static KustoEventGridDataFormat Avro { get; } = new KustoEventGridDataFormat(AvroValue);
+
         /// <summary> TSVE. </summary>
         public static KustoEventGridDataFormat Tsve { get; } = new KustoEventGridDataFormat(TsveValue);
+
         /// <summary> PARQUET. </summary>
         public static KustoEventGridDataFormat Parquet { get; } = new KustoEventGridDataFormat(ParquetValue);
+
         /// <summary> ORC. </summary>
         public static KustoEventGridDataFormat Orc { get; } = new KustoEventGridDataFormat(OrcValue);
+
         /// <summary> APACHEAVRO. </summary>
         public static KustoEventGridDataFormat ApacheAvro { get; } = new KustoEventGridDataFormat(ApacheAvroValue);
+
         /// <summary> W3CLOGFILE. </summary>
         public static KustoEventGridDataFormat W3CLogFile { get; } = new KustoEventGridDataFormat(W3CLogFileValue);
+
+        /// <summary> AZMONSTREAM. </summary>
+        public static KustoEventGridDataFormat AzmonStream { get; } = new KustoEventGridDataFormat(AzmonStreamValue);
+
         /// <summary> Determines if two <see cref="KustoEventGridDataFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoEventGridDataFormat left, KustoEventGridDataFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoEventGridDataFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoEventGridDataFormat left, KustoEventGridDataFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoEventGridDataFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoEventGridDataFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoEventGridDataFormat(string value) => new KustoEventGridDataFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoEventGridDataFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoEventGridDataFormat?(string value) => value == null ? null : new KustoEventGridDataFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoEventGridDataFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoEventGridDataFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,91 +8,98 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Kusto.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Kusto.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableKustoSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _kustoClusterClustersClientDiagnostics;
-        private ClustersRestOperations _kustoClusterClustersRestClient;
+        private ClientDiagnostics _clustersClientDiagnostics;
+        private Clusters _clustersRestClient;
         private ClientDiagnostics _skusClientDiagnostics;
-        private SkusRestOperations _skusRestClient;
+        private Skus _skusRestClient;
+        private ClientDiagnostics _operationsResultsClientDiagnostics;
+        private OperationsResults _operationsResultsRestClient;
+        private ClientDiagnostics _operationsResultsLocationClientDiagnostics;
+        private OperationsResultsLocation _operationsResultsLocationRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableKustoSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableKustoSubscriptionResource for mocking. </summary>
         protected MockableKustoSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableKustoSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableKustoSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableKustoSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics KustoClusterClustersClientDiagnostics => _kustoClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoClusterResource.ResourceType.Namespace, Diagnostics);
-        private ClustersRestOperations KustoClusterClustersRestClient => _kustoClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(KustoClusterResource.ResourceType));
-        private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kusto", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kusto.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2025-02-14");
+
+        private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kusto.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Endpoint, "2025-02-14");
+
+        private ClientDiagnostics OperationsResultsClientDiagnostics => _operationsResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kusto.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private OperationsResults OperationsResultsRestClient => _operationsResultsRestClient ??= new OperationsResults(OperationsResultsClientDiagnostics, Pipeline, Endpoint, "2025-02-14");
+
+        private ClientDiagnostics OperationsResultsLocationClientDiagnostics => _operationsResultsLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kusto.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private OperationsResultsLocation OperationsResultsLocationRestClient => _operationsResultsLocationRestClient ??= new OperationsResultsLocation(OperationsResultsLocationClientDiagnostics, Pipeline, Endpoint, "2025-02-14");
 
         /// <summary>
         /// Lists all Kusto clusters within a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kusto/clusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/clusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoClusterResource> GetKustoClustersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => KustoClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoClusterResource(Client, KustoClusterData.DeserializeKustoClusterData(e)), KustoClusterClustersClientDiagnostics, Pipeline, "MockableKustoSubscriptionResource.GetKustoClusters", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<KustoClusterData, KustoClusterResource>(new ClustersGetAllAsyncCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableKustoSubscriptionResource.GetKustoClusters"), data => new KustoClusterResource(Client, data));
         }
 
         /// <summary>
         /// Lists all Kusto clusters within a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kusto/clusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/clusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -100,102 +107,111 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <returns> A collection of <see cref="KustoClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoClusterResource> GetKustoClusters(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => KustoClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoClusterResource(Client, KustoClusterData.DeserializeKustoClusterData(e)), KustoClusterClustersClientDiagnostics, Pipeline, "MockableKustoSubscriptionResource.GetKustoClusters", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<KustoClusterData, KustoClusterResource>(new ClustersGetAllCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableKustoSubscriptionResource.GetKustoClusters"), data => new KustoClusterResource(Client, data));
         }
 
         /// <summary>
         /// Lists eligible SKUs for Kusto resource provider.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kusto/skus</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/skus. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_ListSkus</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClustersOperationGroup_ListSkus. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoSkuDescription"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<KustoSkuDescription> GetKustoEligibleSkusAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => KustoClusterClustersRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => KustoSkuDescription.DeserializeKustoSkuDescription(e), KustoClusterClustersClientDiagnostics, Pipeline, "MockableKustoSubscriptionResource.GetKustoEligibleSkus", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists eligible SKUs for Kusto resource provider.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kusto/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_ListSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="KustoSkuDescription"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<KustoSkuDescription> GetKustoEligibleSkus(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<KustoSkuDescription> GetSkusAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => KustoClusterClustersRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => KustoSkuDescription.DeserializeKustoSkuDescription(e), KustoClusterClustersClientDiagnostics, Pipeline, "MockableKustoSubscriptionResource.GetKustoEligibleSkus", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ClustersGetSkusAsyncCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableKustoSubscriptionResource.GetSkus");
+        }
+
+        /// <summary>
+        /// Lists eligible SKUs for Kusto resource provider.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/skus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ClustersOperationGroup_ListSkus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="KustoSkuDescription"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KustoSkuDescription> GetSkus(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ClustersGetSkusCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableKustoSubscriptionResource.GetSkus");
         }
 
         /// <summary>
         /// Checks that the cluster name is valid and is not already in use.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClustersOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="content"> The name of the cluster. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<KustoNameAvailabilityResult>> CheckKustoClusterNameAvailabilityAsync(AzureLocation location, KustoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<KustoNameAvailabilityResult>> CheckNameAvailabilityAsync(string location, KustoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = KustoClusterClustersClientDiagnostics.CreateScope("MockableKustoSubscriptionResource.CheckKustoClusterNameAvailability");
+            using DiagnosticScope scope = ClustersClientDiagnostics.CreateScope("MockableKustoSubscriptionResource.CheckNameAvailability");
             scope.Start();
             try
             {
-                var response = await KustoClusterClustersRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ClustersRestClient.CreateCheckNameAvailabilityRequest(Id.SubscriptionId, location, KustoClusterNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -209,36 +225,44 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// Checks that the cluster name is valid and is not already in use.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClustersOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="content"> The name of the cluster. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<KustoNameAvailabilityResult> CheckKustoClusterNameAvailability(AzureLocation location, KustoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<KustoNameAvailabilityResult> CheckNameAvailability(string location, KustoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = KustoClusterClustersClientDiagnostics.CreateScope("MockableKustoSubscriptionResource.CheckKustoClusterNameAvailability");
+            using DiagnosticScope scope = ClustersClientDiagnostics.CreateScope("MockableKustoSubscriptionResource.CheckNameAvailability");
             scope.Start();
             try
             {
-                var response = KustoClusterClustersRestClient.CheckNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ClustersRestClient.CreateCheckNameAvailabilityRequest(Id.SubscriptionId, location, KustoClusterNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<KustoNameAvailabilityResult> response = Response.FromValue(KustoNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -252,52 +276,248 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// Lists eligible region SKUs for Kusto resource provider by Azure region.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/skus</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/skus. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Skus_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SkusOperationGroup_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoSkuDescription"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<KustoSkuDescription> GetSkusAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="KustoSkuDescription"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KustoSkuDescription> GetAllAsync(string location, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => KustoSkuDescription.DeserializeKustoSkuDescription(e), SkusClientDiagnostics, Pipeline, "MockableKustoSubscriptionResource.GetSkus", "value", null, cancellationToken);
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SkusGetAllAsyncCollectionResultOfT(SkusRestClient, Id.SubscriptionId, location, context, "MockableKustoSubscriptionResource.GetAll");
         }
 
         /// <summary>
         /// Lists eligible region SKUs for Kusto resource provider by Azure region.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/skus</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/skus. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Skus_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SkusOperationGroup_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="KustoSkuDescription"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<KustoSkuDescription> GetSkus(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Pageable<KustoSkuDescription> GetAll(string location, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => KustoSkuDescription.DeserializeKustoSkuDescription(e), SkusClientDiagnostics, Pipeline, "MockableKustoSubscriptionResource.GetSkus", "value", null, cancellationToken);
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SkusGetAllCollectionResultOfT(SkusRestClient, Id.SubscriptionId, location, context, "MockableKustoSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Returns operation results.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/operationResults/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OperationsResultsOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal virtual async Task<Response<OperationResult>> GetOperationResultAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = OperationsResultsClientDiagnostics.CreateScope("MockableKustoSubscriptionResource.GetOperationResult");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationsResultsRestClient.CreateGetOperationResultRequest(Id.SubscriptionId, location, operationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OperationResult> response = Response.FromValue(OperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns operation results.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/operationResults/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OperationsResultsOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal virtual Response<OperationResult> GetOperationResult(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = OperationsResultsClientDiagnostics.CreateScope("MockableKustoSubscriptionResource.GetOperationResult");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationsResultsRestClient.CreateGetOperationResultRequest(Id.SubscriptionId, location, operationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OperationResult> response = Response.FromValue(OperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns operation results.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/operationResults/{operationId}?operationResultResponseType=Location. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OperationsResultsOperationGroup_GetLocation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> GetAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = OperationsResultsLocationClientDiagnostics.CreateScope("MockableKustoSubscriptionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationsResultsLocationRestClient.CreateGetRequest(Id.SubscriptionId, location, operationId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns operation results.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/operationResults/{operationId}?operationResultResponseType=Location. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OperationsResultsOperationGroup_GetLocation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Get(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = OperationsResultsLocationClientDiagnostics.CreateScope("MockableKustoSubscriptionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationsResultsLocationRestClient.CreateGetRequest(Id.SubscriptionId, location, operationId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

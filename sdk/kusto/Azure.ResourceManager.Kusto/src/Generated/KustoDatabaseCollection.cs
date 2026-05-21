@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Kusto.Models;
 
 namespace Azure.ResourceManager.Kusto
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.Kusto
     /// </summary>
     public partial class KustoDatabaseCollection : ArmCollection, IEnumerable<KustoDatabaseResource>, IAsyncEnumerable<KustoDatabaseResource>
     {
-        private readonly ClientDiagnostics _kustoDatabaseDatabasesClientDiagnostics;
-        private readonly DatabasesRestOperations _kustoDatabaseDatabasesRestClient;
+        private readonly ClientDiagnostics _databasesClientDiagnostics;
+        private readonly Databases _databasesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="KustoDatabaseCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of KustoDatabaseCollection for mocking. </summary>
         protected KustoDatabaseCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="KustoDatabaseCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDatabaseCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal KustoDatabaseCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _kustoDatabaseDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoDatabaseResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(KustoDatabaseResource.ResourceType, out string kustoDatabaseDatabasesApiVersion);
-            _kustoDatabaseDatabasesRestClient = new DatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, kustoDatabaseDatabasesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(KustoDatabaseResource.ResourceType, out string kustoDatabaseApiVersion);
+            _databasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoDatabaseResource.ResourceType.Namespace, Diagnostics);
+            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Endpoint, kustoDatabaseApiVersion ?? "2025-02-14");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != KustoClusterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, KustoClusterResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, KustoClusterResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,21 +77,34 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="data"> The database parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="callerRole"> By default, any user who run operation on a database become an Admin on it. This property allows the caller to exclude the caller from Admins list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<KustoDatabaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string databaseName, KustoDatabaseData data, KustoDatabaseCallerRole? callerRole = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<KustoDatabaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string databaseName, KustoDatabaseData data, KustoDatabaseCallerRole? callerRole = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("KustoDatabaseCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _kustoDatabaseDatabasesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, callerRole, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation<KustoDatabaseResource>(new KustoDatabaseOperationSource(Client), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, _kustoDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, callerRole).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, KustoDatabaseData.ToRequestContent(data), callerRole?.ToString(), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                KustoArmOperation<KustoDatabaseResource> operation = new KustoArmOperation<KustoDatabaseResource>(
+                    new KustoDatabaseOperationSource(Client),
+                    _databasesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +118,16 @@ namespace Azure.ResourceManager.Kusto
         /// Creates or updates a database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,21 +136,34 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="data"> The database parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="callerRole"> By default, any user who run operation on a database become an Admin on it. This property allows the caller to exclude the caller from Admins list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<KustoDatabaseResource> CreateOrUpdate(WaitUntil waitUntil, string databaseName, KustoDatabaseData data, KustoDatabaseCallerRole? callerRole = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<KustoDatabaseResource> CreateOrUpdate(WaitUntil waitUntil, string databaseName, KustoDatabaseData data, KustoDatabaseCallerRole? callerRole = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("KustoDatabaseCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _kustoDatabaseDatabasesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, callerRole, cancellationToken);
-                var operation = new KustoArmOperation<KustoDatabaseResource>(new KustoDatabaseOperationSource(Client), _kustoDatabaseDatabasesClientDiagnostics, Pipeline, _kustoDatabaseDatabasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, data, callerRole).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, KustoDatabaseData.ToRequestContent(data), callerRole?.ToString(), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                KustoArmOperation<KustoDatabaseResource> operation = new KustoArmOperation<KustoDatabaseResource>(
+                    new KustoDatabaseOperationSource(Client),
+                    _databasesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -156,38 +177,42 @@ namespace Azure.ResourceManager.Kusto
         /// Returns a database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<KustoDatabaseResource>> GetAsync(string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.Get");
+            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("KustoDatabaseCollection.Get");
             scope.Start();
             try
             {
-                var response = await _kustoDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databasesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<KustoDatabaseData> response = Response.FromValue(KustoDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -201,38 +226,42 @@ namespace Azure.ResourceManager.Kusto
         /// Returns a database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<KustoDatabaseResource> Get(string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.Get");
+            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("KustoDatabaseCollection.Get");
             scope.Start();
             try
             {
-                var response = _kustoDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databasesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<KustoDatabaseData> response = Response.FromValue(KustoDatabaseData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,39 +272,129 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary>
+        /// Returns the list of databases of the given Kusto cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_ListByCluster. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> limit the number of results. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="KustoDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KustoDatabaseResource> GetAllAsync(int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<KustoDatabaseData, KustoDatabaseResource>(new DatabasesGetByClusterAsyncCollectionResultOfT(
+                _databasesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                top,
+                skiptoken,
+                context,
+                "KustoDatabaseCollection.GetAll"), data => new KustoDatabaseResource(Client, data));
+        }
+
+        /// <summary>
+        /// Returns the list of databases of the given Kusto cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_ListByCluster. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> limit the number of results. </param>
+        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="KustoDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KustoDatabaseResource> GetAll(int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<KustoDatabaseData, KustoDatabaseResource>(new DatabasesGetByClusterCollectionResultOfT(
+                _databasesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                top,
+                skiptoken,
+                context,
+                "KustoDatabaseCollection.GetAll"), data => new KustoDatabaseResource(Client, data));
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.Exists");
+            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("KustoDatabaseCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _kustoDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databasesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<KustoDatabaseData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoDatabaseData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoDatabaseData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -289,36 +408,50 @@ namespace Azure.ResourceManager.Kusto
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.Exists");
+            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("KustoDatabaseCollection.Exists");
             scope.Start();
             try
             {
-                var response = _kustoDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databasesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<KustoDatabaseData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoDatabaseData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoDatabaseData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -332,38 +465,54 @@ namespace Azure.ResourceManager.Kusto
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<KustoDatabaseResource>> GetIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.GetIfExists");
+            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("KustoDatabaseCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _kustoDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databasesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<KustoDatabaseData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoDatabaseData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoDatabaseData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<KustoDatabaseResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -377,38 +526,54 @@ namespace Azure.ResourceManager.Kusto
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Databases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Databases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<KustoDatabaseResource> GetIfExists(string databaseName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
-            using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.GetIfExists");
+            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("KustoDatabaseCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _kustoDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _databasesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<KustoDatabaseData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoDatabaseData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoDatabaseData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<KustoDatabaseResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -428,6 +593,7 @@ namespace Azure.ResourceManager.Kusto
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<KustoDatabaseResource> IAsyncEnumerable<KustoDatabaseResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Kusto
 {
-    internal class KustoAttachedDatabaseConfigurationOperationSource : IOperationSource<KustoAttachedDatabaseConfigurationResource>
+    /// <summary></summary>
+    internal partial class KustoAttachedDatabaseConfigurationOperationSource : IOperationSource<KustoAttachedDatabaseConfigurationResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal KustoAttachedDatabaseConfigurationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         KustoAttachedDatabaseConfigurationResource IOperationSource<KustoAttachedDatabaseConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KustoAttachedDatabaseConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            KustoAttachedDatabaseConfigurationData data = KustoAttachedDatabaseConfigurationData.DeserializeKustoAttachedDatabaseConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new KustoAttachedDatabaseConfigurationResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<KustoAttachedDatabaseConfigurationResource> IOperationSource<KustoAttachedDatabaseConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KustoAttachedDatabaseConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
-            return await Task.FromResult(new KustoAttachedDatabaseConfigurationResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            KustoAttachedDatabaseConfigurationData data = KustoAttachedDatabaseConfigurationData.DeserializeKustoAttachedDatabaseConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new KustoAttachedDatabaseConfigurationResource(_client, data);
         }
     }
 }

@@ -1,0 +1,4 @@
+directory: specification/azure-kusto/resource-manager/Microsoft.Kusto/Kusto
+commit: HEAD
+repo: ../azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

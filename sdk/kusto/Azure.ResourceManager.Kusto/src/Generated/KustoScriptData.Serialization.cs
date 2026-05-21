@@ -10,16 +10,75 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    public partial class KustoScriptData : IUtf8JsonSerializable, IJsonModel<KustoScriptData>
+    /// <summary> Class representing a database script. </summary>
+    public partial class KustoScriptData : ResourceData, IJsonModel<KustoScriptData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoScriptData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KustoScriptData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKustoScriptData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KustoScriptData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KustoScriptData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KustoScriptData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KustoScriptData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoScriptData IPersistableModel<KustoScriptData>.Create(BinaryData data, ModelReaderWriterOptions options) => (KustoScriptData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KustoScriptData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="kustoScriptData"> The <see cref="KustoScriptData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(KustoScriptData kustoScriptData)
+        {
+            if (kustoScriptData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(kustoScriptData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KustoScriptData"/> from. </param>
+        internal static KustoScriptData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeKustoScriptData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KustoScriptData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,459 +90,105 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoScriptData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KustoScriptData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KustoScriptData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ScriptUri))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("scriptUrl"u8);
-                writer.WriteStringValue(ScriptUri.AbsoluteUri);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(ScriptUriSasToken))
-            {
-                writer.WritePropertyName("scriptUrlSasToken"u8);
-                writer.WriteStringValue(ScriptUriSasToken);
-            }
-            if (Optional.IsDefined(ScriptContent))
-            {
-                writer.WritePropertyName("scriptContent"u8);
-                writer.WriteStringValue(ScriptContent);
-            }
-            if (Optional.IsDefined(ForceUpdateTag))
-            {
-                writer.WritePropertyName("forceUpdateTag"u8);
-                writer.WriteStringValue(ForceUpdateTag);
-            }
-            if (Optional.IsDefined(ShouldContinueOnErrors))
-            {
-                writer.WritePropertyName("continueOnErrors"u8);
-                writer.WriteBooleanValue(ShouldContinueOnErrors.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(ScriptLevel))
-            {
-                writer.WritePropertyName("scriptLevel"u8);
-                writer.WriteStringValue(ScriptLevel.Value.ToString());
-            }
-            if (Optional.IsDefined(PrincipalPermissionsAction))
-            {
-                writer.WritePropertyName("principalPermissionsAction"u8);
-                writer.WriteStringValue(PrincipalPermissionsAction.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        KustoScriptData IJsonModel<KustoScriptData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoScriptData IJsonModel<KustoScriptData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KustoScriptData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoScriptData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KustoScriptData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KustoScriptData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKustoScriptData(document.RootElement, options);
         }
 
-        internal static KustoScriptData DeserializeKustoScriptData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KustoScriptData DeserializeKustoScriptData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            Uri scriptUrl = default;
-            string scriptUrlSasToken = default;
-            string scriptContent = default;
-            string forceUpdateTag = default;
-            bool? continueOnErrors = default;
-            KustoProvisioningState? provisioningState = default;
-            KustoScriptLevel? scriptLevel = default;
-            PrincipalPermissionsAction? principalPermissionsAction = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ScriptProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKustoContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("scriptUrl"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            scriptUrl = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("scriptUrlSasToken"u8))
-                        {
-                            scriptUrlSasToken = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("scriptContent"u8))
-                        {
-                            scriptContent = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("forceUpdateTag"u8))
-                        {
-                            forceUpdateTag = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("continueOnErrors"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            continueOnErrors = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new KustoProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("scriptLevel"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            scriptLevel = new KustoScriptLevel(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("principalPermissionsAction"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            principalPermissionsAction = new PrincipalPermissionsAction(property0.Value.GetString());
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKustoContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ScriptProperties.DeserializeScriptProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new KustoScriptData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                scriptUrl,
-                scriptUrlSasToken,
-                scriptContent,
-                forceUpdateTag,
-                continueOnErrors,
-                provisioningState,
-                scriptLevel,
-                principalPermissionsAction,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScriptUri), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    scriptUrl: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScriptUri))
-                {
-                    builder.Append("    scriptUrl: ");
-                    builder.AppendLine($"'{ScriptUri.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScriptUriSasToken), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    scriptUrlSasToken: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScriptUriSasToken))
-                {
-                    builder.Append("    scriptUrlSasToken: ");
-                    if (ScriptUriSasToken.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ScriptUriSasToken}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ScriptUriSasToken}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScriptContent), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    scriptContent: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScriptContent))
-                {
-                    builder.Append("    scriptContent: ");
-                    if (ScriptContent.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ScriptContent}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ScriptContent}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ForceUpdateTag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    forceUpdateTag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ForceUpdateTag))
-                {
-                    builder.Append("    forceUpdateTag: ");
-                    if (ForceUpdateTag.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ForceUpdateTag}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ForceUpdateTag}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShouldContinueOnErrors), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    continueOnErrors: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ShouldContinueOnErrors))
-                {
-                    builder.Append("    continueOnErrors: ");
-                    var boolValue = ShouldContinueOnErrors.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScriptLevel), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    scriptLevel: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScriptLevel))
-                {
-                    builder.Append("    scriptLevel: ");
-                    builder.AppendLine($"'{ScriptLevel.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalPermissionsAction), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    principalPermissionsAction: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrincipalPermissionsAction))
-                {
-                    builder.Append("    principalPermissionsAction: ");
-                    builder.AppendLine($"'{PrincipalPermissionsAction.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<KustoScriptData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoScriptData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(KustoScriptData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        KustoScriptData IPersistableModel<KustoScriptData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoScriptData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKustoScriptData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KustoScriptData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<KustoScriptData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

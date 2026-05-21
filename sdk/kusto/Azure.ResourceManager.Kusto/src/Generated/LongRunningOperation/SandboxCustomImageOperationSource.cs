@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Kusto
 {
-    internal class SandboxCustomImageOperationSource : IOperationSource<SandboxCustomImageResource>
+    /// <summary></summary>
+    internal partial class SandboxCustomImageOperationSource : IOperationSource<SandboxCustomImageResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SandboxCustomImageOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SandboxCustomImageResource IOperationSource<SandboxCustomImageResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SandboxCustomImageData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SandboxCustomImageData data = SandboxCustomImageData.DeserializeSandboxCustomImageData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SandboxCustomImageResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SandboxCustomImageResource> IOperationSource<SandboxCustomImageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SandboxCustomImageData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
-            return await Task.FromResult(new SandboxCustomImageResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SandboxCustomImageData data = SandboxCustomImageData.DeserializeSandboxCustomImageData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SandboxCustomImageResource(_client, data);
         }
     }
 }
