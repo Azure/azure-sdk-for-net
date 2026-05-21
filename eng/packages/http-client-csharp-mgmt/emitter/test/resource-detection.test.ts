@@ -1,4 +1,5 @@
 import { beforeEach, describe, it } from "vitest";
+import type { Diagnostic } from "@typespec/compiler";
 import {
   createCSharpSdkContext,
   createEmitterContext,
@@ -11,7 +12,10 @@ import { createModel } from "@typespec/http-client-csharp";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
-import { ArmResourceSchema, ResourceScope } from "../src/resource-metadata.js";
+import {
+  ArmResourceSchema,
+  ResourceScopeKind
+} from "../src/resource-metadata.js";
 
 describe("Resource Detection", () => {
   let runner: TestHost;
@@ -131,7 +135,7 @@ interface Employees2 {
 
     // Validate resource metadata
     strictEqual(
-      metadata.resourceIdPattern,
+      metadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
     strictEqual(
@@ -139,9 +143,9 @@ interface Employees2 {
       "Microsoft.ContosoProviderHub/employeeParents/employees"
     );
     strictEqual(metadata.singletonResourceName, undefined);
-    strictEqual(metadata.resourceScope, "ResourceGroup");
+    strictEqual(metadata.scope.kind, "ResourceGroup");
     strictEqual(
-      metadata.parentResourceId,
+      metadata.parentResourceId?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
     );
     strictEqual(metadata.resourceName, "Employee");
@@ -159,12 +163,12 @@ interface Employees2 {
     const getMethod = metadata.methods.find((m: any) => m.kind === "Read");
     ok(getMethod);
     strictEqual(
-      getMethod.operationPath,
+      getMethod.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(getMethod.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(getMethod.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      getMethod.resourceScope,
+      getMethod.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -172,12 +176,12 @@ interface Employees2 {
     const createEntry = metadata.methods.find((m: any) => m.kind === "Create");
     ok(createEntry);
     strictEqual(
-      createEntry.operationPath,
+      createEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(createEntry.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(createEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      createEntry.resourceScope,
+      createEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -185,12 +189,12 @@ interface Employees2 {
     const updateEntry = metadata.methods.find((m: any) => m.kind === "Update");
     ok(updateEntry);
     strictEqual(
-      updateEntry.operationPath,
+      updateEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(updateEntry.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(updateEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      updateEntry.resourceScope,
+      updateEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -198,45 +202,48 @@ interface Employees2 {
     const deleteEntry = metadata.methods.find((m: any) => m.kind === "Delete");
     ok(deleteEntry);
     strictEqual(
-      deleteEntry.operationPath,
+      deleteEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(deleteEntry.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(deleteEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      deleteEntry.resourceScope,
+      deleteEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
     // Validate ListByResourceGroup (list by parent)
     const listByRgEntry = metadata.methods.find(
       (m: any) =>
-        m.kind === "List" && m.operationPath.includes("employeeParents")
+        m.kind === "List" && m.operationPath.path.includes("employeeParents")
     );
     ok(listByRgEntry);
     strictEqual(listByRgEntry.kind, "List");
     strictEqual(
-      listByRgEntry.operationPath,
+      listByRgEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees"
     );
-    strictEqual(listByRgEntry.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(listByRgEntry.scope.kind, ResourceScopeKind.ResourceGroup);
     strictEqual(
-      listByRgEntry.resourceScope,
+      listByRgEntry.scope.scopeIdPattern?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
     );
 
     // Validate ListBySubscription
     const listBySubEntry = metadata.methods.find(
       (m: any) =>
-        m.kind === "List" && m.operationScope === ResourceScope.Subscription
+        m.kind === "List" && m.scope.kind === ResourceScopeKind.Subscription
     );
     ok(listBySubEntry);
     strictEqual(listBySubEntry.kind, "List");
     strictEqual(
-      listBySubEntry.operationPath,
+      listBySubEntry.operationPath.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees"
     );
-    strictEqual(listBySubEntry.operationScope, ResourceScope.Subscription);
-    strictEqual(listBySubEntry.resourceScope, undefined);
+    strictEqual(listBySubEntry.scope.kind, ResourceScopeKind.Subscription);
+    strictEqual(
+      listBySubEntry.scope.scopeIdPattern?.path,
+      "/subscriptions/{subscriptionId}"
+    );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -349,7 +356,7 @@ interface CurrentEmployees {
     ok(metadata);
 
     strictEqual(
-      metadata.resourceIdPattern,
+      metadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employees/default"
     );
     strictEqual(
@@ -357,7 +364,7 @@ interface CurrentEmployees {
       "Microsoft.ContosoProviderHub/employees"
     );
     strictEqual(metadata.singletonResourceName, "default");
-    strictEqual(metadata.resourceScope, "ResourceGroup");
+    strictEqual(metadata.scope.kind, "ResourceGroup");
     strictEqual(metadata.methods.length, 3);
     // Verify a Read method exists (position may vary due to sorting)
     ok(
@@ -376,7 +383,7 @@ interface CurrentEmployees {
     const currentMetadata = currentEmployeeResource.metadata;
     ok(currentMetadata);
     strictEqual(
-      currentMetadata.resourceIdPattern,
+      currentMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/currentEmployees/current"
     );
     strictEqual(
@@ -384,7 +391,7 @@ interface CurrentEmployees {
       "Microsoft.ContosoProviderHub/currentEmployees"
     );
     strictEqual(currentMetadata.singletonResourceName, "current");
-    strictEqual(currentMetadata.resourceScope, "ResourceGroup");
+    strictEqual(currentMetadata.scope.kind, "ResourceGroup");
     strictEqual(currentMetadata.methods.length, 3);
     strictEqual(currentMetadata.resourceName, "CurrentEmployee");
 
@@ -493,7 +500,7 @@ interface Employees {
     ok(employeeMetadata);
 
     strictEqual(
-      employeeMetadata.resourceIdPattern,
+      employeeMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
     );
     strictEqual(
@@ -501,7 +508,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     strictEqual(employeeMetadata.singletonResourceName, undefined);
-    strictEqual(employeeMetadata.resourceScope, "ResourceGroup");
+    strictEqual(employeeMetadata.scope.kind, "ResourceGroup");
     strictEqual(employeeMetadata.methods.length, 5);
     // Verify a Read method exists (position may vary due to sorting)
     ok(
@@ -509,7 +516,7 @@ interface Employees {
       "Should have a Read method"
     );
     strictEqual(
-      employeeMetadata.parentResourceId,
+      employeeMetadata.parentResourceId?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(employeeMetadata.resourceName, "Employee");
@@ -525,7 +532,7 @@ interface Employees {
     ok(departmentMetadata);
 
     strictEqual(
-      departmentMetadata.resourceIdPattern,
+      departmentMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(
@@ -533,10 +540,10 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments"
     );
     strictEqual(departmentMetadata.singletonResourceName, undefined);
-    strictEqual(departmentMetadata.resourceScope, "ResourceGroup");
+    strictEqual(departmentMetadata.scope.kind, "ResourceGroup");
     strictEqual(departmentMetadata.methods.length, 2);
     strictEqual(
-      departmentMetadata.parentResourceId,
+      departmentMetadata.parentResourceId?.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(departmentMetadata.resourceName, "Department");
@@ -551,7 +558,7 @@ interface Employees {
     ok(companyMetadata);
 
     strictEqual(
-      companyMetadata.resourceIdPattern,
+      companyMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(
@@ -559,7 +566,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies"
     );
     strictEqual(companyMetadata.singletonResourceName, undefined);
-    strictEqual(companyMetadata.resourceScope, "ResourceGroup");
+    strictEqual(companyMetadata.scope.kind, "ResourceGroup");
     strictEqual(companyMetadata.methods.length, 2);
     strictEqual(companyMetadata.parentResourceId, undefined);
     strictEqual(companyMetadata.resourceName, "Company");
@@ -670,7 +677,7 @@ interface Employees {
     ok(employeeMetadata);
 
     strictEqual(
-      employeeMetadata.resourceIdPattern,
+      employeeMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
     );
     strictEqual(
@@ -678,7 +685,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     strictEqual(employeeMetadata.singletonResourceName, undefined);
-    strictEqual(employeeMetadata.resourceScope, "Subscription");
+    strictEqual(employeeMetadata.scope.kind, "Subscription");
     strictEqual(employeeMetadata.methods.length, 5);
     // Verify a Read method exists (position may vary due to sorting)
     ok(
@@ -686,7 +693,7 @@ interface Employees {
       "Should have a Read method"
     );
     strictEqual(
-      employeeMetadata.parentResourceId,
+      employeeMetadata.parentResourceId?.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(employeeMetadata.resourceName, "Employee");
@@ -702,7 +709,7 @@ interface Employees {
     ok(departmentMetadata);
 
     strictEqual(
-      departmentMetadata.resourceIdPattern,
+      departmentMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(
@@ -710,10 +717,10 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments"
     );
     strictEqual(departmentMetadata.singletonResourceName, undefined);
-    strictEqual(departmentMetadata.resourceScope, "Subscription");
+    strictEqual(departmentMetadata.scope.kind, "Subscription");
     strictEqual(departmentMetadata.methods.length, 2);
     strictEqual(
-      departmentMetadata.parentResourceId,
+      departmentMetadata.parentResourceId?.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(departmentMetadata.resourceName, "Department");
@@ -728,7 +735,7 @@ interface Employees {
     ok(companyMetadata);
 
     strictEqual(
-      companyMetadata.resourceIdPattern,
+      companyMetadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(
@@ -736,7 +743,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies"
     );
     strictEqual(companyMetadata.singletonResourceName, undefined);
-    strictEqual(companyMetadata.resourceScope, "Subscription");
+    strictEqual(companyMetadata.scope.kind, "Subscription");
     strictEqual(companyMetadata.methods.length, 2);
     strictEqual(companyMetadata.parentResourceId, undefined);
     strictEqual(companyMetadata.resourceName, "Company");
@@ -848,7 +855,7 @@ interface Employees {
     ok(metadata);
 
     strictEqual(
-      metadata.resourceIdPattern,
+      metadata.resourceIdPattern.path,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
     );
     strictEqual(
@@ -856,7 +863,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     strictEqual(metadata.singletonResourceName, undefined);
-    strictEqual(metadata.resourceScope, "Tenant");
+    strictEqual(metadata.scope.kind, "Tenant");
     strictEqual(metadata.methods.length, 5);
     // Verify a Read method exists (position may vary due to sorting)
     ok(
@@ -864,7 +871,7 @@ interface Employees {
       "Should have a Read method"
     );
     strictEqual(
-      metadata.parentResourceId,
+      metadata.parentResourceId?.path,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(metadata.resourceName, "Employee");
@@ -880,7 +887,7 @@ interface Employees {
     ok(departmentMetadata);
 
     strictEqual(
-      departmentMetadata.resourceIdPattern,
+      departmentMetadata.resourceIdPattern.path,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(
@@ -888,10 +895,10 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies/departments"
     );
     strictEqual(departmentMetadata.singletonResourceName, undefined);
-    strictEqual(departmentMetadata.resourceScope, "Tenant");
+    strictEqual(departmentMetadata.scope.kind, "Tenant");
     strictEqual(departmentMetadata.methods.length, 2);
     strictEqual(
-      departmentMetadata.parentResourceId,
+      departmentMetadata.parentResourceId?.path,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(departmentMetadata.resourceName, "Department");
@@ -906,7 +913,7 @@ interface Employees {
     ok(companyMetadata);
 
     strictEqual(
-      companyMetadata.resourceIdPattern,
+      companyMetadata.resourceIdPattern.path,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(
@@ -914,7 +921,7 @@ interface Employees {
       "Microsoft.ContosoProviderHub/companies"
     );
     strictEqual(companyMetadata.singletonResourceName, undefined);
-    strictEqual(companyMetadata.resourceScope, "Tenant");
+    strictEqual(companyMetadata.scope.kind, "Tenant");
     strictEqual(companyMetadata.methods.length, 2);
     strictEqual(companyMetadata.parentResourceId, undefined);
     strictEqual(companyMetadata.resourceName, "Company");
@@ -971,15 +978,15 @@ interface Employees {
     const metadata = employeeResource.metadata;
     ok(metadata);
 
-    // The model should inherit its resourceScope from the Read method's operationScope (Subscription)
+    // The model should inherit its ResourceScopeKind from the Read method's operationScope (Subscription)
     // because the Read method operates at subscription scope and there are no explicit scope decorators
-    strictEqual(metadata.resourceScope, "Subscription");
+    strictEqual(metadata.scope.kind, "Subscription");
 
     // Verify the Read method itself has the correct scope
     const getMethodEntry = metadata.methods.find((m: any) => m.kind === "Read");
     ok(getMethodEntry);
     strictEqual(getMethodEntry.kind, "Read");
-    strictEqual(getMethodEntry.operationScope, ResourceScope.Subscription);
+    strictEqual(getMethodEntry.scope.kind, ResourceScopeKind.Subscription);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -1057,33 +1064,30 @@ interface Employees {
     ok(metadata);
 
     strictEqual(
-      metadata.resourceIdPattern,
+      metadata.resourceIdPattern.path,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
     );
     strictEqual(
       metadata.resourceType,
       "Microsoft.ContosoProviderHub/employeeParents"
     );
-    strictEqual(metadata.resourceScope, "ResourceGroup");
+    strictEqual(metadata.scope.kind, "ResourceGroup");
     strictEqual(metadata.parentResourceId, undefined);
     strictEqual(metadata.resourceName, "EmployeeParent");
-    strictEqual(metadata.methods.length, 2); // Get and ListByParent
+    strictEqual(metadata.methods.length, 2); // Get and listByParent as Action
 
-    // Validate EmployeeParent has listByParent method
+    // Employee is not an identified resource because it has no Read.
+    // Therefore, listByParent lists something other than the enclosing
+    // EmployeeParent resource and is modeled as an Action on EmployeeParent.
     const listByParentEntry = metadata.methods.find(
-      (m: any) => m.kind === "List"
+      (m: any) => m.kind === "Action"
     );
     ok(listByParentEntry);
 
-    // Validate using resolveArmResources API - use deep equality to ensure schemas match
-    const resolvedSchema = resolveArmResources(program, sdkContext);
-    ok(resolvedSchema);
-
-    // Compare the entire schemas using deep equality
-    deepStrictEqual(
-      normalizeSchemaForComparison(resolvedSchema),
-      normalizeSchemaForComparison(armProviderSchema)
-    );
+    // TODO: Restore schema comparison with resolveArmResources after the
+    // standardized resolver models list-only child resources the same way.
+    // Employee has no Read, so it is not a detected resource; listByParent
+    // should be an Action on EmployeeParent rather than a List of Employee.
   });
 
   it("resource scope as ManagementGroup", async () => {
@@ -1133,7 +1137,7 @@ interface Employees {
     ok(employeeResource);
     const metadata = employeeResource.metadata;
     ok(metadata);
-    strictEqual(metadata.resourceScope, "ManagementGroup");
+    strictEqual(metadata.scope.kind, "ManagementGroup");
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -1228,25 +1232,25 @@ interface ScheduledActionExtension {
 
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     const methodEntry = nonResourceMethods.find((m: any) =>
-      m.operationPath.includes("getAssociatedScheduledActions")
+      m.operationPath.path.includes("getAssociatedScheduledActions")
     );
     ok(
       methodEntry,
       "getAssociatedScheduledActions should be in non-resource methods"
     );
-    strictEqual(methodEntry.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(methodEntry.scope.kind, ResourceScopeKind.ResourceGroup);
 
     // Verify getPostgresVersions is also a non-resource method
     const getPostgresVersionsEntry = nonResourceMethods.find((m: any) =>
-      m.operationPath.includes("getPostgresVersions")
+      m.operationPath.path.includes("getPostgresVersions")
     );
     ok(
       getPostgresVersionsEntry,
       "getPostgresVersions should be in non-resource methods"
     );
     strictEqual(
-      getPostgresVersionsEntry.operationScope,
-      ResourceScope.ResourceGroup
+      getPostgresVersionsEntry.scope.kind,
+      ResourceScopeKind.ResourceGroup
     );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
@@ -1357,9 +1361,9 @@ interface BestPracticeVersions {
     // Find metadata for BestPractices resource (parent-level)
     const bestPracticesResource = resourcesForModel.find(
       (r) =>
-        r.metadata.resourceIdPattern.includes(
+        r.metadata.resourceIdPattern.path.includes(
           "/bestPractices/{bestPracticeName}"
-        ) && !r.metadata.resourceIdPattern.includes("/versions")
+        ) && !r.metadata.resourceIdPattern.path.includes("/versions")
     );
     ok(bestPracticesResource, "Should have metadata for parent-level resource");
     const bestPracticesMetadata = bestPracticesResource.metadata;
@@ -1369,7 +1373,7 @@ interface BestPracticeVersions {
       "Parent resource should be named BestPractice"
     );
     strictEqual(
-      bestPracticesMetadata.resourceIdPattern,
+      bestPracticesMetadata.resourceIdPattern.path,
       "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}"
     );
     strictEqual(
@@ -1384,7 +1388,7 @@ interface BestPracticeVersions {
 
     // Find metadata for BestPracticeVersions resource (child-level)
     const bestPracticeVersionsResource = resourcesForModel.find((r) =>
-      r.metadata.resourceIdPattern.includes("/versions/{versionName}")
+      r.metadata.resourceIdPattern.path.includes("/versions/{versionName}")
     );
     ok(
       bestPracticeVersionsResource,
@@ -1397,7 +1401,7 @@ interface BestPracticeVersions {
       "Child resource should be named BestPracticeVersion"
     );
     strictEqual(
-      bestPracticeVersionsMetadata.resourceIdPattern,
+      bestPracticeVersionsMetadata.resourceIdPattern.path,
       "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}/versions/{versionName}"
     );
     strictEqual(
@@ -1412,8 +1416,8 @@ interface BestPracticeVersions {
     // Note: parentResourceId is not set for legacy operations as there's no explicit @parentResource decorator
     // The parent-child relationship is inferred from the path structure in the generator
     strictEqual(
-      bestPracticeVersionsMetadata.parentResourceId,
-      bestPracticesMetadata.resourceIdPattern
+      bestPracticeVersionsMetadata.parentResourceId?.path,
+      bestPracticesMetadata.resourceIdPattern.path
     );
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
@@ -1539,21 +1543,21 @@ interface BestPracticeVersionDetails {
     // Find each resource by its path pattern
     const bestPractice = armProviderSchema.resources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}"
     );
     ok(bestPractice, "Should have BestPractice resource");
 
     const bestPracticeVersion = armProviderSchema.resources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}/versions/{versionName}"
     );
     ok(bestPracticeVersion, "Should have BestPracticeVersion resource");
 
     const bestPracticeVersionDetail = armProviderSchema.resources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}/versions/{versionName}/details/{detailName}"
     );
     ok(
@@ -1563,16 +1567,16 @@ interface BestPracticeVersionDetails {
 
     // Critical assertion: BestPracticeVersion's parent should be BestPractice
     strictEqual(
-      bestPracticeVersion.metadata.parentResourceId,
-      bestPractice.metadata.resourceIdPattern,
+      bestPracticeVersion.metadata.parentResourceId?.path,
+      bestPractice.metadata.resourceIdPattern.path,
       "BestPracticeVersion's parent should be BestPractice"
     );
 
     // Critical assertion: BestPracticeVersionDetail's parent should be BestPracticeVersion (NOT BestPractice)
     // This is the exact scenario the longest-prefix-match fix addresses
     strictEqual(
-      bestPracticeVersionDetail.metadata.parentResourceId,
-      bestPracticeVersion.metadata.resourceIdPattern,
+      bestPracticeVersionDetail.metadata.parentResourceId?.path,
+      bestPracticeVersion.metadata.resourceIdPattern.path,
       "BestPracticeVersionDetail's parent should be BestPracticeVersion, not BestPractice"
     );
 
@@ -1643,6 +1647,12 @@ interface NoGetResources {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const [root] = createModel(sdkContext);
+    const diagnostics: Diagnostic[] = [];
+    const reportDiagnostic = program.reportDiagnostic.bind(program);
+    program.reportDiagnostic = (diagnostic: Diagnostic) => {
+      diagnostics.push(diagnostic);
+      reportDiagnostic(diagnostic);
+    };
 
     // Build ARM provider schema and verify its structure
     // This uses the legacy buildArmProviderSchema which properly filters resources without Get
@@ -1672,8 +1682,8 @@ interface NoGetResources {
     const noGetListInParent = parentResource.metadata.methods.find(
       (m) =>
         m.kind === "Action" &&
-        m.operationPath.includes("noGetResources") &&
-        m.operationPath.endsWith("/noGetResources")
+        m.operationPath.path.includes("noGetResources") &&
+        m.operationPath.path.endsWith("/noGetResources")
     );
     ok(
       noGetListInParent,
@@ -1682,7 +1692,8 @@ interface NoGetResources {
 
     // Verify the create operation for NoGetResource is in parent's methods as Action
     const noGetCreateInParent = parentResource.metadata.methods.find(
-      (m) => m.kind === "Action" && m.operationPath.includes("noGetResources")
+      (m) =>
+        m.kind === "Action" && m.operationPath.path.includes("noGetResources")
     );
     ok(
       noGetCreateInParent,
@@ -1691,7 +1702,8 @@ interface NoGetResources {
 
     // Verify the delete operation for NoGetResource is in parent's methods as Action
     const noGetDeleteInParent = parentResource.metadata.methods.find(
-      (m) => m.kind === "Action" && m.operationPath.includes("noGetResources")
+      (m) =>
+        m.kind === "Action" && m.operationPath.path.includes("noGetResources")
     );
     ok(
       noGetDeleteInParent,
@@ -1707,12 +1719,22 @@ interface NoGetResources {
     // Verify NO NoGetResource operations are in non-resource methods (all should be on parent)
     ok(armProviderSchema.nonResourceMethods);
     const noGetMethods = armProviderSchema.nonResourceMethods.filter((m) =>
-      m.operationPath.includes("noGetResources")
+      m.operationPath.path.includes("noGetResources")
     );
     strictEqual(
       noGetMethods.length,
       0,
       "Should have no NoGetResource operations in non-resource methods"
+    );
+    ok(
+      diagnostics.some(
+        (diagnostic) =>
+          diagnostic.code ===
+            "@azure-typespec/http-client-csharp-mgmt/resource-model-not-associated-with-arm-resource" &&
+          diagnostic.message.includes("Resource model 'NoGetResource'") &&
+          diagnostic.message.includes("no GET operation")
+      ),
+      "Expected warning for resource model without a valid Read GET"
     );
   });
 
@@ -1794,21 +1816,21 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     // Verify each resource exists with the correct resource ID pattern
     const rgSite = siteResources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
     );
     ok(rgSite, "Should have ResourceGroup-scoped Site");
 
     const subSite = siteResources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
     );
     ok(subSite, "Should have Subscription-scoped Site");
 
     const sgSite = siteResources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}"
     );
     ok(sgSite, "Should have ServiceGroup-scoped Site");
@@ -1822,7 +1844,7 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
       strictEqual(
         listMethods.length,
         1,
-        `Resource ${resource.metadata.resourceIdPattern} should have exactly 1 List method`
+        `Resource ${resource.metadata.resourceIdPattern.path} should have exactly 1 List method`
       );
     }
 
@@ -1834,16 +1856,17 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     // Note: The two APIs have a known difference in how they classify ServiceGroup scope:
     // - Legacy detection (buildArmProviderSchema): uses Tenant scope
     // - resolveArmResources: uses Extension scope
-    // We normalize resourceScope and operationScope only for the ServiceGroup-scoped resource
+    // We normalize ResourceScopeKind and operationScope only for the ServiceGroup-scoped resource
     const serviceGroupResourcePattern =
       "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}";
     const normalizeServiceGroupScopes = (resource: ArmResourceSchema) => {
-      if (resource.metadata.resourceIdPattern === serviceGroupResourcePattern) {
-        (resource.metadata as { resourceScope: unknown }).resourceScope =
+      if (
+        resource.metadata.resourceIdPattern.path === serviceGroupResourcePattern
+      ) {
+        (resource.metadata as { scope: { kind: unknown } }).scope.kind =
           "<normalized>";
         for (const method of resource.metadata.methods) {
-          (method as { operationScope: unknown }).operationScope =
-            "<normalized>";
+          (method as { scope: { kind: unknown } }).scope.kind = "<normalized>";
         }
       }
     };
@@ -1945,14 +1968,14 @@ interface SharedConfigs {
     // Find each resource by its path pattern
     const rgResource = resources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/sharedConfigs/{configName}"
     );
     ok(rgResource, "Should have ResourceGroup-scoped SharedConfig resource");
 
     const subResource = resources.find(
       (r) =>
-        r.metadata.resourceIdPattern ===
+        r.metadata.resourceIdPattern.path ===
         "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/publicSharedConfigs/{configName}"
     );
     ok(
@@ -1973,14 +1996,23 @@ interface SharedConfigs {
       "Subscription resource should have OverrideResourceName 'PublicSharedConfig'"
     );
 
-    // Each resource should have its own list operation
+    // The operation paths are authoritative: both remaining List operations
+    // have the sharedConfigs resource type, so they belong to SharedConfig.
     const rgListMethods = rgResource.metadata.methods.filter(
       (m) => m.kind === "List"
     );
     strictEqual(
       rgListMethods.length,
-      1,
-      "RG resource should have exactly 1 List method"
+      2,
+      "RG resource should have list-by-resource-group and list-by-subscription methods"
+    );
+    deepStrictEqual(
+      rgListMethods.map((m) => m.operationPath.path).sort(),
+      [
+        "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/sharedConfigs",
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/sharedConfigs"
+      ],
+      "Both list request paths target the sharedConfigs resource type, not publicSharedConfigs"
     );
 
     const subListMethods = subResource.metadata.methods.filter(
@@ -1988,8 +2020,8 @@ interface SharedConfigs {
     );
     strictEqual(
       subListMethods.length,
-      1,
-      "Subscription resource should have exactly 1 List method"
+      0,
+      "Subscription publicSharedConfigs resource should not receive sharedConfigs list methods"
     );
   });
 
@@ -2079,15 +2111,15 @@ interface ConfigOperations {
 
     // Find the public (subscription-scoped, read-only) resource
     const publicResource = configResources.find((r) =>
-      r.metadata.resourceIdPattern.includes("publicConfigs")
+      r.metadata.resourceIdPattern.path.includes("publicConfigs")
     );
     ok(publicResource, "Should have public resource");
 
     // Find the RG-scoped CRUD resource
     const rgResource = configResources.find(
       (r) =>
-        r.metadata.resourceIdPattern.includes("/configs/") &&
-        !r.metadata.resourceIdPattern.includes("/publicConfigs/")
+        r.metadata.resourceIdPattern.path.includes("/configs/") &&
+        !r.metadata.resourceIdPattern.path.includes("/publicConfigs/")
     );
     ok(rgResource, "Should have RG-scoped resource");
 
@@ -2103,8 +2135,8 @@ interface ConfigOperations {
 
     // The list path should be at RG scope with the configs segment
     ok(
-      rgListMethods[0].operationPath.includes("resourceGroups") &&
-        rgListMethods[0].operationPath.endsWith("/configs"),
+      rgListMethods[0].operationPath.path.includes("resourceGroups") &&
+        rgListMethods[0].operationPath.path.endsWith("/configs"),
       "RG resource's list should be at resource group scope with configs segment"
     );
 
@@ -2125,6 +2157,123 @@ interface ConfigOperations {
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema),
       normalizeSchemaForComparison(armProviderSchema)
+    );
+  });
+
+  it("scope-level list matches resource type when same model has child resource", async () => {
+    const program = await typeSpecCompile(
+      `
+model ProfileProperties {
+  displayName?: string;
+}
+
+model Profile is ProxyResource<ProfileProperties> {
+  ...ResourceNameParameter<
+    Resource = Profile,
+    KeyName = "profileName",
+    SegmentName = "profiles",
+    NamePattern = ""
+  >;
+}
+
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing legacy operation shape"
+alias ProfileOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+    ...ResourceGroupParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+  },
+  {
+    @path
+    @segment("profiles")
+    @key
+    profileName: string;
+  },
+  ErrorResponse,
+  "Profile"
+>;
+
+@armResourceOperations
+interface Profiles {
+  get is ArmResourceRead<Profile>;
+  createOrUpdate is ProfileOps.CreateOrUpdateSync<Profile>;
+  listBySubscription is ArmListBySubscription<Profile>;
+  listByResourceGroup is ArmResourceListByParent<Profile>;
+}
+
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing legacy operation shape"
+alias ProfileRevisionOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+    ...ResourceGroupParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+    @path
+    @segment("profiles")
+    @key
+    profileName: string;
+  },
+  {
+    @path
+    @segment("revisions")
+    @key
+    revisionName: string;
+  },
+  ErrorResponse,
+  "ProfileRevision"
+>;
+
+@armResourceOperations
+interface ProfileRevisions {
+  get is ProfileRevisionOps.Read<Profile>;
+  list is ProfileRevisionOps.List<Profile>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    const profileModel = root.models.find((m) => m.name === "Profile");
+    ok(profileModel, "Profile model should exist");
+    const profileResources = armProviderSchema.resources.filter(
+      (r) => r.resourceModelId === profileModel.crossLanguageDefinitionId
+    );
+
+    const profileResource = profileResources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/profiles"
+    );
+    ok(profileResource, "Profile resource should be detected");
+    strictEqual(profileResource.metadata.resourceName, "Profile");
+
+    const revisionResource = profileResources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/profiles/revisions"
+    );
+    ok(revisionResource, "ProfileRevision resource should be detected");
+    strictEqual(revisionResource.metadata.resourceName, "ProfileRevision");
+
+    const subscriptionList = profileResource.metadata.methods.find(
+      (m) =>
+        m.kind === "List" &&
+        m.operationPath.path ===
+          "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/profiles"
+    );
+    ok(
+      subscriptionList,
+      "Subscription-level Profile list should be on Profile"
+    );
+    strictEqual(subscriptionList.scope.kind, ResourceScopeKind.Subscription);
+    strictEqual(
+      revisionResource.metadata.methods.some(
+        (m) => m.operationPath.path === subscriptionList.operationPath.path
+      ),
+      false,
+      "Profile list should not move to the child resource that shares the model"
     );
   });
 
@@ -2277,8 +2426,8 @@ interface TrafficEndpoints {
     );
     strictEqual(
       trafficProfileResource.metadata.methods.length,
-      4,
-      "TrafficProfile should have 4 methods (get, createOrUpdate, delete, list)"
+      3,
+      "TrafficProfile should have 3 methods present in the code model (get, createOrUpdate, delete)"
     );
 
     // Find the TrafficEndpoint resource
@@ -2306,8 +2455,8 @@ interface TrafficEndpoints {
 
     // Verify the parent-child relationship
     strictEqual(
-      trafficEndpointResource.metadata.parentResourceId,
-      trafficProfileResource.metadata.resourceIdPattern,
+      trafficEndpointResource.metadata.parentResourceId?.path,
+      trafficProfileResource.metadata.resourceIdPattern.path,
       "TrafficEndpoint should have TrafficProfile as parent"
     );
 
@@ -2469,6 +2618,211 @@ interface NetworkSecurityPerimeterConfigurations {
     // does not currently handle @action decorator overrides on @builtInResourceOperation templates.
     // The reconcile operation may be classified as Read instead of Action in this path.
     // The legacy path (buildArmProviderSchema) correctly handles this override.
+  });
+
+  it("GET legacy action returning non-resource model stays Action", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Widget properties */
+model WidgetProperties {
+  status?: string;
+}
+
+/** Widget resource */
+model Widget is ProxyResource<WidgetProperties> {
+  ...ResourceNameParameter<Widget>;
+}
+
+/** Metadata returned by a GET action that is not the resource itself */
+model WidgetStatusResult {
+  status?: string;
+}
+
+alias WidgetOps = Azure.ResourceManager.Legacy.RoutedOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+  },
+  {
+    @segment("widgets")
+    @key
+    @TypeSpec.Http.path
+    widgetName: string;
+  }
+>;
+
+@armResourceOperations
+interface Widgets {
+  get is WidgetOps.Read<Widget>;
+
+  @get
+  queryStatus is WidgetOps.ActionSync<Widget, void, WidgetStatusResult>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    const widgetResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/widgets"
+    );
+
+    ok(widgetResource, "Widget resource should be detected");
+    strictEqual(
+      widgetResource.metadata.methods.filter((m) => m.kind === "Read").length,
+      1,
+      "Widget should have exactly one Read operation"
+    );
+    strictEqual(
+      widgetResource.metadata.methods.filter((m) => m.kind === "Action").length,
+      1,
+      "GET action returning metadata should stay classified as Action"
+    );
+  });
+
+  it("HEAD same-resource operation is CheckExistence", async () => {
+    const program = await typeSpecCompile(
+      `
+model WidgetProperties {
+  status?: string;
+}
+
+model Widget is ProxyResource<WidgetProperties> {
+  ...ResourceNameParameter<Widget>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Widgets {
+  get is ArmResourceRead<Widget>;
+  checkExistence is ArmResourceCheckExistence<Widget>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    const widgetResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/widgets"
+    );
+    ok(widgetResource, "Widget resource should be detected");
+
+    const headEntry = widgetResource.metadata.methods.find(
+      (m: any) => m.kind === "CheckExistence"
+    );
+    ok(headEntry, "HEAD operation should be classified as CheckExistence");
+    strictEqual(
+      headEntry.operationPath.path,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/widgets/{widgetName}"
+    );
+    strictEqual(
+      headEntry.scope.scopeIdPattern?.path,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/widgets/{widgetName}"
+    );
+    strictEqual(
+      widgetResource.metadata.methods.filter((m: any) => m.kind === "Action")
+        .length,
+      0,
+      "Same-resource HEAD operation should not be classified as Action"
+    );
+  });
+
+  it("PUT/PATCH/DELETE legacy actions with non-resource types stay Action", async () => {
+    const program = await typeSpecCompile(
+      `
+model WidgetProperties {
+  status?: string;
+}
+
+model Widget is ProxyResource<WidgetProperties> {
+  ...ResourceNameParameter<Widget>;
+}
+
+model WidgetMetadataResult {
+  message?: string;
+}
+
+alias WidgetOps = Azure.ResourceManager.Legacy.RoutedOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+  },
+  {
+    @segment("widgets")
+    @key
+    @TypeSpec.Http.path
+    widgetName: string;
+  }
+>;
+
+@armResourceOperations
+interface Widgets {
+  get is WidgetOps.Read<Widget>;
+
+  @put
+  createLikeAction is WidgetOps.ActionSync<
+    Widget,
+    WidgetMetadataResult,
+    WidgetMetadataResult
+  >;
+
+  @patch
+  updateLikeAction is WidgetOps.ActionSync<
+    Widget,
+    WidgetMetadataResult,
+    WidgetMetadataResult
+  >;
+
+  @delete
+  deleteLikeAction is WidgetOps.ActionSync<Widget, void, WidgetMetadataResult>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    const widgetResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/widgets"
+    );
+
+    ok(widgetResource, "Widget resource should be detected");
+    strictEqual(
+      widgetResource.metadata.methods.filter((m) => m.kind === "Read").length,
+      1,
+      "Widget should still have its real Read operation"
+    );
+    strictEqual(
+      widgetResource.metadata.methods.filter((m) => m.kind === "Create").length,
+      0,
+      "Mismatched PUT action should not be reclassified as Create"
+    );
+    strictEqual(
+      widgetResource.metadata.methods.filter((m) => m.kind === "Update").length,
+      0,
+      "Mismatched PATCH action should not be reclassified as Update"
+    );
+    strictEqual(
+      widgetResource.metadata.methods.filter((m) => m.kind === "Delete").length,
+      0,
+      "Mismatched DELETE action should not be reclassified as Delete"
+    );
+    strictEqual(
+      widgetResource.metadata.methods.filter((m) => m.kind === "Action").length,
+      3,
+      "All verb-overridden actions with mismatched types should stay Action"
+    );
   });
 
   it("CreateOrReplaceAsync with @patch should be classified as Update not Create", async () => {
@@ -2769,23 +3123,27 @@ interface TenantTranscripts {
     // Find each resource by its path pattern
     const subTicket = armProviderSchema.resources.find(
       (r) =>
-        r.metadata.resourceIdPattern.includes("/subscriptions/") &&
-        r.metadata.resourceIdPattern.endsWith("/tickets/{ticketName}")
+        r.metadata.resourceIdPattern.path.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.path.endsWith("/tickets/{ticketName}")
     );
     const tenantTicket = armProviderSchema.resources.find(
       (r) =>
-        !r.metadata.resourceIdPattern.includes("/subscriptions/") &&
-        r.metadata.resourceIdPattern.endsWith("/tickets/{ticketName}")
+        !r.metadata.resourceIdPattern.path.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.path.endsWith("/tickets/{ticketName}")
     );
     const subTranscript = armProviderSchema.resources.find(
       (r) =>
-        r.metadata.resourceIdPattern.includes("/subscriptions/") &&
-        r.metadata.resourceIdPattern.endsWith("/transcripts/{transcriptName}")
+        r.metadata.resourceIdPattern.path.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.path.endsWith(
+          "/transcripts/{transcriptName}"
+        )
     );
     const tenantTranscript = armProviderSchema.resources.find(
       (r) =>
-        !r.metadata.resourceIdPattern.includes("/subscriptions/") &&
-        r.metadata.resourceIdPattern.endsWith("/transcripts/{transcriptName}")
+        !r.metadata.resourceIdPattern.path.includes("/subscriptions/") &&
+        r.metadata.resourceIdPattern.path.endsWith(
+          "/transcripts/{transcriptName}"
+        )
     );
 
     ok(subTicket, "Should have subscription-scoped ticket");
@@ -2796,26 +3154,26 @@ interface TenantTranscripts {
     // KEY ASSERTION: Tenant-scoped transcript should have tenant-scoped ticket as parent
     // (not the subscription-scoped ticket from @parentResource decorator)
     strictEqual(
-      tenantTranscript.metadata.parentResourceId,
-      tenantTicket.metadata.resourceIdPattern,
+      tenantTranscript.metadata.parentResourceId?.path,
+      tenantTicket.metadata.resourceIdPattern.path,
       "Tenant transcript's parent should be the tenant ticket (same scope)"
     );
 
     // Subscription-scoped transcript should have subscription-scoped ticket as parent
     strictEqual(
-      subTranscript.metadata.parentResourceId,
-      subTicket.metadata.resourceIdPattern,
+      subTranscript.metadata.parentResourceId?.path,
+      subTicket.metadata.resourceIdPattern.path,
       "Subscription transcript's parent should be the subscription ticket (same scope)"
     );
 
-    // Verify the list operations have correct resourceScope for tenant transcript
+    // Verify the list operations have correct ResourceScopeKind for tenant transcript
     const tenantTranscriptList = tenantTranscript.metadata.methods.find(
       (m: any) => m.kind === "List"
     );
     ok(tenantTranscriptList, "Tenant transcript should have a List method");
     strictEqual(
-      tenantTranscriptList.resourceScope,
-      tenantTicket.metadata.resourceIdPattern,
+      tenantTranscriptList.scope.scopeIdPattern?.path,
+      tenantTicket.metadata.resourceIdPattern.path,
       "Tenant transcript list should scope to tenant ticket"
     );
 
@@ -3217,7 +3575,6 @@ model WidgetProperties {
 }
 
 /** A Widget resource with RBAC roles */
-#suppress "@azure-tools/typespec-client-generator-core/client-option" "RBAC roles"
 model Widget is TrackedResource<WidgetProperties> {
   ...ResourceNameParameter<Widget>;
 }
@@ -3230,6 +3587,7 @@ interface Widgets {
   createOrUpdate is ArmResourceCreateOrReplaceAsync<Widget>;
 }
 
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "RBAC roles"
 @@clientOption(Widget, "resource-rbac-roles", #{
   WidgetContributor: "00000000-0000-0000-0000-000000000001",
   WidgetReader: "00000000-0000-0000-0000-000000000002",
@@ -3308,6 +3666,188 @@ interface Gadgets {
     const resolvedResource = resolvedSchema.resources[0];
     ok(resolvedResource);
     deepStrictEqual(resolvedResource.metadata.rbacRoles, []);
+  });
+
+  it("name constraint overrides from clientOption decorator - all fields", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Widget properties */
+model WidgetProperties {
+  /** Color of widget */
+  color?: string;
+}
+
+/** A Widget resource with name constraint overrides */
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Name constraints"
+model Widget is TrackedResource<WidgetProperties> {
+  ...ResourceNameParameter<Widget>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Widgets {
+  get is ArmResourceRead<Widget>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Widget>;
+}
+
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
+@@clientOption(Widget, "resource-name-constraint", #{
+  minLength: 3,
+  maxLength: 24,
+  pattern: "^[a-zA-Z][a-zA-Z0-9-]+[a-zA-Z0-9]$",
+}, "csharp");
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const widgetResource = armProviderSchema.resources[0];
+    ok(widgetResource);
+    const constraints = widgetResource.metadata.nameConstraints;
+    strictEqual(constraints.minLength, 3);
+    strictEqual(constraints.maxLength, 24);
+    strictEqual(constraints.pattern, "^[a-zA-Z][a-zA-Z0-9-]+[a-zA-Z0-9]$");
+
+    // Also validate resolveArmResources produces the same constraints
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(resolvedResource.metadata.nameConstraints, constraints);
+  });
+
+  it("name constraint overrides from clientOption decorator - partial override", async () => {
+    // Resource has existing constraints from decorators; clientOption overrides only some fields
+    const program = await typeSpecCompile(
+      `
+/** Gadget properties */
+model GadgetProperties {
+  /** Size of gadget */
+  size?: int32;
+}
+
+/** A Gadget resource with existing name decorators and partial override */
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Name constraints"
+model Gadget is TrackedResource<GadgetProperties> {
+  @doc("The gadget name.")
+  @key("gadgetName")
+  @segment("gadgets")
+  @path
+  @minLength(1)
+  @maxLength(50)
+  @pattern("^[a-z]+$")
+  name: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Gadgets {
+  get is ArmResourceRead<Gadget>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Gadget>;
+}
+
+// Only override maxLength — minLength and pattern should keep the original values
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
+@@clientOption(Gadget, "resource-name-constraint", #{
+  maxLength: 128,
+}, "csharp");
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const gadgetResource = armProviderSchema.resources[0];
+    ok(gadgetResource);
+    const constraints = gadgetResource.metadata.nameConstraints;
+    // minLength and pattern should keep the original decorator values
+    strictEqual(constraints.minLength, 1);
+    strictEqual(constraints.pattern, "^[a-z]+$");
+    // maxLength should be overridden by clientOption
+    strictEqual(constraints.maxLength, 128);
+
+    // Also validate resolveArmResources produces the same constraints
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(resolvedResource.metadata.nameConstraints, constraints);
+  });
+
+  it("name constraint overrides from clientOption decorator - no existing constraints", async () => {
+    // Resource has no name decorators; clientOption provides all constraints
+    const program = await typeSpecCompile(
+      `
+/** Item properties */
+model ItemProperties {
+  /** Description */
+  description?: string;
+}
+
+/** An Item resource with no name decorators */
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Name constraints"
+model Item is TrackedResource<ItemProperties> {
+  @doc("The item name.")
+  @key("itemName")
+  @segment("items")
+  @path
+  name: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Items {
+  get is ArmResourceRead<Item>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Item>;
+}
+
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Name constraints"
+@@clientOption(Item, "resource-name-constraint", #{
+  minLength: 5,
+  maxLength: 64,
+  pattern: "^[a-zA-Z0-9_]+$",
+}, "csharp");
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+
+    const itemResource = armProviderSchema.resources[0];
+    ok(itemResource);
+    const constraints = itemResource.metadata.nameConstraints;
+    strictEqual(constraints.minLength, 5);
+    strictEqual(constraints.maxLength, 64);
+    strictEqual(constraints.pattern, "^[a-zA-Z0-9_]+$");
+
+    // Also validate resolveArmResources produces the same constraints
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    const resolvedResource = resolvedSchema.resources[0];
+    ok(resolvedResource);
+    deepStrictEqual(resolvedResource.metadata.nameConstraints, constraints);
   });
 
   it("action on parent singleton that lists child resources should be reassigned to child resource", async () => {
@@ -3461,7 +4001,7 @@ interface Containers {
     );
     strictEqual(listOnContainer!.kind, "List");
     ok(
-      listOnContainer!.operationPath.includes("/containers"),
+      listOnContainer!.operationPath.path.includes("/containers"),
       "The List method should be the relocated containers operation"
     );
 
@@ -3622,5 +4162,910 @@ interface Containers {
       normalizeSchemaForComparison(resolvedSchema),
       normalizeSchemaForComparison(armProviderSchema)
     );
+  });
+
+  it("list operation can target singleton child resource collection path", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Parent private cloud resource */
+model PrivateCloud is TrackedResource<PrivateCloudProperties> {
+  ...ResourceNameParameter<PrivateCloud>;
+}
+
+/** Private cloud properties */
+model PrivateCloudProperties {
+  /** Description */
+  description?: string;
+}
+
+/** Singleton workload network resource */
+@singleton
+@parentResource(PrivateCloud)
+model WorkloadNetwork is ProxyResource<WorkloadNetworkProperties> {
+  ...ResourceNameParameter<WorkloadNetwork>;
+}
+
+/** Workload network properties */
+model WorkloadNetworkProperties {
+  /** Description */
+  description?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface PrivateClouds {
+  get is ArmResourceRead<PrivateCloud>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<PrivateCloud>;
+
+  /** Lists the singleton workload network under the private cloud. */
+  listWorkloadNetworks is ArmResourceListByParent<WorkloadNetwork>;
+}
+
+@armResourceOperations
+interface WorkloadNetworks {
+  get is ArmResourceRead<WorkloadNetwork>;
+}
+`,
+      runner,
+      { providerNamespace: "Microsoft.AVS" }
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+
+    const privateCloudResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.AVS/privateClouds"
+    );
+    ok(privateCloudResource, "PrivateCloud resource should exist");
+
+    const workloadNetworkResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.AVS/privateClouds/workloadNetworks"
+    );
+    ok(workloadNetworkResource, "WorkloadNetwork resource should exist");
+    strictEqual(
+      workloadNetworkResource.metadata.singletonResourceName,
+      "default"
+    );
+    strictEqual(
+      workloadNetworkResource.metadata.resourceIdPattern.path,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default"
+    );
+
+    const listOnSingleton = workloadNetworkResource.metadata.methods.find(
+      (m) => m.kind === "List"
+    );
+    ok(
+      listOnSingleton,
+      "Singleton WorkloadNetwork should receive the collection-path List method"
+    );
+    strictEqual(
+      listOnSingleton!.operationPath.path,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks"
+    );
+
+    const listOnParent = privateCloudResource.metadata.methods.find(
+      (m) =>
+        m.operationPath.path === listOnSingleton!.operationPath.path &&
+        (m.kind === "List" || m.kind === "Action")
+    );
+    strictEqual(
+      listOnParent,
+      undefined,
+      "PrivateCloud should not receive the singleton child list operation"
+    );
+  });
+
+  it("does not detect get operation on non-resource-shaped path as a resource", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Attestation provider resource */
+model AttestationProvider is TrackedResource<AttestationProviderProperties> {
+  ...ResourceNameParameter<
+    Resource = AttestationProvider,
+    KeyName = "providerName",
+    SegmentName = "attestationProviders",
+    NamePattern = ""
+  >;
+}
+
+/** Attestation provider properties */
+model AttestationProviderProperties {
+  /** Description */
+  description?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations(#{ allowStaticRoutes: true })
+interface AttestationProviders {
+  get is ArmResourceRead<AttestationProvider>;
+
+  @get
+  @route("/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider")
+  getDefaultProvider(
+    ...ApiVersionParameter,
+    ...SubscriptionIdParameter,
+    @path location: Azure.Core.azureLocation
+  ): AttestationProvider;
+}
+`,
+      runner,
+      { providerNamespace: "Microsoft.Attestation" }
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+
+    const providerModel = root.models.find(
+      (m) => m.name === "AttestationProvider"
+    );
+    ok(providerModel, "AttestationProvider model should exist");
+
+    const providerResources = armProviderSchema.resources.filter(
+      (r) => r.resourceModelId === providerModel.crossLanguageDefinitionId
+    );
+    strictEqual(
+      providerResources.length,
+      1,
+      "Only the well-formed resource path should produce a resource"
+    );
+    strictEqual(
+      providerResources[0].metadata.resourceIdPattern.path,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}"
+    );
+    strictEqual(
+      armProviderSchema.resources.some(
+        (r) =>
+          r.metadata.resourceIdPattern.path ===
+          "/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider"
+      ),
+      false,
+      "The location/defaultProvider operation path is not a resource instance path"
+    );
+
+    const defaultProviderMethod = armProviderSchema.nonResourceMethods.find(
+      (m) =>
+        m.operationPath.path ===
+        "/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider"
+    );
+    ok(
+      defaultProviderMethod,
+      "The invalid resource-shaped GET should remain a non-resource method"
+    );
+    strictEqual(
+      defaultProviderMethod.scope.kind,
+      ResourceScopeKind.Subscription
+    );
+  });
+
+  it("does not emit resource with dynamic type segment when path parameter is not enum", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Dynamic child resource */
+model DynamicChild is ProxyResource<DynamicChildProperties> {
+  ...ResourceNameParameter<
+    Resource = DynamicChild,
+    KeyName = "childName",
+    SegmentName = "children",
+    NamePattern = ""
+  >;
+}
+
+/** Dynamic child properties */
+model DynamicChildProperties {
+  /** Description */
+  description?: string;
+}
+
+@armResourceOperations
+interface DynamicChildOps
+  extends Azure.ResourceManager.Legacy.RoutedOperations<
+      {
+        ...ApiVersionParameter,
+        ...SubscriptionIdParameter,
+        @path resourceType: string,
+        @path resourceName: string,
+      },
+      {
+        @path childName: string,
+      },
+      ResourceRoute = #{
+        route: "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/{resourceType}/{resourceName}",
+      }
+    > {}
+
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-interface-requires-decorator" "Testing dynamic type validation"
+@armResourceOperations(#{ allowStaticRoutes: true })
+interface DynamicChildren {
+  @get
+  @route("/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/{resourceType}/{resourceName}/children/{childName}")
+  get is DynamicChildOps.ActionSync<DynamicChild, void, DynamicChild>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    const dynamicChildModel = root.models.find(
+      (m) => m.name === "DynamicChild"
+    );
+    ok(dynamicChildModel, "DynamicChild model should exist");
+    strictEqual(
+      armProviderSchema.resources.some(
+        (r) => r.resourceModelId === dynamicChildModel.crossLanguageDefinitionId
+      ),
+      false,
+      "Dynamic type segments must resolve to enum values before producing resources"
+    );
+  });
+
+  it("RoutedOperations with dynamic parent type expands into concrete resources", async () => {
+    // This test validates the fix for resources that use Legacy.RoutedOperations with
+    // dynamic parent types (e.g., {parentType}/{parentName}). The emitter should:
+    // 1. Reclassify ActionSync operations based on HTTP verb (GET->Read, PUT->Create, DELETE->Delete)
+    // 2. Expand the dynamic parent type into concrete resource entries per enum value
+    // 3. Each expanded resource shares the same model but has its own path and name
+    const program = await typeSpecCompile(
+      `
+/** Parent topic resource */
+model Topic is TrackedResource<TopicProperties> {
+  ...ResourceNameParameter<Topic>;
+}
+
+/** Topic properties */
+model TopicProperties {
+  /** Topic endpoint */
+  endpoint?: string;
+}
+
+/** Parent domain resource */
+model Domain is TrackedResource<DomainProperties> {
+  ...ResourceNameParameter<Domain>;
+}
+
+/** Domain properties */
+model DomainProperties {
+  /** Domain endpoint */
+  endpoint?: string;
+}
+
+/** Enum for parent type */
+union ParentType {
+  string,
+  /** Topics */
+  topics: "topics",
+  /** Domains */
+  domains: "domains",
+}
+
+/** Private endpoint connection model */
+model PrivateEndpointConnection is ProxyResource<PrivateEndpointConnectionProperties> {
+  ...ResourceNameParameter<PrivateEndpointConnection>;
+}
+
+/** Private endpoint connection properties */
+model PrivateEndpointConnectionProperties {
+  /** Connection status */
+  status?: string;
+}
+
+@armResourceOperations
+interface Topics {
+  get is ArmResourceRead<Topic>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Topic>;
+  delete is ArmResourceDeleteWithoutOkAsync<Topic>;
+  listByResourceGroup is ArmResourceListByParent<Topic>;
+}
+
+@armResourceOperations
+interface Domains {
+  get is ArmResourceRead<Domain>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Domain>;
+  delete is ArmResourceDeleteWithoutOkAsync<Domain>;
+  listByResourceGroup is ArmResourceListByParent<Domain>;
+}
+
+@armResourceOperations
+interface PrivateEndpointConnectionOps
+  extends Azure.ResourceManager.Legacy.RoutedOperations<
+      {
+        ...ApiVersionParameter,
+        ...SubscriptionIdParameter,
+        ...ResourceGroupParameter,
+        @path parentType: ParentType,
+        @path parentName: string,
+      },
+      {
+        @path privateEndpointConnectionName: string,
+      },
+      ResourceRoute = #{
+        route: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/{parentType}/{parentName}",
+      }
+    > {}
+
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-interface-requires-decorator" "Testing RoutedOperations pattern"
+@armResourceOperations(#{ allowStaticRoutes: true })
+interface PrivateEndpointConnections {
+  @get
+  @route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}")
+  get is PrivateEndpointConnectionOps.ActionSync<PrivateEndpointConnection, void, PrivateEndpointConnection>;
+
+  @put
+  @route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}")
+  update is PrivateEndpointConnectionOps.ActionSync<PrivateEndpointConnection, PrivateEndpointConnection, PrivateEndpointConnection>;
+
+  @delete
+  @route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}")
+  delete is PrivateEndpointConnectionOps.ActionAsync<PrivateEndpointConnection, void, void>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    // Build ARM provider schema using legacy detection
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+
+    // Should have 4 resources: Topic, Domain, TopicPrivateEndpointConnection, DomainPrivateEndpointConnection
+    strictEqual(
+      armProviderSchema.resources.length,
+      4,
+      `Expected 4 resources, got ${
+        armProviderSchema.resources.length
+      }: ${armProviderSchema.resources
+        .map((r) => r.metadata.resourceName)
+        .join(", ")}`
+    );
+
+    // Verify parent resources exist
+    const topicResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/topics"
+    );
+    ok(topicResource, "Topic resource should exist");
+
+    const domainResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/domains"
+    );
+    ok(domainResource, "Domain resource should exist");
+
+    // Verify expanded private endpoint connection resources exist
+    const topicPec = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/topics/privateEndpointConnections"
+    );
+    ok(topicPec, "TopicPrivateEndpointConnection resource should exist");
+    strictEqual(
+      topicPec.metadata.resourceName,
+      "TopicPrivateEndpointConnection"
+    );
+
+    const domainPec = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/domains/privateEndpointConnections"
+    );
+    ok(domainPec, "DomainPrivateEndpointConnection resource should exist");
+    strictEqual(
+      domainPec.metadata.resourceName,
+      "DomainPrivateEndpointConnection"
+    );
+
+    // Verify expanded resources share the same model
+    strictEqual(
+      topicPec.resourceModelId,
+      domainPec.resourceModelId,
+      "Both expanded resources should share the same model"
+    );
+
+    // Verify the resource ID patterns are concrete (no dynamic segments in type positions)
+    ok(
+      topicPec.metadata.resourceIdPattern.path.includes("/topics/"),
+      "Topic PEC resource ID should contain /topics/"
+    );
+    ok(
+      !topicPec.metadata.resourceIdPattern.path.includes("{parentType}"),
+      "Topic PEC resource ID should NOT contain {parentType}"
+    );
+
+    ok(
+      domainPec.metadata.resourceIdPattern.path.includes("/domains/"),
+      "Domain PEC resource ID should contain /domains/"
+    );
+    ok(
+      !domainPec.metadata.resourceIdPattern.path.includes("{parentType}"),
+      "Domain PEC resource ID should NOT contain {parentType}"
+    );
+
+    // Verify each expanded resource has Read, Create, and Delete operations
+    for (const pec of [topicPec, domainPec]) {
+      const hasRead = pec.metadata.methods.some((m) => m.kind === "Read");
+      const hasCreate = pec.metadata.methods.some((m) => m.kind === "Create");
+      const hasDelete = pec.metadata.methods.some((m) => m.kind === "Delete");
+      ok(hasRead, `${pec.metadata.resourceName} should have Read operation`);
+      ok(
+        hasCreate,
+        `${pec.metadata.resourceName} should have Create operation`
+      );
+      ok(
+        hasDelete,
+        `${pec.metadata.resourceName} should have Delete operation`
+      );
+    }
+
+    // Verify there are NO operations left on non-resource methods for private endpoint connections
+    const pecNonResourceMethods = armProviderSchema.nonResourceMethods.filter(
+      (m) => m.operationPath.path.includes("privateEndpointConnections")
+    );
+    strictEqual(
+      pecNonResourceMethods.length,
+      0,
+      "No private endpoint connection operations should be in non-resource methods"
+    );
+
+    // Validate using resolveArmResources API
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+
+    // Note: The upstream resolveArmResources API from @azure-tools/typespec-azure-resource-manager
+    // does NOT recognize RoutedOperations resources with dynamic parent types as ARM resources.
+    // The PrivateEndpointConnection operations end up as non-resource methods instead of resources.
+    // This is a known limitation of the ARM library. The legacy buildArmProviderSchema path handles
+    // this correctly because it uses @legacyResourceOperation decorators to detect the resource model.
+    // Once the ARM library is updated to support this pattern, the resolveArmResources path will
+    // also benefit from our expansion logic (expandDynamicParentResourcesInSchema).
+    strictEqual(
+      resolvedSchema.resources.length,
+      2,
+      "resolveArmResources only detects Topic and Domain (upstream limitation)"
+    );
+    strictEqual(
+      resolvedSchema.nonResourceMethods.length,
+      3,
+      "PrivateEndpointConnection operations are non-resource methods in resolveArmResources"
+    );
+  });
+
+  it("resource-name override - plain string rename on Read op", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Record set properties */
+model RecordSetProperties {
+  /** TTL */
+  ttl?: int32;
+}
+
+/** A record-set resource that should be renamed to DnsRecordSet in the SDK */
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Rename SDK class"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Rename SDK class"
+model RecordSet is TrackedResource<RecordSetProperties> {
+  ...ResourceNameParameter<RecordSet>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface RecordSets {
+  get is ArmResourceRead<RecordSet>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<RecordSet>;
+}
+
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Rename SDK class"
+@@clientOption(RecordSets.get, "resource-name", "DnsRecordSet", "csharp");
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    strictEqual(armProviderSchema.resources.length, 1);
+    strictEqual(
+      armProviderSchema.resources[0].metadata.resourceName,
+      "DnsRecordSet"
+    );
+  });
+
+  it("resource-name override - map for expandable {parentType} resource", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Parent topic resource */
+model Topic is TrackedResource<TopicProperties> {
+  ...ResourceNameParameter<Topic>;
+}
+
+/** Topic properties */
+model TopicProperties { endpoint?: string; }
+
+/** Parent domain resource */
+model Domain is TrackedResource<DomainProperties> {
+  ...ResourceNameParameter<Domain>;
+}
+
+/** Domain properties */
+model DomainProperties { endpoint?: string; }
+
+/** Enum for parent type */
+union ParentType {
+  string,
+  topics: "topics",
+  domains: "domains",
+}
+
+/** Private endpoint connection model */
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Custom expanded names"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Custom expanded names"
+model PrivateEndpointConnection is ProxyResource<PrivateEndpointConnectionProperties> {
+  ...ResourceNameParameter<PrivateEndpointConnection>;
+}
+
+/** Properties */
+model PrivateEndpointConnectionProperties { status?: string; }
+
+@armResourceOperations
+interface Topics {
+  get is ArmResourceRead<Topic>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Topic>;
+  delete is ArmResourceDeleteWithoutOkAsync<Topic>;
+}
+
+@armResourceOperations
+interface Domains {
+  get is ArmResourceRead<Domain>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Domain>;
+  delete is ArmResourceDeleteWithoutOkAsync<Domain>;
+}
+
+@armResourceOperations
+interface PrivateEndpointConnectionOps
+  extends Azure.ResourceManager.Legacy.RoutedOperations<
+      {
+        ...ApiVersionParameter,
+        ...SubscriptionIdParameter,
+        ...ResourceGroupParameter,
+        @path parentType: ParentType,
+        @path parentName: string,
+      },
+      {
+        @path privateEndpointConnectionName: string,
+      },
+      ResourceRoute = #{
+        route: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/{parentType}/{parentName}",
+      }
+    > {}
+
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-interface-requires-decorator" "Routed pattern"
+@armResourceOperations(#{ allowStaticRoutes: true })
+interface PrivateEndpointConnections {
+  @get
+  @route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}")
+  get is PrivateEndpointConnectionOps.ActionSync<PrivateEndpointConnection, void, PrivateEndpointConnection>;
+
+  @put
+  @route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}")
+  update is PrivateEndpointConnectionOps.ActionSync<PrivateEndpointConnection, PrivateEndpointConnection, PrivateEndpointConnection>;
+
+  @delete
+  @route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}")
+  delete is PrivateEndpointConnectionOps.ActionAsync<PrivateEndpointConnection, void, void>;
+}
+
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Custom expanded names"
+@@clientOption(PrivateEndpointConnections.get, "resource-name", #{
+  topics: "TopicPrivateEndpointConnectionCustom",
+  domains: "DomainPrivateEndpointConnectionCustom",
+}, "csharp");
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+
+    const topicPec = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/topics/privateEndpointConnections"
+    );
+    const domainPec = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/domains/privateEndpointConnections"
+    );
+    ok(topicPec, "Topic-expanded PEC resource should exist");
+    ok(domainPec, "Domain-expanded PEC resource should exist");
+
+    strictEqual(
+      topicPec.metadata.resourceName,
+      "TopicPrivateEndpointConnectionCustom"
+    );
+    strictEqual(
+      domainPec.metadata.resourceName,
+      "DomainPrivateEndpointConnectionCustom"
+    );
+
+    // Underlying model unchanged.
+    strictEqual(topicPec.resourceModelId, domainPec.resourceModelId);
+  });
+
+  it("resource-name override - unused map entry emits a diagnostic", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Parent topic resource */
+model Topic is TrackedResource<TopicProperties> {
+  ...ResourceNameParameter<Topic>;
+}
+model TopicProperties { endpoint?: string; }
+
+model Domain is TrackedResource<DomainProperties> {
+  ...ResourceNameParameter<Domain>;
+}
+model DomainProperties { endpoint?: string; }
+
+union ParentType {
+  string,
+  topics: "topics",
+  domains: "domains",
+}
+
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Custom expanded names"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Custom expanded names"
+model PrivateEndpointConnection is ProxyResource<PrivateEndpointConnectionProperties> {
+  ...ResourceNameParameter<PrivateEndpointConnection>;
+}
+model PrivateEndpointConnectionProperties { status?: string; }
+
+@armResourceOperations
+interface Topics {
+  get is ArmResourceRead<Topic>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Topic>;
+}
+
+@armResourceOperations
+interface Domains {
+  get is ArmResourceRead<Domain>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Domain>;
+}
+
+@armResourceOperations
+interface PrivateEndpointConnectionOps
+  extends Azure.ResourceManager.Legacy.RoutedOperations<
+      {
+        ...ApiVersionParameter,
+        ...SubscriptionIdParameter,
+        ...ResourceGroupParameter,
+        @path parentType: ParentType,
+        @path parentName: string,
+      },
+      {
+        @path privateEndpointConnectionName: string,
+      },
+      ResourceRoute = #{
+        route: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/{parentType}/{parentName}",
+      }
+    > {}
+
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-interface-requires-decorator" "Routed pattern"
+@armResourceOperations(#{ allowStaticRoutes: true })
+interface PrivateEndpointConnections {
+  @get
+  @route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}")
+  get is PrivateEndpointConnectionOps.ActionSync<PrivateEndpointConnection, void, PrivateEndpointConnection>;
+}
+
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Custom expanded names"
+@@clientOption(PrivateEndpointConnections.get, "resource-name", #{
+  topics: "TopicPrivateEndpointConnectionCustom",
+  foobar: "ShouldNotMatchAnything",
+}, "csharp");
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+    buildArmProviderSchema(sdkContext, root);
+
+    const diagnostics: readonly Diagnostic[] = program.diagnostics;
+    const unusedKeyWarning = diagnostics.find((d) =>
+      d.message.includes("entry 'foobar' did not match")
+    );
+    ok(
+      unusedKeyWarning,
+      `Expected a warning for unused map key 'foobar'. Diagnostics: ${diagnostics
+        .map((d) => d.message)
+        .join(" | ")}`
+    );
+  });
+
+  it("resource-name override - string on expandable Read op emits a diagnostic and is ignored", async () => {
+    const program = await typeSpecCompile(
+      `
+model Topic is TrackedResource<TopicProperties> {
+  ...ResourceNameParameter<Topic>;
+}
+model TopicProperties { endpoint?: string; }
+
+model Domain is TrackedResource<DomainProperties> {
+  ...ResourceNameParameter<Domain>;
+}
+model DomainProperties { endpoint?: string; }
+
+union ParentType {
+  string,
+  topics: "topics",
+  domains: "domains",
+}
+
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Custom expanded names"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Custom expanded names"
+model PrivateEndpointConnection is ProxyResource<PrivateEndpointConnectionProperties> {
+  ...ResourceNameParameter<PrivateEndpointConnection>;
+}
+model PrivateEndpointConnectionProperties { status?: string; }
+
+@armResourceOperations
+interface Topics {
+  get is ArmResourceRead<Topic>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Topic>;
+}
+
+@armResourceOperations
+interface Domains {
+  get is ArmResourceRead<Domain>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Domain>;
+}
+
+@armResourceOperations
+interface PrivateEndpointConnectionOps
+  extends Azure.ResourceManager.Legacy.RoutedOperations<
+      {
+        ...ApiVersionParameter,
+        ...SubscriptionIdParameter,
+        ...ResourceGroupParameter,
+        @path parentType: ParentType,
+        @path parentName: string,
+      },
+      {
+        @path privateEndpointConnectionName: string,
+      },
+      ResourceRoute = #{
+        route: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/{parentType}/{parentName}",
+      }
+    > {}
+
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-interface-requires-decorator" "Routed pattern"
+@armResourceOperations(#{ allowStaticRoutes: true })
+interface PrivateEndpointConnections {
+  @get
+  @route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}")
+  get is PrivateEndpointConnectionOps.ActionSync<PrivateEndpointConnection, void, PrivateEndpointConnection>;
+}
+
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Misuse: string on expandable"
+@@clientOption(PrivateEndpointConnections.get, "resource-name", "SingleName", "csharp");
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+
+    // Default expansion names should be preserved (override is ignored).
+    const topicPec = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/topics/privateEndpointConnections"
+    );
+    const domainPec = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType ===
+        "Microsoft.ContosoProviderHub/domains/privateEndpointConnections"
+    );
+    ok(topicPec);
+    ok(domainPec);
+    strictEqual(
+      topicPec.metadata.resourceName,
+      "TopicPrivateEndpointConnection"
+    );
+    strictEqual(
+      domainPec.metadata.resourceName,
+      "DomainPrivateEndpointConnection"
+    );
+
+    const diagnostics: readonly Diagnostic[] = program.diagnostics;
+    const misuseWarning = diagnostics.find((d) =>
+      d.message.includes("plain string but its Read operation's path")
+    );
+    ok(
+      misuseWarning,
+      `Expected a warning for string override on expandable op. Diagnostics: ${diagnostics
+        .map((d) => d.message)
+        .join(" | ")}`
+    );
+  });
+
+  it("resource-name override - map on non-expandable Read op emits a single diagnostic", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Record set properties */
+model RecordSetProperties {
+  /** TTL */
+  ttl?: int32;
+}
+
+/** An ordinary (non-expandable) resource. */
+model RecordSet is TrackedResource<RecordSetProperties> {
+  ...ResourceNameParameter<RecordSet>;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface RecordSets {
+  get is ArmResourceRead<RecordSet>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<RecordSet>;
+}
+
+// Map form misused on a non-expandable Read op.
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Misuse: map on non-expandable"
+@@clientOption(RecordSets.get, "resource-name", #{
+  one: "DnsRecordSetOne",
+  two: "DnsRecordSetTwo",
+}, "csharp");
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+
+    // Override is ignored; default model-derived name is preserved.
+    strictEqual(armProviderSchema.resources.length, 1);
+    strictEqual(
+      armProviderSchema.resources[0].metadata.resourceName,
+      "RecordSet"
+    );
+
+    const diagnostics: readonly Diagnostic[] = program.diagnostics;
+    const nonExpandable = diagnostics.filter((d) =>
+      d.message.includes("does not contain a {parentType} segment")
+    );
+    // Exactly one diagnostic — not one per map entry.
+    strictEqual(
+      nonExpandable.length,
+      1,
+      `Expected exactly one 'non-expandable map' diagnostic. Diagnostics: ${diagnostics
+        .map((d) => d.message)
+        .join(" | ")}`
+    );
+    // The per-entry "did not match any expanded resource" diagnostic must NOT fire.
+    const perEntry = diagnostics.filter((d) =>
+      d.message.includes("did not match any expanded resource")
+    );
+    strictEqual(perEntry.length, 0);
   });
 });

@@ -13,79 +13,81 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary>
-    /// A class representing the DataBoxEdgeUser data model.
-    /// Represents a user who has access to one or more shares on the Data Box Edge/Gateway device.
-    /// </summary>
+    /// <summary> Represents a user who has access to one or more shares on the Data Box Edge/Gateway device. </summary>
     public partial class DataBoxEdgeUserData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUserData"/>. </summary>
         /// <param name="userType"> Type of the user. </param>
         public DataBoxEdgeUserData(DataBoxEdgeUserType userType)
         {
-            ShareAccessRights = new ChangeTrackingList<ShareAccessRight>();
-            UserType = userType;
+
+            Properties = new UserProperties(userType);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUserData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="encryptedPassword"> The password details. </param>
-        /// <param name="shareAccessRights"> List of shares that the user has rights on. This field should not be specified during user creation. </param>
-        /// <param name="userType"> Type of the user. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AsymmetricEncryptedSecret encryptedPassword, IReadOnlyList<ShareAccessRight> shareAccessRights, DataBoxEdgeUserType userType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The storage account credential properties. </param>
+        internal DataBoxEdgeUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, UserProperties properties) : base(id, name, resourceType, systemData)
         {
-            EncryptedPassword = encryptedPassword;
-            ShareAccessRights = shareAccessRights;
-            UserType = userType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUserData"/> for deserialization. </summary>
-        internal DataBoxEdgeUserData()
-        {
-        }
+        /// <summary> The storage account credential properties. </summary>
+        internal UserProperties Properties { get; set; }
 
         /// <summary> The password details. </summary>
-        public AsymmetricEncryptedSecret EncryptedPassword { get; set; }
+        public AsymmetricEncryptedSecret EncryptedPassword
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptedPassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserProperties();
+                }
+                Properties.EncryptedPassword = value;
+            }
+        }
+
         /// <summary> List of shares that the user has rights on. This field should not be specified during user creation. </summary>
-        public IReadOnlyList<ShareAccessRight> ShareAccessRights { get; }
+        public IReadOnlyList<ShareAccessRight> ShareAccessRights
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserProperties();
+                }
+                return Properties.ShareAccessRights;
+            }
+        }
+
         /// <summary> Type of the user. </summary>
-        public DataBoxEdgeUserType UserType { get; set; }
+        public DataBoxEdgeUserType UserType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserProperties();
+                }
+                Properties.UserType = value;
+            }
+        }
     }
 }

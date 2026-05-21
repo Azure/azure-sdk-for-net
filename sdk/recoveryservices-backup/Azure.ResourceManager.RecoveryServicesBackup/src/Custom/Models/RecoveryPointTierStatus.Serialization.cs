@@ -23,11 +23,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         public static RecoveryPointTierStatus ToRecoveryPointTierStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return RecoveryPointTierStatus.Invalid;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Valid")) return RecoveryPointTierStatus.Valid;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return RecoveryPointTierStatus.Disabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleted")) return RecoveryPointTierStatus.Deleted;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Rehydrated")) return RecoveryPointTierStatus.Rehydrated;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid"))
+                return RecoveryPointTierStatus.Invalid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Valid"))
+                return RecoveryPointTierStatus.Valid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+                return RecoveryPointTierStatus.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleted"))
+                return RecoveryPointTierStatus.Deleted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Rehydrated"))
+                return RecoveryPointTierStatus.Rehydrated;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RecoveryPointTierStatus value.");
         }
     }

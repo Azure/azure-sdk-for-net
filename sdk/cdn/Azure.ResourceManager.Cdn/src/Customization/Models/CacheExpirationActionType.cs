@@ -8,6 +8,12 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
+    // Customization: This file provides the complete definition of the CacheExpirationActionType extensible enum type, which does not exist in the TypeSpec-generated code.
+    // Reason: The old SDK (AutoRest-generated) wrapped the polymorphic discriminator value
+    // "DeliveryRuleCacheExpirationActionParameters" as a standalone extensible enum type referenced in user code.
+    // After the TypeSpec migration, discriminators are plain strings and this type is no longer generated.
+    // The full type definition is preserved here to maintain backward compatibility with the old public API.
+
     /// <summary> The CacheExpirationActionType. </summary>
     public readonly partial struct CacheExpirationActionType : IEquatable<CacheExpirationActionType>
     {

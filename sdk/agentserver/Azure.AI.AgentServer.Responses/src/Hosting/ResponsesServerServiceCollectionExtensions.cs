@@ -8,6 +8,7 @@ using Azure.Core.Pipeline;
 using Azure.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 
 namespace Azure.AI.AgentServer.Responses;
 
@@ -86,10 +87,24 @@ public static class ResponsesServerServiceCollectionExtensions
             // Build the Azure.Core HttpPipeline with BearerTokenAuthenticationPolicy.
             // This automatically provides: retry, request ID, user-agent telemetry,
             // distributed tracing, logging, and token caching.
+            // The ServerVersionPolicy prepends the composed server version (from all
+            // registered protocols and developer segments) to the User-Agent header.
+            // The FoundryStorageLoggingPolicy is added as a per-retry policy so each
+            // attempt (including retries) is logged with correlation headers.
             services.TryAddSingleton(sp =>
             {
                 var credential = sp.GetRequiredService<TokenCredential>();
+                var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<FoundryStorageLoggingPolicy>();
                 var options = new FoundryStorageClientOptions();
+
+                var registry = sp.GetService<ServerVersionRegistry>();
+                if (registry is not null)
+                {
+                    options.AddPolicy(new ServerVersionPolicy(registry), HttpPipelinePosition.PerCall);
+                }
+
+                options.AddPolicy(new FoundryStorageLoggingPolicy(logger), HttpPipelinePosition.PerRetry);
+
                 return HttpPipelineBuilder.Build(
                     options,
                     new BearerTokenAuthenticationPolicy(credential, FoundryStorageScope));
@@ -113,6 +128,9 @@ public static class ResponsesServerServiceCollectionExtensions
         services.AddScoped<ResponseOrchestrator>();
         services.AddScoped<ResponseEndpointHandler>();
         services.AddScoped<ResponsesExceptionFilter>();
+
+        // Log startup configuration when the host starts
+        services.AddHostedService<ResponsesStartupLogger>();
 
         return services;
     }

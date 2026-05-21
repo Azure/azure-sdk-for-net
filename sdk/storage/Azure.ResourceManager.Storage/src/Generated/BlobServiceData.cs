@@ -83,6 +83,24 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
+        /// <summary> The static website properties for blob storage. </summary>
+        [WirePath("properties.staticWebsite")]
+        public StaticWebsite StaticWebsite
+        {
+            get
+            {
+                return BlobServiceProperties is null ? default : BlobServiceProperties.StaticWebsite;
+            }
+            set
+            {
+                if (BlobServiceProperties is null)
+                {
+                    BlobServiceProperties = new BlobServicePropertiesProperties();
+                }
+                BlobServiceProperties.StaticWebsite = value;
+            }
+        }
+
         /// <summary> Versioning is enabled if set to true. </summary>
         [WirePath("properties.isVersioningEnabled")]
         public bool? IsVersioningEnabled
@@ -97,7 +115,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     BlobServiceProperties = new BlobServicePropertiesProperties();
                 }
-                BlobServiceProperties.IsVersioningEnabled = value.Value;
+                BlobServiceProperties.IsVersioningEnabled = value;
             }
         }
 
@@ -115,7 +133,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     BlobServiceProperties = new BlobServicePropertiesProperties();
                 }
-                BlobServiceProperties.IsAutomaticSnapshotPolicyEnabled = value.Value;
+                BlobServiceProperties.IsAutomaticSnapshotPolicyEnabled = value;
             }
         }
 

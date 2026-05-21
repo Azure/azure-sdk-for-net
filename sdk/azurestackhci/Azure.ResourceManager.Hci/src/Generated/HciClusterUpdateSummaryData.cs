@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateSummariesProperties();
                 }
-                Properties.LastUpdatedOn = value.Value;
+                Properties.LastUpdatedOn = value;
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateSummariesProperties();
                 }
-                Properties.LastCheckedOn = value.Value;
+                Properties.LastCheckedOn = value;
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateSummariesProperties();
                 }
-                Properties.HealthState = value.Value;
+                Properties.HealthState = value;
             }
         }
 
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateSummariesProperties();
                 }
-                Properties.HealthCheckOn = value.Value;
+                Properties.HealthCheckOn = value;
             }
         }
 
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Hci
                 {
                     Properties = new UpdateSummariesProperties();
                 }
-                Properties.State = value.Value;
+                Properties.State = value;
             }
         }
     }

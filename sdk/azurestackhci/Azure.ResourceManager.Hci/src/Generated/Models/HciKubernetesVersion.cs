@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             get
             {
-                return Properties.KubernetesVersionValue;
+                return Properties is null ? default : Properties.KubernetesVersionValue;
             }
         }
     }

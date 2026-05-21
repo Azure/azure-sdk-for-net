@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class CommitmentPlanAccountAssociationCollection : ArmCollection, IEnumerable<CommitmentPlanAccountAssociationResource>, IAsyncEnumerable<CommitmentPlanAccountAssociationResource>
     {
-        private readonly ClientDiagnostics _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics;
-        private readonly CommitmentPlansRestOperations _commitmentPlanAccountAssociationCommitmentPlansRestClient;
+        private readonly ClientDiagnostics _commitmentPlanAccountAssociationsClientDiagnostics;
+        private readonly CommitmentPlanAccountAssociations _commitmentPlanAccountAssociationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CommitmentPlanAccountAssociationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of CommitmentPlanAccountAssociationCollection for mocking. </summary>
         protected CommitmentPlanAccountAssociationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CommitmentPlanAccountAssociationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentPlanAccountAssociationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CommitmentPlanAccountAssociationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CommitmentPlanAccountAssociationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CommitmentPlanAccountAssociationResource.ResourceType, out string commitmentPlanAccountAssociationCommitmentPlansApiVersion);
-            _commitmentPlanAccountAssociationCommitmentPlansRestClient = new CommitmentPlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, commitmentPlanAccountAssociationCommitmentPlansApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(CommitmentPlanAccountAssociationResource.ResourceType, out string commitmentPlanAccountAssociationApiVersion);
+            _commitmentPlanAccountAssociationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CommitmentPlanAccountAssociationResource.ResourceType.Namespace, Diagnostics);
+            _commitmentPlanAccountAssociationsRestClient = new CommitmentPlanAccountAssociations(_commitmentPlanAccountAssociationsClientDiagnostics, Pipeline, Endpoint, commitmentPlanAccountAssociationApiVersion ?? "2026-01-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != CognitiveServicesCommitmentPlanResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesCommitmentPlanResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesCommitmentPlanResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update the association of the Cognitive Services commitment plan.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommitmentPlans_CreateOrUpdateAssociation</description>
+        /// <term> Operation Id. </term>
+        /// <description> CommitmentPlanAccountAssociations_CreateOrUpdateAssociation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CommitmentPlanAccountAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="commitmentPlanAssociationName"> The name of the commitment plan association with the Cognitive Services Account. </param>
         /// <param name="data"> The commitmentPlan properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanAssociationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<CommitmentPlanAccountAssociationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string commitmentPlanAssociationName, CommitmentPlanAccountAssociationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(commitmentPlanAssociationName, nameof(commitmentPlanAssociationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateOrUpdateAssociationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource>(new CommitmentPlanAccountAssociationOperationSource(Client), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, CommitmentPlanAccountAssociationData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource> operation = new CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource>(
+                    new CommitmentPlanAccountAssociationOperationSource(Client),
+                    _commitmentPlanAccountAssociationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Create or update the association of the Cognitive Services commitment plan.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommitmentPlans_CreateOrUpdateAssociation</description>
+        /// <term> Operation Id. </term>
+        /// <description> CommitmentPlanAccountAssociations_CreateOrUpdateAssociation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CommitmentPlanAccountAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="commitmentPlanAssociationName"> The name of the commitment plan association with the Cognitive Services Account. </param>
         /// <param name="data"> The commitmentPlan properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanAssociationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<CommitmentPlanAccountAssociationResource> CreateOrUpdate(WaitUntil waitUntil, string commitmentPlanAssociationName, CommitmentPlanAccountAssociationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(commitmentPlanAssociationName, nameof(commitmentPlanAssociationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateOrUpdateAssociation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, data, cancellationToken);
-                var operation = new CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource>(new CommitmentPlanAccountAssociationOperationSource(Client), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, CommitmentPlanAccountAssociationData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource> operation = new CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource>(
+                    new CommitmentPlanAccountAssociationOperationSource(Client),
+                    _commitmentPlanAccountAssociationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Gets the association of the Cognitive Services commitment plan.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommitmentPlans_GetAssociation</description>
+        /// <term> Operation Id. </term>
+        /// <description> CommitmentPlanAccountAssociations_GetAssociation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CommitmentPlanAccountAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="commitmentPlanAssociationName"> The name of the commitment plan association with the Cognitive Services Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanAssociationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<CommitmentPlanAccountAssociationResource>> GetAsync(string commitmentPlanAssociationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(commitmentPlanAssociationName, nameof(commitmentPlanAssociationName));
 
-            using var scope = _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationCollection.Get");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _commitmentPlanAccountAssociationCommitmentPlansRestClient.GetAssociationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CommitmentPlanAccountAssociationData> response = Response.FromValue(CommitmentPlanAccountAssociationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CommitmentPlanAccountAssociationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Gets the association of the Cognitive Services commitment plan.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommitmentPlans_GetAssociation</description>
+        /// <term> Operation Id. </term>
+        /// <description> CommitmentPlanAccountAssociations_GetAssociation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CommitmentPlanAccountAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="commitmentPlanAssociationName"> The name of the commitment plan association with the Cognitive Services Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanAssociationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<CommitmentPlanAccountAssociationResource> Get(string commitmentPlanAssociationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(commitmentPlanAssociationName, nameof(commitmentPlanAssociationName));
 
-            using var scope = _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationCollection.Get");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationCollection.Get");
             scope.Start();
             try
             {
-                var response = _commitmentPlanAccountAssociationCommitmentPlansRestClient.GetAssociation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CommitmentPlanAccountAssociationData> response = Response.FromValue(CommitmentPlanAccountAssociationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CommitmentPlanAccountAssociationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Gets the associations of the Cognitive Services commitment plan.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommitmentPlans_ListAssociations</description>
+        /// <term> Operation Id. </term>
+        /// <description> CommitmentPlanAccountAssociations_ListAssociations. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CommitmentPlanAccountAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CommitmentPlanAccountAssociationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CommitmentPlanAccountAssociationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CommitmentPlanAccountAssociationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateListAssociationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateListAssociationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommitmentPlanAccountAssociationResource(Client, CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(e)), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, "CommitmentPlanAccountAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CommitmentPlanAccountAssociationData, CommitmentPlanAccountAssociationResource>(new CommitmentPlanAccountAssociationsGetAssociationsAsyncCollectionResultOfT(
+                _commitmentPlanAccountAssociationsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CommitmentPlanAccountAssociationCollection.GetAll"), data => new CommitmentPlanAccountAssociationResource(Client, data));
         }
 
         /// <summary>
         /// Gets the associations of the Cognitive Services commitment plan.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommitmentPlans_ListAssociations</description>
+        /// <term> Operation Id. </term>
+        /// <description> CommitmentPlanAccountAssociations_ListAssociations. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CommitmentPlanAccountAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CommitmentPlanAccountAssociationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CommitmentPlanAccountAssociationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateListAssociationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _commitmentPlanAccountAssociationCommitmentPlansRestClient.CreateListAssociationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommitmentPlanAccountAssociationResource(Client, CommitmentPlanAccountAssociationData.DeserializeCommitmentPlanAccountAssociationData(e)), _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics, Pipeline, "CommitmentPlanAccountAssociationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CommitmentPlanAccountAssociationData, CommitmentPlanAccountAssociationResource>(new CommitmentPlanAccountAssociationsGetAssociationsCollectionResultOfT(
+                _commitmentPlanAccountAssociationsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CommitmentPlanAccountAssociationCollection.GetAll"), data => new CommitmentPlanAccountAssociationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommitmentPlans_GetAssociation</description>
+        /// <term> Operation Id. </term>
+        /// <description> CommitmentPlanAccountAssociations_GetAssociation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CommitmentPlanAccountAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="commitmentPlanAssociationName"> The name of the commitment plan association with the Cognitive Services Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanAssociationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string commitmentPlanAssociationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(commitmentPlanAssociationName, nameof(commitmentPlanAssociationName));
 
-            using var scope = _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationCollection.Exists");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _commitmentPlanAccountAssociationCommitmentPlansRestClient.GetAssociationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CommitmentPlanAccountAssociationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CommitmentPlanAccountAssociationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CommitmentPlanAccountAssociationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommitmentPlans_GetAssociation</description>
+        /// <term> Operation Id. </term>
+        /// <description> CommitmentPlanAccountAssociations_GetAssociation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CommitmentPlanAccountAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="commitmentPlanAssociationName"> The name of the commitment plan association with the Cognitive Services Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanAssociationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string commitmentPlanAssociationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(commitmentPlanAssociationName, nameof(commitmentPlanAssociationName));
 
-            using var scope = _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationCollection.Exists");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _commitmentPlanAccountAssociationCommitmentPlansRestClient.GetAssociation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CommitmentPlanAccountAssociationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CommitmentPlanAccountAssociationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CommitmentPlanAccountAssociationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommitmentPlans_GetAssociation</description>
+        /// <term> Operation Id. </term>
+        /// <description> CommitmentPlanAccountAssociations_GetAssociation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CommitmentPlanAccountAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="commitmentPlanAssociationName"> The name of the commitment plan association with the Cognitive Services Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanAssociationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<CommitmentPlanAccountAssociationResource>> GetIfExistsAsync(string commitmentPlanAssociationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(commitmentPlanAssociationName, nameof(commitmentPlanAssociationName));
 
-            using var scope = _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationCollection.GetIfExists");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _commitmentPlanAccountAssociationCommitmentPlansRestClient.GetAssociationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CommitmentPlanAccountAssociationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CommitmentPlanAccountAssociationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CommitmentPlanAccountAssociationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CommitmentPlanAccountAssociationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CommitmentPlanAccountAssociationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/commitmentPlans/{commitmentPlanName}/accountAssociations/{commitmentPlanAssociationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CommitmentPlans_GetAssociation</description>
+        /// <term> Operation Id. </term>
+        /// <description> CommitmentPlanAccountAssociations_GetAssociation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CommitmentPlanAccountAssociationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="commitmentPlanAssociationName"> The name of the commitment plan association with the Cognitive Services Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanAssociationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commitmentPlanAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<CommitmentPlanAccountAssociationResource> GetIfExists(string commitmentPlanAssociationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(commitmentPlanAssociationName, nameof(commitmentPlanAssociationName));
 
-            using var scope = _commitmentPlanAccountAssociationCommitmentPlansClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationCollection.GetIfExists");
+            using DiagnosticScope scope = _commitmentPlanAccountAssociationsClientDiagnostics.CreateScope("CommitmentPlanAccountAssociationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _commitmentPlanAccountAssociationCommitmentPlansRestClient.GetAssociation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateGetAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, commitmentPlanAssociationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CommitmentPlanAccountAssociationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CommitmentPlanAccountAssociationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CommitmentPlanAccountAssociationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CommitmentPlanAccountAssociationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CommitmentPlanAccountAssociationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.CognitiveServices
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<CommitmentPlanAccountAssociationResource> IAsyncEnumerable<CommitmentPlanAccountAssociationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

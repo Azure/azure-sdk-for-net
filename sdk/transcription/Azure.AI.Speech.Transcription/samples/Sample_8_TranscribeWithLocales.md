@@ -29,7 +29,7 @@ ClientResult<TranscriptionResult> response = await client.TranscribeAsync(option
 TranscriptionResult result = response.Value;
 
 Console.WriteLine("Transcription with known locale (en-US):");
-var channelPhrases = result.PhrasesByChannel.First();
+var channelPhrases = result.CombinedPhrases.First();
 Console.WriteLine(channelPhrases.Text);
 ```
 
@@ -51,10 +51,10 @@ ClientResult<TranscriptionResult> response = await client.TranscribeAsync(option
 TranscriptionResult result = response.Value;
 
 Console.WriteLine("Transcription with language identification:");
-var channelPhrases = result.PhrasesByChannel.First();
+var channelPhrases = result.CombinedPhrases.First();
 
 // The detected locale is available in each phrase
-foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
+foreach (TranscribedPhrase phrase in result.Phrases)
 {
     Console.WriteLine($"[{phrase.Locale}] {phrase.Text}");
 }

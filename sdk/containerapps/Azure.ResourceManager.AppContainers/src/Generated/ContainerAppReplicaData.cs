@@ -13,86 +13,90 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary>
-    /// A class representing the ContainerAppReplica data model.
-    /// Container App Revision Replica.
-    /// </summary>
+    /// <summary> Container App Revision Replica. </summary>
     public partial class ContainerAppReplicaData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppReplicaData"/>. </summary>
         public ContainerAppReplicaData()
         {
-            Containers = new ChangeTrackingList<ContainerAppReplicaContainer>();
-            InitContainers = new ChangeTrackingList<ContainerAppReplicaContainer>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppReplicaData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="createdOn"> Timestamp describing when the pod was created by controller. </param>
-        /// <param name="runningState"> Current running state of the replica. </param>
-        /// <param name="runningStateDetails"> The details of replica current running state. </param>
-        /// <param name="containers"> The containers collection under a replica. </param>
-        /// <param name="initContainers"> The init containers collection under a replica. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppReplicaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, ContainerAppReplicaRunningState? runningState, string runningStateDetails, IList<ContainerAppReplicaContainer> containers, IList<ContainerAppReplicaContainer> initContainers, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Replica resource specific properties. </param>
+        internal ContainerAppReplicaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ReplicaProperties properties) : base(id, name, resourceType, systemData)
         {
-            CreatedOn = createdOn;
-            RunningState = runningState;
-            RunningStateDetails = runningStateDetails;
-            Containers = containers;
-            InitContainers = initContainers;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Replica resource specific properties. </summary>
+        [WirePath("properties")]
+        internal ReplicaProperties Properties { get; set; }
 
         /// <summary> Timestamp describing when the pod was created by controller. </summary>
         [WirePath("properties.createdTime")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> Current running state of the replica. </summary>
         [WirePath("properties.runningState")]
-        public ContainerAppReplicaRunningState? RunningState { get; }
+        public ContainerAppReplicaRunningState? RunningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RunningState;
+            }
+        }
+
         /// <summary> The details of replica current running state. </summary>
         [WirePath("properties.runningStateDetails")]
-        public string RunningStateDetails { get; }
+        public string RunningStateDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RunningStateDetails;
+            }
+        }
+
         /// <summary> The containers collection under a replica. </summary>
         [WirePath("properties.containers")]
-        public IList<ContainerAppReplicaContainer> Containers { get; }
+        public IList<ContainerAppReplicaContainer> Containers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReplicaProperties();
+                }
+                return Properties.Containers;
+            }
+        }
+
         /// <summary> The init containers collection under a replica. </summary>
         [WirePath("properties.initContainers")]
-        public IList<ContainerAppReplicaContainer> InitContainers { get; }
+        public IList<ContainerAppReplicaContainer> InitContainers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReplicaProperties();
+                }
+                return Properties.InitContainers;
+            }
+        }
     }
 }

@@ -37,7 +37,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
         /// <param name="error"></param>
-        internal ItemMcpListTools(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, IList<MCPListToolsTool> tools, string error) : base(@type, additionalBinaryDataProperties)
+        internal ItemMcpListTools(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, IList<MCPListToolsTool> tools, RealtimeMCPError error) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             ServerLabel = serverLabel;
@@ -55,6 +55,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         public IList<MCPListToolsTool> Tools { get; }
 
         /// <summary> Gets or sets the Error. </summary>
-        public string Error { get; set; }
+        public RealtimeMCPError Error { get; set; }
     }
 }

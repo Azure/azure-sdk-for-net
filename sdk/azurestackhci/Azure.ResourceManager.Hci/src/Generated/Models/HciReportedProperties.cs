@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Hci.Models
     public partial class HciReportedProperties : HciEdgeDeviceReportedProperties
     {
         /// <summary> Initializes a new instance of <see cref="HciReportedProperties"/>. </summary>
-        public HciReportedProperties()
+        internal HciReportedProperties()
         {
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             get
             {
-                return HardwareProfile.ProcessorType;
+                return HardwareProfile is null ? default : HardwareProfile.ProcessorType;
             }
         }
     }

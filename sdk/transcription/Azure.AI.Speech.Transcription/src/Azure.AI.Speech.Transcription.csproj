@@ -2,7 +2,9 @@
   <PropertyGroup>
     <Description>Microsoft Azure client library for Azure AI Speech Transcription service.</Description>
     <AssemblyTitle>Azure AI Speech Transcription Client Library</AssemblyTitle>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Azure.AI.Speech.Transcription</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

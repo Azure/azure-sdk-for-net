@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ExpandMsixImageProperties();
                 }
-                Properties.IsRegularRegistration = value.Value;
+                Properties.IsRegularRegistration = value;
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ExpandMsixImageProperties();
                 }
-                Properties.IsActive = value.Value;
+                Properties.IsActive = value;
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ExpandMsixImageProperties();
                 }
-                Properties.LastUpdatedOn = value.Value;
+                Properties.LastUpdatedOn = value;
             }
         }
 
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ExpandMsixImageProperties();
                 }
-                Properties.CertificateExpiry = value.Value;
+                Properties.CertificateExpiry = value;
             }
         }
     }

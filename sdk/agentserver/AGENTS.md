@@ -84,7 +84,7 @@ principles conflict, resolve in this priority order:
 
 | Project | Path | Description |
 |---|---|---|
-| **Core** | `Azure.AI.AgentServer.Core/src/` | Shared foundation: `AgentHost`, `AgentHostBuilder`, OpenTelemetry, user-agent header, health endpoint |
+| **Core** | `Azure.AI.AgentServer.Core/src/` | Shared foundation: `AgentHost`, `AgentHostBuilder`, OpenTelemetry, server version header, inbound request logging, health endpoint |
 | **Core Tests** | `Azure.AI.AgentServer.Core/tests/` | NUnit tests for Core |
 | **Invocations** | `Azure.AI.AgentServer.Invocations/src/` | Invocations protocol: `InvocationHandler`, session resolution, client header forwarding |
 | **Invocations Tests** | `Azure.AI.AgentServer.Invocations/tests/` | NUnit tests for Invocations |
@@ -199,7 +199,7 @@ string comparisons like `$(TargetFramework) != 'net462'`.
 
 When another production assembly needs internal types, eliminate the cross-library dependency:
 - Add `@@usage(..., Usage.input | Usage.output)` in `client.tsp` for public constructors on generated models.
-- Use the public model factory (`AzureAIAgentServerResponsesModelFactory`).
+- Use the internal model factory (`AgentServerResponsesModelFactory`) or public constructors.
 - Add a public constructor or factory method via partial-class customization.
 
 ### 2.6 Copyright headers

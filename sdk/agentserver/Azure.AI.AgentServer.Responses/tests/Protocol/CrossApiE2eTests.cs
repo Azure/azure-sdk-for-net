@@ -61,10 +61,10 @@ public class CrossApiE2eTests : ProtocolTestBase
         Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
-    // E32/E35: store=false + Cancel → 400 (non-bg cancel rejected with "synchronous" error, B1, B14)
+    // E32/E35: store=false + Cancel → 404 (response evicted from tracker and never persisted)
     [TestCase(false)]  // E32: C5 → Cancel
     [TestCase(true)]   // E35: C6 → Cancel
-    public async Task Ephemeral_StoreFalse_Cancel_Returns400(bool stream)
+    public async Task Ephemeral_StoreFalse_Cancel_Returns404(bool stream)
     {
         // Validates: B1, B14 — store=false response not bg, cancel rejected
         Handler.EventFactory = stream
@@ -87,9 +87,9 @@ public class CrossApiE2eTests : ProtocolTestBase
             responseId = doc.RootElement.GetProperty("id").GetString()!;
         }
 
-        // Cancel on a non-bg response → 400 (checked before store lookup)
+        // Cancel on a store=false response after completion → 404 (evicted, never persisted)
         var result = await CancelResponseAsync(responseId);
-        Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     // ════════════════════════════════════════════════════════════
@@ -166,6 +166,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
         Assert.That(doc.RootElement.GetProperty("error").GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(doc.RootElement.GetProperty("error").GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
         XAssert.Contains("synchronous", doc.RootElement.GetProperty("error").GetProperty("message").GetString());
     }
 
@@ -296,6 +297,7 @@ public class CrossApiE2eTests : ProtocolTestBase
         var cancelResponse = await CancelResponseAsync(responseId);
         Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
+        Assert.That(doc.RootElement.GetProperty("error").GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
         XAssert.Contains("synchronous", doc.RootElement.GetProperty("error").GetProperty("message").GetString());
     }
 
@@ -449,8 +451,10 @@ public class CrossApiE2eTests : ProtocolTestBase
         var cancelResponse = await CancelResponseAsync(responseId);
         Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
+        var error = doc.RootElement.GetProperty("error");
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
         XAssert.Contains("Cannot cancel a completed response",
-            doc.RootElement.GetProperty("error").GetProperty("message").GetString());
+            error.GetProperty("message").GetString());
     }
 
     // E18: Create → Cancel → Cancel → 200 (idempotent, B3)
@@ -551,8 +555,10 @@ public class CrossApiE2eTests : ProtocolTestBase
         var cancelResponse = await CancelResponseAsync(responseId);
         Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
+        var error = doc.RootElement.GetProperty("error");
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
         XAssert.Contains("Cannot cancel a failed response",
-            doc.RootElement.GetProperty("error").GetProperty("message").GetString());
+            error.GetProperty("message").GetString());
     }
 
     // E39: Handler signals incomplete → Cancel → 400 (B12: terminal status — cancel rejected)
@@ -560,6 +566,7 @@ public class CrossApiE2eTests : ProtocolTestBase
     public async Task C3_BgCreate_HandlerIncomplete_Then_Cancel_Returns400()
     {
         // Validates: B12 — cancel rejection on incomplete (terminal status)
+        // Spec: "Cannot cancel a response in terminal state."
         Handler.EventFactory = (req, ctx, ct) => IncompleteStream(ctx);
 
         var createResponse = await PostResponsesAsync(new { model = "test", background = true });
@@ -570,6 +577,10 @@ public class CrossApiE2eTests : ProtocolTestBase
 
         var cancelResponse = await CancelResponseAsync(responseId);
         Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        using var doc = await ParseJsonAsync(cancelResponse);
+        var error = doc.RootElement.GetProperty("error");
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
+        XAssert.Contains("terminal state", error.GetProperty("message").GetString());
     }
 
     // ════════════════════════════════════════════════════════════
@@ -801,8 +812,10 @@ public class CrossApiE2eTests : ProtocolTestBase
         var cancelResponse = await CancelResponseAsync(responseId);
         Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         using var doc = await ParseJsonAsync(cancelResponse);
+        var error = doc.RootElement.GetProperty("error");
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
         XAssert.Contains("Cannot cancel a completed response",
-            doc.RootElement.GetProperty("error").GetProperty("message").GetString());
+            error.GetProperty("message").GetString());
     }
 
     // E28: Create (SSE) → Cancel → Cancel → 200 (idempotent, B3)

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <returns> A new <see cref="Models.FabricCapacityProperties"/> instance for mocking. </returns>
         public static FabricCapacityProperties FabricCapacityProperties(FabricProvisioningState? provisioningState = default, FabricResourceState? state = default, IEnumerable<string> administrationMembers = default)
         {
-            return new FabricCapacityProperties(provisioningState, state, administrationMembers is null ? default : new FabricCapacityAdministration((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), null), additionalBinaryDataProperties: null);
+            return new FabricCapacityProperties(provisioningState, state, new FabricCapacityAdministration((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The administration properties of the Fabric capacity resource. </summary>
@@ -63,16 +63,15 @@ namespace Azure.ResourceManager.Fabric.Models
             return new FabricCapacityAdministration(members.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The type used for update operations of the FabricCapacity. </summary>
         /// <param name="sku"> The SKU details. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="fabricCapacityUpdateAdministrationMembers"> Gets or sets the AdministrationMembers. </param>
         /// <returns> A new <see cref="Models.FabricCapacityPatch"/> instance for mocking. </returns>
-        public static FabricCapacityPatch FabricCapacityPatch(FabricSku sku = default, IDictionary<string, string> tags = default, FabricCapacityUpdateProperties properties = default)
+        public static FabricCapacityPatch FabricCapacityPatch(FabricSku sku = default, IDictionary<string, string> tags = default, IEnumerable<string> fabricCapacityUpdateAdministrationMembers = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new FabricCapacityPatch(sku, tags, properties, additionalBinaryDataProperties: null);
+            return new FabricCapacityPatch(sku, tags, fabricCapacityUpdateAdministrationMembers is null ? default : new FabricCapacityUpdateProperties(default, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The check availability result. </summary>

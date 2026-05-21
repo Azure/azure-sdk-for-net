@@ -356,29 +356,13 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task JSRuntimeOptionsTest()
         {
-            // Get Default JS Runtime Options
+            // Get initial JS Runtime Options (capture to restore later)
             Response result = await Client.GetRuntimeOptionsAsync();
-            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
-            // Deserialize JSON response into a dictionary
-            var runtimeOptions = JsonSerializer.Deserialize<RuntimeOptions>(result.Content.ToString());
+            // Deserialize JSON response into the initial runtime options
+            var initialRuntimeOptions = JsonSerializer.Deserialize<RuntimeOptions>(result.Content.ToString());
 
-            var expectedRuntimeOptions = new RuntimeOptions
-            {
-                LogExceptionDetails = false,
-                MaxCachedInterpreters = 10,
-                MaxExecutionTimeMs = 1000,
-                MaxHeapBytes = 104857600,
-                MaxStackBytes = 1048576,
-                ReturnExceptionDetails = false
-            };
-
-            Assert.AreEqual(expectedRuntimeOptions.LogExceptionDetails, runtimeOptions.LogExceptionDetails);
-            Assert.AreEqual(expectedRuntimeOptions.MaxCachedInterpreters, runtimeOptions.MaxCachedInterpreters);
-            Assert.AreEqual(expectedRuntimeOptions.MaxExecutionTimeMs, runtimeOptions.MaxExecutionTimeMs);
-            Assert.AreEqual(expectedRuntimeOptions.MaxHeapBytes, runtimeOptions.MaxHeapBytes);
-            Assert.AreEqual(expectedRuntimeOptions.MaxStackBytes, runtimeOptions.MaxStackBytes);
-            Assert.AreEqual(expectedRuntimeOptions.ReturnExceptionDetails, runtimeOptions.ReturnExceptionDetails);
+            Assert.NotNull(initialRuntimeOptions);
 
             var updateJSRuntimeOptions = new RuntimeOptions
             {
@@ -396,7 +380,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             result = await Client.UpdateRuntimeOptionsAsync(runtimeOptionsContent);
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
 
-            runtimeOptions = JsonSerializer.Deserialize<RuntimeOptions>(result.Content.ToString());
+            var runtimeOptions = JsonSerializer.Deserialize<RuntimeOptions>(result.Content.ToString());
             Assert.AreEqual(updateJSRuntimeOptions.LogExceptionDetails, runtimeOptions.LogExceptionDetails);
             Assert.AreEqual(updateJSRuntimeOptions.MaxCachedInterpreters, runtimeOptions.MaxCachedInterpreters);
             Assert.AreEqual(updateJSRuntimeOptions.MaxExecutionTimeMs, runtimeOptions.MaxExecutionTimeMs);
@@ -404,8 +388,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.AreEqual(updateJSRuntimeOptions.MaxStackBytes, runtimeOptions.MaxStackBytes);
             Assert.AreEqual(updateJSRuntimeOptions.ReturnExceptionDetails, runtimeOptions.ReturnExceptionDetails);
 
-            // Revert Runtime Options
-            string restoreJsRuntimeOptionsPayload = JsonSerializer.Serialize(expectedRuntimeOptions);
+            // Revert to initial Runtime Options
+            string restoreJsRuntimeOptionsPayload = JsonSerializer.Serialize(initialRuntimeOptions);
             runtimeOptionsContent = RequestContent.Create(restoreJsRuntimeOptionsPayload);
 
             result = await Client.UpdateRuntimeOptionsAsync(runtimeOptionsContent);

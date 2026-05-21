@@ -121,9 +121,6 @@
           ]
         }
       },
-      "required": [
-        "CredentialSource"
-      ],
       "allOf": [
         {
           "if": {

@@ -18,6 +18,40 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 public class EphemeralNonBgResponseTests : ProtocolTestBase
 {
     // ═══════════════════════════════════════════════════════════════════════
+    // C6: store=false, stream=true, bg=false — SSE stream completes, GET 404
+    // ═══════════════════════════════════════════════════════════════════════
+
+    [Test]
+    public async Task C6_StoreFalse_StreamTrue_NoBg_StreamsEvents_Then_GET_Returns404()
+    {
+        Handler.EventFactory = (req, ctx, ct) => SimpleTextStream(ctx);
+
+        var createResponse = await PostResponsesAsync(
+            new { model = "test", store = false, stream = true });
+        Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(createResponse.Content.Headers.ContentType?.MediaType,
+            Is.EqualTo("text/event-stream"));
+
+        // Verify SSE events are present and valid
+        var events = await ParseSseAsync(createResponse);
+        Assert.That(events.Count, Is.GreaterThanOrEqualTo(2),
+            "C6 must produce at least response.created + response.completed");
+
+        var firstEvent = events.First(e => e.EventType == "response.created");
+        Assert.That(firstEvent, Is.Not.Null);
+        var lastEvent = events.Last(e => e.EventType == "response.completed");
+        Assert.That(lastEvent, Is.Not.Null);
+
+        // Extract response ID from first event
+        using var doc = JsonDocument.Parse(firstEvent!.Data);
+        var responseId = doc.RootElement.GetProperty("response").GetProperty("id").GetString()!;
+
+        // C6: store=false → GET returns 404 (never persisted)
+        var getResponse = await GetResponseAsync(responseId);
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════
     // T021: bg=false, stream=true — client disconnects mid-stream → GET 404
     // ═══════════════════════════════════════════════════════════════════════
 
@@ -279,5 +313,30 @@ public class EphemeralNonBgResponseTests : ProtocolTestBase
         yield return stream.EmitCreated();
         await Task.CompletedTask;
         yield return stream.EmitIncomplete();
+    }
+
+    /// <summary>
+    /// Handler that yields a full text response: created → message → text → completed.
+    /// </summary>
+    private static async IAsyncEnumerable<ResponseStreamEvent> SimpleTextStream(
+        ResponseContext ctx,
+        [EnumeratorCancellation] CancellationToken ct = default)
+    {
+        await Task.CompletedTask;
+        var stream = new ResponseEventStream(ctx, new CreateResponse { Model = "test" });
+
+        yield return stream.EmitCreated();
+
+        var message = stream.AddOutputItemMessage();
+        yield return message.EmitAdded();
+
+        var text = message.AddTextContent();
+        yield return text.EmitAdded();
+        yield return text.EmitDelta("Hello");
+        yield return text.EmitTextDone("Hello");
+        yield return text.EmitDone();
+        yield return message.EmitDone();
+
+        yield return stream.EmitCompleted();
     }
 }

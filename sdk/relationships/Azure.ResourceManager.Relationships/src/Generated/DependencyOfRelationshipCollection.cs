@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Relationships
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateCreateOrUpdateRequest(Id, name, DependencyOfRelationshipData.ToRequestContent(data), context);
+                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), name, DependencyOfRelationshipData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RelationshipsArmOperation<DependencyOfRelationshipResource> operation = new RelationshipsArmOperation<DependencyOfRelationshipResource>(
                     new DependencyOfRelationshipOperationSource(Client),
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Relationships
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateCreateOrUpdateRequest(Id, name, DependencyOfRelationshipData.ToRequestContent(data), context);
+                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), name, DependencyOfRelationshipData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RelationshipsArmOperation<DependencyOfRelationshipResource> operation = new RelationshipsArmOperation<DependencyOfRelationshipResource>(
                     new DependencyOfRelationshipOperationSource(Client),
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Relationships
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateGetRequest(Id, name, context);
+                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateGetRequest(Id.ToString(), name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DependencyOfRelationshipData> response = Response.FromValue(DependencyOfRelationshipData.FromResponse(result), result);
                 if (response.Value == null)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Relationships
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateGetRequest(Id, name, context);
+                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateGetRequest(Id.ToString(), name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DependencyOfRelationshipData> response = Response.FromValue(DependencyOfRelationshipData.FromResponse(result), result);
                 if (response.Value == null)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Relationships
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateGetRequest(Id, name, context);
+                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateGetRequest(Id.ToString(), name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DependencyOfRelationshipData> response = default;
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Relationships
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateGetRequest(Id, name, context);
+                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateGetRequest(Id.ToString(), name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DependencyOfRelationshipData> response = default;
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Relationships
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateGetRequest(Id, name, context);
+                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateGetRequest(Id.ToString(), name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DependencyOfRelationshipData> response = default;
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Relationships
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateGetRequest(Id, name, context);
+                HttpMessage message = _dependencyOfRelationshipsRestClient.CreateGetRequest(Id.ToString(), name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DependencyOfRelationshipData> response = default;

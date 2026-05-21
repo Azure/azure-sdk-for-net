@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci
         {
             get
             {
-                return Properties.PlatformUpdateDetails;
+                return Properties is null ? default : Properties.PlatformUpdateDetails;
             }
         }
     }

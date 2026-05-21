@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci
         {
             get
             {
-                return Properties.UpdatePayloads;
+                return Properties is null ? default : Properties.UpdatePayloads;
             }
         }
     }

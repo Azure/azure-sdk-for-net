@@ -126,7 +126,7 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string inVmAccessControlProfileReferenceId = default;
-            HostEndpointSettingsModeTypes? mode = default;
+            HostEndpointSettingsModeType? mode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,7 +141,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    mode = new HostEndpointSettingsModeTypes(prop.Value.GetString());
+                    mode = new HostEndpointSettingsModeType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Advisor.Models
         {
             get
             {
-                return Properties.ExtendedProperties;
+                return Properties is null ? default : Properties.ExtendedProperties;
             }
         }
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Advisor.Models
         {
             get
             {
-                return Properties.PredictionType;
+                return Properties is null ? default : Properties.PredictionType;
             }
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Advisor.Models
         {
             get
             {
-                return Properties.Category;
+                return Properties is null ? default : Properties.Category;
             }
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Advisor.Models
         {
             get
             {
-                return Properties.Impact;
+                return Properties is null ? default : Properties.Impact;
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Advisor.Models
         {
             get
             {
-                return Properties.ImpactedField;
+                return Properties is null ? default : Properties.ImpactedField;
             }
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Advisor.Models
         {
             get
             {
-                return Properties.LastUpdatedOn;
+                return Properties is null ? default : Properties.LastUpdatedOn;
             }
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Advisor.Models
         {
             get
             {
-                return Properties.ShortDescription;
+                return Properties is null ? default : Properties.ShortDescription;
             }
         }
     }

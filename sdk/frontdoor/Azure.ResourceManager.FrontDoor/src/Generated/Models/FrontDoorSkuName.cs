@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct FrontDoorSkuName : IEquatable<FrontDoorSkuName>
     {
         private readonly string _value;
+        /// <summary> Classic_AzureFrontDoor. </summary>
+        private const string ClassicAzureFrontDoorValue = "Classic_AzureFrontDoor";
+        /// <summary> Standard_AzureFrontDoor. </summary>
+        private const string StandardAzureFrontDoorValue = "Standard_AzureFrontDoor";
+        /// <summary> Premium_AzureFrontDoor. </summary>
+        private const string PremiumAzureFrontDoorValue = "Premium_AzureFrontDoor";
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FrontDoorSkuName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ClassicAzureFrontDoorValue = "Classic_AzureFrontDoor";
-        private const string StandardAzureFrontDoorValue = "Standard_AzureFrontDoor";
-        private const string PremiumAzureFrontDoorValue = "Premium_AzureFrontDoor";
+            _value = value;
+        }
 
         /// <summary> Classic_AzureFrontDoor. </summary>
         public static FrontDoorSkuName ClassicAzureFrontDoor { get; } = new FrontDoorSkuName(ClassicAzureFrontDoorValue);
+
         /// <summary> Standard_AzureFrontDoor. </summary>
         public static FrontDoorSkuName StandardAzureFrontDoor { get; } = new FrontDoorSkuName(StandardAzureFrontDoorValue);
+
         /// <summary> Premium_AzureFrontDoor. </summary>
         public static FrontDoorSkuName PremiumAzureFrontDoor { get; } = new FrontDoorSkuName(PremiumAzureFrontDoorValue);
+
         /// <summary> Determines if two <see cref="FrontDoorSkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorSkuName left, FrontDoorSkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontDoorSkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorSkuName left, FrontDoorSkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorSkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontDoorSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontDoorSkuName(string value) => new FrontDoorSkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontDoorSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontDoorSkuName?(string value) => value == null ? null : new FrontDoorSkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorSkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontDoorSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,15 +1,38 @@
 # Release History
 
-## 2.1.0-beta.1 (Unreleased)
+## 2.1.0-beta.3 (Unreleased)
 
 ### Features Added
-- Added `AgentToolboxes` client, which can be retrieved using `GetAgentToolboxes` method of `AgentAdministrationClient`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.1.0-beta.2 (2026-05-14)
+
+### Features Added
+- Added `FabricIQPreviewTool`.
+- Added `ToolboxSearchPreviewTool` for discovering deferred tools via `search_tools` queries at runtime.
+- Added `WorkIQPreviewTool`.
+- Added `Name` and `Description` properties to tool classes (`A2APreviewTool`, `AzureAISearchTool`, `BingCustomSearchPreviewTool`, `BingGroundingTool`, `BrowserAutomationPreviewTool`, `MemorySearchPreviewTool`, `MicrosoftFabricPreviewTool`, `SharepointPreviewTool`).
+
+### Breaking Changes
+- `AgentEndpoint` was renamed to `AgentEndpointConfiguration`.
+- `TelemetryEndpointAuth` was renamed to `TelemetryEndpointAuthentication`.
+- `TelemetryEndpoint` property `Auth` was renamed to `Authentication`.
+- `TelemetryEndpoint` property `Data` was renamed to `ExportedDataTypes`.
+- `isolationKey` was removed from `CreateSession` and `DeleteSession` operations.
+
+## 2.1.0-beta.1 (2026-04-21)
+
+### Features Added
+- Added `AgentToolboxes` client, which can be retrieved using `GetAgentToolboxes` method of `AgentAdministrationClient`.
+- In `AgentAdministrationClient` added CRUD operations for sessions on the hosted Agent.
+- Added `AgentSessionFiles` client to work with the files in the session samdbox.
+- Added `ProjectAgentSkills` to manage agent skills.
+- Added `GetSessionLogStreamAsync` and `GetSessionLogStream` to get the logs from the hosted Agent docker container.
 
 ## 2.0.0 (2026-03-31)
 

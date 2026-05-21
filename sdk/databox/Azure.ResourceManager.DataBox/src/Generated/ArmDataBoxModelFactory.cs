@@ -1471,8 +1471,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="error"> Top level error for the job. </param>
         /// <param name="details">
         /// Details of a job run. This field will only be sent for expand details filter.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include , ,  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include , ,  and .
         /// </param>
         /// <param name="cancellationReason"> Reason for cancellation. </param>
         /// <param name="deliveryType"> Delivery type of Job. </param>
@@ -1506,7 +1506,7 @@ namespace Azure.ResourceManager.DataBox.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DeviceErasureDetails DeviceErasureDetails(DataBoxStageStatus? deviceErasureStatus, string erasureOrDestructionCertificateSasKey)
         {
-            return DeviceErasureDetails(deviceErasureStatus, erasureOrDestructionCertificateSasKey, secureErasureCertificateSasKey: default);
+            return DeviceErasureDetails(deviceErasureStatus: deviceErasureStatus, erasureOrDestructionCertificateSasKey: erasureOrDestructionCertificateSasKey, secureErasureCertificateSasKey: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxJobStage"/>. </summary>
@@ -1519,7 +1519,7 @@ namespace Azure.ResourceManager.DataBox.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataBoxJobStage DataBoxJobStage(DataBoxStageName? stageName, string displayName, DataBoxStageStatus? stageStatus, DateTimeOffset? stageTime, BinaryData jobStageDetails)
         {
-            return DataBoxJobStage(stageName, displayName, stageStatus, stageTime, jobStageDetails, delayInformation: default);
+            return DataBoxJobStage(stageName: stageName, displayName: displayName, stageStatus: stageStatus, stageTime: stageTime, jobStageDetails: jobStageDetails, delayInformation: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxSkuCapacity"/>. </summary>
@@ -1529,7 +1529,7 @@ namespace Azure.ResourceManager.DataBox.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataBoxSkuCapacity DataBoxSkuCapacity(string usable, string maximum)
         {
-            return DataBoxSkuCapacity(usable, maximum, individualSkuUsable: default);
+            return DataBoxSkuCapacity(usable: usable, maximum: maximum, individualSkuUsable: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RegionConfigurationResult"/>. </summary>
@@ -1537,14 +1537,14 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="transportAvailabilityDetails"> Transport options available for given sku in a region. </param>
         /// <param name="dataCenterAddressResponse">
         /// Datacenter address for given sku in a region.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include  and .
         /// </param>
         /// <returns> A new <see cref="Models.RegionConfigurationResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RegionConfigurationResult RegionConfigurationResult(IEnumerable<DateTimeOffset> scheduleAvailabilityResponseAvailableDates, IEnumerable<TransportAvailabilityDetails> transportAvailabilityDetails, DataCenterAddressResult dataCenterAddressResponse)
         {
-            return RegionConfigurationResult(scheduleAvailabilityResponseAvailableDates, transportAvailabilityDetails, dataCenterAddressResponse, deviceCapabilityDetails: default);
+            return RegionConfigurationResult(scheduleAvailabilityResponseAvailableDates: scheduleAvailabilityResponseAvailableDates, transportAvailabilityDetails: transportAvailabilityDetails, dataCenterAddressResponse: dataCenterAddressResponse, deviceCapabilityDetails: default);
         }
     }
 }

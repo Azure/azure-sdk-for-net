@@ -1,14 +1,82 @@
 # Release History
 
-## 1.0.0-beta.22 (Unreleased)
+## 1.0.0-beta.24 (2026-05-19)
 
 ### Features Added
 
+- Added Agent365 tracing export support with managed identity token acquisition when `FOUNDRY_AGENT365_TRACING_ENABLED` is set.
+- Added `AgentInstanceClientId`, `AgentBlueprintClientId`, `AgentTenantId`, and `IsAgent365TracingEnabled` properties to `FoundryEnvironment`.
+- Added `FoundryEnrichmentProcessor` attributes: `gen_ai.agent.blueprint.id`, `microsoft.tenant.id`, and `microsoft.foundry.agent.type` on telemetry spans.
+- Added `W3CBaggagePropagator` middleware that parses the W3C `baggage` header into `Activity.Baggage` on all target frameworks (net8.0, net9.0, net10.0).
+- Configured W3C Trace Context and Baggage propagators via `Sdk.SetDefaultTextMapPropagator` for outgoing request propagation.
+- Added conditional exporter registration: Azure Monitor, OTLP, and Agent365 exporters activate only when their respective environment variables are set.
+- Added `PlatformHeaders.ErrorSource` (`x-platform-error-source`), `PlatformHeaders.ErrorDetail`
+  (`x-platform-error-detail`), and error source value constants (`ErrorSourceUser`,
+  `ErrorSourcePlatform`, `ErrorSourceUpstream`) for error classification per container-image-spec §8.
+- Replaced `Azure.Monitor.OpenTelemetry.AspNetCore` with the unified `Microsoft.OpenTelemetry` distro for telemetry. The new distro auto-detects Azure Monitor and OTLP exporters from environment variables and eliminates the need for duplicate-instrumentation guards.
+- Added `FoundryEnvironment.WebSocketKeepAliveInterval` (sourced from the
+  `WS_KEEPALIVE_INTERVAL` environment variable) for the new
+  `invocations_ws` (WebSocket) protocol. Wired through
+  `AgentHostMiddlewareExtensions.UseAgentServerCore` into Kestrel's
+  `WebSocketOptions.KeepAliveInterval`, so a positive value emits RFC 6455
+  protocol-level Ping frames (opcode `0x9`) that keep idle WebSocket
+  connections alive across upstream proxy / load-balancer idle timeouts.
+  Disabled by default (`Timeout.InfiniteTimeSpan`).
+- `UseAgentServerCore` now also calls `IApplicationBuilder.UseWebSockets`,
+  so any protocol library that hosts WebSocket endpoints (e.g., the
+  Invocations `/invocations_ws` endpoint) works out of the box without
+  the consumer having to wire `UseWebSockets` themselves.
+
+## 1.0.0-beta.23 (2026-04-22)
+
+### Features Added
+
+- Added `PlatformHeaders` static class centralizing all platform HTTP header name constants
+  (`x-request-id`, `x-platform-server`, `x-agent-session-id`, isolation keys, `traceparent`,
+  `x-ms-client-request-id`). All AgentServer packages now reference these shared constants
+  instead of declaring private duplicates.
+- Added `RequestIdMiddleware` that sets the `x-request-id` response header on every HTTP response.
+  Value is resolved in priority order: OTEL trace ID → incoming `x-request-id` header → new GUID.
+  Registered automatically by `AgentHostBuilder` and by `AddAgentServerCore()` for
+  standalone (Tier 3) setups.
+- Added `RequestIdBaggagePropagator` middleware that propagates incoming `x-request-id` header
+  values into `Activity.Baggage` for end-to-end distributed tracing correlation.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- Removed `IsolationContext.UserIsolationKeyHeaderName` and `IsolationContext.ChatIsolationKeyHeaderName`
+  — use `PlatformHeaders.UserIsolationKey` and `PlatformHeaders.ChatIsolationKey` instead.
+- Replaced `AddAgentServerRequestId()`, `AddAgentServerVersion()`, `AddAgentServerLogging()`,
+  `UseAgentServerRequestId()`, `UseAgentServerVersion()`, and `UseAgentServerLogging()` with a
+  single `AddAgentServerCore()` / `UseAgentServerCore()` pair. Tier 3 standalone setups now use
+  two calls instead of six.
 
-### Other Changes
+## 1.0.0-beta.22 (2026-04-17)
+
+### Features Added
+
+- Added `HttpClient` instrumentation (`AddHttpClientInstrumentation`) for both tracing and metrics
+  in the OTLP-only telemetry path. This exports outbound HTTP client spans, enabling end-to-end
+  distributed trace correlation through Foundry storage and other downstream services.
+- Added inbound request logging middleware that logs all incoming HTTP requests with method, path,
+  status code, duration, correlation headers (`x-request-id`, `x-ms-client-request-id`), and
+  OpenTelemetry trace ID. Successful requests log at `Information` level; 4xx/5xx responses log at
+  `Warning` level. Request start is logged at `Information` level.
+- Added `AddAgentServerLogging()` and `UseAgentServerLogging()` extensions for Tier 3 setups to
+  independently enable the inbound request logging middleware.
+- Added startup configuration logging: platform environment, connectivity, host options, and
+  registered protocols are logged at `Information` level when the host starts.
+
+### Breaking Changes
+
+- Renamed `ServerUserAgentRegistry` to `ServerVersionRegistry`.
+- Renamed `AgentHostBuilder.UserAgentRegistry` property to `VersionRegistry`.
+- Renamed `AddAgentServerUserAgent()` to `AddAgentServerVersion()` and
+  `UseAgentServerUserAgent()` to `UseAgentServerVersion()`. The version middleware
+  no longer bundles the inbound request logging registration — use the new
+  `AddAgentServerLogging()` / `UseAgentServerLogging()` pair separately.
+- Made `AgentHostTelemetry` internal. The telemetry source and meter name constants
+  are implementation details; use the string values directly if needed for OTel filtering.
 
 ## 1.0.0-beta.21 (2026-04-14)
 
@@ -34,8 +102,9 @@ for upgrading from earlier beta versions.
 - Multi-protocol composition via `AgentHostBuilder.RegisterProtocol()`. Protocol packages provide extension methods (e.g., `AddResponses<T>()`, `AddInvocations<T>()`) built on top of this API.
 - Graceful shutdown with configurable drain period.
 - Server user-agent `x-platform-server` header on every response with SDK version info.
-- `ServerUserAgentRegistry` for protocol packages to register user-agent identity segments.
-- `AddAgentServerUserAgent()` and `UseAgentServerUserAgent()` extensions for standalone (Tier 3) setups.
+- `ServerVersionRegistry` for protocol packages to register version identity segments.
+- `AddAgentServerVersion()` and `UseAgentServerVersion()` extensions for standalone (Tier 3) setups.
+- `AddAgentServerLogging()` and `UseAgentServerLogging()` extensions for standalone inbound request logging.
 - `FoundryEnvironment` for Azure AI Foundry platform variable resolution.
 - Distributed tracing context propagation via request ID baggage.
 

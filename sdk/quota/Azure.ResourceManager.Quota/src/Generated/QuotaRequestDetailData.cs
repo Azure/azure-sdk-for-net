@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Quota
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Quota
         {
             get
             {
-                return Properties.Message;
+                return Properties is null ? default : Properties.Message;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Quota
         {
             get
             {
-                return Properties.Error;
+                return Properties is null ? default : Properties.Error;
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Quota
         {
             get
             {
-                return Properties.RequestSubmitOn;
+                return Properties is null ? default : Properties.RequestSubmitOn;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Quota
         {
             get
             {
-                return Properties.Value;
+                return Properties is null ? default : Properties.Value;
             }
         }
     }

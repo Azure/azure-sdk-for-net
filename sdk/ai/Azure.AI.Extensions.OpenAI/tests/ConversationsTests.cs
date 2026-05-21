@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
@@ -174,10 +174,32 @@ public class ConversationsTests : ProjectsOpenAITestBase
 
         // Verify that we can collect all items consistently
         List<AgentResponseItem> allItems = [];
-        await foreach (AgentResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id))
+        await foreach (AgentResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id, order: AgentListOrder.Ascending.ToString()))
         {
             allItems.Add(item);
         }
         Assert.That(allItems, Has.Count.EqualTo(40));
+
+        List<AgentResponseItem> partialItems = [];
+        int counter = 10;
+        await foreach (AgentResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id, limit: 5, after: allItems[9].Id, before: allItems[20].Id, order: AgentListOrder.Ascending.ToString()))
+        {
+            partialItems.Add(item);
+            Assert.That(item.Id, Is.EqualTo(allItems[counter].Id),
+                $"Item at position {counter} should be the same in both orderings");
+            counter++;
+        }
+        Assert.That(partialItems, Has.Count.EqualTo(10));
+
+        partialItems = [];
+        counter = 19;
+        await foreach (AgentResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id, limit: 3, before: allItems[9].Id, after: allItems[20].Id, order: AgentListOrder.Descending.ToString()))
+        {
+            partialItems.Add(item);
+            Assert.That(item.Id, Is.EqualTo(allItems[counter].Id),
+                $"Item at position {counter} should be the same in both orderings");
+            counter--;
+        }
+        Assert.That(partialItems, Has.Count.EqualTo(10));
     }
 }

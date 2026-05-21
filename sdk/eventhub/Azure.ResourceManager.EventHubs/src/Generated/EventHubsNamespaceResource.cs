@@ -711,6 +711,102 @@ namespace Azure.ResourceManager.EventHubs
                 "EventHubsNamespaceResource.GetPrivateLinkResources");
         }
 
+        /// <summary>
+        /// Gets NetworkRuleSet for a Namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkRuleSets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkRuleSets_ListNetworkRuleSet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EventHubsNamespaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<NetworkRuleSetListResult>> GetNetworkRuleSetsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("EventHubsNamespaceResource.GetNetworkRuleSets");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _namespacesRestClient.CreateGetNetworkRuleSetsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkRuleSetListResult> response = Response.FromValue(NetworkRuleSetListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets NetworkRuleSet for a Namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkRuleSets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkRuleSets_ListNetworkRuleSet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EventHubsNamespaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<NetworkRuleSetListResult> GetNetworkRuleSets(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("EventHubsNamespaceResource.GetNetworkRuleSets");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _namespacesRestClient.CreateGetNetworkRuleSetsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkRuleSetListResult> response = Response.FromValue(NetworkRuleSetListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -742,7 +838,7 @@ namespace Azure.ResourceManager.EventHubs
                 else
                 {
                     EventHubsNamespaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    EventHubsNamespaceData patch = new EventHubsNamespaceData();
+                    EventHubsNamespaceData patch = new EventHubsNamespaceData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -790,7 +886,7 @@ namespace Azure.ResourceManager.EventHubs
                 else
                 {
                     EventHubsNamespaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    EventHubsNamespaceData patch = new EventHubsNamespaceData();
+                    EventHubsNamespaceData patch = new EventHubsNamespaceData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -837,7 +933,7 @@ namespace Azure.ResourceManager.EventHubs
                 else
                 {
                     EventHubsNamespaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    EventHubsNamespaceData patch = new EventHubsNamespaceData();
+                    EventHubsNamespaceData patch = new EventHubsNamespaceData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<EventHubsNamespaceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -880,7 +976,7 @@ namespace Azure.ResourceManager.EventHubs
                 else
                 {
                     EventHubsNamespaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    EventHubsNamespaceData patch = new EventHubsNamespaceData();
+                    EventHubsNamespaceData patch = new EventHubsNamespaceData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<EventHubsNamespaceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -922,7 +1018,7 @@ namespace Azure.ResourceManager.EventHubs
                 else
                 {
                     EventHubsNamespaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    EventHubsNamespaceData patch = new EventHubsNamespaceData();
+                    EventHubsNamespaceData patch = new EventHubsNamespaceData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -968,7 +1064,7 @@ namespace Azure.ResourceManager.EventHubs
                 else
                 {
                     EventHubsNamespaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    EventHubsNamespaceData patch = new EventHubsNamespaceData();
+                    EventHubsNamespaceData patch = new EventHubsNamespaceData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

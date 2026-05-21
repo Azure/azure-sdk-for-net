@@ -1,16 +1,49 @@
 # Release History
 
-## 1.54.0-beta.1 (Unreleased)
+## 1.57.0-beta.1 (Unreleased)
 
 ### Features Added
 
+- Added `RequestContent.Create(BinaryContent)` overload that adapts a `System.ClientModel.BinaryContent` instance into a `Azure.Core.RequestContent` instance.
+- Added experimental (`SCME0002`) `AzureCredentialResolver` that resolves Azure token credential sections (e.g. `AzureCliCredential`, `ManagedIdentityCredential`, `ChainedTokenCredential`) into `TokenCredential` instances. `ApiKeyCredential` sections are not claimed — clients dispatch on `Credential.CredentialSource` themselves.
+- Added experimental (`SCME0002`) extensions on `Azure.Identity.ConfigurationExtensions`:
+  - `AddAzureCredentialResolver()` on `IServiceCollection` and `IHostApplicationBuilder` — idempotent DI registration.
+  - `IConfiguration.GetAzureCredentialSettings(sectionName, ...)` — returns `CredentialSettings?` with `TokenProvider` populated for token sources and `Key` populated for inline ApiKey sources, so a single call site can dispatch on either shape without binding a `ClientSettings`.
+  - `IConfiguration.GetAzureClientSettings<T>(sectionName, params CredentialResolver[] resolvers)` — resolver-aware overload.
+- The Azure OpenAI default-scope quirk now writes `Credential:Scope` at the credential-section root (the canonical SCM 1.12.0+ location) instead of `Credential:AdditionalProperties:Scope`. SCM 1.12.0 reads both locations so existing configs continue to work.
+
 ### Breaking Changes
+
+- Removed experimental (`SCME0002`) `WithAzureCredential` extension methods on `ClientSettings` and `IClientBuilder`. For DI, use `AddAzureClient<TClient, TSettings>` / `AddKeyedAzureClient<TClient, TSettings>` (which register `AzureCredentialResolver` automatically), or call `AddAzureCredentialResolver()` followed by `AddClient<TClient, TSettings>` / `AddKeyedClient<TClient, TSettings>`. For standalone scenarios, use `IConfiguration.GetAzureClientSettings<T>(...)` or `IConfiguration.GetAzureCredentialSettings(...)`.
 
 ### Bugs Fixed
 
 - Fixed `DiagnosticScope` to mark the parent `ActivityContext` as remote (`IsRemote = true`) when a traceparent is provided via `SetTraceContext` or `AddLink`. The traceparent in these paths is always extracted from an external source (e.g. a messaging broker's application properties), so samplers that distinguish local vs. remote parents — such as the `RateLimitedSampler` used by the Azure Monitor OpenTelemetry exporter — can now make correct decisions for activities started from incoming messages.
 
 ### Other Changes
+
+## 1.56.0 (2026-05-14)
+
+### Features Added
+
+- Added experimental `TokenRequestCallback` property and `TokenRequestCallbackContext` type to MSAL-backed credential options to allow customizing token request body parameters before they are sent to the identity provider.
+
+## 1.55.0 (2026-05-05)
+
+### Features Added
+
+- Added `AzureLocation.DenmarkEast` for the Denmark East Azure region.
+- Added experimental `AdditionalQueryParameters` property to `TokenCredentialOptions` to enable forwarding extra query string parameters to MSAL during authentication.
+
+### Bugs Fixed
+
+- Fixed `AzureDeveloperCliCredential` to correctly parse error messages from Azure Developer CLI v1.23.7 and later, which previously caused raw JSON to surface in `AuthenticationFailedException` instead of the underlying error text.
+
+## 1.54.0 (2026-04-23)
+
+### Bugs Fixed
+
+- Removed duplicate top-level `required: ["CredentialSource"]` from the `credential` definition in `ConfigurationSchema.json` to prevent duplicate entries when the schema is merged with `System.ClientModel`'s schema.
 
 ## 1.53.0 (2026-04-09)
 

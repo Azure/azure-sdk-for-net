@@ -326,10 +326,10 @@ var queryResult = client.GetLedgerEntriesAsync(collectionIdForQuery, tag: "tag1"
 Users are managed directly with the confidential ledger instead of through Azure. New users may be AAD-based or certificate-based.
 
 ```C# Snippet:NewUser
-string newUserAadObjectId = "<some AAD user or service princpal object Id>";
-ledgerClient.CreateOrUpdateUser(
+string newUserAadObjectId = "<some AAD user or service principal object Id>";
+ledgerClient.CreateOrUpdateLedgerUser(
     newUserAadObjectId,
-    RequestContent.Create(new { assignedRole = "Reader" }));
+    RequestContent.Create(new { assignedRoles = new[] { "Reader" } }));
 ```
 
 

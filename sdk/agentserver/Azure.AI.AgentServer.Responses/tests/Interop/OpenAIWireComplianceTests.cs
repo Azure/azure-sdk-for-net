@@ -836,8 +836,12 @@ public class OpenAIWireComplianceTests
         Assert.That((await CaptureRequest("""{ "model": "test", "max_output_tokens": 1024 }""")).MaxOutputTokens, Is.EqualTo(1024));
 
     [Test]
-    public async Task CreateResponse_PreviousResponseId() =>
-        Assert.That((await CaptureRequest("""{ "model": "test", "previous_response_id": "resp_prev_001" }""")).PreviousResponseId, Is.EqualTo("resp_prev_001"));
+    public async Task CreateResponse_PreviousResponseId()
+    {
+        var validId = IdGenerator.NewResponseId();
+        var req = await CaptureRequest($$"""{ "model": "test", "previous_response_id": "{{validId}}" }""");
+        Assert.That(req.PreviousResponseId, Is.EqualTo(validId));
+    }
 
     [Test]
     public async Task CreateResponse_Store() =>

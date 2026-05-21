@@ -93,7 +93,7 @@
     {
       "$id": "8",
       "kind": "constant",
-      "name": "listWithPageContentType",
+      "name": "ListWithPageAccept",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -109,7 +109,7 @@
     {
       "$id": "10",
       "kind": "constant",
-      "name": "listWithParametersContentType",
+      "name": "ListWithPageAccept1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -125,7 +125,7 @@
     {
       "$id": "12",
       "kind": "constant",
-      "name": "listWithParametersContentType1",
+      "name": "ListWithPageAccept2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -141,7 +141,7 @@
     {
       "$id": "14",
       "kind": "constant",
-      "name": "listWithCustomPageModelContentType",
+      "name": "ListWithPageAccept3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -157,7 +157,7 @@
     {
       "$id": "16",
       "kind": "constant",
-      "name": "withParameterizedNextLinkContentType",
+      "name": "ListWithPageAccept4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -173,7 +173,7 @@
     {
       "$id": "18",
       "kind": "constant",
-      "name": "withRelativeNextLinkContentType",
+      "name": "ListWithPageAccept5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -189,7 +189,7 @@
     {
       "$id": "20",
       "kind": "constant",
-      "name": "listFirstItemContentType",
+      "name": "ListWithPageAccept6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -205,7 +205,7 @@
     {
       "$id": "22",
       "kind": "constant",
-      "name": "listSecondItemContentType",
+      "name": "ListWithPageAccept7",
       "namespace": "",
       "usage": "None",
       "valueType": {

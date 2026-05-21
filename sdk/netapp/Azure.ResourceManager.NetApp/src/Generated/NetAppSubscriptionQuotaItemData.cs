@@ -9,46 +9,15 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary>
-    /// A class representing the NetAppSubscriptionQuotaItem data model.
-    /// Information regarding Quota Item.
-    /// </summary>
+    /// <summary> Information regarding Quota Item. </summary>
     public partial class NetAppSubscriptionQuotaItemData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetAppSubscriptionQuotaItemData"/>. </summary>
         public NetAppSubscriptionQuotaItemData()
@@ -56,27 +25,46 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppSubscriptionQuotaItemData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="current"> The current quota value. </param>
-        /// <param name="default"> The default quota value. </param>
-        /// <param name="usage"> The usage quota value. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppSubscriptionQuotaItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default, int? usage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> QuotaItem properties. </param>
+        internal NetAppSubscriptionQuotaItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, QuotaItemProperties properties) : base(id, name, resourceType, systemData)
         {
-            Current = current;
-            Default = @default;
-            Usage = usage;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> QuotaItem properties. </summary>
+        internal QuotaItemProperties Properties { get; set; }
+
         /// <summary> The current quota value. </summary>
-        public int? Current { get; }
+        public int? Current
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Current;
+            }
+        }
+
         /// <summary> The default quota value. </summary>
-        public int? Default { get; }
+        public int? Default
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Default;
+            }
+        }
+
         /// <summary> The usage quota value. </summary>
-        public int? Usage { get; }
+        public int? Usage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Usage;
+            }
+        }
     }
 }

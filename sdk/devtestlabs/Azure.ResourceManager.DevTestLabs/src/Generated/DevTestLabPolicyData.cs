@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of the resource. </param>
-        /// <param name="tags"> The tags of the resource. </param>
-        internal DevTestLabPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, PolicyProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
+        internal DevTestLabPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, PolicyProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     Properties = new PolicyProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     Properties = new PolicyProperties();
                 }
-                Properties.FactName = value.Value;
+                Properties.FactName = value;
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     Properties = new PolicyProperties();
                 }
-                Properties.EvaluatorType = value.Value;
+                Properties.EvaluatorType = value;
             }
         }
 

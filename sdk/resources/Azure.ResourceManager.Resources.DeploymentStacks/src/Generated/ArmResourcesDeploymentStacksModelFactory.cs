@@ -184,26 +184,6 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 denyStatus);
         }
 
-        /// <summary> The Deployment stack validation result. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="name"> Name of this resource. </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="error"> The error detail. </param>
-        /// <param name="properties"> The validation result details. </param>
-        /// <returns> A new <see cref="Models.DeploymentStackValidateResult"/> instance for mocking. </returns>
-        public static DeploymentStackValidateResult DeploymentStackValidateResult(ResourceIdentifier id = default, ResourceType resourceType = default, string name = default, SystemData systemData = default, ResponseError error = default, DeploymentStackValidateProperties properties = default)
-        {
-            return new DeploymentStackValidateResult(
-                id,
-                resourceType,
-                additionalBinaryDataProperties: null,
-                name,
-                systemData,
-                error,
-                properties);
-        }
-
         /// <summary> The Deployment stack validation result details. </summary>
         /// <param name="actionOnUnmanage"> Defines the behavior of resources that are no longer managed after the Deployment stack is updated or deleted. </param>
         /// <param name="correlationId"> The correlation id of the Deployment stack validate operation. It is in GUID format and is used for tracing. </param>
@@ -459,6 +439,26 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 target,
                 additionalInfo.ToList(),
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The Deployment stack validation result. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="name"> Name of this resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="error"> The error detail. </param>
+        /// <param name="properties"> The validation result details. </param>
+        /// <returns> A new <see cref="Models.DeploymentStackValidateResult"/> instance for mocking. </returns>
+        public static DeploymentStackValidateResult DeploymentStackValidateResult(ResourceIdentifier id = default, ResourceType resourceType = default, string name = default, SystemData systemData = default, ResponseError error = default, DeploymentStackValidateProperties properties = default)
+        {
+            return new DeploymentStackValidateResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                error,
+                properties);
         }
     }
 }

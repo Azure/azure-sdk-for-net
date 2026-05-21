@@ -1,5 +1,5 @@
 {
-  "name": "Service.MultipleServices.ServiceA",
+  "name": "Service.MultipleServices",
   "apiVersions": [
     "av1",
     "av2"
@@ -177,7 +177,7 @@
         {
           "$id": "15",
           "kind": "client",
-          "name": "SubNamespace",
+          "name": "ASubNamespace",
           "namespace": "Service.MultipleServices.ServiceA.SubNamespace",
           "methods": [
             {
@@ -303,7 +303,7 @@
         {
           "$id": "23",
           "kind": "client",
-          "name": "Operations",
+          "name": "AOperations",
           "namespace": "Service.MultipleServices.ServiceA",
           "methods": [
             {
@@ -528,7 +528,7 @@
         {
           "$id": "39",
           "kind": "client",
-          "name": "SubNamespace",
+          "name": "BSubNamespace",
           "namespace": "Service.MultipleServices.ServiceB.SubNamespace",
           "methods": [
             {
@@ -654,7 +654,7 @@
         {
           "$id": "47",
           "kind": "client",
-          "name": "Operations",
+          "name": "BOperations",
           "namespace": "Service.MultipleServices.ServiceB",
           "methods": [
             {

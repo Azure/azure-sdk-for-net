@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -51,29 +52,10 @@ internal sealed class SseReplayResult : IResult
 
         _logger.LogInformation("SSE replay started for response {ResponseId}", _responseId);
 
-        using var sseWriter = new SseWriter(httpContext.Response.Body, _jsonOptions);
+        await using var keepAliveSession = SseKeepAliveSession.Start(
+            httpContext.Response.Body, _keepAliveInterval, _logger, $"response {_responseId}");
+        var sseWriter = new SseWriter(keepAliveSession, _jsonOptions);
         var ct = httpContext.RequestAborted;
-
-        // Start keep-alive timer if configured
-        Timer? keepAliveTimer = null;
-        if (_keepAliveInterval != Timeout.InfiniteTimeSpan && _keepAliveInterval > TimeSpan.Zero)
-        {
-            keepAliveTimer = new Timer(
-                async _ =>
-                {
-                    try
-                    {
-                        await sseWriter.WriteKeepAliveAsync(CancellationToken.None);
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogDebug(ex, "Keep-alive write failed for response {ResponseId}", _responseId);
-                    }
-                },
-                null,
-                _keepAliveInterval,
-                _keepAliveInterval);
-        }
 
         try
         {
@@ -91,17 +73,27 @@ internal sealed class SseReplayResult : IResult
             _logger.LogInformation(
                 "SSE replay completed for response {ResponseId}", _responseId);
         }
+        catch (BadRequestException ex)
+        {
+            // Stream provider signalled that no event stream is available for this
+            // response (e.g., non-streaming background response, or stream TTL expired).
+            // Since SSE headers have not been flushed yet, we can still write a JSON error.
+            _logger.LogWarning(ex, "SSE replay unavailable for response {ResponseId}", _responseId);
+            httpContext.Response.Headers.Remove("Cache-Control");
+            httpContext.Response.Headers.Remove("Connection");
+            httpContext.Response.Headers.Remove("X-Accel-Buffering");
+            // TODO: The container spec prescribes distinct error messages for "not created
+            // with stream=true" vs "stream TTL expired", but the BadRequestException from the
+            // stream provider does not carry enough context to distinguish the two cases.
+            // Until the provider surfaces the reason, we use a combined message.
+            await ApiErrorFactory.InvalidRequest(
+                "This response cannot be streamed because it was not created with stream=true or the stream TTL has expired.",
+                param: "stream").ExecuteAsync(httpContext);
+        }
         catch (OperationCanceledException)
         {
             _logger.LogInformation(
                 "SSE replay cancelled (client disconnected) for response {ResponseId}", _responseId);
-        }
-        finally
-        {
-            if (keepAliveTimer is not null)
-            {
-                await keepAliveTimer.DisposeAsync();
-            }
         }
     }
 

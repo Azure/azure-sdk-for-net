@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     Properties = new CommunicationServiceUpdateProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     Properties = new CommunicationServiceUpdateProperties();
                 }
-                Properties.DisableLocalAuth = value.Value;
+                Properties.DisableLocalAuth = value;
             }
         }
     }

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     Properties = new ServiceBusFailOverDetail();
                 }
-                Properties.Force = value.Value;
+                Properties.Force = value;
             }
         }
     }

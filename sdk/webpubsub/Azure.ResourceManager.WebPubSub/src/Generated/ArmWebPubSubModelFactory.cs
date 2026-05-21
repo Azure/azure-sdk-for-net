@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && keyVaultBaseUri is null && keyVaultSecretName is null && keyVaultSecretVersion is null ? default : new CustomCertificateProperties(provisioningState, keyVaultBaseUri, keyVaultSecretName, keyVaultSecretVersion, null));
+                new CustomCertificateProperties(provisioningState, keyVaultBaseUri, keyVaultSecretName, keyVaultSecretVersion, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                provisioningState is null && domainName is null && customCertificateId is null ? default : new CustomDomainProperties(provisioningState, domainName, new ResourceReference(customCertificateId, null), null));
+                new CustomDomainProperties(provisioningState, domainName, new ResourceReference(customCertificateId, null), null));
         }
 
         /// <summary> A hub setting. </summary>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WebPubSubData WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BillingInfoSku sku, ManagedServiceIdentity identity, WebPubSubProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IEnumerable<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources, bool? isClientCertEnabled, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, IEnumerable<ResourceLogCategory> resourceLogCategories, WebPubSubNetworkAcls networkAcls, string publicNetworkAccess, bool? isLocalAuthDisabled, bool? isAadAuthDisabled)
         {
-            return WebPubSubData(id, name, resourceType, systemData, tags, location, provisioningState, externalIP, hostName, publicPort, serverPort, version, privateEndpointConnections, sharedPrivateLinkResources, hostNamePrefix, liveTraceConfiguration, networkAcls, applicationFirewall: default, publicNetworkAccess, isLocalAuthDisabled, isAadAuthDisabled, isRegionEndpointEnabled: default, resourceStopped: default, isClientCertEnabled, resourceLogCategories, socketIOServiceMode: default, sku, kind: default, identity);
+            return WebPubSubData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, externalIP: externalIP, hostName: hostName, publicPort: publicPort, serverPort: serverPort, version: version, privateEndpointConnections: privateEndpointConnections, sharedPrivateLinkResources: sharedPrivateLinkResources, hostNamePrefix: hostNamePrefix, liveTraceConfiguration: liveTraceConfiguration, networkAcls: networkAcls, applicationFirewall: default, publicNetworkAccess: publicNetworkAccess, isLocalAuthDisabled: isLocalAuthDisabled, isAadAuthDisabled: isAadAuthDisabled, isRegionEndpointEnabled: default, resourceStopped: default, isClientCertEnabled: isClientCertEnabled, resourceLogCategories: resourceLogCategories, socketIOServiceMode: default, sku: sku, kind: default, identity: identity);
         }
 
         /// <summary> Initializes a new instance of <see cref="WebPubSub.WebPubSubPrivateEndpointConnectionData"/>. </summary>
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WebPubSubSharedPrivateLinkData WebPubSubSharedPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, ResourceIdentifier privateLinkResourceId, WebPubSubProvisioningState? provisioningState, string requestMessage, WebPubSubSharedPrivateLinkStatus? status)
         {
-            return WebPubSubSharedPrivateLinkData(id, name, resourceType, systemData, groupId, privateLinkResourceId, provisioningState, requestMessage, fqdns: default, status);
+            return WebPubSubSharedPrivateLinkData(id: id, name: name, resourceType: resourceType, systemData: systemData, groupId: groupId, privateLinkResourceId: privateLinkResourceId, provisioningState: provisioningState, requestMessage: requestMessage, fqdns: default, status: status);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebPubSubPrivateLink"/>. </summary>

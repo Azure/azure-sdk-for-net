@@ -100,16 +100,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("ingestionSchedule"u8);
                 writer.WriteObjectValue(IngestionSchedule, options);
             }
-            if (Optional.IsCollectionDefined(IngestionPermissionOptions))
-            {
-                writer.WritePropertyName("ingestionPermissionOptions"u8);
-                writer.WriteStartArray();
-                foreach (KnowledgeSourceIngestionPermissionOption item in IngestionPermissionOptions)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(ContentExtractionMode))
             {
                 writer.WritePropertyName("contentExtractionMode"u8);
@@ -167,7 +157,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             KnowledgeBaseModel chatCompletionModel = default;
             bool? disableImageVerbalization = default;
             IndexingSchedule ingestionSchedule = default;
-            IList<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions = default;
             KnowledgeSourceContentExtractionMode? contentExtractionMode = default;
             AIServices aiServices = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -222,20 +211,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     ingestionSchedule = IndexingSchedule.DeserializeIndexingSchedule(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("ingestionPermissionOptions"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<KnowledgeSourceIngestionPermissionOption> array = new List<KnowledgeSourceIngestionPermissionOption>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(new KnowledgeSourceIngestionPermissionOption(item.GetString()));
-                    }
-                    ingestionPermissionOptions = array;
-                    continue;
-                }
                 if (prop.NameEquals("contentExtractionMode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -267,7 +242,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 chatCompletionModel,
                 disableImageVerbalization,
                 ingestionSchedule,
-                ingestionPermissionOptions ?? new ChangeTrackingList<KnowledgeSourceIngestionPermissionOption>(),
                 contentExtractionMode,
                 aiServices,
                 additionalBinaryDataProperties);

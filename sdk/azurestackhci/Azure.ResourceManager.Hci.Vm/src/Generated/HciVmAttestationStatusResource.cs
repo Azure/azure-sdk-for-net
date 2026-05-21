@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationStatusesRestClient.CreateGetRequest(Id.Parent.Parent, context);
+                HttpMessage message = _attestationStatusesRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciVmAttestationStatusData> response = Response.FromValue(HciVmAttestationStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationStatusesRestClient.CreateGetRequest(Id.Parent.Parent, context);
+                HttpMessage message = _attestationStatusesRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciVmAttestationStatusData> response = Response.FromValue(HciVmAttestationStatusData.FromResponse(result), result);
                 if (response.Value == null)

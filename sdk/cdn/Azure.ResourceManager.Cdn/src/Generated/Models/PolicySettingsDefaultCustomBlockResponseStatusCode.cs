@@ -15,49 +15,60 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct PolicySettingsDefaultCustomBlockResponseStatusCode : IEquatable<PolicySettingsDefaultCustomBlockResponseStatusCode>
     {
         private readonly int _value;
-
-        /// <summary> Initializes a new instance of <see cref="PolicySettingsDefaultCustomBlockResponseStatusCode"/>. </summary>
-        public PolicySettingsDefaultCustomBlockResponseStatusCode(int value)
-        {
-            _value = value;
-        }
-
         private const int TwoHundredValue = 200;
         private const int FourHundredThreeValue = 403;
         private const int FourHundredFiveValue = 405;
         private const int FourHundredSixValue = 406;
         private const int FourHundredTwentyNineValue = 429;
 
-        /// <summary> 200. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySettingsDefaultCustomBlockResponseStatusCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public PolicySettingsDefaultCustomBlockResponseStatusCode(int value)
+        {
+            _value = value;
+        }
+
+        /// <summary> Gets the TwoHundred. </summary>
         public static PolicySettingsDefaultCustomBlockResponseStatusCode TwoHundred { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(TwoHundredValue);
-        /// <summary> 403. </summary>
+
+        /// <summary> Gets the FourHundredThree. </summary>
         public static PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredThree { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(FourHundredThreeValue);
-        /// <summary> 405. </summary>
+
+        /// <summary> Gets the FourHundredFive. </summary>
         public static PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredFive { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(FourHundredFiveValue);
-        /// <summary> 406. </summary>
+
+        /// <summary> Gets the FourHundredSix. </summary>
         public static PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredSix { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(FourHundredSixValue);
-        /// <summary> 429. </summary>
+
+        /// <summary> Gets the FourHundredTwentyNine. </summary>
         public static PolicySettingsDefaultCustomBlockResponseStatusCode FourHundredTwentyNine { get; } = new PolicySettingsDefaultCustomBlockResponseStatusCode(FourHundredTwentyNineValue);
 
-        internal int ToSerialInt32() => _value;
-
         /// <summary> Determines if two <see cref="PolicySettingsDefaultCustomBlockResponseStatusCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PolicySettingsDefaultCustomBlockResponseStatusCode left, PolicySettingsDefaultCustomBlockResponseStatusCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PolicySettingsDefaultCustomBlockResponseStatusCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PolicySettingsDefaultCustomBlockResponseStatusCode left, PolicySettingsDefaultCustomBlockResponseStatusCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="int"/> to a <see cref="PolicySettingsDefaultCustomBlockResponseStatusCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PolicySettingsDefaultCustomBlockResponseStatusCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PolicySettingsDefaultCustomBlockResponseStatusCode(int value) => new PolicySettingsDefaultCustomBlockResponseStatusCode(value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PolicySettingsDefaultCustomBlockResponseStatusCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PolicySettingsDefaultCustomBlockResponseStatusCode other) => Equals(_value, other._value);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value.GetHashCode();
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value.ToString(CultureInfo.InvariantCulture);
     }
 }

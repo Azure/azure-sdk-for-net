@@ -6,7 +6,6 @@ using System.ClientModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Identity;
-using Castle.Components.DictionaryAdapter;
 using Microsoft.ClientModel.TestFramework;
 
 namespace Azure.AI.Projects.Agents.Tests
@@ -29,6 +28,9 @@ namespace Azure.AI.Projects.Agents.Tests
         public string SHAREPOINT_CONNECTION_ID => GetRecordedVariable(nameof(SHAREPOINT_CONNECTION_ID));
         public string FABRIC_CONNECTION_ID => GetRecordedVariable(nameof(FABRIC_CONNECTION_ID));
         public string STORAGE_QUEUE_URI => GetRecordedVariable(nameof(STORAGE_QUEUE_URI));
+        public string HOSTED_AGENT_NAME => GetRecordedVariable(nameof(HOSTED_AGENT_NAME));
+        public string HOSTED_AGENT_VERSION => GetRecordedVariable(nameof(HOSTED_AGENT_VERSION));
+        public string FOUNDRY_AGENT_CONTAINER_IMAGE => GetRecordedVariable(nameof(FOUNDRY_AGENT_CONTAINER_IMAGE));
         public override Dictionary<string, string> ParseEnvironmentFile() => new()
         {
             { "OPEN-API-KEY", Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "api-key" }

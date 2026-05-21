@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             get
             {
-                return BillingProperties.NextBillingModel;
+                return BillingProperties is null ? default : BillingProperties.NextBillingModel;
             }
         }
     }

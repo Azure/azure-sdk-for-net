@@ -1922,7 +1922,7 @@ namespace Azure.ResourceManager.DevCenter.Models
     }
     public partial class DevCenterCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterCapability>
     {
-        public DevCenterCapability() { }
+        internal DevCenterCapability() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
         protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterCapability JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2492,7 +2492,7 @@ namespace Azure.ResourceManager.DevCenter.Models
     }
     public partial class DevCenterHealthCheck : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheck>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterHealthCheck>
     {
-        public DevCenterHealthCheck() { }
+        internal DevCenterHealthCheck() { }
         public string AdditionalDetails { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
@@ -3237,7 +3237,7 @@ namespace Azure.ResourceManager.DevCenter.Models
     }
     public partial class DevCenterResourceRange : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.DevCenterResourceRange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.DevCenterResourceRange>
     {
-        public DevCenterResourceRange() { }
+        internal DevCenterResourceRange() { }
         public int? Max { get { throw null; } }
         public int? Min { get { throw null; } }
         protected virtual Azure.ResourceManager.DevCenter.Models.DevCenterResourceRange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3774,7 +3774,7 @@ namespace Azure.ResourceManager.DevCenter.Models
     }
     public partial class RecommendedMachineConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DevCenter.Models.RecommendedMachineConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DevCenter.Models.RecommendedMachineConfiguration>
     {
-        public RecommendedMachineConfiguration() { }
+        internal RecommendedMachineConfiguration() { }
         public Azure.ResourceManager.DevCenter.Models.DevCenterResourceRange Memory { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterResourceRange VCpus { get { throw null; } }
         protected virtual Azure.ResourceManager.DevCenter.Models.RecommendedMachineConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

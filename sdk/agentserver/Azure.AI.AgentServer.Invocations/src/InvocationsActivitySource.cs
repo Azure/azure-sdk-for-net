@@ -8,141 +8,63 @@ using Microsoft.AspNetCore.Http;
 namespace Azure.AI.AgentServer.Invocations;
 
 /// <summary>
-/// Manages <see cref="ActivitySource"/> for invocations protocol tracing.
-/// Follows the same DI-friendly, virtual-for-testability pattern as
-/// <c>ResponsesActivitySource</c>.
+/// Manages baggage propagation for invocations protocol tracing.
+/// W3C trace context propagation is handled automatically by ASP.NET Core;
+/// this class sets correlation baggage on the current Activity so downstream
+/// spans inherit invocation/session IDs.
 /// </summary>
-public class InvocationsActivitySource
+internal class InvocationsActivitySource
 {
     /// <summary>
-    /// The default activity source name.
+    /// The default activity source name (retained for listener registration compatibility).
     /// </summary>
-    public const string DefaultName = AgentHostTelemetry.InvocationsSourceName;
-
-    private readonly ActivitySource _activitySource;
+    public const string DefaultName = "Azure.AI.AgentServer.Invocations";
 
     /// <summary>
-    /// Initializes a new instance of <see cref="InvocationsActivitySource"/> with the default name.
+    /// Initializes a new instance of <see cref="InvocationsActivitySource"/>.
     /// </summary>
     public InvocationsActivitySource()
-        : this(DefaultName)
     {
     }
 
     /// <summary>
-    /// Initializes a new instance of <see cref="InvocationsActivitySource"/> with a custom name.
+    /// Initializes a new instance of <see cref="InvocationsActivitySource"/> (for subclass testability).
     /// </summary>
-    /// <param name="name">The activity source name. Pass <c>null</c> to use the default.</param>
     protected InvocationsActivitySource(string? name)
     {
-        _activitySource = new ActivitySource(name ?? DefaultName);
     }
 
     /// <summary>
-    /// Builds the span display name following the pattern in §4.1 of the invocation protocol spec:
-    /// <c>invoke_agent {Name}:{Version}</c>, <c>invoke_agent {Name}</c>, or <c>invoke_agent</c>.
-    /// </summary>
-    private static string BuildSpanDisplayName(string? agentName, string? agentVersion)
-    {
-        if (!string.IsNullOrEmpty(agentName) && !string.IsNullOrEmpty(agentVersion))
-        {
-            return $"invoke_agent {agentName}:{agentVersion}";
-        }
-
-        if (!string.IsNullOrEmpty(agentName))
-        {
-            return $"invoke_agent {agentName}";
-        }
-
-        return "invoke_agent";
-    }
-
-    /// <summary>
-    /// Builds the <c>gen_ai.agent.id</c> value:
-    /// <c>{Name}:{Version}</c>, <c>{Name}</c>, or empty string when agent info is unavailable.
-    /// </summary>
-    private static string BuildAgentId(string? agentName, string? agentVersion)
-    {
-        if (!string.IsNullOrEmpty(agentName) && !string.IsNullOrEmpty(agentVersion))
-        {
-            return $"{agentName}:{agentVersion}";
-        }
-
-        if (!string.IsNullOrEmpty(agentName))
-        {
-            return agentName;
-        }
-
-        return string.Empty;
-    }
-
-    /// <summary>
-    /// Starts a tracing span for a <c>POST /invocations</c> request.
-    /// Sets GenAI semantic convention tags and baggage keys per the invocation protocol spec §4.
+    /// Propagates invocation baggage onto the current <see cref="Activity"/> (the ASP.NET
+    /// Core request activity) without creating an additional <c>invoke_agent</c> span.
+    /// W3C trace context propagation is handled automatically by ASP.NET Core, so
+    /// framework spans are parented directly under the caller's span.
     /// </summary>
     /// <param name="context">The invocation context with resolved IDs.</param>
-    /// <param name="headers">The request headers (for trace propagation).</param>
-    /// <returns>An <see cref="Activity"/> if a listener is registered, otherwise <c>null</c>.</returns>
-    public virtual Activity? StartInvocationActivity(
+    /// <param name="headers">The request headers (for x-request-id propagation).</param>
+    public virtual void PropagateInvocationBaggage(
         InvocationContext context,
         IHeaderDictionary headers)
     {
-        var agentName = FoundryEnvironment.AgentName;
-        var agentVersion = FoundryEnvironment.AgentVersion;
-
-        var activity = _activitySource.StartActivity(
-            BuildSpanDisplayName(agentName, agentVersion),
-            ActivityKind.Server);
-
+        var activity = Activity.Current;
         if (activity is null)
         {
-            return null;
+            return;
         }
-
-        // Identity & GenAI convention tags (§4.2)
-        activity.SetTag("service.name", "azure.ai.agentserver");
-        activity.SetTag("gen_ai.provider.name", "AzureAI Hosted Agents");
-        activity.SetTag("gen_ai.operation.name", "invoke_agent");
-        activity.SetTag("gen_ai.response.id", context.InvocationId);
-        activity.SetTag("gen_ai.agent.id", BuildAgentId(agentName, agentVersion));
-
-        if (!string.IsNullOrEmpty(context.SessionId))
-        {
-            activity.SetTag("microsoft.session.id", context.SessionId);
-        }
-
-        if (!string.IsNullOrEmpty(agentName))
-        {
-            activity.SetTag("gen_ai.agent.name", agentName);
-        }
-
-        if (!string.IsNullOrEmpty(agentVersion))
-        {
-            activity.SetTag("gen_ai.agent.version", agentVersion);
-        }
-
-        // Namespaced tags (§4.2)
-        activity.SetTag("azure.ai.agentserver.invocations.invocation_id", context.InvocationId);
-        activity.SetTag("azure.ai.agentserver.invocations.session_id", context.SessionId ?? string.Empty);
-        activity.SetTag("microsoft.foundry.project.id", FoundryEnvironment.ProjectArmId ?? string.Empty);
 
         // Baggage for downstream correlation (§4.3)
-        activity.SetBaggage("azure.ai.agentserver.invocation_id", context.InvocationId);
-        activity.SetBaggage("azure.ai.agentserver.session_id", context.SessionId ?? string.Empty);
+        activity.AddBaggage("azure.ai.agentserver.invocation_id", context.InvocationId);
+        activity.AddBaggage("azure.ai.agentserver.session_id", context.SessionId ?? string.Empty);
 
         // x-request-id propagation (if present in headers)
-        if (headers.TryGetValue("x-request-id", out var requestId))
+        if (headers.TryGetValue(PlatformHeaders.RequestId, out var requestId))
         {
             var requestIdStr = requestId.ToString();
             if (!string.IsNullOrEmpty(requestIdStr))
             {
-                activity.SetTag("azure.ai.agentserver.x-request-id",
-                    requestIdStr.Length > 256 ? requestIdStr[..256] : requestIdStr);
-                activity.SetBaggage("x-request-id",
+                activity.AddBaggage(PlatformHeaders.RequestId,
                     requestIdStr.Length > 256 ? requestIdStr[..256] : requestIdStr);
             }
         }
-
-        return activity;
     }
 }

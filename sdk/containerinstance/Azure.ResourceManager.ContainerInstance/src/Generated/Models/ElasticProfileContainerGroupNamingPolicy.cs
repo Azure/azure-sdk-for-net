@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> Container Groups are named on a generic guid based naming scheme/policy. Customer can modify naming policy to add prefix to CG names during scale out operation. </summary>
     internal partial class ElasticProfileContainerGroupNamingPolicy
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticProfileContainerGroupNamingPolicy"/>. </summary>
         public ElasticProfileContainerGroupNamingPolicy()
@@ -52,23 +23,29 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Initializes a new instance of <see cref="ElasticProfileContainerGroupNamingPolicy"/>. </summary>
         /// <param name="guidNamingPolicy"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticProfileContainerGroupNamingPolicy(ElasticProfileContainerGroupNamingPolicyGuidNamingPolicy guidNamingPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticProfileContainerGroupNamingPolicy(ElasticProfileContainerGroupNamingPolicyGuidNamingPolicy guidNamingPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GuidNamingPolicy = guidNamingPolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the guid naming policy. </summary>
+        /// <summary> Gets or sets the GuidNamingPolicy. </summary>
         internal ElasticProfileContainerGroupNamingPolicyGuidNamingPolicy GuidNamingPolicy { get; set; }
+
         /// <summary> The prefix can be used when there are tooling limitations (e.g. on the Azure portal where CGs from multiple NGroups exist in the same RG). The prefix with the suffixed resource name must still follow Azure resource naming guidelines. </summary>
         public string GuidNamingPrefix
         {
-            get => GuidNamingPolicy is null ? default : GuidNamingPolicy.Prefix;
+            get
+            {
+                return GuidNamingPolicy is null ? default : GuidNamingPolicy.Prefix;
+            }
             set
             {
                 if (GuidNamingPolicy is null)
+                {
                     GuidNamingPolicy = new ElasticProfileContainerGroupNamingPolicyGuidNamingPolicy();
+                }
                 GuidNamingPolicy.Prefix = value;
             }
         }

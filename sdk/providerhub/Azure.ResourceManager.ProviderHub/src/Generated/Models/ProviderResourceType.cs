@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             get
             {
-                return IdentityManagement.ManagementType;
+                return IdentityManagement is null ? default : IdentityManagement.ManagementType;
             }
         }
 
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             get
             {
-                return FeaturesRule.RequiredFeaturesPolicy;
+                return FeaturesRule is null ? default : FeaturesRule.RequiredFeaturesPolicy;
             }
         }
 
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             get
             {
-                return ResourceProviderAuthorizationRules.AsyncOperationPollingRules;
+                return ResourceProviderAuthorizationRules is null ? default : ResourceProviderAuthorizationRules.AsyncOperationPollingRules;
             }
         }
     }

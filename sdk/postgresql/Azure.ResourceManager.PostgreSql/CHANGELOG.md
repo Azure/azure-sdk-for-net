@@ -4,11 +4,15 @@
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded API version to `2026-01-01-preview`.
+- Migrated from AutoRest to TypeSpec-based generation while preserving compatibility with the previously shipped public API surface.
 
-### Bugs Fixed
+## 1.4.2 (2026-04-28)
 
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.54.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
 
 ## 1.4.1 (2026-02-12)
 

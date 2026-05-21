@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal class NetAppElasticSnapshotOperationSource : IOperationSource<NetAppElasticSnapshotResource>
+    /// <summary></summary>
+    internal partial class NetAppElasticSnapshotOperationSource : IOperationSource<NetAppElasticSnapshotResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NetAppElasticSnapshotOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NetAppElasticSnapshotResource IOperationSource<NetAppElasticSnapshotResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetAppElasticSnapshotData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetAppElasticSnapshotData data = NetAppElasticSnapshotData.DeserializeNetAppElasticSnapshotData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetAppElasticSnapshotResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetAppElasticSnapshotResource> IOperationSource<NetAppElasticSnapshotResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetAppElasticSnapshotData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
-            return await Task.FromResult(new NetAppElasticSnapshotResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetAppElasticSnapshotData data = NetAppElasticSnapshotData.DeserializeNetAppElasticSnapshotData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetAppElasticSnapshotResource(_client, data);
         }
     }
 }

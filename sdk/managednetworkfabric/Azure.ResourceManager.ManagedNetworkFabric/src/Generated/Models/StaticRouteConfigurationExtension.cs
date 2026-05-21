@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string NoExtensionValue = "NoExtension";
         private const string NpbValue = "NPB";
 
-        /// <summary> NoExtension. </summary>
+        /// <summary> Extension-NoExtension. </summary>
         public static StaticRouteConfigurationExtension NoExtension { get; } = new StaticRouteConfigurationExtension(NoExtensionValue);
-        /// <summary> NPB. </summary>
+        /// <summary> Extension-NPB. </summary>
         public static StaticRouteConfigurationExtension Npb { get; } = new StaticRouteConfigurationExtension(NpbValue);
         /// <summary> Determines if two <see cref="StaticRouteConfigurationExtension"/> values are the same. </summary>
         public static bool operator ==(StaticRouteConfigurationExtension left, StaticRouteConfigurationExtension right) => left.Equals(right);

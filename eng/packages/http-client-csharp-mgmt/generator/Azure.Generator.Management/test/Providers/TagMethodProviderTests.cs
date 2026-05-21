@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Providers;
@@ -23,19 +23,19 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = addTagMethod.Signature;
-            Assert.IsTrue(signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
-            Assert.IsTrue(signature.Modifiers.HasFlag(MethodSignatureModifiers.Virtual));
-            Assert.IsFalse(signature.Modifiers.HasFlag(MethodSignatureModifiers.Async));
-            Assert.AreEqual(3, signature.Parameters.Count);
-            Assert.AreEqual("key", signature.Parameters[0].Name);
-            Assert.AreEqual("value", signature.Parameters[1].Name);
-            Assert.AreEqual("cancellationToken", signature.Parameters[2].Name);
-            Assert.AreEqual("AddTag", signature.Name);
+            Assert.That(signature.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.True);
+            Assert.That(signature.Modifiers.HasFlag(MethodSignatureModifiers.Virtual), Is.True);
+            Assert.That(signature.Modifiers.HasFlag(MethodSignatureModifiers.Async), Is.False);
+            Assert.That(signature.Parameters.Count, Is.EqualTo(3));
+            Assert.That(signature.Parameters[0].Name, Is.EqualTo("key"));
+            Assert.That(signature.Parameters[1].Name, Is.EqualTo("value"));
+            Assert.That(signature.Parameters[2].Name, Is.EqualTo("cancellationToken"));
+            Assert.That(signature.Name, Is.EqualTo("AddTag"));
             // verify the method body
             var bodyStatements = addTagMethod.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
+            Assert.That(bodyStatements, Is.Not.Null);
             var expected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(expected, bodyStatements);
+            Assert.That(bodyStatements, Is.EqualTo(expected));
         }
 
         [TestCase]
@@ -45,19 +45,19 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = addTagAsyncMethod.Signature;
-            Assert.IsTrue(signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
-            Assert.IsTrue(signature.Modifiers.HasFlag(MethodSignatureModifiers.Virtual));
-            Assert.IsTrue(signature.Modifiers.HasFlag(MethodSignatureModifiers.Async));
-            Assert.AreEqual(3, signature.Parameters.Count);
-            Assert.AreEqual("key", signature.Parameters[0].Name);
-            Assert.AreEqual("value", signature.Parameters[1].Name);
-            Assert.AreEqual("cancellationToken", signature.Parameters[2].Name);
-            Assert.AreEqual("AddTagAsync", signature.Name);
+            Assert.That(signature.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.True);
+            Assert.That(signature.Modifiers.HasFlag(MethodSignatureModifiers.Virtual), Is.True);
+            Assert.That(signature.Modifiers.HasFlag(MethodSignatureModifiers.Async), Is.True);
+            Assert.That(signature.Parameters.Count, Is.EqualTo(3));
+            Assert.That(signature.Parameters[0].Name, Is.EqualTo("key"));
+            Assert.That(signature.Parameters[1].Name, Is.EqualTo("value"));
+            Assert.That(signature.Parameters[2].Name, Is.EqualTo("cancellationToken"));
+            Assert.That(signature.Name, Is.EqualTo("AddTagAsync"));
             // verify the method body
             var bodyStatements = addTagAsyncMethod.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
+            Assert.That(bodyStatements, Is.Not.Null);
             var expected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(expected, bodyStatements);
+            Assert.That(bodyStatements, Is.EqualTo(expected));
         }
 
         [TestCase]
@@ -67,18 +67,18 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = removeTagMethod.Signature;
-            Assert.IsTrue(signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
-            Assert.IsTrue(signature.Modifiers.HasFlag(MethodSignatureModifiers.Virtual));
-            Assert.IsFalse(signature.Modifiers.HasFlag(MethodSignatureModifiers.Async));
-            Assert.AreEqual(2, signature.Parameters.Count);
-            Assert.AreEqual("key", signature.Parameters[0].Name);
-            Assert.AreEqual("cancellationToken", signature.Parameters[1].Name);
-            Assert.AreEqual("RemoveTag", signature.Name);
+            Assert.That(signature.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.True);
+            Assert.That(signature.Modifiers.HasFlag(MethodSignatureModifiers.Virtual), Is.True);
+            Assert.That(signature.Modifiers.HasFlag(MethodSignatureModifiers.Async), Is.False);
+            Assert.That(signature.Parameters.Count, Is.EqualTo(2));
+            Assert.That(signature.Parameters[0].Name, Is.EqualTo("key"));
+            Assert.That(signature.Parameters[1].Name, Is.EqualTo("cancellationToken"));
+            Assert.That(signature.Name, Is.EqualTo("RemoveTag"));
             // verify the method body
             var bodyStatements = removeTagMethod.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
+            Assert.That(bodyStatements, Is.Not.Null);
             var expected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(expected, bodyStatements);
+            Assert.That(bodyStatements, Is.EqualTo(expected));
         }
 
         [TestCase]
@@ -88,18 +88,18 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = removeTagAsyncMethod.Signature;
-            Assert.IsTrue(signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
-            Assert.IsTrue(signature.Modifiers.HasFlag(MethodSignatureModifiers.Virtual));
-            Assert.IsTrue(signature.Modifiers.HasFlag(MethodSignatureModifiers.Async));
-            Assert.AreEqual(2, signature.Parameters.Count);
-            Assert.AreEqual("key", signature.Parameters[0].Name);
-            Assert.AreEqual("cancellationToken", signature.Parameters[1].Name);
-            Assert.AreEqual("RemoveTagAsync", signature.Name);
+            Assert.That(signature.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.True);
+            Assert.That(signature.Modifiers.HasFlag(MethodSignatureModifiers.Virtual), Is.True);
+            Assert.That(signature.Modifiers.HasFlag(MethodSignatureModifiers.Async), Is.True);
+            Assert.That(signature.Parameters.Count, Is.EqualTo(2));
+            Assert.That(signature.Parameters[0].Name, Is.EqualTo("key"));
+            Assert.That(signature.Parameters[1].Name, Is.EqualTo("cancellationToken"));
+            Assert.That(signature.Name, Is.EqualTo("RemoveTagAsync"));
             // verify the method body
             var bodyStatements = removeTagAsyncMethod.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
+            Assert.That(bodyStatements, Is.Not.Null);
             var expected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(expected, bodyStatements);
+            Assert.That(bodyStatements, Is.EqualTo(expected));
         }
 
         [TestCase]
@@ -109,18 +109,18 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = setTagsMethod.Signature;
-            Assert.IsTrue(signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
-            Assert.IsTrue(signature.Modifiers.HasFlag(MethodSignatureModifiers.Virtual));
-            Assert.IsFalse(signature.Modifiers.HasFlag(MethodSignatureModifiers.Async));
-            Assert.AreEqual(2, signature.Parameters.Count);
-            Assert.AreEqual("tags", signature.Parameters[0].Name);
-            Assert.AreEqual("cancellationToken", signature.Parameters[1].Name);
-            Assert.AreEqual("SetTags", signature.Name);
+            Assert.That(signature.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.True);
+            Assert.That(signature.Modifiers.HasFlag(MethodSignatureModifiers.Virtual), Is.True);
+            Assert.That(signature.Modifiers.HasFlag(MethodSignatureModifiers.Async), Is.False);
+            Assert.That(signature.Parameters.Count, Is.EqualTo(2));
+            Assert.That(signature.Parameters[0].Name, Is.EqualTo("tags"));
+            Assert.That(signature.Parameters[1].Name, Is.EqualTo("cancellationToken"));
+            Assert.That(signature.Name, Is.EqualTo("SetTags"));
             // verify the method body
             var bodyStatements = setTagsMethod.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
+            Assert.That(bodyStatements, Is.Not.Null);
             var expected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(expected, bodyStatements);
+            Assert.That(bodyStatements, Is.EqualTo(expected));
         }
 
         [TestCase]
@@ -130,18 +130,18 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = setTagsAsyncMethod.Signature;
-            Assert.IsTrue(signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
-            Assert.IsTrue(signature.Modifiers.HasFlag(MethodSignatureModifiers.Virtual));
-            Assert.IsTrue(signature.Modifiers.HasFlag(MethodSignatureModifiers.Async));
-            Assert.AreEqual(2, signature.Parameters.Count);
-            Assert.AreEqual("tags", signature.Parameters[0].Name);
-            Assert.AreEqual("cancellationToken", signature.Parameters[1].Name);
-            Assert.AreEqual("SetTagsAsync", signature.Name);
+            Assert.That(signature.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.True);
+            Assert.That(signature.Modifiers.HasFlag(MethodSignatureModifiers.Virtual), Is.True);
+            Assert.That(signature.Modifiers.HasFlag(MethodSignatureModifiers.Async), Is.True);
+            Assert.That(signature.Parameters.Count, Is.EqualTo(2));
+            Assert.That(signature.Parameters[0].Name, Is.EqualTo("tags"));
+            Assert.That(signature.Parameters[1].Name, Is.EqualTo("cancellationToken"));
+            Assert.That(signature.Name, Is.EqualTo("SetTagsAsync"));
             // verify the method body
             var bodyStatements = setTagsAsyncMethod.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
+            Assert.That(bodyStatements, Is.Not.Null);
             var expected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(expected, bodyStatements);
+            Assert.That(bodyStatements, Is.EqualTo(expected));
         }
 
         [TestCase]
@@ -150,14 +150,14 @@ namespace Azure.Generator.Management.Tests.Providers
             var (client, models) = InputResourceData.ClientWithResourceBodylessPatch();
             _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
             var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
-            Assert.IsNotNull(resourceClientProvider);
+            Assert.That(resourceClientProvider, Is.Not.Null);
 
             // Verify that no tag methods are generated
             var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
             foreach (var tagMethodName in tagMethodNames)
             {
                 var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
-                Assert.IsNull(method, $"Tag method '{tagMethodName}' should not be generated when PATCH has no body parameter.");
+                Assert.That(method, Is.Null, $"Tag method '{tagMethodName}' should not be generated when PATCH has no body parameter.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.Generator.Management.Tests.Providers
             var (client, models) = InputResourceData.ClientWithResourceBodylessPatchAndPut();
             _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
             var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
-            Assert.IsNotNull(resourceClientProvider);
+            Assert.That(resourceClientProvider, Is.Not.Null);
 
             // For a non-singleton resource, the Create (PUT) method is categorized only into the collection,
             // not the resource. When PATCH has no body, the PUT fallback should not be found in the resource's
@@ -176,7 +176,7 @@ namespace Azure.Generator.Management.Tests.Providers
             foreach (var tagMethodName in tagMethodNames)
             {
                 var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
-                Assert.IsNull(method, $"Tag method '{tagMethodName}' should not be generated for non-singleton resource when PATCH has no body and PUT is collection-only.");
+                Assert.That(method, Is.Null, $"Tag method '{tagMethodName}' should not be generated for non-singleton resource when PATCH has no body and PUT is collection-only.");
             }
         }
 
@@ -186,7 +186,7 @@ namespace Azure.Generator.Management.Tests.Providers
             var (client, models) = InputResourceData.ClientWithSingletonResourceBodylessPatchAndPut();
             _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
             var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
-            Assert.IsNotNull(resourceClientProvider);
+            Assert.That(resourceClientProvider, Is.Not.Null);
 
             // For a singleton resource, the Create (PUT) method is categorized into the resource,
             // so the PUT fallback should be found and tag methods SHOULD be generated.
@@ -194,7 +194,7 @@ namespace Azure.Generator.Management.Tests.Providers
             foreach (var tagMethodName in tagMethodNames)
             {
                 var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
-                Assert.IsNotNull(method, $"Tag method '{tagMethodName}' should be generated for singleton resource using PUT fallback when PATCH has no body.");
+                Assert.That(method, Is.Not.Null, $"Tag method '{tagMethodName}' should be generated for singleton resource using PUT fallback when PATCH has no body.");
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.Generator.Management.Tests.Providers
             var (client, models) = InputResourceData.ClientWithResourceNoPatchOnlyPut();
             _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
             var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
-            Assert.IsNotNull(resourceClientProvider);
+            Assert.That(resourceClientProvider, Is.Not.Null);
 
             // For a non-singleton resource with no PATCH at all, the Create (PUT) method gets added
             // to the resource's methods by the categorization fallback (no hasUpdateMethod).
@@ -213,7 +213,7 @@ namespace Azure.Generator.Management.Tests.Providers
             foreach (var tagMethodName in tagMethodNames)
             {
                 var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
-                Assert.IsNotNull(method, $"Tag method '{tagMethodName}' should be generated for non-singleton resource using PUT when no PATCH exists.");
+                Assert.That(method, Is.Not.Null, $"Tag method '{tagMethodName}' should be generated for non-singleton resource using PUT when no PATCH exists.");
             }
         }
 
@@ -223,14 +223,14 @@ namespace Azure.Generator.Management.Tests.Providers
             var (client, models) = InputResourceData.ClientWithResourcePatchBodyWithoutTags();
             _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
             var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
-            Assert.IsNotNull(resourceClientProvider);
+            Assert.That(resourceClientProvider, Is.Not.Null);
 
             // Verify that no tag methods are generated when PATCH body does not define tags
             var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
             foreach (var tagMethodName in tagMethodNames)
             {
                 var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
-                Assert.IsNull(method, $"Tag method '{tagMethodName}' should not be generated when PATCH body does not define a tags property.");
+                Assert.That(method, Is.Null, $"Tag method '{tagMethodName}' should not be generated when PATCH body does not define a tags property.");
             }
         }
 
@@ -240,14 +240,14 @@ namespace Azure.Generator.Management.Tests.Providers
             var (client, models) = InputResourceData.ClientWithResourcePatchNoContent();
             _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
             var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
-            Assert.IsNotNull(resourceClientProvider);
+            Assert.That(resourceClientProvider, Is.Not.Null);
 
             // Verify that no tag methods are generated when PATCH returns no content
             var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
             foreach (var tagMethodName in tagMethodNames)
             {
                 var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
-                Assert.IsNull(method, $"Tag method '{tagMethodName}' should not be generated when PATCH returns no content.");
+                Assert.That(method, Is.Null, $"Tag method '{tagMethodName}' should not be generated when PATCH returns no content.");
             }
         }
 
@@ -258,7 +258,7 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // validate the tag related methods are generated in the resource
             var method = resource.Methods.SingleOrDefault(m => m.Signature.Name == methodName);
-            Assert.IsNotNull(method);
+            Assert.That(method, Is.Not.Null);
             return method!;
         }
 
@@ -289,9 +289,9 @@ namespace Azure.Generator.Management.Tests.Providers
             var (client, models) = InputResourceData.ClientWithResource();
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
             var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
-            Assert.IsNotNull(resourceClientProvider);
+            Assert.That(resourceClientProvider, Is.Not.Null);
             var clientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(client);
-            Assert.IsNotNull(clientProvider);
+            Assert.That(clientProvider, Is.Not.Null);
             return (resourceClientProvider!, clientProvider!);
         }
     }

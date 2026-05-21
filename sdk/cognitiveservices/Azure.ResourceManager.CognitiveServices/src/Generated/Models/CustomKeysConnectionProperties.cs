@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -21,9 +22,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class CustomKeysConnectionProperties : CognitiveServicesConnectionProperties
     {
         /// <summary> Initializes a new instance of <see cref="CustomKeysConnectionProperties"/>. </summary>
-        public CustomKeysConnectionProperties()
+        public CustomKeysConnectionProperties() : base(ConnectionAuthType.CustomKeys)
         {
-            AuthType = ConnectionAuthType.CustomKeys;
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomKeysConnectionProperties"/>. </summary>
@@ -40,16 +40,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="sharedUserList"></param>
         /// <param name="target"> The connection URL to be used. </param>
         /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials"> Custom Keys credential object. </param>
-        internal CustomKeysConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData, CustomKeys credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, serializedAdditionalRawData)
+        internal CustomKeysConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? @group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomKeys credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, @group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, additionalBinaryDataProperties)
         {
             Credentials = credentials;
-            AuthType = authType;
         }
 
         /// <summary> Custom Keys credential object. </summary>
+        [WirePath("credentials")]
         internal CustomKeys Credentials { get; set; }
+
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         [WirePath("credentials.keys")]
         public IDictionary<string, string> CredentialsKeys
@@ -57,7 +58,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             get
             {
                 if (Credentials is null)
+                {
                     Credentials = new CustomKeys();
+                }
                 return Credentials.Keys;
             }
         }

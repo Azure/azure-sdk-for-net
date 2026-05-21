@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct RedirectType : IEquatable<RedirectType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RedirectType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RedirectType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string MovedValue = "Moved";
         private const string FoundValue = "Found";
         private const string TemporaryRedirectValue = "TemporaryRedirect";
         private const string PermanentRedirectValue = "PermanentRedirect";
 
-        /// <summary> Moved. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedirectType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RedirectType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Moved. </summary>
         public static RedirectType Moved { get; } = new RedirectType(MovedValue);
-        /// <summary> Found. </summary>
+
+        /// <summary> Gets the Found. </summary>
         public static RedirectType Found { get; } = new RedirectType(FoundValue);
-        /// <summary> TemporaryRedirect. </summary>
+
+        /// <summary> Gets the TemporaryRedirect. </summary>
         public static RedirectType TemporaryRedirect { get; } = new RedirectType(TemporaryRedirectValue);
-        /// <summary> PermanentRedirect. </summary>
+
+        /// <summary> Gets the PermanentRedirect. </summary>
         public static RedirectType PermanentRedirect { get; } = new RedirectType(PermanentRedirectValue);
+
         /// <summary> Determines if two <see cref="RedirectType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedirectType left, RedirectType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedirectType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedirectType left, RedirectType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedirectType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedirectType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedirectType(string value) => new RedirectType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedirectType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedirectType?(string value) => value == null ? null : new RedirectType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedirectType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedirectType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
