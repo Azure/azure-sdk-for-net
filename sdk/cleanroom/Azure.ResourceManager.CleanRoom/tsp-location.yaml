@@ -1,0 +1,6 @@
+directory: specification/cleanroom/CleanRoom.Management
+commit: <replace with your value>
+repo: vaideheemishra-2816/azure-rest-api-specs-pr
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/legacy-emitter-package.json
