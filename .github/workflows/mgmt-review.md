@@ -1,9 +1,18 @@
 ---
 on:
   pull_request_target:
-    types: [labeled]
-labels: [mgmt-review-needed]
-if: github.event.label.name == 'mgmt-review-needed'
+    types: [opened, reopened, synchronize]
+    paths:
+      - "sdk/**/Azure.ResourceManager.*/**"
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "Pull request number to review"
+        required: true
+        type: string
+if: |
+  github.event_name == 'workflow_dispatch' ||
+  (github.event.pull_request && !github.event.pull_request.draft)
 description: "Review Azure SDK for .NET management-plane PRs using the mgmt PR review skill"
 checkout: false
 inlined-imports: true
@@ -21,7 +30,7 @@ safe-outputs:
   report-failure-as-issue: false
   create-pull-request-review-comment:
     max: 40
-    target: "${{ github.event.pull_request.number }}"
+    target: "${{ github.event.pull_request.number || github.event.inputs.pr_number }}"
   submit-pull-request-review:
     max: 1
     footer: "if-body"
@@ -38,7 +47,7 @@ tools:
     toolsets: [context, repos, pull_requests, actions]
   bash: true
 timeout-minutes: 25
-concurrency: mgmt-review-${{ github.event.pull_request.number }}
+concurrency: mgmt-review-${{ github.event.pull_request.number || github.event.inputs.pr_number }}
 ---
 
 # Azure .NET Management SDK PR Review
@@ -47,7 +56,7 @@ concurrency: mgmt-review-${{ github.event.pull_request.number }}
 
 You are the Azure SDK for .NET management-plane PR reviewer for `${{ github.repository }}`.
 
-This workflow runs when the `mgmt-review-needed` label is applied to a pull request. Fetch and review the PR using the checked-in skill instructions from the base branch:
+This workflow runs automatically when a pull request modifies files under an `Azure.ResourceManager.*` package path, or can be triggered manually via `workflow_dispatch`. Fetch and review the PR using the checked-in skill instructions from the base branch:
 
 - Primary skill: `.github/skills/azure-sdk-mgmt-pr-review/SKILL.md`
 - If the PR is a Swagger/AutoRest to TypeSpec migration, also apply `.github/skills/mpg-migration-pr-review/SKILL.md`
