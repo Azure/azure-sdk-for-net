@@ -236,5 +236,25 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract Task SetStateAsync(
             BinaryData sessionState,
             CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Lists the IDs of sessions that have active messages or whose state was updated after
+        /// the specified time.
+        /// </summary>
+        ///
+        /// <param name="lastUpdatedTime">Filter timestamp; must have <see cref="DateTimeKind.Utc"/> kind to
+        /// avoid local-time interpretation during AMQP timestamp encoding. Pass
+        /// <c>DateTime.SpecifyKind(DateTime.MaxValue, DateTimeKind.Utc)</c> to get sessions with active
+        /// messages; pass a real UTC timestamp to get sessions updated since that time.</param>
+        /// <param name="skip">Pagination offset.</param>
+        /// <param name="top">Page size.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>A list of session ID strings for this page.</returns>
+        public abstract Task<IReadOnlyList<string>> GetMessageSessionsAsync(
+            DateTime lastUpdatedTime,
+            int skip,
+            int top,
+            CancellationToken cancellationToken);
     }
 }

@@ -423,7 +423,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         /// Drains an AMQP link. When drain failure happens we make sure to close the link to ensure ordering.
         /// </summary>
-        /// <param name="link">The AMPQ link to drain.</param>
+        /// <param name="link">The AMQP link to drain.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public async Task SafeDrainLinkAsync(ReceivingAmqpLink link, CancellationToken cancellationToken)
@@ -1586,6 +1586,97 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 throw LinkException;
             }
+        }
+
+        /// <summary>
+        /// Lists the IDs of sessions that have active messages or whose state was updated since the given time.
+        /// </summary>
+        public override async Task<IReadOnlyList<string>> GetMessageSessionsAsync(
+            DateTime lastUpdatedTime, int skip, int top, CancellationToken cancellationToken)
+        {
+            return await _retryPolicy.RunOperation(
+                static async (args, timeout, _) =>
+                    await args.receiver.GetMessageSessionsInternal(timeout, args.lastUpdatedTime, args.skip, args.top).ConfigureAwait(false),
+                (receiver: this, lastUpdatedTime, skip, top),
+                _connectionScope,
+                cancellationToken).ConfigureAwait(false);
+        }
+
+        internal async Task<IReadOnlyList<string>> GetMessageSessionsInternal(
+            TimeSpan timeout, DateTime lastUpdatedTime, int skip, int top)
+        {
+            var amqpRequestMessage = AmqpRequestMessage.CreateRequest(
+                ManagementConstants.Operations.GetMessageSessionsOperation, timeout, null);
+
+            // No associated link name -- this is an entity-level operation
+            amqpRequestMessage.Map[ManagementConstants.Properties.LastUpdatedTime] = lastUpdatedTime;
+            amqpRequestMessage.Map[ManagementConstants.Properties.Skip] = skip;
+            amqpRequestMessage.Map[ManagementConstants.Properties.Top] = top;
+
+            var amqpResponseMessage = await ExecuteRequest(timeout, amqpRequestMessage).ConfigureAwait(false);
+
+            if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
+            {
+                // 200 OK with no map body or no 'sessions-ids' key is a contract violation:
+                // the documented "no sessions" path is 204 No Content (handled below). Treat anything
+                // else as an error rather than dereferencing a null Map (NRE) or silently returning
+                // an empty result, which would mask protocol or server issues.
+                if (amqpResponseMessage.Map == null ||
+                    !amqpResponseMessage.Map.TryGetValue<object>(ManagementConstants.Properties.SessionIds, out var sessionsObj))
+                {
+                    throw new ServiceBusException(
+                        "The management response contained a missing or invalid 'sessions-ids' payload.",
+                        ServiceBusFailureReason.GeneralError);
+                }
+
+                if (sessionsObj is string[] sessionArray)
+                {
+                    for (int i = 0; i < sessionArray.Length; i++)
+                    {
+                        if (string.IsNullOrEmpty(sessionArray[i]))
+                        {
+                            throw new ServiceBusException(
+                                $"The management response contained an invalid session id at index {i}.",
+                                ServiceBusFailureReason.GeneralError);
+                        }
+                    }
+                    return sessionArray;
+                }
+                if (sessionsObj is object[] objectArray)
+                {
+                    var result = new string[objectArray.Length];
+                    for (int i = 0; i < objectArray.Length; i++)
+                    {
+                        if (objectArray[i] is not string sessionId || string.IsNullOrEmpty(sessionId))
+                        {
+                            throw new ServiceBusException(
+                                $"The management response contained an invalid session id at index {i}.",
+                                ServiceBusFailureReason.GeneralError);
+                        }
+                        result[i] = sessionId;
+                    }
+                    return result;
+                }
+
+                // Key was present but the value was an unexpected type.
+                throw new ServiceBusException(
+                    "The management response contained a missing or invalid 'sessions-ids' payload.",
+                    ServiceBusFailureReason.GeneralError);
+            }
+            else if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent)
+            {
+                return Array.Empty<string>();
+            }
+            else if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound &&
+                     Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition()))
+            {
+                // 404 + com.microsoft:message-not-found means no sessions exist for this entity.
+                // Other 404 conditions (e.g., entity not found) fall through to the exception below
+                // so callers can distinguish "no sessions" from "queue doesn't exist".
+                return Array.Empty<string>();
+            }
+
+            throw amqpResponseMessage.ToMessagingContractException();
         }
     }
 }
