@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
@@ -100,6 +98,8 @@ namespace Azure.AI.Projects
                     return new("DirectPipelinePassthrough");
                 case "Internal.AgentsPipelinePassthrough":
                     return new("AgentsPipelinePassthrough");
+                case "Internal.EndpointPipelineData":
+                    return new("EndpointPipelineData");
 
                 default:
                     throw new ArgumentException($"Unknown connection type for ID: {connectionId}");

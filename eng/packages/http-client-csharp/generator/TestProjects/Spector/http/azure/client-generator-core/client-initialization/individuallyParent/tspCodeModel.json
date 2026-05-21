@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "getStandaloneContentType",
+      "name": "GetStandaloneAccept",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -22,7 +22,7 @@
     {
       "$id": "3",
       "kind": "constant",
-      "name": "getStandaloneContentType1",
+      "name": "GetStandaloneAccept1",
       "namespace": "",
       "usage": "None",
       "valueType": {

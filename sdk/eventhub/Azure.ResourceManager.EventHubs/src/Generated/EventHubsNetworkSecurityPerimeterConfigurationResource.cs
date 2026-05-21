@@ -25,8 +25,6 @@ namespace Azure.ResourceManager.EventHubs
     {
         private readonly ClientDiagnostics _networkSecurityPerimeterConfigurationsClientDiagnostics;
         private readonly NetworkSecurityPerimeterConfigurations _networkSecurityPerimeterConfigurationsRestClient;
-        private readonly ClientDiagnostics _networkSecurityPerimeterConfigurationClientDiagnostics;
-        private readonly NetworkSecurityPerimeterConfiguration _networkSecurityPerimeterConfigurationRestClient;
         private readonly EventHubsNetworkSecurityPerimeterConfigurationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/networkSecurityPerimeterConfigurations";
@@ -53,8 +51,6 @@ namespace Azure.ResourceManager.EventHubs
             TryGetApiVersion(ResourceType, out string eventHubsNetworkSecurityPerimeterConfigurationApiVersion);
             _networkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
             _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Endpoint, eventHubsNetworkSecurityPerimeterConfigurationApiVersion ?? "2025-05-01-preview");
-            _networkSecurityPerimeterConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterConfigurationRestClient = new NetworkSecurityPerimeterConfiguration(_networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, Endpoint, eventHubsNetworkSecurityPerimeterConfigurationApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 

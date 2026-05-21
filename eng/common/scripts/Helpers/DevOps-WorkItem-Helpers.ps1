@@ -1205,6 +1205,7 @@ function Get-ReleasePlan-Link($releasePlanWorkItemId)
   $fields += "System.Title"
   $fields += "Custom.ReleasePlanLink"
   $fields += "Custom.ReleasePlanSubmittedby"
+  $fields += "Custom.ReleasePlanID"
 
   $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
   $query = "SELECT ${fieldList} FROM WorkItems WHERE [System.Id] = $releasePlanWorkItemId"

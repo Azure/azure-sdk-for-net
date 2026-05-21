@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -15,71 +16,52 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Environment Auth Token. </summary>
     public partial class ContainerAppEnvironmentAuthToken : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppEnvironmentAuthToken"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public ContainerAppEnvironmentAuthToken(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppEnvironmentAuthToken"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="token"> Auth token value. </param>
-        /// <param name="expireOn"> Token expiration date. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppEnvironmentAuthToken(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string token, DateTimeOffset? expireOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Environment auth token resource specific properties. </param>
+        internal ContainerAppEnvironmentAuthToken(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, EnvironmentAuthTokenProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            Token = token;
-            ExpireOn = expireOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerAppEnvironmentAuthToken"/> for deserialization. </summary>
-        internal ContainerAppEnvironmentAuthToken()
-        {
-        }
+        /// <summary> Environment auth token resource specific properties. </summary>
+        [WirePath("properties")]
+        internal EnvironmentAuthTokenProperties Properties { get; set; }
 
         /// <summary> Auth token value. </summary>
         [WirePath("properties.token")]
-        public string Token { get; }
+        public string Token
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Token;
+            }
+        }
+
         /// <summary> Token expiration date. </summary>
         [WirePath("properties.expires")]
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpireOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpireOn;
+            }
+        }
     }
 }

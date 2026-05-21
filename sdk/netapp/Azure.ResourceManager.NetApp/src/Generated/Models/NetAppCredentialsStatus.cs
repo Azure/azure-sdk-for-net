@@ -7,12 +7,12 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary>
     /// The bucket credentials status. There states:
-    ///
     /// "NoCredentialsSet": Access and Secret key pair have not been generated.
     /// "CredentialsExpired": Access and Secret key pair have expired.
     /// "Active": The certificate has been installed and credentials are unexpired.
@@ -20,41 +20,62 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppCredentialsStatus : IEquatable<NetAppCredentialsStatus>
     {
         private readonly string _value;
+        /// <summary> Access and Secret key pair have not been generated. </summary>
+        private const string NoCredentialsSetValue = "NoCredentialsSet";
+        /// <summary> Access and Secret key pair have expired. </summary>
+        private const string CredentialsExpiredValue = "CredentialsExpired";
+        /// <summary> The certificate has been installed on the bucket server and the bucket credentials are unexpired. </summary>
+        private const string ActiveValue = "Active";
 
         /// <summary> Initializes a new instance of <see cref="NetAppCredentialsStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetAppCredentialsStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoCredentialsSetValue = "NoCredentialsSet";
-        private const string CredentialsExpiredValue = "CredentialsExpired";
-        private const string ActiveValue = "Active";
+            _value = value;
+        }
 
         /// <summary> Access and Secret key pair have not been generated. </summary>
         public static NetAppCredentialsStatus NoCredentialsSet { get; } = new NetAppCredentialsStatus(NoCredentialsSetValue);
+
         /// <summary> Access and Secret key pair have expired. </summary>
         public static NetAppCredentialsStatus CredentialsExpired { get; } = new NetAppCredentialsStatus(CredentialsExpiredValue);
+
         /// <summary> The certificate has been installed on the bucket server and the bucket credentials are unexpired. </summary>
         public static NetAppCredentialsStatus Active { get; } = new NetAppCredentialsStatus(ActiveValue);
+
         /// <summary> Determines if two <see cref="NetAppCredentialsStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppCredentialsStatus left, NetAppCredentialsStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetAppCredentialsStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppCredentialsStatus left, NetAppCredentialsStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppCredentialsStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetAppCredentialsStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetAppCredentialsStatus(string value) => new NetAppCredentialsStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetAppCredentialsStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetAppCredentialsStatus?(string value) => value == null ? null : new NetAppCredentialsStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppCredentialsStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetAppCredentialsStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
