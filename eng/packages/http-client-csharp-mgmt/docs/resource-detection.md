@@ -144,7 +144,12 @@ For each candidate resource model `M` from Step 1:
       `string`-typed `{variable}` type segments — is rejected.
    5. Each **name** segment is either a literal (the resource is a
       singleton; the literal becomes its constant name) or a
-      `{variable}` parameter (the resource has a parameterized name).
+      `{variable}` parameter. A `{variable}` name parameter also represents
+      a singleton when its type is a closed enum with exactly one string
+      value; that value becomes the constant name and the canonical
+      instance path substitutes the parameter with that value. Other
+      `{variable}` name parameters mean the resource has a parameterized
+      name.
    6. The scope prefix must match one of the recognized shapes:
 
       | Scope prefix | Scope |
@@ -179,7 +184,8 @@ For each candidate resource model `M` from Step 1:
 
 4. **Derive the path-based facts intrinsic to each (expanded)
    resource.** Use the validated instance path to obtain `resourceType`,
-   the trailing `{name}` parameter (or the literal singleton name), the
+   the trailing `{name}` parameter (or the singleton name, derived from a
+   literal segment or a one-value closed enum name parameter), the
    `apiVersion`, and the `scope` from the prefix as classified in
    sub-step 2.6 above. See [*How a resource is named*](#how-a-resource-is-named).
    The resource's `parent` is resolved in
@@ -302,7 +308,7 @@ For each remaining operation `O`:
    - `O.path` is exactly `R.instancePath` with the trailing name segment
      removed. This is the normal list-by-parent/list-by-resource-group
      shape. Singleton resources are handled the same way: the collection
-     path is the singleton instance path with its literal singleton name
+     path is the singleton instance path with its constant singleton name
      removed.
    - `O.path` has the same ARM resource type as `R` and ends on that
      resource type. This covers scope-level list operations whose path

@@ -26,10 +26,10 @@ import {
   isResourceInstancePath,
   sortResourceMethods,
   RequestPath,
-  extractNameConstraintOverrides
+  extractNameConstraintOverrides,
+  resolveFixedEnumNameSegments
 } from "./resource-metadata.js";
 import {
-  DecoratorInfo,
   SdkHttpOperation,
   SdkMethod,
   SdkModelType
@@ -43,8 +43,7 @@ import {
   customAzureResource,
   extensionResourceOperationName,
   legacyExtensionResourceOperationName,
-  legacyResourceOperationName,
-  singleton
+  legacyResourceOperationName
 } from "./sdk-context-options.js";
 import {
   DecoratorApplication,
@@ -128,6 +127,7 @@ export function buildArmProviderSchema(
       operationPath: RequestPath;
     }>;
     explicitResourceName?: string;
+    singletonResourceName?: string;
   };
   const resourceEntries: ResourceEntry[] = [];
   const consumedMethodIds = new Set<string>();
@@ -139,15 +139,19 @@ export function buildArmProviderSchema(
     const respModelId = getDirectResponseModelId(sdkMethod);
     if (!respModelId || !resourceModelIds.has(respModelId)) continue;
 
-    const path = new RequestPath(method.operation.path);
-    if (!isResourceInstancePath(sdkMethod, path)) continue;
+    const rawPath = new RequestPath(method.operation.path);
+    if (!isResourceInstancePath(sdkMethod, rawPath)) continue;
+    // Canonicalizing fixed enum names changes resourceIdPattern from a parameter
+    // to a literal; track any full-regeneration API impact before broad rollout.
+    const path = resolveFixedEnumNameSegments(sdkMethod, rawPath);
 
     const entry: ResourceEntry = {
       modelId: respModelId,
       instancePath: path,
       client,
       methods: [],
-      explicitResourceName: getExplicitResourceName(sdkMethod)
+      explicitResourceName: getExplicitResourceName(sdkMethod),
+      singletonResourceName: path.singletonName
     };
     resourceEntries.push(entry);
     entry.methods.push({
@@ -201,8 +205,9 @@ export function buildArmProviderSchema(
       default:
         continue;
     }
-    const opPath = new RequestPath(method.operation.path);
-    if (!isResourceInstancePath(sdkMethod, opPath)) continue;
+    const rawOpPath = new RequestPath(method.operation.path);
+    if (!isResourceInstancePath(sdkMethod, rawOpPath)) continue;
+    const opPath = resolveFixedEnumNameSegments(sdkMethod, rawOpPath);
     const matched = resourceEntries.find((entry) =>
       entry.instancePath.equals(opPath)
     );
@@ -240,9 +245,7 @@ export function buildArmProviderSchema(
     const metadata: ResourceMetadata = {
       resourceIdPattern: entry.instancePath,
       resourceType: entry.instancePath.resourceType ?? "",
-      singletonResourceName: getSingletonResource(
-        model?.decorators?.find((d) => d.name == singleton)
-      ),
+      singletonResourceName: entry.singletonResourceName,
       scope: {
         kind: ResourceScopeKind.Tenant,
         scopeIdPattern: RequestPath.empty
@@ -384,13 +387,13 @@ function getDirectResponseModelId(
 }
 
 /**
- * Returns the page-item model id for a pageable method, or undefined when the
- * method is not pageable or returns a non-model item type.
+ * Returns the item model id for a method that returns a resource collection.
+ * Some ARM single-page list templates are represented as basic GET methods
+ * returning T[], so list detection must not be limited to paging/lropaging.
  */
-function getPagingItemModelIdLocal(
+function getCollectionItemModelIdLocal(
   method: SdkMethod<SdkHttpOperation>
 ): string | undefined {
-  if (method.kind !== "paging" && method.kind !== "lropaging") return undefined;
   const r = method.response?.type;
   if (r?.kind === "array" && r.valueType.kind === "model") {
     return (r.valueType as SdkModelType).crossLanguageDefinitionId;
@@ -431,11 +434,14 @@ function assignRemainingOperations(
     const methodId = method.crossLanguageDefinitionId;
     if (consumedMethodIds.has(methodId)) continue;
 
-    const operationPath = new RequestPath(method.operation.path);
     const sdkMethod = serviceMethods.get(methodId);
+    const rawOperationPath = new RequestPath(method.operation.path);
+    const operationPath = sdkMethod
+      ? resolveFixedEnumNameSegments(sdkMethod, rawOperationPath)
+      : rawOperationPath;
     const itemModelId =
       sdkMethod?.operation?.verb === "get"
-        ? getPagingItemModelIdLocal(sdkMethod)
+        ? getCollectionItemModelIdLocal(sdkMethod)
         : undefined;
     const listTarget =
       itemModelId && identifiedResourceModelIds.has(itemModelId)
@@ -685,15 +691,6 @@ function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
   return resourceModels;
 }
 
-function getSingletonResource(
-  decorator: DecoratorInfo | undefined
-): string | undefined {
-  if (!decorator) return undefined;
-  const singletonResource = decorator.arguments["keyValue"] as
-    | string
-    | undefined;
-  return singletonResource ?? "default";
-}
 /**
  * Builds an ArmScopeInfo from an operation path.
  * Extracts the scope ID pattern and resource type from the path's scope portion.
