@@ -10,6 +10,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
+    // Customization adds an ArmDataFactoryModelFactory factory method for the SDK-only
+    // DataFactoryManagedIdentityCredentialData type (see DataFactoryManagedIdentityCredentialResource
+    // for the dual-view rationale). Because the spec does not define a separate ManagedIdentityCredential
+    // resource, the MPG generator emits only DataFactoryServiceCredentialData on the model factory;
+    // this partial keeps the upstream factory signature available for mocking/back-compat consumers.
     public static partial class ArmDataFactoryModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="DataFactoryManagedIdentityCredentialData"/>. </summary>

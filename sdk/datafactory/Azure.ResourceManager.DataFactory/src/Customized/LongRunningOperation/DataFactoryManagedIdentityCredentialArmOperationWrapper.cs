@@ -11,6 +11,12 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataFactory
 {
+    // Internal LRO bridge used by the DataFactoryManagedIdentityCredential dual-view customization
+    // (see DataFactoryManagedIdentityCredentialResource for full rationale). The MPG generator only
+    // emits ArmOperation<DataFactoryServiceCredentialResource> for the spec-defined Credentials
+    // CreateOrUpdate LRO. This wrapper re-types it as ArmOperation<DataFactoryManagedIdentityCredentialResource>
+    // by lifting the inner operation's Value through DataFactoryManagedIdentityCredentialData so back-compat
+    // consumers calling CreateOrUpdate/Update on the specialized resource keep getting the specialized type.
     internal sealed class DataFactoryManagedIdentityCredentialArmOperationWrapper : ArmOperation<DataFactoryManagedIdentityCredentialResource>
     {
         private readonly ArmClient _client;

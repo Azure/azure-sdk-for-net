@@ -1,13 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Customization restores the DataFactoryManagedIdentityCredentialData back-compat surface
-// that was present in the upstream (pre-MPG) generator. The MPG migration replaced this
-// type with the generic DataFactoryServiceCredentialData (which uses the DataFactoryCredential
-// base type for Properties). This wrapper preserves the upstream public API by holding an
-// inner DataFactoryServiceCredentialData and projecting its Properties as the strongly-typed
-// DataFactoryManagedIdentityCredentialProperties subclass.
-
 #nullable disable
 
 using System;
@@ -20,9 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
+    // Customization restores the DataFactoryManagedIdentityCredentialData back-compat surface.
+    //
+    // Spec context: the DataFactory ARM provider exposes a single credential resource type
+    // `Microsoft.DataFactory/factories/credentials` (TypeSpec CredentialResource.tsp,
+    // swagger path /factories/{factoryName}/credentials/{credentialName}). Neither swagger nor Bicep
+    // defines a separate /managedIdentityCredentials/ resource type. `ManagedIdentityCredential`
+    // is only a discriminator value (type: "ManagedIdentity") of the polymorphic `Credential` model.
+    //
+    // The pre-MPG AutoRest SDK historically projected the same REST endpoint as two SDK-only "views":
+    // the general DataFactoryServiceCredential family and this specialized
+    // DataFactoryManagedIdentityCredential family. Because the second view has no spec representation,
+    // the MPG generator emits only the general view. This partial reconstructs the specialized data
+    // model as a thin delegating wrapper around DataFactoryServiceCredentialData, preserving the
+    // published API surface without altering wire serialization. Marked EditorBrowsableNever to
+    // discourage new usage.
     /// <summary>
     /// A class representing the DataFactoryManagedIdentityCredential data model.
-    /// Credential resource type specialized for managed-identity credentials.
+    /// Credential resource type.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class DataFactoryManagedIdentityCredentialData : ResourceData, IJsonModel<DataFactoryManagedIdentityCredentialData>, IPersistableModel<DataFactoryManagedIdentityCredentialData>

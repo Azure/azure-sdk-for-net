@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Customization adds the GetDataFactoryManagedIdentityCredentialResource extension method
-// that the upstream SDK previously exposed. The underlying resource type is restored as a
-// hidden ([EditorBrowsable(Never)]) SDK customization for back-compat only.
-
 #nullable disable
 
 using System;
@@ -15,6 +11,12 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Mocking
 {
+    // Customization adds GetDataFactoryManagedIdentityCredentialResource to the mockable ArmClient
+    // surface (see DataFactoryManagedIdentityCredentialResource for the dual-view rationale). The
+    // spec only defines one credential resource (Microsoft.DataFactory/factories/credentials), so
+    // the MPG generator does not emit a getter for the SDK-only DataFactoryManagedIdentityCredentialResource
+    // view. This partial re-exposes the upstream mocking entry point with [EditorBrowsable(Never)]
+    // so tests/mocks keep compiling without polluting IntelliSense.
     public partial class MockableDataFactoryArmClient
     {
         /// <summary>

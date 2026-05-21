@@ -9,6 +9,9 @@ using Azure;
 
 namespace Azure.ResourceManager.DataFactory
 {
+    // Async counterpart of SinglePagePageable<T>; see that file for the full rationale. Wraps the
+    // single Response<Wrapper> emitted by the MPG generator for spec-paged operations into a
+    // one-page AsyncPageable<TItem>, matching the pre-MPG AutoRest SDK API surface.
     internal sealed class SinglePageAsyncPageable<T> : AsyncPageable<T>
     {
         private readonly Response _rawResponse;

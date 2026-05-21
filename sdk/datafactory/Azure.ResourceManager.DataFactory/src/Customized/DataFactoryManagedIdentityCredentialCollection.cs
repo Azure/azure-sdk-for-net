@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Customization restores the DataFactoryManagedIdentityCredentialCollection back-compat surface
-// by delegating to the equivalent DataFactoryServiceCredentialCollection that targets the same
-// REST endpoint.
-
 #nullable disable
 
 using System;
@@ -17,8 +13,19 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataFactory
 {
+    // Customization restores the DataFactoryManagedIdentityCredentialCollection back-compat surface.
+    //
+    // Spec context: only one credential resource type exists in TypeSpec/swagger/Bicep
+    // (Microsoft.DataFactory/factories/credentials). The pre-MPG AutoRest SDK exposed a second
+    // SDK-only collection over the same REST endpoint to surface the specialized
+    // DataFactoryManagedIdentityCredential view. Since the spec does not define this view, the
+    // MPG generator does not emit it. This partial reconstructs the collection as a thin delegating
+    // wrapper over DataFactoryServiceCredentialCollection so list/get/create operations hit the
+    // same REST endpoint while preserving the published API surface.
     /// <summary>
     /// A class representing a collection of <see cref="DataFactoryManagedIdentityCredentialResource"/> and their operations.
+    /// Each <see cref="DataFactoryManagedIdentityCredentialResource"/> in the collection will belong to the same instance of <see cref="DataFactoryResource"/>.
+    /// To get a <see cref="DataFactoryManagedIdentityCredentialCollection"/> instance call the GetDataFactoryManagedIdentityCredentials method from an instance of <see cref="DataFactoryResource"/>.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class DataFactoryManagedIdentityCredentialCollection : ArmCollection, IEnumerable<DataFactoryManagedIdentityCredentialResource>, IAsyncEnumerable<DataFactoryManagedIdentityCredentialResource>

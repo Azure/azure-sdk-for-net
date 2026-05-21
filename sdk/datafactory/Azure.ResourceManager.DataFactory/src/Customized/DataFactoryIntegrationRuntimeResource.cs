@@ -15,6 +15,15 @@ using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
+    // Customization on DataFactoryIntegrationRuntimeResource restores two upstream back-compat surfaces:
+    //  1) `string ifNoneMatch` overloads of Get/GetAsync. The MPG generator types ARM common-types v6
+    //     If-None-Match as `Azure.ETag?`; these wrappers accept `string` for source compatibility.
+    //  2) `Pageable<T>` / `AsyncPageable<T>` for SSIS object metadata
+    //     (GetAllIntegrationRuntimeObjectMetadata) and Azure-SSIS outbound network dependencies
+    //     (GetOutboundNetworkDependencies). The spec marks these as paged via `x-ms-pageable`, but the
+    //     TypeSpec migration loses that marker so the MPG generator emits a single non-paged response.
+    //     These wrappers project that single response into a one-page Pageable to match the upstream
+    //     API. On-the-wire requests are unchanged.
     public partial class DataFactoryIntegrationRuntimeResource
     {
         [EditorBrowsable(EditorBrowsableState.Never)]

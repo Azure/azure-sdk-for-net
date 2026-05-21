@@ -15,6 +15,16 @@ using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
+    // Customization on DataFactoryResource restores two upstream back-compat surfaces dropped by MPG generation:
+    //  1) `string ifNoneMatch` overloads of Get/GetAsync. The MPG generator types ARM common-types v6
+    //     If-None-Match as `Azure.ETag?`; these wrappers accept `string` and forward to the ETag overload,
+    //     so existing call sites compile unchanged. The on-the-wire request is identical.
+    //  2) `Pageable<T>` / `AsyncPageable<T>` wrappers for query operations (QueryPipelineRuns,
+    //     QueryActivityRuns, QueryTriggerRuns, GetGitHubAccessToken). The spec marks these operations as
+    //     paged via `x-ms-pageable` in swagger but the TypeSpec migration loses that marker, so the MPG
+    //     generator emits each as a single non-paged `Response<...>`. These wrappers re-expose the original
+    //     Pageable surface by adapting the single response into a one-page enumerable.
+    // Marked [EditorBrowsable(Never)] where applicable to discourage new usage of the legacy signatures.
     public partial class DataFactoryResource
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -202,7 +212,10 @@ namespace Azure.ResourceManager.DataFactory
             private readonly CancellationToken _cancellationToken;
             public InternalActivityRunAsyncPageable(DataFactoryResource parent, string runId, RunFilterContent content, CancellationToken cancellationToken)
             {
-                _parent = parent; _runId = runId; _content = content; _cancellationToken = cancellationToken;
+                _parent = parent;
+                _runId = runId;
+                _content = content;
+                _cancellationToken = cancellationToken;
             }
             public override async System.Collections.Generic.IAsyncEnumerable<Page<PipelineActivityRunInformation>> AsPages(string continuationToken = null, int? pageSizeHint = null)
             {
@@ -231,7 +244,9 @@ namespace Azure.ResourceManager.DataFactory
             private readonly CancellationToken _cancellationToken;
             public InternalPipelineRunsAsyncPageable(DataFactoryResource parent, RunFilterContent content, CancellationToken cancellationToken)
             {
-                _parent = parent; _content = content; _cancellationToken = cancellationToken;
+                _parent = parent;
+                _content = content;
+                _cancellationToken = cancellationToken;
             }
             public override async System.Collections.Generic.IAsyncEnumerable<Page<DataFactoryPipelineRunInfo>> AsPages(string continuationToken = null, int? pageSizeHint = null)
             {
@@ -259,7 +274,8 @@ namespace Azure.ResourceManager.DataFactory
             private readonly CancellationToken _cancellationToken;
             public InternalPrivateLinkResourcesAsyncPageable(DataFactoryResource parent, CancellationToken cancellationToken)
             {
-                _parent = parent; _cancellationToken = cancellationToken;
+                _parent = parent;
+                _cancellationToken = cancellationToken;
             }
             public override async System.Collections.Generic.IAsyncEnumerable<Page<DataFactoryPrivateLinkResource>> AsPages(string continuationToken = null, int? pageSizeHint = null)
             {
@@ -288,7 +304,9 @@ namespace Azure.ResourceManager.DataFactory
             private readonly CancellationToken _cancellationToken;
             public InternalTriggerRunsAsyncPageable(DataFactoryResource parent, RunFilterContent content, CancellationToken cancellationToken)
             {
-                _parent = parent; _content = content; _cancellationToken = cancellationToken;
+                _parent = parent;
+                _content = content;
+                _cancellationToken = cancellationToken;
             }
             public override async System.Collections.Generic.IAsyncEnumerable<Page<DataFactoryTriggerRun>> AsPages(string continuationToken = null, int? pageSizeHint = null)
             {
@@ -322,7 +340,9 @@ namespace Azure.ResourceManager.DataFactory
             private readonly CancellationToken _cancellationToken;
             public InternalTriggersAsyncPageable(DataFactoryResource parent, TriggerFilterContent content, CancellationToken cancellationToken)
             {
-                _parent = parent; _content = content; _cancellationToken = cancellationToken;
+                _parent = parent;
+                _content = content;
+                _cancellationToken = cancellationToken;
             }
             public override async System.Collections.Generic.IAsyncEnumerable<Page<DataFactoryTriggerResource>> AsPages(string continuationToken = null, int? pageSizeHint = null)
             {

@@ -15,6 +15,11 @@ using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
+    // Customization restores back-compat overloads on DataFactoryChangeDataCaptureResource where the MPG generator
+    // changed the If-None-Match/If-Match header parameter type from `string` to `ETag?` (ARM common-types v6
+    // models them as `Azure.ETag`). These wrappers convert `string` -> `ETag?` so existing call sites compile
+    // unchanged and the on-the-wire request is identical. Marked [EditorBrowsable(Never)] to discourage
+    // new usage of the legacy signatures.
     public partial class DataFactoryChangeDataCaptureResource
     {
         [EditorBrowsable(EditorBrowsableState.Never)]

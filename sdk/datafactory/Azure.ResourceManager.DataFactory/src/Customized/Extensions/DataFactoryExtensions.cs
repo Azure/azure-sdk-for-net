@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Customization adds back-compat extension methods that the upstream SDK previously exposed.
-
 #nullable disable
 
 using System;
@@ -16,6 +14,20 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataFactory
 {
+    // Customization restores two groups of back-compat extension surfaces on the static
+    // DataFactoryExtensions class:
+    //
+    // 1. GetDataFactoryManagedIdentityCredentialResource(...) - The Microsoft.DataFactory spec only
+    //    defines one credential resource (factories/credentials) in TypeSpec/swagger/Bicep, so the
+    //    MPG generator does not emit a getter for the SDK-only DataFactoryManagedIdentityCredentialResource
+    //    view (see DataFactoryManagedIdentityCredentialResource for the full dual-view rationale).
+    //    This partial re-exposes the upstream extension method by delegating through the mockable
+    //    ArmClient surface to the equivalent service-credential resource.
+    //
+    // 2. GetDataFactory / GetDataFactoryAsync(..., string ifNoneMatch, ...) - The MPG generator now
+    //    types the ifNoneMatch parameter as ETag? because the property is modeled as an ETag header.
+    //    The pre-MPG SDK accepted a plain string. These wrappers convert string -> ETag? to keep the
+    //    old call sites source-compatible.
     public static partial class DataFactoryExtensions
     {
         private static MockableDataFactoryArmClient GetMockableDataFactoryArmClientForManagedIdentityCredential(ArmClient client)

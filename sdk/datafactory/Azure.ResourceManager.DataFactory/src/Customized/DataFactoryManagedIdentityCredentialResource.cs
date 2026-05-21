@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Customization restores the DataFactoryManagedIdentityCredentialResource back-compat surface
-// by delegating all CRUD operations to the equivalent DataFactoryServiceCredentialResource.
-// Both types share the same Microsoft.DataFactory/factories/credentials REST endpoint.
-
 #nullable disable
 
 using System;
@@ -19,9 +15,21 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataFactory
 {
+    // Customization restores the DataFactoryManagedIdentityCredentialResource back-compat surface.
+    //
+    // Spec context: the ARM resource for credentials is `Microsoft.DataFactory/factories/credentials`
+    // (single resource type; no `/managedIdentityCredentials/` sibling path in TypeSpec
+    // CredentialResource.tsp, swagger, or Bicep). The pre-MPG AutoRest SDK projected the same REST endpoint
+    // as two SDK-only "views": DataFactoryServiceCredentialResource and this specialized
+    // DataFactoryManagedIdentityCredentialResource. Because the second view has no spec representation,
+    // the MPG generator emits only the general resource. This partial reconstructs the specialized resource
+    // as a thin delegating wrapper around DataFactoryServiceCredentialResource so all CRUD/LRO operations
+    // hit the same REST endpoint while the published API surface is preserved.
     /// <summary>
-    /// A Class representing a DataFactoryManagedIdentityCredential along with the instance
-    /// operations that can be performed on it.
+    /// A Class representing a DataFactoryManagedIdentityCredential along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataFactoryManagedIdentityCredentialResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataFactoryManagedIdentityCredentialResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource"/> using the GetDataFactoryManagedIdentityCredential method.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class DataFactoryManagedIdentityCredentialResource : ArmResource, IJsonModel<DataFactoryManagedIdentityCredentialData>, IPersistableModel<DataFactoryManagedIdentityCredentialData>

@@ -15,6 +15,11 @@ using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
+    // Customization restores back-compat overloads on DataFactoryManagedVirtualNetworkCollection where the MPG generator changed the
+    // If-Match/If-None-Match header parameter type from `string` to `ETag?` (ARM common-types v6 models them
+    // as `Azure.ETag`). Wrappers convert `string` -> `ETag?` for CreateOrUpdate/Get/Exists so existing call
+    // sites compile unchanged; the on-the-wire request is identical. Marked [EditorBrowsable(Never)] to
+    // discourage new usage of the legacy signatures.
     public partial class DataFactoryManagedVirtualNetworkCollection
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
