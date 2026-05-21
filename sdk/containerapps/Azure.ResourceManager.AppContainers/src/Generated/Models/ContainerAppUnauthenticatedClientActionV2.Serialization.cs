@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     internal static partial class ContainerAppUnauthenticatedClientActionV2Extensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ContainerAppUnauthenticatedClientActionV2 value) => value switch
         {
             ContainerAppUnauthenticatedClientActionV2.RedirectToLoginPage => "RedirectToLoginPage",
@@ -21,25 +20,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContainerAppUnauthenticatedClientActionV2 value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static ContainerAppUnauthenticatedClientActionV2 ToContainerAppUnauthenticatedClientActionV2(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RedirectToLoginPage"))
-            {
-                return ContainerAppUnauthenticatedClientActionV2.RedirectToLoginPage;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AllowAnonymous"))
-            {
-                return ContainerAppUnauthenticatedClientActionV2.AllowAnonymous;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Return401"))
-            {
-                return ContainerAppUnauthenticatedClientActionV2.Return401;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Return403"))
-            {
-                return ContainerAppUnauthenticatedClientActionV2.Return403;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RedirectToLoginPage")) return ContainerAppUnauthenticatedClientActionV2.RedirectToLoginPage;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AllowAnonymous")) return ContainerAppUnauthenticatedClientActionV2.AllowAnonymous;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Return401")) return ContainerAppUnauthenticatedClientActionV2.Return401;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Return403")) return ContainerAppUnauthenticatedClientActionV2.Return403;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContainerAppUnauthenticatedClientActionV2 value.");
         }
     }

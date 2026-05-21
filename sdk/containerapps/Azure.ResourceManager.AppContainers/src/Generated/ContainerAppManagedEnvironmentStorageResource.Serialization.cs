@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary></summary>
     public partial class ContainerAppManagedEnvironmentStorageResource : IJsonModel<ContainerAppManagedEnvironmentStorageData>
     {
-        private static IJsonModel<ContainerAppManagedEnvironmentStorageData> s_dataDeserializationInstance;
+        private static ContainerAppManagedEnvironmentStorageData s_dataDeserializationInstance;
+        private static ContainerAppManagedEnvironmentStorageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<ContainerAppManagedEnvironmentStorageData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ContainerAppManagedEnvironmentStorageData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerAppManagedEnvironmentStorageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppManagedEnvironmentStorageData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerAppManagedEnvironmentStorageData IJsonModel<ContainerAppManagedEnvironmentStorageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        ContainerAppManagedEnvironmentStorageData IJsonModel<ContainerAppManagedEnvironmentStorageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppManagedEnvironmentStorageData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ContainerAppManagedEnvironmentStorageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerAppManagedEnvironmentStorageData>(Data, options, AzureResourceManagerAppContainersContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         ContainerAppManagedEnvironmentStorageData IPersistableModel<ContainerAppManagedEnvironmentStorageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerAppManagedEnvironmentStorageData>(data, options, AzureResourceManagerAppContainersContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerAppManagedEnvironmentStorageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<ContainerAppManagedEnvironmentStorageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppManagedEnvironmentStorageData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

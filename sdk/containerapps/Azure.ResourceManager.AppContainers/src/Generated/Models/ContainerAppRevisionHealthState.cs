@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct ContainerAppRevisionHealthState : IEquatable<ContainerAppRevisionHealthState>
     {
         private readonly string _value;
-        /// <summary> Healthy. </summary>
-        private const string HealthyValue = "Healthy";
-        /// <summary> Unhealthy. </summary>
-        private const string UnhealthyValue = "Unhealthy";
-        /// <summary> None. </summary>
-        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppRevisionHealthState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppRevisionHealthState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string HealthyValue = "Healthy";
+        private const string UnhealthyValue = "Unhealthy";
+        private const string NoneValue = "None";
 
         /// <summary> Healthy. </summary>
         public static ContainerAppRevisionHealthState Healthy { get; } = new ContainerAppRevisionHealthState(HealthyValue);
-
         /// <summary> Unhealthy. </summary>
         public static ContainerAppRevisionHealthState Unhealthy { get; } = new ContainerAppRevisionHealthState(UnhealthyValue);
-
         /// <summary> None. </summary>
         public static ContainerAppRevisionHealthState None { get; } = new ContainerAppRevisionHealthState(NoneValue);
-
         /// <summary> Determines if two <see cref="ContainerAppRevisionHealthState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppRevisionHealthState left, ContainerAppRevisionHealthState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ContainerAppRevisionHealthState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppRevisionHealthState left, ContainerAppRevisionHealthState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ContainerAppRevisionHealthState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppRevisionHealthState"/>. </summary>
         public static implicit operator ContainerAppRevisionHealthState(string value) => new ContainerAppRevisionHealthState(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerAppRevisionHealthState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppRevisionHealthState?(string value) => value == null ? null : new ContainerAppRevisionHealthState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppRevisionHealthState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ContainerAppRevisionHealthState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -67,20 +67,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastOperation))
-            {
-                writer.WritePropertyName("lastOperation"u8);
-                writer.WriteObjectValue(LastOperation, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
-            {
-                writer.WritePropertyName("configurationState"u8);
-                writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -115,9 +105,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             NetworkRackType? networkRackType = default;
             ResourceIdentifier networkFabricId = default;
             IReadOnlyList<ResourceIdentifier> networkDevices = default;
-            LastOperationProperties lastOperation = default;
             NetworkFabricProvisioningState? provisioningState = default;
-            NetworkFabricConfigurationState? configurationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,15 +202,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             networkDevices = array;
                             continue;
                         }
-                        if (property0.NameEquals("lastOperation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
-                            continue;
-                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -230,15 +209,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                                 continue;
                             }
                             provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("configurationState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -261,9 +231,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 networkRackType,
                 networkFabricId,
                 networkDevices ?? new ChangeTrackingList<ResourceIdentifier>(),
-                lastOperation,
                 provisioningState,
-                configurationState,
                 serializedAdditionalRawData);
         }
 

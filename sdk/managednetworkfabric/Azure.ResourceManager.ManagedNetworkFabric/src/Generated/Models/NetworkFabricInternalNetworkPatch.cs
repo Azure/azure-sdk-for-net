@@ -58,6 +58,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
         /// <param name="connectedIPv4Subnets"> List of Connected IPv4 Subnets. </param>
         /// <param name="connectedIPv6Subnets"> List of connected IPv6 Subnets. </param>
+        /// <param name="importRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
+        /// <param name="exportRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
         /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
         /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
@@ -65,15 +67,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="isMonitoringEnabled"> To check whether monitoring of internal network is enabled or not. </param>
         /// <param name="bgpConfiguration"> BGP configuration properties. </param>
         /// <param name="staticRouteConfiguration"> Static Route Configuration properties. </param>
-        /// <param name="nativeIPv4PrefixLimit"> Native IPv4 Prefix Limit Configuration properties. </param>
-        /// <param name="nativeIPv6PrefixLimit"> Native IPv6 Prefix Limit Configuration properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricInternalNetworkPatch(string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, BgpConfiguration bgpConfiguration, StaticRouteConfiguration staticRouteConfiguration, NativeIPv4PrefixLimitPatchProperties nativeIPv4PrefixLimit, NativeIPv6PrefixLimitPatchProperties nativeIPv6PrefixLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkFabricInternalNetworkPatch(string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, BgpConfiguration bgpConfiguration, StaticRouteConfiguration staticRouteConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Annotation = annotation;
             Mtu = mtu;
             ConnectedIPv4Subnets = connectedIPv4Subnets;
             ConnectedIPv6Subnets = connectedIPv6Subnets;
+            ImportRoutePolicyId = importRoutePolicyId;
+            ExportRoutePolicyId = exportRoutePolicyId;
             ImportRoutePolicy = importRoutePolicy;
             ExportRoutePolicy = exportRoutePolicy;
             IngressAclId = ingressAclId;
@@ -81,8 +83,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IsMonitoringEnabled = isMonitoringEnabled;
             BgpConfiguration = bgpConfiguration;
             StaticRouteConfiguration = staticRouteConfiguration;
-            NativeIPv4PrefixLimit = nativeIPv4PrefixLimit;
-            NativeIPv6PrefixLimit = nativeIPv6PrefixLimit;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -94,6 +94,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public IList<ConnectedSubnet> ConnectedIPv4Subnets { get; }
         /// <summary> List of connected IPv6 Subnets. </summary>
         public IList<ConnectedSubnet> ConnectedIPv6Subnets { get; }
+        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
+        public ResourceIdentifier ImportRoutePolicyId { get; set; }
+        /// <summary> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </summary>
+        public ResourceIdentifier ExportRoutePolicyId { get; set; }
         /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
         public ImportRoutePolicy ImportRoutePolicy { get; set; }
         /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
@@ -108,30 +112,5 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public BgpConfiguration BgpConfiguration { get; set; }
         /// <summary> Static Route Configuration properties. </summary>
         public StaticRouteConfiguration StaticRouteConfiguration { get; set; }
-        /// <summary> Native IPv4 Prefix Limit Configuration properties. </summary>
-        internal NativeIPv4PrefixLimitPatchProperties NativeIPv4PrefixLimit { get; set; }
-        /// <summary> Prefix limits. </summary>
-        public IList<PrefixLimitPatchProperties> NativeIPv4PrefixLimits
-        {
-            get
-            {
-                if (NativeIPv4PrefixLimit is null)
-                    NativeIPv4PrefixLimit = new NativeIPv4PrefixLimitPatchProperties();
-                return NativeIPv4PrefixLimit.PrefixLimits;
-            }
-        }
-
-        /// <summary> Native IPv6 Prefix Limit Configuration properties. </summary>
-        internal NativeIPv6PrefixLimitPatchProperties NativeIPv6PrefixLimit { get; set; }
-        /// <summary> Prefix limits. </summary>
-        public IList<PrefixLimitPatchProperties> NativeIPv6PrefixLimits
-        {
-            get
-            {
-                if (NativeIPv6PrefixLimit is null)
-                    NativeIPv6PrefixLimit = new NativeIPv6PrefixLimitPatchProperties();
-                return NativeIPv6PrefixLimit.PrefixLimits;
-            }
-        }
     }
 }

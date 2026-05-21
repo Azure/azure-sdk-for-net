@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     internal static partial class ContainerAppForwardProxyConventionExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ContainerAppForwardProxyConvention value) => value switch
         {
             ContainerAppForwardProxyConvention.NoProxy => "NoProxy",
@@ -20,21 +19,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContainerAppForwardProxyConvention value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static ContainerAppForwardProxyConvention ToContainerAppForwardProxyConvention(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoProxy"))
-            {
-                return ContainerAppForwardProxyConvention.NoProxy;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard"))
-            {
-                return ContainerAppForwardProxyConvention.Standard;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom"))
-            {
-                return ContainerAppForwardProxyConvention.Custom;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoProxy")) return ContainerAppForwardProxyConvention.NoProxy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return ContainerAppForwardProxyConvention.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom")) return ContainerAppForwardProxyConvention.Custom;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContainerAppForwardProxyConvention value.");
         }
     }

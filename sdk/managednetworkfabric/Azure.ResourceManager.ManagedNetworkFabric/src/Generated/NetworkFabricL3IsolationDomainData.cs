@@ -69,38 +69,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: "True" | "False". </param>
         /// <param name="redistributeStaticRoutes"> Advertise Static Routes. Ex: "True" | "False". </param>
         /// <param name="aggregateRouteConfiguration"> Aggregate route configurations. </param>
         /// <param name="connectedSubnetRoutePolicy"> Connected Subnet RoutePolicy. </param>
         /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
-        /// <param name="staticRoutePolicy"> Static Route - route policy. </param>
-        /// <param name="uniqueRdConfiguration"> Unique Route Distinguisher configuration. </param>
-        /// <param name="v4RoutePrefixLimit"> IPv4 VRF Limit configuration. </param>
-        /// <param name="v6RoutePrefixLimit"> IPv6 VRF Limit configuration. </param>
-        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
-        /// <param name="exportPolicyConfiguration"> BMP Export Policy configuration. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricL3IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, ResourceIdentifier networkFabricId, StaticRoutePolicy staticRoutePolicy, L3UniqueRouteDistinguisherProperties uniqueRdConfiguration, RoutePrefixLimitProperties v4RoutePrefixLimit, RoutePrefixLimitProperties v6RoutePrefixLimit, LastOperationProperties lastOperation, BmpExportPolicyProperties exportPolicyConfiguration, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricL3IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, ResourceIdentifier networkFabricId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Identity = identity;
             Annotation = annotation;
             RedistributeConnectedSubnets = redistributeConnectedSubnets;
             RedistributeStaticRoutes = redistributeStaticRoutes;
             AggregateRouteConfiguration = aggregateRouteConfiguration;
             ConnectedSubnetRoutePolicy = connectedSubnetRoutePolicy;
             NetworkFabricId = networkFabricId;
-            StaticRoutePolicy = staticRoutePolicy;
-            UniqueRdConfiguration = uniqueRdConfiguration;
-            V4RoutePrefixLimit = v4RoutePrefixLimit;
-            V6RoutePrefixLimit = v6RoutePrefixLimit;
-            LastOperation = lastOperation;
-            ExportPolicyConfiguration = exportPolicyConfiguration;
             ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
             AdministrativeState = administrativeState;
@@ -112,8 +98,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Advertise Connected Subnets. Ex: "True" | "False". </summary>
@@ -126,58 +110,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy { get; set; }
         /// <summary> ARM Resource ID of the Network Fabric. </summary>
         public ResourceIdentifier NetworkFabricId { get; set; }
-        /// <summary> Static Route - route policy. </summary>
-        internal StaticRoutePolicy StaticRoutePolicy { get; set; }
-        /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
-        public L3ExportRoutePolicy StaticRouteExportRoutePolicy
-        {
-            get => StaticRoutePolicy is null ? default : StaticRoutePolicy.StaticRouteExportRoutePolicy;
-            set
-            {
-                if (StaticRoutePolicy is null)
-                    StaticRoutePolicy = new StaticRoutePolicy();
-                StaticRoutePolicy.StaticRouteExportRoutePolicy = value;
-            }
-        }
-
-        /// <summary> Unique Route Distinguisher configuration. </summary>
-        internal L3UniqueRouteDistinguisherProperties UniqueRdConfiguration { get; set; }
-        /// <summary> List of Unique Route Distinguisher addresses. </summary>
-        public IReadOnlyList<string> UniqueRds
-        {
-            get
-            {
-                if (UniqueRdConfiguration is null)
-                    UniqueRdConfiguration = new L3UniqueRouteDistinguisherProperties();
-                return UniqueRdConfiguration.UniqueRds;
-            }
-        }
-
-        /// <summary> IPv4 VRF Limit configuration. </summary>
-        public RoutePrefixLimitProperties V4RoutePrefixLimit { get; set; }
-        /// <summary> IPv6 VRF Limit configuration. </summary>
-        public RoutePrefixLimitProperties V6RoutePrefixLimit { get; set; }
-        /// <summary> Details of the last operation performed on the resource. </summary>
-        internal LastOperationProperties LastOperation { get; }
-        /// <summary> Details status of the last operation performed on the resource. </summary>
-        public string LastOperationDetails
-        {
-            get => LastOperation?.Details;
-        }
-
-        /// <summary> BMP Export Policy configuration. </summary>
-        internal BmpExportPolicyProperties ExportPolicyConfiguration { get; set; }
-        /// <summary> Export Policy for the BGP Monitoring Protocol (BMP) Configuration. </summary>
-        public IList<BmpExportPolicy> ExportPolicies
-        {
-            get
-            {
-                if (ExportPolicyConfiguration is null)
-                    ExportPolicyConfiguration = new BmpExportPolicyProperties();
-                return ExportPolicyConfiguration.ExportPolicies;
-            }
-        }
-
         /// <summary> Configuration state of the resource. </summary>
         public NetworkFabricConfigurationState? ConfigurationState { get; }
         /// <summary> Provisioning state of the resource. </summary>

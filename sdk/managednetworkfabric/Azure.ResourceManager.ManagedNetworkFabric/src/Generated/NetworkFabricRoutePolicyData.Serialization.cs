@@ -50,24 +50,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            writer.WritePropertyName("statements"u8);
-            writer.WriteStartArray();
-            foreach (var item in Statements)
+            if (Optional.IsCollectionDefined(Statements))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("statements"u8);
+                writer.WriteStartArray();
+                foreach (var item in Statements)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             writer.WritePropertyName("networkFabricId"u8);
             writer.WriteStringValue(NetworkFabricId);
             if (Optional.IsDefined(AddressFamilyType))
             {
                 writer.WritePropertyName("addressFamilyType"u8);
                 writer.WriteStringValue(AddressFamilyType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastOperation))
-            {
-                writer.WritePropertyName("lastOperation"u8);
-                writer.WriteObjectValue(LastOperation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
@@ -118,7 +116,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             IList<RoutePolicyStatementProperties> statements = default;
             ResourceIdentifier networkFabricId = default;
             AddressFamilyType? addressFamilyType = default;
-            LastOperationProperties lastOperation = default;
             NetworkFabricConfigurationState? configurationState = default;
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
@@ -194,6 +191,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("statements"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             List<RoutePolicyStatementProperties> array = new List<RoutePolicyStatementProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -214,15 +215,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                                 continue;
                             }
                             addressFamilyType = new AddressFamilyType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("lastOperation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("configurationState"u8))
@@ -270,10 +262,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 location,
                 annotation,
                 defaultAction,
-                statements,
+                statements ?? new ChangeTrackingList<RoutePolicyStatementProperties>(),
                 networkFabricId,
                 addressFamilyType,
-                lastOperation,
                 configurationState,
                 provisioningState,
                 administrativeState,

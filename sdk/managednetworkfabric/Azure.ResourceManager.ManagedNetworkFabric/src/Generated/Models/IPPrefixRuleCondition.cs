@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string LesserThanOrEqualToValue = "LesserThanOrEqualTo";
         private const string RangeValue = "Range";
 
-        /// <summary> Condition-EqualTo. </summary>
+        /// <summary> EqualTo. </summary>
         public static IPPrefixRuleCondition EqualTo { get; } = new IPPrefixRuleCondition(EqualToValue);
-        /// <summary> Condition-GreaterThanOrEqualTo. </summary>
+        /// <summary> GreaterThanOrEqualTo. </summary>
         public static IPPrefixRuleCondition GreaterThanOrEqualTo { get; } = new IPPrefixRuleCondition(GreaterThanOrEqualToValue);
-        /// <summary> Condition-LesserThanOrEqualTo. </summary>
+        /// <summary> LesserThanOrEqualTo. </summary>
         public static IPPrefixRuleCondition LesserThanOrEqualTo { get; } = new IPPrefixRuleCondition(LesserThanOrEqualToValue);
-        /// <summary> Condition-Range. </summary>
+        /// <summary> Range. </summary>
         public static IPPrefixRuleCondition Range { get; } = new IPPrefixRuleCondition(RangeValue);
         /// <summary> Determines if two <see cref="IPPrefixRuleCondition"/> values are the same. </summary>
         public static bool operator ==(IPPrefixRuleCondition left, IPPrefixRuleCondition right) => left.Equals(right);

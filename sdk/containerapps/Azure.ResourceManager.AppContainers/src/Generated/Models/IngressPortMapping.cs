@@ -7,15 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Port mappings of container app ingress. </summary>
     public partial class IngressPortMapping
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IngressPortMapping"/>. </summary>
         /// <param name="external"> Specifies whether the app port is accessible outside of the environment. </param>
@@ -30,23 +58,26 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="external"> Specifies whether the app port is accessible outside of the environment. </param>
         /// <param name="targetPort"> Specifies the port user's container listens on. </param>
         /// <param name="exposedPort"> Specifies the exposed port for the target port. If not specified, it defaults to target port. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IngressPortMapping(bool external, int targetPort, int? exposedPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IngressPortMapping(bool external, int targetPort, int? exposedPort, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             External = external;
             TargetPort = targetPort;
             ExposedPort = exposedPort;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IngressPortMapping"/> for deserialization. </summary>
+        internal IngressPortMapping()
+        {
         }
 
         /// <summary> Specifies whether the app port is accessible outside of the environment. </summary>
         [WirePath("external")]
         public bool External { get; set; }
-
         /// <summary> Specifies the port user's container listens on. </summary>
         [WirePath("targetPort")]
         public int TargetPort { get; set; }
-
         /// <summary> Specifies the exposed port for the target port. If not specified, it defaults to target port. </summary>
         [WirePath("exposedPort")]
         public int? ExposedPort { get; set; }

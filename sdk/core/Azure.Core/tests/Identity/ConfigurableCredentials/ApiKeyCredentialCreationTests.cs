@@ -158,7 +158,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ApiKey
         }
 
         [Test]
-        public void CreatesCredentialFromConfiguration_GetAzureClientSettings_ApiKey_DispatchesViaCredentialSettings()
+        public void CreatesCredentialFromConfiguration_WithAzureCredential_E2E()
         {
             var config = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
@@ -170,39 +170,8 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ApiKey
                 .Build();
 
             var settings = config.GetAzureClientSettings<E2ETestSettings>("MyClient");
-
-            // AzureCredentialResolver intentionally does not claim inline ApiKey
-            // sections. Consuming libraries dispatch on
-            // Credential.CredentialSource == "apikeycredential" and read
-            // Credential.Key directly at client-construction time.
-            Assert.IsNull(settings.CredentialProvider, "CredentialProvider should be null for inline ApiKey via GetAzureClientSettings");
-            Assert.IsNotNull(settings.Credential, "Credential settings should still be bound");
-            Assert.AreEqual("apikeycredential", settings.Credential.CredentialSource);
-            Assert.AreEqual("test-api-key", settings.Credential.Key);
-
-            // AuthenticationPolicy.Create can still build a policy from the
-            // bound CredentialSettings using the inline Key (no TokenProvider needed).
-            var policy = AuthenticationPolicy.Create(settings);
-            Assert.IsNotNull(policy);
-        }
-
-        [Test]
-        public void CreatesCredentialFromConfiguration_WithAzureCredential_E2E()
-        {
-            // Explicit .WithAzureCredential() wraps an inline ApiKey section in
-            // ConfigurableCredential via ConfigurableCredentialCache.
-            var config = new ConfigurationBuilder()
-                .AddInMemoryCollection(new Dictionary<string, string>
-                {
-                    ["MyClient:Endpoint"] = "https://test.example.com",
-                    ["MyClient:Credential:CredentialSource"] = "ApiKey",
-                    ["MyClient:Credential:Key"] = "test-api-key",
-                })
-                .Build();
-
-            var settings = config.GetClientSettings<E2ETestSettings>("MyClient").WithAzureCredential();
-            Assert.IsNotNull(settings.CredentialProvider, "CredentialProvider should be set by WithAzureCredential for ApiKey");
-            Assert.IsInstanceOf<ConfigurableCredential>(settings.CredentialProvider, "WithAzureCredential returns ConfigurableCredential");
+            Assert.IsNotNull(settings.CredentialProvider, "CredentialProvider should be set for ApiKey");
+            Assert.IsInstanceOf<ConfigurableCredential>(settings.CredentialProvider, "CredentialProvider should be ConfigurableCredential for ApiKey");
 
             var credential = (ConfigurableCredential)settings.CredentialProvider;
             Assert.IsNull(GetTokenCredential(credential), "ApiKey credential should not have an inner TokenCredential");

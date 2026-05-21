@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPExtendedCommunityPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
-        internal NetworkFabricIPExtendedCommunityPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string annotation, IList<IPExtendedCommunityRule> ipExtendedCommunityRules) : base(tags, serializedAdditionalRawData)
+        /// <param name="annotation"> Switch configuration description. </param>
+        internal NetworkFabricIPExtendedCommunityPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<IPExtendedCommunityRule> ipExtendedCommunityRules, string annotation) : base(tags, serializedAdditionalRawData)
         {
-            Annotation = annotation;
             IPExtendedCommunityRules = ipExtendedCommunityRules;
+            Annotation = annotation;
         }
 
-        /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
         /// <summary> List of IP Extended Community Rules. </summary>
         public IList<IPExtendedCommunityRule> IPExtendedCommunityRules { get; }
+        /// <summary> Switch configuration description. </summary>
+        public string Annotation { get; set; }
     }
 }

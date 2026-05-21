@@ -12,37 +12,34 @@ The `Microsoft.Extensions.Configuration` and `Microsoft.Extensions.DependencyInj
 
 - `Azure.Core.ClientOptions` constructor that accepts `IConfigurationSection`
 - `Azure.Core.DiagnosticsOptions` constructor that accepts `IConfigurationSection`
-- `Azure.Identity.ConfigurationExtensions` - Extension methods for `IConfiguration`, `IServiceCollection`, and `IHostApplicationBuilder`
-  - `GetAzureClientSettings<T>` - Creates client settings from configuration with Azure credential resolution. Overloads accept caller-supplied `CredentialResolver` chains in addition to the built-in `AzureCredentialResolver`.
-  - `GetAzureCredentialSettings` - Returns a `CredentialSettings` bound from a credential section, with `TokenProvider` populated by the built-in `AzureCredentialResolver` when it claims the section. For inline ApiKey sections `Key` is populated and `TokenProvider` is `null`, letting callers dispatch on either shape without binding a `ClientSettings`. Returns `null` only when the section does not exist; never throws.
-  - `AddAzureCredentialResolver` (on `IServiceCollection` and `IHostApplicationBuilder`) - Idempotently registers the `AzureCredentialResolver` in DI so libraries that want their own credential sources can compose with the Azure built-in chain.
-  - `AddAzureClient<TClient, TSettings>` - Registers an Azure client in the DI container. The built-in `AzureCredentialResolver` is added automatically.
-  - `AddKeyedAzureClient<TClient, TSettings>` - Registers a keyed Azure client in the DI container. The built-in `AzureCredentialResolver` is added automatically.
-- `Azure.Identity.AzureCredentialResolver` - A `System.ClientModel.Primitives.CredentialResolver` that resolves Azure credential configuration sections (api-key, chained, single-source) into `TokenCredential` instances. Used implicitly by the Azure-flavored extensions; can also be registered directly via `AddCredentialResolver<AzureCredentialResolver>()` or `AddAzureCredentialResolver()`.
+- `Azure.Identity.ConfigurationExtensions` - Extension methods for `IConfiguration` and `IHostApplicationBuilder`
+  - `GetAzureClientSettings<T>` - Creates client settings from configuration with Azure credential resolution
+  - `AddAzureClient<TClient, TSettings>` - Registers an Azure client in the DI container (automatically calls `WithAzureCredential`)
+  - `AddKeyedAzureClient<TClient, TSettings>` - Registers a keyed Azure client in the DI container (automatically calls `WithAzureCredential`)
+  - `WithAzureCredential` (on `ClientSettings`) - Configures settings to resolve Azure credentials from configuration
+  - `WithAzureCredential` (on `IClientBuilder`) - Configures the client builder to resolve Azure credentials from configuration
 
-### Example Usage
+### How AddAzureClient and WithAzureCredential Work Together
 
-See [ConfigurationAndDependencyInjection.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/docs/ConfigurationAndDependencyInjection.md) for detailed examples, including the
-[Custom Credential Resolvers](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/docs/ConfigurationAndDependencyInjection.md#for-library-authors-custom-credential-resolvers)
-section for library authors who want to publish their own credential sources.
+The `AddAzureClient` extension methods are convenience wrappers that call the base `AddClient` method from `System.ClientModel` and then automatically call `WithAzureCredential`. This means you don't need to manually configure Azure credential resolution — it's handled for you.
 
-### Composing with the Base `AddClient`
+If you use the base `AddClient` method directly, you can call `WithAzureCredential` explicitly to get the same behavior:
 
-`AddAzureClient` is sugar that registers the `AzureCredentialResolver` for you and
-then calls the base `AddClient`. If you prefer to call `AddClient` directly, register
-the resolver explicitly first to get the same behavior:
-
-```C# Snippet:Azure_Core_Samples_AzureClient_AddAzureClientEquivalence
+```csharp
 #pragma warning disable SCME0002
 
 // These two are equivalent:
 builder.AddAzureClient<MyClient, MyClientSettings>("MyClient");
 
-builder.AddAzureCredentialResolver();
-builder.AddClient<MyClient, MyClientSettings>("MyClient");
+builder.AddClient<MyClient, MyClientSettings>("MyClient")
+    .WithAzureCredential();
 
 #pragma warning restore SCME0002
 ```
+
+### Example Usage
+
+See [ConfigurationAndDependencyInjection.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ConfigurationAndDependencyInjection.md) for detailed examples.
 
 ### Suppression
 

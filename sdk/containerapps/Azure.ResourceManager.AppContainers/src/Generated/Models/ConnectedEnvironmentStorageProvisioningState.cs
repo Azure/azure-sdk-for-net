@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -15,72 +14,47 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct ConnectedEnvironmentStorageProvisioningState : IEquatable<ConnectedEnvironmentStorageProvisioningState>
     {
         private readonly string _value;
-        /// <summary> Succeeded. </summary>
-        private const string SucceededValue = "Succeeded";
-        /// <summary> Failed. </summary>
-        private const string FailedValue = "Failed";
-        /// <summary> Canceled. </summary>
-        private const string CanceledValue = "Canceled";
-        /// <summary> InProgress. </summary>
-        private const string InProgressValue = "InProgress";
-        /// <summary> Deleting. </summary>
-        private const string DeletingValue = "Deleting";
 
         /// <summary> Initializes a new instance of <see cref="ConnectedEnvironmentStorageProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectedEnvironmentStorageProvisioningState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string SucceededValue = "Succeeded";
+        private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
+        private const string InProgressValue = "InProgress";
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Succeeded. </summary>
         public static ConnectedEnvironmentStorageProvisioningState Succeeded { get; } = new ConnectedEnvironmentStorageProvisioningState(SucceededValue);
-
         /// <summary> Failed. </summary>
         public static ConnectedEnvironmentStorageProvisioningState Failed { get; } = new ConnectedEnvironmentStorageProvisioningState(FailedValue);
-
         /// <summary> Canceled. </summary>
         public static ConnectedEnvironmentStorageProvisioningState Canceled { get; } = new ConnectedEnvironmentStorageProvisioningState(CanceledValue);
-
         /// <summary> InProgress. </summary>
         public static ConnectedEnvironmentStorageProvisioningState InProgress { get; } = new ConnectedEnvironmentStorageProvisioningState(InProgressValue);
-
         /// <summary> Deleting. </summary>
         public static ConnectedEnvironmentStorageProvisioningState Deleting { get; } = new ConnectedEnvironmentStorageProvisioningState(DeletingValue);
-
         /// <summary> Determines if two <see cref="ConnectedEnvironmentStorageProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectedEnvironmentStorageProvisioningState left, ConnectedEnvironmentStorageProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ConnectedEnvironmentStorageProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectedEnvironmentStorageProvisioningState left, ConnectedEnvironmentStorageProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ConnectedEnvironmentStorageProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectedEnvironmentStorageProvisioningState"/>. </summary>
         public static implicit operator ConnectedEnvironmentStorageProvisioningState(string value) => new ConnectedEnvironmentStorageProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="ConnectedEnvironmentStorageProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ConnectedEnvironmentStorageProvisioningState?(string value) => value == null ? null : new ConnectedEnvironmentStorageProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectedEnvironmentStorageProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ConnectedEnvironmentStorageProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

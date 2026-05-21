@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string NoneValue = "None";
         private const string GreValue = "GRE";
 
-        /// <summary> Encapsulation-None. </summary>
+        /// <summary> None. </summary>
         public static IsolationDomainEncapsulationType None { get; } = new IsolationDomainEncapsulationType(NoneValue);
-        /// <summary> Encapsulation-GRE. </summary>
+        /// <summary> GRE. </summary>
         public static IsolationDomainEncapsulationType Gre { get; } = new IsolationDomainEncapsulationType(GreValue);
         /// <summary> Determines if two <see cref="IsolationDomainEncapsulationType"/> values are the same. </summary>
         public static bool operator ==(IsolationDomainEncapsulationType left, IsolationDomainEncapsulationType right) => left.Equals(right);

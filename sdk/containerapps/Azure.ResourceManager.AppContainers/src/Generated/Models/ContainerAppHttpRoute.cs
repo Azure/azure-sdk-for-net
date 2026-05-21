@@ -7,15 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Http Routes configuration, including paths to match on and whether or not rewrites are to be done. </summary>
+    /// <summary> Http Routes, including paths to match on and whether or not rewrites are to be done. </summary>
     public partial class ContainerAppHttpRoute
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppHttpRoute"/>. </summary>
         public ContainerAppHttpRoute()
@@ -25,36 +53,28 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ContainerAppHttpRoute"/>. </summary>
         /// <param name="match"> Conditions route will match on. </param>
         /// <param name="action"> Once route is matched, what is the desired action. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppHttpRoute(ContainerAppHttpRouteMatch match, HttpRouteAction action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppHttpRoute(ContainerAppHttpRouteMatch match, HttpRouteAction action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Match = match;
             Action = action;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Conditions route will match on. </summary>
         [WirePath("match")]
         public ContainerAppHttpRouteMatch Match { get; set; }
-
         /// <summary> Once route is matched, what is the desired action. </summary>
-        [WirePath("action")]
         internal HttpRouteAction Action { get; set; }
-
         /// <summary> Rewrite prefix, default is no rewrites. </summary>
         [WirePath("action.prefixRewrite")]
         public string ActionPrefixRewrite
         {
-            get
-            {
-                return Action is null ? default : Action.PrefixRewrite;
-            }
+            get => Action is null ? default : Action.PrefixRewrite;
             set
             {
                 if (Action is null)
-                {
                     Action = new HttpRouteAction();
-                }
                 Action.PrefixRewrite = value;
             }
         }

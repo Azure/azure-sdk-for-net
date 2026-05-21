@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string UngracefulRebootWithZtpValue = "UngracefulRebootWithZTP";
         private const string UngracefulRebootWithoutZtpValue = "UngracefulRebootWithoutZTP";
 
-        /// <summary> RebootType GracefulRebootWithZTP. </summary>
+        /// <summary> GracefulRebootWithZTP. </summary>
         public static NetworkDeviceRebootType GracefulRebootWithZtp { get; } = new NetworkDeviceRebootType(GracefulRebootWithZtpValue);
-        /// <summary> RebootType GracefulRebootWithoutZTP. </summary>
+        /// <summary> GracefulRebootWithoutZTP. </summary>
         public static NetworkDeviceRebootType GracefulRebootWithoutZtp { get; } = new NetworkDeviceRebootType(GracefulRebootWithoutZtpValue);
-        /// <summary> RebootType UngracefulRebootWithZTP. </summary>
+        /// <summary> UngracefulRebootWithZTP. </summary>
         public static NetworkDeviceRebootType UngracefulRebootWithZtp { get; } = new NetworkDeviceRebootType(UngracefulRebootWithZtpValue);
-        /// <summary> RebootType UngracefulRebootWithoutZTP. </summary>
+        /// <summary> UngracefulRebootWithoutZTP. </summary>
         public static NetworkDeviceRebootType UngracefulRebootWithoutZtp { get; } = new NetworkDeviceRebootType(UngracefulRebootWithoutZtpValue);
         /// <summary> Determines if two <see cref="NetworkDeviceRebootType"/> values are the same. </summary>
         public static bool operator ==(NetworkDeviceRebootType left, NetworkDeviceRebootType right) => left.Equals(right);

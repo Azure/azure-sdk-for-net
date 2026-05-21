@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary></summary>
     public partial class LogicAppResource : IJsonModel<LogicAppData>
     {
-        private static IJsonModel<LogicAppData> s_dataDeserializationInstance;
+        private static LogicAppData s_dataDeserializationInstance;
+        private static LogicAppData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<LogicAppData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LogicAppData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LogicAppData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LogicAppData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LogicAppData IJsonModel<LogicAppData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        LogicAppData IJsonModel<LogicAppData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogicAppData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<LogicAppData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LogicAppData>(Data, options, AzureResourceManagerAppContainersContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         LogicAppData IPersistableModel<LogicAppData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogicAppData>(data, options, AzureResourceManagerAppContainersContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LogicAppData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<LogicAppData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogicAppData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

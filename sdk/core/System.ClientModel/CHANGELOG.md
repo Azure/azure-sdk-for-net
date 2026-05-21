@@ -4,9 +4,6 @@
 
 ### Features Added
 
-- Added experimental `FileBinaryContent` type for representing a file part within an HTTP request payload, typically as part of a `multipart/form-data` request.
-- Added experimental `MultiPartFormContent` type for building `multipart/form-data` request payloads.
-
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -57,7 +54,7 @@
 ### Features Added
 
 - Added `JsonPatch.EnumerateArray` method that iterates over JSON array elements at a specified path, yielding each element as raw UTF-8 bytes.
-- Added `CollectionResult<T>.FromPages` and `AsyncCollectionResult<T>.FromPages` static factory methods that create collection result instances from pre-existing pages of values for testing.
+- Added `CollectionResult<T>.FromPages` and `AsyncCollectionResult<T>.FromPages` static factory methods that create collection result instances from pre-existing pages of values for testing. 
 - Added `IsReadOnly` property to `ClientPipelineOptions` and `ClientLoggingOptions` so callers can check whether options can still be modified without catching an exception.
 - Added `Clone()` method to `ClientPipelineOptions` and `ClientLoggingOptions` that creates a new mutable instance from an existing instance that may be read-only.
 - Added `ConfigurationSchema.json` to the NuGet package via the MSBuild `JsonSchemaSegment` feature, enabling automatic JSON IntelliSense and validation for `appsettings.json` when configuring System.ClientModel-based clients.

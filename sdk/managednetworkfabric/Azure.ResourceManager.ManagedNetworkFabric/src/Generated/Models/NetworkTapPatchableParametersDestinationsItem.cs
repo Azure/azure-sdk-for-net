@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The network tap destination properties. </summary>
+    /// <summary> Destination. </summary>
     public partial class NetworkTapPatchableParametersDestinationsItem : NetworkTapDestinationProperties
     {
         /// <summary> Initializes a new instance of <see cref="NetworkTapPatchableParametersDestinationsItem"/>. </summary>

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct ContainerAppIPRuleAction : IEquatable<ContainerAppIPRuleAction>
     {
         private readonly string _value;
-        /// <summary> Allow. </summary>
-        private const string AllowValue = "Allow";
-        /// <summary> Deny. </summary>
-        private const string DenyValue = "Deny";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppIPRuleAction"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppIPRuleAction(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string AllowValue = "Allow";
+        private const string DenyValue = "Deny";
 
         /// <summary> Allow. </summary>
         public static ContainerAppIPRuleAction Allow { get; } = new ContainerAppIPRuleAction(AllowValue);
-
         /// <summary> Deny. </summary>
         public static ContainerAppIPRuleAction Deny { get; } = new ContainerAppIPRuleAction(DenyValue);
-
         /// <summary> Determines if two <see cref="ContainerAppIPRuleAction"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppIPRuleAction left, ContainerAppIPRuleAction right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ContainerAppIPRuleAction"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppIPRuleAction left, ContainerAppIPRuleAction right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ContainerAppIPRuleAction"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppIPRuleAction"/>. </summary>
         public static implicit operator ContainerAppIPRuleAction(string value) => new ContainerAppIPRuleAction(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerAppIPRuleAction"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppIPRuleAction?(string value) => value == null ? null : new ContainerAppIPRuleAction(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppIPRuleAction other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ContainerAppIPRuleAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct ContainerAppAvailableWorkloadProfileApplicability : IEquatable<ContainerAppAvailableWorkloadProfileApplicability>
     {
         private readonly string _value;
-        /// <summary> LocationDefault. </summary>
-        private const string LocationDefaultValue = "LocationDefault";
-        /// <summary> Custom. </summary>
-        private const string CustomValue = "Custom";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppAvailableWorkloadProfileApplicability"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppAvailableWorkloadProfileApplicability(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string LocationDefaultValue = "LocationDefault";
+        private const string CustomValue = "Custom";
 
         /// <summary> LocationDefault. </summary>
         public static ContainerAppAvailableWorkloadProfileApplicability LocationDefault { get; } = new ContainerAppAvailableWorkloadProfileApplicability(LocationDefaultValue);
-
         /// <summary> Custom. </summary>
         public static ContainerAppAvailableWorkloadProfileApplicability Custom { get; } = new ContainerAppAvailableWorkloadProfileApplicability(CustomValue);
-
         /// <summary> Determines if two <see cref="ContainerAppAvailableWorkloadProfileApplicability"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppAvailableWorkloadProfileApplicability left, ContainerAppAvailableWorkloadProfileApplicability right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ContainerAppAvailableWorkloadProfileApplicability"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppAvailableWorkloadProfileApplicability left, ContainerAppAvailableWorkloadProfileApplicability right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ContainerAppAvailableWorkloadProfileApplicability"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppAvailableWorkloadProfileApplicability"/>. </summary>
         public static implicit operator ContainerAppAvailableWorkloadProfileApplicability(string value) => new ContainerAppAvailableWorkloadProfileApplicability(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerAppAvailableWorkloadProfileApplicability"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppAvailableWorkloadProfileApplicability?(string value) => value == null ? null : new ContainerAppAvailableWorkloadProfileApplicability(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppAvailableWorkloadProfileApplicability other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ContainerAppAvailableWorkloadProfileApplicability other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

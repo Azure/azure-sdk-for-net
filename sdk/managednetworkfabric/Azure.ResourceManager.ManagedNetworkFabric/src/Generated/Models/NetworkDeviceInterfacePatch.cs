@@ -51,23 +51,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfacePatch"/>. </summary>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="additionalDescription"> Additional description of the interface. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkDeviceInterfacePatch(NetworkFabricManagedServiceIdentityPatch identity, string annotation, string additionalDescription, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkDeviceInterfacePatch(string annotation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Identity = identity;
             Annotation = annotation;
-            AdditionalDescription = additionalDescription;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
-        /// <summary> Additional description of the interface. </summary>
-        public string AdditionalDescription { get; set; }
     }
 }

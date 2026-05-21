@@ -7,15 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Targets - Container App Names, Revision Names, Labels. </summary>
     public partial class ContainerAppHttpRouteTarget
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppHttpRouteTarget"/>. </summary>
         /// <param name="containerApp"> Container App Name to route requests to. </param>
@@ -30,32 +58,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ContainerAppHttpRouteTarget"/>. </summary>
         /// <param name="containerApp"> Container App Name to route requests to. </param>
         /// <param name="revision"> Revision to route requests to. </param>
-        /// <param name="label"> Label/Revision to route requests to. </param>
-        /// <param name="weight"> Weighted routing. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppHttpRouteTarget(string containerApp, string revision, string label, int? weight, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="label"> Label to route requests to. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppHttpRouteTarget(string containerApp, string revision, string label, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContainerApp = containerApp;
             Revision = revision;
             Label = label;
-            Weight = weight;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppHttpRouteTarget"/> for deserialization. </summary>
+        internal ContainerAppHttpRouteTarget()
+        {
         }
 
         /// <summary> Container App Name to route requests to. </summary>
         [WirePath("containerApp")]
         public string ContainerApp { get; set; }
-
         /// <summary> Revision to route requests to. </summary>
         [WirePath("revision")]
         public string Revision { get; set; }
-
-        /// <summary> Label/Revision to route requests to. </summary>
+        /// <summary> Label to route requests to. </summary>
         [WirePath("label")]
         public string Label { get; set; }
-
-        /// <summary> Weighted routing. </summary>
-        [WirePath("weight")]
-        public int? Weight { get; set; }
     }
 }

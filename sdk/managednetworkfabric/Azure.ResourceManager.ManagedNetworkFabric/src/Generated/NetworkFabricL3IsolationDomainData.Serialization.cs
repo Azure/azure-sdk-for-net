@@ -38,11 +38,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Annotation))
@@ -72,36 +67,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
             writer.WritePropertyName("networkFabricId"u8);
             writer.WriteStringValue(NetworkFabricId);
-            if (Optional.IsDefined(StaticRoutePolicy))
-            {
-                writer.WritePropertyName("staticRouteRoutePolicy"u8);
-                writer.WriteObjectValue(StaticRoutePolicy, options);
-            }
-            if (Optional.IsDefined(UniqueRdConfiguration))
-            {
-                writer.WritePropertyName("uniqueRdConfiguration"u8);
-                writer.WriteObjectValue(UniqueRdConfiguration, options);
-            }
-            if (Optional.IsDefined(V4RoutePrefixLimit))
-            {
-                writer.WritePropertyName("v4routePrefixLimit"u8);
-                writer.WriteObjectValue(V4RoutePrefixLimit, options);
-            }
-            if (Optional.IsDefined(V6RoutePrefixLimit))
-            {
-                writer.WritePropertyName("v6routePrefixLimit"u8);
-                writer.WriteObjectValue(V6RoutePrefixLimit, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastOperation))
-            {
-                writer.WritePropertyName("lastOperation"u8);
-                writer.WriteObjectValue(LastOperation, options);
-            }
-            if (Optional.IsDefined(ExportPolicyConfiguration))
-            {
-                writer.WritePropertyName("exportPolicyConfiguration"u8);
-                writer.WriteObjectValue(ExportPolicyConfiguration, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);
@@ -140,7 +105,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -153,12 +117,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             AggregateRouteConfiguration aggregateRouteConfiguration = default;
             ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = default;
             ResourceIdentifier networkFabricId = default;
-            StaticRoutePolicy staticRouteRoutePolicy = default;
-            L3UniqueRouteDistinguisherProperties uniqueRdConfiguration = default;
-            RoutePrefixLimitProperties v4routePrefixLimit = default;
-            RoutePrefixLimitProperties v6routePrefixLimit = default;
-            LastOperationProperties lastOperation = default;
-            BmpExportPolicyProperties exportPolicyConfiguration = default;
             NetworkFabricConfigurationState? configurationState = default;
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
@@ -166,15 +124,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                    continue;
-                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -273,60 +222,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             networkFabricId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("staticRouteRoutePolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            staticRouteRoutePolicy = StaticRoutePolicy.DeserializeStaticRoutePolicy(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("uniqueRdConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            uniqueRdConfiguration = L3UniqueRouteDistinguisherProperties.DeserializeL3UniqueRouteDistinguisherProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("v4routePrefixLimit"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            v4routePrefixLimit = RoutePrefixLimitProperties.DeserializeRoutePrefixLimitProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("v6routePrefixLimit"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            v6routePrefixLimit = RoutePrefixLimitProperties.DeserializeRoutePrefixLimitProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("lastOperation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("exportPolicyConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            exportPolicyConfiguration = BmpExportPolicyProperties.DeserializeBmpExportPolicyProperties(property0.Value, options);
-                            continue;
-                        }
                         if (property0.NameEquals("configurationState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -370,19 +265,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                identity,
                 annotation,
                 redistributeConnectedSubnets,
                 redistributeStaticRoutes,
                 aggregateRouteConfiguration,
                 connectedSubnetRoutePolicy,
                 networkFabricId,
-                staticRouteRoutePolicy,
-                uniqueRdConfiguration,
-                v4routePrefixLimit,
-                v6routePrefixLimit,
-                lastOperation,
-                exportPolicyConfiguration,
                 configurationState,
                 provisioningState,
                 administrativeState,

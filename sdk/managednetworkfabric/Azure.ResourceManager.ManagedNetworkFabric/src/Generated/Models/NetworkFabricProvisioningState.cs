@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Accepted Provisioning State. </summary>
+        /// <summary> Accepted. </summary>
         public static NetworkFabricProvisioningState Accepted { get; } = new NetworkFabricProvisioningState(AcceptedValue);
-        /// <summary> Succeeded Provisioning State. </summary>
+        /// <summary> Succeeded. </summary>
         public static NetworkFabricProvisioningState Succeeded { get; } = new NetworkFabricProvisioningState(SucceededValue);
-        /// <summary> Updating Provisioning State. </summary>
+        /// <summary> Updating. </summary>
         public static NetworkFabricProvisioningState Updating { get; } = new NetworkFabricProvisioningState(UpdatingValue);
-        /// <summary> Deleting Provisioning State. </summary>
+        /// <summary> Deleting. </summary>
         public static NetworkFabricProvisioningState Deleting { get; } = new NetworkFabricProvisioningState(DeletingValue);
-        /// <summary> Failed Provisioning State. </summary>
+        /// <summary> Failed. </summary>
         public static NetworkFabricProvisioningState Failed { get; } = new NetworkFabricProvisioningState(FailedValue);
-        /// <summary> Canceled Provisioning State. </summary>
+        /// <summary> Canceled. </summary>
         public static NetworkFabricProvisioningState Canceled { get; } = new NetworkFabricProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="NetworkFabricProvisioningState"/> values are the same. </summary>
         public static bool operator ==(NetworkFabricProvisioningState left, NetworkFabricProvisioningState right) => left.Equals(right);

@@ -34,7 +34,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            NetworkFabricIPCommunityData data = new NetworkFabricIPCommunityData(new AzureLocation(TestEnvironment.Location), new[]
+            NetworkFabricIPCommunityData data = new NetworkFabricIPCommunityData(new AzureLocation(TestEnvironment.Location))
+            {
+                Annotation = "annotation",
+                IPCommunityRules =
                 {
                     new IPCommunityRule( CommunityActionType.Permit, 4155123341, new string[] { "1:1" })
                     {
@@ -43,9 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                             WellKnownCommunity.Internet
                         },
                     }
-                })
-            {
-                Annotation = "annotation",
+                },
                 Tags =
                 {
                     ["keyId"] = "KeyValue",

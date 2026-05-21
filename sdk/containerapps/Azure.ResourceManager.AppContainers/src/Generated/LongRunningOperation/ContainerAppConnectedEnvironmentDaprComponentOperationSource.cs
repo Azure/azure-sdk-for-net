@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary></summary>
-    internal partial class ContainerAppConnectedEnvironmentDaprComponentOperationSource : IOperationSource<ContainerAppConnectedEnvironmentDaprComponentResource>
+    internal class ContainerAppConnectedEnvironmentDaprComponentOperationSource : IOperationSource<ContainerAppConnectedEnvironmentDaprComponentResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal ContainerAppConnectedEnvironmentDaprComponentOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         ContainerAppConnectedEnvironmentDaprComponentResource IOperationSource<ContainerAppConnectedEnvironmentDaprComponentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ContainerAppDaprComponentData data = ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<ContainerAppDaprComponentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
             return new ContainerAppConnectedEnvironmentDaprComponentResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<ContainerAppConnectedEnvironmentDaprComponentResource> IOperationSource<ContainerAppConnectedEnvironmentDaprComponentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ContainerAppDaprComponentData data = ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ContainerAppConnectedEnvironmentDaprComponentResource(_client, data);
+            var data = ModelReaderWriter.Read<ContainerAppDaprComponentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
+            return await Task.FromResult(new ContainerAppConnectedEnvironmentDaprComponentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

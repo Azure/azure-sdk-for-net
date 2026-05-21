@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             MatchConfigurations = new ChangeTrackingList<AccessControlListMatchConfiguration>();
             DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
-            ControlPlaneAclConfiguration = new ChangeTrackingList<ControlPlaneAclPatchProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListPatch"/>. </summary>
@@ -29,22 +28,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
         /// <param name="matchConfigurations"> List of match configurations. </param>
         /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
-        /// <param name="controlPlaneAclConfiguration"> Access Control List (ACL) configurations. </param>
-        /// <param name="aclType"> Access Control List (ACL) Type. </param>
-        /// <param name="deviceRole"> Device Role. </param>
-        /// <param name="globalAccessControlListActions"> Global Access Control List (ACL) actions. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        internal NetworkFabricAccessControlListPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, IList<ControlPlaneAclPatchProperties> controlPlaneAclConfiguration, NetworkFabricAclType? aclType, NetworkFabricDeviceRole? deviceRole, GlobalAccessControlListActionPatchProperties globalAccessControlListActions, string annotation) : base(tags, serializedAdditionalRawData)
+        internal NetworkFabricAccessControlListPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, string annotation) : base(tags, serializedAdditionalRawData)
         {
             ConfigurationType = configurationType;
             AclsUri = aclsUri;
             DefaultAction = defaultAction;
             MatchConfigurations = matchConfigurations;
             DynamicMatchConfigurations = dynamicMatchConfigurations;
-            ControlPlaneAclConfiguration = controlPlaneAclConfiguration;
-            AclType = aclType;
-            DeviceRole = deviceRole;
-            GlobalAccessControlListActions = globalAccessControlListActions;
             Annotation = annotation;
         }
 
@@ -58,26 +49,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public IList<AccessControlListMatchConfiguration> MatchConfigurations { get; }
         /// <summary> List of dynamic match configurations. </summary>
         public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get; }
-        /// <summary> Access Control List (ACL) configurations. </summary>
-        public IList<ControlPlaneAclPatchProperties> ControlPlaneAclConfiguration { get; }
-        /// <summary> Access Control List (ACL) Type. </summary>
-        public NetworkFabricAclType? AclType { get; set; }
-        /// <summary> Device Role. </summary>
-        public NetworkFabricDeviceRole? DeviceRole { get; set; }
-        /// <summary> Global Access Control List (ACL) actions. </summary>
-        internal GlobalAccessControlListActionPatchProperties GlobalAccessControlListActions { get; set; }
-        /// <summary> Configuration to enable or disable ACL action count. </summary>
-        public NetworkFabricBooleanValue? GlobalAccessControlListActionsEnableCount
-        {
-            get => GlobalAccessControlListActions is null ? default : GlobalAccessControlListActions.EnableCount;
-            set
-            {
-                if (GlobalAccessControlListActions is null)
-                    GlobalAccessControlListActions = new GlobalAccessControlListActionPatchProperties();
-                GlobalAccessControlListActions.EnableCount = value;
-            }
-        }
-
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
     }

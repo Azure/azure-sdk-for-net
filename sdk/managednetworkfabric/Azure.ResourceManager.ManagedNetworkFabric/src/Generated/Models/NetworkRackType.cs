@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string ComputeValue = "Compute";
         private const string CombinedValue = "Combined";
 
-        /// <summary> NetworkRackType-Aggregate. </summary>
+        /// <summary> Aggregate. </summary>
         public static NetworkRackType Aggregate { get; } = new NetworkRackType(AggregateValue);
-        /// <summary> NetworkRackType-Compute. </summary>
+        /// <summary> Compute. </summary>
         public static NetworkRackType Compute { get; } = new NetworkRackType(ComputeValue);
-        /// <summary> NetworkRackType-Combined. </summary>
+        /// <summary> Combined. </summary>
         public static NetworkRackType Combined { get; } = new NetworkRackType(CombinedValue);
         /// <summary> Determines if two <see cref="NetworkRackType"/> values are the same. </summary>
         public static bool operator ==(NetworkRackType left, NetworkRackType right) => left.Equals(right);

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct LogicAppWorkflowKind : IEquatable<LogicAppWorkflowKind>
     {
         private readonly string _value;
-        /// <summary> Stateful. </summary>
-        private const string StatefulValue = "Stateful";
-        /// <summary> Stateless. </summary>
-        private const string StatelessValue = "Stateless";
-        /// <summary> Agentic. </summary>
-        private const string AgenticValue = "Agentic";
 
         /// <summary> Initializes a new instance of <see cref="LogicAppWorkflowKind"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LogicAppWorkflowKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string StatefulValue = "Stateful";
+        private const string StatelessValue = "Stateless";
+        private const string AgenticValue = "Agentic";
 
         /// <summary> Stateful. </summary>
         public static LogicAppWorkflowKind Stateful { get; } = new LogicAppWorkflowKind(StatefulValue);
-
         /// <summary> Stateless. </summary>
         public static LogicAppWorkflowKind Stateless { get; } = new LogicAppWorkflowKind(StatelessValue);
-
         /// <summary> Agentic. </summary>
         public static LogicAppWorkflowKind Agentic { get; } = new LogicAppWorkflowKind(AgenticValue);
-
         /// <summary> Determines if two <see cref="LogicAppWorkflowKind"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LogicAppWorkflowKind left, LogicAppWorkflowKind right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="LogicAppWorkflowKind"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LogicAppWorkflowKind left, LogicAppWorkflowKind right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="LogicAppWorkflowKind"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogicAppWorkflowKind"/>. </summary>
         public static implicit operator LogicAppWorkflowKind(string value) => new LogicAppWorkflowKind(value);
 
-        /// <summary> Converts a string to a <see cref="LogicAppWorkflowKind"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator LogicAppWorkflowKind?(string value) => value == null ? null : new LogicAppWorkflowKind(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LogicAppWorkflowKind other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(LogicAppWorkflowKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

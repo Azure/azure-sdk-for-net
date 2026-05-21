@@ -72,15 +72,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="location"> The location. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="ruleProperties"> Rules for the InternetGateways. </param>
-        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="internetGatewayIds"> List of Internet Gateway resource Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricInternetGatewayRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, InternetGatewayRules ruleProperties, LastOperationProperties lastOperation, NetworkFabricProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> internetGatewayIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricInternetGatewayRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, InternetGatewayRules ruleProperties, NetworkFabricProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> internetGatewayIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             RuleProperties = ruleProperties;
-            LastOperation = lastOperation;
             ProvisioningState = provisioningState;
             InternetGatewayIds = internetGatewayIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -95,14 +93,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public string Annotation { get; set; }
         /// <summary> Rules for the InternetGateways. </summary>
         public InternetGatewayRules RuleProperties { get; set; }
-        /// <summary> Details of the last operation performed on the resource. </summary>
-        internal LastOperationProperties LastOperation { get; }
-        /// <summary> Details status of the last operation performed on the resource. </summary>
-        public string LastOperationDetails
-        {
-            get => LastOperation?.Details;
-        }
-
         /// <summary> Provisioning state of the resource. </summary>
         public NetworkFabricProvisioningState? ProvisioningState { get; }
         /// <summary> List of Internet Gateway resource Id. </summary>
