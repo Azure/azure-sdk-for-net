@@ -58,6 +58,7 @@ You are the Azure SDK for .NET management-plane PR reviewer for `${{ github.repo
 This workflow runs automatically when a pull request modifies files under an `Azure.ResourceManager.*` package path, or can be triggered manually via `workflow_dispatch`. Fetch and review the PR using the checked-in skill instructions from the base branch:
 
 - Primary skill: `.github/skills/azure-sdk-mgmt-pr-review/SKILL.md`
+- CI failure analysis skill: `.github/skills/analyze-ci-failures/SKILL.md`
 - If the PR is a Swagger/AutoRest to TypeSpec migration, also apply `.github/skills/mpg-migration-pr-review/SKILL.md`
 
 ## Operating constraints
@@ -76,7 +77,7 @@ Fetch the pull request details. If the PR is in draft state, use `noop` and stop
 Then check CI status: list the check runs and commit statuses for the PR head commit.
 
 - If the required CI checks (e.g., the Azure Pipelines build) have not yet completed (status is still `queued` or `in_progress`), use `noop` with a message like "CI checks have not completed yet — review will run on the next trigger after CI finishes."
-- If CI checks have failed, fetch the failure details (check run name, conclusion, and output summary/text). Include relevant CI failures in your review — for example, build errors, ApiCompat violations, or test failures. Link to the failed check run URL so authors can navigate directly to the failure logs.
+- If CI checks have failed, apply the CI failure analysis skill (`.github/skills/analyze-ci-failures/SKILL.md`) to diagnose failures. Use its check-name mapping and log-symptom tables to classify each failure, fetch job logs for details, and include actionable fix instructions in your review. Link to failed check run URLs so authors can navigate directly to the failure logs.
 - If CI checks have passed, proceed with the review.
 
 ## Step 1 - Determine review scope
