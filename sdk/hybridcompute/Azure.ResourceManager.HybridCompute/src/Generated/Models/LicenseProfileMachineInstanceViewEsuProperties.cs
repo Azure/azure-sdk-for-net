@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -17,21 +15,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="LicenseProfileMachineInstanceViewEsuProperties"/>. </summary>
         public LicenseProfileMachineInstanceViewEsuProperties()
         {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LicenseProfileMachineInstanceViewEsuProperties"/>. </summary>
-        /// <param name="assignedLicenseImmutableId"> The guid id of the license. </param>
-        /// <param name="esuKeys"> The list of ESU keys. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="serverType"> The type of the Esu servers. </param>
-        /// <param name="esuEligibility"> Indicates the eligibility state of Esu. </param>
-        /// <param name="esuKeyState"> Indicates whether there is an ESU Key currently active for the machine. </param>
-        /// <param name="assignedLicense"> The assigned license resource. </param>
-        /// <param name="licenseAssignmentState"> Describes the license assignment state (Assigned or NotAssigned). </param>
-        internal LicenseProfileMachineInstanceViewEsuProperties(Guid? assignedLicenseImmutableId, IReadOnlyList<EsuKey> esuKeys, IDictionary<string, BinaryData> additionalBinaryDataProperties, EsuServerType? serverType, EsuEligibility? esuEligibility, EsuKeyState? esuKeyState, HybridComputeLicense assignedLicense, LicenseAssignmentState? licenseAssignmentState) : base(assignedLicenseImmutableId, esuKeys, additionalBinaryDataProperties, serverType, esuEligibility, esuKeyState)
-        {
-            AssignedLicense = assignedLicense;
-            LicenseAssignmentState = licenseAssignmentState;
         }
 
         /// <summary> Describes the license assignment state (Assigned or NotAssigned). </summary>

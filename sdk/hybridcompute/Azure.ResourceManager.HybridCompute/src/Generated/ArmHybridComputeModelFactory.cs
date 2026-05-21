@@ -306,30 +306,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputePatchSettingsStatus(hotpatchEnablementStatus, error, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Properties for the Machine ESU profile. </summary>
-        /// <param name="assignedLicenseImmutableId"> The guid id of the license. </param>
-        /// <param name="esuKeys"> The list of ESU keys. </param>
-        /// <param name="serverType"> The type of the Esu servers. </param>
-        /// <param name="esuEligibility"> Indicates the eligibility state of Esu. </param>
-        /// <param name="esuKeyState"> Indicates whether there is an ESU Key currently active for the machine. </param>
-        /// <param name="assignedLicense"> The assigned license resource. </param>
-        /// <param name="licenseAssignmentState"> Describes the license assignment state (Assigned or NotAssigned). </param>
-        /// <returns> A new <see cref="Models.LicenseProfileMachineInstanceViewEsuProperties"/> instance for mocking. </returns>
-        public static LicenseProfileMachineInstanceViewEsuProperties LicenseProfileMachineInstanceViewEsuProperties(Guid? assignedLicenseImmutableId = default, IEnumerable<EsuKey> esuKeys = default, EsuServerType? serverType = default, EsuEligibility? esuEligibility = default, EsuKeyState? esuKeyState = default, HybridComputeLicense assignedLicense = default, LicenseAssignmentState? licenseAssignmentState = default)
-        {
-            esuKeys ??= new ChangeTrackingList<EsuKey>();
-
-            return new LicenseProfileMachineInstanceViewEsuProperties(
-                assignedLicenseImmutableId,
-                esuKeys.ToList(),
-                additionalBinaryDataProperties: null,
-                serverType,
-                esuEligibility,
-                esuKeyState,
-                assignedLicense,
-                licenseAssignmentState);
-        }
-
         /// <summary> Describes the properties of a License Profile ARM model. </summary>
         /// <param name="assignedLicenseImmutableId"> The guid id of the license. </param>
         /// <param name="esuKeys"> The list of ESU keys. </param>
