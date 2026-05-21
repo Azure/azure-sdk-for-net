@@ -4,6 +4,7 @@
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Visitors;
+using Azure.Generator.Management;
 using Azure.Generator.Management.Providers;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
@@ -95,13 +96,17 @@ namespace Azure.Generator.Mgmt.Tests
                 baseModel: trackedResourceModel,
                 usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
             _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [trackedResourceModel, resourceModel]);
+            var trackedResourceType = new CSharpType(typeof(TrackedResourceData));
+            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[trackedResourceType] =
+                new SystemObjectModelProvider(trackedResourceType, trackedResourceModel);
 
             var modelProvider = new ResourceDataModelProvider(resourceModel);
             var visitor = new TestableInheritableSystemObjectModelVisitor();
             var result = visitor.InvokePreVisitModel(resourceModel, modelProvider);
 
             Assert.That(result, Is.Not.Null);
-            var propertyNames = result!.Properties.Select(p => p.Name).ToList();
+            Assert.That(result!.BaseModelProvider, Is.InstanceOf<SystemObjectModelProvider>());
+            var propertyNames = result.Properties.Select(p => p.Name).ToList();
             Assert.That(propertyNames, Does.Not.Contain("Id"));
             Assert.That(propertyNames, Does.Not.Contain("Name"));
             Assert.That(propertyNames, Does.Not.Contain("ResourceType"));

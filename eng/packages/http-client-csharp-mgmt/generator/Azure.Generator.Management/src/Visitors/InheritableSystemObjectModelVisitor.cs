@@ -140,7 +140,12 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             foreach (var property in currentModel.Properties)
             {
                 basePropertyNames.Add(property.Name);
-                if (property.WireInfo?.SerializedName is { } serializedName)
+                var serializedName = property.WireInfo?.SerializedName;
+                if (serializedName is null && currentModel is SystemObjectModelProvider)
+                {
+                    serializedName = GetArmResourceSerializedName(property.Name);
+                }
+                if (serializedName is not null)
                 {
                     baseSerializedNameToPropertyName.TryAdd(serializedName, property.Name);
                 }
@@ -149,6 +154,18 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         }
         return (basePropertyNames, baseSerializedNameToPropertyName);
     }
+
+    private static string? GetArmResourceSerializedName(string propertyName)
+        => propertyName switch
+        {
+            "Id" => "id",
+            "Name" => "name",
+            "ResourceType" => "type",
+            "SystemData" => "systemData",
+            "Tags" => "tags",
+            "Location" => "location",
+            _ => null
+        };
 
     private static void StripOrphanedVirtualModifiers(ModelProvider baseModel, HashSet<string> removedPropertyNames)
     {

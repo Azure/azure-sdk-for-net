@@ -142,6 +142,12 @@ namespace Azure.Generator.Management
 
             if (ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
             {
+                if (model.BaseModel is not null &&
+                    KnownManagementTypes.TryGetInheritableSystemType(model.BaseModel.CrossLanguageDefinitionId, out var baseType) &&
+                    !CSharpTypeMap.ContainsKey(baseType))
+                {
+                    CSharpTypeMap[baseType] = new SystemObjectModelProvider(baseType, model.BaseModel);
+                }
                 return new ResourceDataModelProvider(model);
             }
 
