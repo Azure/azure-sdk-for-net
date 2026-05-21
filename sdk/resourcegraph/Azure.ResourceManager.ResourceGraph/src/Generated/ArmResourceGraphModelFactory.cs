@@ -58,6 +58,24 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Specifies the date and time interval for a changes request. </summary>
+        /// <param name="startOn"> A datetime indicating the inclusive/closed start of the time interval, i.e. `[`<b>`start`</b>`, end)`. Specifying a `start` that occurs chronologically after `end` will result in an error. </param>
+        /// <param name="endOn"> A datetime indicating the exclusive/open end of the time interval, i.e. `[start, `<b>`end`</b>`)`. Specifying an `end` that occurs chronologically before `start` will result in an error. </param>
+        /// <returns> A new <see cref="Models.ResourceChangesRequestParametersInterval"/> instance for mocking. </returns>
+        public static ResourceChangesRequestParametersInterval ResourceChangesRequestParametersInterval(DateTimeOffset startOn = default, DateTimeOffset endOn = default)
+        {
+            return new ResourceChangesRequestParametersInterval(startOn, endOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An interval in time specifying the date and time for the inclusive start and exclusive end, i.e. `[start, end)`. </summary>
+        /// <param name="startOn"> A datetime indicating the inclusive/closed start of the time interval, i.e. `[`<b>`start`</b>`, end)`. Specifying a `start` that occurs chronologically after `end` will result in an error. </param>
+        /// <param name="endOn"> A datetime indicating the exclusive/open end of the time interval, i.e. `[start, `<b>`end`</b>`)`. Specifying an `end` that occurs chronologically before `start` will result in an error. </param>
+        /// <returns> A new <see cref="Models.DateTimeInterval"/> instance for mocking. </returns>
+        public static DateTimeInterval DateTimeInterval(DateTimeOffset startOn = default, DateTimeOffset endOn = default)
+        {
+            return new DateTimeInterval(startOn, endOn, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> A list of changes associated with a resource over a specific time interval. </summary>
         /// <param name="changes">
         /// The pageable value returned by the operation, i.e. a list of changes to the resource.
@@ -338,6 +356,25 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 modifiedOn is null && description is null && query is null && resultKind is null ? default : new GraphQueryProperties(modifiedOn, description, query, resultKind, default),
                 tags,
                 etag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourcesHistoryRequestOptions"/>. </summary>
+        /// <param name="interval"> The time interval used to fetch history. </param>
+        /// <param name="top"> The maximum number of rows that the query should return. Overrides the page size when ```$skipToken``` property is present. </param>
+        /// <param name="skip"> The number of rows to skip from the beginning of the results. Overrides the next page offset when ```$skipToken``` property is present. </param>
+        /// <param name="skipToken"> Continuation token for pagination, capturing the next page size and offset, as well as the context of the query. </param>
+        /// <param name="resultFormat"> Defines in which format query result returned. </param>
+        /// <returns> A new <see cref="Models.ResourcesHistoryRequestOptions"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ResourcesHistoryRequestOptions ResourcesHistoryRequestOptions(DateTimeInterval interval, int? top, int? skip, string skipToken, ResultFormat? resultFormat)
+        {
+            return new ResourcesHistoryRequestOptions(
+                interval,
+                top,
+                skip,
+                skipToken,
+                resultFormat,
+                additionalBinaryDataProperties: null);
         }
     }
 }
