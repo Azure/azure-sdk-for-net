@@ -17,28 +17,28 @@ using Azure.ResourceManager;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EventGridTopicEventGridPrivateEndpointConnectionResource"/> and their operations.
-    /// Each <see cref="EventGridTopicEventGridPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="EventGridTopicResource"/>.
-    /// To get a <see cref="EventGridTopicEventGridPrivateEndpointConnectionCollection"/> instance call the GetEventGridTopicEventGridPrivateEndpointConnections method from an instance of <see cref="EventGridTopicResource"/>.
+    /// A class representing a collection of <see cref="EventGridDomainPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="EventGridDomainPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="EventGridDomainResource"/>.
+    /// To get a <see cref="EventGridDomainPrivateEndpointConnectionCollection"/> instance call the GetEventGridDomainPrivateEndpointConnections method from an instance of <see cref="EventGridDomainResource"/>.
     /// </summary>
-    public partial class EventGridTopicEventGridPrivateEndpointConnectionCollection : ArmCollection
+    public partial class EventGridDomainPrivateEndpointConnectionCollection : ArmCollection
     {
         private readonly ClientDiagnostics _eventGridPrivateEndpointConnectionsClientDiagnostics;
         private readonly EventGridPrivateEndpointConnections _eventGridPrivateEndpointConnectionsRestClient;
 
-        /// <summary> Initializes a new instance of EventGridTopicEventGridPrivateEndpointConnectionCollection for mocking. </summary>
-        protected EventGridTopicEventGridPrivateEndpointConnectionCollection()
+        /// <summary> Initializes a new instance of EventGridDomainPrivateEndpointConnectionCollection for mocking. </summary>
+        protected EventGridDomainPrivateEndpointConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventGridTopicEventGridPrivateEndpointConnectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridDomainPrivateEndpointConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal EventGridTopicEventGridPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal EventGridDomainPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EventGridTopicEventGridPrivateEndpointConnectionResource.ResourceType, out string eventGridTopicEventGridPrivateEndpointConnectionApiVersion);
-            _eventGridPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", EventGridTopicEventGridPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _eventGridPrivateEndpointConnectionsRestClient = new EventGridPrivateEndpointConnections(_eventGridPrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, eventGridTopicEventGridPrivateEndpointConnectionApiVersion ?? "2024-05-01");
+            TryGetApiVersion(EventGridDomainPrivateEndpointConnectionResource.ResourceType, out string eventGridDomainPrivateEndpointConnectionApiVersion);
+            _eventGridPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", EventGridDomainPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
+            _eventGridPrivateEndpointConnectionsRestClient = new EventGridPrivateEndpointConnections(_eventGridPrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, eventGridDomainPrivateEndpointConnectionApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -46,9 +46,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != EventGridTopicResource.ResourceType)
+            if (id.ResourceType != EventGridDomainResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EventGridTopicResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EventGridDomainResource.ResourceType), nameof(id));
             }
         }
 
@@ -75,12 +75,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventGridPrivateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventGridPrivateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<EventGridTopicEventGridPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string eventGridPrivateEndpointConnectionName, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EventGridDomainPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string eventGridPrivateEndpointConnectionName, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventGridPrivateEndpointConnectionName, nameof(eventGridPrivateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _eventGridPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicEventGridPrivateEndpointConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _eventGridPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridDomainPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -88,12 +88,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventGridPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "eventGridTopics", Id.Name, eventGridPrivateEndpointConnectionName, EventGridPrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _eventGridPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "eventGridDomains", Id.Name, eventGridPrivateEndpointConnectionName, EventGridPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventGridPrivateEndpointConnectionData> response = Response.FromValue(EventGridPrivateEndpointConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TestsArmOperation<EventGridTopicEventGridPrivateEndpointConnectionResource> operation = new TestsArmOperation<EventGridTopicEventGridPrivateEndpointConnectionResource>(Response.FromValue(new EventGridTopicEventGridPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                TestsArmOperation<EventGridDomainPrivateEndpointConnectionResource> operation = new TestsArmOperation<EventGridDomainPrivateEndpointConnectionResource>(Response.FromValue(new EventGridDomainPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -130,12 +130,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventGridPrivateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventGridPrivateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<EventGridTopicEventGridPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string eventGridPrivateEndpointConnectionName, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EventGridDomainPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string eventGridPrivateEndpointConnectionName, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventGridPrivateEndpointConnectionName, nameof(eventGridPrivateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _eventGridPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicEventGridPrivateEndpointConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _eventGridPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridDomainPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -143,12 +143,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventGridPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "eventGridTopics", Id.Name, eventGridPrivateEndpointConnectionName, EventGridPrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _eventGridPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "eventGridDomains", Id.Name, eventGridPrivateEndpointConnectionName, EventGridPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventGridPrivateEndpointConnectionData> response = Response.FromValue(EventGridPrivateEndpointConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TestsArmOperation<EventGridTopicEventGridPrivateEndpointConnectionResource> operation = new TestsArmOperation<EventGridTopicEventGridPrivateEndpointConnectionResource>(Response.FromValue(new EventGridTopicEventGridPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                TestsArmOperation<EventGridDomainPrivateEndpointConnectionResource> operation = new TestsArmOperation<EventGridDomainPrivateEndpointConnectionResource>(Response.FromValue(new EventGridDomainPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -183,11 +183,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventGridPrivateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventGridPrivateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<EventGridTopicEventGridPrivateEndpointConnectionResource>> GetAsync(string eventGridPrivateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventGridDomainPrivateEndpointConnectionResource>> GetAsync(string eventGridPrivateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventGridPrivateEndpointConnectionName, nameof(eventGridPrivateEndpointConnectionName));
 
-            using DiagnosticScope scope = _eventGridPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicEventGridPrivateEndpointConnectionCollection.Get");
+            using DiagnosticScope scope = _eventGridPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridDomainPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
@@ -195,14 +195,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventGridPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "eventGridTopics", Id.Name, eventGridPrivateEndpointConnectionName, context);
+                HttpMessage message = _eventGridPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "eventGridDomains", Id.Name, eventGridPrivateEndpointConnectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventGridPrivateEndpointConnectionData> response = Response.FromValue(EventGridPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new EventGridTopicEventGridPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventGridDomainPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,11 +232,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventGridPrivateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventGridPrivateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<EventGridTopicEventGridPrivateEndpointConnectionResource> Get(string eventGridPrivateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<EventGridDomainPrivateEndpointConnectionResource> Get(string eventGridPrivateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventGridPrivateEndpointConnectionName, nameof(eventGridPrivateEndpointConnectionName));
 
-            using DiagnosticScope scope = _eventGridPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicEventGridPrivateEndpointConnectionCollection.Get");
+            using DiagnosticScope scope = _eventGridPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridDomainPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
@@ -244,14 +244,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventGridPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "eventGridTopics", Id.Name, eventGridPrivateEndpointConnectionName, context);
+                HttpMessage message = _eventGridPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "eventGridDomains", Id.Name, eventGridPrivateEndpointConnectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventGridPrivateEndpointConnectionData> response = Response.FromValue(EventGridPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new EventGridTopicEventGridPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventGridDomainPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -285,7 +285,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNullOrEmpty(eventGridPrivateEndpointConnectionName, nameof(eventGridPrivateEndpointConnectionName));
 
-            using DiagnosticScope scope = _eventGridPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicEventGridPrivateEndpointConnectionCollection.Exists");
+            using DiagnosticScope scope = _eventGridPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridDomainPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -293,7 +293,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventGridPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "eventGridTopics", Id.Name, eventGridPrivateEndpointConnectionName, context);
+                HttpMessage message = _eventGridPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "eventGridDomains", Id.Name, eventGridPrivateEndpointConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EventGridPrivateEndpointConnectionData> response = default;
@@ -342,7 +342,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNullOrEmpty(eventGridPrivateEndpointConnectionName, nameof(eventGridPrivateEndpointConnectionName));
 
-            using DiagnosticScope scope = _eventGridPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicEventGridPrivateEndpointConnectionCollection.Exists");
+            using DiagnosticScope scope = _eventGridPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridDomainPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
@@ -350,7 +350,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventGridPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "eventGridTopics", Id.Name, eventGridPrivateEndpointConnectionName, context);
+                HttpMessage message = _eventGridPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "eventGridDomains", Id.Name, eventGridPrivateEndpointConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EventGridPrivateEndpointConnectionData> response = default;
@@ -395,11 +395,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventGridPrivateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventGridPrivateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<EventGridTopicEventGridPrivateEndpointConnectionResource>> GetIfExistsAsync(string eventGridPrivateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<EventGridDomainPrivateEndpointConnectionResource>> GetIfExistsAsync(string eventGridPrivateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventGridPrivateEndpointConnectionName, nameof(eventGridPrivateEndpointConnectionName));
 
-            using DiagnosticScope scope = _eventGridPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicEventGridPrivateEndpointConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _eventGridPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridDomainPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -407,7 +407,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventGridPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "eventGridTopics", Id.Name, eventGridPrivateEndpointConnectionName, context);
+                HttpMessage message = _eventGridPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "eventGridDomains", Id.Name, eventGridPrivateEndpointConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EventGridPrivateEndpointConnectionData> response = default;
@@ -424,9 +424,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<EventGridTopicEventGridPrivateEndpointConnectionResource>(response.GetRawResponse());
+                    return new NoValueResponse<EventGridDomainPrivateEndpointConnectionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new EventGridTopicEventGridPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventGridDomainPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -456,11 +456,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventGridPrivateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventGridPrivateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<EventGridTopicEventGridPrivateEndpointConnectionResource> GetIfExists(string eventGridPrivateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<EventGridDomainPrivateEndpointConnectionResource> GetIfExists(string eventGridPrivateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventGridPrivateEndpointConnectionName, nameof(eventGridPrivateEndpointConnectionName));
 
-            using DiagnosticScope scope = _eventGridPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicEventGridPrivateEndpointConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _eventGridPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridDomainPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -468,7 +468,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventGridPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "eventGridTopics", Id.Name, eventGridPrivateEndpointConnectionName, context);
+                HttpMessage message = _eventGridPrivateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, "eventGridDomains", Id.Name, eventGridPrivateEndpointConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EventGridPrivateEndpointConnectionData> response = default;
@@ -485,9 +485,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<EventGridTopicEventGridPrivateEndpointConnectionResource>(response.GetRawResponse());
+                    return new NoValueResponse<EventGridDomainPrivateEndpointConnectionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new EventGridTopicEventGridPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventGridDomainPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

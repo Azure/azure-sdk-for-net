@@ -9,7 +9,9 @@ import {
   SdkMethod,
   SdkPathParameter
 } from "@azure-tools/typespec-client-generator-core";
+import { NoTarget, Program } from "@typespec/compiler";
 import pluralize from "pluralize";
+import { $lib } from "./lib/lib.js";
 
 type SdkHttpOperationParameter = SdkHttpOperation["parameters"][number];
 type SdkHttpOperationEnumPathParameter = SdkPathParameter & {
@@ -489,6 +491,95 @@ export function extractNameConstraintOverrides(
   };
 }
 
+const resourceNameKey = "resource-name";
+
+/**
+ * The parsed value of the `@@clientOption(op, "resource-name", ...)` decorator
+ * applied to an ARM resource's Read operation.
+ *
+ * - A plain `string` renames the single resource that Read identifies.
+ * - A `Map<string, string>` is used when the Read operation expands into
+ *   multiple concrete resources (via `{parentType}` segment expansion). The
+ *   map keys are the enum/union values that get substituted for the
+ *   `{parentType}` segment (e.g. `"eventGridTopics"`), and the values are
+ *   the desired resource (SDK class) names.
+ */
+export type ResourceNameOverride = string | Map<string, string>;
+
+/**
+ * Extracts a resource-name override from an ARM resource's Read operation
+ * `@@clientOption(op, "resource-name", value, "csharp")` decorator.
+ *
+ * Returns:
+ * - a non-empty `string` if the decorator value is a string,
+ * - a non-empty `Map<string, string>` if the decorator value is a record with
+ *   non-empty string entries,
+ * - `undefined` if the decorator is not set or the value is malformed.
+ *
+ * Malformed values (mixed types, empty strings, empty maps) are reported via
+ * the optional `program` and treated as if the decorator was absent.
+ */
+export function extractResourceNameOverride(
+  operation: DecoratedType | undefined,
+  program?: Program
+): ResourceNameOverride | undefined {
+  if (!operation) return undefined;
+  const value = getClientOptions(operation, resourceNameKey);
+  if (value === undefined || value === null) return undefined;
+
+  if (typeof value === "string") {
+    if (value.length === 0) {
+      if (program) {
+        $lib.reportDiagnostic(program, {
+          code: "resource-name-empty-string",
+          format: {},
+          target: NoTarget
+        });
+      }
+      return undefined;
+    }
+    return value;
+  }
+
+  if (typeof value === "object") {
+    const record = value as Record<string, unknown>;
+    const map = new Map<string, string>();
+    for (const [key, v] of Object.entries(record)) {
+      if (typeof v !== "string" || v.length === 0 || key.length === 0) {
+        if (program) {
+          $lib.reportDiagnostic(program, {
+            code: "resource-name-bad-entry",
+            format: { key },
+            target: NoTarget
+          });
+        }
+        continue;
+      }
+      map.set(key, v);
+    }
+    if (map.size === 0) {
+      if (program) {
+        $lib.reportDiagnostic(program, {
+          code: "resource-name-empty-record",
+          format: {},
+          target: NoTarget
+        });
+      }
+      return undefined;
+    }
+    return map;
+  }
+
+  if (program) {
+    $lib.reportDiagnostic(program, {
+      code: "resource-name-bad-type",
+      format: { actualType: typeof value },
+      target: NoTarget
+    });
+  }
+  return undefined;
+}
+
 export interface NonResourceMethod {
   methodId: string;
   operationPath: RequestPath;
@@ -929,7 +1020,8 @@ export function expandArmResources(
     options.diagnosticReporter,
     (expanded, original) => {
       expandedToOriginal.set(expanded, original);
-    }
+    },
+    options.resourceNameOverrides
   );
   return { expandedResources, expandedToOriginal };
 }
@@ -937,6 +1029,14 @@ export function expandArmResources(
 export interface ExpandArmResourcesOptions {
   serviceMethods?: Map<string, SdkMethod<SdkHttpOperation>>;
   diagnosticReporter?: (message: string) => void;
+  /**
+   * Optional per-template-path map of `resource-name` `@@clientOption`
+   * overrides keyed by enum value. The outer map key is the pre-expansion
+   * resource instance path (i.e. the path containing the `{parentType}`
+   * placeholder). The inner map keys are the enum/union values that get
+   * substituted for the dynamic segment.
+   */
+  resourceNameOverrides?: Map<string, Map<string, string>>;
 }
 
 export interface ExpandArmResourcesResult {
@@ -1378,12 +1478,19 @@ function buildExpandedResourceName(
  * @param onExpand Optional callback invoked for each expanded resource with a reference
  * to its original (un-expanded) resource. Callers can use it to mirror entries into
  * auxiliary maps keyed by ArmResourceSchema (e.g., schemaToResolvedResource).
+ * @param resourceNameOverrides Optional per-template-path map of
+ * `resource-name` `@@clientOption` overrides keyed by enum value. When the
+ * inner map contains an entry for the enum value being substituted, the
+ * expanded resource's `resourceName` becomes that value instead of the
+ * default `Capitalize(singular(enumValue)) + baseResourceName`. Stale keys
+ * (not matched against any enum value) produce a warning diagnostic.
  */
 export function expandDynamicParentResourcesInSchema(
   resources: ArmResourceSchema[],
   serviceMethods: Map<string, SdkMethod<SdkHttpOperation>>,
   diagnosticReporter?: (message: string) => void,
-  onExpand?: (expanded: ArmResourceSchema, original: ArmResourceSchema) => void
+  onExpand?: (expanded: ArmResourceSchema, original: ArmResourceSchema) => void,
+  resourceNameOverrides?: Map<string, Map<string, string>>
 ): ArmResourceSchema[] {
   const resourcesToRemove: Set<ArmResourceSchema> = new Set();
   const resourcesToAdd: ArmResourceSchema[] = [];
@@ -1418,6 +1525,11 @@ export function expandDynamicParentResourcesInSchema(
       continue;
     }
 
+    const overrideMap = resourceNameOverrides?.get(
+      resource.metadata.resourceIdPattern?.path ?? ""
+    );
+    const usedOverrideKeys = overrideMap ? new Set<string>() : undefined;
+
     for (const enumValue of enumValues) {
       const expandedIdPattern = resource.metadata.resourceIdPattern
         ? replacePathVariable(
@@ -1442,10 +1554,13 @@ export function expandDynamicParentResourcesInSchema(
         ? expandedIdPattern.resourceType ?? ""
         : "";
 
-      const expandedResourceName = buildExpandedResourceName(
-        enumValue,
-        resource.metadata.resourceName
-      );
+      const overrideName = overrideMap?.get(enumValue);
+      if (overrideName !== undefined) {
+        usedOverrideKeys!.add(enumValue);
+      }
+      const expandedResourceName =
+        overrideName ??
+        buildExpandedResourceName(enumValue, resource.metadata.resourceName);
 
       const expanded: ArmResourceSchema = {
         resourceModelId: resource.resourceModelId,
@@ -1467,6 +1582,16 @@ export function expandDynamicParentResourcesInSchema(
       onExpand?.(expanded, resource);
     }
 
+    if (overrideMap && usedOverrideKeys) {
+      for (const key of overrideMap.keys()) {
+        if (!usedOverrideKeys.has(key)) {
+          diagnosticReporter?.(
+            `@@clientOption(..., "resource-name", ...) entry '${key}' did not match any expanded resource produced by this Read operation. Check for typos or stale entries.`
+          );
+        }
+      }
+    }
+
     resourcesToRemove.add(resource);
   }
 
@@ -1480,7 +1605,7 @@ export function expandDynamicParentResourcesInSchema(
   ];
 }
 
-function detectDynamicTypeSegments(
+export function detectDynamicTypeSegments(
   path: RequestPath
 ): Array<{ typeParamName: string; nameParamName: string; typeIndex: number }> {
   const results: Array<{

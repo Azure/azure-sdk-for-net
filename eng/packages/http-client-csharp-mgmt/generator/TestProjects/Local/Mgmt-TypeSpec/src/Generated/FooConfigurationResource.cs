@@ -19,11 +19,11 @@ using Azure.ResourceManager.Resources;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
-    /// A class representing a FooSettings along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FooSettingsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetFooSettings method.
+    /// A class representing a FooConfiguration along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FooConfigurationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetFooConfiguration method.
     /// </summary>
-    public partial class FooSettingsResource : ArmResource
+    public partial class FooConfigurationResource : ArmResource
     {
         private readonly ClientDiagnostics _fooSettingsOperationsClientDiagnostics;
         private readonly FooSettingsOperations _fooSettingsOperationsRestClient;
@@ -31,28 +31,28 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/FooSettings";
 
-        /// <summary> Initializes a new instance of FooSettingsResource for mocking. </summary>
-        protected FooSettingsResource()
+        /// <summary> Initializes a new instance of FooConfigurationResource for mocking. </summary>
+        protected FooConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FooSettingsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="FooConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal FooSettingsResource(ArmClient client, FooSettingsData data) : this(client, data.Id)
+        internal FooConfigurationResource(ArmClient client, FooSettingsData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FooSettingsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="FooConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal FooSettingsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal FooConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string fooSettingsApiVersion);
+            TryGetApiVersion(ResourceType, out string fooConfigurationApiVersion);
             _fooSettingsOperationsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _fooSettingsOperationsRestClient = new FooSettingsOperations(_fooSettingsOperationsClientDiagnostics, Pipeline, Endpoint, fooSettingsApiVersion ?? "2024-05-01");
+            _fooSettingsOperationsRestClient = new FooSettingsOperations(_fooSettingsOperationsClientDiagnostics, Pipeline, Endpoint, fooConfigurationApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FooSettingsResource"/>. </description>
+        /// <description> <see cref="FooConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,11 +116,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<FooSettingsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, FooSettingsData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FooConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, FooSettingsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.CreateOrUpdate");
+            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooConfigurationResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -133,7 +133,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 Response<FooSettingsData> response = Response.FromValue(FooSettingsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TestsArmOperation<FooSettingsResource> operation = new TestsArmOperation<FooSettingsResource>(Response.FromValue(new FooSettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                TestsArmOperation<FooConfigurationResource> operation = new TestsArmOperation<FooConfigurationResource>(Response.FromValue(new FooConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -164,7 +164,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FooSettingsResource"/>. </description>
+        /// <description> <see cref="FooConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,11 +172,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<FooSettingsResource> CreateOrUpdate(WaitUntil waitUntil, FooSettingsData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<FooConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, FooSettingsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.CreateOrUpdate");
+            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooConfigurationResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -189,7 +189,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 Response<FooSettingsData> response = Response.FromValue(FooSettingsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TestsArmOperation<FooSettingsResource> operation = new TestsArmOperation<FooSettingsResource>(Response.FromValue(new FooSettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                TestsArmOperation<FooConfigurationResource> operation = new TestsArmOperation<FooConfigurationResource>(Response.FromValue(new FooConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -220,14 +220,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FooSettingsResource"/>. </description>
+        /// <description> <see cref="FooConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FooSettingsResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FooConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.Get");
+            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooConfigurationResource.Get");
             scope.Start();
             try
             {
@@ -242,7 +242,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new FooSettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FooConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -268,14 +268,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FooSettingsResource"/>. </description>
+        /// <description> <see cref="FooConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FooSettingsResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<FooConfigurationResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.Get");
+            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooConfigurationResource.Get");
             scope.Start();
             try
             {
@@ -290,7 +290,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new FooSettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FooConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -316,18 +316,18 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FooSettingsResource"/>. </description>
+        /// <description> <see cref="FooConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<FooSettingsResource>> UpdateAsync(FooSettingsPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FooConfigurationResource>> UpdateAsync(FooSettingsPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.Update");
+            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooConfigurationResource.Update");
             scope.Start();
             try
             {
@@ -342,7 +342,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new FooSettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FooConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -368,18 +368,18 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FooSettingsResource"/>. </description>
+        /// <description> <see cref="FooConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<FooSettingsResource> Update(FooSettingsPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<FooConfigurationResource> Update(FooSettingsPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.Update");
+            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooConfigurationResource.Update");
             scope.Start();
             try
             {
@@ -394,7 +394,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new FooSettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FooConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -420,7 +420,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FooSettingsResource"/>. </description>
+        /// <description> <see cref="FooConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -428,7 +428,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.Delete");
+            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooConfigurationResource.Delete");
             scope.Start();
             try
             {
@@ -471,7 +471,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FooSettingsResource"/>. </description>
+        /// <description> <see cref="FooConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -479,7 +479,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooSettingsResource.Delete");
+            using DiagnosticScope scope = _fooSettingsOperationsClientDiagnostics.CreateScope("FooConfigurationResource.Delete");
             scope.Start();
             try
             {
