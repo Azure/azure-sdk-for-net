@@ -52,6 +52,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && Optional.IsDefined(NetworkFabricId))
+            {
+                writer.WritePropertyName("networkFabricId"u8);
+                writer.WriteStringValue(NetworkFabricId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastOperation))
+            {
+                writer.WritePropertyName("lastOperation"u8);
+                writer.WriteObjectValue(LastOperation, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);
@@ -98,6 +108,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             SystemData systemData = default;
             string annotation = default;
             IList<IPExtendedCommunityRule> ipExtendedCommunityRules = default;
+            ResourceIdentifier networkFabricId = default;
+            LastOperationProperties lastOperation = default;
             NetworkFabricConfigurationState? configurationState = default;
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
@@ -172,6 +184,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             ipExtendedCommunityRules = array;
                             continue;
                         }
+                        if (property0.NameEquals("networkFabricId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkFabricId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("lastOperation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("configurationState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -217,6 +247,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 location,
                 annotation,
                 ipExtendedCommunityRules,
+                networkFabricId,
+                lastOperation,
                 configurationState,
                 provisioningState,
                 administrativeState,
