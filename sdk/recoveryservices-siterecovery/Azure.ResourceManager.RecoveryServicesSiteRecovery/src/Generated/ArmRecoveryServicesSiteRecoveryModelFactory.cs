@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="dataPendingInStagingStorageAccountInMB"> The data pending for replication in MB at staging account. </param>
         /// <param name="dataPendingAtSourceAgentInMB"> The data pending at source virtual machine in MB. </param>
         /// <param name="diskState"> The disk state. </param>
-        /// <param name="allowedDiskLevelOperation"> The disk level operations list. </param>
+        /// <param name="siteRecoveryAllowedDiskLevelOperation"> The disk level operations list. </param>
         /// <param name="isDiskEncrypted"> A value indicating whether vm has encrypted os disk or not. </param>
         /// <param name="secretIdentifier"> The secret URL / identifier (BEK). </param>
         /// <param name="dekKeyVaultArmId"> The KeyVault resource id for secret (BEK). </param>
@@ -441,9 +441,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryDiskAccessId"> The recovery disk access Arm Id. </param>
         /// <param name="recoveryPublicNetworkAccess"> The public network access setting for the recovery managed disk. </param>
         /// <returns> A new <see cref="Models.A2AProtectedManagedDiskDetails"/> instance for mocking. </returns>
-        public static A2AProtectedManagedDiskDetails A2AProtectedManagedDiskDetails(string diskId = default, ResourceIdentifier recoveryResourceGroupId = default, ResourceIdentifier recoveryTargetDiskId = default, ResourceIdentifier recoveryReplicaDiskId = default, ResourceIdentifier recoveryOrignalTargetDiskId = default, string recoveryReplicaDiskAccountType = default, string recoveryTargetDiskAccountType = default, ResourceIdentifier recoveryDiskEncryptionSetId = default, ResourceIdentifier primaryDiskEncryptionSetId = default, string diskName = default, long? diskCapacityInBytes = default, ResourceIdentifier primaryStagingAzureStorageAccountId = default, string diskType = default, bool? isResyncRequired = default, int? monitoringPercentageCompletion = default, string monitoringJobType = default, double? dataPendingInStagingStorageAccountInMB = default, double? dataPendingAtSourceAgentInMB = default, string diskState = default, IEnumerable<string> allowedDiskLevelOperation = default, bool? isDiskEncrypted = default, string secretIdentifier = default, ResourceIdentifier dekKeyVaultArmId = default, bool? isDiskKeyEncrypted = default, string keyIdentifier = default, ResourceIdentifier kekKeyVaultArmId = default, string failoverDiskName = default, string tfoDiskName = default, SiteRecoveryDiskNetworkAccessPolicy? recoveryNetworkAccessPolicy = default, string recoveryDiskAccessId = default, SiteRecoveryDiskPublicNetworkAccess? recoveryPublicNetworkAccess = default)
+        public static A2AProtectedManagedDiskDetails A2AProtectedManagedDiskDetails(string diskId = default, ResourceIdentifier recoveryResourceGroupId = default, ResourceIdentifier recoveryTargetDiskId = default, ResourceIdentifier recoveryReplicaDiskId = default, ResourceIdentifier recoveryOrignalTargetDiskId = default, string recoveryReplicaDiskAccountType = default, string recoveryTargetDiskAccountType = default, ResourceIdentifier recoveryDiskEncryptionSetId = default, ResourceIdentifier primaryDiskEncryptionSetId = default, string diskName = default, long? diskCapacityInBytes = default, ResourceIdentifier primaryStagingAzureStorageAccountId = default, string diskType = default, bool? isResyncRequired = default, int? monitoringPercentageCompletion = default, string monitoringJobType = default, double? dataPendingInStagingStorageAccountInMB = default, double? dataPendingAtSourceAgentInMB = default, string diskState = default, IEnumerable<string> siteRecoveryAllowedDiskLevelOperation = default, bool? isDiskEncrypted = default, string secretIdentifier = default, ResourceIdentifier dekKeyVaultArmId = default, bool? isDiskKeyEncrypted = default, string keyIdentifier = default, ResourceIdentifier kekKeyVaultArmId = default, string failoverDiskName = default, string tfoDiskName = default, SiteRecoveryDiskNetworkAccessPolicy? recoveryNetworkAccessPolicy = default, string recoveryDiskAccessId = default, SiteRecoveryDiskPublicNetworkAccess? recoveryPublicNetworkAccess = default)
         {
-            allowedDiskLevelOperation ??= new ChangeTrackingList<string>();
+            siteRecoveryAllowedDiskLevelOperation ??= new ChangeTrackingList<string>();
 
             return new A2AProtectedManagedDiskDetails(
                 diskId,
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 dataPendingInStagingStorageAccountInMB,
                 dataPendingAtSourceAgentInMB,
                 diskState,
-                allowedDiskLevelOperation.ToList(),
+                siteRecoveryAllowedDiskLevelOperation.ToList(),
                 isDiskEncrypted,
                 secretIdentifier,
                 dekKeyVaultArmId,
@@ -7520,7 +7520,41 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static A2AProtectedManagedDiskDetails A2AProtectedManagedDiskDetails(string diskId, ResourceIdentifier recoveryResourceGroupId, ResourceIdentifier recoveryTargetDiskId, ResourceIdentifier recoveryReplicaDiskId, ResourceIdentifier recoveryOrignalTargetDiskId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, ResourceIdentifier primaryDiskEncryptionSetId, string diskName, long? diskCapacityInBytes, ResourceIdentifier primaryStagingAzureStorageAccountId, string diskType, bool? isResyncRequired, int? monitoringPercentageCompletion, string monitoringJobType, double? dataPendingInStagingStorageAccountInMB, double? dataPendingAtSourceAgentInMB, string diskState, IEnumerable<string> allowedDiskLevelOperation, bool? isDiskEncrypted, string secretIdentifier, ResourceIdentifier dekKeyVaultArmId, bool? isDiskKeyEncrypted, string keyIdentifier, ResourceIdentifier kekKeyVaultArmId, string failoverDiskName, string tfoDiskName)
         {
-            return A2AProtectedManagedDiskDetails(diskId: diskId, recoveryResourceGroupId: recoveryResourceGroupId, recoveryTargetDiskId: recoveryTargetDiskId, recoveryReplicaDiskId: recoveryReplicaDiskId, recoveryOrignalTargetDiskId: recoveryOrignalTargetDiskId, recoveryReplicaDiskAccountType: recoveryReplicaDiskAccountType, recoveryTargetDiskAccountType: recoveryTargetDiskAccountType, recoveryDiskEncryptionSetId: recoveryDiskEncryptionSetId, primaryDiskEncryptionSetId: primaryDiskEncryptionSetId, diskName: diskName, diskCapacityInBytes: diskCapacityInBytes, primaryStagingAzureStorageAccountId: primaryStagingAzureStorageAccountId, diskType: diskType, isResyncRequired: isResyncRequired, monitoringPercentageCompletion: monitoringPercentageCompletion, monitoringJobType: monitoringJobType, dataPendingInStagingStorageAccountInMB: dataPendingInStagingStorageAccountInMB, dataPendingAtSourceAgentInMB: dataPendingAtSourceAgentInMB, diskState: diskState, allowedDiskLevelOperation: allowedDiskLevelOperation, isDiskEncrypted: isDiskEncrypted, secretIdentifier: secretIdentifier, dekKeyVaultArmId: dekKeyVaultArmId, isDiskKeyEncrypted: isDiskKeyEncrypted, keyIdentifier: keyIdentifier, kekKeyVaultArmId: kekKeyVaultArmId, failoverDiskName: failoverDiskName, tfoDiskName: tfoDiskName, recoveryNetworkAccessPolicy: default, recoveryDiskAccessId: default, recoveryPublicNetworkAccess: default);
+            allowedDiskLevelOperation ??= new ChangeTrackingList<string>();
+
+            return new A2AProtectedManagedDiskDetails(
+                diskId,
+                recoveryResourceGroupId,
+                recoveryTargetDiskId,
+                recoveryReplicaDiskId,
+                recoveryOrignalTargetDiskId,
+                recoveryReplicaDiskAccountType,
+                recoveryTargetDiskAccountType,
+                recoveryDiskEncryptionSetId,
+                primaryDiskEncryptionSetId,
+                diskName,
+                diskCapacityInBytes,
+                primaryStagingAzureStorageAccountId,
+                diskType,
+                isResyncRequired,
+                monitoringPercentageCompletion,
+                monitoringJobType,
+                dataPendingInStagingStorageAccountInMB,
+                dataPendingAtSourceAgentInMB,
+                diskState,
+                default,
+                isDiskEncrypted,
+                secretIdentifier,
+                dekKeyVaultArmId,
+                isDiskKeyEncrypted,
+                keyIdentifier,
+                kekKeyVaultArmId,
+                failoverDiskName,
+                tfoDiskName,
+                default,
+                default,
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.A2AUnprotectedDiskDetails"/>. </summary>

@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("diskState"u8);
                 writer.WriteStringValue(DiskState);
             }
-            if (Optional.IsCollectionDefined(AllowedDiskLevelOperation))
+            if (Optional.IsCollectionDefined(SiteRecoveryAllowedDiskLevelOperation))
             {
                 writer.WritePropertyName("allowedDiskLevelOperation"u8);
                 writer.WriteStartArray();
-                foreach (string item in AllowedDiskLevelOperation)
+                foreach (string item in SiteRecoveryAllowedDiskLevelOperation)
                 {
                     if (item == null)
                     {
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             double? dataPendingInStagingStorageAccountInMB = default;
             double? dataPendingAtSourceAgentInMB = default;
             string diskState = default;
-            IReadOnlyList<string> allowedDiskLevelOperation = default;
+            IList<string> siteRecoveryAllowedDiskLevelOperation = default;
             bool? isDiskEncrypted = default;
             string secretIdentifier = default;
             ResourceIdentifier dekKeyVaultArmId = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                             array.Add(item.GetString());
                         }
                     }
-                    allowedDiskLevelOperation = array;
+                    siteRecoveryAllowedDiskLevelOperation = array;
                     continue;
                 }
                 if (prop.NameEquals("isDiskEncrypted"u8))
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 dataPendingInStagingStorageAccountInMB,
                 dataPendingAtSourceAgentInMB,
                 diskState,
-                allowedDiskLevelOperation ?? new ChangeTrackingList<string>(),
+                siteRecoveryAllowedDiskLevelOperation ?? new ChangeTrackingList<string>(),
                 isDiskEncrypted,
                 secretIdentifier,
                 dekKeyVaultArmId,

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="A2AProtectedManagedDiskDetails"/>. </summary>
         public A2AProtectedManagedDiskDetails()
         {
-            AllowedDiskLevelOperation = new ChangeTrackingList<string>();
+            SiteRecoveryAllowedDiskLevelOperation = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="A2AProtectedManagedDiskDetails"/>. </summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="dataPendingInStagingStorageAccountInMB"> The data pending for replication in MB at staging account. </param>
         /// <param name="dataPendingAtSourceAgentInMB"> The data pending at source virtual machine in MB. </param>
         /// <param name="diskState"> The disk state. </param>
-        /// <param name="allowedDiskLevelOperation"> The disk level operations list. </param>
+        /// <param name="siteRecoveryAllowedDiskLevelOperation"> The disk level operations list. </param>
         /// <param name="isDiskEncrypted"> A value indicating whether vm has encrypted os disk or not. </param>
         /// <param name="secretIdentifier"> The secret URL / identifier (BEK). </param>
         /// <param name="dekKeyVaultArmId"> The KeyVault resource id for secret (BEK). </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryDiskAccessId"> The recovery disk access Arm Id. </param>
         /// <param name="recoveryPublicNetworkAccess"> The public network access setting for the recovery managed disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal A2AProtectedManagedDiskDetails(string diskId, ResourceIdentifier recoveryResourceGroupId, ResourceIdentifier recoveryTargetDiskId, ResourceIdentifier recoveryReplicaDiskId, ResourceIdentifier recoveryOrignalTargetDiskId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, ResourceIdentifier primaryDiskEncryptionSetId, string diskName, long? diskCapacityInBytes, ResourceIdentifier primaryStagingAzureStorageAccountId, string diskType, bool? isResyncRequired, int? monitoringPercentageCompletion, string monitoringJobType, double? dataPendingInStagingStorageAccountInMB, double? dataPendingAtSourceAgentInMB, string diskState, IReadOnlyList<string> allowedDiskLevelOperation, bool? isDiskEncrypted, string secretIdentifier, ResourceIdentifier dekKeyVaultArmId, bool? isDiskKeyEncrypted, string keyIdentifier, ResourceIdentifier kekKeyVaultArmId, string failoverDiskName, string tfoDiskName, SiteRecoveryDiskNetworkAccessPolicy? recoveryNetworkAccessPolicy, string recoveryDiskAccessId, SiteRecoveryDiskPublicNetworkAccess? recoveryPublicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal A2AProtectedManagedDiskDetails(string diskId, ResourceIdentifier recoveryResourceGroupId, ResourceIdentifier recoveryTargetDiskId, ResourceIdentifier recoveryReplicaDiskId, ResourceIdentifier recoveryOrignalTargetDiskId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, ResourceIdentifier primaryDiskEncryptionSetId, string diskName, long? diskCapacityInBytes, ResourceIdentifier primaryStagingAzureStorageAccountId, string diskType, bool? isResyncRequired, int? monitoringPercentageCompletion, string monitoringJobType, double? dataPendingInStagingStorageAccountInMB, double? dataPendingAtSourceAgentInMB, string diskState, IList<string> siteRecoveryAllowedDiskLevelOperation, bool? isDiskEncrypted, string secretIdentifier, ResourceIdentifier dekKeyVaultArmId, bool? isDiskKeyEncrypted, string keyIdentifier, ResourceIdentifier kekKeyVaultArmId, string failoverDiskName, string tfoDiskName, SiteRecoveryDiskNetworkAccessPolicy? recoveryNetworkAccessPolicy, string recoveryDiskAccessId, SiteRecoveryDiskPublicNetworkAccess? recoveryPublicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             RecoveryResourceGroupId = recoveryResourceGroupId;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DataPendingInStagingStorageAccountInMB = dataPendingInStagingStorageAccountInMB;
             DataPendingAtSourceAgentInMB = dataPendingAtSourceAgentInMB;
             DiskState = diskState;
-            AllowedDiskLevelOperation = allowedDiskLevelOperation;
+            SiteRecoveryAllowedDiskLevelOperation = siteRecoveryAllowedDiskLevelOperation;
             IsDiskEncrypted = isDiskEncrypted;
             SecretIdentifier = secretIdentifier;
             DekKeyVaultArmId = dekKeyVaultArmId;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string DiskState { get; set; }
 
         /// <summary> The disk level operations list. </summary>
-        public IReadOnlyList<string> AllowedDiskLevelOperation { get; }
+        public IList<string> SiteRecoveryAllowedDiskLevelOperation { get; }
 
         /// <summary> A value indicating whether vm has encrypted os disk or not. </summary>
         public bool? IsDiskEncrypted { get; set; }
