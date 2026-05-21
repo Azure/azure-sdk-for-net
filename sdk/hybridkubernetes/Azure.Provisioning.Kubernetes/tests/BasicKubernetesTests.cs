@@ -19,9 +19,12 @@ public class BasicKubernetesTests
                 Infrastructure infra = new();
 
                 ConnectedCluster cluster =
-                    new(nameof(cluster), ConnectedCluster.ResourceVersions.V2024_01_01)
+                    new(nameof(cluster), ConnectedCluster.ResourceVersions.V2026_05_01)
                     {
-                        AgentPublicKeyCertificate = "base64cert",
+                        Properties = new ConnectedClusterProperties
+                        {
+                            AgentPublicKeyCertificate = "base64cert"
+                        },
                         Identity = new ManagedServiceIdentity
                         {
                             ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned
@@ -43,15 +46,15 @@ public class BasicKubernetesTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource cluster 'Microsoft.Kubernetes/connectedClusters@2024-01-01' = {
-              name: take('cluster-${uniqueString(resourceGroup().id)}', 63)
+            resource cluster 'Microsoft.Kubernetes/connectedClusters@2026-05-01' = {
+              name: take('cluster${uniqueString(resourceGroup().id)}', 24)
+              location: location
               properties: {
                 agentPublicKeyCertificate: 'base64cert'
               }
               identity: {
                 type: 'SystemAssigned'
               }
-              location: location
             }
             """);
     }
