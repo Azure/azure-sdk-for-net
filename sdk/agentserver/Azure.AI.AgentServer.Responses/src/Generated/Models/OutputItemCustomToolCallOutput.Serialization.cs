@@ -100,7 +100,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("created_by"u8);
-                writer.WriteStringValue(CreatedBy);
+                writer.WriteRawValue(CreatedBy);
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             string callId = default;
             BinaryData output = default;
             FunctionCallOutputStatusEnum status = default;
-            string createdBy = default;
+            BinaryData createdBy = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -181,7 +181,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("created_by"u8))
                 {
-                    createdBy = prop.Value.GetString();
+                    createdBy = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
