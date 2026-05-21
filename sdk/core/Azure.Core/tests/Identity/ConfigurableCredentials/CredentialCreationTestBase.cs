@@ -126,7 +126,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
         /// </summary>
         [Test]
         [NonParallelizable]
-        public void WithoutWithAzureCredential_AuthenticationPolicyCreateThrows()
+        public void WithoutAzureCredentialResolver_AuthenticationPolicyCreateThrows()
         {
             using (new TestEnvVar(GetRequiredEnvVars()))
             {
@@ -160,7 +160,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
         /// </summary>
         [Test]
         [NonParallelizable]
-        public void AddClient_WithoutWithAzureCredential_ThrowsOnResolve()
+        public void AddClient_WithoutAzureCredentialResolver_ThrowsOnResolve()
         {
             using (new TestEnvVar(GetRequiredEnvVars()))
             {
@@ -182,7 +182,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
         /// </summary>
         [Test]
         [NonParallelizable]
-        public void AddKeyedClient_WithoutWithAzureCredential_ThrowsOnResolve()
+        public void AddKeyedClient_WithoutAzureCredentialResolver_ThrowsOnResolve()
         {
             using (new TestEnvVar(GetRequiredEnvVars()))
             {

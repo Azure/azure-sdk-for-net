@@ -187,7 +187,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ApiKey
         }
 
         [Test]
-        public void CreatesCredentialFromConfiguration_WithoutWithAzureCredential_E2E()
+        public void CreatesCredentialFromConfiguration_WithoutAzureCredentialResolver_E2E()
         {
             var config = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
@@ -199,14 +199,14 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ApiKey
                 .Build();
 
             var settings = config.GetClientSettings<E2ETestSettings>("MyClient");
-            Assert.IsNull(settings.CredentialProvider, "CredentialProvider should be null without WithAzureCredential");
+            Assert.IsNull(settings.CredentialProvider, "CredentialProvider should be null without an Azure credential resolver registered");
 
             var policy = AuthenticationPolicy.Create(settings);
             Assert.IsNotNull(policy);
         }
 
         [Test]
-        public void AddClient_WithoutWithAzureCredential_ThrowsOnResolve()
+        public void AddClient_WithoutAzureCredentialResolver_ThrowsOnResolve()
         {
             HostApplicationBuilder builder = Host.CreateApplicationBuilder();
             builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
@@ -224,7 +224,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ApiKey
         }
 
         [Test]
-        public void AddKeyedClient_WithoutWithAzureCredential_ThrowsOnResolve()
+        public void AddKeyedClient_WithoutAzureCredentialResolver_ThrowsOnResolve()
         {
             HostApplicationBuilder builder = Host.CreateApplicationBuilder();
             builder.Configuration.AddInMemoryCollection(new Dictionary<string, string>
