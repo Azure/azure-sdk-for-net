@@ -57,6 +57,26 @@ namespace Azure.ResourceManager.GuestConfiguration
             return GetMockableGuestConfigurationSubscriptionResource(subscriptionResource).GetAllGuestConfigurationAssignmentDataAsync(cancellationToken);
         }
 
+        /// <summary> List all guest configuration assignments for a subscription. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Pageable<GuestConfigurationVmAssignmentResource> GetGuestConfigurationVmAssignments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableGuestConfigurationSubscriptionResource(subscriptionResource).GetGuestConfigurationVmAssignments(cancellationToken);
+        }
+
+        /// <summary> List all guest configuration assignments for a subscription. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AsyncPageable<GuestConfigurationVmAssignmentResource> GetGuestConfigurationVmAssignmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableGuestConfigurationSubscriptionResource(subscriptionResource).GetGuestConfigurationVmAssignmentsAsync(cancellationToken);
+        }
+
         // backward compatible for generator bug fixes
         /// <summary>
         /// List all guest configuration assignments for a resource group.

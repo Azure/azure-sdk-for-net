@@ -12,10 +12,16 @@ using System.Linq;
 using System.Security.Principal;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Model factory for models. </summary>
+    // Suppress generated overloads whose parameter order/defaults differ from the GA API surface.
+    // The custom overloads below preserve source and binary compatibility for callers.
+    [CodeGenSuppress("ManagedHsmData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(AzureLocation), typeof(ManagedHsmProperties), typeof(ManagedHsmSku), typeof(ManagedServiceIdentity), typeof(IDictionary<string, string>))]
+    [CodeGenSuppress("ManagedHsmPrivateEndpointConnectionData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(ManagedHsmPrivateLinkServiceConnectionState), typeof(ManagedHsmPrivateEndpointConnectionProvisioningState?), typeof(ResourceIdentifier), typeof(ManagedHsmSku), typeof(ManagedServiceIdentity), typeof(ETag?))]
+    [CodeGenSuppress("ManagedHsmPrivateEndpointConnectionData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(AzureLocation), typeof(ManagedHsmPrivateLinkServiceConnectionState), typeof(ManagedHsmPrivateEndpointConnectionProvisioningState?), typeof(ResourceIdentifier), typeof(ManagedHsmSku), typeof(ManagedServiceIdentity), typeof(ETag?), typeof(IDictionary<string, string>))]
     public static partial class ArmKeyVaultModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="KeyVault.ManagedHsmPrivateEndpointConnectionData"/>. </summary>
@@ -99,6 +105,35 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static ManagedHsmData ManagedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedHsmProperties properties, ManagedHsmSku sku)
             => ManagedHsmData(id, name, resourceType, systemData, location, properties, sku, default, tags);
 
+        /// <summary> Initializes a new instance of <see cref="KeyVault.ManagedHsmData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> Properties of the managed HSM. </param>
+        /// <param name="sku"> SKU details. </param>
+        /// <param name="identity"> Managed service identity. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <returns> A new <see cref="KeyVault.ManagedHsmData"/> instance for mocking. </returns>
+        // Keep the prior optional-parameter overload; the generated signature now orders tags last.
+        public static ManagedHsmData ManagedHsmData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ManagedHsmProperties properties = null, ManagedHsmSku sku = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ManagedHsmData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties,
+                sku,
+                identity);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.KeyVaultAccessPolicyParameters"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -180,6 +215,39 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="KeyVault.ManagedHsmPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location = default, ManagedHsmSku sku = null, ManagedServiceIdentity identity = null, ETag? etag = null, ResourceIdentifier privateEndpointId = null, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = null)
             => ManagedHsmPrivateEndpointConnectionData(id, name, resourceType, systemData, location, privateLinkServiceConnectionState, provisioningState, privateEndpointId, sku, identity, etag, tags);
+
+        /// <summary> Initializes a new instance of <see cref="KeyVault.ManagedHsmPrivateEndpointConnectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
+        /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
+        /// <param name="privateEndpointId"> Properties of the private endpoint object. </param>
+        /// <param name="sku"> SKU details. </param>
+        /// <param name="identity"> Managed service identity. </param>
+        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <returns> A new <see cref="KeyVault.ManagedHsmPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        // Keep the prior optional-parameter overload; the generated signature no longer matches this order/default set.
+        public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = null, ManagedHsmSku sku = null, ManagedServiceIdentity identity = null, ETag? etag = default, IDictionary<string, string> tags = null)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ManagedHsmPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new ManagedHsmPrivateEndpointConnectionProperties(new ManagedHsmPrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null),
+                sku,
+                identity,
+                etag);
+        }
 
         /// <summary> Initializes a new instance of <see cref="KeyVault.ManagedHsmData"/>. </summary>
         /// <param name="id"> The id. </param>
