@@ -73,6 +73,8 @@ This workflow runs automatically when a pull request modifies files under an `Az
 
 Fetch the pull request details. If the PR is in draft state, use `noop` and stop — draft PRs are not ready for review and should not have their state modified.
 
+Then check CI status: list the check runs and commit statuses for the PR head commit. If the required CI checks (e.g., the Azure Pipelines build) have not yet completed (status is still `queued` or `in_progress`), use `noop` with a message like "CI checks have not completed yet — review will run on the next trigger after CI finishes." This avoids reviewing code that may still have build or test failures pending.
+
 ## Step 1 - Determine review scope
 
 Fetch changed files for the PR.

@@ -1,4 +1,4 @@
-# gh-aw-metadata: {"schema_version":"v3","frontmatter_hash":"7c84bb3da831fcc051dee00d20113a70bd61f9266902d4fc39c26a8b71641fd4","compiler_version":"v0.74.4","strict":true,"agent_id":"copilot"}
+# gh-aw-metadata: {"schema_version":"v3","frontmatter_hash":"847f189c621e992d33cb523dfad92190658251dc44d006ac2fe1e958306a10bf","compiler_version":"v0.74.4","strict":true,"agent_id":"copilot"}
 # gh-aw-manifest: {"version":1,"secrets":["COPILOT_GITHUB_TOKEN","GH_AW_GITHUB_MCP_SERVER_TOKEN","GH_AW_GITHUB_TOKEN","GITHUB_TOKEN"],"actions":[{"repo":"actions/checkout","sha":"de0fac2e4500dabe0009e67214ff5f5447ce83dd","version":"v6.0.2"},{"repo":"actions/download-artifact","sha":"3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c","version":"v8.0.1"},{"repo":"actions/github-script","sha":"373c709c69115d41ff229c7e5df9f8788daa9553","version":"v9"},{"repo":"actions/github-script","sha":"3a2844b7e9c422d3c10d287c895573f7108da1b3","version":"v9.0.0"},{"repo":"actions/setup-node","sha":"48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e","version":"v6.4.0"},{"repo":"actions/upload-artifact","sha":"043fb46d1a93c77aae656e7c1c64a875d1fc6a0a","version":"v7.0.1"},{"repo":"github/gh-aw-actions/setup","sha":"d3abfe96a194bce3a523ed2093ddedd5704cdf62","version":"v0.74.4"}],"containers":[{"image":"ghcr.io/github/gh-aw-firewall/agent:0.25.46"},{"image":"ghcr.io/github/gh-aw-firewall/api-proxy:0.25.46"},{"image":"ghcr.io/github/gh-aw-firewall/squid:0.25.46"},{"image":"ghcr.io/github/gh-aw-mcpg:v0.3.9","digest":"sha256:64828b42a4482f58fab16509d7f8f495a6d97c972a98a68aff20543531ac0388","pinned_image":"ghcr.io/github/gh-aw-mcpg:v0.3.9@sha256:64828b42a4482f58fab16509d7f8f495a6d97c972a98a68aff20543531ac0388"},{"image":"ghcr.io/github/github-mcp-server:v1.0.4"},{"image":"node:lts-alpine","digest":"sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f","pinned_image":"node:lts-alpine@sha256:d1b3b4da11eefd5941e7f0b9cf17783fc99d9c6fc34884a665f40a06dbdfc94f"}]}
 #    ___                   _   _      
 #   / _ \                 | | (_)     
@@ -215,20 +215,20 @@ jobs:
         run: |
           bash "${RUNNER_TEMP}/gh-aw/actions/create_prompt_first.sh"
           {
-          cat << 'GH_AW_PROMPT_1b6a6f87f4969f42_EOF'
+          cat << 'GH_AW_PROMPT_5937b361128ad92c_EOF'
           <system>
-          GH_AW_PROMPT_1b6a6f87f4969f42_EOF
+          GH_AW_PROMPT_5937b361128ad92c_EOF
           cat "${RUNNER_TEMP}/gh-aw/prompts/xpia.md"
           cat "${RUNNER_TEMP}/gh-aw/prompts/temp_folder_prompt.md"
           cat "${RUNNER_TEMP}/gh-aw/prompts/markdown.md"
           cat "${RUNNER_TEMP}/gh-aw/prompts/safe_outputs_prompt.md"
-          cat << 'GH_AW_PROMPT_1b6a6f87f4969f42_EOF'
+          cat << 'GH_AW_PROMPT_5937b361128ad92c_EOF'
           <safe-output-tools>
           Tools: create_pull_request_review_comment(max:40), submit_pull_request_review, missing_tool, missing_data, noop
           </safe-output-tools>
-          GH_AW_PROMPT_1b6a6f87f4969f42_EOF
+          GH_AW_PROMPT_5937b361128ad92c_EOF
           cat "${RUNNER_TEMP}/gh-aw/prompts/mcp_cli_tools_prompt.md"
-          cat << 'GH_AW_PROMPT_1b6a6f87f4969f42_EOF'
+          cat << 'GH_AW_PROMPT_5937b361128ad92c_EOF'
           <github-context>
           The following GitHub context information is available for this workflow:
           {{#if github.actor}}
@@ -257,9 +257,9 @@ jobs:
           {{/if}}
           </github-context>
           
-          GH_AW_PROMPT_1b6a6f87f4969f42_EOF
+          GH_AW_PROMPT_5937b361128ad92c_EOF
           cat "${RUNNER_TEMP}/gh-aw/prompts/github_mcp_tools_with_safeoutputs_prompt.md"
-          cat << 'GH_AW_PROMPT_1b6a6f87f4969f42_EOF'
+          cat << 'GH_AW_PROMPT_5937b361128ad92c_EOF'
           </system>
           # Azure .NET Management SDK PR Review
           
@@ -284,6 +284,8 @@ jobs:
           ## Step 0 - Validate the PR
           
           Fetch the pull request details. If the PR is in draft state, use `noop` and stop — draft PRs are not ready for review and should not have their state modified.
+          
+          Then check CI status: list the check runs and commit statuses for the PR head commit. If the required CI checks (e.g., the Azure Pipelines build) have not yet completed (status is still `queued` or `in_progress`), use `noop` with a message like "CI checks have not completed yet — review will run on the next trigger after CI finishes." This avoids reviewing code that may still have build or test failures pending.
           
           ## Step 1 - Determine review scope
           
@@ -352,7 +354,7 @@ jobs:
           
           If there are no findings, submit a neutral `COMMENT` review with a short body indicating that no blocking management SDK review issues were found.
           
-          GH_AW_PROMPT_1b6a6f87f4969f42_EOF
+          GH_AW_PROMPT_5937b361128ad92c_EOF
           } > "$GH_AW_PROMPT"
       - name: Interpolate variables and render templates
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
@@ -558,9 +560,9 @@ jobs:
           mkdir -p "${RUNNER_TEMP}/gh-aw/safeoutputs"
           mkdir -p /tmp/gh-aw/safeoutputs
           mkdir -p /tmp/gh-aw/mcp-logs/safeoutputs
-          cat > "${RUNNER_TEMP}/gh-aw/safeoutputs/config.json" << 'GH_AW_SAFE_OUTPUTS_CONFIG_ce291ec29e7556e7_EOF'
+          cat > "${RUNNER_TEMP}/gh-aw/safeoutputs/config.json" << 'GH_AW_SAFE_OUTPUTS_CONFIG_0d17b0dc09815307_EOF'
           {"create_pull_request_review_comment":{"max":40,"side":"RIGHT","target":"${{ github.event.pull_request.number || github.event.inputs.pr_number }}"},"create_report_incomplete_issue":{},"missing_data":{},"missing_tool":{},"noop":{"max":1,"report-as-issue":"false"},"report_incomplete":{},"submit_pull_request_review":{"allowed_events":["COMMENT","REQUEST_CHANGES"],"footer":"if-body","max":1}}
-          GH_AW_SAFE_OUTPUTS_CONFIG_ce291ec29e7556e7_EOF
+          GH_AW_SAFE_OUTPUTS_CONFIG_0d17b0dc09815307_EOF
       - name: Generate Safe Outputs Tools
         env:
           GH_AW_TOOLS_META_JSON: |
@@ -788,7 +790,7 @@ jobs:
           
           mkdir -p /home/runner/.copilot
           GH_AW_NODE=$(which node 2>/dev/null || command -v node 2>/dev/null || echo node)
-          cat << GH_AW_MCP_CONFIG_558431d78f11e06b_EOF | "$GH_AW_NODE" "${RUNNER_TEMP}/gh-aw/actions/start_mcp_gateway.cjs"
+          cat << GH_AW_MCP_CONFIG_657acdc1b55537f5_EOF | "$GH_AW_NODE" "${RUNNER_TEMP}/gh-aw/actions/start_mcp_gateway.cjs"
           {
             "mcpServers": {
               "github": {
@@ -829,7 +831,7 @@ jobs:
               "payloadDir": "${MCP_GATEWAY_PAYLOAD_DIR}"
             }
           }
-          GH_AW_MCP_CONFIG_558431d78f11e06b_EOF
+          GH_AW_MCP_CONFIG_657acdc1b55537f5_EOF
       - name: Mount MCP servers as CLIs
         id: mount-mcp-clis
         continue-on-error: true
