@@ -1673,9 +1673,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
             else if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound &&
                      Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition()))
             {
-                // 404 + com.microsoft:message-not-found means no sessions exist for this entity.
-                // Other 404 conditions (e.g., entity not found) fall through to the exception below
-                // so callers can distinguish "no sessions" from "queue doesn't exist".
+                // The service currently returns 204 NoContent (with com.microsoft:session-not-found)
+                // for empty results, which the branch above handles. This 404 + message-not-found
+                // catch is a cross-SDK safety net (JS and Python carry the same guard). Other 404
+                // conditions (e.g., entity not found) fall through to the exception below so callers
+                // can distinguish "no sessions" from "queue doesn't exist".
                 return Array.Empty<string>();
             }
 
