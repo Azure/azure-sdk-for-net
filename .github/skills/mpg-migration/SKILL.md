@@ -31,7 +31,7 @@ Typical triggers:
 
 1. **Never edit `src/Generated/` or `metadata.json` by hand.**
 2. **Never add `ApiCompatBaseline.txt` entries or disable ApiCompat/package validation.**
-3. **Prefer spec-side decorators first**: `@@clientName`, `@@access`, `@@alternateType`, `@@markAsPageable`.
+3. **Prefer spec-side decorators first**: `@@clientName`, `@@alternateType`, `@@markAsPageable`.
 4. **Use MCP tools first for deterministic custom-code edits**; hand-edit only the remaining shim logic.
 5. **Use SDK customizations only** for backward-compat shims or when decorators cannot express the fix.
 

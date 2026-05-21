@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     internal static partial class ManagedEnvironmentWeekDayExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ManagedEnvironmentWeekDay value) => value switch
         {
             ManagedEnvironmentWeekDay.Monday => "Monday",
@@ -23,15 +24,37 @@ namespace Azure.ResourceManager.AppContainers.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ManagedEnvironmentWeekDay value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ManagedEnvironmentWeekDay ToManagedEnvironmentWeekDay(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday")) return ManagedEnvironmentWeekDay.Monday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday")) return ManagedEnvironmentWeekDay.Tuesday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday")) return ManagedEnvironmentWeekDay.Wednesday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday")) return ManagedEnvironmentWeekDay.Thursday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday")) return ManagedEnvironmentWeekDay.Friday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday")) return ManagedEnvironmentWeekDay.Saturday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday")) return ManagedEnvironmentWeekDay.Sunday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday"))
+            {
+                return ManagedEnvironmentWeekDay.Monday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday"))
+            {
+                return ManagedEnvironmentWeekDay.Tuesday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday"))
+            {
+                return ManagedEnvironmentWeekDay.Wednesday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday"))
+            {
+                return ManagedEnvironmentWeekDay.Thursday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday"))
+            {
+                return ManagedEnvironmentWeekDay.Friday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday"))
+            {
+                return ManagedEnvironmentWeekDay.Saturday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday"))
+            {
+                return ManagedEnvironmentWeekDay.Sunday;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ManagedEnvironmentWeekDay value.");
         }
     }
