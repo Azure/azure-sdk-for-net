@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 networkAdapters is null ? default : new NetworkSettingsProperties((networkAdapters ?? new ChangeTrackingList<DataBoxEdgeNetworkAdapter>()).ToList(), null));
         }
 
-        /// <summary> Represents the networkAdapter on a device. </summary>
         /// <param name="adapterId"> Instance ID of network adapter. </param>
         /// <param name="adapterPosition"> Hardware position of network adapter. </param>
         /// <param name="index"> Logical index of the adapter. </param>
@@ -49,12 +48,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="status"> Value indicating whether this adapter is valid. </param>
         /// <param name="rdmaStatus"> Value indicating whether this adapter is RDMA capable. </param>
         /// <param name="dhcpStatus"> Value indicating whether this adapter has DHCP enabled. </param>
-        /// <param name="iPv4Configuration"> The IPv4 configuration of the network adapter. </param>
-        /// <param name="iPv6Configuration"> The IPv6 configuration of the network adapter. </param>
-        /// <param name="iPv6LinkLocalAddress"> The IPv6 local address. </param>
+        /// <param name="ipv4Configuration"> The IPv4 configuration of the network adapter. </param>
+        /// <param name="ipv6Configuration"> The IPv6 configuration of the network adapter. </param>
+        /// <param name="ipv6LinkLocalAddress"> The IPv6 local address. </param>
         /// <param name="dnsServers"> The list of DNS Servers of the device. </param>
         /// <returns> A new <see cref="Models.DataBoxEdgeNetworkAdapter"/> instance for mocking. </returns>
-        public static DataBoxEdgeNetworkAdapter DataBoxEdgeNetworkAdapter(string adapterId = default, DataBoxEdgeNetworkAdapterPosition adapterPosition = default, int? index = default, Guid? nodeId = default, string networkAdapterName = default, string label = default, string macAddress = default, long? linkSpeed = default, DataBoxEdgeNetworkAdapterStatus? status = default, DataBoxEdgeNetworkAdapterRdmaStatus? rdmaStatus = default, DataBoxEdgeNetworkAdapterDhcpStatus? dhcpStatus = default, DataBoxEdgeIPv4Config iPv4Configuration = default, DataBoxEdgeIPv6Config iPv6Configuration = default, string iPv6LinkLocalAddress = default, IEnumerable<string> dnsServers = default)
+        public static DataBoxEdgeNetworkAdapter DataBoxEdgeNetworkAdapter(string adapterId = default, DataBoxEdgeNetworkAdapterPosition adapterPosition = default, int? index = default, Guid? nodeId = default, string networkAdapterName = default, string label = default, string macAddress = default, long? linkSpeed = default, DataBoxEdgeNetworkAdapterStatus? status = default, DataBoxEdgeNetworkAdapterRdmaStatus? rdmaStatus = default, DataBoxEdgeNetworkAdapterDhcpStatus? dhcpStatus = default, DataBoxEdgeIPv4Config ipv4Configuration = default, DataBoxEdgeIPv6Config ipv6Configuration = default, string ipv6LinkLocalAddress = default, IEnumerable<string> dnsServers = default)
         {
             dnsServers ??= new ChangeTrackingList<string>();
 
@@ -70,9 +69,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 status,
                 rdmaStatus,
                 dhcpStatus,
-                iPv4Configuration,
-                iPv6Configuration,
-                iPv6LinkLocalAddress,
+                ipv4Configuration,
+                ipv6Configuration,
+                ipv6LinkLocalAddress,
                 dnsServers.ToList(),
                 additionalBinaryDataProperties: null);
         }
@@ -132,11 +131,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="edgeSubscription"> Edge Profile Subscription. </param>
         /// <param name="residencyType"> DataResidencyType enum. </param>
         /// <param name="sku"> The SKU type. </param>
-        /// <param name="etag"> The etag for the devices. </param>
+        /// <param name="eTag"> The etag for the devices. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
         /// <param name="kind"> The kind of the device. </param>
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeDeviceData"/> instance for mocking. </returns>
-        public static DataBoxEdgeDeviceData DataBoxEdgeDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SystemData dataBoxEdgeSystemData = default, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus = default, string serialNumber = default, string description = default, string modelDescription = default, DataBoxEdgeDeviceType? deviceType = default, string friendlyName = default, string culture = default, string deviceModel = default, string deviceSoftwareVersion = default, long? deviceLocalCapacity = default, string timeZone = default, string deviceHcsVersion = default, IEnumerable<DataBoxEdgeRoleType> configuredRoleTypes = default, int? nodeCount = default, DataBoxEdgeResourceMoveDetails resourceMoveDetails = default, string kubernetesWorkloadProfile = default, EdgeProfileSubscription edgeSubscription = default, DataBoxEdgeDataResidencyType? residencyType = default, DataBoxEdgeSku sku = default, ETag? etag = default, ManagedServiceIdentity identity = default, DataBoxEdgeDeviceKind? kind = default)
+        public static DataBoxEdgeDeviceData DataBoxEdgeDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SystemData dataBoxEdgeSystemData = default, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus = default, string serialNumber = default, string description = default, string modelDescription = default, DataBoxEdgeDeviceType? deviceType = default, string friendlyName = default, string culture = default, string deviceModel = default, string deviceSoftwareVersion = default, long? deviceLocalCapacity = default, string timeZone = default, string deviceHcsVersion = default, IEnumerable<DataBoxEdgeRoleType> configuredRoleTypes = default, int? nodeCount = default, DataBoxEdgeResourceMoveDetails resourceMoveDetails = default, string kubernetesWorkloadProfile = default, EdgeProfileSubscription edgeSubscription = default, DataBoxEdgeDataResidencyType? residencyType = default, DataBoxEdgeSku sku = default, ETag? eTag = default, ManagedServiceIdentity identity = default, DataBoxEdgeDeviceKind? kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     kubernetesWorkloadProfile,
                     null),
                 sku,
-                etag,
+                eTag,
                 identity,
                 kind);
         }
@@ -247,6 +246,53 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static GenerateCertResult GenerateCertResult(string publicKey = default, string privateKey = default, DateTimeOffset? expireOn = default)
         {
             return new GenerateCertResult(publicKey, privateKey, expireOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="encryptionKeyThumbprint"> The digital signature of encrypted certificate. </param>
+        /// <param name="encryptionKey"> The public part of the encryption certificate. Client uses this to encrypt any secret. </param>
+        /// <param name="resourceKey"> The Resource ID of the Resource. </param>
+        /// <param name="clientSecretStoreId"> The Key Vault ARM Id for client secrets. </param>
+        /// <param name="clientSecretStoreUri"> The url to access the Client Key Vault. </param>
+        /// <param name="channelIntegrityKeyName"> The name of Channel Integrity Key stored in the Client Key Vault. </param>
+        /// <param name="channelIntegrityKeyVersion"> The version of Channel Integrity Key stored in the Client Key Vault. </param>
+        /// <param name="keyVaultSyncStatus"> Key vault sync status. </param>
+        /// <param name="deviceSecrets"> Device secrets, will be returned only with ODataFilter $expand=deviceSecrets. </param>
+        /// <param name="clusterWitnessType"> Cluster Witness Type. </param>
+        /// <param name="fileShareWitnessLocation"> The witness location of file share. </param>
+        /// <param name="fileShareWitnessUsername"> The username of file share. </param>
+        /// <param name="cloudWitnessStorageAccountName"> The Cloud Witness Storage account name. </param>
+        /// <param name="cloudWitnessContainerName"> The Container for cloud witness in the storage account. </param>
+        /// <param name="cloudWitnessStorageEndpoint"> The Azure service endpoint of the cloud witness storage account. </param>
+        /// <returns> A new <see cref="Models.DataBoxEdgeDeviceExtendedInfo"/> instance for mocking. </returns>
+        public static DataBoxEdgeDeviceExtendedInfo DataBoxEdgeDeviceExtendedInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string encryptionKeyThumbprint = default, string encryptionKey = default, string resourceKey = default, ResourceIdentifier clientSecretStoreId = default, Uri clientSecretStoreUri = default, string channelIntegrityKeyName = default, string channelIntegrityKeyVersion = default, EdgeKeyVaultSyncStatus? keyVaultSyncStatus = default, IReadOnlyDictionary<string, DataBoxEdgeDeviceSecret> deviceSecrets = default, EdgeClusterWitnessType? clusterWitnessType = default, string fileShareWitnessLocation = default, string fileShareWitnessUsername = default, string cloudWitnessStorageAccountName = default, string cloudWitnessContainerName = default, string cloudWitnessStorageEndpoint = default)
+        {
+            return new DataBoxEdgeDeviceExtendedInfo(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                encryptionKeyThumbprint is null && encryptionKey is null && resourceKey is null && clientSecretStoreId is null && clientSecretStoreUri is null && channelIntegrityKeyName is null && channelIntegrityKeyVersion is null && keyVaultSyncStatus is null && deviceSecrets is null && clusterWitnessType is null && fileShareWitnessLocation is null && fileShareWitnessUsername is null && cloudWitnessStorageAccountName is null && cloudWitnessContainerName is null && cloudWitnessStorageEndpoint is null ? default : new DataBoxEdgeDeviceExtendedInfoProperties(
+                    encryptionKeyThumbprint,
+                    encryptionKey,
+                    resourceKey,
+                    clientSecretStoreId,
+                    clientSecretStoreUri,
+                    channelIntegrityKeyName,
+                    channelIntegrityKeyVersion,
+                    keyVaultSyncStatus,
+                    deviceSecrets,
+                    clusterWitnessType,
+                    fileShareWitnessLocation,
+                    fileShareWitnessUsername,
+                    cloudWitnessStorageAccountName,
+                    cloudWitnessContainerName,
+                    cloudWitnessStorageEndpoint,
+                    null));
         }
 
         /// <summary> Holds device secret either as a KeyVault reference or as an encrypted value. </summary>
@@ -1177,41 +1223,41 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataBoxEdgeDeviceData DataBoxEdgeDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxEdgeSku sku, ETag? etag, ManagedServiceIdentity identity, DataBoxEdgeDeviceKind? kind, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus, string serialNumber, string description, string modelDescription, DataBoxEdgeDeviceType? deviceType, string friendlyName, string culture, string deviceModel, string deviceSoftwareVersion, long? deviceLocalCapacity, string timeZone, string deviceHcsVersion, IEnumerable<DataBoxEdgeRoleType> configuredRoleTypes, int? nodeCount, DataBoxEdgeResourceMoveDetails resourceMoveDetails, EdgeProfileSubscription edgeSubscription, DataBoxEdgeDataResidencyType? residencyType)
         {
-            return DataBoxEdgeDeviceData(id, name, resourceType, systemData, tags, location, dataBoxEdgeSystemData: default, dataBoxEdgeDeviceStatus, serialNumber, description, modelDescription, deviceType, friendlyName, culture, deviceModel, deviceSoftwareVersion, deviceLocalCapacity, timeZone, deviceHcsVersion, configuredRoleTypes, nodeCount, resourceMoveDetails, kubernetesWorkloadProfile: default, edgeSubscription, residencyType, sku, etag, identity, kind);
-        }
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxEdgeDeviceExtendedInfo"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="encryptionKeyThumbprint"> The digital signature of encrypted certificate. </param>
-        /// <param name="encryptionKey"> The public part of the encryption certificate. Client uses this to encrypt any secret. </param>
-        /// <param name="resourceKey"> The Resource ID of the Resource. </param>
-        /// <param name="clientSecretStoreId"> The Key Vault ARM Id for client secrets. </param>
-        /// <param name="clientSecretStoreUri"> The url to access the Client Key Vault. </param>
-        /// <param name="channelIntegrityKeyName"> The name of Channel Integrity Key stored in the Client Key Vault. </param>
-        /// <param name="channelIntegrityKeyVersion"> The version of Channel Integrity Key stored in the Client Key Vault. </param>
-        /// <param name="keyVaultSyncStatus"> Key vault sync status. </param>
-        /// <param name="deviceSecrets"> Device secrets, will be returned only with ODataFilter $expand=deviceSecrets. </param>
-        /// <param name="clusterWitnessType"> Cluster Witness Type. </param>
-        /// <param name="fileShareWitnessLocation"> The witness location of file share. </param>
-        /// <param name="fileShareWitnessUsername"> The username of file share. </param>
-        /// <param name="cloudWitnessStorageAccountName"> The Cloud Witness Storage account name. </param>
-        /// <param name="cloudWitnessContainerName"> The Container for cloud witness in the storage account. </param>
-        /// <param name="cloudWitnessStorageEndpoint"> The Azure service endpoint of the cloud witness storage account. </param>
-        /// <returns> A new <see cref="Models.DataBoxEdgeDeviceExtendedInfo"/> instance for mocking. </returns>
-        public static DataBoxEdgeDeviceExtendedInfo DataBoxEdgeDeviceExtendedInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string encryptionKeyThumbprint = default, string encryptionKey = default, string resourceKey = default, ResourceIdentifier clientSecretStoreId = default, Uri clientSecretStoreUri = default, string channelIntegrityKeyName = default, string channelIntegrityKeyVersion = default, EdgeKeyVaultSyncStatus? keyVaultSyncStatus = default, IReadOnlyDictionary<string, DataBoxEdgeDeviceSecret> deviceSecrets = default, EdgeClusterWitnessType? clusterWitnessType = default, string fileShareWitnessLocation = default, string fileShareWitnessUsername = default, string cloudWitnessStorageAccountName = default, string cloudWitnessContainerName = default, string cloudWitnessStorageEndpoint = default)
-        {
-            deviceSecrets ??= new ChangeTrackingDictionary<string, DataBoxEdgeDeviceSecret>();
-
-            return new DataBoxEdgeDeviceExtendedInfo(
+            return new DataBoxEdgeDeviceData(
                 id,
                 name,
                 resourceType,
+                systemData,
                 additionalBinaryDataProperties: null,
-                default,
-                systemData);
+                tags,
+                location,
+                dataBoxEdgeDeviceStatus is null && serialNumber is null && description is null && modelDescription is null && deviceType is null && friendlyName is null && culture is null && deviceModel is null && deviceSoftwareVersion is null && deviceLocalCapacity is null && timeZone is null && deviceHcsVersion is null && configuredRoleTypes is null && nodeCount is null && resourceMoveDetails is null && edgeSubscription is null && residencyType is null ? default : new DataBoxEdgeDeviceProperties(
+                    default,
+                    dataBoxEdgeDeviceStatus,
+                    serialNumber,
+                    description,
+                    modelDescription,
+                    deviceType,
+                    friendlyName,
+                    culture,
+                    deviceModel,
+                    deviceSoftwareVersion,
+                    deviceLocalCapacity,
+                    timeZone,
+                    deviceHcsVersion,
+                    (configuredRoleTypes ?? new ChangeTrackingList<DataBoxEdgeRoleType>()).ToList(),
+                    nodeCount,
+                    resourceMoveDetails,
+                    new EdgeProfile(edgeSubscription, default),
+                    new DataResidency(residencyType, default),
+                    default,
+                    default),
+                sku,
+                etag,
+                identity,
+                kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.DataBoxEdgeJobData"/>. </summary>
@@ -1288,7 +1334,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static UploadCertificateContent UploadCertificateContent(DataBoxEdgeAuthenticationType? authenticationType, string certificate)
         {
-            return new UploadCertificateContent(default, additionalBinaryDataProperties: null);
+            return new UploadCertificateContent(authenticationType is null && certificate is null ? default : new RawCertificateData(authenticationType, certificate, default), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CloudEdgeManagementRole"/>. </summary>
@@ -1340,7 +1386,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataBoxEdgeLoadBalancerConfig DataBoxEdgeLoadBalancerConfig(string loadBalancerConfigType, string version)
         {
-            return DataBoxEdgeLoadBalancerConfig(loadBalancerConfigType, version, ipRange: default);
+            return DataBoxEdgeLoadBalancerConfig(loadBalancerConfigType: loadBalancerConfigType, version: version, ipRange: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeriodicTimerEventTrigger"/>. </summary>

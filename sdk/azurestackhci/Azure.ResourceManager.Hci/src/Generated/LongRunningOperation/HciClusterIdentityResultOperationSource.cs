@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.Hci
         HciClusterIdentityResult IOperationSource<HciClusterIdentityResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            HciClusterIdentityResult result = HciClusterIdentityResult.DeserializeHciClusterIdentityResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return HciClusterIdentityResult.DeserializeHciClusterIdentityResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.Hci
         async ValueTask<HciClusterIdentityResult> IOperationSource<HciClusterIdentityResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            HciClusterIdentityResult result = HciClusterIdentityResult.DeserializeHciClusterIdentityResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return HciClusterIdentityResult.DeserializeHciClusterIdentityResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

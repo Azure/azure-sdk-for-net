@@ -35,8 +35,9 @@ public static class InvocationsServerServiceCollectionExtensions
         // Register activity source as singleton (virtual → mockable)
         services.TryAddSingleton<InvocationsActivitySource>();
 
-        // Register endpoint handler as scoped (per-request)
+        // Register endpoint handlers as scoped (per-request)
         services.AddScoped<InvocationEndpointHandler>();
+        services.AddScoped<WebSocketEndpointHandler>();
 
         // Log startup configuration when the host starts
         services.AddHostedService<InvocationsStartupLogger>();

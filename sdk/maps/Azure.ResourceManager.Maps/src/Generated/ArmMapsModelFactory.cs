@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Maps.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MapsAccountPatch MapsAccountPatch(IDictionary<string, string> tags, MapsAccountKind? kind, MapsSku sku, ManagedServiceIdentity identity, Guid? uniqueId, bool? disableLocalAuth, string provisioningState, IEnumerable<MapsLinkedResource> linkedResources, IEnumerable<MapsCorsRule> corsRulesValue, MapsEncryption encryption)
         {
-            return MapsAccountPatch(tags, kind, sku, identity, uniqueId, disableLocalAuth, provisioningState, linkedResources, encryption, locations: default, privateEndpointConnections: default, publicNetworkAccess: default, corsRules: default, corsRulesValue);
+            return MapsAccountPatch(tags: tags, kind: kind, sku: sku, identity: identity, uniqueId: uniqueId, disableLocalAuth: disableLocalAuth, provisioningState: provisioningState, linkedResources: linkedResources, encryption: encryption, locations: default, privateEndpointConnections: default, publicNetworkAccess: default, corsRules: default, corsRulesValue: corsRulesValue);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MapsCreatorProperties"/>. </summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Maps.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MapsCreatorProperties MapsCreatorProperties(string provisioningState, int storageUnits)
         {
-            return MapsCreatorProperties(provisioningState, storageUnits, totalStorageUnitSizeInBytes: default, consumedStorageUnitSizeInBytes: default);
+            return MapsCreatorProperties(provisioningState: provisioningState, storageUnits: storageUnits, totalStorageUnitSizeInBytes: default, consumedStorageUnitSizeInBytes: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MapsCreatorPatch"/>. </summary>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Maps.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MapsCreatorPatch MapsCreatorPatch(IDictionary<string, string> tags, string provisioningState, int? storageUnits)
         {
-            return MapsCreatorPatch(tags, provisioningState, storageUnits, totalStorageUnitSizeInBytes: default, consumedStorageUnitSizeInBytes: default);
+            return MapsCreatorPatch(tags: tags, provisioningState: provisioningState, storageUnits: storageUnits, totalStorageUnitSizeInBytes: default, consumedStorageUnitSizeInBytes: default);
         }
     }
 }

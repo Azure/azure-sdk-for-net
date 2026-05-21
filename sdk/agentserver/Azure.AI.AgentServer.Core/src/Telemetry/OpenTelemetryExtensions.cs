@@ -1,9 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+using Azure.Identity;
+using Microsoft.Agents.A365.Observability.Runtime.Tracing.Exporters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenTelemetry;
+using OpenTelemetry;
+using OpenTelemetry.Context.Propagation;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -18,6 +23,9 @@ namespace Azure.AI.AgentServer.Core.Internal;
 /// </summary>
 internal static class OpenTelemetryExtensions
 {
+    // The A365 token acquisition scope.
+    private const string Agent365Scope = "api://9b975845-388f-4429-889e-eab1ef63949c/.default";
+
     /// <summary>
     /// Registers OpenTelemetry providers and conditional exporters via the
     /// Microsoft OpenTelemetry distro.
@@ -50,7 +58,39 @@ internal static class OpenTelemetryExtensions
         // exporters from environment variables. It registers ASP.NET Core, HttpClient,
         // SQL, Azure SDK, and AI instrumentation automatically.
         var otelBuilder = services.AddOpenTelemetry();
-        otelBuilder.UseMicrosoftOpenTelemetry(options => { });
+
+        // Ensure W3C Trace Context and Baggage propagators are active on all TFMs.
+        // On net9+, ASP.NET Core natively respects OTel's propagator for incoming
+        // requests. On net8.0, the W3CBaggagePropagator middleware handles extraction.
+        // This call ensures outgoing requests also propagate baggage correctly.
+        Sdk.SetDefaultTextMapPropagator(new CompositeTextMapPropagator(new TextMapPropagator[]
+        {
+            new TraceContextPropagator(),
+            new BaggagePropagator(),
+        }));
+
+        otelBuilder.UseMicrosoftOpenTelemetry(options =>
+        {
+            var exporters = ExportTarget.None;
+
+            if (!string.IsNullOrEmpty(FoundryEnvironment.AppInsightsConnectionString))
+            {
+                exporters |= ExportTarget.AzureMonitor;
+            }
+
+            if (!string.IsNullOrEmpty(FoundryEnvironment.OtlpEndpoint))
+            {
+                exporters |= ExportTarget.Otlp;
+            }
+
+            if (FoundryEnvironment.IsAgent365TracingEnabled)
+            {
+                exporters |= ExportTarget.Agent365;
+                ConfigureAgent365Export(options);
+            }
+
+            options.Exporters = exporters;
+        });
 
         otelBuilder
             .ConfigureResource(r =>
@@ -88,6 +128,57 @@ internal static class OpenTelemetryExtensions
         });
 
         return services;
+    }
+
+    /// <summary>
+    /// Configures Agent365 export when the environment indicates it should be enabled.
+    /// Requires <see cref="FoundryEnvironment.IsAgent365TracingEnabled"/> to be true,
+    /// and <see cref="FoundryEnvironment.AgentInstanceClientId"/> to be set for token acquisition.
+    /// </summary>
+    private static void ConfigureAgent365Export(MicrosoftOpenTelemetryOptions options)
+    {
+        if (!FoundryEnvironment.IsAgent365TracingEnabled)
+        {
+            return;
+        }
+
+        var clientId = FoundryEnvironment.AgentInstanceClientId;
+        if (string.IsNullOrEmpty(clientId))
+        {
+            return;
+        }
+
+        options.Exporters |= ExportTarget.Agent365;
+        options.Agent365.Exporter.UseS2SEndpoint = true;
+        options.Agent365.Exporter.TokenResolver = CreateTokenResolver();
+    }
+
+    /// <summary>
+    /// Creates a token resolver delegate that acquires tokens using
+    /// <see cref="DefaultAzureCredential"/> for the A365 exporter scope.
+    /// The credential is configured with the agent instance's managed identity client ID
+    /// so that token acquisition uses the correct identity.
+    /// </summary>
+    private static AsyncAuthTokenResolver CreateTokenResolver()
+    {
+        var credentialOptions = new DefaultAzureCredentialOptions();
+        var clientId = FoundryEnvironment.AgentInstanceClientId;
+        if (!string.IsNullOrEmpty(clientId))
+        {
+            credentialOptions.ManagedIdentityClientId = clientId;
+        }
+
+        var credential = new DefaultAzureCredential(credentialOptions);
+
+        return async (agentId, tenantId) =>
+        {
+            var tenantForRequest = tenantId ?? FoundryEnvironment.AgentTenantId;
+            var context = new TokenRequestContext(
+                new[] { Agent365Scope },
+                tenantId: tenantForRequest);
+            var token = await credential.GetTokenAsync(context, CancellationToken.None);
+            return token.Token;
+        };
     }
 
     /// <summary>

@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated Azure.ResourceManager.AppContainers management-plane generation from AutoRest to TypeSpec.
+
 ## 1.5.0 (2025-10-09)
 
 ### Features Added

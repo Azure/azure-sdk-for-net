@@ -43,7 +43,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentEndpoint"> An optional endpoint configuration. If not specified, a default endpoint configuration will be set for the agent. </param>
         /// <param name="agentCard"> Optional agent card for the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalCreateAgentRequest(string name, IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, AgentEndpointConfig agentEndpoint, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalCreateAgentRequest(string name, IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, AgentEndpointConfiguration agentEndpoint, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Metadata = metadata;
@@ -77,7 +77,7 @@ namespace Azure.AI.Projects.Agents
         public AgentBlueprintReference BlueprintReference { get; }
 
         /// <summary> An optional endpoint configuration. If not specified, a default endpoint configuration will be set for the agent. </summary>
-        public AgentEndpointConfig AgentEndpoint { get; }
+        public AgentEndpointConfiguration AgentEndpoint { get; }
 
         /// <summary> Optional agent card for the agent. </summary>
         public AgentCard AgentCard { get; }

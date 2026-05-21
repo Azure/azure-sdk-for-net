@@ -76,9 +76,9 @@ namespace System.ClientModel
         public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
-        public static System.ClientModel.AuthenticationTokenProvider? GetCredential(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) { throw null; }
-        public static System.ClientModel.AuthenticationTokenProvider? GetCredential(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) { throw null; }
-        public static System.ClientModel.AuthenticationTokenProvider? GetCredential(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings? GetCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings? GetCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings? GetCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) { throw null; }
     }
     public partial class ContinuationToken
     {
@@ -86,6 +86,37 @@ namespace System.ClientModel
         protected ContinuationToken(System.BinaryData bytes) { }
         public static System.ClientModel.ContinuationToken FromBytes(System.BinaryData bytes) { throw null; }
         public virtual System.BinaryData ToBytes() { throw null; }
+    }
+    public sealed partial class FileBinaryContent : System.ClientModel.BinaryContent
+    {
+        public FileBinaryContent(System.BinaryData data, string? mediaType = "application/octet-stream") { }
+        public FileBinaryContent(System.IO.Stream stream, string? mediaType = "application/octet-stream") { }
+        public FileBinaryContent(string path, string? mediaType = "application/octet-stream") { }
+        public string? Filename { get { throw null; } set { } }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public sealed partial class MultiPartFormContent : System.ClientModel.BinaryContent
+    {
+        public MultiPartFormContent() { }
+        public MultiPartFormContent(string boundary) { }
+        public void Add(string fieldName, System.BinaryData content) { }
+        public void Add(string fieldName, byte[] content, string? mediaType = "application/octet-stream") { }
+        public void Add(string fieldName, System.ClientModel.FileBinaryContent fileContent) { }
+        public void Add(string fieldName, decimal content, string? mediaType = "application/json") { }
+        public void Add(string fieldName, double content, string? mediaType = "application/json") { }
+        public void Add(string fieldName, int content, string? mediaType = "application/json") { }
+        public void Add(string fieldName, long content, string? mediaType = "application/json") { }
+        public void Add(string fieldName, float content, string? mediaType = "application/json") { }
+        public void Add(string fieldName, string content, string? mediaType = "application/json") { }
+        public void Add<T>(string fieldName, System.ClientModel.Primitives.IPersistableModel<T> model) { }
+        public void Add<T>(string fieldName, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterContext? context = null, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null, string? mediaType = "application/json") { }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace System.ClientModel.Primitives
@@ -260,7 +291,9 @@ namespace System.ClientModel.Primitives
         public CredentialSettings(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         public Microsoft.Extensions.Configuration.IConfigurationSection? AdditionalProperties { get { throw null; } set { } }
         public string? CredentialSource { get { throw null; } set { } }
+        public string? this[string key] { get { throw null; } }
         public string? Key { get { throw null; } set { } }
+        public System.ClientModel.AuthenticationTokenProvider? TokenProvider { get { throw null; } set { } }
     }
     public partial class GetTokenOptions
     {
