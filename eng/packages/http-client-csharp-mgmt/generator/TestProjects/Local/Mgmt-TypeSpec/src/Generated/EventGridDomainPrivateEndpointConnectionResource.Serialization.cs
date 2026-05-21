@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
-    public partial class EventGridTopicEventGridPrivateEndpointConnectionResource : IJsonModel<EventGridPrivateEndpointConnectionData>
+    public partial class EventGridDomainPrivateEndpointConnectionResource : IJsonModel<EventGridPrivateEndpointConnectionData>
     {
         private static IJsonModel<EventGridPrivateEndpointConnectionData> s_dataDeserializationInstance;
 
