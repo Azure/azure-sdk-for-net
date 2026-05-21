@@ -1,4 +1,6 @@
 directory: specification/translation/data-plane/TextTranslation
-commit: 90d45385f572aaf6354fa8b18b0125e7b99d6785
+commit: 745dcab5c32d0b8c5d88d8424c3acd5630be8e51
 repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json

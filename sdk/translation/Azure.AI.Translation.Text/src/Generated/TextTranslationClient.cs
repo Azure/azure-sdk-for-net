@@ -28,10 +28,28 @@ namespace Azure.AI.Translation.Text
     public partial class TextTranslationClient
     {
         private readonly Uri _endpoint;
+        private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
+        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of TextTranslationClient for mocking. </summary>
         protected TextTranslationClient()
+        {
+        }
+
+        /// <summary> Initializes a new instance of TextTranslationClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public TextTranslationClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new TextTranslationClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of TextTranslationClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public TextTranslationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new TextTranslationClientOptions())
         {
         }
 
@@ -58,10 +76,28 @@ namespace Azure.AI.Translation.Text
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
+        /// <summary> Initializes a new instance of TextTranslationClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public TextTranslationClient(Uri endpoint, AzureKeyCredential credential, TextTranslationClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of TextTranslationClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public TextTranslationClient(Uri endpoint, TokenCredential credential, TextTranslationClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        {
+        }
+
         /// <summary> Initializes a new instance of TextTranslationClient from a <see cref="TextTranslationClientSettings"/>. </summary>
         /// <param name="settings"> The settings for TextTranslationClient. </param>
         [Experimental("SCME0002")]
-        public TextTranslationClient(TextTranslationClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
+        public TextTranslationClient(TextTranslationClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
 
