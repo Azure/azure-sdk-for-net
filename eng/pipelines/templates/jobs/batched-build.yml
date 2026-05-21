@@ -41,8 +41,6 @@ jobs:
       value: ${{ parameters.SDKType }}
 
     pool:
-      # 1es pipeline templates converts `image` to demands: ImageOverride under the hood
-      # which is incompatible with image selection in the default non-1es hosted pools
       ${{ if eq(parameters.OSName, 'macOS') }}:
         vmImage: $(OSVmImage)
       ${{ else }}:
@@ -50,7 +48,6 @@ jobs:
       name: $(Pool)
       os: ${{ parameters.OSName }}
     ${{ if eq(parameters.UsePlatformContainer, 'true') }}:
-      # Add a default so the job doesn't fail when the matrix is empty
       container: $[ variables['Container'] ]
 
     steps:
@@ -60,26 +57,3 @@ jobs:
           TestPipeline: ${{ parameters.TestPipeline }}
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           SDKType: ${{ parameters.SDKType }}
-
-  - job:
-    displayName: "Analyze"
-    dependsOn: ${{ parameters.DependsOn }}
-    condition: and(succeededOrFailed(), ne(${{ parameters.Matrix }}, '{}'))
-
-    # allow duplication of the job by matrix
-    strategy:
-      matrix: $[ ${{ parameters.Matrix }} ]
-
-    # but immediately ignore the matrix for the job name
-    pool:
-      name: $(LINUXPOOL)
-      image: $(LINUXVMIMAGE)
-      os: linux
-
-    steps:
-      - template: /eng/pipelines/templates/steps/analyze.yml
-        parameters:
-          Artifacts: ${{ parameters.Artifacts }}
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
-          SDKType: ${{ parameters.SDKType }}
-          BuildSnippets: ${{ parameters.BuildSnippets }}
