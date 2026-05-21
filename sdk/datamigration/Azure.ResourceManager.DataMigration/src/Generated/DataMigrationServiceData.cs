@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Custom service properties. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="eTag"> HTTP strong entity tag value. Ignored if submitted. </param>
         /// <param name="kind"> The resource kind. Only 'vm' (the default) is supported. </param>
         /// <param name="sku"> Service SKU. </param>
-        internal DataMigrationServiceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, DataMigrationServiceProperties properties, IDictionary<string, string> tags, ETag? eTag, string kind, DataMigrationServiceSku sku) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="tags"></param>
+        internal DataMigrationServiceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, DataMigrationServiceProperties properties, ETag? eTag, string kind, DataMigrationServiceSku sku, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

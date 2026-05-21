@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.DataMigration
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AzureLocation location = default;
             DataMigrationServiceProperties properties = default;
-            IDictionary<string, string> tags = default;
             ETag? eTag = default;
             string kind = default;
             DataMigrationServiceSku sku = default;
+            IDictionary<string, string> tags = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -207,27 +207,6 @@ namespace Azure.ResourceManager.DataMigration
                     properties = DataMigrationServiceProperties.DeserializeDataMigrationServiceProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("tags"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    tags = dictionary;
-                    continue;
-                }
                 if (prop.NameEquals("etag"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -251,6 +230,27 @@ namespace Azure.ResourceManager.DataMigration
                     sku = DataMigrationServiceSku.DeserializeDataMigrationServiceSku(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    tags = dictionary;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -264,10 +264,10 @@ namespace Azure.ResourceManager.DataMigration
                 additionalBinaryDataProperties,
                 location,
                 properties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 eTag,
                 kind,
-                sku);
+                sku,
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

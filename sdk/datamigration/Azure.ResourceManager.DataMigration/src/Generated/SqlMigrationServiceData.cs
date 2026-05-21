@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The SQL Migration Service properties. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="tags"></param>
         internal SqlMigrationServiceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, SqlMigrationServiceProperties properties, IDictionary<string, string> tags) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

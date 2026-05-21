@@ -4674,10 +4674,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="databasesInfo"> List of DatabaseInfo. </param>
         /// <param name="provisioningState"> The project's provisioning state. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="eTag"> HTTP strong entity tag value. This is ignored if submitted. </param>
+        /// <param name="tags"></param>
         /// <returns> A new <see cref="DataMigration.DataMigrationProjectData"/> instance for mocking. </returns>
-        public static DataMigrationProjectData DataMigrationProjectData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, DataMigrationProjectSourcePlatform? sourcePlatform = default, DataMigrationAadApp azureAuthenticationInfo = default, DataMigrationProjectTargetPlatform? targetPlatform = default, DateTimeOffset? createdOn = default, ServerConnectionInfo sourceConnectionInfo = default, ServerConnectionInfo targetConnectionInfo = default, IEnumerable<DataMigrationProjectDatabaseInfo> databasesInfo = default, DataMigrationProjectProvisioningState? provisioningState = default, IDictionary<string, string> tags = default, ETag? eTag = default)
+        public static DataMigrationProjectData DataMigrationProjectData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, DataMigrationProjectSourcePlatform? sourcePlatform = default, DataMigrationAadApp azureAuthenticationInfo = default, DataMigrationProjectTargetPlatform? targetPlatform = default, DateTimeOffset? createdOn = default, ServerConnectionInfo sourceConnectionInfo = default, ServerConnectionInfo targetConnectionInfo = default, IEnumerable<DataMigrationProjectDatabaseInfo> databasesInfo = default, DataMigrationProjectProvisioningState? provisioningState = default, ETag? eTag = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4698,8 +4698,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                     (databasesInfo ?? new ChangeTrackingList<DataMigrationProjectDatabaseInfo>()).ToList(),
                     provisioningState,
                     null),
-                tags,
-                eTag);
+                eTag,
+                tags);
         }
 
         /// <summary> Database Migration Resource for SQL Database. </summary>
@@ -4767,12 +4767,12 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="virtualNicId"> The ID of the Microsoft.Network/networkInterfaces resource which the service have. </param>
         /// <param name="autoStopDelay"> The time delay before the service is auto-stopped when idle. </param>
         /// <param name="shouldDeleteResourcesOnStop"> Whether service resources should be deleted when stopped. (Turned on by default). </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="eTag"> HTTP strong entity tag value. Ignored if submitted. </param>
         /// <param name="kind"> The resource kind. Only 'vm' (the default) is supported. </param>
         /// <param name="sku"> Service SKU. </param>
+        /// <param name="tags"></param>
         /// <returns> A new <see cref="DataMigration.DataMigrationServiceData"/> instance for mocking. </returns>
-        public static DataMigrationServiceData DataMigrationServiceData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, DataMigrationServiceProvisioningState? provisioningState = default, string publicKey = default, string virtualSubnetId = default, string virtualNicId = default, string autoStopDelay = default, bool? shouldDeleteResourcesOnStop = default, IDictionary<string, string> tags = default, ETag? eTag = default, string kind = default, DataMigrationServiceSku sku = default)
+        public static DataMigrationServiceData DataMigrationServiceData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, DataMigrationServiceProvisioningState? provisioningState = default, string publicKey = default, string virtualSubnetId = default, string virtualNicId = default, string autoStopDelay = default, bool? shouldDeleteResourcesOnStop = default, ETag? eTag = default, string kind = default, DataMigrationServiceSku sku = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4791,10 +4791,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     autoStopDelay,
                     shouldDeleteResourcesOnStop,
                     null),
-                tags,
                 eTag,
                 kind,
-                sku);
+                sku,
+                tags);
         }
 
         /// <summary> Service health status. </summary>
@@ -5171,10 +5171,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     autoStopDelay,
                     shouldDeleteResourcesOnStop,
                     default),
-                tags,
                 etag,
                 kind,
-                sku);
+                sku,
+                tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigration.DataMigrationProjectTaskData"/>. </summary>
@@ -5249,8 +5249,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                     (databasesInfo ?? new ChangeTrackingList<DataMigrationProjectDatabaseInfo>()).ToList(),
                     provisioningState,
                     default),
-                tags,
-                etag);
+                etag,
+                tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigration.DataMigrationProjectFileData"/>. </summary>

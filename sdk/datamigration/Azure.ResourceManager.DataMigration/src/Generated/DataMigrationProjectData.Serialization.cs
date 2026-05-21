@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.DataMigration
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AzureLocation location = default;
             ProjectProperties properties = default;
-            IDictionary<string, string> tags = default;
             ETag? eTag = default;
+            IDictionary<string, string> tags = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -195,6 +195,15 @@ namespace Azure.ResourceManager.DataMigration
                     properties = ProjectProperties.DeserializeProjectProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("etag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -216,15 +225,6 @@ namespace Azure.ResourceManager.DataMigration
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("etag"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -238,8 +238,8 @@ namespace Azure.ResourceManager.DataMigration
                 additionalBinaryDataProperties,
                 location,
                 properties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                eTag);
+                eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }
