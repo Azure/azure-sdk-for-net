@@ -4,6 +4,8 @@ on:
     types: [opened, reopened, synchronize]
     paths:
       - "sdk/**/Azure.ResourceManager.*/**"
+  check_run:
+    types: [completed]
   workflow_dispatch:
     inputs:
       pr_number:
@@ -12,6 +14,7 @@ on:
         type: string
 if: |
   github.event_name == 'workflow_dispatch' ||
+  (github.event_name == 'check_run' && github.event.check_run.name == 'net - pullrequest' && github.event.check_run.pull_requests[0]) ||
   (github.event.pull_request && !github.event.pull_request.draft)
 description: "Review Azure SDK for .NET management-plane PRs using the mgmt PR review skill"
 checkout:
@@ -32,7 +35,7 @@ safe-outputs:
   report-failure-as-issue: false
   create-pull-request-review-comment:
     max: 40
-    target: "${{ github.event.pull_request.number || github.event.inputs.pr_number }}"
+    target: "${{ github.event.pull_request.number || github.event.check_run.pull_requests[0].number || github.event.inputs.pr_number }}"
   submit-pull-request-review:
     max: 1
     footer: "if-body"
@@ -49,7 +52,7 @@ tools:
     toolsets: [context, repos, pull_requests, actions]
   bash: true
 timeout-minutes: 25
-concurrency: mgmt-review-${{ github.event.pull_request.number || github.event.inputs.pr_number }}
+concurrency: mgmt-review-${{ github.event.pull_request.number || github.event.check_run.pull_requests[0].number || github.event.inputs.pr_number }}
 ---
 
 # Azure .NET Management SDK PR Review
@@ -58,7 +61,7 @@ concurrency: mgmt-review-${{ github.event.pull_request.number || github.event.in
 
 You are the Azure SDK for .NET management-plane PR reviewer for `${{ github.repository }}`.
 
-This workflow runs automatically when a pull request modifies files under an `Azure.ResourceManager.*` package path, or can be triggered manually via `workflow_dispatch`. Fetch and review the PR using the checked-in skill instructions from the base branch:
+This workflow runs automatically when a pull request modifies files under an `Azure.ResourceManager.*` package path, when the `net - pullrequest` CI check completes, or can be triggered manually via `workflow_dispatch`. Fetch and review the PR using the checked-in skill instructions from the base branch:
 
 - Primary skill: `.github/skills/azure-sdk-mgmt-pr-review/SKILL.md`
 - CI failure analysis skill: `.github/skills/analyze-ci-failures/SKILL.md`
