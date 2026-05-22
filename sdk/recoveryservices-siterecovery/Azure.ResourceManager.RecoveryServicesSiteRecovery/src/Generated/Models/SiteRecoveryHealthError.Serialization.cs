@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 throw new FormatException($"The model {nameof(SiteRecoveryHealthError)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(InnerHealthErrors))
+            if (Optional.IsCollectionDefined(SiteRecoveryInnerHealthErrorsList))
             {
                 writer.WritePropertyName("innerHealthErrors"u8);
                 writer.WriteStartArray();
-                foreach (SiteRecoveryInnerHealthError item in InnerHealthErrors)
+                foreach (SiteRecoveryInnerHealthError item in SiteRecoveryInnerHealthErrorsList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            IReadOnlyList<SiteRecoveryInnerHealthError> innerHealthErrors = default;
+            IList<SiteRecoveryInnerHealthError> siteRecoveryInnerHealthErrorsList = default;
             string errorSource = default;
             string errorType = default;
             string errorLevel = default;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         array.Add(SiteRecoveryInnerHealthError.DeserializeSiteRecoveryInnerHealthError(item, options));
                     }
-                    innerHealthErrors = array;
+                    siteRecoveryInnerHealthErrorsList = array;
                     continue;
                 }
                 if (prop.NameEquals("errorSource"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             return new SiteRecoveryHealthError(
-                innerHealthErrors ?? new ChangeTrackingList<SiteRecoveryInnerHealthError>(),
+                siteRecoveryInnerHealthErrorsList ?? new ChangeTrackingList<SiteRecoveryInnerHealthError>(),
                 errorSource,
                 errorType,
                 errorLevel,

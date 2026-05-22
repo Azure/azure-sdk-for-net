@@ -140,7 +140,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Health Error. </summary>
         /// <param name="innerHealthErrors"> The inner health errors. HealthError having a list of HealthError as child errors is problematic. InnerHealthError is used because this will prevent an infinite loop of structures when Hydra tries to auto-generate the contract. We are exposing the related health errors as inner health errors and all API consumers can utilize this in the same fashion as Exception -&gt; InnerException. </param>
         /// <param name="errorSource"> Source of error. </param>
         /// <param name="errorType"> Type of error. </param>
