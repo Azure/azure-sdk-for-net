@@ -102,7 +102,10 @@ public class ModelReaderWriterOptions
     }
 
     /// <summary>
-    /// Gets the model that is currently being proxied.
+    /// Gets the original model instance that is currently being proxied.
+    /// Set by <see cref="ResolveProxy{T}(IJsonModel{T})"/> and <see cref="ReadWithChain{T}(IPersistableModel{T}, BinaryData)"/>
+    /// so that the proxy implementation can access the original model's data during serialization.
+    /// Returns null when no proxy is active.
     /// </summary>
     public object? ProxiedModel { get; private set; }
 
