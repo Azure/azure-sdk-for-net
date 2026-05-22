@@ -6,6 +6,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Memory
@@ -14,6 +15,8 @@ namespace Azure.AI.Projects.Memory
     {
         private readonly AIProjectMemoryStores _client;
         private readonly string _name;
+        private readonly BinaryContent _content;
+        private readonly string _kind;
         private readonly int? _limit;
         private readonly string _order;
         private readonly string _after;
@@ -23,6 +26,8 @@ namespace Azure.AI.Projects.Memory
         /// <summary> Initializes a new instance of AIProjectMemoryStoresGetMemoriesAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AIProjectMemoryStores client used to send requests. </param>
         /// <param name="name"> The name of the memory store. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="kind"> The kind of the memory item. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
         /// default is 20.
@@ -42,10 +47,12 @@ namespace Azure.AI.Projects.Memory
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AIProjectMemoryStoresGetMemoriesAsyncCollectionResult(AIProjectMemoryStores client, string name, int? limit, string order, string after, string before, RequestOptions options)
+        public AIProjectMemoryStoresGetMemoriesAsyncCollectionResult(AIProjectMemoryStores client, string name, BinaryContent content, string kind, int? limit, string order, string after, string before, RequestOptions options)
         {
             _client = client;
             _name = name;
+            _content = content;
+            _kind = kind;
             _limit = limit;
             _order = order;
             _after = after;
@@ -57,11 +64,11 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The raw pages of the collection. </returns>
         public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
-            PipelineMessage message = _client.CreateGetMemoriesRequest(_name, _limit, _order, _after, _before, _options);
+            PipelineMessage message = _client.CreateGetMemoriesRequest(_name, _content, _kind, _limit, _order, _after, _before, _options);
             string nextToken = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+                ClientResult result = await GetNextResponseAsync(message).ConfigureAwait(false);
                 yield return result;
 
                 nextToken = ((AgentsPagedResultMemoryItem)result).LastId;
@@ -69,7 +76,7 @@ namespace Azure.AI.Projects.Memory
                 {
                     yield break;
                 }
-                message = _client.CreateGetMemoriesRequest(_name, _limit, _order, nextToken, _before, _options);
+                message = _client.CreateGetMemoriesRequest(_name, _content, _kind, _limit, _order, nextToken, _before, _options);
             }
         }
 
@@ -87,6 +94,13 @@ namespace Azure.AI.Projects.Memory
             {
                 return null;
             }
+        }
+
+        /// <summary> Sends the request in the pipeline message and returns the response. </summary>
+        /// <param name="message"> The pipeline message containing the request to send. </param>
+        private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
+        {
+            return ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
         }
     }
 }

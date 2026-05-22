@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Boolean Enum. Example- True/False. </summary>
+    /// <summary> Boolean union. Example- True/False. </summary>
     public readonly partial struct NetworkFabricBooleanValue : IEquatable<NetworkFabricBooleanValue>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string TrueValue = "True";
         private const string FalseValue = "False";
 
-        /// <summary> True. </summary>
+        /// <summary> EnumProperty-True. </summary>
         public static NetworkFabricBooleanValue True { get; } = new NetworkFabricBooleanValue(TrueValue);
-        /// <summary> False. </summary>
+        /// <summary> EnumProperty-False. </summary>
         public static NetworkFabricBooleanValue False { get; } = new NetworkFabricBooleanValue(FalseValue);
         /// <summary> Determines if two <see cref="NetworkFabricBooleanValue"/> values are the same. </summary>
         public static bool operator ==(NetworkFabricBooleanValue left, NetworkFabricBooleanValue right) => left.Equals(right);

@@ -27,12 +27,6 @@ namespace Azure.ResourceManager.ApiCenter
     {
         private readonly ClientDiagnostics _workspacesClientDiagnostics;
         private readonly Workspaces _workspacesRestClient;
-        private readonly ClientDiagnostics _apisClientDiagnostics;
-        private readonly Apis _apisRestClient;
-        private readonly ClientDiagnostics _apiCenterApiSourceClientDiagnostics;
-        private readonly ApiCenterApiSource _apiCenterApiSourceRestClient;
-        private readonly ClientDiagnostics _environmentsClientDiagnostics;
-        private readonly Environments _environmentsRestClient;
 
         /// <summary> Initializes a new instance of ApiCenterWorkspaceCollection for mocking. </summary>
         protected ApiCenterWorkspaceCollection()
@@ -47,12 +41,6 @@ namespace Azure.ResourceManager.ApiCenter
             TryGetApiVersion(ApiCenterWorkspaceResource.ResourceType, out string apiCenterWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterWorkspaceResource.ResourceType.Namespace, Diagnostics);
             _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Endpoint, apiCenterWorkspaceApiVersion ?? "2024-06-01-preview");
-            _apisClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _apisRestClient = new Apis(_apisClientDiagnostics, Pipeline, Endpoint, apiCenterWorkspaceApiVersion ?? "2024-06-01-preview");
-            _apiCenterApiSourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _apiCenterApiSourceRestClient = new ApiCenterApiSource(_apiCenterApiSourceClientDiagnostics, Pipeline, Endpoint, apiCenterWorkspaceApiVersion ?? "2024-06-01-preview");
-            _environmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _environmentsRestClient = new Environments(_environmentsClientDiagnostics, Pipeline, Endpoint, apiCenterWorkspaceApiVersion ?? "2024-06-01-preview");
             ValidateResourceId(id);
         }
 

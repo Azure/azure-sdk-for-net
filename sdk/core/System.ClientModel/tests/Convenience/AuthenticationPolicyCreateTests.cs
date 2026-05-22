@@ -225,7 +225,7 @@ public class AuthenticationPolicyCreateTests
         Assert.That(scopeValue, Is.EqualTo("https://example.com/.default"), "Scope should be readable from AdditionalProperties");
 
         // Scope is meaningless for API-key auth and is silently ignored, so a
-        // CredentialProvider supplied by a customer resolver can coexist with
+        // TokenProvider supplied by a customer resolver can coexist with
         // a stray Scope value in config.
         PipelinePolicy policy = AuthenticationPolicy.Create(settings);
 
@@ -486,9 +486,9 @@ public class AuthenticationPolicyCreateTests
 
     // -------- End-to-end: GetClientSettings then AuthenticationPolicy.Create --------
     //
-    // SCM does not synthesize a CredentialProvider for inline ApiKey
+    // SCM does not synthesize a TokenProvider for inline ApiKey
     // configurations — the consuming library reads CredentialSettings.Key
-    // directly when CredentialProvider is null. AuthenticationPolicy.Create
+    // directly when TokenProvider is null. AuthenticationPolicy.Create
     // also falls back to Credential.Key for ApiKey, so it produces a working
     // policy end-to-end without any CredentialResolver participation.
 
@@ -508,12 +508,12 @@ public class AuthenticationPolicyCreateTests
             "TestClient",
             Array.Empty<CredentialResolver>());
 
-        // SCM does not auto-fill CredentialProvider for inline ApiKey configs.
+        // SCM does not auto-fill TokenProvider for inline ApiKey configs.
         Assert.That(settings.CredentialProvider, Is.Null);
         Assert.That(settings.Credential!.Key, Is.EqualTo("inline-secret"));
 
         // AuthenticationPolicy.Create must still produce the right policy by
-        // reading Credential.Key directly when CredentialProvider is null.
+        // reading Credential.Key directly when TokenProvider is null.
         AuthenticationPolicy policy = AuthenticationPolicy.Create(settings);
 
         Assert.That(policy, Is.InstanceOf<ApiKeyAuthenticationPolicy>());
@@ -578,7 +578,7 @@ public class AuthenticationPolicyCreateTests
     {
         // Customers can still claim ApiKey sections with their own
         // CredentialResolver — for example, to back the key with a vault
-        // lookup. AuthenticationPolicy.Create reads from CredentialProvider
+        // lookup. AuthenticationPolicy.Create reads from TokenProvider
         // when it is non-null, falling back to Credential.Key only when it is.
         IConfigurationRoot config = new ConfigurationBuilder()
             .AddInMemoryCollection(new Dictionary<string, string?>
@@ -599,6 +599,39 @@ public class AuthenticationPolicyCreateTests
 
         Assert.That(policy, Is.InstanceOf<ApiKeyAuthenticationPolicy>());
         Assert.That(GetKeyFromApiKeyPolicy((ApiKeyAuthenticationPolicy)policy), Is.EqualTo("vault-key"));
+    }
+
+    // -------- Phase 1.9: legacy ClientSettings.CredentialProvider routes through Credential.TokenProvider --------
+
+    [Test]
+    public void Create_TokenSource_LegacyCredentialProviderField_RoutesThroughCredential()
+    {
+        // Callers who only know about the legacy ClientSettings.CredentialProvider
+        // continue to produce a working policy — the setter writes through
+        // to Credential.TokenProvider, which Create reads.
+        TestClientSettings settings = new();
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["TestClient:Credential:CredentialSource"] = "TokenCredential",
+                ["TestClient:Credential:Scope"] = "https://example.com/.default",
+            })
+            .Build();
+        settings.Bind(config.GetSection("TestClient"));
+
+        var provider = new TestTokenProvider("legacy-only");
+        settings.CredentialProvider = provider;
+
+        AuthenticationPolicy policy = AuthenticationPolicy.Create(settings);
+
+        Assert.That(policy, Is.InstanceOf<BearerTokenPolicy>());
+        Assert.That(GetScopeFromBearerTokenPolicy((BearerTokenPolicy)policy), Is.EqualTo("https://example.com/.default"));
+
+        BearerTokenPolicy bearer = (BearerTokenPolicy)policy;
+        FieldInfo providerField = typeof(BearerTokenPolicy).GetField("_tokenProvider", BindingFlags.NonPublic | BindingFlags.Instance)!;
+        AuthenticationTokenProvider wired = (AuthenticationTokenProvider)providerField.GetValue(bearer)!;
+        Assert.That(wired, Is.SameAs(provider),
+            "Setting ClientSettings.CredentialProvider must wire the policy via Credential.TokenProvider.");
     }
 
     private sealed class VaultLikeApiKeyResolver : CredentialResolver
