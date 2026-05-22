@@ -9,11 +9,12 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary> Information of the private link resource. </summary>
-    public partial class EventGridPrivateLinkResourceData
+    public partial class EventGridPrivateLinkResourceData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -29,30 +30,15 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="name"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridPrivateLinkResourceData(EventGridPrivateLinkResourceProperties properties, ResourceIdentifier id, string name, ResourceType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventGridPrivateLinkResourceData(EventGridPrivateLinkResourceProperties properties, ResourceIdentifier id, string name, ResourceType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, @type ?? default, default)
         {
             Properties = properties;
-            Id = id;
-            Name = name;
-            Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the private link resource. </summary>
         [WirePath("properties")]
         internal EventGridPrivateLinkResourceProperties Properties { get; }
-
-        /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
-        [WirePath("id")]
-        public ResourceIdentifier Id { get; }
-
-        /// <summary> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
-        [WirePath("type")]
-        public ResourceType? Type { get; }
 
         /// <summary> Gets the GroupId. </summary>
         [WirePath("properties.groupId")]
