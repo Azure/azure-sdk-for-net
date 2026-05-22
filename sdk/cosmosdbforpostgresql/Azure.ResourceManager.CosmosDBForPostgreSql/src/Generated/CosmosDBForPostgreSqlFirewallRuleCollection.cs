@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// </summary>
     public partial class CosmosDBForPostgreSqlFirewallRuleCollection : ArmCollection, IEnumerable<CosmosDBForPostgreSqlFirewallRuleResource>, IAsyncEnumerable<CosmosDBForPostgreSqlFirewallRuleResource>
     {
-        private readonly ClientDiagnostics _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics;
-        private readonly FirewallRulesRestOperations _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient;
+        private readonly ClientDiagnostics _firewallRulesClientDiagnostics;
+        private readonly FirewallRules _firewallRulesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlFirewallRuleCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlFirewallRuleCollection for mocking. </summary>
         protected CosmosDBForPostgreSqlFirewallRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlFirewallRuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlFirewallRuleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CosmosDBForPostgreSqlFirewallRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", CosmosDBForPostgreSqlFirewallRuleResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CosmosDBForPostgreSqlFirewallRuleResource.ResourceType, out string cosmosDBForPostgreSqlFirewallRuleFirewallRulesApiVersion);
-            _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient = new FirewallRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBForPostgreSqlFirewallRuleFirewallRulesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(CosmosDBForPostgreSqlFirewallRuleResource.ResourceType, out string cosmosDBForPostgreSqlFirewallRuleApiVersion);
+            _firewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", CosmosDBForPostgreSqlFirewallRuleResource.ResourceType.Namespace, Diagnostics);
+            _firewallRulesRestClient = new FirewallRules(_firewallRulesClientDiagnostics, Pipeline, Endpoint, cosmosDBForPostgreSqlFirewallRuleApiVersion ?? "2023-03-02-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != CosmosDBForPostgreSqlClusterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBForPostgreSqlClusterResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBForPostgreSqlClusterResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates a new cluster firewall rule or updates an existing cluster firewall rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules/{firewallRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules/{firewallRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallRules_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallRules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlFirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="firewallRuleName"> The name of the cluster firewall rule. </param>
         /// <param name="data"> The required parameters for creating or updating a firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<CosmosDBForPostgreSqlFirewallRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string firewallRuleName, CosmosDBForPostgreSqlFirewallRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlFirewallRuleResource>(new CosmosDBForPostgreSqlFirewallRuleOperationSource(Client), _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, CosmosDBForPostgreSqlFirewallRuleData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlFirewallRuleResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlFirewallRuleResource>(
+                    new CosmosDBForPostgreSqlFirewallRuleOperationSource(Client),
+                    _firewallRulesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// Creates a new cluster firewall rule or updates an existing cluster firewall rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules/{firewallRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules/{firewallRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallRules_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallRules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlFirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <param name="firewallRuleName"> The name of the cluster firewall rule. </param>
         /// <param name="data"> The required parameters for creating or updating a firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<CosmosDBForPostgreSqlFirewallRuleResource> CreateOrUpdate(WaitUntil waitUntil, string firewallRuleName, CosmosDBForPostgreSqlFirewallRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data, cancellationToken);
-                var operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlFirewallRuleResource>(new CosmosDBForPostgreSqlFirewallRuleOperationSource(Client), _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, CosmosDBForPostgreSqlFirewallRuleData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlFirewallRuleResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlFirewallRuleResource>(
+                    new CosmosDBForPostgreSqlFirewallRuleOperationSource(Client),
+                    _firewallRulesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// Gets information about a cluster firewall rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules/{firewallRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules/{firewallRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlFirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the cluster firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<CosmosDBForPostgreSqlFirewallRuleResource>> GetAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using var scope = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.Get");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CosmosDBForPostgreSqlFirewallRuleData> response = Response.FromValue(CosmosDBForPostgreSqlFirewallRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBForPostgreSqlFirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// Gets information about a cluster firewall rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules/{firewallRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules/{firewallRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlFirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the cluster firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<CosmosDBForPostgreSqlFirewallRuleResource> Get(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using var scope = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.Get");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CosmosDBForPostgreSqlFirewallRuleData> response = Response.FromValue(CosmosDBForPostgreSqlFirewallRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBForPostgreSqlFirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,49 +272,50 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// Lists all the firewall rules on cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallRules_ListByCluster</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallRules_ListByCluster. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlFirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBForPostgreSqlFirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CosmosDBForPostgreSqlFirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBForPostgreSqlFirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBForPostgreSqlFirewallRuleResource(Client, CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(e)), _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CosmosDBForPostgreSqlFirewallRuleData, CosmosDBForPostgreSqlFirewallRuleResource>(new FirewallRulesGetByClusterAsyncCollectionResultOfT(
+                _firewallRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBForPostgreSqlFirewallRuleCollection.GetAll"), data => new CosmosDBForPostgreSqlFirewallRuleResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the firewall rules on cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallRules_ListByCluster</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallRules_ListByCluster. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlFirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,44 +323,67 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> A collection of <see cref="CosmosDBForPostgreSqlFirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBForPostgreSqlFirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBForPostgreSqlFirewallRuleResource(Client, CosmosDBForPostgreSqlFirewallRuleData.DeserializeCosmosDBForPostgreSqlFirewallRuleData(e)), _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlFirewallRuleCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CosmosDBForPostgreSqlFirewallRuleData, CosmosDBForPostgreSqlFirewallRuleResource>(new FirewallRulesGetByClusterCollectionResultOfT(
+                _firewallRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBForPostgreSqlFirewallRuleCollection.GetAll"), data => new CosmosDBForPostgreSqlFirewallRuleResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules/{firewallRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules/{firewallRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlFirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the cluster firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using var scope = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.Exists");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CosmosDBForPostgreSqlFirewallRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBForPostgreSqlFirewallRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBForPostgreSqlFirewallRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,36 +397,50 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules/{firewallRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules/{firewallRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlFirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the cluster firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using var scope = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.Exists");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.Exists");
             scope.Start();
             try
             {
-                var response = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CosmosDBForPostgreSqlFirewallRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBForPostgreSqlFirewallRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBForPostgreSqlFirewallRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,38 +454,54 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules/{firewallRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules/{firewallRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlFirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the cluster firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<CosmosDBForPostgreSqlFirewallRuleResource>> GetIfExistsAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using var scope = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CosmosDBForPostgreSqlFirewallRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBForPostgreSqlFirewallRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBForPostgreSqlFirewallRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CosmosDBForPostgreSqlFirewallRuleResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBForPostgreSqlFirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -432,38 +515,54 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules/{firewallRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules/{firewallRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlFirewallRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the cluster firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<CosmosDBForPostgreSqlFirewallRuleResource> GetIfExists(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            using var scope = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _firewallRulesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlFirewallRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firewallRuleName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, firewallRuleName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CosmosDBForPostgreSqlFirewallRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBForPostgreSqlFirewallRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBForPostgreSqlFirewallRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CosmosDBForPostgreSqlFirewallRuleResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBForPostgreSqlFirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -483,6 +582,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<CosmosDBForPostgreSqlFirewallRuleResource> IAsyncEnumerable<CosmosDBForPostgreSqlFirewallRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

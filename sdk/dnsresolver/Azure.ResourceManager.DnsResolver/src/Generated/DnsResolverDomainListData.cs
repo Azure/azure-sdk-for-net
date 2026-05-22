@@ -7,94 +7,86 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary>
-    /// A class representing the DnsResolverDomainList data model.
-    /// Describes a DNS resolver domain list.
-    /// </summary>
+    /// <summary> Describes a DNS resolver domain list. </summary>
     public partial class DnsResolverDomainListData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverDomainListData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DnsResolverDomainListData(AzureLocation location) : base(location)
         {
-            Domains = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverDomainListData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <param name="domains"> The domains in the domain list. Will be null if user is using large domain list. </param>
-        /// <param name="domainsUri"> The URL for bulk upload or download for domain lists containing larger set of domains. This will be populated if domains is empty or null. </param>
-        /// <param name="provisioningState"> The current provisioning state of the DNS resolver domain list. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver domain list resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsResolverDomainListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<string> domains, Uri domainsUri, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the DNS resolver domain list. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        internal DnsResolverDomainListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DnsResolverDomainListProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
-            Domains = domains;
-            DomainsUri = domainsUri;
-            ProvisioningState = provisioningState;
-            ResourceGuid = resourceGuid;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DnsResolverDomainListData"/> for deserialization. </summary>
-        internal DnsResolverDomainListData()
-        {
-        }
+        /// <summary> Properties of the DNS resolver domain list. </summary>
+        internal DnsResolverDomainListProperties Properties { get; set; }
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
+
         /// <summary> The domains in the domain list. Will be null if user is using large domain list. </summary>
-        public IList<string> Domains { get; }
+        public IList<string> Domains
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DnsResolverDomainListProperties();
+                }
+                return Properties.Domains;
+            }
+        }
+
         /// <summary> The URL for bulk upload or download for domain lists containing larger set of domains. This will be populated if domains is empty or null. </summary>
-        public Uri DomainsUri { get; }
+        public Uri DomainsUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DomainsUri;
+            }
+        }
+
         /// <summary> The current provisioning state of the DNS resolver domain list. This is a read-only property and any attempt to set this value will be ignored. </summary>
-        public DnsResolverProvisioningState? ProvisioningState { get; }
+        public DnsResolverProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The resourceGuid property of the DNS resolver domain list resource. </summary>
-        public Guid? ResourceGuid { get; }
+        public Guid? ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
     }
 }

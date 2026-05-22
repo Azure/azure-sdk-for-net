@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Avs
         private readonly string _privateCloudName;
         private readonly string _scriptPackageName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ScriptCmdletsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ScriptCmdlets client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.Avs
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="scriptPackageName"> Name of the script package. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ScriptCmdletsGetAllAsyncCollectionResultOfT(ScriptCmdlets client, Guid subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ScriptCmdletsGetAllAsyncCollectionResultOfT(ScriptCmdlets client, Guid subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.Avs
             _privateCloudName = privateCloudName;
             _scriptPackageName = scriptPackageName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ScriptCmdletsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Avs
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _privateCloudName, _scriptPackageName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _privateCloudName, _scriptPackageName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ScriptCmdletCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

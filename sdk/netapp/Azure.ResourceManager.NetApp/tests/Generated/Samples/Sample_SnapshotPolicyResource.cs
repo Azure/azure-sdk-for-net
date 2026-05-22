@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SnapshotPoliciesGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2025-12-01/examples/SnapshotPolicies_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2026-01-01/examples/SnapshotPolicies_Get.json
             // this example is just showing the usage of "SnapshotPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_SnapshotPoliciesDelete()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2025-12-01/examples/SnapshotPolicies_Delete.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2026-01-01/examples/SnapshotPolicies_Delete.json
             // this example is just showing the usage of "SnapshotPolicies_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_SnapshotPoliciesUpdate()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2025-12-01/examples/SnapshotPolicies_Update.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2026-01-01/examples/SnapshotPolicies_Update.json
             // this example is just showing the usage of "SnapshotPolicies_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             SnapshotPolicyResource snapshotPolicy = client.GetSnapshotPolicyResource(snapshotPolicyResourceId);
 
             // invoke the operation
-            SnapshotPolicyPatch patch = new SnapshotPolicyPatch(new AzureLocation("eastus"))
+            SnapshotPolicyPatch patch = new SnapshotPolicyPatch()
             {
                 HourlySchedule = new SnapshotPolicyHourlySchedule
                 {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetVolumes_SnapshotPoliciesListVolumes()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2025-12-01/examples/SnapshotPolicies_ListVolumes.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2026-01-01/examples/SnapshotPolicies_ListVolumes.json
             // this example is just showing the usage of "SnapshotPolicies_ListVolumes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -156,14 +156,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             ResourceIdentifier snapshotPolicyResourceId = SnapshotPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, snapshotPolicyName);
             SnapshotPolicyResource snapshotPolicy = client.GetSnapshotPolicyResource(snapshotPolicyResourceId);
 
-            // invoke the operation and iterate over the result
+            // invoke the operation
             await foreach (NetAppVolumeResource item in snapshotPolicy.GetVolumesAsync())
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                NetAppVolumeData resourceData = item.Data;
                 // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+                Console.WriteLine($"Succeeded on id: {item.Data.Id}");
             }
 
             Console.WriteLine("Succeeded");

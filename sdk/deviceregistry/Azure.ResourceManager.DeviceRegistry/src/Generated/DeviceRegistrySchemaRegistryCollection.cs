@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(DeviceRegistrySchemaRegistryResource.ResourceType, out string deviceRegistrySchemaRegistryApiVersion);
             _schemaRegistriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistrySchemaRegistryResource.ResourceType.Namespace, Diagnostics);
-            _schemaRegistriesRestClient = new SchemaRegistries(_schemaRegistriesClientDiagnostics, Pipeline, Endpoint, deviceRegistrySchemaRegistryApiVersion ?? "2025-11-01-preview");
+            _schemaRegistriesRestClient = new SchemaRegistries(_schemaRegistriesClientDiagnostics, Pipeline, Endpoint, deviceRegistrySchemaRegistryApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistrySchemaRegistryData, DeviceRegistrySchemaRegistryResource>(new SchemaRegistriesGetByResourceGroupAsyncCollectionResultOfT(_schemaRegistriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeviceRegistrySchemaRegistryResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistrySchemaRegistryData, DeviceRegistrySchemaRegistryResource>(new SchemaRegistriesGetByResourceGroupAsyncCollectionResultOfT(_schemaRegistriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeviceRegistrySchemaRegistryCollection.GetAll"), data => new DeviceRegistrySchemaRegistryResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistrySchemaRegistryData, DeviceRegistrySchemaRegistryResource>(new SchemaRegistriesGetByResourceGroupCollectionResultOfT(_schemaRegistriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeviceRegistrySchemaRegistryResource(Client, data));
+            return new PageableWrapper<DeviceRegistrySchemaRegistryData, DeviceRegistrySchemaRegistryResource>(new SchemaRegistriesGetByResourceGroupCollectionResultOfT(_schemaRegistriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeviceRegistrySchemaRegistryCollection.GetAll"), data => new DeviceRegistrySchemaRegistryResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

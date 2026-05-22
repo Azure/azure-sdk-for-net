@@ -95,6 +95,11 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// The name of the blob being made accessible, or
         /// <see cref="string.Empty"/> for a container SAS.
+        /// Beginning in version 2020-02-10, setting
+        /// <see cref="IsDirectory"/> to true means we will accept the
+        /// blob name as a virtual directory name for a directory SAS.
+        /// If set, do not prefix or suffix BlobName with '/'.
+        /// If not set, this value is assumed to be a blob name for a Blob SAS.
         /// </summary>
         public string BlobName { get; set; }
 
@@ -109,6 +114,13 @@ namespace Azure.Storage.Sas
         /// <see cref="string.Empty"/> for a blob SAS.
         /// </summary>
         public string BlobVersionId { get; set; }
+
+        /// <summary>
+        /// Beginning in version 2020-02-10, this value defines whether or
+        /// not the <see cref="BlobName"/> is a virtual directory.
+        /// Required when <see cref="Resource"/> is set to "d".
+        /// </summary>
+        public bool? IsDirectory { get; set; }
 
         /// <summary>
         /// Specifies which resources are accessible via the shared access
@@ -130,6 +142,12 @@ namespace Azure.Storage.Sas
         /// is a blob version.  This grants access to the content and
         /// metadata of the specific version, but not the corresponding root
         /// blob.
+        ///
+        /// Beginning in version 2020-02-10, specify "d" if the shared resource
+        /// is a virtual directory. This grants access to the blobs in the
+        /// virtual directory and to list the blobs in the virtual directory.
+        /// When "d" is specified, the sdd query parameter is also required.
+        /// <see cref="IsDirectory"/> should be set to true.
         /// </summary>
         public string Resource { get; set; }
 
@@ -201,6 +219,13 @@ namespace Azure.Storage.Sas
         /// include these query parameters and values in the request.
         /// </summary>
         public Dictionary<string, string> RequestQueryParameters { get; set; }
+
+        /// <summary>
+        /// Optional. Required when <see cref="Resource"/> is set to "d" to indicate the
+        /// depth of the virtual blob directory specified in the canonicalizedresource
+        /// field of the string-to-sign.
+        /// </summary>
+        private int? _directoryDepth;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobSasBuilder"/>
@@ -405,7 +430,8 @@ namespace Azure.Storage.Sas
                 contentEncoding: ContentEncoding,
                 contentLanguage: ContentLanguage,
                 contentType: ContentType,
-                encryptionScope: EncryptionScope);
+                encryptionScope: EncryptionScope,
+                directoryDepth: _directoryDepth);
             return p;
         }
 
@@ -507,7 +533,8 @@ namespace Azure.Storage.Sas
                 delegatedUserObjectId: DelegatedUserObjectId,
                 keyDelegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId,
                 requestHeaders: SasExtensions.ConvertRequestDictToKeyList(RequestHeaders),
-                requestQueryParameters: SasExtensions.ConvertRequestDictToKeyList(RequestQueryParameters));
+                requestQueryParameters: SasExtensions.ConvertRequestDictToKeyList(RequestQueryParameters),
+                directoryDepth: _directoryDepth);
             return p;
         }
 
@@ -589,24 +616,39 @@ namespace Azure.Storage.Sas
             {
                 Resource = Constants.Sas.Resource.Container;
             }
-
-            // Blob or Snapshot
+            // Blob or Snapshot or Version or Directory
             else
             {
-                // Blob
-                if (string.IsNullOrEmpty(Snapshot) && string.IsNullOrEmpty(BlobVersionId))
+                if (IsDirectory == true)
                 {
-                    Resource = Constants.Sas.Resource.Blob;
+                    // Directory
+                    Resource = Constants.Sas.Resource.Directory;
+                    if (!BlobName.Equals("/", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        _directoryDepth = BlobName.Trim('/').Split('/').Length;
+                    }
+                    else
+                    {
+                        _directoryDepth = 0;
+                    }
                 }
-                // Snapshot
-                else if (string.IsNullOrEmpty(BlobVersionId))
-                {
-                    Resource = Constants.Sas.Resource.BlobSnapshot;
-                }
-                // Blob Version
                 else
                 {
-                    Resource = Constants.Sas.Resource.BlobVersion;
+                    // Blob
+                    if (string.IsNullOrEmpty(Snapshot) && string.IsNullOrEmpty(BlobVersionId))
+                    {
+                        Resource = Constants.Sas.Resource.Blob;
+                    }
+                    // Snapshot
+                    else if (string.IsNullOrEmpty(BlobVersionId))
+                    {
+                        Resource = Constants.Sas.Resource.BlobSnapshot;
+                    }
+                    // Blob Version
+                    else
+                    {
+                        Resource = Constants.Sas.Resource.BlobVersion;
+                    }
                 }
             }
 
@@ -651,6 +693,7 @@ namespace Azure.Storage.Sas
                 BlobName = originalBlobSasBuilder.BlobName,
                 Snapshot = originalBlobSasBuilder.Snapshot,
                 BlobVersionId = originalBlobSasBuilder.BlobVersionId,
+                IsDirectory = originalBlobSasBuilder.IsDirectory,
                 Resource = originalBlobSasBuilder.Resource,
                 CacheControl = originalBlobSasBuilder.CacheControl,
                 ContentDisposition = originalBlobSasBuilder.ContentDisposition,

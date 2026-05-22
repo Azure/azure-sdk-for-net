@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             patch.Tags.Add(testKey, testValue);
 
             NetworkCloudRackResource rack = Client.GetNetworkCloudRackResource(firstRack.Id);
-            var updateResult = await rack.UpdateAsync(WaitUntil.Completed, patch);
+            var updateResult = await rack.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
             Assert.AreEqual(testValue, updateResult.Value.Data.Tags[testKey]);
 
             // Update: Remove patched Tags
             patch.Tags.Remove(testKey);
-            updateResult = await rack.UpdateAsync(WaitUntil.Completed, patch);
+            updateResult = await rack.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
             try
             {
                 var shouldNotPass = updateResult.Value.Data.Tags[testKey];

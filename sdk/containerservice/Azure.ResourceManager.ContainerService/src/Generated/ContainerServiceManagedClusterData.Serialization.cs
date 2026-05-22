@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.Models;
@@ -18,10 +18,73 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    public partial class ContainerServiceManagedClusterData : IUtf8JsonSerializable, IJsonModel<ContainerServiceManagedClusterData>
+    /// <summary> Managed cluster. </summary>
+    public partial class ContainerServiceManagedClusterData : TrackedResourceData, IJsonModel<ContainerServiceManagedClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceManagedClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceManagedClusterData"/> for deserialization. </summary>
+        internal ContainerServiceManagedClusterData()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeContainerServiceManagedClusterData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerServiceManagedClusterData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerServiceManagedClusterData IPersistableModel<ContainerServiceManagedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContainerServiceManagedClusterData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerServiceManagedClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="containerServiceManagedClusterData"> The <see cref="ContainerServiceManagedClusterData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ContainerServiceManagedClusterData containerServiceManagedClusterData)
+        {
+            if (containerServiceManagedClusterData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(containerServiceManagedClusterData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContainerServiceManagedClusterData"/> from. </param>
+        internal static ContainerServiceManagedClusterData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeContainerServiceManagedClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerServiceManagedClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -33,13 +96,17 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
@@ -65,1948 +132,175 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
-            }
-            if (options.Format != "W" && Optional.IsDefined(PowerState))
-            {
-                writer.WritePropertyName("powerState"u8);
-                writer.WriteObjectValue(PowerState, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MaxAgentPools))
-            {
-                writer.WritePropertyName("maxAgentPools"u8);
-                writer.WriteNumberValue(MaxAgentPools.Value);
-            }
-            if (Optional.IsDefined(KubernetesVersion))
-            {
-                writer.WritePropertyName("kubernetesVersion"u8);
-                writer.WriteStringValue(KubernetesVersion);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CurrentKubernetesVersion))
-            {
-                writer.WritePropertyName("currentKubernetesVersion"u8);
-                writer.WriteStringValue(CurrentKubernetesVersion);
-            }
-            if (Optional.IsDefined(DnsPrefix))
-            {
-                writer.WritePropertyName("dnsPrefix"u8);
-                writer.WriteStringValue(DnsPrefix);
-            }
-            if (Optional.IsDefined(FqdnSubdomain))
-            {
-                writer.WritePropertyName("fqdnSubdomain"u8);
-                writer.WriteStringValue(FqdnSubdomain);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Fqdn))
-            {
-                writer.WritePropertyName("fqdn"u8);
-                writer.WriteStringValue(Fqdn);
-            }
-            if (options.Format != "W" && Optional.IsDefined(PrivateFqdn))
-            {
-                writer.WritePropertyName("privateFQDN"u8);
-                writer.WriteStringValue(PrivateFqdn);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AzurePortalFqdn))
-            {
-                writer.WritePropertyName("azurePortalFQDN"u8);
-                writer.WriteStringValue(AzurePortalFqdn);
-            }
-            if (Optional.IsCollectionDefined(AgentPoolProfiles))
-            {
-                writer.WritePropertyName("agentPoolProfiles"u8);
-                writer.WriteStartArray();
-                foreach (var item in AgentPoolProfiles)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(LinuxProfile))
-            {
-                writer.WritePropertyName("linuxProfile"u8);
-                writer.WriteObjectValue(LinuxProfile, options);
-            }
-            if (Optional.IsDefined(WindowsProfile))
-            {
-                writer.WritePropertyName("windowsProfile"u8);
-                writer.WriteObjectValue(WindowsProfile, options);
-            }
-            if (Optional.IsDefined(ServicePrincipalProfile))
-            {
-                writer.WritePropertyName("servicePrincipalProfile"u8);
-                writer.WriteObjectValue(ServicePrincipalProfile, options);
-            }
-            if (Optional.IsCollectionDefined(AddonProfiles))
-            {
-                writer.WritePropertyName("addonProfiles"u8);
-                writer.WriteStartObject();
-                foreach (var item in AddonProfiles)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(PodIdentityProfile))
-            {
-                writer.WritePropertyName("podIdentityProfile"u8);
-                writer.WriteObjectValue(PodIdentityProfile, options);
-            }
-            if (Optional.IsDefined(OidcIssuerProfile))
-            {
-                writer.WritePropertyName("oidcIssuerProfile"u8);
-                writer.WriteObjectValue(OidcIssuerProfile, options);
-            }
-            if (Optional.IsDefined(NodeResourceGroup))
-            {
-                writer.WritePropertyName("nodeResourceGroup"u8);
-                writer.WriteStringValue(NodeResourceGroup);
-            }
-            if (Optional.IsDefined(NodeResourceGroupProfile))
-            {
-                writer.WritePropertyName("nodeResourceGroupProfile"u8);
-                writer.WriteObjectValue(NodeResourceGroupProfile, options);
-            }
-            if (Optional.IsDefined(EnableRbac))
-            {
-                writer.WritePropertyName("enableRBAC"u8);
-                writer.WriteBooleanValue(EnableRbac.Value);
-            }
-            if (Optional.IsDefined(SupportPlan))
-            {
-                writer.WritePropertyName("supportPlan"u8);
-                writer.WriteStringValue(SupportPlan.Value.ToString());
-            }
-            if (Optional.IsDefined(NetworkProfile))
-            {
-                writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
-            }
-            if (Optional.IsDefined(AadProfile))
-            {
-                writer.WritePropertyName("aadProfile"u8);
-                writer.WriteObjectValue(AadProfile, options);
-            }
-            if (Optional.IsDefined(AutoUpgradeProfile))
-            {
-                writer.WritePropertyName("autoUpgradeProfile"u8);
-                writer.WriteObjectValue(AutoUpgradeProfile, options);
-            }
-            if (Optional.IsDefined(UpgradeSettings))
-            {
-                writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue(UpgradeSettings, options);
-            }
-            if (Optional.IsDefined(AutoScalerProfile))
-            {
-                writer.WritePropertyName("autoScalerProfile"u8);
-                writer.WriteObjectValue(AutoScalerProfile, options);
-            }
-            if (Optional.IsDefined(ApiServerAccessProfile))
-            {
-                writer.WritePropertyName("apiServerAccessProfile"u8);
-                writer.WriteObjectValue(ApiServerAccessProfile, options);
-            }
-            if (Optional.IsDefined(DiskEncryptionSetId))
-            {
-                writer.WritePropertyName("diskEncryptionSetID"u8);
-                writer.WriteStringValue(DiskEncryptionSetId);
-            }
-            if (Optional.IsCollectionDefined(IdentityProfile))
-            {
-                writer.WritePropertyName("identityProfile"u8);
-                writer.WriteStartObject();
-                foreach (var item in IdentityProfile)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(PrivateLinkResources))
-            {
-                writer.WritePropertyName("privateLinkResources"u8);
-                writer.WriteStartArray();
-                foreach (var item in PrivateLinkResources)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(DisableLocalAccounts))
-            {
-                writer.WritePropertyName("disableLocalAccounts"u8);
-                writer.WriteBooleanValue(DisableLocalAccounts.Value);
-            }
-            if (Optional.IsDefined(HttpProxyConfig))
-            {
-                writer.WritePropertyName("httpProxyConfig"u8);
-                writer.WriteObjectValue(HttpProxyConfig, options);
-            }
-            if (Optional.IsDefined(SecurityProfile))
-            {
-                writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile, options);
-            }
-            if (Optional.IsDefined(StorageProfile))
-            {
-                writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
-            }
-            if (Optional.IsDefined(IngressProfile))
-            {
-                writer.WritePropertyName("ingressProfile"u8);
-                writer.WriteObjectValue(IngressProfile, options);
-            }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
-            }
-            if (Optional.IsDefined(WorkloadAutoScalerProfile))
-            {
-                writer.WritePropertyName("workloadAutoScalerProfile"u8);
-                writer.WriteObjectValue(WorkloadAutoScalerProfile, options);
-            }
-            if (Optional.IsDefined(AzureMonitorProfile))
-            {
-                writer.WritePropertyName("azureMonitorProfile"u8);
-                writer.WriteObjectValue(AzureMonitorProfile, options);
-            }
-            if (Optional.IsDefined(ServiceMeshProfile))
-            {
-                writer.WritePropertyName("serviceMeshProfile"u8);
-                writer.WriteObjectValue(ServiceMeshProfile, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceId))
-            {
-                writer.WritePropertyName("resourceUID"u8);
-                writer.WriteStringValue(ResourceId);
-            }
-            if (Optional.IsDefined(MetricsProfile))
-            {
-                writer.WritePropertyName("metricsProfile"u8);
-                writer.WriteObjectValue(MetricsProfile, options);
-            }
-            if (Optional.IsDefined(NodeProvisioningProfile))
-            {
-                writer.WritePropertyName("nodeProvisioningProfile"u8);
-                writer.WriteObjectValue(NodeProvisioningProfile, options);
-            }
-            if (Optional.IsDefined(BootstrapProfile))
-            {
-                writer.WritePropertyName("bootstrapProfile"u8);
-                writer.WriteObjectValue(BootstrapProfile, options);
-            }
-            if (Optional.IsDefined(AiToolchainOperatorProfile))
-            {
-                writer.WritePropertyName("aiToolchainOperatorProfile"u8);
-                writer.WriteObjectValue(AiToolchainOperatorProfile, options);
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status, options);
-            }
-            writer.WriteEndObject();
         }
 
-        ContainerServiceManagedClusterData IJsonModel<ContainerServiceManagedClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerServiceManagedClusterData IJsonModel<ContainerServiceManagedClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ContainerServiceManagedClusterData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeContainerServiceManagedClusterData(document.RootElement, options);
         }
 
-        internal static ContainerServiceManagedClusterData DeserializeContainerServiceManagedClusterData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ContainerServiceManagedClusterData DeserializeContainerServiceManagedClusterData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? etag = default;
-            ManagedClusterSku sku = default;
-            ExtendedLocation extendedLocation = default;
-            ManagedClusterIdentity identity = default;
-            string kind = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string provisioningState = default;
-            ContainerServicePowerState powerState = default;
-            int? maxAgentPools = default;
-            string kubernetesVersion = default;
-            string currentKubernetesVersion = default;
-            string dnsPrefix = default;
-            string fqdnSubdomain = default;
-            string fqdn = default;
-            string privateFQDN = default;
-            string azurePortalFQDN = default;
-            IList<ManagedClusterAgentPoolProfile> agentPoolProfiles = default;
-            ContainerServiceLinuxProfile linuxProfile = default;
-            ManagedClusterWindowsProfile windowsProfile = default;
-            ManagedClusterServicePrincipalProfile servicePrincipalProfile = default;
-            IDictionary<string, ManagedClusterAddonProfile> addonProfiles = default;
-            ManagedClusterPodIdentityProfile podIdentityProfile = default;
-            ManagedClusterOidcIssuerProfile oidcIssuerProfile = default;
-            string nodeResourceGroup = default;
-            ManagedClusterNodeResourceGroupProfile nodeResourceGroupProfile = default;
-            bool? enableRBAC = default;
-            KubernetesSupportPlan? supportPlan = default;
-            ContainerServiceNetworkProfile networkProfile = default;
-            ManagedClusterAadProfile aadProfile = default;
-            ManagedClusterAutoUpgradeProfile autoUpgradeProfile = default;
-            ClusterUpgradeSettings upgradeSettings = default;
-            ManagedClusterAutoScalerProfile autoScalerProfile = default;
-            ManagedClusterApiServerAccessProfile apiServerAccessProfile = default;
-            ResourceIdentifier diskEncryptionSetId = default;
-            IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile = default;
-            IList<ContainerServicePrivateLinkResourceData> privateLinkResources = default;
-            bool? disableLocalAccounts = default;
-            ManagedClusterHttpProxyConfig httpProxyConfig = default;
-            ManagedClusterSecurityProfile securityProfile = default;
-            ManagedClusterStorageProfile storageProfile = default;
-            ManagedClusterIngressProfile ingressProfile = default;
-            ContainerServicePublicNetworkAccess? publicNetworkAccess = default;
-            ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile = default;
-            ManagedClusterAzureMonitorProfile azureMonitorProfile = default;
-            ServiceMeshProfile serviceMeshProfile = default;
-            ResourceIdentifier resourceUID = default;
-            ManagedClusterMetricsProfile metricsProfile = default;
-            ManagedClusterNodeProvisioningProfile nodeProvisioningProfile = default;
-            ManagedClusterBootstrapProfile bootstrapProfile = default;
-            ManagedClusterAIToolchainOperatorProfile aiToolchainOperatorProfile = default;
-            ManagedClusterStatus status = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            ManagedClusterProperties properties = default;
+            ETag? eTag = default;
+            ManagedClusterSku sku = default;
+            ExtendedLocation extendedLocation = default;
+            ManagedClusterIdentity clusterIdentity = default;
+            string kind = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("eTag"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sku"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sku = ManagedClusterSku.DeserializeManagedClusterSku(property.Value, options);
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("extendedLocation"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerContainerServiceContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerServiceContext.Default);
                     continue;
                 }
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ManagedClusterIdentity.DeserializeManagedClusterIdentity(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerServiceContext.Default);
+                    properties = ManagedClusterProperties.DeserializeManagedClusterProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("eTag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    eTag = new ETag(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("sku"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            provisioningState = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("powerState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("maxAgentPools"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maxAgentPools = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("kubernetesVersion"u8))
-                        {
-                            kubernetesVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("currentKubernetesVersion"u8))
-                        {
-                            currentKubernetesVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("dnsPrefix"u8))
-                        {
-                            dnsPrefix = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("fqdnSubdomain"u8))
-                        {
-                            fqdnSubdomain = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("fqdn"u8))
-                        {
-                            fqdn = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("privateFQDN"u8))
-                        {
-                            privateFQDN = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("azurePortalFQDN"u8))
-                        {
-                            azurePortalFQDN = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("agentPoolProfiles"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ManagedClusterAgentPoolProfile> array = new List<ManagedClusterAgentPoolProfile>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ManagedClusterAgentPoolProfile.DeserializeManagedClusterAgentPoolProfile(item, options));
-                            }
-                            agentPoolProfiles = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("linuxProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            linuxProfile = ContainerServiceLinuxProfile.DeserializeContainerServiceLinuxProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("windowsProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            windowsProfile = ManagedClusterWindowsProfile.DeserializeManagedClusterWindowsProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("servicePrincipalProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            servicePrincipalProfile = ManagedClusterServicePrincipalProfile.DeserializeManagedClusterServicePrincipalProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("addonProfiles"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, ManagedClusterAddonProfile> dictionary = new Dictionary<string, ManagedClusterAddonProfile>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, ManagedClusterAddonProfile.DeserializeManagedClusterAddonProfile(property1.Value, options));
-                            }
-                            addonProfiles = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("podIdentityProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            podIdentityProfile = ManagedClusterPodIdentityProfile.DeserializeManagedClusterPodIdentityProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("oidcIssuerProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            oidcIssuerProfile = ManagedClusterOidcIssuerProfile.DeserializeManagedClusterOidcIssuerProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("nodeResourceGroup"u8))
-                        {
-                            nodeResourceGroup = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("nodeResourceGroupProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            nodeResourceGroupProfile = ManagedClusterNodeResourceGroupProfile.DeserializeManagedClusterNodeResourceGroupProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("enableRBAC"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableRBAC = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("supportPlan"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            supportPlan = new KubernetesSupportPlan(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("networkProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            networkProfile = ContainerServiceNetworkProfile.DeserializeContainerServiceNetworkProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("aadProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            aadProfile = ManagedClusterAadProfile.DeserializeManagedClusterAadProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("autoUpgradeProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            autoUpgradeProfile = ManagedClusterAutoUpgradeProfile.DeserializeManagedClusterAutoUpgradeProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("upgradeSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            upgradeSettings = ClusterUpgradeSettings.DeserializeClusterUpgradeSettings(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("autoScalerProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            autoScalerProfile = ManagedClusterAutoScalerProfile.DeserializeManagedClusterAutoScalerProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("apiServerAccessProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            apiServerAccessProfile = ManagedClusterApiServerAccessProfile.DeserializeManagedClusterApiServerAccessProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("diskEncryptionSetID"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            diskEncryptionSetId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("identityProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, ContainerServiceUserAssignedIdentity> dictionary = new Dictionary<string, ContainerServiceUserAssignedIdentity>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, ContainerServiceUserAssignedIdentity.DeserializeContainerServiceUserAssignedIdentity(property1.Value, options));
-                            }
-                            identityProfile = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("privateLinkResources"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ContainerServicePrivateLinkResourceData> array = new List<ContainerServicePrivateLinkResourceData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(item, options));
-                            }
-                            privateLinkResources = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("disableLocalAccounts"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            disableLocalAccounts = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("httpProxyConfig"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            httpProxyConfig = ManagedClusterHttpProxyConfig.DeserializeManagedClusterHttpProxyConfig(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("securityProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            securityProfile = ManagedClusterSecurityProfile.DeserializeManagedClusterSecurityProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("storageProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storageProfile = ManagedClusterStorageProfile.DeserializeManagedClusterStorageProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("ingressProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ingressProfile = ManagedClusterIngressProfile.DeserializeManagedClusterIngressProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("publicNetworkAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            publicNetworkAccess = new ContainerServicePublicNetworkAccess(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("workloadAutoScalerProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            workloadAutoScalerProfile = ManagedClusterWorkloadAutoScalerProfile.DeserializeManagedClusterWorkloadAutoScalerProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("azureMonitorProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            azureMonitorProfile = ManagedClusterAzureMonitorProfile.DeserializeManagedClusterAzureMonitorProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceMeshProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            serviceMeshProfile = ServiceMeshProfile.DeserializeServiceMeshProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceUID"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceUID = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("metricsProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            metricsProfile = ManagedClusterMetricsProfile.DeserializeManagedClusterMetricsProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("nodeProvisioningProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            nodeProvisioningProfile = ManagedClusterNodeProvisioningProfile.DeserializeManagedClusterNodeProvisioningProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("bootstrapProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            bootstrapProfile = ManagedClusterBootstrapProfile.DeserializeManagedClusterBootstrapProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("aiToolchainOperatorProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            aiToolchainOperatorProfile = ManagedClusterAIToolchainOperatorProfile.DeserializeManagedClusterAIToolchainOperatorProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("status"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            status = ManagedClusterStatus.DeserializeManagedClusterStatus(property0.Value, options);
-                            continue;
-                        }
+                        continue;
                     }
+                    sku = ManagedClusterSku.DeserializeManagedClusterSku(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("extendedLocation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerServiceContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterIdentity = ManagedClusterIdentity.DeserializeManagedClusterIdentity(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerServiceManagedClusterData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
+                properties,
+                eTag,
                 sku,
                 extendedLocation,
-                identity,
-                kind,
-                provisioningState,
-                powerState,
-                maxAgentPools,
-                kubernetesVersion,
-                currentKubernetesVersion,
-                dnsPrefix,
-                fqdnSubdomain,
-                fqdn,
-                privateFQDN,
-                azurePortalFQDN,
-                agentPoolProfiles ?? new ChangeTrackingList<ManagedClusterAgentPoolProfile>(),
-                linuxProfile,
-                windowsProfile,
-                servicePrincipalProfile,
-                addonProfiles ?? new ChangeTrackingDictionary<string, ManagedClusterAddonProfile>(),
-                podIdentityProfile,
-                oidcIssuerProfile,
-                nodeResourceGroup,
-                nodeResourceGroupProfile,
-                enableRBAC,
-                supportPlan,
-                networkProfile,
-                aadProfile,
-                autoUpgradeProfile,
-                upgradeSettings,
-                autoScalerProfile,
-                apiServerAccessProfile,
-                diskEncryptionSetId,
-                identityProfile ?? new ChangeTrackingDictionary<string, ContainerServiceUserAssignedIdentity>(),
-                privateLinkResources ?? new ChangeTrackingList<ContainerServicePrivateLinkResourceData>(),
-                disableLocalAccounts,
-                httpProxyConfig,
-                securityProfile,
-                storageProfile,
-                ingressProfile,
-                publicNetworkAccess,
-                workloadAutoScalerProfile,
-                azureMonitorProfile,
-                serviceMeshProfile,
-                resourceUID,
-                metricsProfile,
-                nodeProvisioningProfile,
-                bootstrapProfile,
-                aiToolchainOperatorProfile,
-                status,
-                serializedAdditionalRawData);
+                clusterIdentity,
+                kind);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  location: ");
-                builder.AppendLine($"'{Location.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tags: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Tags))
-                {
-                    if (Tags.Any())
-                    {
-                        builder.Append("  tags: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Tags)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  eTag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  eTag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sku: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Sku))
-                {
-                    builder.Append("  sku: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtendedLocation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  extendedLocation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ExtendedLocation))
-                {
-                    builder.Append("  extendedLocation: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ExtendedLocation, options, 2, false, "  extendedLocation: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterIdentity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  identity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClusterIdentity))
-                {
-                    builder.Append("  identity: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ClusterIdentity, options, 2, false, "  identity: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Kind))
-                {
-                    builder.Append("  kind: ");
-                    if (Kind.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Kind}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Kind}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    if (ProvisioningState.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ProvisioningState}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ProvisioningState}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PowerStateCode", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    powerState: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      powerState: {");
-                builder.Append("        code: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(PowerState))
-                {
-                    builder.Append("    powerState: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, PowerState, options, 4, false, "    powerState: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxAgentPools), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    maxAgentPools: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxAgentPools))
-                {
-                    builder.Append("    maxAgentPools: ");
-                    builder.AppendLine($"{MaxAgentPools.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KubernetesVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    kubernetesVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(KubernetesVersion))
-                {
-                    builder.Append("    kubernetesVersion: ");
-                    if (KubernetesVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{KubernetesVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{KubernetesVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentKubernetesVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    currentKubernetesVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CurrentKubernetesVersion))
-                {
-                    builder.Append("    currentKubernetesVersion: ");
-                    if (CurrentKubernetesVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CurrentKubernetesVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CurrentKubernetesVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsPrefix), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    dnsPrefix: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DnsPrefix))
-                {
-                    builder.Append("    dnsPrefix: ");
-                    if (DnsPrefix.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DnsPrefix}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DnsPrefix}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FqdnSubdomain), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    fqdnSubdomain: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FqdnSubdomain))
-                {
-                    builder.Append("    fqdnSubdomain: ");
-                    if (FqdnSubdomain.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FqdnSubdomain}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FqdnSubdomain}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Fqdn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    fqdn: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Fqdn))
-                {
-                    builder.Append("    fqdn: ");
-                    if (Fqdn.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Fqdn}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Fqdn}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateFqdn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    privateFQDN: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrivateFqdn))
-                {
-                    builder.Append("    privateFQDN: ");
-                    if (PrivateFqdn.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrivateFqdn}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrivateFqdn}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzurePortalFqdn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    azurePortalFQDN: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AzurePortalFqdn))
-                {
-                    builder.Append("    azurePortalFQDN: ");
-                    if (AzurePortalFqdn.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AzurePortalFqdn}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AzurePortalFqdn}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgentPoolProfiles), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    agentPoolProfiles: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AgentPoolProfiles))
-                {
-                    if (AgentPoolProfiles.Any())
-                    {
-                        builder.Append("    agentPoolProfiles: ");
-                        builder.AppendLine("[");
-                        foreach (var item in AgentPoolProfiles)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    agentPoolProfiles: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    linuxProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LinuxProfile))
-                {
-                    builder.Append("    linuxProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, LinuxProfile, options, 4, false, "    linuxProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowsProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    windowsProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(WindowsProfile))
-                {
-                    builder.Append("    windowsProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, WindowsProfile, options, 4, false, "    windowsProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServicePrincipalProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    servicePrincipalProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServicePrincipalProfile))
-                {
-                    builder.Append("    servicePrincipalProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ServicePrincipalProfile, options, 4, false, "    servicePrincipalProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AddonProfiles), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    addonProfiles: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AddonProfiles))
-                {
-                    if (AddonProfiles.Any())
-                    {
-                        builder.Append("    addonProfiles: ");
-                        builder.AppendLine("{");
-                        foreach (var item in AddonProfiles)
-                        {
-                            builder.Append($"        '{item.Key}': ");
-                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 6, false, "    addonProfiles: ");
-                        }
-                        builder.AppendLine("    }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PodIdentityProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    podIdentityProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PodIdentityProfile))
-                {
-                    builder.Append("    podIdentityProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, PodIdentityProfile, options, 4, false, "    podIdentityProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OidcIssuerProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    oidcIssuerProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OidcIssuerProfile))
-                {
-                    builder.Append("    oidcIssuerProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, OidcIssuerProfile, options, 4, false, "    oidcIssuerProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeResourceGroup), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    nodeResourceGroup: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NodeResourceGroup))
-                {
-                    builder.Append("    nodeResourceGroup: ");
-                    if (NodeResourceGroup.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NodeResourceGroup}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NodeResourceGroup}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("NodeResourceGroupRestrictionLevel", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    nodeResourceGroupProfile: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      nodeResourceGroupProfile: {");
-                builder.Append("        restrictionLevel: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(NodeResourceGroupProfile))
-                {
-                    builder.Append("    nodeResourceGroupProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, NodeResourceGroupProfile, options, 4, false, "    nodeResourceGroupProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableRbac), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enableRBAC: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableRbac))
-                {
-                    builder.Append("    enableRBAC: ");
-                    var boolValue = EnableRbac.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportPlan), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    supportPlan: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SupportPlan))
-                {
-                    builder.Append("    supportPlan: ");
-                    builder.AppendLine($"'{SupportPlan.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    networkProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NetworkProfile))
-                {
-                    builder.Append("    networkProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, NetworkProfile, options, 4, false, "    networkProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    aadProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AadProfile))
-                {
-                    builder.Append("    aadProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, AadProfile, options, 4, false, "    aadProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoUpgradeProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    autoUpgradeProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AutoUpgradeProfile))
-                {
-                    builder.Append("    autoUpgradeProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, AutoUpgradeProfile, options, 4, false, "    autoUpgradeProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("UpgradeOverrideSettings", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    upgradeSettings: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      upgradeSettings: {");
-                builder.Append("        overrideSettings: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(UpgradeSettings))
-                {
-                    builder.Append("    upgradeSettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, UpgradeSettings, options, 4, false, "    upgradeSettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoScalerProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    autoScalerProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AutoScalerProfile))
-                {
-                    builder.Append("    autoScalerProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, AutoScalerProfile, options, 4, false, "    autoScalerProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiServerAccessProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    apiServerAccessProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ApiServerAccessProfile))
-                {
-                    builder.Append("    apiServerAccessProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ApiServerAccessProfile, options, 4, false, "    apiServerAccessProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiskEncryptionSetId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    diskEncryptionSetID: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DiskEncryptionSetId))
-                {
-                    builder.Append("    diskEncryptionSetID: ");
-                    builder.AppendLine($"'{DiskEncryptionSetId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    identityProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(IdentityProfile))
-                {
-                    if (IdentityProfile.Any())
-                    {
-                        builder.Append("    identityProfile: ");
-                        builder.AppendLine("{");
-                        foreach (var item in IdentityProfile)
-                        {
-                            builder.Append($"        '{item.Key}': ");
-                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 6, false, "    identityProfile: ");
-                        }
-                        builder.AppendLine("    }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkResources), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    privateLinkResources: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(PrivateLinkResources))
-                {
-                    if (PrivateLinkResources.Any())
-                    {
-                        builder.Append("    privateLinkResources: ");
-                        builder.AppendLine("[");
-                        foreach (var item in PrivateLinkResources)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    privateLinkResources: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisableLocalAccounts), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    disableLocalAccounts: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DisableLocalAccounts))
-                {
-                    builder.Append("    disableLocalAccounts: ");
-                    var boolValue = DisableLocalAccounts.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpProxyConfig), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    httpProxyConfig: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HttpProxyConfig))
-                {
-                    builder.Append("    httpProxyConfig: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, HttpProxyConfig, options, 4, false, "    httpProxyConfig: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecurityProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    securityProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SecurityProfile))
-                {
-                    builder.Append("    securityProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, SecurityProfile, options, 4, false, "    securityProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    storageProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StorageProfile))
-                {
-                    builder.Append("    storageProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, StorageProfile, options, 4, false, "    storageProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IngressWebAppRouting", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ingressProfile: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      ingressProfile: {");
-                builder.Append("        webAppRouting: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(IngressProfile))
-                {
-                    builder.Append("    ingressProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, IngressProfile, options, 4, false, "    ingressProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    publicNetworkAccess: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PublicNetworkAccess))
-                {
-                    builder.Append("    publicNetworkAccess: ");
-                    builder.AppendLine($"'{PublicNetworkAccess.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkloadAutoScalerProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    workloadAutoScalerProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(WorkloadAutoScalerProfile))
-                {
-                    builder.Append("    workloadAutoScalerProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, WorkloadAutoScalerProfile, options, 4, false, "    workloadAutoScalerProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AzureMonitorMetrics", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    azureMonitorProfile: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      azureMonitorProfile: {");
-                builder.Append("        metrics: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(AzureMonitorProfile))
-                {
-                    builder.Append("    azureMonitorProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, AzureMonitorProfile, options, 4, false, "    azureMonitorProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceMeshProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    serviceMeshProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServiceMeshProfile))
-                {
-                    builder.Append("    serviceMeshProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ServiceMeshProfile, options, 4, false, "    serviceMeshProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    resourceUID: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceId))
-                {
-                    builder.Append("    resourceUID: ");
-                    builder.AppendLine($"'{ResourceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsCostAnalysisEnabled", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    metricsProfile: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      metricsProfile: {");
-                builder.AppendLine("        costAnalysis: {");
-                builder.Append("          enabled: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("        }");
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(MetricsProfile))
-                {
-                    builder.Append("    metricsProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, MetricsProfile, options, 4, false, "    metricsProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeProvisioningProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    nodeProvisioningProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NodeProvisioningProfile))
-                {
-                    builder.Append("    nodeProvisioningProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, NodeProvisioningProfile, options, 4, false, "    nodeProvisioningProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BootstrapProfile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    bootstrapProfile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BootstrapProfile))
-                {
-                    builder.Append("    bootstrapProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, BootstrapProfile, options, 4, false, "    bootstrapProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsAIToolchainOperatorEnabled", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    aiToolchainOperatorProfile: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      aiToolchainOperatorProfile: {");
-                builder.Append("        enabled: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(AiToolchainOperatorProfile))
-                {
-                    builder.Append("    aiToolchainOperatorProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, AiToolchainOperatorProfile, options, 4, false, "    aiToolchainOperatorProfile: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("StatusProvisioningError", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    status: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      status: {");
-                builder.Append("        provisioningError: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Status))
-                {
-                    builder.Append("    status: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Status, options, 4, false, "    status: ");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ContainerServiceManagedClusterData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ContainerServiceManagedClusterData IPersistableModel<ContainerServiceManagedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeContainerServiceManagedClusterData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ContainerServiceManagedClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

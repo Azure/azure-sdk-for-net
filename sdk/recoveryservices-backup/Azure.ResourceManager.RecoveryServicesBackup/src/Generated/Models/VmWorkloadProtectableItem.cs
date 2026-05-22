@@ -10,17 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Azure VM workload-specific protectable item.
-    /// Please note <see cref="VmWorkloadProtectableItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="VmWorkloadSapHanaHsrProtectableItem"/>, <see cref="VmWorkloadSapAseDatabaseProtectableItem"/>, <see cref="VmWorkloadSapAseSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="VmWorkloadSapHanaDBInstance"/>, <see cref="VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="VmWorkloadSqlDatabaseProtectableItem"/> and <see cref="VmWorkloadSqlInstanceProtectableItem"/>.
-    /// </summary>
+    /// <summary> Azure VM workload-specific protectable item. </summary>
     public partial class VmWorkloadProtectableItem : WorkloadProtectableItem
     {
         /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectableItem"/>. </summary>
-        public VmWorkloadProtectableItem()
+        public VmWorkloadProtectableItem() : base("AzureVmWorkloadProtectableItem")
         {
-            ProtectableItemType = "AzureVmWorkloadProtectableItem";
         }
 
         /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectableItem"/>. </summary>
@@ -29,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectableItemType"> Type of the backup item. </param>
         /// <param name="friendlyName"> Friendly name of the backup item. </param>
         /// <param name="protectionState"> State of the back up item. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parentName"> Name for instance or AG. </param>
         /// <param name="parentUniqueName">
         /// Parent Unique Name is added to provide the service formatted URI Name of the Parent
@@ -42,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="subProtectableItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
         /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
         /// <param name="isProtectable"> Indicates if item is protectable. </param>
-        internal VmWorkloadProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData, string parentName, string parentUniqueName, string serverName, bool? isAutoProtectable, bool? isAutoProtected, int? subInquiredItemCount, int? subProtectableItemCount, PreBackupValidation preBackupValidation, bool? isProtectable) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, serializedAdditionalRawData)
+        internal VmWorkloadProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string parentName, string parentUniqueName, string serverName, bool? isAutoProtectable, bool? isAutoProtected, int? subInquiredItemCount, int? subProtectableItemCount, PreBackupValidation preBackupValidation, bool? isProtectable) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, additionalBinaryDataProperties)
         {
             ParentName = parentName;
             ParentUniqueName = parentUniqueName;
@@ -53,28 +48,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             SubProtectableItemCount = subProtectableItemCount;
             PreBackupValidation = preBackupValidation;
             IsProtectable = isProtectable;
-            ProtectableItemType = protectableItemType ?? "AzureVmWorkloadProtectableItem";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectableItem"/>. </summary>
+        /// <param name="protectableItemType"> Type of the backup item. </param>
+        private protected VmWorkloadProtectableItem(string protectableItemType) : base(protectableItemType)
+        {
         }
 
         /// <summary> Name for instance or AG. </summary>
         public string ParentName { get; set; }
+
         /// <summary>
         /// Parent Unique Name is added to provide the service formatted URI Name of the Parent
         /// Only Applicable for data bases where the parent would be either Instance or a SQL AG.
         /// </summary>
         public string ParentUniqueName { get; set; }
+
         /// <summary> Host/Cluster Name for instance or AG. </summary>
         public string ServerName { get; set; }
+
         /// <summary> Indicates if protectable item is auto-protectable. </summary>
         public bool? IsAutoProtectable { get; set; }
+
         /// <summary> Indicates if protectable item is auto-protected. </summary>
         public bool? IsAutoProtected { get; set; }
+
         /// <summary> For instance or AG, indicates number of DB's present. </summary>
         public int? SubInquiredItemCount { get; set; }
+
         /// <summary> For instance or AG, indicates number of DB's to be protected. </summary>
         public int? SubProtectableItemCount { get; set; }
+
         /// <summary> Pre-backup validation for protectable objects. </summary>
         public PreBackupValidation PreBackupValidation { get; set; }
+
         /// <summary> Indicates if item is protectable. </summary>
         public bool? IsProtectable { get; set; }
     }

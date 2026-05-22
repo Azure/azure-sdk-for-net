@@ -11,11 +11,7 @@ trigger:
     include:
     - sdk/synapse/ci.yml
     - sdk/synapse/service.projects
-    - sdk/synapse/Azure.Analytics.Synapse.AccessControl
     - sdk/synapse/Azure.Analytics.Synapse.Artifacts
-    - sdk/synapse/Azure.Analytics.Synapse.ManagedPrivateEndpoints
-    - sdk/synapse/Azure.Analytics.Synapse.Monitoring
-    - sdk/synapse/Azure.Analytics.Synapse.Spark
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -24,23 +20,7 @@ extends:
     ServiceDirectory: synapse
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Analytics.Synapse.Spark
-      safeName: AzureAnalyticsSynapseSpark
-      triggeringPaths:
-      - Azure.Analytics.Synapse.Shared
-    - name: Azure.Analytics.Synapse.AccessControl
-      safeName: AzureAnalyticsSynapseAccessControl
-      triggeringPaths:
-      - Azure.Analytics.Synapse.Shared
     - name: Azure.Analytics.Synapse.Artifacts
       safeName: AzureAnalyticsSynapseArtifacts
-      triggeringPaths:
-      - Azure.Analytics.Synapse.Shared
-    - name: Azure.Analytics.Synapse.ManagedPrivateEndpoints
-      safeName: AzureAnalyticsSynapseManagedPrivateEndpoints
-      triggeringPaths:
-      - Azure.Analytics.Synapse.Shared
-    - name: Azure.Analytics.Synapse.Monitoring
-      safeName: AzureAnalyticsSynapseMonitoring
       triggeringPaths:
       - Azure.Analytics.Synapse.Shared

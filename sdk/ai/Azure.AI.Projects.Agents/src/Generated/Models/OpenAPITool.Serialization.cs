@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
-    public partial class OpenAPITool : AgentTool, IJsonModel<OpenAPITool>
+    public partial class OpenAPITool : ProjectsAgentTool, IJsonModel<OpenAPITool>
     {
         /// <summary> Initializes a new instance of <see cref="OpenAPITool"/> for deserialization. </summary>
         internal OpenAPITool()
@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OpenAPITool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -78,7 +78,18 @@ namespace Azure.AI.Projects.Agents
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("openapi"u8);
-            writer.WriteObjectValue(Openapi, options);
+            writer.WriteObjectValue(FunctionDefinition, options);
+            if (Optional.IsCollectionDefined(ToolConfigs))
+            {
+                writer.WritePropertyName("tool_configs"u8);
+                writer.WriteStartObject();
+                foreach (var item in ToolConfigs)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -87,7 +98,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OpenAPITool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -108,7 +119,8 @@ namespace Azure.AI.Projects.Agents
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            OpenAPIFunctionDefinition openapi = default;
+            OpenApiFunctionDefinition functionDefinition = default;
+            IDictionary<string, ToolConfig> toolConfigs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -118,7 +130,21 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("openapi"u8))
                 {
-                    openapi = OpenAPIFunctionDefinition.DeserializeOpenAPIFunctionDefinition(prop.Value, options);
+                    functionDefinition = OpenApiFunctionDefinition.DeserializeOpenApiFunctionDefinition(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("tool_configs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                    }
+                    toolConfigs = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +152,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OpenAPITool(@type, additionalBinaryDataProperties, openapi);
+            return new OpenAPITool(@type, additionalBinaryDataProperties, functionDefinition, toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>());
         }
     }
 }

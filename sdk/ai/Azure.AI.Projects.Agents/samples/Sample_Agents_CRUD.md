@@ -5,28 +5,24 @@ In this example we will demonstrate creation and basic use of an agent step by s
 1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_Agents_CreateAgentClientCRUD
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AgentsClientOptions options = new()
-{
-    Endpoint = new Uri(projectEndpoint)
-};
-AgentsClient agentsClient = new(tokenProvider: new DefaultAzureCredential(), options: options);
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 2. Use the client to create two versioned agent objects.
 
 Synchronous sample:
 ```C# Snippet:Sample_Agents_CreateAgentVersionCRUD_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-AgentVersion agentVersion1 = agentsClient.CreateAgentVersion(
+ProjectsAgentVersion agentVersion1 = agentsClient.CreateAgentVersion(
     agentName: "myAgent1",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-AgentVersion agentVersion2 = agentsClient.CreateAgentVersion(
+ProjectsAgentVersion agentVersion2 = agentsClient.CreateAgentVersion(
     agentName: "myAgent2",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
@@ -34,15 +30,15 @@ Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.
 
 Asynchronous sample:
 ```C# Snippet:Sample_Agents_CreateAgentVersionCRUD_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a prompt agent."
 };
-AgentVersion agentVersion1 = await agentsClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion1 = await agentsClient.CreateAgentVersionAsync(
     agentName: "myAgent1",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion1.Id}, name: {agentVersion1.Name}, version: {agentVersion1.Version})");
-AgentVersion agentVersion2 = await agentsClient.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion2 = await agentsClient.CreateAgentVersionAsync(
     agentName: "myAgent2",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.Name}, version: {agentVersion2.Version})");
@@ -52,13 +48,13 @@ Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.
 
 Synchronous sample:
 ```C# Snippet:Sample_Agents_GetAgentCRUD_Sync
-AgentRecord result = agentsClient.GetAgent(agentVersion1.Name);
+ProjectsAgentRecord result = agentsClient.GetAgent(agentVersion1.Name);
 Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Agents_GetAgentCRUD_Async
-AgentRecord result = await agentsClient.GetAgentAsync(agentVersion1.Name);
+ProjectsAgentRecord result = await agentsClient.GetAgentAsync(agentVersion1.Name);
 Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
 ```
 
@@ -66,7 +62,7 @@ Console.WriteLine($"Agent created (id: {result.Id}, name: {result.Name})");
 
 Synchronous sample:
 ```C# Snippet:Sample_Agents_ListAgentsCRUD_Sync
-foreach (AgentRecord agent in agentsClient.GetAgents())
+foreach (ProjectsAgentRecord agent in agentsClient.GetAgents())
 {
     Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
 }
@@ -74,7 +70,7 @@ foreach (AgentRecord agent in agentsClient.GetAgents())
 
 Asynchronous sample:
 ```C# Snippet:Sample_Agents_ListAgentsCRUD_Async
-await foreach (AgentRecord agent in agentsClient.GetAgentsAsync())
+await foreach (ProjectsAgentRecord agent in agentsClient.GetAgentsAsync())
 {
     Console.WriteLine($"Listed Agent: id: {agent.Id}, name: {agent.Name}");
 }

@@ -21,18 +21,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         private readonly Guid _subscriptionId;
         private readonly string _skiptoken;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CloudHsmClustersGetBySubscriptionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CloudHsmClusters client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="skiptoken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CloudHsmClustersGetBySubscriptionAsyncCollectionResultOfT(CloudHsmClusters client, Guid subscriptionId, string skiptoken, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public CloudHsmClustersGetBySubscriptionAsyncCollectionResultOfT(CloudHsmClusters client, Guid subscriptionId, string skiptoken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _skiptoken = skiptoken;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of CloudHsmClustersGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _skiptoken, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _skiptoken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableHardwareSecurityModulesSubscriptionResource.GetCloudHsmClusters");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

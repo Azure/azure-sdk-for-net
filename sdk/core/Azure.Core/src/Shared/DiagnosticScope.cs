@@ -375,8 +375,11 @@ namespace Azure.Core.Pipeline
                 {
                     return null;
                 }
-                // TODO(limolkova) set isRemote to true once we switch to DiagnosticSource 7.0
-                ActivityContext.TryParse(_traceparent, _tracestate, out ActivityContext context);
+                // The traceparent was extracted from an inbound message (e.g. Service Bus / Event Hubs message
+                // application properties) via SetTraceContext/AddLink, so the resulting context is remote by definition.
+                // Marking it as remote is required for samplers (e.g. RateLimitedSampler, ParentBased variants)
+                // that distinguish local vs. remote parents to make correct decisions.
+                ActivityContext.TryParse(_traceparent, _tracestate, isRemote: true, out ActivityContext context);
                 return _activitySource.StartActivity(_activityName, _kind, context, _tagCollection, _links, _startTime);
             }
 

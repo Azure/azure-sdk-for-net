@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public readonly partial struct DeferUpgradeSetting : IEquatable<DeferUpgradeSetting>
     {
         private readonly string _value;
+        /// <summary> Deferred. </summary>
+        private const string DeferredValue = "Deferred";
+        /// <summary> NotDeferred. </summary>
+        private const string NotDeferredValue = "NotDeferred";
 
         /// <summary> Initializes a new instance of <see cref="DeferUpgradeSetting"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeferUpgradeSetting(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DeferredValue = "Deferred";
-        private const string NotDeferredValue = "NotDeferred";
+            _value = value;
+        }
 
         /// <summary> Deferred. </summary>
         public static DeferUpgradeSetting Deferred { get; } = new DeferUpgradeSetting(DeferredValue);
+
         /// <summary> NotDeferred. </summary>
         public static DeferUpgradeSetting NotDeferred { get; } = new DeferUpgradeSetting(NotDeferredValue);
+
         /// <summary> Determines if two <see cref="DeferUpgradeSetting"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeferUpgradeSetting left, DeferUpgradeSetting right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeferUpgradeSetting"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeferUpgradeSetting left, DeferUpgradeSetting right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeferUpgradeSetting"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeferUpgradeSetting"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeferUpgradeSetting(string value) => new DeferUpgradeSetting(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeferUpgradeSetting"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeferUpgradeSetting?(string value) => value == null ? null : new DeferUpgradeSetting(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeferUpgradeSetting other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeferUpgradeSetting other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

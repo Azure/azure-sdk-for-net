@@ -8,7 +8,7 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class InternalApplyPatchToolParam : AgentTool
+    internal partial class InternalApplyPatchToolParam : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="InternalApplyPatchToolParam"/>. </summary>
         public InternalApplyPatchToolParam() : base(ToolType.ApplyPatch)

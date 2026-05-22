@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Geographical region. </summary>
+    /// <summary>
+    /// Geographical region.
+    /// Serialized Name: GeoRegion
+    /// </summary>
     public partial class AppServiceGeoRegion : ResourceData
     {
         /// <summary>
@@ -57,10 +60,22 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Region description. </param>
-        /// <param name="displayName"> Display name for region. </param>
-        /// <param name="orgDomain"> Display name for region. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="description">
+        /// Region description.
+        /// Serialized Name: GeoRegion.properties.description
+        /// </param>
+        /// <param name="displayName">
+        /// Display name for region.
+        /// Serialized Name: GeoRegion.properties.displayName
+        /// </param>
+        /// <param name="orgDomain">
+        /// Display name for region.
+        /// Serialized Name: GeoRegion.properties.orgDomain
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceGeoRegion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string displayName, string orgDomain, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -71,16 +86,28 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Region description. </summary>
+        /// <summary>
+        /// Region description.
+        /// Serialized Name: GeoRegion.properties.description
+        /// </summary>
         [WirePath("properties.description")]
         public string Description { get; }
-        /// <summary> Display name for region. </summary>
+        /// <summary>
+        /// Display name for region.
+        /// Serialized Name: GeoRegion.properties.displayName
+        /// </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; }
-        /// <summary> Display name for region. </summary>
+        /// <summary>
+        /// Display name for region.
+        /// Serialized Name: GeoRegion.properties.orgDomain
+        /// </summary>
         [WirePath("properties.orgDomain")]
         public string OrgDomain { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

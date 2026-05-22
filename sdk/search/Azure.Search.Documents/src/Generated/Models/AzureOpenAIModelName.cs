@@ -21,22 +21,14 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string TextEmbedding3LargeValue = "text-embedding-3-large";
         /// <summary> TextEmbedding3Small model. </summary>
         private const string TextEmbedding3SmallValue = "text-embedding-3-small";
-        /// <summary> Gpt4o model. </summary>
-        private const string Gpt4oValue = "gpt-4o";
-        /// <summary> Gpt4oMini model. </summary>
-        private const string Gpt4oMiniValue = "gpt-4o-mini";
-        /// <summary> Gpt41 model. </summary>
-        private const string Gpt41Value = "gpt-4.1";
-        /// <summary> Gpt41Mini model. </summary>
-        private const string Gpt41MiniValue = "gpt-4.1-mini";
-        /// <summary> Gpt41Nano model. </summary>
-        private const string Gpt41NanoValue = "gpt-4.1-nano";
-        /// <summary> Gpt5 model. </summary>
-        private const string Gpt5Value = "gpt-5";
         /// <summary> Gpt5Mini model. </summary>
         private const string Gpt5MiniValue = "gpt-5-mini";
         /// <summary> Gpt5Nano model. </summary>
         private const string Gpt5NanoValue = "gpt-5-nano";
+        /// <summary> Gpt54Mini model. </summary>
+        private const string Gpt54MiniValue = "gpt-5.4-mini";
+        /// <summary> Gpt54Nano model. </summary>
+        private const string Gpt54NanoValue = "gpt-5.4-nano";
 
         /// <summary> Initializes a new instance of <see cref="AzureOpenAIModelName"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -57,29 +49,17 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> TextEmbedding3Small model. </summary>
         public static AzureOpenAIModelName TextEmbedding3Small { get; } = new AzureOpenAIModelName(TextEmbedding3SmallValue);
 
-        /// <summary> Gpt4o model. </summary>
-        public static AzureOpenAIModelName Gpt4o { get; } = new AzureOpenAIModelName(Gpt4oValue);
-
-        /// <summary> Gpt4oMini model. </summary>
-        public static AzureOpenAIModelName Gpt4oMini { get; } = new AzureOpenAIModelName(Gpt4oMiniValue);
-
-        /// <summary> Gpt41 model. </summary>
-        public static AzureOpenAIModelName Gpt41 { get; } = new AzureOpenAIModelName(Gpt41Value);
-
-        /// <summary> Gpt41Mini model. </summary>
-        public static AzureOpenAIModelName Gpt41Mini { get; } = new AzureOpenAIModelName(Gpt41MiniValue);
-
-        /// <summary> Gpt41Nano model. </summary>
-        public static AzureOpenAIModelName Gpt41Nano { get; } = new AzureOpenAIModelName(Gpt41NanoValue);
-
-        /// <summary> Gpt5 model. </summary>
-        public static AzureOpenAIModelName Gpt5 { get; } = new AzureOpenAIModelName(Gpt5Value);
-
         /// <summary> Gpt5Mini model. </summary>
         public static AzureOpenAIModelName Gpt5Mini { get; } = new AzureOpenAIModelName(Gpt5MiniValue);
 
         /// <summary> Gpt5Nano model. </summary>
         public static AzureOpenAIModelName Gpt5Nano { get; } = new AzureOpenAIModelName(Gpt5NanoValue);
+
+        /// <summary> Gpt54Mini model. </summary>
+        public static AzureOpenAIModelName Gpt54Mini { get; } = new AzureOpenAIModelName(Gpt54MiniValue);
+
+        /// <summary> Gpt54Nano model. </summary>
+        public static AzureOpenAIModelName Gpt54Nano { get; } = new AzureOpenAIModelName(Gpt54NanoValue);
 
         /// <summary> Determines if two <see cref="AzureOpenAIModelName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

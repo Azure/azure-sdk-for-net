@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Metric comparison for a treatment against the baseline. </summary>
     public partial class EvalRunResultCompareItem : IJsonModel<EvalRunResultCompareItem>

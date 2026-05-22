@@ -13,8 +13,8 @@ This sample demonstrates how to use the synchronous and asynchronous `.deploymen
 ## Synchronous Sample
 
 ```C# Snippet:AI_Projects_DeploymentExampleSync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
 
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
@@ -39,8 +39,8 @@ Console.WriteLine(deploymentDetails);
 ## Asynchronous Sample
 
 ```C# Snippet:AI_Projects_DeploymentExampleAsync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
 
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());

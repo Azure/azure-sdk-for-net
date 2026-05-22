@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `LogsQueryClientSettings` to support creating a `LogsQueryClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
 ### Breaking Changes
 
 ### Bugs Fixed

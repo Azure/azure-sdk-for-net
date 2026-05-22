@@ -19,16 +19,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         private readonly ScopingConfiguration _client;
         private readonly string _reportName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ScopingConfigurationGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ScopingConfiguration client used to send requests. </param>
         /// <param name="reportName"> Report Name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ScopingConfigurationGetAllCollectionResultOfT(ScopingConfiguration client, string reportName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public ScopingConfigurationGetAllCollectionResultOfT(ScopingConfiguration client, string reportName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _reportName = reportName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of ScopingConfigurationGetAllCollectionResultOfT as an enumerable collection. </summary>
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _reportName, _context) : _client.CreateGetAllRequest(_reportName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

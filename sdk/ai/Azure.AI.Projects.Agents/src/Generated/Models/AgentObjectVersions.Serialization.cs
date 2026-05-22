@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The AgentObjectVersions. </summary>
-    public partial class AgentObjectVersions : IJsonModel<AgentObjectVersions>
+    internal partial class AgentObjectVersions : IJsonModel<AgentObjectVersions>
     {
         /// <summary> Initializes a new instance of <see cref="AgentObjectVersions"/> for deserialization. </summary>
         internal AgentObjectVersions()
@@ -119,13 +119,13 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            AgentVersion latest = default;
+            ProjectsAgentVersion latest = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("latest"u8))
                 {
-                    latest = AgentVersion.DeserializeAgentVersion(prop.Value, options);
+                    latest = ProjectsAgentVersion.DeserializeProjectsAgentVersion(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

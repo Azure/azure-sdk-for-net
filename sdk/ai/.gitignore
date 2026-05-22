@@ -1,4 +1,5 @@
 # Runsetting files
 Azure.AI.Projects/**/.runsettings
-Azure.AI.Agents/**/.runsettings
+Azure.AI.Projects.Agents/**/.runsettings
+Azure.AI.Extensions.OpenAI/**/.runsettings
 Azure.AI.Agents.Persistent/**/.runsettings

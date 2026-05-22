@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             if (id.ResourceType != MySqlFlexibleServerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MySqlFlexibleServersPrivateEndpointConnectionData, MySqlFlexibleServersPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByServerAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MySqlFlexibleServersPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<MySqlFlexibleServersPrivateEndpointConnectionData, MySqlFlexibleServersPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByServerAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MySqlFlexibleServersPrivateEndpointConnectionCollection.GetAll"), data => new MySqlFlexibleServersPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MySqlFlexibleServersPrivateEndpointConnectionData, MySqlFlexibleServersPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByServerCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MySqlFlexibleServersPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<MySqlFlexibleServersPrivateEndpointConnectionData, MySqlFlexibleServersPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByServerCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MySqlFlexibleServersPrivateEndpointConnectionCollection.GetAll"), data => new MySqlFlexibleServersPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

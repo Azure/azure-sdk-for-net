@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(userSessionMessage, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(userSessionMessage, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

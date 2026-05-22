@@ -12,5 +12,7 @@ namespace Azure.Search.Documents
     /// <summary> Client options for clients in this library. </summary>
     public partial class SearchClientOptions : ClientOptions
     {
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
     }
 }

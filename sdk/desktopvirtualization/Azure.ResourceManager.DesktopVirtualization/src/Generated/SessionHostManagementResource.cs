@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SessionHostManagementResource>> UpdateAsync(SessionHostManagementPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SessionHostManagementResource>> UpdateAsync(SessionHostManagementPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _sessionHostManagementsClientDiagnostics.CreateScope("SessionHostManagementResource.Update");
             scope.Start();
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SessionHostManagementResource> Update(SessionHostManagementPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual Response<SessionHostManagementResource> Update(SessionHostManagementPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _sessionHostManagementsClientDiagnostics.CreateScope("SessionHostManagementResource.Update");
             scope.Start();

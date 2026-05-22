@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(edgeSiteReferenceData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(edgeSiteReferenceData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeSiteReferenceData"/> from. </param>

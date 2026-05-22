@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deviceRegistryNamespaceDevicePatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(deviceRegistryNamespaceDevicePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

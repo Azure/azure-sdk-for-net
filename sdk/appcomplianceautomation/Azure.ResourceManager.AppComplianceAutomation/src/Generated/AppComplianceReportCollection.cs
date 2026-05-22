@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             if (id.ResourceType != TenantResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
             }
         }
 
@@ -310,7 +310,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 @orderby,
                 offerGuid,
                 reportCreatorTenantId,
-                context), data => new AppComplianceReportResource(Client, data));
+                context,
+                "AppComplianceReportCollection.GetAll"), data => new AppComplianceReportResource(Client, data));
         }
 
         /// <summary>
@@ -354,7 +355,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 @orderby,
                 offerGuid,
                 reportCreatorTenantId,
-                context), data => new AppComplianceReportResource(Client, data));
+                context,
+                "AppComplianceReportCollection.GetAll"), data => new AppComplianceReportResource(Client, data));
         }
 
         /// <summary>

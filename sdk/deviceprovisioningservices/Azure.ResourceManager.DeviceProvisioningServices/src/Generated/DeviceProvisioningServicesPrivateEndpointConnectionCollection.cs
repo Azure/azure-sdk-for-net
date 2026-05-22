@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +21,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// Each <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="DeviceProvisioningServiceResource"/>.
     /// To get a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionCollection"/> instance call the GetDeviceProvisioningServicesPrivateEndpointConnections method from an instance of <see cref="DeviceProvisioningServiceResource"/>.
     /// </summary>
-    public partial class DeviceProvisioningServicesPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionResource>, IAsyncEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionResource>
+    public partial class DeviceProvisioningServicesPrivateEndpointConnectionCollection : ArmCollection
     {
         private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
         private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
@@ -50,7 +48,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             if (id.ResourceType != DeviceProvisioningServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeviceProvisioningServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeviceProvisioningServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -266,62 +264,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// List private endpoint connection properties
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateEndpointConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_ListPrivateEndpointConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeviceProvisioningServicesPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DeviceProvisioningServicesPrivateEndpointConnectionData, DeviceProvisioningServicesPrivateEndpointConnectionResource>(new DeviceProvisioningServicesPrivateEndpointConnectionCollectionGetAllAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, data));
-        }
-
-        /// <summary>
-        /// List private endpoint connection properties
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateEndpointConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_ListPrivateEndpointConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeviceProvisioningServicesPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DeviceProvisioningServicesPrivateEndpointConnectionData, DeviceProvisioningServicesPrivateEndpointConnectionResource>(new DeviceProvisioningServicesPrivateEndpointConnectionCollectionGetAllCollectionResultOfT(_privateEndpointConnectionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -558,22 +500,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<DeviceProvisioningServicesPrivateEndpointConnectionResource> IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<DeviceProvisioningServicesPrivateEndpointConnectionResource> IAsyncEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

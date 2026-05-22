@@ -471,7 +471,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             var warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
-            Assert.AreEqual($"ServiceBus {_entityTypeName} '{_entityPath}' was not found.", warning.FormattedMessage);
+            Assert.AreEqual($"Function '{_functionId}' warning: ServiceBus {_entityTypeName} '{_entityPath}' was not found.", warning.FormattedMessage);
             _loggerProvider.ClearAllLogMessages();
 
             // UnauthorizedAccessException
@@ -488,7 +488,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
-            Assert.AreEqual($"Connection string does not have Manage claim for {_entityTypeName} '{_entityPath}'. Failed to get {_entityTypeName} description to derive {_entityTypeName} length metrics. " +
+            Assert.AreEqual($"Function '{_functionId}' warning: Connection string does not have Manage claim for {_entityTypeName} '{_entityPath}'. Failed to get {_entityTypeName} description to derive {_entityTypeName} length metrics. " +
                         $"Falling back to using first message enqueued time.",
                         warning.FormattedMessage);
             _loggerProvider.ClearAllLogMessages();
@@ -507,7 +507,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
-            Assert.AreEqual($"Error querying for Service Bus {_entityTypeName} scale status: Uh oh", warning.FormattedMessage);
+            Assert.AreEqual($"Function '{_functionId}' warning: Error querying for Service Bus {_entityTypeName} scale status", warning.FormattedMessage);
         }
 
         private ServiceBusListener CreateListener(bool useDeadletterQueue = false)

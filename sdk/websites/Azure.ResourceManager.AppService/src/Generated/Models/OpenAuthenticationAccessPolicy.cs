@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Open authentication access policy defined by user. </summary>
+    /// <summary>
+    /// Open authentication access policy defined by user.
+    /// Serialized Name: OpenAuthenticationAccessPolicy
+    /// </summary>
     public partial class OpenAuthenticationAccessPolicy
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAuthenticationAccessPolicy"/>. </summary>
-        /// <param name="providerType"> Type of provider for OAuth. </param>
-        /// <param name="claims"> The access policy claims. </param>
+        /// <param name="providerType">
+        /// Type of provider for OAuth.
+        /// Serialized Name: OpenAuthenticationAccessPolicy.type
+        /// </param>
+        /// <param name="claims">
+        /// The access policy claims.
+        /// Serialized Name: OpenAuthenticationAccessPolicy.claims
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OpenAuthenticationAccessPolicy(OpenAuthenticationProviderType? providerType, IList<OpenAuthenticationPolicyClaim> claims, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,10 +71,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Type of provider for OAuth. </summary>
+        /// <summary>
+        /// Type of provider for OAuth.
+        /// Serialized Name: OpenAuthenticationAccessPolicy.type
+        /// </summary>
         [WirePath("type")]
         public OpenAuthenticationProviderType? ProviderType { get; set; }
-        /// <summary> The access policy claims. </summary>
+        /// <summary>
+        /// The access policy claims.
+        /// Serialized Name: OpenAuthenticationAccessPolicy.claims
+        /// </summary>
         [WirePath("claims")]
         public IList<OpenAuthenticationPolicyClaim> Claims { get; }
     }

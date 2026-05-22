@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     {
         private readonly ClientDiagnostics _nodeTypesClientDiagnostics;
         private readonly NodeTypes _nodeTypesRestClient;
-        private readonly ClientDiagnostics _nodeTypeSkusClientDiagnostics;
-        private readonly NodeTypeSkus _nodeTypeSkusRestClient;
 
         /// <summary> Initializes a new instance of ServiceFabricManagedNodeTypeCollection for mocking. </summary>
         protected ServiceFabricManagedNodeTypeCollection()
@@ -42,9 +40,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             TryGetApiVersion(ServiceFabricManagedNodeTypeResource.ResourceType, out string serviceFabricManagedNodeTypeApiVersion);
             _nodeTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ServiceFabricManagedNodeTypeResource.ResourceType.Namespace, Diagnostics);
-            _nodeTypesRestClient = new NodeTypes(_nodeTypesClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedNodeTypeApiVersion ?? "2025-10-01-preview");
-            _nodeTypeSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ServiceFabricManagedNodeTypeResource.ResourceType.Namespace, Diagnostics);
-            _nodeTypeSkusRestClient = new NodeTypeSkus(_nodeTypeSkusClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedNodeTypeApiVersion ?? "2025-10-01-preview");
+            _nodeTypesRestClient = new NodeTypes(_nodeTypesClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedNodeTypeApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -54,7 +50,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             if (id.ResourceType != ServiceFabricManagedClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceFabricManagedClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceFabricManagedClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -71,7 +67,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,7 +125,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,7 +183,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,7 +232,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,7 +281,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,7 +293,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricManagedNodeTypeData, ServiceFabricManagedNodeTypeResource>(new NodeTypesGetByManagedClustersAsyncCollectionResultOfT(_nodeTypesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ServiceFabricManagedNodeTypeResource(Client, data));
+            return new AsyncPageableWrapper<ServiceFabricManagedNodeTypeData, ServiceFabricManagedNodeTypeResource>(new NodeTypesGetByManagedClustersAsyncCollectionResultOfT(
+                _nodeTypesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ServiceFabricManagedNodeTypeCollection.GetAll"), data => new ServiceFabricManagedNodeTypeResource(Client, data));
         }
 
         /// <summary>
@@ -313,7 +315,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -325,7 +327,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricManagedNodeTypeData, ServiceFabricManagedNodeTypeResource>(new NodeTypesGetByManagedClustersCollectionResultOfT(_nodeTypesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new ServiceFabricManagedNodeTypeResource(Client, data));
+            return new PageableWrapper<ServiceFabricManagedNodeTypeData, ServiceFabricManagedNodeTypeResource>(new NodeTypesGetByManagedClustersCollectionResultOfT(
+                _nodeTypesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ServiceFabricManagedNodeTypeCollection.GetAll"), data => new ServiceFabricManagedNodeTypeResource(Client, data));
         }
 
         /// <summary>
@@ -341,7 +349,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -398,7 +406,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -455,7 +463,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -516,7 +524,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>

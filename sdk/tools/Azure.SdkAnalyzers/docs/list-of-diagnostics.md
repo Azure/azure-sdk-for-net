@@ -1,5 +1,22 @@
 # List of diagnostics produced by Azure.SdkAnalyzers
 
+## AZC0101
+
+### Cause
+
+An awaitable expression uses `ConfigureAwait(true)` instead of `ConfigureAwait(false)`.
+
+### How to fix violation
+
+Replace `true` with `false`. A code fix is available:
+
+```diff
+- await task.ConfigureAwait(true);
++ await task.ConfigureAwait(false);
+```
+
+See AZC0101 documentation for details.
+
 ## AZC0012
 
 ### Cause

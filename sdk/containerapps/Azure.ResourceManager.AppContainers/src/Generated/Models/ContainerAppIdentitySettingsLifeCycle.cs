@@ -7,51 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Use to select the lifecycle stages of a Container App during which the Managed Identity should be available. </summary>
+    /// <summary> Use to select the lifecycle stages of a Session Pool during which the Managed Identity should be available. </summary>
     public readonly partial struct ContainerAppIdentitySettingsLifeCycle : IEquatable<ContainerAppIdentitySettingsLifeCycle>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Main. </summary>
+        private const string MainValue = "Main";
+        /// <summary> Init. </summary>
+        private const string InitValue = "Init";
+        /// <summary> All. </summary>
+        private const string AllValue = "All";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppIdentitySettingsLifeCycle"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppIdentitySettingsLifeCycle(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string InitValue = "Init";
-        private const string MainValue = "Main";
-        private const string NoneValue = "None";
-        private const string AllValue = "All";
+        /// <summary> None. </summary>
+        public static ContainerAppIdentitySettingsLifeCycle None { get; } = new ContainerAppIdentitySettingsLifeCycle(NoneValue);
+
+        /// <summary> Main. </summary>
+        public static ContainerAppIdentitySettingsLifeCycle Main { get; } = new ContainerAppIdentitySettingsLifeCycle(MainValue);
 
         /// <summary> Init. </summary>
         public static ContainerAppIdentitySettingsLifeCycle Init { get; } = new ContainerAppIdentitySettingsLifeCycle(InitValue);
-        /// <summary> Main. </summary>
-        public static ContainerAppIdentitySettingsLifeCycle Main { get; } = new ContainerAppIdentitySettingsLifeCycle(MainValue);
-        /// <summary> None. </summary>
-        public static ContainerAppIdentitySettingsLifeCycle None { get; } = new ContainerAppIdentitySettingsLifeCycle(NoneValue);
+
         /// <summary> All. </summary>
         public static ContainerAppIdentitySettingsLifeCycle All { get; } = new ContainerAppIdentitySettingsLifeCycle(AllValue);
+
         /// <summary> Determines if two <see cref="ContainerAppIdentitySettingsLifeCycle"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppIdentitySettingsLifeCycle left, ContainerAppIdentitySettingsLifeCycle right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerAppIdentitySettingsLifeCycle"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppIdentitySettingsLifeCycle left, ContainerAppIdentitySettingsLifeCycle right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppIdentitySettingsLifeCycle"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerAppIdentitySettingsLifeCycle"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerAppIdentitySettingsLifeCycle(string value) => new ContainerAppIdentitySettingsLifeCycle(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerAppIdentitySettingsLifeCycle"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerAppIdentitySettingsLifeCycle?(string value) => value == null ? null : new ContainerAppIdentitySettingsLifeCycle(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppIdentitySettingsLifeCycle other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerAppIdentitySettingsLifeCycle other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.AI.Projects;
+namespace Azure.AI.Projects.Memory;
 
 [CodeGenType("MemoryStoreUpdateResponse")]
 public partial class MemoryUpdateResult

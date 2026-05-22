@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.TrustedSigning
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(trustedSigningAccountData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(trustedSigningAccountData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TrustedSigningAccountData"/> from. </param>

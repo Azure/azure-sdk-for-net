@@ -91,10 +91,20 @@ namespace Azure.Template
     public partial class WidgetAnalyticsClient
     {
         protected WidgetAnalyticsClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public WidgetAnalyticsClient(Azure.Template.WidgetAnalyticsClientSettings settings) { }
         public WidgetAnalyticsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public WidgetAnalyticsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Template.WidgetAnalyticsClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Template.AzureWidgets GetAzureWidgetsClient() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class WidgetAnalyticsClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedWidgetAnalyticsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedWidgetAnalyticsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Template.WidgetAnalyticsClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddWidgetAnalyticsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddWidgetAnalyticsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Template.WidgetAnalyticsClientSettings> configureSettings) { throw null; }
     }
     public partial class WidgetAnalyticsClientOptions : Azure.Core.ClientOptions
     {
@@ -103,6 +113,14 @@ namespace Azure.Template
         {
             V2022_12_01 = 1,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class WidgetAnalyticsClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public WidgetAnalyticsClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Template.WidgetAnalyticsClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class WidgetSuite : System.ClientModel.Primitives.IJsonModel<Azure.Template.WidgetSuite>, System.ClientModel.Primitives.IPersistableModel<Azure.Template.WidgetSuite>
     {

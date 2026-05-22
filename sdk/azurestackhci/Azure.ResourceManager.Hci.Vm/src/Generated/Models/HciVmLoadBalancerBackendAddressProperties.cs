@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         {
             get
             {
-                return Subnet.ResourceId;
+                return Subnet is null ? default : Subnet.ResourceId;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         {
             get
             {
-                return VirtualNetwork.ResourceId;
+                return VirtualNetwork is null ? default : VirtualNetwork.ResourceId;
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         {
             get
             {
-                return LogicalNetwork.Id;
+                return LogicalNetwork is null ? default : LogicalNetwork.Id;
             }
         }
 

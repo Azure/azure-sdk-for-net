@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -24,75 +25,85 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudBmcKeySetCollection : ArmCollection, IEnumerable<NetworkCloudBmcKeySetResource>, IAsyncEnumerable<NetworkCloudBmcKeySetResource>
     {
-        private readonly ClientDiagnostics _networkCloudBmcKeySetBmcKeySetsClientDiagnostics;
-        private readonly BmcKeySetsRestOperations _networkCloudBmcKeySetBmcKeySetsRestClient;
+        private readonly ClientDiagnostics _bmcKeySetsClientDiagnostics;
+        private readonly BmcKeySets _bmcKeySetsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkCloudBmcKeySetCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkCloudBmcKeySetCollection for mocking. </summary>
         protected NetworkCloudBmcKeySetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkCloudBmcKeySetCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBmcKeySetCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudBmcKeySetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkCloudBmcKeySetBmcKeySetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudBmcKeySetResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NetworkCloudBmcKeySetResource.ResourceType, out string networkCloudBmcKeySetBmcKeySetsApiVersion);
-            _networkCloudBmcKeySetBmcKeySetsRestClient = new BmcKeySetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudBmcKeySetBmcKeySetsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(NetworkCloudBmcKeySetResource.ResourceType, out string networkCloudBmcKeySetApiVersion);
+            _bmcKeySetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudBmcKeySetResource.ResourceType.Namespace, Diagnostics);
+            _bmcKeySetsRestClient = new BmcKeySets(_bmcKeySetsClientDiagnostics, Pipeline, Endpoint, networkCloudBmcKeySetApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != NetworkCloudClusterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkCloudClusterResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetworkCloudClusterResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create a new baseboard management controller key set or update the existing one for the provided cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets/{bmcKeySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets/{bmcKeySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BmcKeySets_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> BmcKeySets_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBmcKeySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
         /// <param name="data"> The request body. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkCloudBmcKeySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bmcKeySetName, NetworkCloudBmcKeySetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<NetworkCloudBmcKeySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bmcKeySetName, NetworkCloudBmcKeySetData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkCloudBmcKeySetBmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _bmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkCloudBmcKeySetBmcKeySetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bmcKeySetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudBmcKeySetResource>(new NetworkCloudBmcKeySetOperationSource(Client), _networkCloudBmcKeySetBmcKeySetsClientDiagnostics, Pipeline, _networkCloudBmcKeySetBmcKeySetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bmcKeySetName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bmcKeySetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, NetworkCloudBmcKeySetData.ToRequestContent(data), matchConditions, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudBmcKeySetResource> operation = new NetworkCloudArmOperation<NetworkCloudBmcKeySetResource>(
+                    new NetworkCloudBmcKeySetOperationSource(Client),
+                    _bmcKeySetsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,44 +117,52 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Create a new baseboard management controller key set or update the existing one for the provided cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets/{bmcKeySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets/{bmcKeySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BmcKeySets_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> BmcKeySets_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBmcKeySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
         /// <param name="data"> The request body. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<NetworkCloudBmcKeySetResource> CreateOrUpdate(WaitUntil waitUntil, string bmcKeySetName, NetworkCloudBmcKeySetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<NetworkCloudBmcKeySetResource> CreateOrUpdate(WaitUntil waitUntil, string bmcKeySetName, NetworkCloudBmcKeySetData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkCloudBmcKeySetBmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _bmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkCloudBmcKeySetBmcKeySetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bmcKeySetName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudBmcKeySetResource>(new NetworkCloudBmcKeySetOperationSource(Client), _networkCloudBmcKeySetBmcKeySetsClientDiagnostics, Pipeline, _networkCloudBmcKeySetBmcKeySetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bmcKeySetName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bmcKeySetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, NetworkCloudBmcKeySetData.ToRequestContent(data), matchConditions, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudBmcKeySetResource> operation = new NetworkCloudArmOperation<NetworkCloudBmcKeySetResource>(
+                    new NetworkCloudBmcKeySetOperationSource(Client),
+                    _bmcKeySetsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +176,42 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Get baseboard management controller key set of the provided cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets/{bmcKeySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets/{bmcKeySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BmcKeySets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BmcKeySets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBmcKeySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NetworkCloudBmcKeySetResource>> GetAsync(string bmcKeySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
 
-            using var scope = _networkCloudBmcKeySetBmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.Get");
+            using DiagnosticScope scope = _bmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkCloudBmcKeySetBmcKeySetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bmcKeySetName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bmcKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkCloudBmcKeySetData> response = Response.FromValue(NetworkCloudBmcKeySetData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkCloudBmcKeySetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +225,42 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Get baseboard management controller key set of the provided cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets/{bmcKeySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets/{bmcKeySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BmcKeySets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BmcKeySets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBmcKeySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NetworkCloudBmcKeySetResource> Get(string bmcKeySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
 
-            using var scope = _networkCloudBmcKeySetBmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.Get");
+            using DiagnosticScope scope = _bmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkCloudBmcKeySetBmcKeySetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bmcKeySetName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bmcKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkCloudBmcKeySetData> response = Response.FromValue(NetworkCloudBmcKeySetData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkCloudBmcKeySetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,52 +274,16 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Get a list of baseboard management controller key sets for the provided cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BmcKeySets_ListByCluster</description>
+        /// <term> Operation Id. </term>
+        /// <description> BmcKeySets_ListByCluster. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBmcKeySetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudBmcKeySetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkCloudBmcKeySetResource> GetAllAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudBmcKeySetBmcKeySetsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudBmcKeySetBmcKeySetsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudBmcKeySetResource(Client, NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(e)), _networkCloudBmcKeySetBmcKeySetsClientDiagnostics, Pipeline, "NetworkCloudBmcKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of baseboard management controller key sets for the provided cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BmcKeySets_ListByCluster</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBmcKeySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,47 +291,109 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudBmcKeySetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkCloudBmcKeySetResource> GetAll(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkCloudBmcKeySetResource> GetAllAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudBmcKeySetBmcKeySetsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudBmcKeySetBmcKeySetsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudBmcKeySetResource(Client, NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(e)), _networkCloudBmcKeySetBmcKeySetsClientDiagnostics, Pipeline, "NetworkCloudBmcKeySetCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkCloudBmcKeySetData, NetworkCloudBmcKeySetResource>(new BmcKeySetsGetByClusterAsyncCollectionResultOfT(
+                _bmcKeySetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                top,
+                skipToken,
+                context,
+                "NetworkCloudBmcKeySetCollection.GetAll"), data => new NetworkCloudBmcKeySetResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get a list of baseboard management controller key sets for the provided cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BmcKeySets_ListByCluster. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkCloudBmcKeySetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudBmcKeySetResource> GetAll(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkCloudBmcKeySetData, NetworkCloudBmcKeySetResource>(new BmcKeySetsGetByClusterCollectionResultOfT(
+                _bmcKeySetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                top,
+                skipToken,
+                context,
+                "NetworkCloudBmcKeySetCollection.GetAll"), data => new NetworkCloudBmcKeySetResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets/{bmcKeySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets/{bmcKeySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BmcKeySets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BmcKeySets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBmcKeySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string bmcKeySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
 
-            using var scope = _networkCloudBmcKeySetBmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.Exists");
+            using DiagnosticScope scope = _bmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkCloudBmcKeySetBmcKeySetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bmcKeySetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bmcKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkCloudBmcKeySetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkCloudBmcKeySetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkCloudBmcKeySetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -354,36 +407,50 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets/{bmcKeySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets/{bmcKeySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BmcKeySets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BmcKeySets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBmcKeySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string bmcKeySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
 
-            using var scope = _networkCloudBmcKeySetBmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.Exists");
+            using DiagnosticScope scope = _bmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkCloudBmcKeySetBmcKeySetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bmcKeySetName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bmcKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkCloudBmcKeySetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkCloudBmcKeySetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkCloudBmcKeySetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,38 +464,54 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets/{bmcKeySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets/{bmcKeySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BmcKeySets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BmcKeySets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBmcKeySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NetworkCloudBmcKeySetResource>> GetIfExistsAsync(string bmcKeySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
 
-            using var scope = _networkCloudBmcKeySetBmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.GetIfExists");
+            using DiagnosticScope scope = _bmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkCloudBmcKeySetBmcKeySetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bmcKeySetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bmcKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkCloudBmcKeySetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkCloudBmcKeySetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkCloudBmcKeySetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkCloudBmcKeySetResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkCloudBmcKeySetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -442,38 +525,54 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets/{bmcKeySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets/{bmcKeySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BmcKeySets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BmcKeySets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBmcKeySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bmcKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NetworkCloudBmcKeySetResource> GetIfExists(string bmcKeySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
 
-            using var scope = _networkCloudBmcKeySetBmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.GetIfExists");
+            using DiagnosticScope scope = _bmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkCloudBmcKeySetBmcKeySetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, bmcKeySetName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bmcKeySetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkCloudBmcKeySetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkCloudBmcKeySetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkCloudBmcKeySetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkCloudBmcKeySetResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkCloudBmcKeySetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -493,6 +592,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkCloudBmcKeySetResource> IAsyncEnumerable<NetworkCloudBmcKeySetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

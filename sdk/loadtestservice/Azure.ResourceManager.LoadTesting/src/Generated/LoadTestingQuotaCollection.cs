@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadTestingQuotaData, LoadTestingQuotaResource>(new QuotasGetAllAsyncCollectionResultOfT(_quotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new LoadTestingQuotaResource(Client, data));
+            return new AsyncPageableWrapper<LoadTestingQuotaData, LoadTestingQuotaResource>(new QuotasGetAllAsyncCollectionResultOfT(_quotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "LoadTestingQuotaCollection.GetAll"), data => new LoadTestingQuotaResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadTestingQuotaData, LoadTestingQuotaResource>(new QuotasGetAllCollectionResultOfT(_quotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new LoadTestingQuotaResource(Client, data));
+            return new PageableWrapper<LoadTestingQuotaData, LoadTestingQuotaResource>(new QuotasGetAllCollectionResultOfT(_quotasRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "LoadTestingQuotaCollection.GetAll"), data => new LoadTestingQuotaResource(Client, data));
         }
 
         /// <summary>

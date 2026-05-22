@@ -27,7 +27,7 @@ namespace Azure.AI.Speech.Transcription.Samples
         [RecordedTest]
         public async Task TranscribeWithMultilingualModel()
         {
-            TestTimeoutInSeconds = 20; // This test takes longer due to large recording
+            TestTimeoutInSeconds = 25; // This test takes longer due to large recording
 #if !SNIPPET
             var client = CreateClient();
 #else
@@ -52,8 +52,8 @@ namespace Azure.AI.Speech.Transcription.Samples
             #endregion Snippet:TranscribeWithMultilingualModel
 
             // Log results - show major locale and combined text
-            var channelPhrases = result.PhrasesByChannel.First();
-            var majorLocale = channelPhrases.Phrases.First().Locale;
+            var channelPhrases = result.CombinedPhrases.First();
+            var majorLocale = result.Phrases.First().Locale;
             Console.WriteLine($"Multilingual transcription (Major locale: {majorLocale}):");
             Console.WriteLine(result.CombinedPhrases.First().Text);
         }

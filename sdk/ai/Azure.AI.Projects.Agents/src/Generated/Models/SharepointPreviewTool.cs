@@ -9,28 +9,52 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
-    public partial class SharepointPreviewTool : AgentTool
+    public partial class SharepointPreviewTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="SharepointPreviewTool"/>. </summary>
-        /// <param name="sharepointGroundingPreview"> The sharepoint grounding tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharepointGroundingPreview"/> is null. </exception>
-        public SharepointPreviewTool(SharePointGroundingToolOptions sharepointGroundingPreview) : base(ToolType.SharepointGroundingPreview)
+        /// <param name="toolOptions"> The sharepoint grounding tool parameters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="toolOptions"/> is null. </exception>
+        public SharepointPreviewTool(SharePointGroundingToolOptions toolOptions) : base(ToolType.SharepointGroundingPreview)
         {
-            Argument.AssertNotNull(sharepointGroundingPreview, nameof(sharepointGroundingPreview));
+            Argument.AssertNotNull(toolOptions, nameof(toolOptions));
 
-            SharepointGroundingPreview = sharepointGroundingPreview;
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolOptions = toolOptions;
         }
 
         /// <summary> Initializes a new instance of <see cref="SharepointPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="sharepointGroundingPreview"> The sharepoint grounding tool parameters. </param>
-        internal SharepointPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharePointGroundingToolOptions sharepointGroundingPreview) : base(@type, additionalBinaryDataProperties)
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="toolOptions"> The sharepoint grounding tool parameters. </param>
+        internal SharepointPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, SharePointGroundingToolOptions toolOptions) : base(@type, additionalBinaryDataProperties)
         {
-            SharepointGroundingPreview = sharepointGroundingPreview;
+            Name = name;
+            Description = description;
+            ToolConfigs = toolConfigs;
+            ToolOptions = toolOptions;
         }
 
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+
         /// <summary> The sharepoint grounding tool parameters. </summary>
-        public SharePointGroundingToolOptions SharepointGroundingPreview { get; set; }
+        public SharePointGroundingToolOptions ToolOptions { get; set; }
     }
 }

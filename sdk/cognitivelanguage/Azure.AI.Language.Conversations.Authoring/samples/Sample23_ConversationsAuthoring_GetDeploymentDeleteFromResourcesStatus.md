@@ -10,7 +10,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential, options);
 ```
 
 Or you can also create a `ConversationAnalysisAuthoringClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
@@ -21,17 +21,14 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To check the status of a delete-from-resources operation, retrieve a deployment-scoped client with `GetDeployment`, then call `GetDeploymentDeleteFromResourcesStatus` with the corresponding job ID.
 
 ```C# Snippet:Sample23_ConversationsAuthoring_GetDeploymentDeleteFromResourcesStatus
+ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
 string projectName = "{projectName}";
 string deploymentName = "{deploymentName}";
 string jobId = "{jobId}";
-
-// Get the deployment-scoped client
-ConversationAuthoringDeployment deploymentClient =
-    client.GetDeployment(projectName, deploymentName);
-
 // Retrieve the job status
 Response<ConversationAuthoringDeploymentDeleteFromResourcesState> response =
-    deploymentClient.GetDeploymentDeleteFromResourcesStatus(jobId);
+    deploymentClient.GetDeploymentDeleteFromResourcesStatus(projectName, deploymentName, jobId);
 
 ConversationAuthoringDeploymentDeleteFromResourcesState state = response.Value;
 
@@ -47,17 +44,14 @@ Console.WriteLine($"Expires On: {state.ExpiresOn}");
 To retrieve job status asynchronously, call `GetDeploymentDeleteFromResourcesStatusAsync`.
 
 ```C# Snippet:Sample23_ConversationsAuthoring_GetDeploymentDeleteFromResourcesStatusAsync
+ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
 string projectName = "{projectName}";
 string deploymentName = "{deploymentName}";
 string jobId = "{jobId}";
-
-// Get the deployment-scoped client
-ConversationAuthoringDeployment deploymentClient =
-    client.GetDeployment(projectName, deploymentName);
-
 // Retrieve the job status asynchronously
 Response<ConversationAuthoringDeploymentDeleteFromResourcesState> response =
-    await deploymentClient.GetDeploymentDeleteFromResourcesStatusAsync(jobId);
+    await deploymentClient.GetDeploymentDeleteFromResourcesStatusAsync(projectName, deploymentName, jobId);
 
 ConversationAuthoringDeploymentDeleteFromResourcesState state = response.Value;
 

@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     {
         private readonly ClientDiagnostics _sqlVirtualMachineGroupsClientDiagnostics;
         private readonly SqlVirtualMachineGroups _sqlVirtualMachineGroupsRestClient;
-        private readonly ClientDiagnostics _sqlVirtualMachinesClientDiagnostics;
-        private readonly SqlVirtualMachines _sqlVirtualMachinesRestClient;
 
         /// <summary> Initializes a new instance of SqlVmGroupCollection for mocking. </summary>
         protected SqlVmGroupCollection()
@@ -44,8 +42,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             TryGetApiVersion(SqlVmGroupResource.ResourceType, out string sqlVmGroupApiVersion);
             _sqlVirtualMachineGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", SqlVmGroupResource.ResourceType.Namespace, Diagnostics);
             _sqlVirtualMachineGroupsRestClient = new SqlVirtualMachineGroups(_sqlVirtualMachineGroupsClientDiagnostics, Pipeline, Endpoint, sqlVmGroupApiVersion ?? "2023-10-01");
-            _sqlVirtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", SqlVmGroupResource.ResourceType.Namespace, Diagnostics);
-            _sqlVirtualMachinesRestClient = new SqlVirtualMachines(_sqlVirtualMachinesClientDiagnostics, Pipeline, Endpoint, sqlVmGroupApiVersion ?? "2023-10-01");
             ValidateResourceId(id);
         }
 
@@ -55,7 +51,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -298,7 +294,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlVmGroupData, SqlVmGroupResource>(new SqlVirtualMachineGroupsGetByResourceGroupAsyncCollectionResultOfT(_sqlVirtualMachineGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new SqlVmGroupResource(Client, data));
+            return new AsyncPageableWrapper<SqlVmGroupData, SqlVmGroupResource>(new SqlVirtualMachineGroupsGetByResourceGroupAsyncCollectionResultOfT(_sqlVirtualMachineGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SqlVmGroupCollection.GetAll"), data => new SqlVmGroupResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +322,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlVmGroupData, SqlVmGroupResource>(new SqlVirtualMachineGroupsGetByResourceGroupCollectionResultOfT(_sqlVirtualMachineGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new SqlVmGroupResource(Client, data));
+            return new PageableWrapper<SqlVmGroupData, SqlVmGroupResource>(new SqlVirtualMachineGroupsGetByResourceGroupCollectionResultOfT(_sqlVirtualMachineGroupsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SqlVmGroupCollection.GetAll"), data => new SqlVmGroupResource(Client, data));
         }
 
         /// <summary>

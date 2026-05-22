@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Input configuration for the evaluation taxonomy when the input type is agent. </summary>
     public partial class AgentTaxonomyInput : EvaluationTaxonomyInput, IJsonModel<AgentTaxonomyInput>
@@ -114,7 +115,7 @@ namespace Azure.AI.Projects
             }
             EvaluationTaxonomyInputType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Target target = default;
+            EvaluationTarget target = default;
             IList<RiskCategory> riskCategories = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -125,7 +126,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("target"u8))
                 {
-                    target = Target.DeserializeTarget(prop.Value, options);
+                    target = EvaluationTarget.DeserializeEvaluationTarget(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("riskCategories"u8))

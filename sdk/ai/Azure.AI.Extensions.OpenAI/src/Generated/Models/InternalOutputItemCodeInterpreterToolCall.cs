@@ -16,7 +16,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="containerId"> The ID of the container used to run the code. </param>
         /// <param name="code"></param>
         /// <param name="outputs"></param>
-        public InternalOutputItemCodeInterpreterToolCall(OutputItemCodeInterpreterToolCallStatus status, string containerId, string code, IEnumerable<BinaryData> outputs) : base(AgentResponseItemKind.CodeInterpreterCall)
+        public InternalOutputItemCodeInterpreterToolCall(InputItemCodeInterpreterToolCallStatus status, string containerId, string code, IEnumerable<BinaryData> outputs) : base(AgentResponseItemKind.CodeInterpreterCall)
         {
             Status = status;
             ContainerId = containerId;
@@ -34,7 +34,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="containerId"> The ID of the container used to run the code. </param>
         /// <param name="code"></param>
         /// <param name="outputs"></param>
-        internal InternalOutputItemCodeInterpreterToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, OutputItemCodeInterpreterToolCallStatus status, string containerId, string code, IList<BinaryData> outputs) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        internal InternalOutputItemCodeInterpreterToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, InputItemCodeInterpreterToolCallStatus status, string containerId, string code, IList<BinaryData> outputs) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
         {
             Status = status;
             ContainerId = containerId;
@@ -43,7 +43,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The status of the code interpreter tool call. Valid values are `in_progress`, `completed`, `incomplete`, `interpreting`, and `failed`. </summary>
-        public OutputItemCodeInterpreterToolCallStatus Status { get; set; }
+        public InputItemCodeInterpreterToolCallStatus Status { get; set; }
 
         /// <summary> The ID of the container used to run the code. </summary>
         public string ContainerId { get; set; }

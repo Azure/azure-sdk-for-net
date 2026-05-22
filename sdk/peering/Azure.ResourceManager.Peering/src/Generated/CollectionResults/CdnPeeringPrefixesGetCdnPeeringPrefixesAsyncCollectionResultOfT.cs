@@ -21,18 +21,21 @@ namespace Azure.ResourceManager.Peering
         private readonly string _subscriptionId;
         private readonly string _peeringLocation;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CdnPeeringPrefixesGetCdnPeeringPrefixesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CdnPeeringPrefixes client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="peeringLocation"> The peering location. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CdnPeeringPrefixesGetCdnPeeringPrefixesAsyncCollectionResultOfT(CdnPeeringPrefixes client, string subscriptionId, string peeringLocation, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public CdnPeeringPrefixesGetCdnPeeringPrefixesAsyncCollectionResultOfT(CdnPeeringPrefixes client, string subscriptionId, string peeringLocation, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _peeringLocation = peeringLocation;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of CdnPeeringPrefixesGetCdnPeeringPrefixesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.Peering
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetCdnPeeringPrefixesRequest(nextLink, _subscriptionId, _peeringLocation, _context) : _client.CreateGetCdnPeeringPrefixesRequest(_subscriptionId, _peeringLocation, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockablePeeringSubscriptionResource.GetCdnPeeringPrefixes");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

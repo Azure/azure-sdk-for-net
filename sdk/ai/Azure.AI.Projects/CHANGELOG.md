@@ -1,14 +1,87 @@
 # Release History
 
-## 2.0.0-beta.2 (Unreleased)
+## 2.1.0-beta.3 (Unreleased)
 
 ### Features Added
+- Added `AIProjectModels` client for model weights management, accessible via `AIProjectClient`.
+- Added memory store item CRUD operations for management of memories inside the `MemoryStore`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.1.0-beta.2 (2026-05-14)
+
+### Features Added
+- Added `DataGenerationJobs` client for synthetic data generation, accessible via `AIProjectClient`.
+- Added data generation job types: `DataGenerationJob`, `DataGenerationJobInputs`, `DataGenerationJobResult`, `DataGenerationModelOptions`, `DataGenerationTokenUsage`.
+- Added data generation job options: `SimpleQnADataGenerationJobOptions`, `TaskDataGenerationJobOptions`, `ToolUseFineTuningDataGenerationJobOptions`, `TracesDataGenerationJobOptions`.
+- Added data generation source types: `AgentDataGenerationJobSource`, `DatasetDataGenerationJobSource`, `FileDataGenerationJobSource`, `PromptDataGenerationJobSource`, `TracesDataGenerationJobSource`.
+- Added data generation output types: `DatasetDataGenerationJobOutput`, `FileDataGenerationJobOutput`.
+
+### Bugs Fixed
+- Fixed missing header required by `ProjectInsights`.
+
+### Sample Updates
+- Added evaluation cluster insight sample and documentation.
+- Added evaluation comparison insight sample and documentation.
+- Added AI-assisted evaluators sample demonstrating Similarity, ROUGE, METEOR, GLEU, F1, and BLEU score evaluations.
+- Added built-in evaluators with inline data sample demonstrating violence, F1 score, and coherence evaluations.
+- Added built-in evaluators with inline data using OpenAI client sample and documentation.
+- Added sample for grading images.
+- Added sample for Toolbox search.
+
+## 2.0.1 (2026-04-22)
+
+### Other Changes
+
+- Adopted `Azure.Core` 1.53.0, which type-forwards the `Azure.Identity` namespace. The explicit `Azure.Identity` package dependency has been removed; the `Azure.Identity` types remain available transitively through `Azure.Core`.
+
+## 2.1.0-beta.1 (2026-04-21)
+
+### Features Added
+- Added Toolboxes sample.
+
+## 2.0.0 (2026-04-01)
+
+### Breaking Changes
+- `Insights` were renamed to `ProjectInsights`.
+- `Insight` was renamed to `ProjectsInsight`.
+- `Schedules` were renamed to `ProjectSchedules`.
+- `Schedule` was renamed to `ProjectsSchedule`.
+- `Target` was renamed to `EvaluationTarget`.
+- `Trigger` was renamed to `ScheduleTrigger`.
+- `ScheduleTask` was renamed to `ProjectsScheduleTask`.
+- `Evaluators` client was renamed to `ProjectEvaluators`.
+- `DetailEnum` was renamed to `InternalImageDetailLevel` and made internal.
+- `InputImageContentParamAutoParam` was renamed to `InternalInputImageContentParamAutoParam` and made internal.
+- `Azure.AI.Projects` evaluations and memory operations were moved to `Azure.AI.Projects.Evaluation` and `Azure.AI.Projects.Memory` namespaces respectively.
+- `AIProjectMemoryStoresOperations` were renamed to `AIProjectMemoryStores`.
+- `AgentManifestOptions` class was removed.
+- `EvalResult.Passed` property was renamed to `EvalResult.IsPassed`.
+- `EvalRunResultComparison.Evaluator` property was renamed to `EvalRunResultComparison.EvaluatorName`.
+- `EvalRunResultComparison.Metric` property was renamed to `EvalRunResultComparison.MetricName`.
+- `InsightSummary.Method` property was renamed to `InsightSummary.MethodName`.
+- `RedTeam.NumTurns` property was renamed to `RedTeam.TurnCount`.
+- `RedTeam.SimulationOnly` property was renamed to `RedTeam.IsSimulationOnly`.
+- `TaxonomySubCategory.Enabled` property was renamed to `TaxonomySubCategory.IsEnabled`.
+- `DeleteMemoryStoreResponse.Deleted` property was renamed to `DeleteMemoryStoreResponse.IsDeleted`.
+- `MemoryStoreDefaultOptions.ChatSummaryEnabled` property was renamed to `MemoryStoreDefaultOptions.IsChatSummaryEnabled`.
+- `MemoryStoreDefaultOptions.UserProfileEnabled` property was renamed to `MemoryStoreDefaultOptions.IsUserProfileEnabled`.
+- `MemoryStoreDeleteScopeResponse.Deleted` property was renamed to `MemoryStoreDeleteScopeResponse.IsDeleted`.
+- `AIProjectClient.OpenAI` property was renamed to `AIProjectClient.ProjectOpenAIClient`.
+- `AIProjectClient.Agents` property was renamed to `AIProjectClient.AgentAdministrationClient`.
+- `RecurrenceTrigger.StartTime`, `RecurrenceTrigger.EndTime`, `OneTimeTrigger.TriggerAt`, `CronTrigger.StartTime`, `CronTrigger.EndTime` and `ScheduleRun.TriggerTime` properties type was changed from `string` to `DateTimeOffset`.
+- Remove the `EvaluationScheduleTaskEvalRun` class.
+
+## 2.0.0-beta.2 (2026-03-12)
+
+### Breaking Changes
+* The `Azure.AI.Projects.OpenAI` package was renamed to `Azure.AI.Extensions.OpenAI`
+* The Agents administration was moved to the `Azure.AI.Projects.Agents` package.
+* OpenAI dependency was upgraded to 2.9.1.
 
 ## 2.0.0-beta.1 (2026-02-24)
 

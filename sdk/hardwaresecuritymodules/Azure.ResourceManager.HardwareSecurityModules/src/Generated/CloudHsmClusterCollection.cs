@@ -28,12 +28,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
     {
         private readonly ClientDiagnostics _cloudHsmClustersClientDiagnostics;
         private readonly CloudHsmClusters _cloudHsmClustersRestClient;
-        private readonly ClientDiagnostics _cloudHsmClusterBackupStatusClientDiagnostics;
-        private readonly CloudHsmClusterBackupStatus _cloudHsmClusterBackupStatusRestClient;
-        private readonly ClientDiagnostics _cloudHsmClusterRestoreStatusClientDiagnostics;
-        private readonly CloudHsmClusterRestoreStatus _cloudHsmClusterRestoreStatusRestClient;
-        private readonly ClientDiagnostics _cloudHsmClusterPrivateLinkResourcesClientDiagnostics;
-        private readonly CloudHsmClusterPrivateLinkResources _cloudHsmClusterPrivateLinkResourcesRestClient;
 
         /// <summary> Initializes a new instance of CloudHsmClusterCollection for mocking. </summary>
         protected CloudHsmClusterCollection()
@@ -48,12 +42,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             TryGetApiVersion(CloudHsmClusterResource.ResourceType, out string cloudHsmClusterApiVersion);
             _cloudHsmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", CloudHsmClusterResource.ResourceType.Namespace, Diagnostics);
             _cloudHsmClustersRestClient = new CloudHsmClusters(_cloudHsmClustersClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
-            _cloudHsmClusterBackupStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", CloudHsmClusterResource.ResourceType.Namespace, Diagnostics);
-            _cloudHsmClusterBackupStatusRestClient = new CloudHsmClusterBackupStatus(_cloudHsmClusterBackupStatusClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
-            _cloudHsmClusterRestoreStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", CloudHsmClusterResource.ResourceType.Namespace, Diagnostics);
-            _cloudHsmClusterRestoreStatusRestClient = new CloudHsmClusterRestoreStatus(_cloudHsmClusterRestoreStatusClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
-            _cloudHsmClusterPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", CloudHsmClusterResource.ResourceType.Namespace, Diagnostics);
-            _cloudHsmClusterPrivateLinkResourcesRestClient = new CloudHsmClusterPrivateLinkResources(_cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
             ValidateResourceId(id);
         }
 
@@ -63,7 +51,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -307,7 +295,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetByResourceGroupAsyncCollectionResultOfT(_cloudHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, skiptoken, context), data => new CloudHsmClusterResource(Client, data));
+            return new AsyncPageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetByResourceGroupAsyncCollectionResultOfT(
+                _cloudHsmClustersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                skiptoken,
+                context,
+                "CloudHsmClusterCollection.GetAll"), data => new CloudHsmClusterResource(Client, data));
         }
 
         /// <summary>
@@ -336,7 +330,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetByResourceGroupCollectionResultOfT(_cloudHsmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, skiptoken, context), data => new CloudHsmClusterResource(Client, data));
+            return new PageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetByResourceGroupCollectionResultOfT(
+                _cloudHsmClustersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                skiptoken,
+                context,
+                "CloudHsmClusterCollection.GetAll"), data => new CloudHsmClusterResource(Client, data));
         }
 
         /// <summary>

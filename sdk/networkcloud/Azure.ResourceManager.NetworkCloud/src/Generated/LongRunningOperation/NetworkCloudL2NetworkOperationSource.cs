@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    internal class NetworkCloudL2NetworkOperationSource : IOperationSource<NetworkCloudL2NetworkResource>
+    /// <summary></summary>
+    internal partial class NetworkCloudL2NetworkOperationSource : IOperationSource<NetworkCloudL2NetworkResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NetworkCloudL2NetworkOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NetworkCloudL2NetworkResource IOperationSource<NetworkCloudL2NetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudL2NetworkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetworkCloudL2NetworkData data = NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetworkCloudL2NetworkResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetworkCloudL2NetworkResource> IOperationSource<NetworkCloudL2NetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudL2NetworkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
-            return await Task.FromResult(new NetworkCloudL2NetworkResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetworkCloudL2NetworkData data = NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkCloudL2NetworkResource(_client, data);
         }
     }
 }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Kubernetes
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Kubernetes
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetByResourceGroupAsyncCollectionResultOfT(_connectedClusterRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ConnectedClusterResource(Client, data));
+            return new AsyncPageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetByResourceGroupAsyncCollectionResultOfT(_connectedClusterRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ConnectedClusterCollection.GetAll"), data => new ConnectedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Kubernetes
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetByResourceGroupCollectionResultOfT(_connectedClusterRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new ConnectedClusterResource(Client, data));
+            return new PageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetByResourceGroupCollectionResultOfT(_connectedClusterRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ConnectedClusterCollection.GetAll"), data => new ConnectedClusterResource(Client, data));
         }
 
         /// <summary>

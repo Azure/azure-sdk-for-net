@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(loadTestProfileMappingData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(loadTestProfileMappingData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LoadTestProfileMappingData"/> from. </param>

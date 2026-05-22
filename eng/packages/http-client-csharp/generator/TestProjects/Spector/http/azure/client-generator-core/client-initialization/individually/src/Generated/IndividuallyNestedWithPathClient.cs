@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,11 +18,16 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClie
     {
         protected IndividuallyNestedWithPathClient() => throw null;
 
-        public IndividuallyNestedWithPathClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new IndividuallyNestedWithPathClientOptions()) => throw null;
+        public IndividuallyNestedWithPathClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new SpecsAzureTcgcClientInitIndividuallyClientOptions()) => throw null;
 
-        public IndividuallyNestedWithPathClient(string blobName, IndividuallyNestedWithPathClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
+        public IndividuallyNestedWithPathClient(string blobName, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(new Uri("http://localhost:3000"), blobName, options) => throw null;
 
-        public IndividuallyNestedWithPathClient(Uri endpoint, string blobName, IndividuallyNestedWithPathClientOptions options) => throw null;
+        internal IndividuallyNestedWithPathClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string blobName, SpecsAzureTcgcClientInitIndividuallyClientOptions options) => throw null;
+
+        public IndividuallyNestedWithPathClient(Uri endpoint, string blobName, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(null, endpoint, blobName, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public IndividuallyNestedWithPathClient(IndividuallyNestedWithPathClientSettings settings) : this(null, settings?.Endpoint, settings?.BlobName, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

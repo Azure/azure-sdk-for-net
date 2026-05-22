@@ -9,28 +9,52 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A tool for capturing structured outputs. </summary>
-    public partial class CaptureStructuredOutputsTool : AgentTool
+    public partial class CaptureStructuredOutputsTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/>. </summary>
-        /// <param name="outputs"> The structured outputs to capture from the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outputs"/> is null. </exception>
-        public CaptureStructuredOutputsTool(StructuredOutputDefinition outputs) : base(ToolType.CaptureStructuredOutputs)
+        /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="outputDefinition"/> is null. </exception>
+        public CaptureStructuredOutputsTool(StructuredOutputDefinition outputDefinition) : base(ToolType.CaptureStructuredOutputs)
         {
-            Argument.AssertNotNull(outputs, nameof(outputs));
+            Argument.AssertNotNull(outputDefinition, nameof(outputDefinition));
 
-            Outputs = outputs;
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            OutputDefinition = outputDefinition;
         }
 
         /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="outputs"> The structured outputs to capture from the model. </param>
-        internal CaptureStructuredOutputsTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, StructuredOutputDefinition outputs) : base(@type, additionalBinaryDataProperties)
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
+        internal CaptureStructuredOutputsTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, StructuredOutputDefinition outputDefinition) : base(@type, additionalBinaryDataProperties)
         {
-            Outputs = outputs;
+            Name = name;
+            Description = description;
+            ToolConfigs = toolConfigs;
+            OutputDefinition = outputDefinition;
         }
 
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+
         /// <summary> The structured outputs to capture from the model. </summary>
-        public StructuredOutputDefinition Outputs { get; set; }
+        public StructuredOutputDefinition OutputDefinition { get; set; }
     }
 }

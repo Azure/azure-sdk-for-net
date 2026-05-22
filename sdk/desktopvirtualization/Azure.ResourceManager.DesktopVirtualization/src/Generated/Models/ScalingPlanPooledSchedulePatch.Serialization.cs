@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(scalingPlanPooledSchedulePatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(scalingPlanPooledSchedulePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

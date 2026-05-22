@@ -762,7 +762,7 @@ public class FineTuningTests : ProjectsClientTestBase
         // Get project client and responses client
         AIProjectClient projectClient = GetTestProjectClient();
         // Get responses client for the specific deployment (model)
-        var responsesClient = projectClient.OpenAI.GetProjectResponsesClientForModel(deploymentName);
+        var responsesClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(deploymentName);
 
         // Perform inference
         string prompt = "What is the capital of France?";
@@ -853,7 +853,7 @@ public class FineTuningTests : ProjectsClientTestBase
     private (OpenAIFileClient FileClient, FineTuningClient FineTuningClient) GetClients()
     {
         AIProjectClient projectClient = GetTestProjectClient(useDefaultEndpoint: true);
-        return (projectClient.OpenAI.GetOpenAIFileClient(), projectClient.OpenAI.GetFineTuningClient());
+        return (projectClient.ProjectOpenAIClient.GetOpenAIFileClient(), projectClient.ProjectOpenAIClient.GetFineTuningClient());
     }
 
     protected void ValidateFineTuningJob(FineTuningJob job, string expectedJobId = null, string expectedStatus = null)

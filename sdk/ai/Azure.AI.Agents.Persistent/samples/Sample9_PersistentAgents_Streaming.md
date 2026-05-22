@@ -1,4 +1,4 @@
-# Sample using agents with streaming in Azure.AI.Agents.Persistent.
+# Sample using Agents with streaming in Azure.AI.Agents.Persistent.
 
 In this example we will demonstrate the agent streaming support.
 
@@ -54,7 +54,7 @@ PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     "Hi, Agent! Draw a graph for a line with a slope of 4 and y-intercept of 9.");
 ```
 
-4. Read the output from the stream.
+4. Create run and stream the output.
 
 Synchronous sample:
 ```C# Snippet:AgentsStreaming_StreamLoop

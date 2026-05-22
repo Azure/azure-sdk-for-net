@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ProviderExtendedLocationType : IEquatable<ProviderExtendedLocationType>
     {
         private readonly string _value;
+        /// <summary> The extended location type is not specified. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
+        /// <summary> The extended location type is custom location. </summary>
+        private const string CustomLocationValue = "CustomLocation";
+        /// <summary> The extended location type is edge zone. </summary>
+        private const string EdgeZoneValue = "EdgeZone";
+        /// <summary> The extended location type is arc zone. </summary>
+        private const string ArcZoneValue = "ArcZone";
 
         /// <summary> Initializes a new instance of <see cref="ProviderExtendedLocationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProviderExtendedLocationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotSpecifiedValue = "NotSpecified";
-        private const string CustomLocationValue = "CustomLocation";
-        private const string EdgeZoneValue = "EdgeZone";
-        private const string ArcZoneValue = "ArcZone";
+            _value = value;
+        }
 
         /// <summary> The extended location type is not specified. </summary>
         public static ProviderExtendedLocationType NotSpecified { get; } = new ProviderExtendedLocationType(NotSpecifiedValue);
+
         /// <summary> The extended location type is custom location. </summary>
         public static ProviderExtendedLocationType CustomLocation { get; } = new ProviderExtendedLocationType(CustomLocationValue);
+
         /// <summary> The extended location type is edge zone. </summary>
         public static ProviderExtendedLocationType EdgeZone { get; } = new ProviderExtendedLocationType(EdgeZoneValue);
+
         /// <summary> The extended location type is arc zone. </summary>
         public static ProviderExtendedLocationType ArcZone { get; } = new ProviderExtendedLocationType(ArcZoneValue);
+
         /// <summary> Determines if two <see cref="ProviderExtendedLocationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProviderExtendedLocationType left, ProviderExtendedLocationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProviderExtendedLocationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProviderExtendedLocationType left, ProviderExtendedLocationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProviderExtendedLocationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProviderExtendedLocationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProviderExtendedLocationType(string value) => new ProviderExtendedLocationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProviderExtendedLocationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProviderExtendedLocationType?(string value) => value == null ? null : new ProviderExtendedLocationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProviderExtendedLocationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProviderExtendedLocationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

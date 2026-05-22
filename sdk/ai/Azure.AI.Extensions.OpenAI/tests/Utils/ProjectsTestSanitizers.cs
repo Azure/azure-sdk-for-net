@@ -254,13 +254,13 @@ namespace Azure.AI.Extensions.OpenAI.Tests.Utils
                 Value = AZURE_PROJECT_NAME_PATTERN.Value
             }));
 
-            // Sanitize Variables section PROJECT_ENDPOINT
-            testBase.BodyKeySanitizers.Add(new BodyKeySanitizer(new("$.Variables.PROJECT_ENDPOINT")
+            // Sanitize Variables section FOUNDRY_PROJECT_ENDPOINT
+            testBase.BodyKeySanitizers.Add(new BodyKeySanitizer(new("$.Variables.FOUNDRY_PROJECT_ENDPOINT")
             {
                 Regex = HOST_SUBDOMAIN_PATTERN.Regex,
                 Value = HOST_SUBDOMAIN_PATTERN.Value
             }));
-            testBase.BodyKeySanitizers.Add(new BodyKeySanitizer(new("$.Variables.PROJECT_ENDPOINT")
+            testBase.BodyKeySanitizers.Add(new BodyKeySanitizer(new("$.Variables.FOUNDRY_PROJECT_ENDPOINT")
             {
                 Regex = AZURE_PROJECT_NAME_PATTERN.Regex,
                 Value = AZURE_PROJECT_NAME_PATTERN.Value

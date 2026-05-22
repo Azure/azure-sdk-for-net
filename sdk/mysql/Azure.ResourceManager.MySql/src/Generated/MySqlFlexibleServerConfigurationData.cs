@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     Properties = new ConfigurationProperties();
                 }
-                Properties.Source = value.Value;
+                Properties.Source = value;
             }
         }
 

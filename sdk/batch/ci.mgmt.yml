@@ -10,3 +10,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Batch
       safeName: AzureResourceManagerBatch
+    - name: Azure.Provisioning.Batch
+      safeName: AzureProvisioningBatch

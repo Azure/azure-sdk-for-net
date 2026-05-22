@@ -6,6 +6,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Speech.Transcription
@@ -14,13 +15,9 @@ namespace Azure.AI.Speech.Transcription
     public partial class TranscriptionClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly ApiKeyCredential _keyCredential;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        /// <summary> A credential provider used to authenticate to the service. </summary>
-        private readonly AuthenticationTokenProvider _tokenProvider;
         /// <summary> The OAuth2 flows supported by the service. </summary>
-        private readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
+        private static readonly Dictionary<string, object>[] _flows = new Dictionary<string, object>[] 
         {
             new Dictionary<string, object>
             {
@@ -53,21 +50,34 @@ namespace Azure.AI.Speech.Transcription
         }
 
         /// <summary> Initializes a new instance of TranscriptionClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public TranscriptionClient(Uri endpoint, ApiKeyCredential credential, TranscriptionClientOptions options)
+        internal TranscriptionClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, TranscriptionClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new TranscriptionClientOptions();
 
             _endpoint = endpoint;
-            _keyCredential = credential;
-            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(TranscriptionClient).Assembly), ApiKeyAuthenticationPolicy.CreateHeaderApiKeyPolicy(_keyCredential, AuthorizationHeader) }, Array.Empty<PipelinePolicy>());
+            if (authenticationPolicy != null)
+            {
+                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(TranscriptionClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
+            }
+            else
+            {
+                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(TranscriptionClient).Assembly) }, Array.Empty<PipelinePolicy>());
+            }
             _apiVersion = options.Version;
+        }
+
+        /// <summary> Initializes a new instance of TranscriptionClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public TranscriptionClient(Uri endpoint, ApiKeyCredential credential, TranscriptionClientOptions options) : this(ApiKeyAuthenticationPolicy.CreateHeaderApiKeyPolicy(credential, AuthorizationHeader), endpoint, options)
+        {
         }
 
         /// <summary> Initializes a new instance of TranscriptionClient. </summary>
@@ -75,17 +85,15 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="tokenProvider"> A credential provider used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenProvider"/> is null. </exception>
-        public TranscriptionClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, TranscriptionClientOptions options)
+        public TranscriptionClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, TranscriptionClientOptions options) : this(new BearerTokenPolicy(tokenProvider, _flows), endpoint, options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(tokenProvider, nameof(tokenProvider));
+        }
 
-            options ??= new TranscriptionClientOptions();
-
-            _endpoint = endpoint;
-            _tokenProvider = tokenProvider;
-            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(TranscriptionClient).Assembly), new BearerTokenPolicy(_tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
-            _apiVersion = options.Version;
+        /// <summary> Initializes a new instance of TranscriptionClient from a <see cref="TranscriptionClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for TranscriptionClient. </param>
+        [Experimental("SCME0002")]
+        public TranscriptionClient(TranscriptionClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options)
+        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>

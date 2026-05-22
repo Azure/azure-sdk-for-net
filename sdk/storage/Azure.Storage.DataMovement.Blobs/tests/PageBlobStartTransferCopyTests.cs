@@ -62,11 +62,25 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         protected override async Task<bool> DestinationExistsAsync(PageBlobClient objectClient)
             => await objectClient.ExistsAsync();
 
-        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceDisposingContainerAsync(BlobServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
             => await SourceClientBuilder.GetTestContainerAsync(service, containerName);
 
-        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAsync(BlobServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceSasDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
+            => await SourceClientBuilder.GetAzureSasCredentialTestContainerAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
             => await DestinationClientBuilder.GetTestContainerAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationSasDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
+            => await DestinationClientBuilder.GetAzureSasCredentialTestContainerAsync(service, containerName);
 
         private async Task<PageBlobClient> GetPageBlobClientAsync(
             BlobContainerClient container,
@@ -75,7 +89,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string objectName = null,
             BlobClientOptions options = null,
             Stream contents = null,
-            bool premium = false)
+            bool premium = false,
+            bool useContainerCredentials = false,
+            CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
             PageBlobClient blobClient = container.GetPageBlobClient(objectName);
@@ -89,14 +105,26 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
                 if (contents != default)
                 {
-                    await UploadPagesAsync(blobClient, contents, premium: premium);
+                    await UploadPagesAsync(
+                        blobClient,
+                        contents,
+                        premium: premium,
+                        cancellationToken: cancellationToken);
                 }
                 else
                 {
                     var data = GetRandomBuffer(objectLength.Value);
                     using Stream originalStream = await CreateLimitedMemoryStream(objectLength.Value);
-                    await UploadPagesAsync(blobClient, originalStream, premium: premium);
+                    await UploadPagesAsync(
+                        blobClient,
+                        originalStream,
+                        premium: premium,
+                        cancellationToken: cancellationToken);
                 }
+            }
+            if (useContainerCredentials)
+            {
+                return blobClient;
             }
             Uri sourceUri = blobClient.GenerateSasUri(BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new PageBlobClient(sourceUri, GetOptions()));
@@ -105,7 +133,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private async Task UploadPagesAsync(
             PageBlobClient blobClient,
             Stream contents,
-            bool premium = false)
+            bool premium = false,
+            CancellationToken cancellationToken = default)
         {
             long size = contents.Length;
             Assert.IsTrue(size % (KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
@@ -124,13 +153,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 options.PremiumPageBlobAccessTier = _defaultPremiumAccessTier;
             }
-            await blobClient.CreateIfNotExistsAsync(size, options);
+            await blobClient.CreateIfNotExistsAsync(size, options, cancellationToken);
             long offset = 0;
             long blockSize = Math.Min(DefaultBufferSize, size);
             while (offset < size)
             {
                 Stream partStream = WindowStream.GetWindow(contents, blockSize);
-                await blobClient.UploadPagesAsync(partStream, offset);
+                await blobClient.UploadPagesAsync(partStream, offset, cancellationToken:cancellationToken);
                 offset += blockSize;
             }
         }
@@ -143,6 +172,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobClientOptions options = null,
             Stream contents = default,
             TransferPropertiesTestType propertiesTestType = default,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
             => GetPageBlobClientAsync(
                 container,
@@ -150,7 +180,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 createResource,
                 objectName,
                 options,
-                contents);
+                contents,
+                default,
+                useContainerCredentials,
+                cancellationToken);
 
         protected override StorageResourceItem GetSourceStorageResourceItem(PageBlobClient objectClient)
             => new PageBlobStorageResource(objectClient);
@@ -165,6 +198,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string objectName = null,
             BlobClientOptions options = null,
             Stream contents = null,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
             => GetPageBlobClientAsync(
                 container,
@@ -172,7 +206,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 createResource,
                 objectName,
                 options,
-                contents);
+                contents,
+                default,
+                useContainerCredentials,
+                cancellationToken);
 
         private StorageResourceItem GetDestinationStorageResourceItemInternal(
             PageBlobClient objectClient,
@@ -324,6 +361,54 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
 
             return InstrumentClientOptions(options);
+        }
+
+        protected override async Task<string> CreateSnapshotAsync(
+            BlobContainerClient containerClient,
+            PageBlobClient objectClient,
+            CancellationToken cancellationToken = default)
+        {
+            Response<BlobSnapshotInfo> snapshotResponse = await objectClient.CreateSnapshotAsync(cancellationToken: cancellationToken);
+            return snapshotResponse.Value.Snapshot;
+        }
+
+        protected override PageBlobClient GetSnapshotObjectClient(
+            PageBlobClient objectClient,
+            string snapshotId)
+            => objectClient.WithSnapshot(snapshotId);
+
+        protected override async Task<string> CreateVersionAsync(
+            BlobContainerClient containerClient,
+            PageBlobClient objectClient,
+            CancellationToken cancellationToken = default)
+        {
+            // Get the current version ID before we modify the blob
+            Response<BlobProperties> propertiesResponse = await objectClient.GetPropertiesAsync(cancellationToken: cancellationToken);
+            string versionId = propertiesResponse.Value.VersionId;
+
+            // Modify the blob to create a new version
+            byte[] newData = new byte[Constants.KB];
+            using MemoryStream stream = new MemoryStream(newData);
+            await objectClient.UploadPagesAsync(stream, offset: 0, cancellationToken: cancellationToken);
+
+            // Return the version ID from before the modification
+            return versionId;
+        }
+
+        protected override PageBlobClient GetVersionObjectClient(
+            PageBlobClient objectClient,
+            string versionId)
+        {
+            // Create version client
+            PageBlobClient versionClient = objectClient.WithVersion(versionId);
+
+            // Generate a new SAS token for the versioned blob
+            // The SAS must include the version in the signed resource
+            Uri versionSasUri = versionClient.GenerateSasUri(
+                BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.Read,
+                Recording.UtcNow.AddDays(1));
+
+            return InstrumentClient(new PageBlobClient(versionSasUri, GetOptions()));
         }
 
         [RecordedTest]

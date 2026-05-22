@@ -1,14 +1,17 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.8.0 (2026-05-11)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded the api-version to 2026-03-01.
 
-### Bugs Fixed
+## 1.7.1 (2026-03-20)
 
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.51.1.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
 
 ## 1.7.0 (2025-09-25)
 

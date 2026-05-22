@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The pod identity profile of the Managed Cluster. See [use AAD pod identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity) for more details on pod identity integration. </summary>
     public partial class ManagedClusterPodIdentityProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProfile"/>. </summary>
         public ManagedClusterPodIdentityProfile()
@@ -54,28 +26,31 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterPodIdentityProfile"/>. </summary>
         /// <param name="isEnabled"> Whether the pod identity addon is enabled. </param>
-        /// <param name="allowNetworkPluginKubenet"> Whether pod identity is allowed to run on clusters with Kubenet networking. Running in Kubenet is disabled by default due to the security related nature of AAD Pod Identity and the risks of IP spoofing. See [using Kubenet network plugin with AAD Pod Identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity#using-kubenet-network-plugin-with-azure-active-directory-pod-managed-identities) for more information. </param>
+        /// <param name="isKubenetNetworkPluginAllowed"> Whether pod identity is allowed to run on clusters with Kubenet networking. Running in Kubenet is disabled by default due to the security related nature of AAD Pod Identity and the risks of IP spoofing. See [using Kubenet network plugin with AAD Pod Identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity#using-kubenet-network-plugin-with-azure-active-directory-pod-managed-identities) for more information. </param>
         /// <param name="userAssignedIdentities"> The pod identities to use in the cluster. </param>
         /// <param name="userAssignedIdentityExceptions"> The pod identity exceptions to allow. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterPodIdentityProfile(bool? isEnabled, bool? allowNetworkPluginKubenet, IList<ManagedClusterPodIdentity> userAssignedIdentities, IList<ManagedClusterPodIdentityException> userAssignedIdentityExceptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterPodIdentityProfile(bool? isEnabled, bool? isKubenetNetworkPluginAllowed, IList<ManagedClusterPodIdentity> userAssignedIdentities, IList<ManagedClusterPodIdentityException> userAssignedIdentityExceptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
-            AllowNetworkPluginKubenet = allowNetworkPluginKubenet;
+            IsKubenetNetworkPluginAllowed = isKubenetNetworkPluginAllowed;
             UserAssignedIdentities = userAssignedIdentities;
             UserAssignedIdentityExceptions = userAssignedIdentityExceptions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether the pod identity addon is enabled. </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
+
         /// <summary> Whether pod identity is allowed to run on clusters with Kubenet networking. Running in Kubenet is disabled by default due to the security related nature of AAD Pod Identity and the risks of IP spoofing. See [using Kubenet network plugin with AAD Pod Identity](https://docs.microsoft.com/azure/aks/use-azure-ad-pod-identity#using-kubenet-network-plugin-with-azure-active-directory-pod-managed-identities) for more information. </summary>
         [WirePath("allowNetworkPluginKubenet")]
-        public bool? AllowNetworkPluginKubenet { get; set; }
+        public bool? IsKubenetNetworkPluginAllowed { get; set; }
+
         /// <summary> The pod identities to use in the cluster. </summary>
         [WirePath("userAssignedIdentities")]
         public IList<ManagedClusterPodIdentity> UserAssignedIdentities { get; }
+
         /// <summary> The pod identity exceptions to allow. </summary>
         [WirePath("userAssignedIdentityExceptions")]
         public IList<ManagedClusterPodIdentityException> UserAssignedIdentityExceptions { get; }

@@ -72,9 +72,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(bazData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(bazData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BazData"/> from. </param>
@@ -140,9 +138,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             BazProperties properties = default;
-            IDictionary<string, string> tags = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -177,20 +175,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = BazProperties.DeserializeBazProperties(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -212,6 +196,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = BazProperties.DeserializeBazProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -223,9 +221,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties,
-                tags ?? new ChangeTrackingDictionary<string, string>());
+                properties);
         }
     }
 }

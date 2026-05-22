@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct DefaultGateway : IEquatable<DefaultGateway>
     {
         private readonly string _value;
+        /// <summary> This is the default gateway. </summary>
+        private const string TrueValue = "True";
+        /// <summary> This is not the default gateway. </summary>
+        private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="DefaultGateway"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DefaultGateway(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TrueValue = "True";
-        private const string FalseValue = "False";
-
-        /// <summary> True. </summary>
+        /// <summary> This is the default gateway. </summary>
         public static DefaultGateway True { get; } = new DefaultGateway(TrueValue);
-        /// <summary> False. </summary>
+
+        /// <summary> This is not the default gateway. </summary>
         public static DefaultGateway False { get; } = new DefaultGateway(FalseValue);
+
         /// <summary> Determines if two <see cref="DefaultGateway"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DefaultGateway left, DefaultGateway right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DefaultGateway"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DefaultGateway left, DefaultGateway right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DefaultGateway"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DefaultGateway"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DefaultGateway(string value) => new DefaultGateway(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DefaultGateway"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DefaultGateway?(string value) => value == null ? null : new DefaultGateway(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DefaultGateway other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DefaultGateway other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    public partial class BackupResourceConfigResource : IJsonModel<BackupResourceConfigData>
+    /// <summary></summary>
+    public partial class BackupResourceConfigResource : ArmResource, IJsonModel<BackupResourceConfigData>
     {
-        private static BackupResourceConfigData s_dataDeserializationInstance;
-        private static BackupResourceConfigData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<BackupResourceConfigData> s_dataDeserializationInstance;
 
+        private static IJsonModel<BackupResourceConfigData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BackupResourceConfigData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackupResourceConfigData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BackupResourceConfigData>)Data).Write(writer, options);
 
-        BackupResourceConfigData IJsonModel<BackupResourceConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupResourceConfigData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackupResourceConfigData IJsonModel<BackupResourceConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BackupResourceConfigData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BackupResourceConfigData>(Data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         BackupResourceConfigData IPersistableModel<BackupResourceConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupResourceConfigData>(data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        string IPersistableModel<BackupResourceConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupResourceConfigData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BackupResourceConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

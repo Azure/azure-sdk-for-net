@@ -30,14 +30,19 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> AppServiceCertificateOrderPatchResource resource specific properties. </param>
-        internal AppServiceCertificateOrderPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AppServiceCertificateOrderPatchResourceProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="kind"> Kind of resource. </param>
+        internal AppServiceCertificateOrderPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AppServiceCertificateOrderPatchResourceProperties properties, string kind) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            Kind = kind;
         }
 
         /// <summary> AppServiceCertificateOrderPatchResource resource specific properties. </summary>
         internal AppServiceCertificateOrderPatchResourceProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
 
         /// <summary> State of the Key Vault secret. </summary>
         public IDictionary<string, AppServiceCertificateProperties> Certificates
@@ -91,7 +96,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 {
                     Properties = new AppServiceCertificateOrderPatchResourceProperties();
                 }
-                Properties.ValidityInYears = value.Value;
+                Properties.ValidityInYears = value;
             }
         }
 
@@ -108,16 +113,16 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 {
                     Properties = new AppServiceCertificateOrderPatchResourceProperties();
                 }
-                Properties.KeySize = value.Value;
+                Properties.KeySize = value;
             }
         }
 
         /// <summary> Certificate product type. </summary>
-        public CertificateProductType ProductType
+        public CertificateProductType? CertificateProductType
         {
             get
             {
-                return Properties is null ? default : Properties.ProductType;
+                return Properties is null ? default : Properties.CertificateProductType;
             }
         }
 
@@ -134,7 +139,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 {
                     Properties = new AppServiceCertificateOrderPatchResourceProperties();
                 }
-                Properties.IsAutoRenew = value.Value;
+                Properties.IsAutoRenew = value;
             }
         }
 

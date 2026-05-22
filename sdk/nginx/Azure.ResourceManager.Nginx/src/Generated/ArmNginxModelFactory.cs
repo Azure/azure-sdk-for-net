@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.NginxDeploymentPropertiesNginxAppProtect"/> instance for mocking. </returns>
         public static NginxDeploymentPropertiesNginxAppProtect NginxDeploymentPropertiesNginxAppProtect(WebApplicationFirewallActivationState? webApplicationFirewallActivationState = default, WebApplicationFirewallStatus webApplicationFirewallStatus = default)
         {
-            return new NginxDeploymentPropertiesNginxAppProtect(webApplicationFirewallActivationState is null ? default : new WebApplicationFirewallSettings(webApplicationFirewallActivationState, null), webApplicationFirewallStatus, additionalBinaryDataProperties: null);
+            return new NginxDeploymentPropertiesNginxAppProtect(new WebApplicationFirewallSettings(webApplicationFirewallActivationState, null), webApplicationFirewallStatus, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The status of the NGINX App Protect Web Application Firewall. </summary>
@@ -523,6 +523,24 @@ namespace Azure.ResourceManager.Nginx.Models
                 compilingState,
                 applyingState,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="status"> The status of the analysis. The possible values can be arbitrary. </param>
+        /// <param name="dataErrors"> List of errors found during analysis. </param>
+        /// <returns> A new <see cref="Models.NginxDeploymentWafPolicyAnalysisResult"/> instance for mocking. </returns>
+        public static NginxDeploymentWafPolicyAnalysisResult NginxDeploymentWafPolicyAnalysisResult(string status = default, IEnumerable<NginxDeploymentWafPolicyError> dataErrors = default)
+        {
+            return new NginxDeploymentWafPolicyAnalysisResult(status, dataErrors is null ? default : new NginxDeploymentWafPolicyAnalysisData((dataErrors ?? new ChangeTrackingList<NginxDeploymentWafPolicyError>()).ToList(), null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Nginx Deployment Waf Policy Error. </summary>
+        /// <param name="code"> Error code. </param>
+        /// <param name="field"> Field that caused the error. </param>
+        /// <param name="message"> Error message. </param>
+        /// <returns> A new <see cref="Models.NginxDeploymentWafPolicyError"/> instance for mocking. </returns>
+        public static NginxDeploymentWafPolicyError NginxDeploymentWafPolicyError(string code = default, string @field = default, string message = default)
+        {
+            return new NginxDeploymentWafPolicyError(code, @field, message, additionalBinaryDataProperties: null);
         }
     }
 }

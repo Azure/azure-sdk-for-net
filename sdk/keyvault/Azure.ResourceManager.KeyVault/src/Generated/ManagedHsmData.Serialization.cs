@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.KeyVault
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(managedHsmData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(managedHsmData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ManagedHsmData"/> from. </param>
@@ -116,7 +114,7 @@ namespace Azure.ResourceManager.KeyVault
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
         }
 
@@ -150,11 +148,11 @@ namespace Azure.ResourceManager.KeyVault
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ManagedHsmProperties properties = default;
             ManagedHsmSku sku = default;
             ManagedServiceIdentity identity = default;
-            IDictionary<string, string> tags = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -189,6 +187,27 @@ namespace Azure.ResourceManager.KeyVault
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKeyVaultContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    tags = dictionary;
+                    continue;
+                }
                 if (prop.NameEquals("location"u8))
                 {
                     location = new AzureLocation(prop.Value.GetString());
@@ -218,28 +237,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKeyVaultContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("tags"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    tags = dictionary;
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerKeyVaultContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -253,11 +251,11 @@ namespace Azure.ResourceManager.KeyVault
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 sku,
-                identity,
-                tags ?? new ChangeTrackingDictionary<string, string>());
+                identity);
         }
     }
 }

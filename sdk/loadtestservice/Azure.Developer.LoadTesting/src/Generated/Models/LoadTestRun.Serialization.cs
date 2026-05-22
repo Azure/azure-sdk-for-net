@@ -270,6 +270,16 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("estimatedVirtualUserHours"u8);
                 writer.WriteNumberValue(EstimatedVirtualUserHours.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(ExecutionStartDateTime))
+            {
+                writer.WritePropertyName("executionStartDateTime"u8);
+                writer.WriteStringValue(ExecutionStartDateTime.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExecutionEndDateTime))
+            {
+                writer.WritePropertyName("executionEndDateTime"u8);
+                writer.WriteStringValue(ExecutionEndDateTime.Value, "O");
+            }
             if (options.Format != "W" && Optional.IsDefined(CreatedDateTime))
             {
                 writer.WritePropertyName("createdDateTime"u8);
@@ -363,6 +373,8 @@ namespace Azure.Developer.LoadTesting
             CreatedByType? createdByType = default;
             Uri createdByUri = default;
             double? estimatedVirtualUserHours = default;
+            DateTimeOffset? executionStartDateTime = default;
+            DateTimeOffset? executionEndDateTime = default;
             DateTimeOffset? createdDateTime = default;
             string createdBy = default;
             DateTimeOffset? lastModifiedDateTime = default;
@@ -661,6 +673,24 @@ namespace Azure.Developer.LoadTesting
                     estimatedVirtualUserHours = prop.Value.GetDouble();
                     continue;
                 }
+                if (prop.NameEquals("executionStartDateTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    executionStartDateTime = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("executionEndDateTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    executionEndDateTime = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (prop.NameEquals("createdDateTime"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -726,6 +756,8 @@ namespace Azure.Developer.LoadTesting
                 createdByType,
                 createdByUri,
                 estimatedVirtualUserHours,
+                executionStartDateTime,
+                executionEndDateTime,
                 createdDateTime,
                 createdBy,
                 lastModifiedDateTime,

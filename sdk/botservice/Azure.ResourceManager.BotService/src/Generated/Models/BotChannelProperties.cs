@@ -7,75 +7,51 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary>
     /// Channel definition
-    /// Please note <see cref="BotChannelProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AcsChatChannel"/>, <see cref="AlexaChannel"/>, <see cref="DirectLineChannel"/>, <see cref="DirectLineSpeechChannel"/>, <see cref="EmailChannel"/>, <see cref="FacebookChannel"/>, <see cref="KikChannel"/>, <see cref="LineChannel"/>, <see cref="M365Extensions"/>, <see cref="MsTeamsChannel"/>, <see cref="Omnichannel"/>, <see cref="OutlookChannel"/>, <see cref="SearchAssistant"/>, <see cref="SkypeChannel"/>, <see cref="SlackChannel"/>, <see cref="SmsChannel"/>, <see cref="TelegramChannel"/>, <see cref="TelephonyChannel"/> and <see cref="WebChatChannel"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AlexaChannel"/>, <see cref="FacebookChannel"/>, <see cref="EmailChannel"/>, <see cref="OutlookChannel"/>, <see cref="MsTeamsChannel"/>, <see cref="SkypeChannel"/>, <see cref="KikChannel"/>, <see cref="WebChatChannel"/>, <see cref="DirectLineChannel"/>, <see cref="TelegramChannel"/>, <see cref="SmsChannel"/>, <see cref="SlackChannel"/>, <see cref="LineChannel"/>, <see cref="DirectLineSpeechChannel"/>, <see cref="Omnichannel"/>, <see cref="TelephonyChannel"/>, <see cref="AcsChatChannel"/>, <see cref="SearchAssistant"/>, and <see cref="M365Extensions"/>.
     /// </summary>
     public abstract partial class BotChannelProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BotChannelProperties"/>. </summary>
-        protected BotChannelProperties()
+        /// <param name="channelName"> The channel name. </param>
+        private protected BotChannelProperties(string channelName)
         {
+            ChannelName = channelName;
         }
 
         /// <summary> Initializes a new instance of <see cref="BotChannelProperties"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
-        /// <param name="etag"> Entity Tag of the resource. </param>
+        /// <param name="eTag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BotChannelProperties(string channelName, ETag? etag, string provisioningState, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BotChannelProperties(string channelName, ETag? eTag, string provisioningState, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ChannelName = channelName;
-            ETag = etag;
+            ETag = eTag;
             ProvisioningState = provisioningState;
             Location = location;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The channel name. </summary>
         internal string ChannelName { get; set; }
+
         /// <summary> Entity Tag of the resource. </summary>
         public ETag? ETag { get; set; }
+
         /// <summary> Provisioning state of the resource. </summary>
         public string ProvisioningState { get; }
+
         /// <summary> Specifies the location of the resource. </summary>
         public AzureLocation? Location { get; set; }
     }

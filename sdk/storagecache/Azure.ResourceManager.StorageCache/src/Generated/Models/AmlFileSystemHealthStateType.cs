@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         private const string DegradedValue = "Degraded";
         private const string TransitioningValue = "Transitioning";
         private const string MaintenanceValue = "Maintenance";
+        private const string ExpandingValue = "Expanding";
 
         /// <summary> Unavailable. </summary>
         public static AmlFileSystemHealthStateType Unavailable { get; } = new AmlFileSystemHealthStateType(UnavailableValue);
@@ -38,6 +39,8 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static AmlFileSystemHealthStateType Transitioning { get; } = new AmlFileSystemHealthStateType(TransitioningValue);
         /// <summary> Maintenance. </summary>
         public static AmlFileSystemHealthStateType Maintenance { get; } = new AmlFileSystemHealthStateType(MaintenanceValue);
+        /// <summary> Expanding. </summary>
+        public static AmlFileSystemHealthStateType Expanding { get; } = new AmlFileSystemHealthStateType(ExpandingValue);
         /// <summary> Determines if two <see cref="AmlFileSystemHealthStateType"/> values are the same. </summary>
         public static bool operator ==(AmlFileSystemHealthStateType left, AmlFileSystemHealthStateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AmlFileSystemHealthStateType"/> values are not the same. </summary>

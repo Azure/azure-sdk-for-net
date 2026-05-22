@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             TryGetApiVersion(ResourceType, out string scheduledActionOccurrenceApiVersion);
             _occurrencesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule", ResourceType.Namespace, Diagnostics);
-            _occurrencesRestClient = new Occurrences(_occurrencesClientDiagnostics, Pipeline, Endpoint, scheduledActionOccurrenceApiVersion ?? "2026-01-01-preview");
+            _occurrencesRestClient = new Occurrences(_occurrencesClientDiagnostics, Pipeline, Endpoint, scheduledActionOccurrenceApiVersion ?? "2026-04-15-preview");
             ValidateResourceId(id);
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -432,8 +432,8 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OccurrenceResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OccurrenceResourceData> GetAttachedResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OccurrenceDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OccurrenceDetails> GetAttachedResourcesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -445,7 +445,8 @@ namespace Azure.ResourceManager.ComputeSchedule
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "ScheduledActionOccurrenceResource.GetAttachedResources");
         }
 
         /// <summary>
@@ -461,7 +462,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-04-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -470,8 +471,8 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OccurrenceResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OccurrenceResourceData> GetAttachedResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OccurrenceDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OccurrenceDetails> GetAttachedResources(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -483,7 +484,8 @@ namespace Azure.ResourceManager.ComputeSchedule
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "ScheduledActionOccurrenceResource.GetAttachedResources");
         }
     }
 }

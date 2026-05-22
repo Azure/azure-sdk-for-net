@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    internal class MonitoringMetricConfigurationOperationSource : IOperationSource<MonitoringMetricConfigurationResource>
+    /// <summary></summary>
+    internal partial class MonitoringMetricConfigurationOperationSource : IOperationSource<MonitoringMetricConfigurationResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal MonitoringMetricConfigurationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         MonitoringMetricConfigurationResource IOperationSource<MonitoringMetricConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MonitoringMetricConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            MonitoringMetricConfigurationData data = MonitoringMetricConfigurationData.DeserializeMonitoringMetricConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new MonitoringMetricConfigurationResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<MonitoringMetricConfigurationResource> IOperationSource<MonitoringMetricConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MonitoringMetricConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
-            return await Task.FromResult(new MonitoringMetricConfigurationResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            MonitoringMetricConfigurationData data = MonitoringMetricConfigurationData.DeserializeMonitoringMetricConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new MonitoringMetricConfigurationResource(_client, data);
         }
     }
 }

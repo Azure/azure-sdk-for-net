@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.IotOperations
         private readonly string _instanceName;
         private readonly string _dataflowProfileName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DataflowGetByResourceGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Dataflow client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="instanceName"> Name of instance. </param>
         /// <param name="dataflowProfileName"> Name of Instance dataflowProfile resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DataflowGetByResourceGroupAsyncCollectionResultOfT(Dataflow client, Guid subscriptionId, string resourceGroupName, string instanceName, string dataflowProfileName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DataflowGetByResourceGroupAsyncCollectionResultOfT(Dataflow client, Guid subscriptionId, string resourceGroupName, string instanceName, string dataflowProfileName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.IotOperations
             _instanceName = instanceName;
             _dataflowProfileName = dataflowProfileName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DataflowGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.IotOperations
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _instanceName, _dataflowProfileName, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _instanceName, _dataflowProfileName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("IotOperationsDataflowCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -65,9 +65,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(firewallLogSettings, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(firewallLogSettings, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FirewallLogSettings"/> from. </param>

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -19,11 +18,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseImageContent"/>. </summary>
         /// <param name="url"> The url of the image. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public KnowledgeBaseImageContent(Uri url)
+        internal KnowledgeBaseImageContent(Uri url)
         {
-            Argument.AssertNotNull(url, nameof(url));
-
             Url = url;
         }
 
@@ -37,6 +33,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         }
 
         /// <summary> The url of the image. </summary>
-        public Uri Url { get; set; }
+        public Uri Url { get; }
     }
 }

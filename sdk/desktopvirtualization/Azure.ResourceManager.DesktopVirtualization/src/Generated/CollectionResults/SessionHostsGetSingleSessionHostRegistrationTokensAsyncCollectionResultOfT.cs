@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly string _sessionHostName;
         private readonly RequestContent _content;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of SessionHostsGetSingleSessionHostRegistrationTokensAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SessionHosts client used to send requests. </param>
@@ -33,7 +34,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public SessionHostsGetSingleSessionHostRegistrationTokensAsyncCollectionResultOfT(SessionHosts client, Guid subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, RequestContent content, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public SessionHostsGetSingleSessionHostRegistrationTokensAsyncCollectionResultOfT(SessionHosts client, Guid subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, RequestContent content, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -42,6 +44,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _sessionHostName = sessionHostName;
             _content = content;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of SessionHostsGetSingleSessionHostRegistrationTokensAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateGetSingleSessionHostRegistrationTokensRequest(_subscriptionId, _resourceGroupName, _hostPoolName, _sessionHostName, _content, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("SessionHostResource.GetSingleSessionHostRegistrationTokens");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

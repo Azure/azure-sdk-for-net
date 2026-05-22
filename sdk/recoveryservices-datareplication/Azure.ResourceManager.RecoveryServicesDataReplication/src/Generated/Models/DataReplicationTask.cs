@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         {
             get
             {
-                return CustomProperties.InstanceType;
+                return CustomProperties is null ? default : CustomProperties.InstanceType;
             }
         }
     }

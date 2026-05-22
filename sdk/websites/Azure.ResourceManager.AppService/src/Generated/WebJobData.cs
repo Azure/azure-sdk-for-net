@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the WebJob data model.
     /// Web Job Information.
+    /// Serialized Name: WebJob
     /// </summary>
     public partial class WebJobData : ResourceData
     {
@@ -62,17 +63,42 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="runCommand"> Run command. </param>
-        /// <param name="uri"> Job URL. </param>
-        /// <param name="extraInfoUri"> Extra Info URL. </param>
-        /// <param name="webJobType"> Job type. </param>
-        /// <param name="error"> Error information. </param>
-        /// <param name="isUsingSdk"> Using SDK?. </param>
-        /// <param name="settings"> Job settings. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: WebJob.kind
+        /// </param>
+        /// <param name="runCommand">
+        /// Run command.
+        /// Serialized Name: WebJob.properties.run_command
+        /// </param>
+        /// <param name="uri">
+        /// Job URL.
+        /// Serialized Name: WebJob.properties.url
+        /// </param>
+        /// <param name="extraInfoUri">
+        /// Extra Info URL.
+        /// Serialized Name: WebJob.properties.extra_info_url
+        /// </param>
+        /// <param name="webJobType">
+        /// Job type.
+        /// Serialized Name: WebJob.properties.web_job_type
+        /// </param>
+        /// <param name="error">
+        /// Error information.
+        /// Serialized Name: WebJob.properties.error
+        /// </param>
+        /// <param name="isUsingSdk">
+        /// Using SDK?
+        /// Serialized Name: WebJob.properties.using_sdk
+        /// </param>
+        /// <param name="settings">
+        /// Job settings.
+        /// Serialized Name: WebJob.properties.settings
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, IDictionary<string, BinaryData> settings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             RunCommand = runCommand;
             Uri = uri;
             ExtraInfoUri = extraInfoUri;
@@ -80,30 +106,54 @@ namespace Azure.ResourceManager.AppService
             Error = error;
             IsUsingSdk = isUsingSdk;
             Settings = settings;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Run command. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: WebJob.kind
+        /// </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
+        /// <summary>
+        /// Run command.
+        /// Serialized Name: WebJob.properties.run_command
+        /// </summary>
         [WirePath("properties.run_command")]
         public string RunCommand { get; set; }
-        /// <summary> Job URL. </summary>
+        /// <summary>
+        /// Job URL.
+        /// Serialized Name: WebJob.properties.url
+        /// </summary>
         [WirePath("properties.url")]
         public Uri Uri { get; set; }
-        /// <summary> Extra Info URL. </summary>
+        /// <summary>
+        /// Extra Info URL.
+        /// Serialized Name: WebJob.properties.extra_info_url
+        /// </summary>
         [WirePath("properties.extra_info_url")]
         public Uri ExtraInfoUri { get; set; }
-        /// <summary> Job type. </summary>
+        /// <summary>
+        /// Job type.
+        /// Serialized Name: WebJob.properties.web_job_type
+        /// </summary>
         [WirePath("properties.web_job_type")]
         public WebJobType? WebJobType { get; set; }
-        /// <summary> Error information. </summary>
+        /// <summary>
+        /// Error information.
+        /// Serialized Name: WebJob.properties.error
+        /// </summary>
         [WirePath("properties.error")]
         public string Error { get; set; }
-        /// <summary> Using SDK?. </summary>
+        /// <summary>
+        /// Using SDK?
+        /// Serialized Name: WebJob.properties.using_sdk
+        /// </summary>
         [WirePath("properties.using_sdk")]
         public bool? IsUsingSdk { get; set; }
         /// <summary>
         /// Job settings.
+        /// Serialized Name: WebJob.properties.settings
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -134,8 +184,5 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         [WirePath("properties.settings")]
         public IDictionary<string, BinaryData> Settings { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

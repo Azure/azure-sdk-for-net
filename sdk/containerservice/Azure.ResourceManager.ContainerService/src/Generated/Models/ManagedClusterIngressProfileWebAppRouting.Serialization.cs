@@ -8,17 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterIngressProfileWebAppRouting : IUtf8JsonSerializable, IJsonModel<ManagedClusterIngressProfileWebAppRouting>
+    /// <summary> Application Routing add-on settings for the ingress profile. </summary>
+    public partial class ManagedClusterIngressProfileWebAppRouting : IJsonModel<ManagedClusterIngressProfileWebAppRouting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterIngressProfileWebAppRouting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedClusterIngressProfileWebAppRouting PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIngressProfileWebAppRouting>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeManagedClusterIngressProfileWebAppRouting(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterIngressProfileWebAppRouting)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIngressProfileWebAppRouting>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterIngressProfileWebAppRouting)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManagedClusterIngressProfileWebAppRouting>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedClusterIngressProfileWebAppRouting IPersistableModel<ManagedClusterIngressProfileWebAppRouting>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedClusterIngressProfileWebAppRouting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedClusterIngressProfileWebAppRouting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,22 +70,26 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIngressProfileWebAppRouting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIngressProfileWebAppRouting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedClusterIngressProfileWebAppRouting)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
+            if (Optional.IsDefined(GatewayAPIImplementations))
+            {
+                writer.WritePropertyName("gatewayAPIImplementations"u8);
+                writer.WriteObjectValue(GatewayAPIImplementations, options);
+            }
             if (Optional.IsCollectionDefined(DnsZoneResourceIds))
             {
                 writer.WritePropertyName("dnsZoneResourceIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in DnsZoneResourceIds)
+                foreach (ResourceIdentifier item in DnsZoneResourceIds)
                 {
                     if (item == null)
                     {
@@ -66,15 +110,20 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(DefaultDomain))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("defaultDomain"u8);
+                writer.WriteObjectValue(DefaultDomain, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -83,51 +132,66 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        ManagedClusterIngressProfileWebAppRouting IJsonModel<ManagedClusterIngressProfileWebAppRouting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedClusterIngressProfileWebAppRouting IJsonModel<ManagedClusterIngressProfileWebAppRouting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedClusterIngressProfileWebAppRouting JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIngressProfileWebAppRouting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIngressProfileWebAppRouting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedClusterIngressProfileWebAppRouting)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeManagedClusterIngressProfileWebAppRouting(document.RootElement, options);
         }
 
-        internal static ManagedClusterIngressProfileWebAppRouting DeserializeManagedClusterIngressProfileWebAppRouting(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ManagedClusterIngressProfileWebAppRouting DeserializeManagedClusterIngressProfileWebAppRouting(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? enabled = default;
+            bool? isEnabled = default;
+            ManagedClusterWebAppRoutingGatewayAPIImplementations gatewayAPIImplementations = default;
             IList<ResourceIdentifier> dnsZoneResourceIds = default;
             ManagedClusterIngressProfileNginx nginx = default;
             ContainerServiceUserAssignedIdentity identity = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ManagedClusterIngressDefaultDomainProfile defaultDomain = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"u8))
+                if (prop.NameEquals("enabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enabled = property.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("dnsZoneResourceIds"u8))
+                if (prop.NameEquals("gatewayAPIImplementations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    gatewayAPIImplementations = ManagedClusterWebAppRoutingGatewayAPIImplementations.DeserializeManagedClusterWebAppRoutingGatewayAPIImplementations(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("dnsZoneResourceIds"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -141,156 +205,46 @@ namespace Azure.ResourceManager.ContainerService.Models
                     dnsZoneResourceIds = array;
                     continue;
                 }
-                if (property.NameEquals("nginx"u8))
+                if (prop.NameEquals("nginx"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nginx = ManagedClusterIngressProfileNginx.DeserializeManagedClusterIngressProfileNginx(property.Value, options);
+                    nginx = ManagedClusterIngressProfileNginx.DeserializeManagedClusterIngressProfileNginx(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identity = ContainerServiceUserAssignedIdentity.DeserializeContainerServiceUserAssignedIdentity(property.Value, options);
+                    identity = ContainerServiceUserAssignedIdentity.DeserializeContainerServiceUserAssignedIdentity(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("defaultDomain"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    defaultDomain = ManagedClusterIngressDefaultDomainProfile.DeserializeManagedClusterIngressDefaultDomainProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedClusterIngressProfileWebAppRouting(enabled, dnsZoneResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), nginx, identity, serializedAdditionalRawData);
+            return new ManagedClusterIngressProfileWebAppRouting(
+                isEnabled,
+                gatewayAPIImplementations,
+                dnsZoneResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                nginx,
+                identity,
+                defaultDomain,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsEnabled))
-                {
-                    builder.Append("  enabled: ");
-                    var boolValue = IsEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsZoneResourceIds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dnsZoneResourceIds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(DnsZoneResourceIds))
-                {
-                    if (DnsZoneResourceIds.Any())
-                    {
-                        builder.Append("  dnsZoneResourceIds: ");
-                        builder.AppendLine("[");
-                        foreach (var item in DnsZoneResourceIds)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("NginxDefaultIngressControllerType", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nginx: ");
-                builder.AppendLine("{");
-                builder.Append("    defaultIngressControllerType: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Nginx))
-                {
-                    builder.Append("  nginx: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Nginx, options, 2, false, "  nginx: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  identity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Identity))
-                {
-                    builder.Append("  identity: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ManagedClusterIngressProfileWebAppRouting>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIngressProfileWebAppRouting>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ManagedClusterIngressProfileWebAppRouting)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ManagedClusterIngressProfileWebAppRouting IPersistableModel<ManagedClusterIngressProfileWebAppRouting>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIngressProfileWebAppRouting>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeManagedClusterIngressProfileWebAppRouting(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ManagedClusterIngressProfileWebAppRouting)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ManagedClusterIngressProfileWebAppRouting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

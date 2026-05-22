@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Specs.Azure.Versioning.PreviewVersion
 {
@@ -14,6 +16,9 @@ namespace Specs.Azure.Versioning.PreviewVersion
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_12_01_Preview;
 
         public PreviewVersionClientOptions(ServiceVersion version = LatestVersion) => throw null;
+
+        [Experimental("SCME0002")]
+        internal PreviewVersionClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

@@ -5,8 +5,11 @@ using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.ComponentModel.Composition;
+using System.Threading.Tasks;
 
 namespace Azure.Generator.Management
 {
@@ -42,6 +45,20 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         public override ManagementTypeFactory TypeFactory { get; }
 
+        /// <inheritdoc/>
+        public override TypeProviderWriter GetWriter(TypeProvider provider)
+        {
+            if (provider is ModelFactoryProvider modelFactory)
+            {
+                // Model factory back-compat overloads can be synthesized from LastContractView
+                // after normal visitors run. Repair them here so the final methods being written
+                // preserve arguments that were moved into flattened model properties.
+                ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+            }
+
+            return base.GetWriter(provider);
+        }
+
         /// <summary>
         /// Customize the generation output for Azure client SDK.
         /// </summary>
@@ -60,6 +77,7 @@ namespace Azure.Generator.Management
             AddVisitor(new TypeFilterVisitor());
             AddVisitor(new PaginationVisitor());
             AddVisitor(new ModelFactoryVisitor());
+            AddVisitor(new ManagedIdentityV3Visitor());
             if (IsWirePathEnabled())
             {
                 AddVisitor(new WirePathVisitor());
@@ -67,6 +85,7 @@ namespace Azure.Generator.Management
         }
 
         private const string EnableWirePathFeatureFlag = "enable-wire-path-attribute";
+        private const string SkipApiVersionOverrideFlag = "skip-api-version-override";
 
         private bool IsWirePathEnabled()
         {
@@ -77,5 +96,22 @@ namespace Azure.Generator.Management
             }
             return false;
         }
+
+        // TODO: This is a temporary workaround until the api-version override issue is properly resolved in Azure.Core.
+        // Once Azure.Core handles api-version correctly during LRO polling, this flag and related logic should be removed.
+        internal bool IsSkipApiVersionOverrideEnabled()
+        {
+            if (Configuration.AdditionalConfigurationOptions.TryGetValue(SkipApiVersionOverrideFlag, out var value)
+                && bool.TryParse(value.ToString(), out var flag))
+            {
+                return flag;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Management plane SDKs do not need ConfigurationSchema.json generation.
+        /// </summary>
+        public override Task WriteAdditionalFiles(string outputPath) => Task.CompletedTask;
     }
 }

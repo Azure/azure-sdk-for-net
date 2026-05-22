@@ -65,9 +65,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sqlVmTroubleshooting, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(sqlVmTroubleshooting, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SqlVmTroubleshooting"/> from. </param>

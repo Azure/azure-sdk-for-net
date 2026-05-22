@@ -3,59 +3,31 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using Azure.Core;
+using System.ClientModel.Primitives;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
+using Microsoft.TypeSpec.Generator.Customizations;
 
+// NOTE: The following customization is intentionally to support boolean serialization and deserialization from a string value property.
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>
+    [CodeGenSerialization(nameof(IsEnabled), SerializationValueHook = nameof(SerializationIsEnabled), DeserializationValueHook = nameof(DeserializeIsEnabled))]
     public partial class LiveTraceConfiguration
     {
-        /// <summary> Initializes a new instance of LiveTraceConfiguration. </summary>
-        public LiveTraceConfiguration()
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void SerializationIsEnabled(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Categories = new ChangeTrackingList<LiveTraceCategory>();
+            writer.WriteStringValue(IsEnabled.HasValue ? IsEnabled.Value.ToString().ToLower(new System.Globalization.CultureInfo("en-us")) : null);
         }
 
-        /// <summary> Initializes a new instance of LiveTraceConfiguration. </summary>
-        /// <param name="enabled">
-        /// Indicates whether or not enable live trace.
-        /// When it&apos;s set to true, live trace client can connect to the service.
-        /// Otherwise, live trace client can&apos;t connect to the service, so that you are unable to receive any log, no matter what you configure in &quot;categories&quot;.
-        /// Available values: true, false.
-        /// Case insensitive.
-        /// </param>
-        /// <param name="categories"> Gets or sets the list of category configurations. </param>
-        internal LiveTraceConfiguration(string enabled, IList<LiveTraceCategory> categories)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void DeserializeIsEnabled(JsonProperty property, ref bool? isEnabled)
         {
-            Enabled = enabled;
-            Categories = categories;
-        }
-
-        /// <summary>
-        /// Indicates whether or not enable live trace.
-        /// When it&apos;s set to true, live trace client can connect to the service.
-        /// Otherwise, live trace client can&apos;t connect to the service, so that you are unable to receive any log, no matter what you configure in &quot;categories&quot;.
-        /// Available values: true, false.
-        /// Case insensitive.
-        /// </summary>
-        private string Enabled { get; set; }
-
-        /// <summary>
-        /// Indicates whether or not enable live trace.
-        /// </summary>
-        public bool? IsEnabled
-        {
-            get
+            if (property.Value.ValueKind == JsonValueKind.Null)
             {
-                return bool.Parse(Enabled);
+                return;
             }
-            set
-            {
-                Enabled = value.ToString().ToLower(new System.Globalization.CultureInfo("en-us"));
-            }
+            isEnabled = bool.Parse(property.Value.GetString());
         }
-        /// <summary> Gets or sets the list of category configurations. </summary>
-        public IList<LiveTraceCategory> Categories { get; }
     }
 }

@@ -32,7 +32,7 @@ sdk/
 Install the package via [NuGet](https://www.nuget.org/):
 
 ```bash
-dotnet add package Azure.ResourceManager.PlanetaryComputer --prerelease
+dotnet add package Azure.ResourceManager.PlanetaryComputer
 ```
 
 ---

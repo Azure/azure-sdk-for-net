@@ -1,6 +1,7 @@
 # Release History
 
-## 1.16.0-beta.1 (Unreleased)
+
+## 1.17.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,9 +11,45 @@
 
 ### Other Changes
 
+- Migrated from AutoRest to TypeSpec-based code generation.
+
+## 1.16.0 (2026-05-01)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2025-12-01' to 'package-2026-01-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c5044e9d381c2bf1b3119011b4696e777f819f76/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
+- Added `NetAppBucketResource` and related bucket models, including credential generation and Key Vault integration support.
+- Added `NetAppCacheResource` for NetApp cache scenarios.
+- Added `NetAppSecretPassword` model and Key Vault-backed credential models (e.g., `CertificateKeyVaultDetails`, `CredentialsKeyVaultDetails`, `EntraIdKeyVaultConfig`, `EntraIdKeyVaultConfigPatch`).
+- Added `NetAppDayOfWeek` enum and additional supporting models and enums (e.g., file system user, NFS user, SMB settings, peering passphrases, origin cluster information, change-zone content; policy/encryption/credential/breakthrough/volume-size/snapshot/Kerberos/global-file-locking/large-volume/SMB-encryption/CIFS-change-notify/write-back/LDAP/certificate-conflict/snapshot-directory-visibility/external-replication enums).
+
+## 1.16.0-beta.2 (2026-03-26)
+
+### Breaking Changes
+
+- Renaming of models to align with the Azure SDK naming convention:
+Added NetApp prefix to models: CacheResource, BucketResource, NetAppBucketResource, ActiveDirectoryConfigResource, SecretPassword, NetAppSecretPassword, LdapConfiguration, DayOfWeek renamed to NetAppDayOfWeek,
+FileSystemUser, NfsUser, SmbSettings, PeeringPassphrases, OriginClusterInformation, ChangeZoneContent
+- Added NetApp prefix to Enums: PolicyStatus, EncryptionState, CredentialsStatus, BreakthroughMode, VolumeSize, SnapshotUsage, KerberosState, GlobalFileLockingState, LargeVolumeType, SmbEncryptionState, CifsChangeNotifyState,
+EnableWriteBackState, LdapServerType, LdapState, OnCertificateConflictAction, SnapshotDirectoryVisibility, ExternalReplicationSetupStatus
+- Standardized AKV abbreviation in models CertificateAkvDetails renamed to CertificateKeyVaultDetails, CredentialsAkvDetails renamed to CredentialsKeyVaultDetails, EntraIdAkvConfig renamed to EntraIdKeyVaultConfig, EntraIdAkvConfigPatch renamed to EntraIdKeyVaultConfigPatch
+- Renamed KeyPairExpiry to KeyPairExpiresOn in BucketGenerateCredentials
+
+## 1.16.0-beta.1 (2026-03-23)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2025-12-01' to 'package-2025-12-15-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/31c0f92613ba340053694ed55714a6f40f4fd7de/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.51.1.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
+
 ## 1.15.0 (2026-03-03)
 
 ### Features Added
+
 - Upgraded api-version tag from 'package-2025-06-01' to 'package-2025-12-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/4b0af9ea3ddad4d6fc0c08572e00ee68679a213c/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
 - Added `RansomwareReport` resource support on `NetAppVolumeResource`, including `GetRansomwareReports`, `GetRansomwareReport`, and `ClearSuspects`.
 - Added quota report support on `NetAppVolumeResource` with `GetQuotaReport` and `GetQuotaReportAsync`.
@@ -21,16 +58,13 @@
 - Added models `RansomwareProtectionPatchSettings`, `RansomwareProtectionSettings`, `RansomwareReportProperties`, `RansomwareSuspects`, `RansomwareSuspectsClearContent`, and `SuspectFile`.
 - Added enums `ActualRansomwareProtectionState`, `DesiredRansomwareProtectionState`, `RansomwareReportSeverity`, `RansomwareReportState`, `RansomwareSuspectResolution`, and `NetAppVolumeQuotaType`.
 
-### Breaking Changes
-- Updated generated quota APIs to add `QuotaItemResource`-based overloads while retaining `NetAppSubscriptionQuotaItem` APIs for compatibility.
-- Updated backup relationship status enum usage to `VolumeBackupRelationshipStatus`.
-
 ### Bugs Fixed
 - Fixed debug-time quota resource validation to accept both account-scoped and location-scoped quota resource IDs.
 
 ## 1.15.0-beta.1 (2025-12-01)
 
 ### Features Added
+
 - Upgraded api-version tag from 'package-2025-09-01' to 'package-2025-09-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/1da0ccefea2127820defac6496bf4710c0902d78/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
 - Added `NetAppCache` resource type
 - Added `ElasticAccount` resource type
@@ -49,12 +83,14 @@
 ## 1.14.0 (2025-11-26)
 
 ### Features Added
+
 - Upgraded api-version tag from 'package-2025-06-01' to 'package-2025-09-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/1da0ccefea2127820defac6496bf4710c0902d78/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
 - Added `ExcludeReplicationsFilter` to `GetReplicationsAsync` to filter out replications
 
 ## 1.13.0-beta.1 (2025-10-22)
 
 ### Features Added
+
 - Upgraded api-version tag from 'package-2025-06-01' to 'package-2025-07-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c2c7ee70dea80830fe9ea94aed2cec6182c4e9e6/specification/netapp/resource-manager/readme.md.
 - Added `Bucket` resource type
 - Added `GetNetAppResourceQuotaLimitsAccountsAsync` to `NetAppAccountResource`
@@ -62,6 +98,7 @@
 ## 1.12.0 (2025-08-25)
 
 ### Features Added
+
 - Upgraded api-version tag from 'package-2025-03-01' to 'package-2025-06-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/bf90cab9d5f6060ce1f7775ffac88ed8eda785ca/specification/netapp/resource-manager/readme.md.
 - Added `customThroughputMibps` to `CapacityPoolData`
 - Added Enum value `Flexible`  to `NetAppFileServiceLevel`
@@ -71,11 +108,13 @@
 ## 1.11.0 (2025-07-25)
 
 ### Features Added
+
 - Upgraded api-version tag from 'package-2025-01-01' to 'package-2025-03-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/bf90cab9d5f6060ce1f7775ffac88ed8eda785ca/specification/netapp/resource-manager/readme.md.
 
 ## 1.10.0 (2025-05-06)
 
 ### Features Added
+
 - Upgraded api-version tag from 'package-2024-09-01' to 'package-2025-01-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/d7a38bf0c0b5fbd9e893e05ad0a7dbee18ac3a8d/specification/netapp/resource-manager/readme.md.
 - Added `GetNetAppResourceUsages` and `GetNetAppResourceUsage`
 - Added `GetNetAppResourceUsages` and `GetNetAppResourceUsage`
@@ -85,7 +124,6 @@
 - Added support for ANF Migration Assistant with operations `PeerExternalCluster`, `AuthorizeExternalReplication`, `FinalizeExternalReplication`, `PerformReplicationTransfer` on `NetAppVolumeResource`
 - Added `IsLargeVolume` to  `NetAppBackupData`
 - `IsRestoring` in `NetAppVolumeData` and `NetAppVolumeGroupVolume` is now a read only property indicating if volume is being resored
-
 
 ## 1.9.0 (2025-02-21)
 

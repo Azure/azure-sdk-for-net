@@ -7,50 +7,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary>
-    /// A class representing the ContainerServiceTrustedAccessRoleBinding data model.
-    /// Defines binding between a resource and role
-    /// </summary>
+    /// <summary> Defines binding between a resource and role. </summary>
     public partial class ContainerServiceTrustedAccessRoleBindingData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceTrustedAccessRoleBindingData"/>. </summary>
         /// <param name="sourceResourceId"> The ARM resource ID of source resource that trusted access is configured for. </param>
@@ -61,40 +28,66 @@ namespace Azure.ResourceManager.ContainerService
             Argument.AssertNotNull(sourceResourceId, nameof(sourceResourceId));
             Argument.AssertNotNull(roles, nameof(roles));
 
-            SourceResourceId = sourceResourceId;
-            Roles = roles.ToList();
+            Properties = new TrustedAccessRoleBindingProperties(sourceResourceId, roles);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceTrustedAccessRoleBindingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The current provisioning state of trusted access role binding. </param>
-        /// <param name="sourceResourceId"> The ARM resource ID of source resource that trusted access is configured for. </param>
-        /// <param name="roles"> A list of roles to bind, each item is a resource type qualified role name. For example: 'Microsoft.MachineLearningServices/workspaces/reader'. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceTrustedAccessRoleBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerServiceTrustedAccessRoleBindingProvisioningState? provisioningState, ResourceIdentifier sourceResourceId, IList<string> roles, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties for trusted access role binding. </param>
+        internal ContainerServiceTrustedAccessRoleBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, TrustedAccessRoleBindingProperties properties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            SourceResourceId = sourceResourceId;
-            Roles = roles;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceTrustedAccessRoleBindingData"/> for deserialization. </summary>
-        internal ContainerServiceTrustedAccessRoleBindingData()
-        {
-        }
+        /// <summary> Properties for trusted access role binding. </summary>
+        [WirePath("properties")]
+        internal TrustedAccessRoleBindingProperties Properties { get; set; }
 
         /// <summary> The current provisioning state of trusted access role binding. </summary>
         [WirePath("properties.provisioningState")]
-        public ContainerServiceTrustedAccessRoleBindingProvisioningState? ProvisioningState { get; }
+        public ContainerServiceTrustedAccessRoleBindingProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The ARM resource ID of source resource that trusted access is configured for. </summary>
         [WirePath("properties.sourceResourceId")]
-        public ResourceIdentifier SourceResourceId { get; set; }
+        public ResourceIdentifier SourceResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TrustedAccessRoleBindingProperties();
+                }
+                Properties.SourceResourceId = value;
+            }
+        }
+
         /// <summary> A list of roles to bind, each item is a resource type qualified role name. For example: 'Microsoft.MachineLearningServices/workspaces/reader'. </summary>
         [WirePath("properties.roles")]
-        public IList<string> Roles { get; }
+        public IList<string> Roles
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new TrustedAccessRoleBindingProperties();
+                }
+                return Properties.Roles;
+            }
+        }
     }
 }

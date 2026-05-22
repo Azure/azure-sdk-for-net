@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(standbyVirtualMachinePoolPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(standbyVirtualMachinePoolPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

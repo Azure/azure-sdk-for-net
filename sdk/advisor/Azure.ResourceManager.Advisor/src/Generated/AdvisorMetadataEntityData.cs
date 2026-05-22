@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.DisplayName;
+                return Properties is null ? default : Properties.DisplayName;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.DependsOn;
+                return Properties is null ? default : Properties.DependsOn;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ApplicableScenarios;
+                return Properties is null ? default : Properties.ApplicableScenarios;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.SupportedValues;
+                return Properties is null ? default : Properties.SupportedValues;
             }
         }
     }

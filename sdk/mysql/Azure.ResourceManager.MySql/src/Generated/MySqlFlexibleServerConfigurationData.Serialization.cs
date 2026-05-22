@@ -68,9 +68,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(mySqlFlexibleServerConfigurationData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(mySqlFlexibleServerConfigurationData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MySqlFlexibleServerConfigurationData"/> from. </param>

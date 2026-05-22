@@ -16,7 +16,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
         /// <param name="status"> The status of the tool call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callId"/>, <paramref name="name"/> or <paramref name="arguments"/> is null. </exception>
-        public A2AToolCall(string callId, string name, string arguments, ToolCallStatus status) : base(AgentResponseItemKind.A2aPreviewCall)
+        public A2AToolCall(string callId, string name, string arguments, ToolCallStatus status) : base(AgentResponseItemKind.A2APreviewCall)
         {
             Argument.AssertNotNull(callId, nameof(callId));
             Argument.AssertNotNull(name, nameof(name));

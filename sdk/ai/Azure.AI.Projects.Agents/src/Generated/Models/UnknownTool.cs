@@ -8,7 +8,7 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class UnknownTool : AgentTool
+    internal partial class UnknownTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTool"/>. </summary>
         /// <param name="type"></param>

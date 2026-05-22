@@ -19,16 +19,19 @@ namespace Azure.ResourceManager.Fabric
         private readonly FabricCapacities _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of FabricCapacitiesGetSkusFabricCapacitiesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The FabricCapacities client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public FabricCapacitiesGetSkusFabricCapacitiesCollectionResultOfT(FabricCapacities client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public FabricCapacitiesGetSkusFabricCapacitiesCollectionResultOfT(FabricCapacities client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of FabricCapacitiesGetSkusFabricCapacitiesCollectionResultOfT as an enumerable collection. </summary>
@@ -62,7 +65,7 @@ namespace Azure.ResourceManager.Fabric
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetSkusFabricCapacitiesRequest(nextLink, _subscriptionId, _context) : _client.CreateGetSkusFabricCapacitiesRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableFabricSubscriptionResource.GetSkusFabricCapacities");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

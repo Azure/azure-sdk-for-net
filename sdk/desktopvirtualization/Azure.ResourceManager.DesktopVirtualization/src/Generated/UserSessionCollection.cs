@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != SessionHostResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SessionHostResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SessionHostResource.ResourceType), nameof(id));
             }
         }
 
@@ -189,7 +189,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new UserSessionResource(Client, data));
+                context,
+                "UserSessionCollection.GetAll"), data => new UserSessionResource(Client, data));
         }
 
         /// <summary>
@@ -229,7 +230,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new UserSessionResource(Client, data));
+                context,
+                "UserSessionCollection.GetAll"), data => new UserSessionResource(Client, data));
         }
 
         /// <summary>

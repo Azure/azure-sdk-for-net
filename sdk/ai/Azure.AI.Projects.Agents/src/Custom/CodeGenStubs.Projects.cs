@@ -17,4 +17,4 @@ internal partial class InternalProjectsClient
 {
 }
 
-[CodeGenType("InternalProjectsClientOptions")] internal partial class InternalProjectsClientOptions { }
+[CodeGenType("InternalProjectsClientOptions")] public partial class AgentAdministrationClientOptions { }

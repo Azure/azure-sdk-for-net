@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.FileShares
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(fileShareSnapshotData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(fileShareSnapshotData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FileShareSnapshotData"/> from. </param>

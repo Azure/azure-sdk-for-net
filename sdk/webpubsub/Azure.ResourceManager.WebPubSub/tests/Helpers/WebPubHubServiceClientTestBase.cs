@@ -81,7 +81,11 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
             AclAction aclAction = new AclAction("Deny");
             IList<WebPubSubRequestType> allow = new List<WebPubSubRequestType>();
             IList<WebPubSubRequestType> deny = new List<WebPubSubRequestType>() { new WebPubSubRequestType("RESTAPI") };
-            PublicNetworkAcls publicNetwork = new PublicNetworkAcls(allow, deny, null);
+            PublicNetworkAcls publicNetwork = new PublicNetworkAcls();
+            foreach (var item in allow)
+                publicNetwork.Allow.Add(item);
+            foreach (var item in deny)
+                publicNetwork.Deny.Add(item);
             IList<PrivateEndpointAcl> privateEndpoints = new List<PrivateEndpointAcl>();
 
             List<ResourceLogCategory> resourceLogCategory = new List<ResourceLogCategory>()
@@ -89,13 +93,22 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Helpers
                 new ResourceLogCategory(){ Name = "category1", Enabled = "false" }
             };
 
+            var networkAcls = new WebPubSubNetworkAcls()
+            {
+                DefaultAction = aclAction,
+                PublicNetwork = publicNetwork,
+            };
+
             WebPubSubData data = new WebPubSubData(AzureLocation.WestUS2)
             {
                 Sku = new BillingInfoSku("Standard_S1"),
-                LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
-                NetworkAcls = new WebPubSubNetworkAcls(aclAction, publicNetwork, privateEndpoints, null),
-                ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory, null),
+                LiveTraceConfiguration = new LiveTraceConfiguration() { IsEnabled = true },
+                NetworkAcls = networkAcls,
             };
+            foreach (var cat in categories)
+                data.LiveTraceConfiguration.Categories.Add(cat);
+            foreach (var cat in resourceLogCategory)
+                data.ResourceLogCategories.Add(cat);
 
             // Create WebPubSub
             var webPubSub = await (await resourceGroup.GetWebPubSubs().CreateOrUpdateAsync(WaitUntil.Completed, webPubSubName, data)).WaitForCompletionAsync();

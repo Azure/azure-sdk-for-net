@@ -9,7 +9,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Extensions.OpenAI;
 using OpenAI;
 using OpenAI.Conversations;
 using OpenAI.Responses;

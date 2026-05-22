@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_QuotaLimits()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2025-12-01/examples/NetAppResourceQuotaLimitsAccount_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2026-01-01/examples/NetAppResourceQuotaLimitsAccount_Get.json
             // this example is just showing the usage of "NetAppResourceQuotaLimitsAccount_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,10 +30,9 @@ namespace Azure.ResourceManager.NetApp.Samples
             // this example assumes you already have this NetAppSubscriptionQuotaItemResource created on azure
             // for more information of creating NetAppSubscriptionQuotaItemResource, please refer to the document of NetAppSubscriptionQuotaItemResource
             string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
-            string resourceGroupName = "myRG";
-            string accountName = "myAccount";
+            AzureLocation location = new AzureLocation("eastus");
             string quotaLimitName = "poolsPerAccount";
-            ResourceIdentifier netAppSubscriptionQuotaItemResourceId = NetAppSubscriptionQuotaItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, quotaLimitName);
+            ResourceIdentifier netAppSubscriptionQuotaItemResourceId = NetAppSubscriptionQuotaItemResource.CreateResourceIdentifier(subscriptionId, location, quotaLimitName);
             NetAppSubscriptionQuotaItemResource netAppSubscriptionQuotaItem = client.GetNetAppSubscriptionQuotaItemResource(netAppSubscriptionQuotaItemResourceId);
 
             // invoke the operation

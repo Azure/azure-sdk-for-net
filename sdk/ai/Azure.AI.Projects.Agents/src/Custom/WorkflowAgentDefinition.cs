@@ -12,7 +12,7 @@ namespace Azure.AI.Projects.Agents;
 public partial class WorkflowAgentDefinition
 {
     /// <summary> Initializes a new instance of <see cref="WorkflowAgentDefinition"/>. </summary>
-    internal WorkflowAgentDefinition() : base(AgentKind.Workflow)
+    internal WorkflowAgentDefinition() : base(ProjectsAgentKind.Workflow)
     {
     }
 

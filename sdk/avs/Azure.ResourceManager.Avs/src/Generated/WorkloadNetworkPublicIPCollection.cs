@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != WorkloadNetworkResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WorkloadNetworkResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WorkloadNetworkResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkPublicIPData, WorkloadNetworkPublicIPResource>(new WorkloadNetworksGetPublicIPsAsyncCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkPublicIPResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadNetworkPublicIPData, WorkloadNetworkPublicIPResource>(new WorkloadNetworksGetPublicIPsAsyncCollectionResultOfT(
+                _workloadNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                context,
+                "WorkloadNetworkPublicIPCollection.GetAll"), data => new WorkloadNetworkPublicIPResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkPublicIPData, WorkloadNetworkPublicIPResource>(new WorkloadNetworksGetPublicIPsCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkPublicIPResource(Client, data));
+            return new PageableWrapper<WorkloadNetworkPublicIPData, WorkloadNetworkPublicIPResource>(new WorkloadNetworksGetPublicIPsCollectionResultOfT(
+                _workloadNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                context,
+                "WorkloadNetworkPublicIPCollection.GetAll"), data => new WorkloadNetworkPublicIPResource(Client, data));
         }
 
         /// <summary>

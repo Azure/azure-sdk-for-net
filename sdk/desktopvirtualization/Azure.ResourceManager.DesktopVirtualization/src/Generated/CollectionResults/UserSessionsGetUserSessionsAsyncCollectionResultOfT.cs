@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly bool? _isDescending;
         private readonly int? _initialSkip;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of UserSessionsGetUserSessionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The UserSessions client used to send requests. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public UserSessionsGetUserSessionsAsyncCollectionResultOfT(UserSessions client, Guid subscriptionId, string resourceGroupName, string hostPoolName, string filter, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public UserSessionsGetUserSessionsAsyncCollectionResultOfT(UserSessions client, Guid subscriptionId, string resourceGroupName, string hostPoolName, string filter, int? pageSize, bool? isDescending, int? initialSkip, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -48,6 +50,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _isDescending = isDescending;
             _initialSkip = initialSkip;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of UserSessionsGetUserSessionsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -80,7 +83,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetUserSessionsRequest(nextLink, _subscriptionId, _resourceGroupName, _hostPoolName, _filter, _pageSize, _isDescending, _initialSkip, _context) : _client.CreateGetUserSessionsRequest(_subscriptionId, _resourceGroupName, _hostPoolName, _filter, _pageSize, _isDescending, _initialSkip, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HostPoolResource.GetUserSessions");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

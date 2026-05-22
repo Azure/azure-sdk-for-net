@@ -1,6 +1,6 @@
 # Release History
 
-## 12.28.0-beta.2 (Unreleased)
+## 12.29.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -10,6 +10,21 @@
 
 ### Other Changes
 - Improved performance of `DownloadToAsync` by buffering each range into memory concurrently instead of streaming one range at a time. This increases throughput but also increases memory consumption, as up to `MaximumConcurrency` ranges (each up to `MaximumTransferLength` in size) may be buffered simultaneously. Use `StorageTransferOptions.MaximumConcurrency` and `StorageTransferOptions.MaximumTransferLength` to control memory usage.
+
+## 12.28.0 (2026-05-12)
+
+### Features Added
+- Includes all features from 12.28.0-beta.1
+
+### Bugs Fixed
+- Fixed issue where the `TokenRequestContext.Scopes` contained a double slash (e.g. `https://storage.azure.com//.default`) when using `TokenCredential` authentication. (#58295)
+
+## 12.29.0-beta.1 (2026-03-24)
+
+### Features Added
+- Added support for service version 2026-06-06.
+- Added support for Blob Smart Tier.
+- Added support for Directory-level SAS and User Delegation SAS.
 
 ## 12.28.0-beta.1 (2026-01-20)
 

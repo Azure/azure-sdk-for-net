@@ -137,7 +137,7 @@ namespace Azure.AI.Extensions.OpenAI
             string encryptedContent = default;
             IList<InternalSummaryTextObject> summary = default;
             IList<ReasoningTextContent> content = default;
-            OutputItemReasoningItemStatus? status = default;
+            InputItemReasoningItemStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -204,7 +204,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToOutputItemReasoningItemStatus();
+                    status = prop.Value.GetString().ToInputItemReasoningItemStatus();
                     continue;
                 }
                 if (options.Format != "W")

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel;
 using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI;
@@ -23,4 +24,7 @@ public partial class ProjectOpenAIClientOptions : OpenAIClientOptions
     {
         _apiVersion = "v1";
     }
+
+    public string AgentName { get; set; } = null;
+    internal AuthenticationTokenProvider TokenProvider { get; set; }
 }

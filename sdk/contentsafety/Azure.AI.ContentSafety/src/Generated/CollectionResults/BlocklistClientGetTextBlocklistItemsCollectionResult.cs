@@ -22,6 +22,7 @@ namespace Azure.AI.ContentSafety
         private readonly int? _skip;
         private readonly int? _maxpagesize;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of BlocklistClientGetTextBlocklistItemsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BlocklistClient client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.AI.ContentSafety
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BlocklistClientGetTextBlocklistItemsCollectionResult(BlocklistClient client, string name, int? maxCount, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public BlocklistClientGetTextBlocklistItemsCollectionResult(BlocklistClient client, string name, int? maxCount, int? skip, int? maxpagesize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _name = name;
@@ -38,6 +40,7 @@ namespace Azure.AI.ContentSafety
             _skip = skip;
             _maxpagesize = maxpagesize;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of BlocklistClientGetTextBlocklistItemsCollectionResult as an enumerable collection. </summary>
@@ -76,7 +79,7 @@ namespace Azure.AI.ContentSafety
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetTextBlocklistItemsRequest(nextLink, pageSize, _context) : _client.CreateGetTextBlocklistItemsRequest(_name, _maxCount, _skip, pageSize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BlocklistClient.GetTextBlocklistItems");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

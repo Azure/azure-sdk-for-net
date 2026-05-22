@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A memory item containing a summary extracted from conversations. </summary>
-    public partial class ChatSummaryMemoryItem : MemoryItem
+    public partial class ChatSummaryMemoryItem : MemoryOutputItem
     {
         /// <summary> Initializes a new instance of <see cref="ChatSummaryMemoryItem"/>. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>

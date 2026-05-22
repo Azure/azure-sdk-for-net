@@ -5,21 +5,16 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 using System.Threading;
 using OpenAI;
 using OpenAI.Conversations;
 using OpenAI.Files;
-using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
 
 public partial class ProjectOpenAIClient : OpenAIClient
 {
-    public virtual ProjectConversationsClient Conversations => GetProjectConversationsClient();
-    public virtual ProjectResponsesClient Responses => GetProjectResponsesClient();
-    public virtual ProjectFilesClient Files => GetProjectFilesClient();
-    public virtual ProjectVectorStoresClient VectorStores => GetProjectVectorStoresClient();
-
     private ProjectConversationsClient _cachedConversationClient;
     private ProjectResponsesClient _cachedResponseClient;
     private ProjectFilesClient _cachedFileClient;
@@ -29,17 +24,25 @@ public partial class ProjectOpenAIClient : OpenAIClient
 
     private static string s_defaultAuthorizationScope = "https://ai.azure.com/.default";
 
+    /// <summary> Initializes a new instance of ProjectOpenAIClient from a <see cref="ProjectOpenAIClientSettings"/>. </summary>
+    /// <param name="settings"> The settings for ProjectOpenAIClient. </param>
+    [System.Diagnostics.CodeAnalysis.Experimental("SCME0002")]
+    public ProjectOpenAIClient(ProjectOpenAIClientSettings settings)
+        : this(AuthenticationPolicy.Create(settings), GetMergedOptions(settings?.Endpoint, settings?.CredentialProvider, settings?.Options))
+    {
+    }
+
     public ProjectOpenAIClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, ProjectOpenAIClientOptions options = null)
         : base(
             pipeline: CreatePipeline(
                 CreateAuthenticationPolicy(tokenProvider, options),
-                GetMergedOptions(projectEndpoint, options)),
-            options: GetMergedOptions(projectEndpoint, options))
+                GetMergedOptions(projectEndpoint, tokenProvider, options)),
+            options: GetMergedOptions(projectEndpoint, tokenProvider, options))
     {
         Argument.AssertNotNull(projectEndpoint, nameof(projectEndpoint));
         Argument.AssertNotNull(tokenProvider, nameof(tokenProvider));
 
-        _options = GetMergedOptions(projectEndpoint, options);
+        _options = GetMergedOptions(projectEndpoint, tokenProvider, options);
     }
 
     public ProjectOpenAIClient(AuthenticationPolicy authenticationPolicy, ProjectOpenAIClientOptions options)
@@ -108,6 +111,26 @@ public partial class ProjectOpenAIClient : OpenAIClient
             defaultConversationId);
     }
 
+    public virtual ProjectResponsesClient GetProjectResponsesClientForAgentEndpoint(string agentName, string defaultConversationId = null, ProjectOpenAIClientOptions options = null)
+    {
+        Argument.AssertNotNull(agentName, nameof(agentName));
+        options ??= new();
+        options.AgentName = agentName;
+        options.TokenProvider = _options.TokenProvider;
+        options.Endpoint = null;
+        Match match = new Regex(@"(?<=/projects/)([^/]+)(?=[/?]|$)").Match(_options.Endpoint.LocalPath);
+        string project = string.IsNullOrEmpty(match.Value) ? "_default" : match.Value;
+        Uri projectEndpoint = new($"{_options.Endpoint.Scheme}://{_options.Endpoint.Host}/api/projects/{project}");
+        options = GetMergedOptions(projectEndpoint, _options.TokenProvider, options);
+        ClientPipeline endpointPipeline = CreatePipeline(CreateAuthenticationPolicy(options.TokenProvider, options), options);
+        return new ProjectResponsesClient(
+            pipeline: endpointPipeline,
+            options: options,
+            defaultAgent: null,
+            defaultConversationId: defaultConversationId
+        );
+    }
+
     public virtual ProjectResponsesClient GetProjectResponsesClientForModel(string defaultModel, string defaultConversationId = null)
     {
         Argument.AssertNotNullOrEmpty(defaultModel, nameof(defaultModel));
@@ -128,6 +151,10 @@ public partial class ProjectOpenAIClient : OpenAIClient
         {
             prefix = $"{options.UserAgentApplicationId}-AIProjectClient";
         }
+        if (!string.IsNullOrEmpty(options.AgentName))
+        {
+            PipelinePolicyHelpers.AddQueryParameterPolicy(options, "api-version", options.ApiVersion);
+        }
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", $"{prefix} {telemetryDetails.UserAgent}");
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
         PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
@@ -144,13 +171,14 @@ public partial class ProjectOpenAIClient : OpenAIClient
         return new BearerTokenPolicy(tokenProvider, s_defaultAuthorizationScope);
     }
 
-    internal static ProjectOpenAIClientOptions GetMergedOptions(Uri projectEndpoint, ProjectOpenAIClientOptions options = null)
+    internal static ProjectOpenAIClientOptions GetMergedOptions(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, ProjectOpenAIClientOptions options = null)
     {
         if (projectEndpoint is null)
         {
             return options;
         }
-        string rawTargetOpenAIEndpoint = projectEndpoint.AbsoluteUri.TrimEnd('/') + "/openai/v1";
+        string path = string.IsNullOrEmpty(options?.AgentName) ? "/openai/v1" : $"/agents/{options.AgentName}/endpoint/protocols/openai";
+        string rawTargetOpenAIEndpoint = projectEndpoint.AbsoluteUri.TrimEnd('/') + path;
         if (options?.Endpoint is not null && options?.Endpoint?.AbsoluteUri != rawTargetOpenAIEndpoint)
         {
             throw new InvalidOperationException(
@@ -158,6 +186,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
         }
         options ??= new();
         options?.Endpoint ??= new Uri(rawTargetOpenAIEndpoint);
+        options?.TokenProvider = tokenProvider;
         return options;
     }
 }

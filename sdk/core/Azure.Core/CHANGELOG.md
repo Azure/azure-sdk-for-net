@@ -1,17 +1,74 @@
 # Release History
 
-## 1.52.0-beta.1 (Unreleased)
+## 1.58.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed `DiagnosticScope` to mark the parent `ActivityContext` as remote (`IsRemote = true`) when a traceparent is provided via `SetTraceContext` or `AddLink`. The traceparent in these paths is always extracted from an external source (e.g. a messaging broker's application properties), so samplers that distinguish local vs. remote parents — such as the `RateLimitedSampler` used by the Azure Monitor OpenTelemetry exporter — can now make correct decisions for activities started from incoming messages.
+
+### Other Changes
+
+## 1.57.0 (2026-05-21)
+
+### Features Added
+
+- Added `RequestContent.Create(BinaryContent)` overload that adapts a `System.ClientModel.BinaryContent` instance into a `Azure.Core.RequestContent` instance.
+- Added experimental (`SCME0002`) `AzureCredentialResolver` that resolves Azure token credential sections (e.g. `AzureCliCredential`, `ManagedIdentityCredential`, `ChainedTokenCredential`) into `TokenCredential` instances. `ApiKeyCredential` sections are not claimed — clients dispatch on `Credential.CredentialSource` themselves.
+- Added experimental (`SCME0002`) extensions on `Azure.Identity.ConfigurationExtensions`:
+  - `AddAzureCredentialResolver()` on `IServiceCollection` and `IHostApplicationBuilder` — idempotent DI registration.
+  - `IConfiguration.GetAzureCredentialSettings(sectionName, ...)` — returns `CredentialSettings?` with `TokenProvider` populated for token sources and `Key` populated for inline ApiKey sources, so a single call site can dispatch on either shape without binding a `ClientSettings`.
+  - `IConfiguration.GetAzureClientSettings<T>(sectionName, params CredentialResolver[] resolvers)` — resolver-aware overload.
+- The Azure OpenAI default-scope quirk now writes `Credential:Scope` at the credential-section root (the canonical SCM 1.12.0+ location) instead of `Credential:AdditionalProperties:Scope`. SCM 1.12.0 reads both locations so existing configs continue to work.
+
+### Breaking Changes
+
+- Removed experimental (`SCME0002`) `WithAzureCredential` extension methods on `ClientSettings` and `IClientBuilder`. For DI, use `AddAzureClient<TClient, TSettings>` / `AddKeyedAzureClient<TClient, TSettings>` (which register `AzureCredentialResolver` automatically), or call `AddAzureCredentialResolver()` followed by `AddClient<TClient, TSettings>` / `AddKeyedClient<TClient, TSettings>`. For standalone scenarios, use `IConfiguration.GetAzureClientSettings<T>(...)` or `IConfiguration.GetAzureCredentialSettings(...)`.
+
+## 1.56.0 (2026-05-14)
+
+### Features Added
+
+- Added experimental `TokenRequestCallback` property and `TokenRequestCallbackContext` type to MSAL-backed credential options to allow customizing token request body parameters before they are sent to the identity provider.
+
+## 1.55.0 (2026-05-05)
+
+### Features Added
+
+- Added `AzureLocation.DenmarkEast` for the Denmark East Azure region.
+- Added experimental `AdditionalQueryParameters` property to `TokenCredentialOptions` to enable forwarding extra query string parameters to MSAL during authentication.
+
+### Bugs Fixed
+
+- Fixed `AzureDeveloperCliCredential` to correctly parse error messages from Azure Developer CLI v1.23.7 and later, which previously caused raw JSON to surface in `AuthenticationFailedException` instead of the underlying error text.
+
+## 1.54.0 (2026-04-23)
+
+### Bugs Fixed
+
+- Removed duplicate top-level `required: ["CredentialSource"]` from the `credential` definition in `ConfigurationSchema.json` to prevent duplicate entries when the schema is merged with `System.ClientModel`'s schema.
+
+## 1.53.0 (2026-04-09)
+
+### Other Changes
+
+- `Azure.Identity` credential types are now included in `Azure.Core`, enabling SDK libraries to provide configuration-driven DI extensions (e.g., `AddAzureSecretClient`) without requiring a direct dependency on `Azure.Identity`.
+
+## 1.52.0 (2026-03-23)
 
 ### Features Added
 
 - Added `IndonesiaCentral`, `NewZealandNorth`, and `MalaysiaWest` locations to `AzureLocation` struct.
+- Added a JSON schema segment to the NuGet package that provides IntelliSense and validation for `AzureClients` configuration in `appsettings.json`, including `Retry` and `Diagnostics` options.
 
 ### Bugs Fixed
 
 - Fixed implicit conversion operators to not throw exceptions on null inputs per Framework Design Guidelines. Operators now return safe defaults: `null` for reference types, `default` for value types.
 - Fixed `RequestContent.Dispose()` to be idempotent and thread-safe, preventing `ArrayPool` buffers from being returned multiple times when disposed concurrently or repeatedly.
-
-### Other Changes
+- Fixed `HttpClientTransport` to correctly set the `Host` header on outgoing requests when explicitly specified, rather than falling through to `TryAddWithoutValidation`.
 
 ### Breaking Changes
 

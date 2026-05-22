@@ -7,178 +7,266 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A class representing the NetworkCloudKubernetesCluster data model.
-    /// KubernetesCluster represents the Kubernetes cluster hosted on Network Cloud.
-    /// </summary>
+    /// <summary> KubernetesCluster represents the Kubernetes cluster hosted on Network Cloud. </summary>
     public partial class NetworkCloudKubernetesClusterData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="controlPlaneNodeConfiguration"> The defining characteristics of the control plane for this Kubernetes Cluster. </param>
         /// <param name="initialAgentPoolConfigurations"> The agent pools that are created with this Kubernetes cluster for running critical system services and workloads. This data in this field is only used during creation, and the field will be empty following the creation of the Kubernetes Cluster. After creation, the management of agent pools is done using the agentPools sub-resource. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version for this cluster. </param>
         /// <param name="networkConfiguration"> The configuration of the Kubernetes cluster networking, including the attachment of networks that span the cluster. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="controlPlaneNodeConfiguration"/>, <paramref name="initialAgentPoolConfigurations"/>, <paramref name="kubernetesVersion"/> or <paramref name="networkConfiguration"/> is null. </exception>
-        public NetworkCloudKubernetesClusterData(AzureLocation location, ExtendedLocation extendedLocation, ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, IEnumerable<InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, KubernetesClusterNetworkConfiguration networkConfiguration) : base(location)
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneNodeConfiguration"/>, <paramref name="initialAgentPoolConfigurations"/>, <paramref name="kubernetesVersion"/>, <paramref name="networkConfiguration"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudKubernetesClusterData(AzureLocation location, ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, IEnumerable<InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, KubernetesClusterNetworkConfiguration networkConfiguration, ExtendedLocation extendedLocation) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
             Argument.AssertNotNull(controlPlaneNodeConfiguration, nameof(controlPlaneNodeConfiguration));
             Argument.AssertNotNull(initialAgentPoolConfigurations, nameof(initialAgentPoolConfigurations));
             Argument.AssertNotNull(kubernetesVersion, nameof(kubernetesVersion));
             Argument.AssertNotNull(networkConfiguration, nameof(networkConfiguration));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
+            Properties = new KubernetesClusterProperties(controlPlaneNodeConfiguration, initialAgentPoolConfigurations, kubernetesVersion, networkConfiguration);
             ExtendedLocation = extendedLocation;
-            AttachedNetworkIds = new ChangeTrackingList<ResourceIdentifier>();
-            AvailableUpgrades = new ChangeTrackingList<AvailableUpgrade>();
-            ControlPlaneNodeConfiguration = controlPlaneNodeConfiguration;
-            FeatureStatuses = new ChangeTrackingList<FeatureStatus>();
-            InitialAgentPoolConfigurations = initialAgentPoolConfigurations.ToList();
-            KubernetesVersion = kubernetesVersion;
-            NetworkConfiguration = networkConfiguration;
-            Nodes = new ChangeTrackingList<KubernetesClusterNode>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
-        /// <param name="aadConfiguration"> The Azure Active Directory Integration properties. </param>
-        /// <param name="administratorConfiguration"> The administrative credentials that will be applied to the control plane and agent pool nodes that do not specify their own values. </param>
-        /// <param name="attachedNetworkIds"> The full list of network resource IDs that are attached to this cluster, including those attached only to specific agent pools. </param>
-        /// <param name="availableUpgrades"> The list of versions that this Kubernetes cluster can be upgraded to. </param>
-        /// <param name="clusterId"> The resource ID of the Network Cloud cluster. </param>
-        /// <param name="connectedClusterId"> The resource ID of the connected cluster set up when this Kubernetes cluster is created. </param>
-        /// <param name="controlPlaneKubernetesVersion"> The current running version of Kubernetes on the control plane. </param>
-        /// <param name="controlPlaneNodeConfiguration"> The defining characteristics of the control plane for this Kubernetes Cluster. </param>
-        /// <param name="detailedStatus"> The current status of the Kubernetes cluster. </param>
-        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
-        /// <param name="featureStatuses"> The current feature settings. </param>
-        /// <param name="initialAgentPoolConfigurations"> The agent pools that are created with this Kubernetes cluster for running critical system services and workloads. This data in this field is only used during creation, and the field will be empty following the creation of the Kubernetes Cluster. After creation, the management of agent pools is done using the agentPools sub-resource. </param>
-        /// <param name="kubernetesVersion"> The Kubernetes version for this cluster. </param>
-        /// <param name="managedResourceGroupConfiguration"> The configuration of the managed resource group associated with the resource. </param>
-        /// <param name="networkConfiguration"> The configuration of the Kubernetes cluster networking, including the attachment of networks that span the cluster. </param>
-        /// <param name="nodes"> The details of the nodes in this cluster. </param>
-        /// <param name="provisioningState"> The provisioning state of the Kubernetes cluster resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudKubernetesClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, NetworkCloudAadConfiguration aadConfiguration, AdministratorConfiguration administratorConfiguration, IReadOnlyList<ResourceIdentifier> attachedNetworkIds, IReadOnlyList<AvailableUpgrade> availableUpgrades, ResourceIdentifier clusterId, ResourceIdentifier connectedClusterId, string controlPlaneKubernetesVersion, ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, KubernetesClusterDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<FeatureStatus> featureStatuses, IList<InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, KubernetesClusterNetworkConfiguration networkConfiguration, IReadOnlyList<KubernetesClusterNode> nodes, KubernetesClusterProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The list of the resource properties. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
+        internal NetworkCloudKubernetesClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, KubernetesClusterProperties properties, ETag? eTag, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
             ExtendedLocation = extendedLocation;
-            AadConfiguration = aadConfiguration;
-            AdministratorConfiguration = administratorConfiguration;
-            AttachedNetworkIds = attachedNetworkIds;
-            AvailableUpgrades = availableUpgrades;
-            ClusterId = clusterId;
-            ConnectedClusterId = connectedClusterId;
-            ControlPlaneKubernetesVersion = controlPlaneKubernetesVersion;
-            ControlPlaneNodeConfiguration = controlPlaneNodeConfiguration;
-            DetailedStatus = detailedStatus;
-            DetailedStatusMessage = detailedStatusMessage;
-            FeatureStatuses = featureStatuses;
-            InitialAgentPoolConfigurations = initialAgentPoolConfigurations;
-            KubernetesVersion = kubernetesVersion;
-            ManagedResourceGroupConfiguration = managedResourceGroupConfiguration;
-            NetworkConfiguration = networkConfiguration;
-            Nodes = nodes;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterData"/> for deserialization. </summary>
-        internal NetworkCloudKubernetesClusterData()
-        {
-        }
+        /// <summary> The list of the resource properties. </summary>
+        internal KubernetesClusterProperties Properties { get; set; }
 
-        /// <summary> Resource ETag. </summary>
+        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
-        /// <summary> The extended location of the cluster associated with the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> The Azure Active Directory Integration properties. </summary>
-        internal NetworkCloudAadConfiguration AadConfiguration { get; set; }
-        /// <summary> The list of Azure Active Directory group object IDs that will have an administrative role on the Kubernetes cluster. </summary>
-        public IList<string> AadAdminGroupObjectIds
-        {
-            get => AadConfiguration is null ? default : AadConfiguration.AdminGroupObjectIds;
-            set => AadConfiguration = new NetworkCloudAadConfiguration(value);
-        }
 
         /// <summary> The administrative credentials that will be applied to the control plane and agent pool nodes that do not specify their own values. </summary>
-        public AdministratorConfiguration AdministratorConfiguration { get; set; }
-        /// <summary> The full list of network resource IDs that are attached to this cluster, including those attached only to specific agent pools. </summary>
-        public IReadOnlyList<ResourceIdentifier> AttachedNetworkIds { get; }
-        /// <summary> The list of versions that this Kubernetes cluster can be upgraded to. </summary>
-        public IReadOnlyList<AvailableUpgrade> AvailableUpgrades { get; }
-        /// <summary> The resource ID of the Network Cloud cluster. </summary>
-        public ResourceIdentifier ClusterId { get; }
-        /// <summary> The resource ID of the connected cluster set up when this Kubernetes cluster is created. </summary>
-        public ResourceIdentifier ConnectedClusterId { get; }
-        /// <summary> The current running version of Kubernetes on the control plane. </summary>
-        public string ControlPlaneKubernetesVersion { get; }
+        public AdministratorConfiguration AdministratorConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministratorConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterProperties();
+                }
+                Properties.AdministratorConfiguration = value;
+            }
+        }
+
         /// <summary> The defining characteristics of the control plane for this Kubernetes Cluster. </summary>
-        public ControlPlaneNodeConfiguration ControlPlaneNodeConfiguration { get; set; }
-        /// <summary> The current status of the Kubernetes cluster. </summary>
-        public KubernetesClusterDetailedStatus? DetailedStatus { get; }
-        /// <summary> The descriptive message about the current detailed status. </summary>
-        public string DetailedStatusMessage { get; }
-        /// <summary> The current feature settings. </summary>
-        public IReadOnlyList<FeatureStatus> FeatureStatuses { get; }
+        public ControlPlaneNodeConfiguration ControlPlaneNodeConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ControlPlaneNodeConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterProperties();
+                }
+                Properties.ControlPlaneNodeConfiguration = value;
+            }
+        }
+
         /// <summary> The agent pools that are created with this Kubernetes cluster for running critical system services and workloads. This data in this field is only used during creation, and the field will be empty following the creation of the Kubernetes Cluster. After creation, the management of agent pools is done using the agentPools sub-resource. </summary>
-        public IList<InitialAgentPoolConfiguration> InitialAgentPoolConfigurations { get; }
+        public IList<InitialAgentPoolConfiguration> InitialAgentPoolConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterProperties();
+                }
+                return Properties.InitialAgentPoolConfigurations;
+            }
+        }
+
         /// <summary> The Kubernetes version for this cluster. </summary>
-        public string KubernetesVersion { get; set; }
+        public string KubernetesVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KubernetesVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterProperties();
+                }
+                Properties.KubernetesVersion = value;
+            }
+        }
+
         /// <summary> The configuration of the managed resource group associated with the resource. </summary>
-        public ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
+        public ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedResourceGroupConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterProperties();
+                }
+                Properties.ManagedResourceGroupConfiguration = value;
+            }
+        }
+
         /// <summary> The configuration of the Kubernetes cluster networking, including the attachment of networks that span the cluster. </summary>
-        public KubernetesClusterNetworkConfiguration NetworkConfiguration { get; set; }
+        public KubernetesClusterNetworkConfiguration NetworkConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterProperties();
+                }
+                Properties.NetworkConfiguration = value;
+            }
+        }
+
+        /// <summary> The full list of network resource IDs that are attached to this cluster, including those attached only to specific agent pools. </summary>
+        public IReadOnlyList<ResourceIdentifier> AttachedNetworkIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterProperties();
+                }
+                return Properties.AttachedNetworkIds;
+            }
+        }
+
+        /// <summary> The list of versions that this Kubernetes cluster can be upgraded to. </summary>
+        public IReadOnlyList<AvailableUpgrade> AvailableUpgrades
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterProperties();
+                }
+                return Properties.AvailableUpgrades;
+            }
+        }
+
+        /// <summary> The resource ID of the Network Cloud cluster. </summary>
+        public ResourceIdentifier ClusterId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClusterId;
+            }
+        }
+
+        /// <summary> The resource ID of the connected cluster set up when this Kubernetes cluster is created. </summary>
+        public ResourceIdentifier ConnectedClusterId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectedClusterId;
+            }
+        }
+
+        /// <summary> The current running version of Kubernetes on the control plane. </summary>
+        public string ControlPlaneKubernetesVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ControlPlaneKubernetesVersion;
+            }
+        }
+
+        /// <summary> The current status of the Kubernetes cluster. </summary>
+        public KubernetesClusterDetailedStatus? DetailedStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatus;
+            }
+        }
+
+        /// <summary> The descriptive message about the current detailed status. </summary>
+        public string DetailedStatusMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetailedStatusMessage;
+            }
+        }
+
+        /// <summary> The current feature settings. </summary>
+        public IReadOnlyList<FeatureStatus> FeatureStatuses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterProperties();
+                }
+                return Properties.FeatureStatuses;
+            }
+        }
+
         /// <summary> The details of the nodes in this cluster. </summary>
-        public IReadOnlyList<KubernetesClusterNode> Nodes { get; }
+        public IReadOnlyList<KubernetesClusterNode> Nodes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new KubernetesClusterProperties();
+                }
+                return Properties.Nodes;
+            }
+        }
+
         /// <summary> The provisioning state of the Kubernetes cluster resource. </summary>
-        public KubernetesClusterProvisioningState? ProvisioningState { get; }
+        public KubernetesClusterProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

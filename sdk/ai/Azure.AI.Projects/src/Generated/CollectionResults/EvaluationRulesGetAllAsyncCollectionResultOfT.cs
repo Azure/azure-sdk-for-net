@@ -7,9 +7,8 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     internal partial class EvaluationRulesGetAllAsyncCollectionResultOfT : AsyncCollectionResult<EvaluationRule>
     {
@@ -42,7 +41,7 @@ namespace Azure.AI.Projects
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+                ClientResult result = await GetNextResponseAsync(message).ConfigureAwait(false);
                 yield return result;
 
                 nextPageUri = ((PagedEvaluationRule)result).NextLink;
@@ -80,6 +79,13 @@ namespace Azure.AI.Projects
                 yield return item;
                 await Task.Yield();
             }
+        }
+
+        /// <summary> Sends the request in the pipeline message and returns the response. </summary>
+        /// <param name="message"> The pipeline message containing the request to send. </param>
+        private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
+        {
+            return ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
         }
     }
 }

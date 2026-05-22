@@ -15,10 +15,17 @@ namespace Azure.Generator.Management
     {
         private const string ArmProviderSchemaDecoratorName = "Azure.ClientGenerator.Core.@armProviderSchema";
         private const string FlattenPropertyDecoratorName = "Azure.ResourceManager.@flattenProperty";
+        private const string ClientOptionDecoratorName = "Azure.ClientGenerator.Core.@clientOption";
+        private const string HasClientNameOverrideDecoratorName = "Azure.ResourceManager.@hasClientNameOverride";
+        private const string DisableSafeFlattenKey = "disable-safe-flatten";
+        private const string CSharpScope = "csharp";
 
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
         private HashSet<InputModelType>? _resourceModels;
+        private HashSet<InputModelType>? _safeFlattenDisabledModels;
+        private HashSet<InputModelType>? _clientNameOverriddenModels;
+        private HashSet<InputServiceMethod>? _clientNameOverriddenMethods;
         private ArmProviderSchema? _providerSchema;
         private IReadOnlyDictionary<string, InputModelType>? _modelsByCrossLanguageDefinitionId;
 
@@ -83,6 +90,158 @@ namespace Azure.Generator.Management
             return result;
         }
 
+        /// <summary>
+        /// Set of input models for which safe-flatten should be disabled. Populated from
+        /// <c>@@clientOption(Model, "disable-safe-flatten", true, "csharp")</c> decorators.
+        /// </summary>
+        internal HashSet<InputModelType> SafeFlattenDisabledModels => _safeFlattenDisabledModels ??= BuildSafeFlattenDisabledModels();
+
+        private HashSet<InputModelType> BuildSafeFlattenDisabledModels()
+        {
+            var result = new HashSet<InputModelType>();
+            foreach (var model in InputNamespace.Models)
+            {
+                if (HasDisableSafeFlattenDecorator(model.Decorators))
+                {
+                    result.Add(model);
+                }
+            }
+            return result;
+        }
+
+        private static bool HasDisableSafeFlattenDecorator(IReadOnlyList<InputDecoratorInfo> decorators)
+        {
+            foreach (var decorator in decorators)
+            {
+                if (decorator.Name != ClientOptionDecoratorName || decorator.Arguments == null)
+                {
+                    continue;
+                }
+
+                // @@clientOption(target, name, value, scope?) — TCGC propagates the named arguments as BinaryData JSON values.
+                // Note: the second positional parameter is called "name" in the TCGC decorator definition,
+                // even though our docs and conceptual model refer to these as "keys".
+                if (!decorator.Arguments.TryGetValue("name", out var nameData) || nameData == null)
+                {
+                    continue;
+                }
+
+                string? optionName;
+                try
+                {
+                    optionName = nameData.ToObjectFromJson<string>();
+                }
+                catch
+                {
+                    continue;
+                }
+                if (optionName != DisableSafeFlattenKey)
+                {
+                    continue;
+                }
+
+                // Honor language scope. @@clientOption is language-scoped (the existing
+                // emitter readers use TCGC's getClientOptions which filters by scope), but
+                // because we read the raw decorator off the input model here we must filter
+                // explicitly. A missing scope is treated as "all languages" (TCGC default)
+                // and is still honored for the C# generator.
+                if (decorator.Arguments.TryGetValue("scope", out var scopeData) && scopeData != null)
+                {
+                    string? scope;
+                    try
+                    {
+                        scope = scopeData.ToObjectFromJson<string>();
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                    if (scope != null && scope != CSharpScope)
+                    {
+                        continue;
+                    }
+                }
+
+                // Only accept a JSON boolean true. Any other value (string "true", 1, false, etc.) is ignored.
+                if (decorator.Arguments.TryGetValue("value", out var valueData) && valueData != null)
+                {
+                    try
+                    {
+                        if (valueData.ToObjectFromJson<bool>())
+                        {
+                            return true;
+                        }
+                    }
+                    catch
+                    {
+                        // not a boolean — ignore
+                    }
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Set of input models for which the user has supplied a <c>@@clientName</c> override
+        /// (csharp scope or unscoped). The mgmt emitter stamps a synthetic
+        /// <c>Azure.ResourceManager.@hasClientNameOverride</c> decorator on these models so the
+        /// generator can detect them without re-running TCGC scope resolution.
+        /// </summary>
+        internal HashSet<InputModelType> ClientNameOverriddenModels => _clientNameOverriddenModels ??= BuildClientNameOverriddenModels();
+
+        private HashSet<InputModelType> BuildClientNameOverriddenModels()
+        {
+            var result = new HashSet<InputModelType>();
+            foreach (var model in InputNamespace.Models)
+            {
+                if (HasClientNameOverrideMarker(model.Decorators))
+                {
+                    result.Add(model);
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Set of service methods whose underlying TypeSpec operation carries a user-supplied
+        /// <c>@@clientName</c> override (csharp scope or unscoped). The marker is stamped onto
+        /// the underlying <see cref="InputOperation"/>'s decorators by the mgmt emitter, because
+        /// <see cref="InputServiceMethod"/> itself has no <c>Decorators</c> property.
+        /// </summary>
+        internal HashSet<InputServiceMethod> ClientNameOverriddenMethods => _clientNameOverriddenMethods ??= BuildClientNameOverriddenMethods();
+
+        private HashSet<InputServiceMethod> BuildClientNameOverriddenMethods()
+        {
+            var result = new HashSet<InputServiceMethod>();
+            foreach (var client in InputNamespace.Clients)
+            {
+                foreach (var method in client.Methods)
+                {
+                    if (HasClientNameOverrideMarker(method.Operation.Decorators))
+                    {
+                        result.Add(method);
+                    }
+                }
+            }
+            return result;
+        }
+
+        private static bool HasClientNameOverrideMarker(IReadOnlyList<InputDecoratorInfo>? decorators)
+        {
+            if (decorators is null)
+            {
+                return false;
+            }
+            foreach (var decorator in decorators)
+            {
+                if (string.Equals(decorator.Name, HasClientNameOverrideDecoratorName, StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         /// <inheritdoc/>
         public ManagementInputLibrary(string configPath) : base(configPath)
         {
@@ -130,7 +289,7 @@ namespace Azure.Generator.Management
             return resourceModels;
         }
 
-        internal IReadOnlyList<ResourceMetadata> ResourceMetadatas => ArmProviderSchema.Resources;
+        internal IReadOnlyList<ArmResourceMetadata> ResourceMetadatas => ArmProviderSchema.Resources;
 
         internal IReadOnlyList<NonResourceMethod> NonResourceMethods => ArmProviderSchema.NonResourceMethods;
 
@@ -142,9 +301,6 @@ namespace Azure.Generator.Management
 
         /// <summary> Gets the ARM provider schema containing all resource metadata and non-resource methods. </summary>
         public ArmProviderSchema ArmProviderSchema => _providerSchema ??= BuildArmProviderSchema();
-
-        // If there're multiple API versions in the input namespace, use the last one as the default.
-        internal string DefaultApiVersion => InputNamespace.ApiVersions.Last();
 
         private IReadOnlyDictionary<InputModelType, (string ResourceName, bool IsAlsoUsedInCreate)> BuildResourceUpdateModelToResourceNameMap()
         {
@@ -180,7 +336,7 @@ namespace Azure.Generator.Management
                 .ToDictionary(kvp => kvp.Key, kvp => (kvp.Value.ResourceName, kvp.Value.IsAlsoUsedInCreate));
         }
 
-        private static bool IsModelUsedInCreateOperation(ResourceMetadata metadata, InputModelType model)
+        private static bool IsModelUsedInCreateOperation(ArmResourceMetadata metadata, InputModelType model)
         {
             var createMethod = metadata.Methods.Where(m => m.Kind == ResourceOperationKind.Create).FirstOrDefault()?.InputMethod;
             if (createMethod is { Operation.HttpMethod: "PUT" })
@@ -215,7 +371,7 @@ namespace Azure.Generator.Management
             if (rootClient == null)
             {
                 // Fallback to empty schema if no root client is available
-                return new ArmProviderSchema(Array.Empty<ResourceMetadata>(), Array.Empty<NonResourceMethod>());
+                return new ArmProviderSchema(Array.Empty<ArmResourceMetadata>(), Array.Empty<NonResourceMethod>());
             }
 
             var armProviderDecorators = rootClient.Decorators
@@ -225,10 +381,10 @@ namespace Azure.Generator.Management
             if (armProviderDecorators.Count == 0)
             {
                 // Fallback to empty schema if decorator not found
-                return new ArmProviderSchema(Array.Empty<ResourceMetadata>(), Array.Empty<NonResourceMethod>());
+                return new ArmProviderSchema(Array.Empty<ArmResourceMetadata>(), Array.Empty<NonResourceMethod>());
             }
 
-            var resourcesByIdPattern = new Dictionary<string, ResourceMetadata>(StringComparer.OrdinalIgnoreCase);
+            var resourcesByIdPattern = new Dictionary<string, ArmResourceMetadata>(StringComparer.OrdinalIgnoreCase);
             var nonResourceMethodsById = new Dictionary<string, NonResourceMethod>(StringComparer.OrdinalIgnoreCase);
 
             foreach (var decorator in armProviderDecorators)

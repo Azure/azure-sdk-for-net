@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct FrontDoorWebApplicationFirewallPolicyGroupByVariableName : IEquatable<FrontDoorWebApplicationFirewallPolicyGroupByVariableName>
     {
         private readonly string _value;
+        /// <summary> SocketAddr. </summary>
+        private const string SocketAddrValue = "SocketAddr";
+        /// <summary> GeoLocation. </summary>
+        private const string GeoLocationValue = "GeoLocation";
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyGroupByVariableName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FrontDoorWebApplicationFirewallPolicyGroupByVariableName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SocketAddrValue = "SocketAddr";
-        private const string GeoLocationValue = "GeoLocation";
-        private const string NoneValue = "None";
+            _value = value;
+        }
 
         /// <summary> SocketAddr. </summary>
         public static FrontDoorWebApplicationFirewallPolicyGroupByVariableName SocketAddr { get; } = new FrontDoorWebApplicationFirewallPolicyGroupByVariableName(SocketAddrValue);
+
         /// <summary> GeoLocation. </summary>
         public static FrontDoorWebApplicationFirewallPolicyGroupByVariableName GeoLocation { get; } = new FrontDoorWebApplicationFirewallPolicyGroupByVariableName(GeoLocationValue);
+
         /// <summary> None. </summary>
         public static FrontDoorWebApplicationFirewallPolicyGroupByVariableName None { get; } = new FrontDoorWebApplicationFirewallPolicyGroupByVariableName(NoneValue);
+
         /// <summary> Determines if two <see cref="FrontDoorWebApplicationFirewallPolicyGroupByVariableName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorWebApplicationFirewallPolicyGroupByVariableName left, FrontDoorWebApplicationFirewallPolicyGroupByVariableName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontDoorWebApplicationFirewallPolicyGroupByVariableName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorWebApplicationFirewallPolicyGroupByVariableName left, FrontDoorWebApplicationFirewallPolicyGroupByVariableName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorWebApplicationFirewallPolicyGroupByVariableName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontDoorWebApplicationFirewallPolicyGroupByVariableName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontDoorWebApplicationFirewallPolicyGroupByVariableName(string value) => new FrontDoorWebApplicationFirewallPolicyGroupByVariableName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontDoorWebApplicationFirewallPolicyGroupByVariableName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontDoorWebApplicationFirewallPolicyGroupByVariableName?(string value) => value == null ? null : new FrontDoorWebApplicationFirewallPolicyGroupByVariableName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorWebApplicationFirewallPolicyGroupByVariableName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontDoorWebApplicationFirewallPolicyGroupByVariableName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

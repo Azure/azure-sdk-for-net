@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="marketplaceInfo"> The values to uniquely identify a marketplace image. Only one should be populated based on the image type. </param>
         /// <param name="customInfo"> The values to uniquely identify a custom image. Only one should be populated based on the image type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DesktopVirtualizationImageInfoPatchProperties(DesktopVirtualizationImageType? imageType, MarketplaceInfoPatchProperties marketplaceInfo, CustomInfoPatchProperties customInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DesktopVirtualizationImageInfoPatchProperties(DesktopVirtualizationImageType? imageType, DesktopVirtualizationMarketplaceInfoPatchProperties marketplaceInfo, CustomInfoPatchProperties customInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageType = imageType;
             MarketplaceInfo = marketplaceInfo;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> The values to uniquely identify a marketplace image. Only one should be populated based on the image type. </summary>
         [WirePath("marketplaceInfo")]
-        public MarketplaceInfoPatchProperties MarketplaceInfo { get; set; }
+        public DesktopVirtualizationMarketplaceInfoPatchProperties MarketplaceInfo { get; set; }
 
         /// <summary> The values to uniquely identify a custom image. Only one should be populated based on the image type. </summary>
         [WirePath("customInfo")]

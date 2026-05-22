@@ -7,21 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The WafRankingType. </summary>
+    /// <summary></summary>
     public readonly partial struct WafRankingType : IEquatable<WafRankingType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="WafRankingType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WafRankingType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ActionValue = "action";
         private const string RuleGroupValue = "ruleGroup";
         private const string RuleIdValue = "ruleId";
@@ -31,39 +24,70 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string CountryOrRegionValue = "countryOrRegion";
         private const string RuleTypeValue = "ruleType";
 
-        /// <summary> action. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafRankingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WafRankingType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Action. </summary>
         public static WafRankingType Action { get; } = new WafRankingType(ActionValue);
-        /// <summary> ruleGroup. </summary>
+
+        /// <summary> Gets the RuleGroup. </summary>
         public static WafRankingType RuleGroup { get; } = new WafRankingType(RuleGroupValue);
-        /// <summary> ruleId. </summary>
+
+        /// <summary> Gets the RuleId. </summary>
         public static WafRankingType RuleId { get; } = new WafRankingType(RuleIdValue);
-        /// <summary> userAgent. </summary>
+
+        /// <summary> Gets the UserAgent. </summary>
         public static WafRankingType UserAgent { get; } = new WafRankingType(UserAgentValue);
-        /// <summary> clientIp. </summary>
+
+        /// <summary> Gets the ClientIP. </summary>
         public static WafRankingType ClientIP { get; } = new WafRankingType(ClientIPValue);
-        /// <summary> url. </summary>
+
+        /// <summary> Gets the Uri. </summary>
         public static WafRankingType Uri { get; } = new WafRankingType(UriValue);
-        /// <summary> countryOrRegion. </summary>
+
+        /// <summary> Gets the CountryOrRegion. </summary>
         public static WafRankingType CountryOrRegion { get; } = new WafRankingType(CountryOrRegionValue);
-        /// <summary> ruleType. </summary>
+
+        /// <summary> Gets the RuleType. </summary>
         public static WafRankingType RuleType { get; } = new WafRankingType(RuleTypeValue);
+
         /// <summary> Determines if two <see cref="WafRankingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WafRankingType left, WafRankingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WafRankingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WafRankingType left, WafRankingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WafRankingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WafRankingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WafRankingType(string value) => new WafRankingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WafRankingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WafRankingType?(string value) => value == null ? null : new WafRankingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WafRankingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WafRankingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

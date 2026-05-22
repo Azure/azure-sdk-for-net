@@ -16,32 +16,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="TieringCostRehydrationInfo"/>. </summary>
         /// <param name="rehydrationSizeInBytes"> Rehydration size in bytes. </param>
         /// <param name="retailRehydrationCostPerGBPerMonth"> Source tier to target tier rehydration cost per GB per month. </param>
-        internal TieringCostRehydrationInfo(long rehydrationSizeInBytes, double retailRehydrationCostPerGBPerMonth)
+        internal TieringCostRehydrationInfo(long rehydrationSizeInBytes, double retailRehydrationCostPerGBPerMonth) : base("TieringCostRehydrationInfo")
         {
             RehydrationSizeInBytes = rehydrationSizeInBytes;
             RetailRehydrationCostPerGBPerMonth = retailRehydrationCostPerGBPerMonth;
-            ObjectType = "TieringCostRehydrationInfo";
         }
 
         /// <summary> Initializes a new instance of <see cref="TieringCostRehydrationInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rehydrationSizeInBytes"> Rehydration size in bytes. </param>
         /// <param name="retailRehydrationCostPerGBPerMonth"> Source tier to target tier rehydration cost per GB per month. </param>
-        internal TieringCostRehydrationInfo(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, long rehydrationSizeInBytes, double retailRehydrationCostPerGBPerMonth) : base(objectType, serializedAdditionalRawData)
+        internal TieringCostRehydrationInfo(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, long rehydrationSizeInBytes, double retailRehydrationCostPerGBPerMonth) : base(objectType, additionalBinaryDataProperties)
         {
             RehydrationSizeInBytes = rehydrationSizeInBytes;
             RetailRehydrationCostPerGBPerMonth = retailRehydrationCostPerGBPerMonth;
-            ObjectType = objectType ?? "TieringCostRehydrationInfo";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TieringCostRehydrationInfo"/> for deserialization. </summary>
-        internal TieringCostRehydrationInfo()
-        {
         }
 
         /// <summary> Rehydration size in bytes. </summary>
         public long RehydrationSizeInBytes { get; }
+
         /// <summary> Source tier to target tier rehydration cost per GB per month. </summary>
         public double RetailRehydrationCostPerGBPerMonth { get; }
     }

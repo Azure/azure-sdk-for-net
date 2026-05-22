@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -18,36 +19,30 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="name"></param>
         /// <param name="lifecycles"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="lifecycles"/> is null. </exception>
-        public DataProtectionRetentionRule(string name, IEnumerable<SourceLifeCycle> lifecycles) : base(name)
+        public DataProtectionRetentionRule(string name, IEnumerable<SourceLifeCycle> lifecycles) : base(name, "AzureRetentionRule")
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(lifecycles, nameof(lifecycles));
 
             Lifecycles = lifecycles.ToList();
-            ObjectType = "AzureRetentionRule";
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionRetentionRule"/>. </summary>
         /// <param name="name"></param>
         /// <param name="objectType"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isDefault"></param>
         /// <param name="lifecycles"></param>
-        internal DataProtectionRetentionRule(string name, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isDefault, IList<SourceLifeCycle> lifecycles) : base(name, objectType, serializedAdditionalRawData)
+        internal DataProtectionRetentionRule(string name, string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? isDefault, IList<SourceLifeCycle> lifecycles) : base(name, objectType, additionalBinaryDataProperties)
         {
             IsDefault = isDefault;
             Lifecycles = lifecycles;
-            ObjectType = objectType ?? "AzureRetentionRule";
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataProtectionRetentionRule"/> for deserialization. </summary>
-        internal DataProtectionRetentionRule()
-        {
-        }
-
-        /// <summary> Gets or sets the is default. </summary>
+        /// <summary> Gets or sets the IsDefault. </summary>
         public bool? IsDefault { get; set; }
-        /// <summary> Gets the lifecycles. </summary>
+
+        /// <summary> Gets the Lifecycles. </summary>
         public IList<SourceLifeCycle> Lifecycles { get; }
     }
 }

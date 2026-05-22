@@ -5,8 +5,8 @@ In this example we will demonstrate how to get a response in streaming scenarios
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_ResponseStreaming
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
@@ -14,7 +14,7 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponseStreaming
-ProjectResponsesClient responsesClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+ProjectResponsesClient responsesClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 ```
 
 3. Stream the results; raise the error if the request was not successful.

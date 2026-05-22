@@ -1,6 +1,6 @@
 ---
 name: mitigate-breaking-changes
-description: Patterns and techniques for mitigating breaking changes during Azure management-plane SDK migration from Swagger/AutoRest to TypeSpec. Covers SDK-side customizations (partial classes, CodeGenType, CodeGenSuppress) and TypeSpec decorator customizations (clientName, access, markAsPageable, alternateType).
+description: Patterns and techniques for mitigating breaking changes during Azure management-plane SDK migration from Swagger/AutoRest to TypeSpec. Covers SDK-side customizations (partial classes, CodeGenType, CodeGenSuppress) and TypeSpec decorator customizations (clientName, access, markAsPageable, alternateType, hierarchyBuilding).
 ---
 # Skill: mitigate-breaking-changes
 
@@ -8,7 +8,7 @@ Patterns and techniques for mitigating breaking changes when migrating or regene
 
 ## When Invoked
 
-Trigger phrases: "mitigate breaking changes", "fix breaking change", "customization patterns", "how to keep backward compat", "CodeGenType", "CodeGenSuppress", "markAsPageable".
+Trigger phrases: "mitigate breaking changes", "fix breaking change", "customization patterns", "how to keep backward compat", "CodeGenType", "CodeGenSuppress", "markAsPageable", "hierarchyBuilding", "base type change".
 
 ## SDK-Side Customizations (in SDK repo)
 
@@ -82,6 +82,71 @@ When the spec uses older common types that generate incorrect C# types (e.g., `s
 ```typespec
 @@alternateType(MyModel.resourceId, Azure.ResourceManager.CommonTypes.ArmResourceIdentifier, "csharp");
 ```
+
+### `@@hierarchyBuilding` Decorator — Change a resource model's base type
+When a TypeSpec resource model generates with the wrong base class (e.g., a plain `Resource` model instead of `TrackedResource` or `ProxyResource`), use `@@hierarchyBuilding` to override the base type. This is common when the spec defines a resource using a non-standard base type that doesn't map to the correct ARM SDK base class (`ResourceData`, `TrackedResourceData`, etc.).
+
+**Syntax:**
+```typespec
+// Requires: using Azure.ClientGenerator.Core.Legacy;
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Change the base type back to <TargetBase> for backward compatibility"
+@@Azure.ClientGenerator.Core.Legacy.hierarchyBuilding(MyResource,
+  Azure.ResourceManager.Foundations.TrackedResource,
+  "csharp"
+);
+```
+
+**Common target base types:**
+- `Azure.ResourceManager.Foundations.TrackedResource` — generates `TrackedResourceData` (for resources with location and tags)
+- `Azure.ResourceManager.Foundations.ProxyResource` — generates `ResourceData` (for proxy/child resources)
+- `Azure.ResourceManager.Foundations.Resource` — generates `ResourceData` (ARM resource base)
+
+**When to use:**
+- When the old SDK had `MyData : ResourceData` or `MyData : TrackedResourceData`, but the new TypeSpec-generated SDK produces `MyData : SomeOtherType` (e.g., a service-local `Resource` model)
+- The `CannotRemoveBaseTypeOrInterface` API compatibility violation indicates this issue (e.g., _"Type 'X' does not inherit from base type 'Azure.ResourceManager.Models.ResourceData'"_)
+
+**Requirements:**
+1. Add `using Azure.ClientGenerator.Core.Legacy;` to the `client.tsp` imports
+2. Add `#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "..."` before each `@@hierarchyBuilding` call
+3. After adding the decorator, regenerate the SDK code
+
+**Example** (from KeyVault migration):
+```typespec
+import "@azure-tools/typespec-client-generator-core";
+using Azure.ClientGenerator.Core.Legacy;
+
+// Fix Vault resource to generate VaultData : TrackedResourceData
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Change the base type back to TrackedResource for backward compatibility"
+@@Azure.ClientGenerator.Core.Legacy.hierarchyBuilding(Vault,
+  Azure.ResourceManager.Foundations.TrackedResource,
+  "csharp"
+);
+```
+
+## WirePathAttribute Breaking Changes [MPG only]
+
+When the previous SDK version included `WirePathAttribute` on model properties (used by Azure.Provisioning libraries), migrating to TypeSpec may produce ApiCompat `CannotRemoveAttribute` errors for the missing attribute — because the emitter defaults to **not** generating it.
+
+### How to detect
+
+- ApiCompat `CannotRemoveAttribute` errors referencing `WirePathAttribute` on model properties
+- These errors appear during `dotnet pack --no-restore` when the previous SDK release had `WirePathAttribute` on properties but the new generation does not
+
+### Fix
+
+Add `enable-wire-path-attribute: true` to the **mgmt emitter options** in `tspconfig.yaml` (in the spec repo):
+
+```yaml
+options:
+  "@azure-typespec/http-client-csharp-mgmt":
+    emitter-output-dir: "{output-dir}/{service-dir}/{namespace}"
+    namespace: "Azure.ResourceManager.<Service>"
+    enable-wire-path-attribute: true
+```
+
+Then regenerate the SDK.
+
+**Avoid** attempting to fix this by creating `ApiCompatBaseline.txt` or disabling ApiCompat. The emitter option is the correct solution.
 
 ## Extension Resources
 

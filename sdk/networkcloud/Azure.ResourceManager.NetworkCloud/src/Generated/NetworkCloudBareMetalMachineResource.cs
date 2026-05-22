@@ -7,47 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
-    /// A Class representing a NetworkCloudBareMetalMachine along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudBareMetalMachineResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudBareMetalMachineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkCloudBareMetalMachine method.
+    /// A class representing a NetworkCloudBareMetalMachine along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudBareMetalMachineResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkCloudBareMetalMachines method.
     /// </summary>
     public partial class NetworkCloudBareMetalMachineResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="NetworkCloudBareMetalMachineResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="bareMetalMachineName"> The bareMetalMachineName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string bareMetalMachineName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics;
-        private readonly BareMetalMachinesRestOperations _networkCloudBareMetalMachineBareMetalMachinesRestClient;
+        private readonly ClientDiagnostics _bareMetalMachinesClientDiagnostics;
+        private readonly BareMetalMachines _bareMetalMachinesRestClient;
         private readonly NetworkCloudBareMetalMachineData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/bareMetalMachines";
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkCloudBareMetalMachineResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkCloudBareMetalMachineResource for mocking. </summary>
         protected NetworkCloudBareMetalMachineResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkCloudBareMetalMachineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudBareMetalMachineResource(ArmClient client, NetworkCloudBareMetalMachineData data) : this(client, data.Id)
@@ -56,71 +46,92 @@ namespace Azure.ResourceManager.NetworkCloud
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkCloudBareMetalMachineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudBareMetalMachineResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string networkCloudBareMetalMachineBareMetalMachinesApiVersion);
-            _networkCloudBareMetalMachineBareMetalMachinesRestClient = new BareMetalMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudBareMetalMachineBareMetalMachinesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string networkCloudBareMetalMachineApiVersion);
+            _bareMetalMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
+            _bareMetalMachinesRestClient = new BareMetalMachines(_bareMetalMachinesClientDiagnostics, Pipeline, Endpoint, networkCloudBareMetalMachineApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual NetworkCloudBareMetalMachineData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="bareMetalMachineName"> The bareMetalMachineName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string bareMetalMachineName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get properties of the provided bare metal machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetworkCloudBareMetalMachineResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Get");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Get");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkCloudBareMetalMachineData> response = Response.FromValue(NetworkCloudBareMetalMachineData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,33 +145,41 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Get properties of the provided bare metal machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkCloudBareMetalMachineResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Get");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Get");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkCloudBareMetalMachineData> response = Response.FromValue(NetworkCloudBareMetalMachineData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -174,41 +193,50 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Patch properties of the provided bare metal machine, or update tags associated with the bare metal machine. Properties and tag updates can be done independently.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The request body. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudBareMetalMachinePatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudBareMetalMachinePatch patch, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Update");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Update");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineResource>(new NetworkCloudBareMetalMachineOperationSource(Client), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudBareMetalMachinePatch.ToRequestContent(patch), matchConditions, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudBareMetalMachineResource> operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineResource>(
+                    new NetworkCloudBareMetalMachineOperationSource(Client),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -222,41 +250,50 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Patch properties of the provided bare metal machine, or update tags associated with the bare metal machine. Properties and tag updates can be done independently.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The request body. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<NetworkCloudBareMetalMachineResource> Update(WaitUntil waitUntil, NetworkCloudBareMetalMachinePatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudBareMetalMachineResource> Update(WaitUntil waitUntil, NetworkCloudBareMetalMachinePatch patch, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Update");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Update");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineResource>(new NetworkCloudBareMetalMachineOperationSource(Client), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudBareMetalMachinePatch.ToRequestContent(patch), matchConditions, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudBareMetalMachineResource> operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineResource>(
+                    new NetworkCloudBareMetalMachineOperationSource(Client),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -270,36 +307,49 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Cordon the provided bare metal machine's Kubernetes node.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/cordon</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/cordon. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Cordon</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_Cordon. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> CordonAsync(WaitUntil waitUntil, BareMetalMachineCordonContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> CordonAsync(WaitUntil waitUntil, BareMetalMachineCordonContent content = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Cordon");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Cordon");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.CordonAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateCordonRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateCordonRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineCordonContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -313,36 +363,49 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Cordon the provided bare metal machine's Kubernetes node.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/cordon</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/cordon. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Cordon</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_Cordon. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkCloudOperationStatusResult> Cordon(WaitUntil waitUntil, BareMetalMachineCordonContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> Cordon(WaitUntil waitUntil, BareMetalMachineCordonContent content = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Cordon");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Cordon");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Cordon(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateCordonRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateCordonRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineCordonContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -356,36 +419,49 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Power off the provided bare metal machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/powerOff</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/powerOff. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_PowerOff</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_PowerOff. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> PowerOffAsync(WaitUntil waitUntil, BareMetalMachinePowerOffContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> PowerOffAsync(WaitUntil waitUntil, BareMetalMachinePowerOffContent content = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.PowerOff");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.PowerOff");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.PowerOffAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreatePowerOffRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachinePowerOffContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -399,36 +475,49 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Power off the provided bare metal machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/powerOff</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/powerOff. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_PowerOff</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_PowerOff. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkCloudOperationStatusResult> PowerOff(WaitUntil waitUntil, BareMetalMachinePowerOffContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> PowerOff(WaitUntil waitUntil, BareMetalMachinePowerOffContent content = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.PowerOff");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.PowerOff");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.PowerOff(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreatePowerOffRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreatePowerOffRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachinePowerOffContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -442,20 +531,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Reimage the provided bare metal machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/reimage</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/reimage. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Reimage</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_Reimage. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,14 +552,27 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> ReimageAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Reimage");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Reimage");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.ReimageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateReimageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -484,20 +586,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Reimage the provided bare metal machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/reimage</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/reimage. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Reimage</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_Reimage. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -505,14 +607,27 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<NetworkCloudOperationStatusResult> Reimage(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Reimage");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Reimage");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Reimage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateReimageRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -526,36 +641,49 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Replace the provided bare metal machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/replace</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/replace. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Replace</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_Replace. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> ReplaceAsync(WaitUntil waitUntil, BareMetalMachineReplaceContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> ReplaceAsync(WaitUntil waitUntil, BareMetalMachineReplaceContent content = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Replace");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Replace");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.ReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineReplaceContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -569,36 +697,49 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Replace the provided bare metal machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/replace</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/replace. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Replace</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_Replace. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkCloudOperationStatusResult> Replace(WaitUntil waitUntil, BareMetalMachineReplaceContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> Replace(WaitUntil waitUntil, BareMetalMachineReplaceContent content = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Replace");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Replace");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Replace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineReplaceContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -612,20 +753,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Restart the provided bare metal machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/restart</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/restart. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Restart</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_Restart. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -633,14 +774,27 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> RestartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Restart");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Restart");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -654,20 +808,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Restart the provided bare metal machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/restart</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/restart. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Restart</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_Restart. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -675,14 +829,27 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<NetworkCloudOperationStatusResult> Restart(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Restart");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Restart");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateRestartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -696,20 +863,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Run the command or the script on the provided bare metal machine. The URL to storage account with the command execution results and the command exit code can be retrieved from the operation status API once available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/runCommand</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/runCommand. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_RunCommand</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_RunCommand. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -721,14 +888,27 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunCommand");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunCommand");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunCommandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateRunCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunCommandContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -742,20 +922,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Run the command or the script on the provided bare metal machine. The URL to storage account with the command execution results and the command exit code can be retrieved from the operation status API once available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/runCommand</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/runCommand. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_RunCommand</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_RunCommand. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -767,14 +947,27 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunCommand");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunCommand");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunCommand(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunCommandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateRunCommandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunCommandContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -788,20 +981,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Run one or more data extractions on the provided bare metal machine. The URL to storage account with the command execution results and the command exit code can be retrieved from the operation status API once available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/runDataExtracts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/runDataExtracts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_RunDataExtracts</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_RunDataExtracts. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -813,14 +1006,27 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunDataExtracts");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunDataExtracts");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtractsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateRunDataExtractsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunDataExtractsContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -834,20 +1040,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Run one or more data extractions on the provided bare metal machine. The URL to storage account with the command execution results and the command exit code can be retrieved from the operation status API once available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/runDataExtracts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/runDataExtracts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_RunDataExtracts</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_RunDataExtracts. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -859,14 +1065,27 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunDataExtracts");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunDataExtracts");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtracts(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateRunDataExtractsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunDataExtractsContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -880,20 +1099,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Run one or more restricted data extractions on the provided bare metal machine. The URL to storage account with the command execution results and the command exit code can be retrieved from the operation status API once available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/runDataExtractsRestricted</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/runDataExtractsRestricted. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_RunDataExtractsRestricted</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_RunDataExtractsRestricted. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -905,14 +1124,27 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunDataExtractsRestricted");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunDataExtractsRestricted");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtractsRestrictedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRestrictedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateRunDataExtractsRestrictedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunDataExtractsContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -926,20 +1158,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Run one or more restricted data extractions on the provided bare metal machine. The URL to storage account with the command execution results and the command exit code can be retrieved from the operation status API once available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/runDataExtractsRestricted</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/runDataExtractsRestricted. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_RunDataExtractsRestricted</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_RunDataExtractsRestricted. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -951,14 +1183,27 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunDataExtractsRestricted");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunDataExtractsRestricted");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunDataExtractsRestricted(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunDataExtractsRestrictedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateRunDataExtractsRestrictedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunDataExtractsContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -972,20 +1217,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Run one or more read-only commands on the provided bare metal machine. The URL to storage account with the command execution results and the command exit code can be retrieved from the operation status API once available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/runReadCommands</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/runReadCommands. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_RunReadCommands</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_RunReadCommands. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -997,14 +1242,27 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunReadCommands");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunReadCommands");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunReadCommandsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunReadCommandsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateRunReadCommandsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunReadCommandsContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1018,20 +1276,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Run one or more read-only commands on the provided bare metal machine. The URL to storage account with the command execution results and the command exit code can be retrieved from the operation status API once available.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/runReadCommands</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/runReadCommands. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_RunReadCommands</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_RunReadCommands. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1043,14 +1301,27 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunReadCommands");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RunReadCommands");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.RunReadCommands(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateRunReadCommandsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateRunReadCommandsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BareMetalMachineRunReadCommandsContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1064,20 +1335,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Start the provided bare metal machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/start</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/start. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Start</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_Start. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1085,14 +1356,27 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Start");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Start");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1106,20 +1390,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Start the provided bare metal machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/start</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/start. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Start</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_Start. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1127,14 +1411,27 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<NetworkCloudOperationStatusResult> Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Start");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Start");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1148,20 +1445,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Uncordon the provided bare metal machine's Kubernetes node.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/uncordon</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/uncordon. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Uncordon</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_Uncordon. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1169,14 +1466,27 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> UncordonAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Uncordon");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Uncordon");
             scope.Start();
             try
             {
-                var response = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.UncordonAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateUncordonRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateUncordonRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1190,20 +1500,20 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Uncordon the provided bare metal machine's Kubernetes node.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/uncordon</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}/uncordon. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Uncordon</description>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_Uncordon. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkCloudBareMetalMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1211,14 +1521,27 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<NetworkCloudOperationStatusResult> Uncordon(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Uncordon");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.Uncordon");
             scope.Start();
             try
             {
-                var response = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Uncordon(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, _networkCloudBareMetalMachineBareMetalMachinesRestClient.CreateUncordonRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bareMetalMachinesRestClient.CreateUncordonRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
+                    new NetworkCloudOperationStatusResultOperationSource(),
+                    _bareMetalMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -1228,27 +1551,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1258,28 +1561,34 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.AddTag");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<NetworkCloudBareMetalMachineData> response = Response.FromValue(NetworkCloudBareMetalMachineData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetworkCloudBareMetalMachinePatch();
-                    foreach (var tag in current.Tags)
+                    NetworkCloudBareMetalMachineData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkCloudBareMetalMachinePatch patch = new NetworkCloudBareMetalMachinePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<NetworkCloudBareMetalMachineResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1290,27 +1599,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1320,28 +1609,34 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.AddTag");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<NetworkCloudBareMetalMachineData> response = Response.FromValue(NetworkCloudBareMetalMachineData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetworkCloudBareMetalMachinePatch();
-                    foreach (var tag in current.Tags)
+                    NetworkCloudBareMetalMachineData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkCloudBareMetalMachinePatch patch = new NetworkCloudBareMetalMachinePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<NetworkCloudBareMetalMachineResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1352,53 +1647,39 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudBareMetalMachineResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.SetTags");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<NetworkCloudBareMetalMachineData> response = Response.FromValue(NetworkCloudBareMetalMachineData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetworkCloudBareMetalMachinePatch();
+                    NetworkCloudBareMetalMachineData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkCloudBareMetalMachinePatch patch = new NetworkCloudBareMetalMachinePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<NetworkCloudBareMetalMachineResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1409,53 +1690,39 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<NetworkCloudBareMetalMachineResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.SetTags");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<NetworkCloudBareMetalMachineData> response = Response.FromValue(NetworkCloudBareMetalMachineData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetworkCloudBareMetalMachinePatch();
+                    NetworkCloudBareMetalMachineData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkCloudBareMetalMachinePatch patch = new NetworkCloudBareMetalMachinePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<NetworkCloudBareMetalMachineResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1466,27 +1733,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1494,28 +1741,34 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RemoveTag");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkCloudBareMetalMachineBareMetalMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<NetworkCloudBareMetalMachineData> response = Response.FromValue(NetworkCloudBareMetalMachineData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetworkCloudBareMetalMachinePatch();
-                    foreach (var tag in current.Tags)
+                    NetworkCloudBareMetalMachineData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkCloudBareMetalMachinePatch patch = new NetworkCloudBareMetalMachinePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<NetworkCloudBareMetalMachineResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1526,27 +1779,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines/{bareMetalMachineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BareMetalMachines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkCloudBareMetalMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1554,28 +1787,34 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RemoveTag");
+            using DiagnosticScope scope = _bareMetalMachinesClientDiagnostics.CreateScope("NetworkCloudBareMetalMachineResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkCloudBareMetalMachineBareMetalMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _bareMetalMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<NetworkCloudBareMetalMachineData> response = Response.FromValue(NetworkCloudBareMetalMachineData.FromResponse(result), result);
+                    return Response.FromValue(new NetworkCloudBareMetalMachineResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetworkCloudBareMetalMachinePatch();
-                    foreach (var tag in current.Tags)
+                    NetworkCloudBareMetalMachineData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkCloudBareMetalMachinePatch patch = new NetworkCloudBareMetalMachinePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<NetworkCloudBareMetalMachineResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

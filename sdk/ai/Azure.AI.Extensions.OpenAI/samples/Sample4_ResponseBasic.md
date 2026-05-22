@@ -5,8 +5,8 @@ In this example we will demonstrate how to get a response without an Agent.
 1. First, we need to project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_ResponseBasic
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
@@ -14,13 +14,13 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_Sync
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 ResponseResult response = responseClient.CreateResponse("What is the size of France in square miles?");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_Async
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
 ResponseResult response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 ```
 

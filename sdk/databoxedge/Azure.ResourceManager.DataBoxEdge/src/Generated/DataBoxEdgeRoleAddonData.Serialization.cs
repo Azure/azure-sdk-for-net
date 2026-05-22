@@ -8,15 +8,75 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DataBoxEdgeRoleAddonData : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeRoleAddonData>
+    /// <summary> Role Addon. </summary>
+    public partial class DataBoxEdgeRoleAddonData : ResourceData, IJsonModel<DataBoxEdgeRoleAddonData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeRoleAddonData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeRoleAddonData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataBoxEdgeRoleAddonData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeRoleAddonData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeRoleAddonData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeRoleAddonData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataBoxEdgeRoleAddonData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxEdgeRoleAddonData IPersistableModel<DataBoxEdgeRoleAddonData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataBoxEdgeRoleAddonData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataBoxEdgeRoleAddonData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dataBoxEdgeRoleAddonData"> The <see cref="DataBoxEdgeRoleAddonData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DataBoxEdgeRoleAddonData dataBoxEdgeRoleAddonData)
+        {
+            if (dataBoxEdgeRoleAddonData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(dataBoxEdgeRoleAddonData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataBoxEdgeRoleAddonData"/> from. </param>
+        internal static DataBoxEdgeRoleAddonData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDataBoxEdgeRoleAddonData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxEdgeRoleAddonData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,77 +88,52 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeRoleAddonData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeRoleAddonData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxEdgeRoleAddonData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
         }
 
-        DataBoxEdgeRoleAddonData IJsonModel<DataBoxEdgeRoleAddonData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataBoxEdgeRoleAddonData IJsonModel<DataBoxEdgeRoleAddonData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataBoxEdgeRoleAddonData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeRoleAddonData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeRoleAddonData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxEdgeRoleAddonData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataBoxEdgeRoleAddonData(document.RootElement, options);
         }
 
-        internal static DataBoxEdgeRoleAddonData DeserializeDataBoxEdgeRoleAddonData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataBoxEdgeRoleAddonData DeserializeDataBoxEdgeRoleAddonData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "ArcForKubernetes": return EdgeArcAddon.DeserializeEdgeArcAddon(element, options);
-                    case "IotEdge": return EdgeIotAddon.DeserializeEdgeIotAddon(element, options);
+                    case "ArcForKubernetes":
+                        return EdgeArcAddon.DeserializeEdgeArcAddon(element, options);
+                    case "IotEdge":
+                        return EdgeIotAddon.DeserializeEdgeIotAddon(element, options);
                 }
             }
-            return UnknownAddon.DeserializeUnknownAddon(element, options);
+            return UnknownDataBoxEdgeRoleAddon.DeserializeUnknownDataBoxEdgeRoleAddon(element, options);
         }
-
-        BinaryData IPersistableModel<DataBoxEdgeRoleAddonData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeRoleAddonData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeRoleAddonData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataBoxEdgeRoleAddonData IPersistableModel<DataBoxEdgeRoleAddonData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeRoleAddonData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataBoxEdgeRoleAddonData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeRoleAddonData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataBoxEdgeRoleAddonData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

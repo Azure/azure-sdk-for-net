@@ -10,15 +10,80 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class StorageAccountMigrationData : IUtf8JsonSerializable, IJsonModel<StorageAccountMigrationData>
+    /// <summary> The parameters or status associated with an ongoing or enqueued storage account migration in order to update its current SKU or region. </summary>
+    public partial class StorageAccountMigrationData : ResourceData, IJsonModel<StorageAccountMigrationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountMigrationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="StorageAccountMigrationData"/> for deserialization. </summary>
+        internal StorageAccountMigrationData()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageAccountMigrationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStorageAccountMigrationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageAccountMigrationData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageAccountMigrationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StorageAccountMigrationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StorageAccountMigrationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageAccountMigrationData IPersistableModel<StorageAccountMigrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageAccountMigrationData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageAccountMigrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="storageAccountMigrationData"> The <see cref="StorageAccountMigrationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(StorageAccountMigrationData storageAccountMigrationData)
+        {
+            if (storageAccountMigrationData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(storageAccountMigrationData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageAccountMigrationData"/> from. </param>
+        internal static StorageAccountMigrationData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeStorageAccountMigrationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageAccountMigrationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,337 +93,102 @@ namespace Azure.ResourceManager.Storage
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountMigrationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageAccountMigrationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageAccountMigrationData)} does not support writing '{format}' format.");
             }
-
-            if (options.Format != "W" && Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(ResourceType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType.Value);
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("targetSkuName"u8);
-            writer.WriteStringValue(TargetSkuName.ToString());
-            if (options.Format != "W" && Optional.IsDefined(MigrationStatus))
-            {
-                writer.WritePropertyName("migrationStatus"u8);
-                writer.WriteStringValue(MigrationStatus.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(MigrationFailedReason))
-            {
-                writer.WritePropertyName("migrationFailedReason"u8);
-                writer.WriteStringValue(MigrationFailedReason);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MigrationFailedDetailedReason))
-            {
-                writer.WritePropertyName("migrationFailedDetailedReason"u8);
-                writer.WriteStringValue(MigrationFailedDetailedReason);
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            writer.WriteObjectValue(StorageAccountMigrationDetails, options);
         }
 
-        StorageAccountMigrationData IJsonModel<StorageAccountMigrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageAccountMigrationData IJsonModel<StorageAccountMigrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StorageAccountMigrationData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountMigrationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageAccountMigrationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageAccountMigrationData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStorageAccountMigrationData(document.RootElement, options);
         }
 
-        internal static StorageAccountMigrationData DeserializeStorageAccountMigrationData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static StorageAccountMigrationData DeserializeStorageAccountMigrationData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
-            StorageSkuName targetSkuName = default;
-            StorageAccountMigrationStatus? migrationStatus = default;
-            string migrationFailedReason = default;
-            string migrationFailedDetailedReason = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            StorageAccountMigrationProperties storageAccountMigrationDetails = default;
+            string name0 = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    type = new ResourceType(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("targetSkuName"u8))
-                        {
-                            targetSkuName = new StorageSkuName(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("migrationStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            migrationStatus = new StorageAccountMigrationStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("migrationFailedReason"u8))
-                        {
-                            migrationFailedReason = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("migrationFailedDetailedReason"u8))
-                        {
-                            migrationFailedDetailedReason = property0.Value.GetString();
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    storageAccountMigrationDetails = StorageAccountMigrationProperties.DeserializeStorageAccountMigrationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new StorageAccountMigrationData(
                 id,
                 name,
-                type,
-                targetSkuName,
-                migrationStatus,
-                migrationFailedReason,
-                migrationFailedDetailedReason,
-                serializedAdditionalRawData);
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties,
+                storageAccountMigrationDetails,
+                name0);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    if (Id.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Id}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Id}'");
-                    }
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetSkuName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    targetSkuName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("    targetSkuName: ");
-                builder.AppendLine($"'{TargetSkuName.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrationStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    migrationStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MigrationStatus))
-                {
-                    builder.Append("    migrationStatus: ");
-                    builder.AppendLine($"'{MigrationStatus.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrationFailedReason), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    migrationFailedReason: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MigrationFailedReason))
-                {
-                    builder.Append("    migrationFailedReason: ");
-                    if (MigrationFailedReason.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MigrationFailedReason}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MigrationFailedReason}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrationFailedDetailedReason), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    migrationFailedDetailedReason: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MigrationFailedDetailedReason))
-                {
-                    builder.Append("    migrationFailedDetailedReason: ");
-                    if (MigrationFailedDetailedReason.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MigrationFailedDetailedReason}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MigrationFailedDetailedReason}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<StorageAccountMigrationData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountMigrationData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(StorageAccountMigrationData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        StorageAccountMigrationData IPersistableModel<StorageAccountMigrationData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountMigrationData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeStorageAccountMigrationData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StorageAccountMigrationData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<StorageAccountMigrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

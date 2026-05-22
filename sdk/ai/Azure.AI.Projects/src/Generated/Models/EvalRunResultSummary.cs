@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Summary statistics of a metric in an evaluation run. </summary>
     public partial class EvalRunResultSummary

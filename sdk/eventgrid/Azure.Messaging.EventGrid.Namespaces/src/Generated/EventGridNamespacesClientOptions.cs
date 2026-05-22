@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
@@ -24,10 +26,31 @@ namespace Azure.Messaging.EventGrid.Namespaces
                 ServiceVersion.V2024_06_01 => "2024-06-01",
                 _ => throw new NotSupportedException()
             };
+            ConfigureLogging();
+        }
+
+        /// <summary> Initializes a new instance of EventGridSenderClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal EventGridNamespacesClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "2024-06-01";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
+
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
 
         internal enum ServiceVersion
         {

@@ -32,12 +32,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="similarity"> The type of similarity algorithm to be used when scoring and ranking the documents matching a search query. The similarity algorithm can only be defined at index creation time and cannot be modified on existing indexes. If null, the ClassicSimilarity algorithm is used. </param>
         /// <param name="semanticSearch"> Defines parameters for a search index that influence semantic capabilities. </param>
         /// <param name="vectorSearch"> Contains configuration options related to vector search. </param>
-        /// <param name="permissionFilterOption"> A value indicating whether permission filtering is enabled for the index. </param>
-        /// <param name="purviewEnabled"> A value indicating whether Purview is enabled for the index. </param>
         /// <param name="fields"> The fields of the index. </param>
         /// <param name="etag"> The ETag of the index. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndex(string name, string description, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, IList<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, bool? purviewEnabled, IList<SearchField> fields, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndex(string name, string description, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, IList<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, IList<SearchField> fields, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -54,8 +52,6 @@ namespace Azure.Search.Documents.Indexes.Models
             Similarity = similarity;
             SemanticSearch = semanticSearch;
             VectorSearch = vectorSearch;
-            PermissionFilterOption = permissionFilterOption;
-            PurviewEnabled = purviewEnabled;
             _fields = fields;
             _etag = etag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -105,11 +101,5 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Contains configuration options related to vector search. </summary>
         public VectorSearch VectorSearch { get; set; }
-
-        /// <summary> A value indicating whether permission filtering is enabled for the index. </summary>
-        public SearchIndexPermissionFilterOption? PermissionFilterOption { get; set; }
-
-        /// <summary> A value indicating whether Purview is enabled for the index. </summary>
-        public bool? PurviewEnabled { get; set; }
     }
 }

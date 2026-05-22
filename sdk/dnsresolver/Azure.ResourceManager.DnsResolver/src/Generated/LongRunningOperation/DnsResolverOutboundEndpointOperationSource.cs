@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    internal class DnsResolverOutboundEndpointOperationSource : IOperationSource<DnsResolverOutboundEndpointResource>
+    /// <summary></summary>
+    internal partial class DnsResolverOutboundEndpointOperationSource : IOperationSource<DnsResolverOutboundEndpointResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DnsResolverOutboundEndpointOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DnsResolverOutboundEndpointResource IOperationSource<DnsResolverOutboundEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DnsResolverOutboundEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DnsResolverOutboundEndpointData data = DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DnsResolverOutboundEndpointResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DnsResolverOutboundEndpointResource> IOperationSource<DnsResolverOutboundEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DnsResolverOutboundEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
-            return await Task.FromResult(new DnsResolverOutboundEndpointResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DnsResolverOutboundEndpointData data = DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DnsResolverOutboundEndpointResource(_client, data);
         }
     }
 }

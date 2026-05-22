@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sphere
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -535,7 +535,8 @@ namespace Azure.ResourceManager.Sphere
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new SphereDeviceGroupResource(Client, data));
+                context,
+                "SphereProductResource.GenerateDefaultDeviceGroups"), data => new SphereDeviceGroupResource(Client, data));
         }
 
         /// <summary>
@@ -573,7 +574,8 @@ namespace Azure.ResourceManager.Sphere
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new SphereDeviceGroupResource(Client, data));
+                context,
+                "SphereProductResource.GenerateDefaultDeviceGroups"), data => new SphereDeviceGroupResource(Client, data));
         }
 
         /// <summary> Gets a collection of SphereDeviceGroups in the <see cref="SphereProductResource"/>. </summary>

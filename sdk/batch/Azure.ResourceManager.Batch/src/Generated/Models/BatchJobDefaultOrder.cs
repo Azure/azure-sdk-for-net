@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Batch.Models
     public readonly partial struct BatchJobDefaultOrder : IEquatable<BatchJobDefaultOrder>
     {
         private readonly string _value;
+        /// <summary> Tasks should be scheduled uniformly from all equal-priority jobs for the pool. </summary>
+        private const string NoneValue = "None";
+        /// <summary> If jobs have equal priority, tasks from jobs that were created earlier should be scheduled first. </summary>
+        private const string CreationTimeValue = "CreationTime";
 
         /// <summary> Initializes a new instance of <see cref="BatchJobDefaultOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchJobDefaultOrder(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string CreationTimeValue = "CreationTime";
+            _value = value;
+        }
 
         /// <summary> Tasks should be scheduled uniformly from all equal-priority jobs for the pool. </summary>
         public static BatchJobDefaultOrder None { get; } = new BatchJobDefaultOrder(NoneValue);
+
         /// <summary> If jobs have equal priority, tasks from jobs that were created earlier should be scheduled first. </summary>
         public static BatchJobDefaultOrder CreationTime { get; } = new BatchJobDefaultOrder(CreationTimeValue);
+
         /// <summary> Determines if two <see cref="BatchJobDefaultOrder"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchJobDefaultOrder left, BatchJobDefaultOrder right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchJobDefaultOrder"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchJobDefaultOrder left, BatchJobDefaultOrder right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchJobDefaultOrder"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchJobDefaultOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchJobDefaultOrder(string value) => new BatchJobDefaultOrder(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BatchJobDefaultOrder"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BatchJobDefaultOrder?(string value) => value == null ? null : new BatchJobDefaultOrder(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchJobDefaultOrder other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchJobDefaultOrder other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

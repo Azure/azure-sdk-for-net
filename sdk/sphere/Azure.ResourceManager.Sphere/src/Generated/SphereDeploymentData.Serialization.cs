@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Sphere
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sphereDeploymentData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(sphereDeploymentData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SphereDeploymentData"/> from. </param>

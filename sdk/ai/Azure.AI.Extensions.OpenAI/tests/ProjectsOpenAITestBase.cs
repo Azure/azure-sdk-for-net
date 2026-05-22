@@ -10,10 +10,8 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
-using Azure.AI.Projects;
-using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Extensions.OpenAI.Tests.Utils;
+using Azure.AI.Projects;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -89,24 +87,24 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
     protected AIProjectClient GetTestProjectClient()
     {
         AIProjectClientOptions options = CreateTestProjectClientOptions();
-        AIProjectClient baseClient = new(new Uri(TestEnvironment.PROJECT_ENDPOINT), GetTestAuthenticationProvider(), options);
+        AIProjectClient baseClient = new(new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestAuthenticationProvider(), options);
         return CreateProxyFromClient(baseClient);
     }
 
     protected ProjectOpenAIClient GetTestProjectOpenAIClient(bool endpointInConstructor = true, bool endpointInOptions = false)
     {
         ProjectOpenAIClientOptions clientOptions = CreateTestOpenAIClientOptions<ProjectOpenAIClientOptions>(
-            endpoint: endpointInOptions ? new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai/v1") : null);
+            endpoint: endpointInOptions ? new Uri($"{TestEnvironment.FOUNDRY_PROJECT_ENDPOINT}/openai/v1") : null);
 
         return CreateProxyFromClient(endpointInConstructor
-            ? new ProjectOpenAIClient(new Uri(TestEnvironment.PROJECT_ENDPOINT), GetTestAuthenticationProvider(), clientOptions)
+            ? new ProjectOpenAIClient(new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestAuthenticationProvider(), clientOptions)
             : new ProjectOpenAIClient(GetTestAuthenticationPolicy(), clientOptions));
     }
 
     protected ProjectResponsesClient GetTestProjectResponsesClient(bool endpointInConstructor = true, bool endpointInOptions = false, string defaultAgentName = null, string defaultModelName = null, string defaultConversationId = null)
     {
         ProjectResponsesClientOptions clientOptions = CreateTestOpenAIClientOptions<ProjectResponsesClientOptions>(
-            endpoint: endpointInOptions ? new Uri($"{TestEnvironment.PROJECT_ENDPOINT}/openai/v1") : null);
+            endpoint: endpointInOptions ? new Uri($"{TestEnvironment.FOUNDRY_PROJECT_ENDPOINT}/openai/v1") : null);
 
         AgentReference defaultAgent = null;
         if (defaultAgentName is not null)
@@ -119,7 +117,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         }
 
         return CreateProxyFromClient(endpointInConstructor
-                ? new ProjectResponsesClient(new Uri(TestEnvironment.PROJECT_ENDPOINT), GetTestAuthenticationProvider(), defaultAgent, defaultConversationId, clientOptions)
+                ? new ProjectResponsesClient(new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestAuthenticationProvider(), defaultAgent, defaultConversationId, clientOptions)
                 : new ProjectResponsesClient(GetTestAuthenticationProvider(), clientOptions));
     }
 
@@ -178,7 +176,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
 
     protected AuthenticationPolicy GetTestAuthenticationPolicy() => new BearerTokenPolicy(GetTestAuthenticationProvider(), "https://ai.azure.com/.default");
 
-    protected async Task<ResponseResult> WaitForRun(ResponsesClient responses, ResponseResult response, int waitTime=500)
+    protected async Task<ResponseResult> WaitForRun(ResponsesClient responses, ResponseResult response, int waitTime = 500)
     {
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
         {

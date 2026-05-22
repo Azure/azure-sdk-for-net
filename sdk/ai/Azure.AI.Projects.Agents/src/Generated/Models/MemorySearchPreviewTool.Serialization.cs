@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A tool for integrating memories into the agent. </summary>
-    public partial class MemorySearchPreviewTool : AgentTool, IJsonModel<MemorySearchPreviewTool>
+    public partial class MemorySearchPreviewTool : ProjectsAgentTool, IJsonModel<MemorySearchPreviewTool>
     {
         /// <summary> Initializes a new instance of <see cref="MemorySearchPreviewTool"/> for deserialization. </summary>
         internal MemorySearchPreviewTool()
@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemorySearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -77,6 +77,27 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(MemorySearchPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsCollectionDefined(ToolConfigs))
+            {
+                writer.WritePropertyName("tool_configs"u8);
+                writer.WriteStartObject();
+                foreach (var item in ToolConfigs)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("memory_store_name"u8);
             writer.WriteStringValue(MemoryStoreName);
             writer.WritePropertyName("scope"u8);
@@ -86,10 +107,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("search_options"u8);
                 writer.WriteObjectValue(SearchOptions, options);
             }
-            if (Optional.IsDefined(UpdateDelay))
+            if (Optional.IsDefined(UpdateDelayInSecs))
             {
                 writer.WritePropertyName("update_delay"u8);
-                writer.WriteNumberValue(UpdateDelay.Value);
+                writer.WriteNumberValue(UpdateDelayInSecs.Value);
             }
         }
 
@@ -99,7 +120,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemorySearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -120,15 +141,42 @@ namespace Azure.AI.Projects.Agents
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string name = default;
+            string description = default;
+            IDictionary<string, ToolConfig> toolConfigs = default;
             string memoryStoreName = default;
             string scope = default;
             MemorySearchToolOptions searchOptions = default;
-            int? updateDelay = default;
+            int? updateDelayInSecs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ToolType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("tool_configs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                    }
+                    toolConfigs = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("memory_store_name"u8))
@@ -156,7 +204,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    updateDelay = prop.Value.GetInt32();
+                    updateDelayInSecs = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,10 +215,13 @@ namespace Azure.AI.Projects.Agents
             return new MemorySearchPreviewTool(
                 @type,
                 additionalBinaryDataProperties,
+                name,
+                description,
+                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
                 memoryStoreName,
                 scope,
                 searchOptions,
-                updateDelay);
+                updateDelayInSecs);
         }
     }
 }

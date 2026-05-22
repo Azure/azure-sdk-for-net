@@ -6,6 +6,19 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
+  <!-- Define AZURE_SEARCH_PREVIEW when the source library is a preview/beta release.
+       This enables preview-only test files (*.Preview.cs) to compile.
+       When building for GA, preview tests are excluded at compile time.
+       We extract the Version from the source .csproj since the test project has its own version. -->
+  <PropertyGroup>
+    <_SrcCsprojPath>$(MSBuildThisFileDirectory)..\src\Azure.Search.Documents.csproj</_SrcCsprojPath>
+    <_SrcCsprojContent>$([System.IO.File]::ReadAllText('$(_SrcCsprojPath)'))</_SrcCsprojContent>
+    <_SrcVersion>$([System.Text.RegularExpressions.Regex]::Match($(_SrcCsprojContent), '%3CVersion%3E([^%3C]+)%3C').Groups.get_Item(1).Value)</_SrcVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(_SrcVersion.Contains('beta'))">
+    <DefineConstants>$(DefineConstants);AZURE_SEARCH_PREVIEW</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
