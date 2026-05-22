@@ -8,12 +8,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Reservations
 {
-    // Justification: GA exposed ReservationOrderData.Reservations as
-    // IReadOnlyList<ReservationDetailData>. The new generator emits IList<T> via the flattened
-    // ReservationOrderProperties; this shim restores the read-only collection surface.
     [CodeGenSuppress("Reservations")]
     public partial class ReservationOrderData
     {
+        // Customization is required to restore the GA public surface from the new generator's
+        // flattened-properties IList<T> shape back to the previously exposed IReadOnlyList<T> shape.
         public IReadOnlyList<ReservationDetailData> Reservations
         {
             get
