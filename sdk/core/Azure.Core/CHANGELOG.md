@@ -4,6 +4,14 @@
 
 ### Features Added
 
+- Added `RequestContent.Create(BinaryContent)` overload that adapts a `System.ClientModel.BinaryContent` instance into a `Azure.Core.RequestContent` instance.
+- Added experimental (`SCME0002`) `AzureCredentialResolver` that resolves Azure token credential sections (e.g. `AzureCliCredential`, `ManagedIdentityCredential`, `ChainedTokenCredential`) into `TokenCredential` instances. `ApiKeyCredential` sections are not claimed — clients dispatch on `Credential.CredentialSource` themselves.
+- Added experimental (`SCME0002`) extensions on `Azure.Identity.ConfigurationExtensions`:
+  - `AddAzureCredentialResolver()` on `IServiceCollection` and `IHostApplicationBuilder` — idempotent DI registration.
+  - `IConfiguration.GetAzureCredentialSettings(sectionName, ...)` — returns `CredentialSettings?` with `TokenProvider` populated for token sources and `Key` populated for inline ApiKey sources, so a single call site can dispatch on either shape without binding a `ClientSettings`.
+  - `IConfiguration.GetAzureClientSettings<T>(sectionName, params CredentialResolver[] resolvers)` — resolver-aware overload.
+- The Azure OpenAI default-scope quirk now writes `Credential:Scope` at the credential-section root (the canonical SCM 1.12.0+ location) instead of `Credential:AdditionalProperties:Scope`. SCM 1.12.0 reads both locations so existing configs continue to work.
+
 ### Breaking Changes
 
 ### Bugs Fixed

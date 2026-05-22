@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Switch configuration entries require a description to discern between configuration groups. </summary>
+    /// <summary> Switch configuration entries require a description to discern between configuration group. </summary>
     public partial class AnnotationResourceProperties
     {
         /// <summary>

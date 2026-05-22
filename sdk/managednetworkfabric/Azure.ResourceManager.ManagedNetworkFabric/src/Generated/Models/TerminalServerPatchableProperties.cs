@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Network and credential configuration currently applied on terminal server. </summary>
+    /// <summary> Terminal server patchable properties. </summary>
     public partial class TerminalServerPatchableProperties
     {
         /// <summary>
