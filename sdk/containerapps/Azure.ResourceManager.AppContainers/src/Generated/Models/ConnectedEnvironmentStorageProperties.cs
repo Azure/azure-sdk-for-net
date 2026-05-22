@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Storage properties. </summary>
     public partial class ConnectedEnvironmentStorageProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectedEnvironmentStorageProperties"/>. </summary>
         public ConnectedEnvironmentStorageProperties()
@@ -51,26 +23,34 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectedEnvironmentStorageProperties"/>. </summary>
-        /// <param name="azureFile"> Azure file properties. </param>
         /// <param name="provisioningState"> Provisioning state of the storage. </param>
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile, ConnectedEnvironmentStorageProvisioningState? provisioningState, string deploymentErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="azureFile"> Azure file properties. </param>
+        /// <param name="smb"> SMB storage properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectedEnvironmentStorageProperties(ConnectedEnvironmentStorageProvisioningState? provisioningState, string deploymentErrors, ContainerAppAzureFileProperties azureFile, SmbStorage smb, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AzureFile = azureFile;
             ProvisioningState = provisioningState;
             DeploymentErrors = deploymentErrors;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            AzureFile = azureFile;
+            Smb = smb;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Provisioning state of the storage. </summary>
+        [WirePath("provisioningState")]
+        public ConnectedEnvironmentStorageProvisioningState? ProvisioningState { get; }
+
+        /// <summary> Any errors that occurred during deployment or deployment validation. </summary>
+        [WirePath("deploymentErrors")]
+        public string DeploymentErrors { get; }
 
         /// <summary> Azure file properties. </summary>
         [WirePath("azureFile")]
         public ContainerAppAzureFileProperties AzureFile { get; set; }
-        /// <summary> Provisioning state of the storage. </summary>
-        [WirePath("provisioningState")]
-        public ConnectedEnvironmentStorageProvisioningState? ProvisioningState { get; }
-        /// <summary> Any errors that occurred during deployment or deployment validation. </summary>
-        [WirePath("deploymentErrors")]
-        public string DeploymentErrors { get; }
+
+        /// <summary> SMB storage properties. </summary>
+        [WirePath("smb")]
+        public SmbStorage Smb { get; set; }
     }
 }

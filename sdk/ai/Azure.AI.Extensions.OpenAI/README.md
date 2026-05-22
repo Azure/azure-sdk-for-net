@@ -52,6 +52,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Add a data agent to the Fabric](#add-a-data-agent-to-the-fabric)
     - [Create a Fabric connection in Microsoft Foundry](#create-a-fabric-connection-in-microsoft-foundry)
     - [Using Microsoft Fabric tool](#using-microsoft-fabric-tool)
+  - [Fabric IQ tool](#fabric-iq-tool)
   - [A2APreviewTool](#a2atool)
     - [Create a connection to A2A agent](#create-a-connection-to-a2a-agent)
       - [Classic Microsoft Foundry](#classic-microsoft-foundry)
@@ -552,17 +553,10 @@ ProjectsAgentRecord patchedRecord = projectClient.AgentAdministrationClient.Patc
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
 ```
 
-In this scenario we cannot use the `ProjectOpenAIClient` from `projectClient.ProjectOpenAIClient`
-property as we need to access customized endpoint, for the Agent, we have created.
-We set its name in `ProjectOpenAIClientOptions`.
+To use the `ProjectResponsesClient` with the endpoint, we need to get it using `GetProjectResponsesClientForAgentEndpoint` method.
 
 ```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Async
-ProjectOpenAIClientOptions responsesOptions = new()
-{
-    AgentName = agentVersion.Name
-};
-ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
-ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
 ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 Console.WriteLine(response.GetOutputText());
 ```
@@ -1680,6 +1674,27 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+### Fabric IQ tool (preview)<a id="fabric-iq-tool"></a>
+
+Fabric IQ is a layer above Microsoft Fabric. It orders and optimizes the data retrieval process. The Fabric IQ tool
+allows you to use These capabilities to get the data context for an Agent. To use it, please create the
+the Fabric IQ connection in Microsoft Foundry and use `FabricIQPreviewTool` in the Agent constructor:
+
+```C# Snippet:Sample_CreateAgent_FabricIQ_Async
+FabricIQPreviewTool fabricIQTool = new(projectConnectionId: fabricIQProjectConnectionId)
+{
+    RequireApproval = BinaryData.FromObjectAsJson("never"),
+};
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "Use the available Fabric IQ tools to answer questions and perform tasks.",
+    Tools = { fabricIQTool },
+};
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+    agentName: "myFabricIQAgent",
     options: new(agentDefinition));
 ```
 
