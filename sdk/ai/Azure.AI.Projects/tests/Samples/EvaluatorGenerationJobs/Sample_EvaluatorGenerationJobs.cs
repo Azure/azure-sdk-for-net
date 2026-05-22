@@ -40,7 +40,6 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
         EvaluatorGenerationJob job = new()
         {
             Inputs = new EvaluatorGenerationInputs(
-                name: "MyEvaluationGenerationJob",
                 sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
                 model: modelDeploymentName,
                 evaluatorName: "coherence"
@@ -68,7 +67,6 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
         job = new()
         {
             Inputs = new EvaluatorGenerationInputs(
-                name: "MyGenerationJobToCancel",
                 sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
                 model: modelDeploymentName,
                 evaluatorName: "violence"
@@ -125,7 +123,6 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
         EvaluatorGenerationJob job = new()
         {
             Inputs = new EvaluatorGenerationInputs(
-                name: "MyEvaluationGenerationJob",
                 sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
                 model: modelDeploymentName,
                 evaluatorName: "coherence"
@@ -153,7 +150,6 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
         job = new()
         {
             Inputs = new EvaluatorGenerationInputs(
-                name: "MyGenerationJobToCancel",
                 sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
                 model: modelDeploymentName,
                 evaluatorName: "violence"
