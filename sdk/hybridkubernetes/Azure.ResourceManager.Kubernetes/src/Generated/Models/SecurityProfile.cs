@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Kubernetes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityProfile"/>. </summary>
-        /// <param name="workloadIdentity"> The workload identity feature webhook. </param>
+        /// <param name="isWorkloadIdentity"> The workload identity feature webhook. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityProfile(SecurityProfileWorkloadIdentity workloadIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityProfile(SecurityProfileWorkloadIdentity isWorkloadIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            WorkloadIdentity = workloadIdentity;
+            IsWorkloadIdentity = isWorkloadIdentity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The workload identity feature webhook. </summary>
-        internal SecurityProfileWorkloadIdentity WorkloadIdentity { get; set; }
+        internal SecurityProfileWorkloadIdentity IsWorkloadIdentity { get; set; }
 
         /// <summary> Whether to enable or disable the workload identity Webhook. </summary>
-        public bool? WorkloadIdentityEnabled
+        public bool? IsWorkloadIdentityEnabled
         {
             get
             {
-                return WorkloadIdentity is null ? default : WorkloadIdentity.Enabled;
+                return IsWorkloadIdentity is null ? default : IsWorkloadIdentity.Enabled;
             }
             set
             {
-                if (WorkloadIdentity is null)
+                if (IsWorkloadIdentity is null)
                 {
-                    WorkloadIdentity = new SecurityProfileWorkloadIdentity();
+                    IsWorkloadIdentity = new SecurityProfileWorkloadIdentity();
                 }
-                WorkloadIdentity.Enabled = value;
+                IsWorkloadIdentity.Enabled = value;
             }
         }
     }

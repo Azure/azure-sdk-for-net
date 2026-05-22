@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Kubernetes;
 
 namespace Azure.ResourceManager.Kubernetes.Models
@@ -50,11 +51,11 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="arcAgentProfile"> Arc agentry configuration for the provisioned cluster. </param>
         /// <param name="securityProfile"> Security profile for the connected cluster. </param>
         /// <param name="oidcIssuerProfile"> Open ID Connect (OIDC) Issuer Profile for the connected cluster. </param>
-        /// <param name="gateway"> Details of the gateway used by the Arc router for connectivity. </param>
+        /// <param name="isGateway"> Details of the gateway used by the Arc router for connectivity. </param>
         /// <param name="arcAgentryConfigurations"> Configuration settings for customizing the behavior of the connected cluster. </param>
         /// <param name="miscellaneousProperties"> More properties related to the Connected Cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterProperties(string agentPublicKeyCertificate, string kubernetesVersion, int? totalNodeCount, int? totalCoreCount, string agentVersion, ProvisioningState? provisioningState, string distribution, string distributionVersion, string infrastructure, string offering, DateTimeOffset? managedIdentityCertificateExpirationOn, DateTimeOffset? lastConnectivityOn, ConnectivityStatus? connectivityStatus, PrivateLinkState? privateLinkState, string privateLinkScopeResourceId, AzureHybridBenefit? azureHybridBenefit, AadProfile aadProfile, ArcAgentProfile arcAgentProfile, SecurityProfile securityProfile, OidcIssuerProfile oidcIssuerProfile, Gateway gateway, IList<ArcAgentryConfigurations> arcAgentryConfigurations, IReadOnlyDictionary<string, string> miscellaneousProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedClusterProperties(string agentPublicKeyCertificate, string kubernetesVersion, int? totalNodeCount, int? totalCoreCount, string agentVersion, ProvisioningState? provisioningState, string distribution, string distributionVersion, string infrastructure, string offering, DateTimeOffset? managedIdentityCertificateExpirationOn, DateTimeOffset? lastConnectivityOn, ConnectivityStatus? connectivityStatus, PrivateLinkState? privateLinkState, ResourceIdentifier privateLinkScopeResourceId, AzureHybridBenefit? azureHybridBenefit, AadProfile aadProfile, ArcAgentProfile arcAgentProfile, SecurityProfile securityProfile, OidcIssuerProfile oidcIssuerProfile, Gateway isGateway, IList<ArcAgentryConfigurations> arcAgentryConfigurations, IReadOnlyDictionary<string, string> miscellaneousProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentPublicKeyCertificate = agentPublicKeyCertificate;
             KubernetesVersion = kubernetesVersion;
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             ArcAgentProfile = arcAgentProfile;
             SecurityProfile = securityProfile;
             OidcIssuerProfile = oidcIssuerProfile;
-            Gateway = gateway;
+            IsGateway = isGateway;
             ArcAgentryConfigurations = arcAgentryConfigurations;
             MiscellaneousProperties = miscellaneousProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public PrivateLinkState? PrivateLinkState { get; set; }
 
         /// <summary> This is populated only if privateLinkState is enabled. The resource id of the private link scope this connected cluster is assigned to, if any. </summary>
-        public string PrivateLinkScopeResourceId { get; set; }
+        public ResourceIdentifier PrivateLinkScopeResourceId { get; set; }
 
         /// <summary> Indicates whether Azure Hybrid Benefit is opted in. </summary>
         public AzureHybridBenefit? AzureHybridBenefit { get; set; }
@@ -143,7 +144,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public OidcIssuerProfile OidcIssuerProfile { get; set; }
 
         /// <summary> Details of the gateway used by the Arc router for connectivity. </summary>
-        internal Gateway Gateway { get; set; }
+        internal Gateway IsGateway { get; set; }
 
         /// <summary> Configuration settings for customizing the behavior of the connected cluster. </summary>
         public IList<ArcAgentryConfigurations> ArcAgentryConfigurations { get; set; }
@@ -152,11 +153,11 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public IReadOnlyDictionary<string, string> MiscellaneousProperties { get; }
 
         /// <summary> Whether to enable or disable the workload identity Webhook. </summary>
-        public bool? WorkloadIdentityEnabled
+        public bool? IsWorkloadIdentityEnabled
         {
             get
             {
-                return SecurityProfile is null ? default : SecurityProfile.WorkloadIdentityEnabled;
+                return SecurityProfile is null ? default : SecurityProfile.IsWorkloadIdentityEnabled;
             }
             set
             {
@@ -164,24 +165,24 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 {
                     SecurityProfile = new SecurityProfile();
                 }
-                SecurityProfile.WorkloadIdentityEnabled = value;
+                SecurityProfile.IsWorkloadIdentityEnabled = value;
             }
         }
 
         /// <summary> Indicates whether the gateway for arc router connectivity is enabled. </summary>
-        public bool? GatewayEnabled
+        public bool? IsGatewayEnabled
         {
             get
             {
-                return Gateway is null ? default : Gateway.Enabled;
+                return IsGateway is null ? default : IsGateway.Enabled;
             }
             set
             {
-                if (Gateway is null)
+                if (IsGateway is null)
                 {
-                    Gateway = new Gateway();
+                    IsGateway = new Gateway();
                 }
-                Gateway.Enabled = value;
+                IsGateway.Enabled = value;
             }
         }
     }

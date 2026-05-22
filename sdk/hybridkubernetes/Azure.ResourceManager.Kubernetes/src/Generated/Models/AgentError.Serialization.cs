@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 writer.WritePropertyName("component"u8);
                 writer.WriteStringValue(Component);
             }
-            if (options.Format != "W" && Optional.IsDefined(Time))
+            if (options.Format != "W" && Optional.IsDefined(OccurredOn))
             {
                 writer.WritePropertyName("time"u8);
-                writer.WriteStringValue(Time.Value, "O");
+                writer.WriteStringValue(OccurredOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             string message = default;
             string severity = default;
             string component = default;
-            DateTimeOffset? time = default;
+            DateTimeOffset? occurredOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    time = prop.Value.GetDateTimeOffset("O");
+                    occurredOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentError(message, severity, component, time, additionalBinaryDataProperties);
+            return new AgentError(message, severity, component, occurredOn, additionalBinaryDataProperties);
         }
     }
 }
