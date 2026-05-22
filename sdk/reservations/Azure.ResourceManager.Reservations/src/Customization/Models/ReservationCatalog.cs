@@ -5,8 +5,8 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    // Justification: GA exposed flattened MsrpP1Y on ReservationCatalog. The new TypeSpec generator
-    // keeps the Msrp envelope object; this shim surfaces the GA-flat property for back-compat.
+    // The new generator preserves the msrp envelope as ReservationCatalog.Msrp.P1Y;
+    // this shim restores the GA-flat ReservationCatalog.MsrpP1Y property for compatibility.
     public partial class ReservationCatalog
     {
         public PurchasePrice MsrpP1Y => Msrp?.P1Y;
