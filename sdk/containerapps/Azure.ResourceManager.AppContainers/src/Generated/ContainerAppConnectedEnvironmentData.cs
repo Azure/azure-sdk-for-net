@@ -14,102 +14,125 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary>
-    /// A class representing the ContainerAppConnectedEnvironment data model.
-    /// An environment for Kubernetes cluster specialized for web workloads by Azure App Service
-    /// </summary>
+    /// <summary> An environment for Kubernetes cluster specialized for web workloads by Azure App Service. </summary>
     public partial class ContainerAppConnectedEnvironmentData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppConnectedEnvironmentData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public ContainerAppConnectedEnvironmentData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppConnectedEnvironmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> ConnectedEnvironment resource specific properties. </param>
         /// <param name="extendedLocation"> The complex type of the extended location. </param>
-        /// <param name="provisioningState"> Provisioning state of the Kubernetes Environment. </param>
-        /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
-        /// <param name="defaultDomain"> Default Domain Name for the cluster. </param>
-        /// <param name="staticIP"> Static IP of the connectedEnvironment. </param>
-        /// <param name="daprAIConnectionString"> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </param>
-        /// <param name="customDomainConfiguration"> Custom domain configuration for the environment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppConnectedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ContainerAppConnectedEnvironmentProvisioningState? provisioningState, string deploymentErrors, string defaultDomain, IPAddress staticIP, string daprAIConnectionString, ContainerAppCustomDomainConfiguration customDomainConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppConnectedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ConnectedEnvironmentProperties properties, ContainerAppExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             ExtendedLocation = extendedLocation;
-            ProvisioningState = provisioningState;
-            DeploymentErrors = deploymentErrors;
-            DefaultDomain = defaultDomain;
-            StaticIP = staticIP;
-            DaprAIConnectionString = daprAIConnectionString;
-            CustomDomainConfiguration = customDomainConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerAppConnectedEnvironmentData"/> for deserialization. </summary>
-        internal ContainerAppConnectedEnvironmentData()
-        {
-        }
+        /// <summary> ConnectedEnvironment resource specific properties. </summary>
+        [WirePath("properties")]
+        internal ConnectedEnvironmentProperties Properties { get; set; }
 
         /// <summary> The complex type of the extended location. </summary>
         [WirePath("extendedLocation")]
         public ContainerAppExtendedLocation ExtendedLocation { get; set; }
+
         /// <summary> Provisioning state of the Kubernetes Environment. </summary>
         [WirePath("properties.provisioningState")]
-        public ContainerAppConnectedEnvironmentProvisioningState? ProvisioningState { get; }
+        public ContainerAppConnectedEnvironmentProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Any errors that occurred during deployment or deployment validation. </summary>
         [WirePath("properties.deploymentErrors")]
-        public string DeploymentErrors { get; }
+        public string DeploymentErrors
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentErrors;
+            }
+        }
+
         /// <summary> Default Domain Name for the cluster. </summary>
         [WirePath("properties.defaultDomain")]
-        public string DefaultDomain { get; }
+        public string DefaultDomain
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultDomain;
+            }
+        }
+
         /// <summary> Static IP of the connectedEnvironment. </summary>
         [WirePath("properties.staticIp")]
-        public IPAddress StaticIP { get; set; }
+        public IPAddress StaticIP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StaticIP;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedEnvironmentProperties();
+                }
+                Properties.StaticIP = value;
+            }
+        }
+
         /// <summary> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </summary>
         [WirePath("properties.daprAIConnectionString")]
-        public string DaprAIConnectionString { get; set; }
+        public string DaprAIConnectionString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DaprAIConnectionString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedEnvironmentProperties();
+                }
+                Properties.DaprAIConnectionString = value;
+            }
+        }
+
         /// <summary> Custom domain configuration for the environment. </summary>
         [WirePath("properties.customDomainConfiguration")]
-        public ContainerAppCustomDomainConfiguration CustomDomainConfiguration { get; set; }
+        public ContainerAppCustomDomainConfiguration CustomDomainConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomDomainConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectedEnvironmentProperties();
+                }
+                Properties.CustomDomainConfiguration = value;
+            }
+        }
     }
 }

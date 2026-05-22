@@ -11,6 +11,8 @@
 
 ### Other Changes
 
+- Migrated from AutoRest to TypeSpec-based code generation.
+
 ## 1.16.0 (2026-05-01)
 
 ### Features Added

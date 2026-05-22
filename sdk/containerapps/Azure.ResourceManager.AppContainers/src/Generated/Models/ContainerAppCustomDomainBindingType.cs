@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct ContainerAppCustomDomainBindingType : IEquatable<ContainerAppCustomDomainBindingType>
     {
         private readonly string _value;
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> SniEnabled. </summary>
+        private const string SniEnabledValue = "SniEnabled";
+        /// <summary> Auto. </summary>
+        private const string AutoValue = "Auto";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppCustomDomainBindingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppCustomDomainBindingType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "Disabled";
-        private const string SniEnabledValue = "SniEnabled";
-        private const string AutoValue = "Auto";
+            _value = value;
+        }
 
         /// <summary> Disabled. </summary>
         public static ContainerAppCustomDomainBindingType Disabled { get; } = new ContainerAppCustomDomainBindingType(DisabledValue);
+
         /// <summary> SniEnabled. </summary>
         public static ContainerAppCustomDomainBindingType SniEnabled { get; } = new ContainerAppCustomDomainBindingType(SniEnabledValue);
+
         /// <summary> Auto. </summary>
         public static ContainerAppCustomDomainBindingType Auto { get; } = new ContainerAppCustomDomainBindingType(AutoValue);
+
         /// <summary> Determines if two <see cref="ContainerAppCustomDomainBindingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppCustomDomainBindingType left, ContainerAppCustomDomainBindingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerAppCustomDomainBindingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppCustomDomainBindingType left, ContainerAppCustomDomainBindingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppCustomDomainBindingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerAppCustomDomainBindingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerAppCustomDomainBindingType(string value) => new ContainerAppCustomDomainBindingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerAppCustomDomainBindingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerAppCustomDomainBindingType?(string value) => value == null ? null : new ContainerAppCustomDomainBindingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppCustomDomainBindingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerAppCustomDomainBindingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,0 +1,81 @@
+name: azsdk-common-prepare-release-plan-trigger-eval
+description: Trigger and anti-trigger tests for the azsdk-common-prepare-release-plan skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-prepare-release-plan
+  type: ci-gate
+
+config:
+  runs: 1
+  timeout: "90s"
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  - name: trigger-prepare-a-release-plan
+    prompt: "prepare a release plan"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-prepare-release-plan"]
+  - name: trigger-plan-the-next-sdk-release
+    prompt: "plan the next SDK release"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-prepare-release-plan"]
+  - name: trigger-create-release-plan-for-my-package
+    prompt: "create release plan for my package"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-prepare-release-plan"]
+  - name: trigger-what-goes-in-a-release-plan
+    prompt: "create a release plan for my new Azure SDK service"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-prepare-release-plan"]
+  - name: trigger-help-me-prepare-for-sdk-release
+    prompt: "help me prepare a release plan for my new Azure SDK package"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-prepare-release-plan"]
+
+  - name: anti-trigger-deploy-my-azure-function
+    prompt: "deploy my Azure Function"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-prepare-release-plan"]
+  - name: anti-trigger-fix-my-pipeline-build-error
+    prompt: "fix my pipeline build error"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-prepare-release-plan"]
+  - name: anti-trigger-create-a-new-typespec-definition
+    prompt: "create a new TypeSpec definition"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-prepare-release-plan"]
+  - name: anti-trigger-configure-azure-logging
+    prompt: "configure Azure logging"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-prepare-release-plan"]
+  - name: anti-trigger-resolve-apiview-feedback
+    prompt: "resolve APIView feedback"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-prepare-release-plan"]

@@ -3,10 +3,9 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
-
 using System;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Cdn.Models
 {

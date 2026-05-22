@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.AppConfiguration
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource>> GetDeletedAppConfigurationStoreAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource GetDeletedAppConfigurationStoreResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreCollection GetDeletedAppConfigurationStores(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource> GetDeletedAppConfigurationStores(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource> GetDeletedAppConfigurationStoresAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AppConfigurationKeyValueCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppConfiguration.AppConfigurationKeyValueResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.AppConfigurationKeyValueResource>, System.Collections.IEnumerable
     {
@@ -492,6 +494,8 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         public virtual Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource> GetDeletedAppConfigurationStore(Azure.Core.AzureLocation location, string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource>> GetDeletedAppConfigurationStoreAsync(Azure.Core.AzureLocation location, string configStoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreCollection GetDeletedAppConfigurationStores() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource> GetDeletedAppConfigurationStores(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreResource> GetDeletedAppConfigurationStoresAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.AppConfiguration.Models

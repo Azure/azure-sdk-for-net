@@ -15,8 +15,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public partial class TerminalServerConfiguration : TerminalServerPatchableProperties
     {
         /// <summary> Initializes a new instance of <see cref="TerminalServerConfiguration"/>. </summary>
-        public TerminalServerConfiguration()
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="primaryIPv4Prefix"/> or <paramref name="secondaryIPv4Prefix"/> is null. </exception>
+        public TerminalServerConfiguration(string primaryIPv4Prefix, string secondaryIPv4Prefix)
         {
+            Argument.AssertNotNull(primaryIPv4Prefix, nameof(primaryIPv4Prefix));
+            Argument.AssertNotNull(secondaryIPv4Prefix, nameof(secondaryIPv4Prefix));
+
+            PrimaryIPv4Prefix = primaryIPv4Prefix;
+            SecondaryIPv4Prefix = secondaryIPv4Prefix;
+            SecretRotationStatus = new ChangeTrackingList<NetworkFabricSecretRotationStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TerminalServerConfiguration"/>. </summary>
@@ -24,22 +33,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="password"> Password for the terminal server connection. </param>
         /// <param name="serialNumber"> Serial Number of Terminal server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="networkDeviceId"> ARM Resource ID used for the NetworkDevice. </param>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
         /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
-        internal TerminalServerConfiguration(string username, string password, string serialNumber, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier networkDeviceId, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix) : base(username, password, serialNumber, serializedAdditionalRawData)
+        /// <param name="networkDeviceId"> ARM Resource ID used for the NetworkDevice. </param>
+        /// <param name="secretRotationStatus"> Secret rotation status for the terminal server's secrets. </param>
+        internal TerminalServerConfiguration(string username, string password, string serialNumber, IDictionary<string, BinaryData> serializedAdditionalRawData, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, ResourceIdentifier networkDeviceId, IReadOnlyList<NetworkFabricSecretRotationStatus> secretRotationStatus) : base(username, password, serialNumber, serializedAdditionalRawData)
         {
-            NetworkDeviceId = networkDeviceId;
             PrimaryIPv4Prefix = primaryIPv4Prefix;
             PrimaryIPv6Prefix = primaryIPv6Prefix;
             SecondaryIPv4Prefix = secondaryIPv4Prefix;
             SecondaryIPv6Prefix = secondaryIPv6Prefix;
+            NetworkDeviceId = networkDeviceId;
+            SecretRotationStatus = secretRotationStatus;
         }
 
-        /// <summary> ARM Resource ID used for the NetworkDevice. </summary>
-        public ResourceIdentifier NetworkDeviceId { get; }
         /// <summary> IPv4 Address Prefix. </summary>
         public string PrimaryIPv4Prefix { get; set; }
         /// <summary> IPv6 Address Prefix. </summary>
@@ -48,5 +57,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string SecondaryIPv4Prefix { get; set; }
         /// <summary> Secondary IPv6 Address Prefix. </summary>
         public string SecondaryIPv6Prefix { get; set; }
+        /// <summary> ARM Resource ID used for the NetworkDevice. </summary>
+        public ResourceIdentifier NetworkDeviceId { get; }
+        /// <summary> Secret rotation status for the terminal server's secrets. </summary>
+        public IReadOnlyList<NetworkFabricSecretRotationStatus> SecretRotationStatus { get; }
     }
 }
