@@ -119,6 +119,7 @@ public class ModelReaderWriterOptions
     {
         if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<object>? list) || list.Count == 0)
         {
+            ProxiedModel = null;
             return model;
         }
 
@@ -140,6 +141,7 @@ public class ModelReaderWriterOptions
             }
         }
 
+        ProxiedModel = null;
         return model;
     }
 
@@ -153,6 +155,7 @@ public class ModelReaderWriterOptions
     {
         if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<object>? list) || list.Count == 0)
         {
+            ProxiedModel = null;
             return model;
         }
 
@@ -173,6 +176,7 @@ public class ModelReaderWriterOptions
             }
         }
 
+        ProxiedModel = null;
         return model;
     }
 
@@ -377,6 +381,7 @@ public class ModelReaderWriterOptions
     {
         if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<object>? list) || list.Count == 0)
         {
+            ProxiedModel = null;
             return model;
         }
 
@@ -400,6 +405,7 @@ public class ModelReaderWriterOptions
             }
         }
 
+        ProxiedModel = null;
         return model;
     }
 

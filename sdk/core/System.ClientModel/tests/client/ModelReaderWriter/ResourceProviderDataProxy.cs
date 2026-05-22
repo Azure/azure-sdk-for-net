@@ -29,7 +29,7 @@ namespace System.ClientModel.Tests.Client
                 writer.WriteStartArray();
                 foreach (var item in model.ResourceTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace System.ClientModel.Tests.Client
                     List<ProviderResourceType> array = new List<ProviderResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderResourceType.DeserializeProviderResourceType(item, options));
+                        array.Add(ModelReaderWriter.Read<ProviderResourceType>(BinaryData.FromString(item.GetRawText()), options)!);
                     }
                     resourceTypes = array;
                     continue;

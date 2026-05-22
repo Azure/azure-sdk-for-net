@@ -57,13 +57,11 @@ OutputModel? model = JsonSerializer.Deserialize<OutputModel>(json, options);
 
 ## Using a Proxy
 
-In more advanced scenarios a library user might want to override the behavior of how a model is read or written.
-In this case you can implement your own class which implements the same interface, either `IPersistableModel<T>` or `IJsonModel<T>`, and register it with the `ModelReaderWriterOptions`.
-The proxy is only valid for a single instance of `ModelReaderWriterOptions` giving you more flexibility to turn it on or off.
+In more advanced scenarios a library user might want to override the behavior of how a model is read or written. In this case you can implement your own class which implements the same interface, either `IPersistableModel<T>` or `IJsonModel<T>`, and register it with the `ModelReaderWriterOptions`. The proxy is only valid for a single instance of `ModelReaderWriterOptions` giving you more flexibility to turn it on or off.
 
-### Direct Proxy (unconditional override)
+### Unconditional Proxy
 
-A direct proxy always handles the type it's registered for. Simply implement `IJsonModel<T>` (or `IPersistableModel<T>`) and register it.
+An unconditional proxy always handles the type it's registered for. Simply implement `IJsonModel<T>` (or `IPersistableModel<T>`) and register it.
 
 Using a proxy with the following definition
 
@@ -92,8 +90,7 @@ Using a proxy with the following definition
 public class InputModelProxy : IJsonModel<InputModel>
 ```
 
-The example below shows how to write a persistable model using a proxy to `BinaryData`.
-On the write path, call `ResolveProxy` to get the proxy (or the model itself if none matches),
+The example below shows how to write a persistable model using a proxy to `BinaryData`. On the write path, call `ResolveProxy` to get the proxy (or the model itself if none matches),
 then write through the returned interface.
 
 ```C# Snippet:Readme_Write_Proxy
@@ -107,10 +104,9 @@ IJsonModel<InputModel> resolved = options.ResolveProxy((IJsonModel<InputModel>)m
 BinaryData data = ModelReaderWriter.Write((IPersistableModel<InputModel>)resolved, options);
 ```
 
-### Conditional Proxy (discriminator routing)
+### Conditional proxy
 
-A conditional proxy inspects the data before deciding whether to handle it.
-Extend `ConditionalModelProxy<T>` and override `CanHandle` to implement discriminator-based routing.
+A conditional proxy inspects the data or model before deciding whether to handle it. Extend `ConditionalModelProxy<T>` and override `CanHandle`.
 
 ```csharp
 public class DerivedModelProxy : ConditionalModelProxy<BaseModel>
@@ -129,18 +125,18 @@ public class DerivedModelProxy : ConditionalModelProxy<BaseModel>
 }
 ```
 
-### Proxy Chain of Responsibility
+#### Multiple proxies and the chain of responsibility
 
-Multiple proxies can be registered for the same model type to form a chain of responsibility.
-Proxies are stored in FIFO order — the **first registered** proxy has the highest priority.
+Multiple proxies can be registered for the same model type to form a chain of responsibility. Proxies are used in the order they are added, regardless of whether they are conditional or unconditional. This means the **first registered** proxy has the highest priority. If conditional proxies are added after an unconditional proxy, they will not be consulted.
 
-**Write path:** Call `options.ResolveProxy(model)` — proxies are consulted first-to-last.
-Each conditional proxy's `CanHandle(model)` method is called; the first that returns `true`
-handles the write. Direct proxies always match. If nothing matches, the model itself is returned.
+For each registered proxy:
+- If it is a conditional proxy, it's `CanHandle(model)` method is called, if it returns `true` then this proxy is used or returned
+- If it is an unconditional proxy, it will always match.
+- If nothing matches, the model itself is used or returned.
 
-**Read path:** Use `ModelReaderWriter.Read<T>(data, options)` — proxies are consulted
-first-to-last internally. Each conditional proxy's `CanHandle(ReadOnlyMemory<byte>)` is called;
-the first that returns `true` handles the read. If all proxies decline, the model deserializes itself.
+**Write path:** Call `options.ResolveProxy(model)`, proxies are consulted first-to-last in the order they were registered. The proxy that should be applied is returned and can be used to write through the applicable model interface.
+
+**Read path:** Use `ModelReaderWriter.Read<T>(data, options)`, proxies are consulted first-to-last internally and the applicable proxy is used during the read process.
 
 ```C# Snippet:Readme_Proxy_Chain
 string json = @"{
@@ -150,10 +146,10 @@ string json = @"{
     }";
 ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
 
-// Higher-priority proxy registered first — consulted first in the chain
+// Higher-priority proxy registered first
 options.AddProxy(new OutputModelProxyOverride());
 
-// Base library registers a fallback proxy
+// Fallback proxy
 options.AddProxy(new OutputModelProxy());
 
 OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
