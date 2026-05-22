@@ -39,7 +39,8 @@ public class MapsClient
 
     public virtual async Task<ClientResult<IPAddressCountryPair>> GetCountryCodeAsync(IPAddress ipAddress)
     {
-        if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
+        if (ipAddress is null)
+            throw new ArgumentNullException(nameof(ipAddress));
 
         ClientResult result = await GetCountryCodeAsync(ipAddress.ToString()).ConfigureAwait(false);
 
@@ -51,7 +52,8 @@ public class MapsClient
 
     public virtual async Task<ClientResult> GetCountryCodeAsync(string ipAddress, RequestOptions? options = null)
     {
-        if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
+        if (ipAddress is null)
+            throw new ArgumentNullException(nameof(ipAddress));
 
         options ??= new RequestOptions();
 
@@ -71,7 +73,8 @@ public class MapsClient
 
     public virtual ClientResult<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress)
     {
-        if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
+        if (ipAddress is null)
+            throw new ArgumentNullException(nameof(ipAddress));
 
         ClientResult result = GetCountryCode(ipAddress.ToString());
 
@@ -83,7 +86,8 @@ public class MapsClient
 
     public virtual ClientResult GetCountryCode(string ipAddress, RequestOptions? options = null)
     {
-        if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
+        if (ipAddress is null)
+            throw new ArgumentNullException(nameof(ipAddress));
 
         options ??= new RequestOptions();
 
@@ -145,7 +149,8 @@ public class MapsClient
     public virtual async Task<ClientResult<CountryRegion>> AddCountryCodeAsync(CountryRegion country)
     {
         // Validate input parameters.
-        if (country is null) throw new ArgumentNullException(nameof(country));
+        if (country is null)
+            throw new ArgumentNullException(nameof(country));
 
         // Create the request body content to pass to the protocol method.
         // The content will be written using methods defined by the model's
@@ -171,7 +176,8 @@ public class MapsClient
     public virtual async Task<ClientResult> AddCountryCodeAsync(BinaryContent country, RequestOptions? options = null)
     {
         // Validate input parameters.
-        if (country is null) throw new ArgumentNullException(nameof(country));
+        if (country is null)
+            throw new ArgumentNullException(nameof(country));
 
         // Use default RequestOptions if none were provided by the caller.
         options ??= new RequestOptions();

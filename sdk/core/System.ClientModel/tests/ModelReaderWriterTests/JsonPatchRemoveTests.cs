@@ -895,8 +895,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void DateTime_Empty()
         {
             JsonPatch jp = new();
-            var dt1 = new DateTime(2024,1,2,3,4,5, DateTimeKind.Utc);
-            var dt2 = new DateTime(2025,2,3,4,5,6, DateTimeKind.Utc);
+            var dt1 = new DateTime(2024, 1, 2, 3, 4, 5, DateTimeKind.Utc);
+            var dt2 = new DateTime(2025, 2, 3, 4, 5, 6, DateTimeKind.Utc);
 
             jp.Set("$.x"u8, dt1);
             jp.Set("$.y"u8, dt2);
@@ -965,8 +965,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void DateTimeOffset_Empty()
         {
             JsonPatch jp = new();
-            var dto1 = new DateTimeOffset(2024,1,2,3,4,5, TimeSpan.Zero);
-            var dto2 = new DateTimeOffset(2025,2,3,4,5,6, TimeSpan.Zero);
+            var dto1 = new DateTimeOffset(2024, 1, 2, 3, 4, 5, TimeSpan.Zero);
+            var dto2 = new DateTimeOffset(2025, 2, 3, 4, 5, 6, TimeSpan.Zero);
 
             jp.Set("$.x"u8, dto1);
             jp.Set("$.y"u8, dto2);

@@ -52,8 +52,8 @@ public class ModelReaderWriterOptions
 
     /// <summary>
     /// Registers an <see cref="IPersistableModel{T}"/> as a proxy for the specified type.
-    /// Proxies are consulted in FIFO order (first registered is consulted first).
-    /// Direct (non-conditional) proxies always match — the first registered one wins.
+    /// Proxies are consulted in the order they were registered.
+    /// Direct (non-conditional) proxies always match, the first registered one wins.
     /// </summary>
     /// <param name="proxy">The proxy implementation.</param>
     public void AddProxy<T>(IPersistableModel<T> proxy)
@@ -69,8 +69,8 @@ public class ModelReaderWriterOptions
 
     /// <summary>
     /// Registers an <see cref="IJsonModel{T}"/> as a proxy for the specified type.
-    /// Proxies are consulted in FIFO order (first registered is consulted first).
-    /// Direct (non-conditional) proxies always match — the first registered one wins.
+    /// Proxies are consulted in the order they were registered.
+    /// Direct (non-conditional) proxies always match, the first registered one wins.
     /// </summary>
     /// <param name="proxy">The proxy implementation.</param>
     public void AddProxy<T>(IJsonModel<T> proxy)
@@ -86,8 +86,9 @@ public class ModelReaderWriterOptions
 
     /// <summary>
     /// Registers a <see cref="ConditionalModelProxy{T}"/> for the specified type.
-    /// When the proxy list is consulted, conditional proxies check <c>CanHandle</c> before delegating
-    /// to their held model. Non-conditional proxies are always used (first one wins).
+    /// Proxies are consulted in the order they were registered.
+    /// When the proxy list is consulted by ModelReaderWriter, it checks <c>CanHandle</c> before delegating
+    /// to the held model.
     /// </summary>
     /// <param name="proxy">The conditional proxy.</param>
     public void AddProxy<T>(ConditionalModelProxy<T> proxy)
@@ -110,7 +111,7 @@ public class ModelReaderWriterOptions
     public object? ProxiedModel { get; private set; }
 
     /// <summary>
-    /// Resolves the write proxy for the specified model, walking the proxy list in FIFO order.
+    /// Resolves the write proxy for the specified model, walking the proxy list in the order they were registered.
     /// For <see cref="ConditionalModelProxy{T}"/>, calls <c>CanHandle(model)</c>; skips if false.
     /// For plain <see cref="IPersistableModel{T}"/> proxies, returns immediately (first wins).
     /// If no proxy matches, returns the model itself.
@@ -146,7 +147,7 @@ public class ModelReaderWriterOptions
     }
 
     /// <summary>
-    /// Resolves the write proxy for the specified model on the JSON path, walking the proxy list in FIFO order.
+    /// Resolves the write proxy for the specified model on the JSON path, walking the proxy list in the order they were registered.
     /// For <see cref="ConditionalModelProxy{T}"/>, calls <c>CanHandle(model)</c>; skips if false.
     /// For plain <see cref="IJsonModel{T}"/> proxies, returns immediately (first wins).
     /// If no proxy matches, returns the model itself.
@@ -181,7 +182,7 @@ public class ModelReaderWriterOptions
     }
 
     /// <summary>
-    /// Attempts to find a proxy for reading from binary data, walking the proxy list in FIFO order.
+    /// Attempts to find a proxy for reading from binary data, walking the proxy list in the order they were registered.
     /// For <see cref="ConditionalModelProxy{T}"/>, calls <c>CanHandle(data)</c>; skips if false.
     /// For plain <see cref="IPersistableModel{T}"/> proxies, returns immediately (first wins).
     /// </summary>
@@ -218,7 +219,7 @@ public class ModelReaderWriterOptions
     }
 
     /// <summary>
-    /// Attempts to find a proxy for reading from a <see cref="Utf8JsonReader"/>, walking the proxy list in FIFO order.
+    /// Attempts to find a proxy for reading from a <see cref="Utf8JsonReader"/>, walking the proxy list in the order they were registered.
     /// For <see cref="ConditionalModelProxy{T}"/>, calls <c>CanHandle(ref reader)</c> with a snapshot; skips if false.
     /// For plain <see cref="IJsonModel{T}"/> proxies, returns immediately (first wins).
     /// </summary>
@@ -275,7 +276,7 @@ public class ModelReaderWriterOptions
     }
 
     /// <summary>
-    /// Resolves reading from a <see cref="Utf8JsonReader"/> by consulting the proxy list in FIFO order.
+    /// Resolves reading from a <see cref="Utf8JsonReader"/> by consulting the proxy list in the order they were registered.
     /// Each conditional proxy receives a snapshot of the reader. Falls back to the model itself.
     /// </summary>
     internal T? ReadWithChain<T>(IJsonModel<T> model, ref Utf8JsonReader reader)
@@ -284,9 +285,7 @@ public class ModelReaderWriterOptions
         if (TryGetProxy<T>(ref snapshot, out IJsonModel<T>? proxy))
         {
             ProxiedModel = model;
-            Utf8JsonReader createReader = reader;
-            T? result = proxy!.Create(ref createReader, this);
-            JsonDocument.ParseValue(ref reader); // advance original past the element
+            T? result = proxy!.Create(ref reader, this);
             return result;
         }
 
@@ -352,9 +351,7 @@ public class ModelReaderWriterOptions
                 if (conditional.CanHandleReader(ref checkReader))
                 {
                     ProxiedModel = model;
-                    Utf8JsonReader createReader = snapshot;
-                    object? result = conditional.CreateFromReader(ref createReader, this);
-                    JsonDocument.ParseValue(ref reader);
+                    object? result = conditional.CreateFromReader(ref reader, this);
                     return result;
                 }
             }
@@ -362,9 +359,7 @@ public class ModelReaderWriterOptions
             {
                 // Direct proxy — covariance lets us cast directly
                 ProxiedModel = model;
-                Utf8JsonReader createReader = snapshot;
-                object? result = directProxy.Create(ref createReader, this);
-                JsonDocument.ParseValue(ref reader);
+                object? result = directProxy.Create(ref reader, this);
                 return result;
             }
         }
@@ -410,7 +405,7 @@ public class ModelReaderWriterOptions
     }
 
     /// <summary>
-    /// Adapts an IJsonModel&lt;T&gt; to IJsonModel&lt;object&gt; for use in non-generic write paths.
+    /// Adapts an IJsonModel{T} to IJsonModel{object} for use in non-generic write paths.
     /// </summary>
     internal sealed class JsonModelObjectAdapter<T> : IJsonModel<object>
     {

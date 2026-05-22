@@ -24,5 +24,5 @@ internal class ReflectionCollectionBuilder : ModelReaderWriterTypeBuilder
     protected override Type? ItemType => _collectionType.GetGenericArguments()[0];
 
     protected override void AddItem(object collection, object? item)
-        => _collectionType.GetMethod(_addMethod, [ ItemType! ])!.Invoke(collection, [ item ]);
+        => _collectionType.GetMethod(_addMethod, [ItemType!])!.Invoke(collection, [item]);
 }

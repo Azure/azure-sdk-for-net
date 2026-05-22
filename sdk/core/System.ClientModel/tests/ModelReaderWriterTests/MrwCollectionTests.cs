@@ -49,7 +49,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         protected override void RoundTripTest(string format, RoundTripStrategy<TCollection> strategy)
         {
-            // TODO -> we may need to update this to make sure the proxy tests are not getting skipped with this check since it was added after the proxy prototype was abandoned
             if (!strategy.UsesContext && !HasReflectionBuilderSupport)
             {
                 Assert.Ignore($"Collection type {CollectionTypeName} does not have reflection builder support.  Skipping test.");

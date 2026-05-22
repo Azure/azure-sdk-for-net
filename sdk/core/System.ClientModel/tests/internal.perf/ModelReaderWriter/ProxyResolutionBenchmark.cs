@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using BenchmarkDotNet.Attributes;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using BenchmarkDotNet.Attributes;
 
 namespace System.ClientModel.Tests.Internal.Perf
 {

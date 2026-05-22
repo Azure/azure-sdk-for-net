@@ -146,10 +146,10 @@ string json = @"{
     }";
 ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
 
-// Higher-priority proxy registered first
+// Higher-priority proxy registered first — consulted first in the chain
 options.AddProxy(new OutputModelProxyOverride());
 
-// Fallback proxy
+// Base library registers a fallback proxy
 options.AddProxy(new OutputModelProxy());
 
 OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
