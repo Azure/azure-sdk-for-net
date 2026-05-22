@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -17,32 +16,12 @@ namespace Azure.ResourceManager.TrafficManager
     [CodeGenType("TrafficManagerUserMetricResource")]
     public partial class TrafficManagerUserMetricsResource
     {
-        /// <summary> Backward-compatible CreateOrUpdate. </summary>
+        /// <summary> Create or update a TrafficManagerUserMetric. </summary>
         /// <param name="waitUntil"> Completion option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual ArmOperation<TrafficManagerUserMetricsResource> CreateOrUpdate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            return Update(waitUntil, cancellationToken);
-        }
-
-        /// <summary> Backward-compatible CreateOrUpdateAsync. </summary>
-        /// <param name="waitUntil"> Completion option. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
         public virtual async Task<ArmOperation<TrafficManagerUserMetricsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            return await UpdateAsync(waitUntil, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Update a TrafficManagerUserMetric. </summary>
-        /// <param name="waitUntil"> Completion option. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<TrafficManagerUserMetricsResource>> UpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _trafficManagerUserMetricsKeysClientDiagnostics.CreateScope("TrafficManagerUserMetricsResource.Update");
+            using DiagnosticScope scope = _trafficManagerUserMetricsKeysClientDiagnostics.CreateScope("TrafficManagerUserMetricsResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -69,12 +48,12 @@ namespace Azure.ResourceManager.TrafficManager
             }
         }
 
-        /// <summary> Update a TrafficManagerUserMetric. </summary>
+        /// <summary> Create or update a TrafficManagerUserMetric. </summary>
         /// <param name="waitUntil"> Completion option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<TrafficManagerUserMetricsResource> Update(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TrafficManagerUserMetricsResource> CreateOrUpdate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _trafficManagerUserMetricsKeysClientDiagnostics.CreateScope("TrafficManagerUserMetricsResource.Update");
+            using DiagnosticScope scope = _trafficManagerUserMetricsKeysClientDiagnostics.CreateScope("TrafficManagerUserMetricsResource.CreateOrUpdate");
             scope.Start();
             try
             {
