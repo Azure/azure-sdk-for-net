@@ -1579,12 +1579,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SiteRecoveryJobResource>> ExportAsync(WaitUntil waitUntil, string resourceName, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteRecoveryJobResource>> ExportSiteRecoveryJobAsync(WaitUntil waitUntil, string resourceName, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ReplicationJobsClientDiagnostics.CreateScope("MockableRecoveryServicesSiteRecoveryResourceGroupResource.Export");
+            using DiagnosticScope scope = ReplicationJobsClientDiagnostics.CreateScope("MockableRecoveryServicesSiteRecoveryResourceGroupResource.ExportSiteRecoveryJob");
             scope.Start();
             try
             {
@@ -1592,7 +1592,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReplicationJobsRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, SiteRecoveryJobQueryContent.ToRequestContent(content), context);
+                HttpMessage message = ReplicationJobsRestClient.CreateExportSiteRecoveryJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, SiteRecoveryJobQueryContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(
                     new SiteRecoveryJobOperationSource(Client),
@@ -1637,12 +1637,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SiteRecoveryJobResource> Export(WaitUntil waitUntil, string resourceName, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteRecoveryJobResource> ExportSiteRecoveryJob(WaitUntil waitUntil, string resourceName, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ReplicationJobsClientDiagnostics.CreateScope("MockableRecoveryServicesSiteRecoveryResourceGroupResource.Export");
+            using DiagnosticScope scope = ReplicationJobsClientDiagnostics.CreateScope("MockableRecoveryServicesSiteRecoveryResourceGroupResource.ExportSiteRecoveryJob");
             scope.Start();
             try
             {
@@ -1650,7 +1650,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReplicationJobsRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, SiteRecoveryJobQueryContent.ToRequestContent(content), context);
+                HttpMessage message = ReplicationJobsRestClient.CreateExportSiteRecoveryJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, SiteRecoveryJobQueryContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryJobResource>(
                     new SiteRecoveryJobOperationSource(Client),

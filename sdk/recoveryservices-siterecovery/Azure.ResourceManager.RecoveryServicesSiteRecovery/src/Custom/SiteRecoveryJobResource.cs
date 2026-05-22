@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             Argument.AssertNotNull(content, nameof(content));
             string vaultName = Id.Parent.Name;
             ResourceGroupResource rg = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
-            return await rg.ExportAsync(waitUntil, vaultName, content, cancellationToken).ConfigureAwait(false);
+            return await rg.ExportSiteRecoveryJobAsync(waitUntil, vaultName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             Argument.AssertNotNull(content, nameof(content));
             string vaultName = Id.Parent.Name;
             ResourceGroupResource rg = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
-            return rg.Export(waitUntil, vaultName, content, cancellationToken);
+            return rg.ExportSiteRecoveryJob(waitUntil, vaultName, content, cancellationToken);
         }
     }
 }

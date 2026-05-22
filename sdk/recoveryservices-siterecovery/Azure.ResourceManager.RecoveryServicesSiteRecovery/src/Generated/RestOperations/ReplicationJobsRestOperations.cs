@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return message;
         }
 
-        internal HttpMessage CreateExportRequest(Guid subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateExportSiteRecoveryJobRequest(Guid subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

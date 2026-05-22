@@ -1420,7 +1420,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The operation to export the details of the Azure Site Recovery jobs of the vault.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.ExportAsync(WaitUntil, string, SiteRecoveryJobQueryContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.ExportSiteRecoveryJobAsync(WaitUntil, string, SiteRecoveryJobQueryContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1429,18 +1429,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<ArmOperation<SiteRecoveryJobResource>> ExportAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string resourceName, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<SiteRecoveryJobResource>> ExportSiteRecoveryJobAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string resourceName, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).ExportAsync(waitUntil, resourceName, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).ExportSiteRecoveryJobAsync(waitUntil, resourceName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// The operation to export the details of the Azure Site Recovery jobs of the vault.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.Export(WaitUntil, string, SiteRecoveryJobQueryContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.ExportSiteRecoveryJob(WaitUntil, string, SiteRecoveryJobQueryContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1449,11 +1449,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static ArmOperation<SiteRecoveryJobResource> Export(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string resourceName, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
+        public static ArmOperation<SiteRecoveryJobResource> ExportSiteRecoveryJob(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string resourceName, SiteRecoveryJobQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).Export(waitUntil, resourceName, content, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).ExportSiteRecoveryJob(waitUntil, resourceName, content, cancellationToken);
         }
 
         /// <summary>
