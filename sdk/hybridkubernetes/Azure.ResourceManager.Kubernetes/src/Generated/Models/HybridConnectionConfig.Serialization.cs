@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 throw new FormatException($"The model {nameof(HybridConnectionConfig)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpirationTime))
+            if (options.Format != "W" && Optional.IsDefined(ExpirationTimeInSeconds))
             {
                 writer.WritePropertyName("expirationTime"u8);
-                writer.WriteNumberValue(ExpirationTime.Value);
+                writer.WriteNumberValue(ExpirationTimeInSeconds.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(HybridConnectionName))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 return null;
             }
-            long? expirationTime = default;
+            long? expirationTimeInSeconds = default;
             string hybridConnectionName = default;
             string relay = default;
             string token = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    expirationTime = prop.Value.GetInt64();
+                    expirationTimeInSeconds = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("hybridConnectionName"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 }
             }
             return new HybridConnectionConfig(
-                expirationTime,
+                expirationTimeInSeconds,
                 hybridConnectionName,
                 relay,
                 token,

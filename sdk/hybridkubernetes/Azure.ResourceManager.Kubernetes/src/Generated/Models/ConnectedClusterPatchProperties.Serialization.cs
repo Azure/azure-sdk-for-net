@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 writer.WritePropertyName("azureHybridBenefit"u8);
                 writer.WriteStringValue(AzureHybridBenefit.Value.ToString());
             }
-            if (Optional.IsDefined(Gateway))
+            if (Optional.IsDefined(IsGateway))
             {
                 writer.WritePropertyName("gateway"u8);
-                writer.WriteObjectValue(Gateway, options);
+                writer.WriteObjectValue(IsGateway, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             string distribution = default;
             string distributionVersion = default;
             AzureHybridBenefit? azureHybridBenefit = default;
-            Gateway gateway = default;
+            Gateway isGateway = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    gateway = Gateway.DeserializeGateway(prop.Value, options);
+                    isGateway = Gateway.DeserializeGateway(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConnectedClusterPatchProperties(distribution, distributionVersion, azureHybridBenefit, gateway, additionalBinaryDataProperties);
+            return new ConnectedClusterPatchProperties(distribution, distributionVersion, azureHybridBenefit, isGateway, additionalBinaryDataProperties);
         }
     }
 }

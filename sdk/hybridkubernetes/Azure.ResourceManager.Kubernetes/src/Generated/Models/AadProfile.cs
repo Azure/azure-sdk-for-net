@@ -20,29 +20,29 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <summary> Initializes a new instance of <see cref="AadProfile"/>. </summary>
         public AadProfile()
         {
-            AdminGroupObjectIDs = new ChangeTrackingList<string>();
+            AdminGroupObjectIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AadProfile"/>. </summary>
-        /// <param name="enableAzureRBAC"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
-        /// <param name="adminGroupObjectIDs"> The list of AAD group object IDs that will have admin role of the cluster. </param>
-        /// <param name="tenantID"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
+        /// <param name="enableAzureRbac"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
+        /// <param name="adminGroupObjectIds"> The list of AAD group object IDs that will have admin role of the cluster. </param>
+        /// <param name="tenantId"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AadProfile(bool? enableAzureRBAC, IList<string> adminGroupObjectIDs, string tenantID, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AadProfile(bool? enableAzureRbac, IList<string> adminGroupObjectIds, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EnableAzureRBAC = enableAzureRBAC;
-            AdminGroupObjectIDs = adminGroupObjectIDs;
-            TenantID = tenantID;
+            EnableAzureRbac = enableAzureRbac;
+            AdminGroupObjectIds = adminGroupObjectIds;
+            TenantId = tenantId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether to enable Azure RBAC for Kubernetes authorization. </summary>
-        public bool? EnableAzureRBAC { get; set; }
+        public bool? EnableAzureRbac { get; set; }
 
         /// <summary> The list of AAD group object IDs that will have admin role of the cluster. </summary>
-        public IList<string> AdminGroupObjectIDs { get; }
+        public IList<string> AdminGroupObjectIds { get; }
 
         /// <summary> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </summary>
-        public string TenantID { get; set; }
+        public string TenantId { get; set; }
     }
 }

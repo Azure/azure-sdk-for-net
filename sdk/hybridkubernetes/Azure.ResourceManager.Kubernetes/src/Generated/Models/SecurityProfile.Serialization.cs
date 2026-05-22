@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 throw new FormatException($"The model {nameof(SecurityProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(WorkloadIdentity))
+            if (Optional.IsDefined(IsWorkloadIdentity))
             {
                 writer.WritePropertyName("workloadIdentity"u8);
-                writer.WriteObjectValue(WorkloadIdentity, options);
+                writer.WriteObjectValue(IsWorkloadIdentity, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 return null;
             }
-            SecurityProfileWorkloadIdentity workloadIdentity = default;
+            SecurityProfileWorkloadIdentity isWorkloadIdentity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    workloadIdentity = SecurityProfileWorkloadIdentity.DeserializeSecurityProfileWorkloadIdentity(prop.Value, options);
+                    isWorkloadIdentity = SecurityProfileWorkloadIdentity.DeserializeSecurityProfileWorkloadIdentity(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SecurityProfile(workloadIdentity, additionalBinaryDataProperties);
+            return new SecurityProfile(isWorkloadIdentity, additionalBinaryDataProperties);
         }
     }
 }
