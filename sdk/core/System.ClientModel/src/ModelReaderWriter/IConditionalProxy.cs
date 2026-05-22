@@ -19,5 +19,5 @@ internal interface IConditionalProxy
     IPersistableModel<object> GetModel();
     object? CreateFromData(BinaryData data, ModelReaderWriterOptions options);
     object? CreateFromReader(ref Utf8JsonReader reader, ModelReaderWriterOptions options);
-    IJsonModel<object> AsJsonModelOfObject(object originalModel);
+    IJsonModel<object> AsJsonModelOfObject();
 }

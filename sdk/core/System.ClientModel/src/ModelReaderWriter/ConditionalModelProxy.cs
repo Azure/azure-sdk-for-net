@@ -83,10 +83,10 @@ public abstract class ConditionalModelProxy<T> : IConditionalProxy
         throw new InvalidOperationException($"Conditional proxy model for {typeof(T).Name} does not support JSON reader path.");
     }
 
-    IJsonModel<object> IConditionalProxy.AsJsonModelOfObject(object originalModel)
+    IJsonModel<object> IConditionalProxy.AsJsonModelOfObject()
     {
         if (Model is IJsonModel<T>)
-            return new ModelReaderWriterOptions.JsonModelObjectAdapter<T>(Model, originalModel);
+            return new ModelReaderWriterOptions.JsonModelObjectAdapter<T>(Model);
         throw new InvalidOperationException($"Conditional proxy model for {typeof(T).Name} does not implement IJsonModel.");
     }
 }

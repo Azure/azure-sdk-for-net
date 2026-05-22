@@ -386,7 +386,7 @@ public class ModelReaderWriterOptions
                     ProxiedModel = model;
                     if (conditional.GetModel() is IJsonModel<object> jsonModel)
                         return jsonModel;
-                    return conditional.AsJsonModelOfObject(model);
+                    return conditional.AsJsonModelOfObject();
                 }
             }
             else if (entry is IJsonModel<object> directProxy)
@@ -406,12 +406,10 @@ public class ModelReaderWriterOptions
     internal sealed class JsonModelObjectAdapter<T> : IJsonModel<object>
     {
         private readonly object _proxy;
-        private readonly object _originalModel;
 
-        public JsonModelObjectAdapter(object proxy, object originalModel)
+        public JsonModelObjectAdapter(object proxy)
         {
             _proxy = proxy;
-            _originalModel = originalModel;
         }
 
         object IJsonModel<object>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
