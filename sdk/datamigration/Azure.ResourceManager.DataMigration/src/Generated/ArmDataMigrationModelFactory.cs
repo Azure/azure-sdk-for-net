@@ -4732,8 +4732,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Database Migration Resource properties for SQL database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <returns> A new <see cref="DataMigration.DatabaseMigrationSqlDBData"/> instance for mocking. </returns>
-        public static DatabaseMigrationSqlDBData DatabaseMigrationSqlDBData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, DatabaseMigrationSqlDBProperties properties = default)
+        public static DatabaseMigrationSqlDBData DatabaseMigrationSqlDBData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, DatabaseMigrationSqlDBProperties properties = default, string targetDBName = default)
         {
             return new DatabaseMigrationSqlDBData(
                 id,
@@ -4741,7 +4742,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                targetDBName);
         }
 
         /// <summary> Database Migration Resource for SQL Managed Instance. </summary>
@@ -4750,8 +4752,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Database Migration Resource properties for SQL Managed Instance. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <returns> A new <see cref="DataMigration.DatabaseMigrationSqlMIData"/> instance for mocking. </returns>
-        public static DatabaseMigrationSqlMIData DatabaseMigrationSqlMIData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, DatabaseMigrationSqlMIProperties properties = default)
+        public static DatabaseMigrationSqlMIData DatabaseMigrationSqlMIData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, DatabaseMigrationSqlMIProperties properties = default, string targetDBName = default)
         {
             return new DatabaseMigrationSqlMIData(
                 id,
@@ -4759,7 +4762,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                targetDBName);
         }
 
         /// <summary> Database Migration Resource for SQL Virtual Machine. </summary>
@@ -4768,8 +4772,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Database Migration Resource properties for SQL Virtual Machine. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <returns> A new <see cref="DataMigration.DatabaseMigrationSqlVmData"/> instance for mocking. </returns>
-        public static DatabaseMigrationSqlVmData DatabaseMigrationSqlVmData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, DatabaseMigrationSqlVmProperties properties = default)
+        public static DatabaseMigrationSqlVmData DatabaseMigrationSqlVmData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, DatabaseMigrationSqlVmProperties properties = default, string targetDBName = default)
         {
             return new DatabaseMigrationSqlVmData(
                 id,
@@ -4777,7 +4782,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                targetDBName);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -5039,6 +5045,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DataMigrationQuotaName(localizedValue, value, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataMigration.DatabaseMigrationSqlDBData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Database Migration Resource properties for SQL database. </param>
+        /// <returns> A new <see cref="DataMigration.DatabaseMigrationSqlDBData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DatabaseMigrationSqlDBData DatabaseMigrationSqlDBData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DatabaseMigrationSqlDBProperties properties)
+        {
+            return DatabaseMigrationSqlDBData(id: id, name: name, resourceType: resourceType, systemData: systemData, properties: properties, targetDBName: default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationSqlDBProperties"/>. </summary>
         /// <param name="scope"> Resource Id of the target resource. </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
@@ -5085,6 +5104,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             return DatabaseMigrationProperties(scope: scope, provisioningState: provisioningState, migrationStatus: migrationStatus, startedOn: startedOn, endedOn: endedOn, migrationService: migrationService, migrationOperationId: migrationOperationId, migrationFailureError: migrationFailureError, provisioningError: provisioningError, sourceSqlConnection: sourceSqlConnection, sourceDatabaseName: sourceDatabaseName, sourceServerName: sourceServerName, targetDatabaseCollation: targetDatabaseCollation, sqlServerInstanceId: default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataMigration.DatabaseMigrationSqlMIData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Database Migration Resource properties for SQL Managed Instance. </param>
+        /// <returns> A new <see cref="DataMigration.DatabaseMigrationSqlMIData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DatabaseMigrationSqlMIData DatabaseMigrationSqlMIData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DatabaseMigrationSqlMIProperties properties)
+        {
+            return DatabaseMigrationSqlMIData(id: id, name: name, resourceType: resourceType, systemData: systemData, properties: properties, targetDBName: default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationSqlMIProperties"/>. </summary>
         /// <param name="scope"> Resource Id of the target resource. </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
@@ -5107,6 +5139,19 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static DatabaseMigrationSqlMIProperties DatabaseMigrationSqlMIProperties(string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, DataMigrationStatusDetails migrationStatusDetails, DataMigrationBackupConfiguration backupConfiguration, DataMigrationOfflineConfiguration offlineConfiguration)
         {
             return DatabaseMigrationSqlMIProperties(scope: scope, provisioningState: provisioningState, migrationStatus: migrationStatus, startedOn: startedOn, endedOn: endedOn, migrationService: migrationService, migrationOperationId: migrationOperationId, migrationFailureError: migrationFailureError, provisioningError: provisioningError, sourceSqlConnection: sourceSqlConnection, sourceDatabaseName: sourceDatabaseName, sourceServerName: sourceServerName, targetDatabaseCollation: targetDatabaseCollation, sqlServerInstanceId: default, migrationStatusDetails: migrationStatusDetails, backupConfiguration: backupConfiguration, offlineConfiguration: offlineConfiguration);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataMigration.DatabaseMigrationSqlVmData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Database Migration Resource properties for SQL Virtual Machine. </param>
+        /// <returns> A new <see cref="DataMigration.DatabaseMigrationSqlVmData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DatabaseMigrationSqlVmData DatabaseMigrationSqlVmData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DatabaseMigrationSqlVmProperties properties)
+        {
+            return DatabaseMigrationSqlVmData(id: id, name: name, resourceType: resourceType, systemData: systemData, properties: properties, targetDBName: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseMigrationSqlVmProperties"/>. </summary>

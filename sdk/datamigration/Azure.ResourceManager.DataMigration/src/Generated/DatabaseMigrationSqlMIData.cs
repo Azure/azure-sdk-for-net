@@ -31,13 +31,18 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Database Migration Resource properties for SQL Managed Instance. </param>
-        internal DatabaseMigrationSqlMIData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DatabaseMigrationSqlMIProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="targetDBName"> The name of the target database. </param>
+        internal DatabaseMigrationSqlMIData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DatabaseMigrationSqlMIProperties properties, string targetDBName) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            TargetDBName = targetDBName;
         }
 
         /// <summary> Database Migration Resource properties for SQL Managed Instance. </summary>
         public DatabaseMigrationSqlMIProperties Properties { get; set; }
+
+        /// <summary> The name of the target database. </summary>
+        public string TargetDBName { get; }
     }
 }

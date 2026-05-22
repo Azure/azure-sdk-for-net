@@ -134,6 +134,7 @@ namespace Azure.ResourceManager.DataMigration
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DatabaseMigrationSqlDBProperties properties = default;
+            string targetDBName = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -188,7 +189,8 @@ namespace Azure.ResourceManager.DataMigration
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties);
+                properties,
+                targetDBName);
         }
     }
 }
