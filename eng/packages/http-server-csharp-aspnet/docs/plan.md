@@ -23,36 +23,37 @@ priority, but priorities will shift as we onboard pilot services.
 - ASP.NET Core integration tests for the AzureSql scenario using
   `WebApplicationFactory<Program>` and real HTTP requests against generated
   routes
-- Current-version output layout: until incremental versioning exists, all
-  operations and generated POCO models are emitted under the latest
-  `InputNamespace.ApiVersions` value (for example `Generated/V20260201/`)
+- Current-version changed-set generation for TypeSpec `@versioned` services:
+  the emitter compares the selected API version with the previous version using
+  TypeSpec versioning projections, keeps only changed operations by TCGC
+  cross-language definition ID, and emits the transitive model/enum/union closure
+  required by those operations
+- Incremental per-version output layout:
+  `Generated/V<YYYYMMDD>/Controllers/<Name>ControllerBase.cs` contains only the
+  operations impacted in the selected version, while
+  `Generated/V<YYYYMMDD>/Models/*.cs` contains only the models related to those
+  changed operations
+- Generated ASP.NET Core version metadata: `[ApiVersion]` on controller bases
+- AzureSql versioning integration tests that verify the latest changed-set
+  controller shape and latest model shape
 
 ## 🔜 Planned
 
-### 1. Versioning (largest gap)
+### 1. Versioning follow-ups
 
-Today every operation lands in the latest version's `ControllerBase`. Real ARM
-services need:
+The current changed-set generation path is implemented. Remaining work for
+production ARM services:
 
-- **Version registry generation.** Walk `@versioned` enums and emit a
-  per-service `ApiVersion` enum (or equivalent registry) with category
-  metadata (Preview / Stable).
-- **Impact analysis.** For each version, compare each operation's
-  request/response fingerprint (parameters + return type, projected through
-  `@typespec/versioning` mutators) against the previous version. Flag an
-  operation as "impacted" when it is `@added`, `@removed`, or its signature
-  changed because a referenced model changed.
-- **Incremental per-version directories.** Emit
-  `Generated/V<YYYYMMDD>/Controllers/<Name>ControllerBase.cs` containing only
-  the operations impacted in that version, plus
-  `Generated/V<YYYYMMDD>/Models/*.cs` reflecting that version's model shapes.
+- **Operation-diff fidelity.** Extend TypeSpec snapshot fingerprints to cover
+  more protocol metadata and versioning decorators if services need finer
+  changed-set boundaries than the current request/response/model graph diff.
 - **Versioning attributes on generated controllers.** Default to `[ApiVersion]`
   / `[Route]`; allow downstream extensions to swap them for service-specific
   attributes (e.g., SQL's `[VersionedRoute]` + `[BaseApiVersion]`) without
   forking the core.
 - **Routing helper.** Optional generated `ApiVersionControllerSelector` (or
-  similar) that implements the "newest controller with baseVersion ≤ requested
-  version, within the same category" fallback rule.
+  similar) that lets service-owned controllers from previous generated
+  changed-sets participate in fallback routing.
 
 ### 2. ARM type replacement
 

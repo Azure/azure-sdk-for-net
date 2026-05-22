@@ -17,38 +17,18 @@ namespace Azure.TypeSpec.Generator.AspNetServer.AzureSql.Generated.V20260201.Con
     {
         /// <summary> Gets a database. </summary>
         [HttpGet("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/databases/{databaseName}")]
-        public abstract Task<ActionResult<Database>> GetAsync([FromRoute(Name = "subscriptionId")]
-        string subscriptionId, [FromRoute(Name = "resourceGroupName")]
-        string resourceGroupName, [FromRoute(Name = "databaseName")]
-        string databaseName, CancellationToken cancellationToken = default);
+        public abstract Task<ActionResult<Database>> GetAsync([FromRoute(Name = "subscriptionId")] string subscriptionId, [FromRoute(Name = "resourceGroupName")] string resourceGroupName, [FromRoute(Name = "databaseName")] string databaseName, CancellationToken cancellationToken = default);
 
         /// <summary> Creates or updates a database (long-running operation). </summary>
         [HttpPut("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/databases/{databaseName}")]
-        public abstract Task<ActionResult<Database>> CreateOrUpdateAsync([FromRoute(Name = "subscriptionId")]
-        string subscriptionId, [FromRoute(Name = "resourceGroupName")]
-        string resourceGroupName, [FromRoute(Name = "databaseName")]
-        string databaseName, [FromBody]
-        Database resource, CancellationToken cancellationToken = default);
-
-        /// <summary> Deletes a database (long-running operation). </summary>
-        [HttpDelete("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/databases/{databaseName}")]
-        public abstract Task<IActionResult> DeleteAsync([FromRoute(Name = "subscriptionId")]
-        string subscriptionId, [FromRoute(Name = "resourceGroupName")]
-        string resourceGroupName, [FromRoute(Name = "databaseName")]
-        string databaseName, CancellationToken cancellationToken = default);
+        public abstract Task<ActionResult<Database>> CreateOrUpdateAsync([FromRoute(Name = "subscriptionId")] string subscriptionId, [FromRoute(Name = "resourceGroupName")] string resourceGroupName, [FromRoute(Name = "databaseName")] string databaseName, [FromBody] Database resource, CancellationToken cancellationToken = default);
 
         /// <summary> Updates a database. Added in 2025-12-01. </summary>
         [HttpPatch("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/databases/{databaseName}")]
-        public abstract Task<ActionResult<Database>> UpdateAsync([FromRoute(Name = "subscriptionId")]
-        string subscriptionId, [FromRoute(Name = "resourceGroupName")]
-        string resourceGroupName, [FromRoute(Name = "databaseName")]
-        string databaseName, [FromBody]
-        DatabaseUpdate properties, CancellationToken cancellationToken = default);
+        public abstract Task<ActionResult<Database>> UpdateAsync([FromRoute(Name = "subscriptionId")] string subscriptionId, [FromRoute(Name = "resourceGroupName")] string resourceGroupName, [FromRoute(Name = "databaseName")] string databaseName, [FromBody] DatabaseUpdate properties, CancellationToken cancellationToken = default);
 
         /// <summary> Lists databases under a server. Added in 2025-12-01. </summary>
         [HttpGet("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/databases")]
-        public abstract Task<ActionResult<DatabaseListResult>> ListByResourceGroupAsync([FromRoute(Name = "subscriptionId")]
-        string subscriptionId, [FromRoute(Name = "resourceGroupName")]
-        string resourceGroupName, CancellationToken cancellationToken = default);
+        public abstract Task<ActionResult<DatabaseListResult>> ListByResourceGroupAsync([FromRoute(Name = "subscriptionId")] string subscriptionId, [FromRoute(Name = "resourceGroupName")] string resourceGroupName, CancellationToken cancellationToken = default);
     }
 }
