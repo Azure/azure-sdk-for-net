@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.Storage.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Indicates whether static website support is enabled for the specified account. </summary>
+        [WirePath("enabled")]
+        public bool IsEnabled { get; set; }
+
         /// <summary> The webpage that Azure Storage serves for requests to the root of a website or any subfolder (for example, index.html). The value is case-sensitive. </summary>
         [WirePath("indexDocument")]
         public string IndexDocument { get; set; }
