@@ -112,9 +112,11 @@ BinaryData data = ModelReaderWriter.Write((IPersistableModel<InputModel>)resolve
 A conditional proxy inspects the data before deciding whether to handle it.
 Extend `ConditionalModelProxy<T>` and override `CanHandle` to implement discriminator-based routing.
 
-```C# Snippet:Readme_ConditionalProxy_ClassStub
+```csharp
 public class DerivedModelProxy : ConditionalModelProxy<BaseModel>
 {
+    public DerivedModelProxy() : base(new DerivedModelImpl()) { }
+
     // Only handle if the JSON contains "kind": "derived"
     public override bool CanHandle(ReadOnlyMemory<byte> data)
     {
@@ -149,10 +151,10 @@ string json = @"{
 ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
 
 // Higher-priority proxy registered first — consulted first in the chain
-options.AddProxy(new DerivedModelProxy());
+options.AddProxy(new OutputModelProxyOverride());
 
 // Base library registers a fallback proxy
-options.AddProxy(new OtherDerivedModelProxy());
+options.AddProxy(new OutputModelProxy());
 
-BaseModel? model = ModelReaderWriter.Read<BaseModel>(BinaryData.FromString(json), options);
+OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
 ```
