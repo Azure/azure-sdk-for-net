@@ -261,46 +261,46 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ArcSettingsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SettingsResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetArcSettingsResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetSettingsResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ArcSettingsResource"/> object. </returns>
-        public static ArcSettingsResource GetArcSettingsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SettingsResource"/> object. </returns>
+        public static SettingsResource GetSettingsResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHybridComputeArmClient(client).GetArcSettingsResource(id);
+            return GetMockableHybridComputeArmClient(client).GetSettingsResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="ArcSettingsCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="SettingsCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetAllArcSettings(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetAllSettings(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="ArcSettingsResource"/> objects. </returns>
-        public static ArcSettingsCollection GetAllArcSettings(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="SettingsResource"/> objects. </returns>
+        public static SettingsCollection GetAllSettings(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHybridComputeArmClient(client).GetAllArcSettings(scope);
+            return GetMockableHybridComputeArmClient(client).GetAllSettings(scope);
         }
 
         /// <summary>
         /// Returns the base Settings for the target resource.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetArcSettings(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetSettings(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -309,18 +309,18 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ArcSettingsResource> GetArcSettings(this ArmClient client, ResourceIdentifier scope, string settingsResourceName, CancellationToken cancellationToken = default)
+        public static Response<SettingsResource> GetSettings(this ArmClient client, ResourceIdentifier scope, string settingsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHybridComputeArmClient(client).GetArcSettings(scope, settingsResourceName, cancellationToken);
+            return GetMockableHybridComputeArmClient(client).GetSettings(scope, settingsResourceName, cancellationToken);
         }
 
         /// <summary>
         /// Returns the base Settings for the target resource.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetArcSettingsAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetSettingsAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -329,11 +329,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ArcSettingsResource>> GetArcSettingsAsync(this ArmClient client, ResourceIdentifier scope, string settingsResourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SettingsResource>> GetSettingsAsync(this ArmClient client, ResourceIdentifier scope, string settingsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableHybridComputeArmClient(client).GetArcSettingsAsync(scope, settingsResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHybridComputeArmClient(client).GetSettingsAsync(scope, settingsResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

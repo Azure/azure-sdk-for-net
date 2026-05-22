@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <summary>
         /// Updates the base Settings of the target resource.
         /// This method preserves the AutoRest-generated mockable API for backward compatibility.
-        /// Use <see cref="ArcSettingsResource.UpdateAsync(ArcSettingsData, CancellationToken)"/> instead.
+        /// Use <see cref="SettingsResource.UpdateAsync(ArcSettingsData, CancellationToken)"/> instead.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
             Argument.AssertNotNull(arcSettings, nameof(arcSettings));
 
-            ResourceIdentifier id = ArcSettingsResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName);
-            Response<ArcSettingsResource> response = await new ArcSettingsResource(Client, id).UpdateAsync(arcSettings.ToArcSettingsData(), cancellationToken).ConfigureAwait(false);
+            ResourceIdentifier id = SettingsResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName);
+            Response<SettingsResource> response = await new SettingsResource(Client, id).UpdateAsync(arcSettings.ToArcSettingsData(), cancellationToken).ConfigureAwait(false);
             return Response.FromValue(ArcSettings.FromArcSettingsData(response.Value.Data), response.GetRawResponse());
         }
 
         /// <summary>
         /// Updates the base Settings of the target resource.
         /// This method preserves the AutoRest-generated mockable API for backward compatibility.
-        /// Use <see cref="ArcSettingsResource.Update(ArcSettingsData, CancellationToken)"/> instead.
+        /// Use <see cref="SettingsResource.Update(ArcSettingsData, CancellationToken)"/> instead.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
             Argument.AssertNotNull(arcSettings, nameof(arcSettings));
 
-            ResourceIdentifier id = ArcSettingsResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName);
-            Response<ArcSettingsResource> response = new ArcSettingsResource(Client, id).Update(arcSettings.ToArcSettingsData(), cancellationToken);
+            ResourceIdentifier id = SettingsResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName);
+            Response<SettingsResource> response = new SettingsResource(Client, id).Update(arcSettings.ToArcSettingsData(), cancellationToken);
             return Response.FromValue(ArcSettings.FromArcSettingsData(response.Value.Data), response.GetRawResponse());
         }
 

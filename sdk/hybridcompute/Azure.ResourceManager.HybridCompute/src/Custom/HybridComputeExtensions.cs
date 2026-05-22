@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary>
         /// Updates the base Settings of the target resource.
         /// This method preserves the AutoRest-generated ResourceGroupResource convenience API for backward compatibility.
-        /// Use <see cref="ArcSettingsResource.UpdateAsync(ArcSettingsData, CancellationToken)"/> instead.
+        /// Use <see cref="SettingsResource.UpdateAsync(ArcSettingsData, CancellationToken)"/> instead.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary>
         /// Updates the base Settings of the target resource.
         /// This method preserves the AutoRest-generated ResourceGroupResource convenience API for backward compatibility.
-        /// Use <see cref="ArcSettingsResource.Update(ArcSettingsData, CancellationToken)"/> instead.
+        /// Use <see cref="SettingsResource.Update(ArcSettingsData, CancellationToken)"/> instead.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]

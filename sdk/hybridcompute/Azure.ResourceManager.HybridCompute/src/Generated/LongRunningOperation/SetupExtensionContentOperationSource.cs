@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.HybridCompute
         SetupExtensionContent IOperationSource<SetupExtensionContent>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SetupExtensionContent result = SetupExtensionContent.DeserializeSetupExtensionContent(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return SetupExtensionContent.DeserializeSetupExtensionContent(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.HybridCompute
         async ValueTask<SetupExtensionContent> IOperationSource<SetupExtensionContent>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SetupExtensionContent result = SetupExtensionContent.DeserializeSetupExtensionContent(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return SetupExtensionContent.DeserializeSetupExtensionContent(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

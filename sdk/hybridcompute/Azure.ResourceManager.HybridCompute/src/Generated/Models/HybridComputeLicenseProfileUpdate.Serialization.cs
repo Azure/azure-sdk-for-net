@@ -14,62 +14,62 @@ using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    /// <summary> Describes a License Update. </summary>
-    public partial class ArcGatewayPatch : HybridComputeResourceUpdate, IJsonModel<ArcGatewayPatch>
+    /// <summary> Describes a License Profile Update. </summary>
+    public partial class HybridComputeLicenseProfileUpdate : HybridComputeResourceUpdate, IJsonModel<HybridComputeLicenseProfileUpdate>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override HybridComputeResourceUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArcGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeArcGatewayPatch(document.RootElement, options);
+                        return DeserializeHybridComputeLicenseProfileUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArcGatewayPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeLicenseProfileUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArcGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ArcGatewayPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeLicenseProfileUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ArcGatewayPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HybridComputeLicenseProfileUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ArcGatewayPatch IPersistableModel<ArcGatewayPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (ArcGatewayPatch)PersistableModelCreateCore(data, options);
+        HybridComputeLicenseProfileUpdate IPersistableModel<HybridComputeLicenseProfileUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => (HybridComputeLicenseProfileUpdate)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ArcGatewayPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridComputeLicenseProfileUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="arcGatewayPatch"> The <see cref="ArcGatewayPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ArcGatewayPatch arcGatewayPatch)
+        /// <param name="hybridComputeLicenseProfileUpdate"> The <see cref="HybridComputeLicenseProfileUpdate"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HybridComputeLicenseProfileUpdate hybridComputeLicenseProfileUpdate)
         {
-            if (arcGatewayPatch == null)
+            if (hybridComputeLicenseProfileUpdate == null)
             {
                 return null;
             }
-            return RequestContent.Create(arcGatewayPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(hybridComputeLicenseProfileUpdate, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ArcGatewayPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridComputeLicenseProfileUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArcGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArcGatewayPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeLicenseProfileUpdate)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -95,24 +95,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ArcGatewayPatch IJsonModel<ArcGatewayPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ArcGatewayPatch)JsonModelCreateCore(ref reader, options);
+        HybridComputeLicenseProfileUpdate IJsonModel<HybridComputeLicenseProfileUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HybridComputeLicenseProfileUpdate)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override HybridComputeResourceUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArcGatewayPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArcGatewayPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeLicenseProfileUpdate)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeArcGatewayPatch(document.RootElement, options);
+            return DeserializeHybridComputeLicenseProfileUpdate(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ArcGatewayPatch DeserializeArcGatewayPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static HybridComputeLicenseProfileUpdate DeserializeHybridComputeLicenseProfileUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            GatewayUpdateProperties properties = default;
+            LicenseProfileUpdateProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("tags"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    properties = GatewayUpdateProperties.DeserializeGatewayUpdateProperties(prop.Value, options);
+                    properties = LicenseProfileUpdateProperties.DeserializeLicenseProfileUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ArcGatewayPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties);
+            return new HybridComputeLicenseProfileUpdate(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties);
         }
     }
 }
