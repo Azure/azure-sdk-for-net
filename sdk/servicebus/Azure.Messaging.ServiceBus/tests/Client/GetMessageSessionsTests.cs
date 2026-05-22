@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             var mockConnection = GetMockConnection(mockTransportReceiver);
 
             mockTransportReceiver.SetupSequence(receiver => receiver.GetMessageSessionsAsync(
-                    It.IsAny<DateTime>(),
+                    It.IsAny<DateTimeOffset>(),
                     It.IsAny<int>(),
                     It.IsAny<int>(),
                     It.IsAny<CancellationToken>()))
@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
 
             Assert.That(sessions, Is.EquivalentTo(new[] { "s1", "s2" }));
             mockTransportReceiver.Verify(receiver => receiver.GetMessageSessionsAsync(
-                    It.IsAny<DateTime>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()),
+                    It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()),
                 Times.Once,
                 "Pagination should stop when a page is shorter than the page size.");
         }
@@ -62,7 +62,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             var shortPage = new[] { "tail-1", "tail-2" };
 
             mockTransportReceiver.SetupSequence(receiver => receiver.GetMessageSessionsAsync(
-                    It.IsAny<DateTime>(),
+                    It.IsAny<DateTimeOffset>(),
                     It.IsAny<int>(),
                     It.IsAny<int>(),
                     It.IsAny<CancellationToken>()))
@@ -91,7 +91,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             var mockConnection = GetMockConnection(mockTransportReceiver);
 
             mockTransportReceiver.SetupSequence(receiver => receiver.GetMessageSessionsAsync(
-                    It.IsAny<DateTime>(),
+                    It.IsAny<DateTimeOffset>(),
                     It.IsAny<int>(),
                     It.IsAny<int>(),
                     It.IsAny<CancellationToken>()))
@@ -108,25 +108,25 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
 
             Assert.That(sessions.Count, Is.EqualTo(100));
             mockTransportReceiver.Verify(receiver => receiver.GetMessageSessionsAsync(
-                    It.IsAny<DateTime>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()),
+                    It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()),
                 Times.Exactly(2),
                 "Pagination should stop on the first empty page after a full page.");
         }
 
         [Test]
-        public async Task GetMessageSessions_PassesUtcDateTimeMaxValueWhenNoSessionStateUpdatedAfter()
+        public async Task GetMessageSessions_PassesDateTimeOffsetMaxValueWhenNoSessionStateUpdatedAfter()
         {
             var mockTransportReceiver = new Mock<TransportReceiver>();
             var mockConnection = GetMockConnection(mockTransportReceiver);
 
-            DateTime capturedTimestamp = default;
+            DateTimeOffset capturedTimestamp = default;
             mockTransportReceiver
                 .Setup(receiver => receiver.GetMessageSessionsAsync(
-                    It.IsAny<DateTime>(),
+                    It.IsAny<DateTimeOffset>(),
                     It.IsAny<int>(),
                     It.IsAny<int>(),
                     It.IsAny<CancellationToken>()))
-                .Callback<DateTime, int, int, CancellationToken>(
+                .Callback<DateTimeOffset, int, int, CancellationToken>(
                     (lastUpdatedTime, _, _, _) => capturedTimestamp = lastUpdatedTime)
                 .ReturnsAsync(Array.Empty<string>());
 
@@ -136,43 +136,39 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             {
             }
 
-            // The no-filter overload must pass DateTime.MaxValue as the sentinel; the service interprets
-            // this as 'all sessions with active messages'. The sentinel must also be UTC-kind so AMQP
-            // timestamp encoding does not interpret it as local time. DateTime.Equals/NUnit Is.EqualTo
-            // only compare Ticks, so Kind must be asserted explicitly.
-            Assert.That(capturedTimestamp, Is.EqualTo(DateTime.SpecifyKind(DateTime.MaxValue, DateTimeKind.Utc)),
-                "The no-filter overload must pass DateTime.MaxValue as the sentinel.");
-            Assert.That(capturedTimestamp.Kind, Is.EqualTo(DateTimeKind.Utc),
-                "The sentinel must be UTC-kind to avoid local-time interpretation during AMQP encoding.");
+            // The no-filter overload must pass DateTimeOffset.MaxValue as the sentinel; the service
+            // interprets this as 'all sessions with active messages'.
+            Assert.That(capturedTimestamp, Is.EqualTo(DateTimeOffset.MaxValue),
+                "The no-filter overload must pass DateTimeOffset.MaxValue as the sentinel.");
         }
 
         [Test]
-        public async Task GetMessageSessions_PassesSessionStateUpdatedAfterAsUtc()
+        public async Task GetMessageSessions_PassesSessionStateUpdatedAfterThrough()
         {
             var mockTransportReceiver = new Mock<TransportReceiver>();
             var mockConnection = GetMockConnection(mockTransportReceiver);
 
-            DateTime capturedTimestamp = default;
+            DateTimeOffset capturedTimestamp = default;
             mockTransportReceiver
                 .Setup(receiver => receiver.GetMessageSessionsAsync(
-                    It.IsAny<DateTime>(),
+                    It.IsAny<DateTimeOffset>(),
                     It.IsAny<int>(),
                     It.IsAny<int>(),
                     It.IsAny<CancellationToken>()))
-                .Callback<DateTime, int, int, CancellationToken>(
+                .Callback<DateTimeOffset, int, int, CancellationToken>(
                     (lastUpdatedTime, _, _, _) => capturedTimestamp = lastUpdatedTime)
                 .ReturnsAsync(Array.Empty<string>());
 
             var client = new ServiceBusClient(mockConnection.Object);
 
-            // Construct a non-UTC offset so we can verify the conversion.
+            // Construct a non-UTC offset so we can verify it is passed through as-is.
             var nonUtcOffset = new DateTimeOffset(2026, 1, 15, 10, 0, 0, TimeSpan.FromHours(-5));
             await foreach (var _ in client.GetMessageSessionsAsync("queue", nonUtcOffset))
             {
             }
 
-            Assert.That(capturedTimestamp, Is.EqualTo(nonUtcOffset.UtcDateTime),
-                "The sessionStateUpdatedAfter overload must convert the offset to UTC before passing it to the transport.");
+            Assert.That(capturedTimestamp, Is.EqualTo(nonUtcOffset),
+                "The sessionStateUpdatedAfter overload must pass the DateTimeOffset through to the transport.");
         }
 
         [Test]
@@ -205,7 +201,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
 
             mockTransportReceiver
                 .Setup(receiver => receiver.GetMessageSessionsAsync(
-                    It.IsAny<DateTime>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+                    It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Array.Empty<string>());
 
             var client = new ServiceBusClient(mockConnection.Object);
@@ -218,7 +214,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 "The subscription overload must format and pass the subscription entity path.");
             mockTransportReceiver.Verify(
                 receiver => receiver.GetMessageSessionsAsync(
-                    It.IsAny<DateTime>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()),
+                    It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()),
                 Times.AtLeastOnce,
                 "The pagination loop must reach the transport receiver against the formatted subscription path.");
         }
@@ -231,7 +227,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
 
             mockTransportReceiver
                 .Setup(receiver => receiver.GetMessageSessionsAsync(
-                    It.IsAny<DateTime>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+                    It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Array.Empty<string>());
 
             var client = new ServiceBusClient(mockConnection.Object);
@@ -254,7 +250,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
 
             mockTransportReceiver
                 .Setup(receiver => receiver.GetMessageSessionsAsync(
-                    It.IsAny<DateTime>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+                    It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(new ServiceBusException(true, "transport boom"));
 
             var client = new ServiceBusClient(mockConnection.Object);

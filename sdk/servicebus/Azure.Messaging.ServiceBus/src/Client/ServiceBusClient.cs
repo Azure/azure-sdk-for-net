@@ -576,7 +576,7 @@ namespace Azure.Messaging.ServiceBus
             ValidateEntityName(queueName);
             await foreach (var sessionId in GetMessageSessionsCoreAsync(
                 queueName,
-                DateTime.SpecifyKind(DateTime.MaxValue, DateTimeKind.Utc),
+                DateTimeOffset.MaxValue,
                 cancellationToken).ConfigureAwait(false))
             {
                 yield return sessionId;
@@ -584,11 +584,11 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Lists the IDs of sessions whose state was updated after the specified time in a session-enabled queue.
+        /// Lists the IDs of sessions whose session state was set or updated after the specified time in a session-enabled queue.
         /// </summary>
         ///
         /// <param name="queueName">The name of the session-enabled queue.</param>
-        /// <param name="sessionStateUpdatedAfter">Only sessions whose session state was updated after this time are returned.</param>
+        /// <param name="sessionStateUpdatedAfter">Only sessions whose session state was set or updated after this time are returned.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An <see cref="IAsyncEnumerable{T}"/> of session ID strings that can be iterated with <c>await foreach</c>.</returns>
@@ -599,7 +599,7 @@ namespace Azure.Messaging.ServiceBus
         {
             ValidateEntityName(queueName);
             await foreach (var sessionId in GetMessageSessionsCoreAsync(
-                queueName, sessionStateUpdatedAfter.UtcDateTime,
+                queueName, sessionStateUpdatedAfter,
                 cancellationToken).ConfigureAwait(false))
             {
                 yield return sessionId;
@@ -624,7 +624,7 @@ namespace Azure.Messaging.ServiceBus
             var entityPath = EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName);
             await foreach (var sessionId in GetMessageSessionsCoreAsync(
                 entityPath,
-                DateTime.SpecifyKind(DateTime.MaxValue, DateTimeKind.Utc),
+                DateTimeOffset.MaxValue,
                 cancellationToken).ConfigureAwait(false))
             {
                 yield return sessionId;
@@ -632,12 +632,12 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Lists the IDs of sessions whose state was updated after the specified time in a session-enabled subscription.
+        /// Lists the IDs of sessions whose session state was set or updated after the specified time in a session-enabled subscription.
         /// </summary>
         ///
         /// <param name="topicName">The name of the topic.</param>
         /// <param name="subscriptionName">The name of the subscription.</param>
-        /// <param name="sessionStateUpdatedAfter">Only sessions whose session state was updated after this time are returned.</param>
+        /// <param name="sessionStateUpdatedAfter">Only sessions whose session state was set or updated after this time are returned.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An <see cref="IAsyncEnumerable{T}"/> of session ID strings that can be iterated with <c>await foreach</c>.</returns>
@@ -650,7 +650,7 @@ namespace Azure.Messaging.ServiceBus
             ValidateEntityName(topicName);
             var entityPath = EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName);
             await foreach (var sessionId in GetMessageSessionsCoreAsync(
-                entityPath, sessionStateUpdatedAfter.UtcDateTime,
+                entityPath, sessionStateUpdatedAfter,
                 cancellationToken).ConfigureAwait(false))
             {
                 yield return sessionId;
@@ -659,7 +659,7 @@ namespace Azure.Messaging.ServiceBus
 
         private async IAsyncEnumerable<string> GetMessageSessionsCoreAsync(
             string entityPath,
-            DateTime lastUpdatedTime,
+            DateTimeOffset lastUpdatedTime,
             [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             Connection.ThrowIfClosed();

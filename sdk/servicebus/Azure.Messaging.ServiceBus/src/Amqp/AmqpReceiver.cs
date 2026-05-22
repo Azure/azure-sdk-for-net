@@ -1589,10 +1589,28 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        /// Lists the IDs of sessions that have active messages or whose state was updated since the given time.
+        /// Lists the IDs of sessions that have active messages or whose session state was updated
+        /// since the given time. Wraps the raw AMQP management request with the receiver's retry policy.
         /// </summary>
+        ///
+        /// <param name="lastUpdatedTime">
+        /// Filter timestamp. Pass <see cref="DateTimeOffset.MaxValue"/> to retrieve all sessions
+        /// that have active messages. Pass a real timestamp to retrieve only sessions whose session
+        /// state was set or updated after that time. The value is converted to a UTC
+        /// <see cref="DateTime"/> via <see cref="DateTimeOffset.UtcDateTime"/> for AMQP encoding.
+        /// </param>
+        /// <param name="skip">Zero-based pagination offset (number of sessions to skip).</param>
+        /// <param name="top">Maximum number of session IDs to return in a single page.</param>
+        /// <param name="cancellationToken">
+        /// An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.
+        /// </param>
+        ///
+        /// <returns>
+        /// A read-only list of session ID strings for the requested page, or an empty list when no
+        /// (more) sessions match the filter.
+        /// </returns>
         public override async Task<IReadOnlyList<string>> GetMessageSessionsAsync(
-            DateTime lastUpdatedTime,
+            DateTimeOffset lastUpdatedTime,
             int skip,
             int top,
             CancellationToken cancellationToken)
@@ -1606,13 +1624,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         internal async Task<IReadOnlyList<string>> GetMessageSessionsInternal(
-            TimeSpan timeout, DateTime lastUpdatedTime, int skip, int top)
+            TimeSpan timeout, DateTimeOffset lastUpdatedTime, int skip, int top)
         {
             var amqpRequestMessage = AmqpRequestMessage.CreateRequest(
                 ManagementConstants.Operations.GetMessageSessionsOperation, timeout, null);
 
-            // No associated link name -- this is an entity-level operation
-            amqpRequestMessage.Map[ManagementConstants.Properties.LastUpdatedTime] = lastUpdatedTime;
+            // No associated link name -- this is an entity-level operation.
+            // Convert DateTimeOffset to UTC DateTime for AMQP timestamp encoding.
+            amqpRequestMessage.Map[ManagementConstants.Properties.LastUpdatedTime] = lastUpdatedTime.UtcDateTime;
             amqpRequestMessage.Map[ManagementConstants.Properties.Skip] = skip;
             amqpRequestMessage.Map[ManagementConstants.Properties.Top] = top;
 
