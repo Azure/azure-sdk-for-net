@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.AlertsManagement.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AlertsManagement.Mocking
 {
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
     // private GetMockableAlertsManagementArmClient() helper forwards requests to the generated
     // MockableAlertsManagementArmClient. These mirror the same pattern used in
     // generated Mockable*SubscriptionResource classes across other Azure.ResourceManager.* packages.
+    /// <summary> Back-compat shim mock-able extension class for <see cref="SubscriptionResource"/>. The AlertProcessingRule and SmartGroup APIs have moved out of this package — every removed member throws <see cref="NotSupportedException"/> and is kept solely to preserve the binary contract of the previously published GA package (v1.1.x). </summary>
     public partial class MockableAlertsManagementSubscriptionResource : ArmResource
     {
         private const string AlertProcessingRuleRemovedMessage = "The AlertProcessingRule APIs have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions, MockableAlertProcessingRulesArmClient, MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource, ArmAlertProcessingRulesModelFactory) instead.";

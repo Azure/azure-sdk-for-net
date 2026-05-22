@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AlertsManagement.Mocking
 {
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
     //   member throws NotSupportedException and the class is [Obsolete(..., error: true)] +
     //   [EditorBrowsable(Never)] so new callers are routed to
     //   MockableAlertProcessingRulesResourceGroupResource in the AlertProcessingRules package.
+    /// <summary> Back-compat shim mock-able extension class for <see cref="ResourceGroupResource"/>. The AlertProcessingRule APIs have moved to the 'Azure.ResourceManager.AlertProcessingRules' package — every member of this class throws <see cref="NotSupportedException"/> and is kept solely to preserve the binary contract of the previously published GA package (v1.1.x). </summary>
     [Obsolete("The AlertProcessingRule APIs have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions, MockableAlertProcessingRulesArmClient, MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource, ArmAlertProcessingRulesModelFactory) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class MockableAlertsManagementResourceGroupResource : ArmResource
