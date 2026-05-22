@@ -28,12 +28,6 @@ namespace Azure.ResourceManager.HybridCompute
     {
         private readonly ClientDiagnostics _machinesClientDiagnostics;
         private readonly Machines _machinesRestClient;
-        private readonly ClientDiagnostics _privateLinkScopesClientDiagnostics;
-        private readonly PrivateLinkScopes _privateLinkScopesRestClient;
-        private readonly ClientDiagnostics _networkProfileClientDiagnostics;
-        private readonly NetworkProfile _networkProfileRestClient;
-        private readonly ClientDiagnostics _hybridComputeClientClientDiagnostics;
-        private readonly HybridComputeClient _hybridComputeClientRestClient;
 
         /// <summary> Initializes a new instance of HybridComputeMachineCollection for mocking. </summary>
         protected HybridComputeMachineCollection()
@@ -48,12 +42,6 @@ namespace Azure.ResourceManager.HybridCompute
             TryGetApiVersion(HybridComputeMachineResource.ResourceType, out string hybridComputeMachineApiVersion);
             _machinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeMachineResource.ResourceType.Namespace, Diagnostics);
             _machinesRestClient = new Machines(_machinesClientDiagnostics, Pipeline, Endpoint, hybridComputeMachineApiVersion ?? "2025-09-16-preview");
-            _privateLinkScopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeMachineResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkScopesRestClient = new PrivateLinkScopes(_privateLinkScopesClientDiagnostics, Pipeline, Endpoint, hybridComputeMachineApiVersion ?? "2025-09-16-preview");
-            _networkProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeMachineResource.ResourceType.Namespace, Diagnostics);
-            _networkProfileRestClient = new NetworkProfile(_networkProfileClientDiagnostics, Pipeline, Endpoint, hybridComputeMachineApiVersion ?? "2025-09-16-preview");
-            _hybridComputeClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeMachineResource.ResourceType.Namespace, Diagnostics);
-            _hybridComputeClientRestClient = new HybridComputeClient(_hybridComputeClientClientDiagnostics, Pipeline, Endpoint, hybridComputeMachineApiVersion ?? "2025-09-16-preview");
             ValidateResourceId(id);
         }
 

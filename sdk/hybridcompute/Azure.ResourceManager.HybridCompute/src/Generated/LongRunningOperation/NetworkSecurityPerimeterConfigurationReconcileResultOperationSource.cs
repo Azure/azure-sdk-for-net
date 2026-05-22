@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.HybridCompute
         NetworkSecurityPerimeterConfigurationReconcileResult IOperationSource<NetworkSecurityPerimeterConfigurationReconcileResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetworkSecurityPerimeterConfigurationReconcileResult result = NetworkSecurityPerimeterConfigurationReconcileResult.DeserializeNetworkSecurityPerimeterConfigurationReconcileResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return NetworkSecurityPerimeterConfigurationReconcileResult.DeserializeNetworkSecurityPerimeterConfigurationReconcileResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.HybridCompute
         async ValueTask<NetworkSecurityPerimeterConfigurationReconcileResult> IOperationSource<NetworkSecurityPerimeterConfigurationReconcileResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetworkSecurityPerimeterConfigurationReconcileResult result = NetworkSecurityPerimeterConfigurationReconcileResult.DeserializeNetworkSecurityPerimeterConfigurationReconcileResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return NetworkSecurityPerimeterConfigurationReconcileResult.DeserializeNetworkSecurityPerimeterConfigurationReconcileResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

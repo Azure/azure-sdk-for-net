@@ -138,35 +138,21 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return new ExtensionValueV2Resource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ArcSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArcSettingsResource"/> object. </returns>
-        public virtual ArcSettingsResource GetArcSettingsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SettingsResource"/> object. </returns>
+        public virtual SettingsResource GetSettingsResource(ResourceIdentifier id)
         {
-            ArcSettingsResource.ValidateResourceId(id);
-            return new ArcSettingsResource(Client, id);
+            SettingsResource.ValidateResourceId(id);
+            return new SettingsResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="ArcSettingsCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="SettingsCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="ArcSettingsResource"/> objects. </returns>
-        public virtual ArcSettingsCollection GetAllArcSettings(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="SettingsResource"/> objects. </returns>
+        public virtual SettingsCollection GetAllSettings(ResourceIdentifier scope)
         {
-            return new ArcSettingsCollection(Client, scope);
-        }
-
-        /// <summary> Returns the base Settings for the target resource. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="settingsResourceName"> The name of the settings resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ArcSettingsResource> GetArcSettings(ResourceIdentifier scope, string settingsResourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
-
-            return GetAllArcSettings(scope).Get(settingsResourceName, cancellationToken);
+            return new SettingsCollection(Client, scope);
         }
 
         /// <summary> Returns the base Settings for the target resource. </summary>
@@ -176,11 +162,25 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ArcSettingsResource>> GetArcSettingsAsync(ResourceIdentifier scope, string settingsResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<SettingsResource> GetSettings(ResourceIdentifier scope, string settingsResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
 
-            return await GetAllArcSettings(scope).GetAsync(settingsResourceName, cancellationToken).ConfigureAwait(false);
+            return GetAllSettings(scope).Get(settingsResourceName, cancellationToken);
+        }
+
+        /// <summary> Returns the base Settings for the target resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="settingsResourceName"> The name of the settings resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SettingsResource>> GetSettingsAsync(ResourceIdentifier scope, string settingsResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
+
+            return await GetAllSettings(scope).GetAsync(settingsResourceName, cancellationToken).ConfigureAwait(false);
         }
     }
 }
