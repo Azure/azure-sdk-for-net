@@ -43,11 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (CapacityReservationGroup is null)
-                {
-                    CapacityReservationGroup = new ComputeWriteableSubResourceData();
-                }
-                CapacityReservationGroup.Id = value;
+                CapacityReservationGroup = new ComputeWriteableSubResourceData(value);
             }
         }
     }

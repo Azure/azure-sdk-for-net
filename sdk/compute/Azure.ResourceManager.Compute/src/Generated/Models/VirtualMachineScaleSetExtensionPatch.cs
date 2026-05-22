@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -20,23 +21,16 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetExtensionPatch"/>. </summary>
-        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> The name of the extension. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> Resource Id. </param>
         /// <param name="properties"> Describes the properties of a Virtual Machine Scale Set Extension. </param>
-        internal VirtualMachineScaleSetExtensionPatch(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VirtualMachineScaleSetExtensionProperties properties) : base(id, additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetExtensionPatch(string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier id, VirtualMachineScaleSetExtensionProperties properties) : base(name, resourceType, systemData, additionalBinaryDataProperties, id)
         {
-            Name = name;
-            Type = @type;
             Properties = properties;
         }
-
-        /// <summary> The name of the extension. </summary>
-        public string Name { get; }
-
-        /// <summary> Resource type. </summary>
-        public string Type { get; }
 
         /// <summary> Describes the properties of a Virtual Machine Scale Set Extension. </summary>
         internal VirtualMachineScaleSetExtensionProperties Properties { get; set; }

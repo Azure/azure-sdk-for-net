@@ -78,11 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (Subnet is null)
-                {
-                    Subnet = new ComputeWriteableSubResourceData();
-                }
-                Subnet.Id = value;
+                Subnet = new ComputeWriteableSubResourceData(value);
             }
         }
     }

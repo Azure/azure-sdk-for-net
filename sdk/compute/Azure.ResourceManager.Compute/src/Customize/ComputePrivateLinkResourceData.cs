@@ -5,10 +5,13 @@
 
 using System.Collections.Generic;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputePrivateLinkResourceData
+    // Backward compatibility: this model inherited ResourceData in the previously shipped SDK.
+    // Without this base type, ApiCompat reports a removed ResourceData base class and consumers lose the standard ARM resource members.
+    public partial class ComputePrivateLinkResourceData : ResourceData
     {
         // Customization: restored as IReadOnlyList<string> to preserve the previously-shipped API surface.
         // The new spec emits this as a writable IList, which would be a binary-breaking change for

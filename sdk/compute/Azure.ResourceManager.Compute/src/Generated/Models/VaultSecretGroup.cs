@@ -50,11 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (SourceVault is null)
-                {
-                    SourceVault = new ComputeWriteableSubResourceData();
-                }
-                SourceVault.Id = value;
+                SourceVault = new ComputeWriteableSubResourceData(value);
             }
         }
     }

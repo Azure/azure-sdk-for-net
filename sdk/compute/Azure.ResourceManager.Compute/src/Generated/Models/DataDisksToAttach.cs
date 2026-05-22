@@ -74,11 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (DiskEncryptionSet is null)
-                {
-                    DiskEncryptionSet = new DiskEncryptionSetParameters();
-                }
-                DiskEncryptionSet.Id = value;
+                DiskEncryptionSet = new DiskEncryptionSetParameters(value);
             }
         }
     }

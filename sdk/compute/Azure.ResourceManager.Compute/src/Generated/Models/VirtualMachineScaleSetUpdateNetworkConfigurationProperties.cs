@@ -95,11 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (NetworkSecurityGroup is null)
-                {
-                    NetworkSecurityGroup = new ComputeWriteableSubResourceData();
-                }
-                NetworkSecurityGroup.Id = value;
+                NetworkSecurityGroup = new ComputeWriteableSubResourceData(value);
             }
         }
 

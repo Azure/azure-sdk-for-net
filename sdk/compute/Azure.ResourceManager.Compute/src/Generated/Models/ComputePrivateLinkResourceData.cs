@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -23,31 +24,20 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputePrivateLinkResourceData"/>. </summary>
-        /// <param name="properties"> Resource properties. </param>
-        /// <param name="id"> private link resource Id. </param>
-        /// <param name="name"> private link resource name. </param>
-        /// <param name="type"> private link resource type. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputePrivateLinkResourceData(ComputePrivateLinkResourceProperties properties, string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="name"> private link resource name. </param>
+        internal ComputePrivateLinkResourceData(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputePrivateLinkResourceProperties properties, string name) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
-            Id = id;
-            Name = name;
-            Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
         /// <summary> Resource properties. </summary>
         internal ComputePrivateLinkResourceProperties Properties { get; }
-
-        /// <summary> private link resource Id. </summary>
-        public string Id { get; }
-
-        /// <summary> private link resource name. </summary>
-        public string Name { get; }
-
-        /// <summary> private link resource type. </summary>
-        public string Type { get; }
 
         /// <summary> The private link resource group id. </summary>
         public ResourceIdentifier GroupId

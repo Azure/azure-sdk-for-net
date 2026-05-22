@@ -58,11 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (SourceVirtualMachine is null)
-                {
-                    SourceVirtualMachine = new ComputeWriteableSubResourceData();
-                }
-                SourceVirtualMachine.Id = value;
+                SourceVirtualMachine = new ComputeWriteableSubResourceData(value);
             }
         }
     }

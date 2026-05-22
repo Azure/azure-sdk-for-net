@@ -105,11 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (NetworkSecurityGroup is null)
-                {
-                    NetworkSecurityGroup = new ComputeWriteableSubResourceData();
-                }
-                NetworkSecurityGroup.Id = value;
+                NetworkSecurityGroup = new ComputeWriteableSubResourceData(value);
             }
         }
 
@@ -135,11 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (DscpConfiguration is null)
-                {
-                    DscpConfiguration = new ComputeWriteableSubResourceData();
-                }
-                DscpConfiguration.Id = value;
+                DscpConfiguration = new ComputeWriteableSubResourceData(value);
             }
         }
     }

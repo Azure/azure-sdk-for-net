@@ -8,9 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ComputeSubResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointAttributes>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -94,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ComputeSubResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointAttributes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -113,12 +115,38 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ResourceIdentifier id = default;
             RestorePointEncryption encryption = default;
             ApiEntityReference sourceDiskRestorePoint = default;
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("id"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -151,7 +179,14 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DiskRestorePointAttributes(id, additionalBinaryDataProperties, encryption, sourceDiskRestorePoint);
+            return new DiskRestorePointAttributes(
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties,
+                id,
+                encryption,
+                sourceDiskRestorePoint);
         }
     }
 }

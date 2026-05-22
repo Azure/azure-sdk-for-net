@@ -73,11 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (Snapshot is null)
-                {
-                    Snapshot = new ComputeWriteableSubResourceData();
-                }
-                Snapshot.Id = value;
+                Snapshot = new ComputeWriteableSubResourceData(value);
             }
         }
 
@@ -90,11 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (ManagedDisk is null)
-                {
-                    ManagedDisk = new ComputeWriteableSubResourceData();
-                }
-                ManagedDisk.Id = value;
+                ManagedDisk = new ComputeWriteableSubResourceData(value);
             }
         }
 
@@ -107,11 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (DiskEncryptionSet is null)
-                {
-                    DiskEncryptionSet = new DiskEncryptionSetParameters();
-                }
-                DiskEncryptionSet.Id = value;
+                DiskEncryptionSet = new DiskEncryptionSetParameters(value);
             }
         }
     }

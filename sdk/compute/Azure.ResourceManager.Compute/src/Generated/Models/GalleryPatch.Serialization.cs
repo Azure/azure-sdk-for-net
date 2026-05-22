@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override UpdateResourceDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<GalleryPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override UpdateResourceDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<GalleryPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -125,28 +125,46 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            string id = default;
-            string name = default;
-            string @type = default;
-            IDictionary<string, string> tags = default;
+            ResourceIdentifier id = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string name = default;
+            IDictionary<string, string> tags = default;
             GalleryProperties properties = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -195,10 +213,11 @@ namespace Azure.ResourceManager.Compute.Models
             }
             return new GalleryPatch(
                 id,
-                name,
-                @type,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                resourceType,
+                systemData,
                 additionalBinaryDataProperties,
+                name,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties,
                 identity);
         }

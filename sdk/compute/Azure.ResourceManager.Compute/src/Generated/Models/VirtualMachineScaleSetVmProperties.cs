@@ -173,11 +173,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (AvailabilitySet is null)
-                {
-                    AvailabilitySet = new ComputeWriteableSubResourceData();
-                }
-                AvailabilitySet.Id = value;
+                AvailabilitySet = new ComputeWriteableSubResourceData(value);
             }
         }
     }

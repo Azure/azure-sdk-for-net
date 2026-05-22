@@ -173,11 +173,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (ProximityPlacementGroup is null)
-                {
-                    ProximityPlacementGroup = new ComputeWriteableSubResourceData();
-                }
-                ProximityPlacementGroup.Id = value;
+                ProximityPlacementGroup = new ComputeWriteableSubResourceData(value);
             }
         }
 
@@ -190,11 +186,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (HostGroup is null)
-                {
-                    HostGroup = new ComputeWriteableSubResourceData();
-                }
-                HostGroup.Id = value;
+                HostGroup = new ComputeWriteableSubResourceData(value);
             }
         }
 

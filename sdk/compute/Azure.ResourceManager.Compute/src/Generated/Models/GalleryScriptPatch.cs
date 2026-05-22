@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -19,13 +21,14 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GalleryScriptPatch"/>. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Gallery script definition properties to update. </param>
-        internal GalleryScriptPatch(string id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, GalleryScriptProperties properties) : base(id, name, @type, tags, additionalBinaryDataProperties)
+        internal GalleryScriptPatch(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, IDictionary<string, string> tags, GalleryScriptProperties properties) : base(id, resourceType, systemData, additionalBinaryDataProperties, name, tags)
         {
             Properties = properties;
         }

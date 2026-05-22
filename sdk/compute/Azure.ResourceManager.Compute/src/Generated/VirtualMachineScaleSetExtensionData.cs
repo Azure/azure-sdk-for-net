@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -21,19 +22,18 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetExtensionData"/>. </summary>
-        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="id"> Resource Id. </param>
         /// <param name="properties"> Describes the properties of a Virtual Machine Scale Set Extension. </param>
         /// <param name="parentName"> The name of the parent resource. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="name"> Resource name. </param>
         /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
-        internal VirtualMachineScaleSetExtensionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualMachineScaleSetExtensionProperties properties, string parentName, string @type, string name, string vmssExtensionName) : base(id, additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetExtensionData(string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier id, VirtualMachineScaleSetExtensionProperties properties, string parentName, string vmssExtensionName) : base(name, resourceType, systemData, additionalBinaryDataProperties, id)
         {
             Properties = properties;
             ParentName = parentName;
-            Type = @type;
-            Name = name;
             VmssExtensionName = vmssExtensionName;
         }
 
@@ -42,12 +42,6 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The name of the parent resource. </summary>
         public string ParentName { get; }
-
-        /// <summary> Resource type. </summary>
-        public string Type { get; }
-
-        /// <summary> Resource name. </summary>
-        public string Name { get; set; }
 
         /// <summary> The name of the VM scale set extension. </summary>
         public string VmssExtensionName { get; }

@@ -30,8 +30,5 @@ namespace Azure.ResourceManager.Compute.Models
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Resource Id. </summary>
-        public ResourceIdentifier Id { get; set; }
     }
 }

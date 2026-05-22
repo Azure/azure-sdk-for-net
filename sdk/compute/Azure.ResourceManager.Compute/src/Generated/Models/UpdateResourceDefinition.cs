@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -24,28 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UpdateResourceDefinition"/>. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateResourceDefinition(string id, string name, string @type, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="name"> Resource name. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal UpdateResourceDefinition(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Name = name;
-            Type = @type;
-            Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Tags = tags;
         }
-
-        /// <summary> Resource Id. </summary>
-        public string Id { get; }
-
-        /// <summary> Resource name. </summary>
-        public string Name { get; }
-
-        /// <summary> Resource type. </summary>
-        public string Type { get; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }

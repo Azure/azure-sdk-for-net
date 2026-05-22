@@ -75,11 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (PublicIPPrefix is null)
-                {
-                    PublicIPPrefix = new ComputeWriteableSubResourceData();
-                }
-                PublicIPPrefix.Id = value;
+                PublicIPPrefix = new ComputeWriteableSubResourceData(value);
             }
         }
     }

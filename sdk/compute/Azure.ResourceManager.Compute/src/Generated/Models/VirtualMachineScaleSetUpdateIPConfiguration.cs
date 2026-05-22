@@ -15,23 +15,20 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine scale set network profile's IP configuration. NOTE: The subnet of a scale set may be modified as long as the original subnet and the new subnet are in the same virtual network. </summary>
     public partial class VirtualMachineScaleSetUpdateIPConfiguration
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateIPConfiguration"/>. </summary>
         public VirtualMachineScaleSetUpdateIPConfiguration()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateIPConfiguration"/>. </summary>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The IP configuration name. </param>
         /// <param name="properties"> Describes a virtual machine scale set network profile's IP configuration properties. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetUpdateIPConfiguration(string name, VirtualMachineScaleSetUpdateIPConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetUpdateIPConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, VirtualMachineScaleSetUpdateIPConfigurationProperties properties) : base(id, additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The IP configuration name. </summary>

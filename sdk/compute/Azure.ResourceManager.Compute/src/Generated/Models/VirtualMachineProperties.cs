@@ -195,11 +195,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (AvailabilitySet is null)
-                {
-                    AvailabilitySet = new ComputeWriteableSubResourceData();
-                }
-                AvailabilitySet.Id = value;
+                AvailabilitySet = new ComputeWriteableSubResourceData(value);
             }
         }
 
@@ -212,11 +208,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (VirtualMachineScaleSet is null)
-                {
-                    VirtualMachineScaleSet = new ComputeWriteableSubResourceData();
-                }
-                VirtualMachineScaleSet.Id = value;
+                VirtualMachineScaleSet = new ComputeWriteableSubResourceData(value);
             }
         }
 
@@ -229,11 +221,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (ProximityPlacementGroup is null)
-                {
-                    ProximityPlacementGroup = new ComputeWriteableSubResourceData();
-                }
-                ProximityPlacementGroup.Id = value;
+                ProximityPlacementGroup = new ComputeWriteableSubResourceData(value);
             }
         }
 
@@ -263,11 +251,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (Host is null)
-                {
-                    Host = new ComputeWriteableSubResourceData();
-                }
-                Host.Id = value;
+                Host = new ComputeWriteableSubResourceData(value);
             }
         }
 
@@ -280,11 +264,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (HostGroup is null)
-                {
-                    HostGroup = new ComputeWriteableSubResourceData();
-                }
-                HostGroup.Id = value;
+                HostGroup = new ComputeWriteableSubResourceData(value);
             }
         }
 

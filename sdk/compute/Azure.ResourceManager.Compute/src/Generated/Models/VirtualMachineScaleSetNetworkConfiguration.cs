@@ -15,9 +15,6 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine scale set network profile's network configurations. </summary>
     public partial class VirtualMachineScaleSetNetworkConfiguration
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetNetworkConfiguration"/>. </summary>
         /// <param name="name"> The network configuration name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -30,16 +27,16 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetNetworkConfiguration"/>. </summary>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The network configuration name. </param>
         /// <param name="properties"> Describes a virtual machine scale set network profile's IP configuration. </param>
         /// <param name="tags"> Resource tags applied to the networkInterface address created by this NetworkInterfaceConfiguration. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetNetworkConfiguration(string name, VirtualMachineScaleSetNetworkConfigurationProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetNetworkConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, VirtualMachineScaleSetNetworkConfigurationProperties properties, IDictionary<string, string> tags) : base(id, additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;
             Tags = tags;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The network configuration name. </summary>

@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set network profile's network configurations. </summary>
-    public partial class VirtualMachineScaleSetNetworkConfiguration : IJsonModel<VirtualMachineScaleSetNetworkConfiguration>
+    public partial class VirtualMachineScaleSetNetworkConfiguration : ComputeWriteableSubResourceData, IJsonModel<VirtualMachineScaleSetNetworkConfiguration>
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetNetworkConfiguration"/> for deserialization. </summary>
         internal VirtualMachineScaleSetNetworkConfiguration()
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualMachineScaleSetNetworkConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ComputeWriteableSubResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineScaleSetNetworkConfiguration IPersistableModel<VirtualMachineScaleSetNetworkConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VirtualMachineScaleSetNetworkConfiguration IPersistableModel<VirtualMachineScaleSetNetworkConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => (VirtualMachineScaleSetNetworkConfiguration)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VirtualMachineScaleSetNetworkConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -72,13 +73,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineScaleSetNetworkConfiguration)} does not support writing '{format}' format.");
             }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Properties))
@@ -102,30 +104,15 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineScaleSetNetworkConfiguration IJsonModel<VirtualMachineScaleSetNetworkConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VirtualMachineScaleSetNetworkConfiguration IJsonModel<VirtualMachineScaleSetNetworkConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VirtualMachineScaleSetNetworkConfiguration)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualMachineScaleSetNetworkConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ComputeWriteableSubResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -144,12 +131,22 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
+            ResourceIdentifier id = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             VirtualMachineScaleSetNetworkConfigurationProperties properties = default;
             IDictionary<string, string> tags = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("id"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
@@ -190,7 +187,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineScaleSetNetworkConfiguration(name, properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new VirtualMachineScaleSetNetworkConfiguration(id, additionalBinaryDataProperties, name, properties, tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

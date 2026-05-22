@@ -77,11 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             set
             {
-                if (ProximityPlacementGroup is null)
-                {
-                    ProximityPlacementGroup = new ComputeWriteableSubResourceData();
-                }
-                ProximityPlacementGroup.Id = value;
+                ProximityPlacementGroup = new ComputeWriteableSubResourceData(value);
             }
         }
     }

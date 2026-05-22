@@ -14,9 +14,10 @@ namespace Azure.ResourceManager.Compute
     {
         /// <summary> Initializes a new instance of VmssExtensionData. </summary>
         /// <param name="name"> The name. </param>
-        public VirtualMachineScaleSetExtensionData(string name) : this()
+        // Backward compatibility: the previously shipped SDK exposed this name-only constructor.
+        // Without chaining to the generated ResourceData base constructor, the constructor cannot set the now read-only ResourceData.Name property.
+        public VirtualMachineScaleSetExtensionData(string name) : base(name, default, default, null, default)
         {
-            Name = name;
         }
 
         // Backward compatibility: the previously-shipped SDK exposed `ProtectedSettingsFromKeyVault` as a loosely-typed
