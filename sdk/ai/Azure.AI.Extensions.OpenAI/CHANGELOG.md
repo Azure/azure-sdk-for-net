@@ -18,6 +18,8 @@
 - Added new method `GetProjectResponsesClientForAgentEndpoint` on the `ProjectOpenAIClient`.
 
 ### Breaking Changes
+- **Breaking changes since version 2.0.0** `MemorySearchToolCallResponseItem` was replaced by `MemorySearchToolCall`, `MemoryCommandToolCall` and `MemoryCommandToolCallOutput`.
+- **Breaking changes since version 2.0.0** `MemoryToolSearchItem` was removed, because it is not used anymore.
 - `ComputerScreenshotImage` property `ImageUrl` was renamed to `ImageUri`.
 - `ResponsesAutoCodeInterpreterToolParam` property `Type` was renamed to `Kind`.
 - `ResponsesAzureAISearchTool` property `AzureAiSearch` was renamed to `AzureAISearch`.
