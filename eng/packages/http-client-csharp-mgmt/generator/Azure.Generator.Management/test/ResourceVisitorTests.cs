@@ -5,7 +5,6 @@ using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Visitors;
 using Azure.Generator.Management;
-using Azure.Generator.Management.Providers;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -25,8 +24,8 @@ namespace Azure.Generator.Mgmt.Tests
             var resourceModel = models.Single();
             _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
 
-            var modelProvider = new ResourceDataModelProvider(resourceModel);
-            Assert.That(modelProvider.Name, Is.EqualTo("ResponseTypeData"));
+            var modelProvider = new ModelProvider(resourceModel);
+            Assert.That(modelProvider.Name, Is.EqualTo("ResponseType"));
             Assert.That(modelProvider.CustomCodeView, Is.Null);
 
             var visitor = new TestableResourceVisitor();
@@ -61,9 +60,8 @@ namespace Azure.Generator.Mgmt.Tests
                 usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
             _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [trackedResourceModel, resourceModel]);
 
-            var modelProvider = new ResourceDataModelProvider(resourceModel);
-
-            Assert.That(modelProvider.Name, Is.EqualTo("NewRelicMonitorResourceData"));
+            var modelProvider = new ModelProvider(resourceModel);
+            Assert.That(modelProvider.Name, Is.EqualTo("NewRelicMonitorResource"));
             Assert.That(modelProvider.BaseType?.AreNamesEqual(new CSharpType(typeof(TrackedResourceData))), Is.True);
         }
 
@@ -100,9 +98,11 @@ namespace Azure.Generator.Mgmt.Tests
             ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[trackedResourceType] =
                 new SystemObjectModelProvider(trackedResourceType, trackedResourceModel);
 
-            var modelProvider = new ResourceDataModelProvider(resourceModel);
+            var modelProvider = new ModelProvider(resourceModel);
+            var resourceVisitor = new TestableResourceVisitor();
+            var resourceDataModel = resourceVisitor.InvokePreVisitModel(resourceModel, modelProvider);
             var visitor = new TestableInheritableSystemObjectModelVisitor();
-            var result = visitor.InvokePreVisitModel(resourceModel, modelProvider);
+            var result = visitor.InvokePreVisitModel(resourceModel, resourceDataModel);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result!.BaseModelProvider, Is.InstanceOf<SystemObjectModelProvider>());

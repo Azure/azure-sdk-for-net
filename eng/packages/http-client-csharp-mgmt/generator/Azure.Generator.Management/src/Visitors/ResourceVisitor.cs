@@ -4,6 +4,7 @@
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
+using System;
 using System.IO;
 
 namespace Azure.Generator.Management.Visitors;
@@ -23,11 +24,17 @@ internal class ResourceVisitor : ScmLibraryVisitor
     {
         if (type is ModelProvider && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
         {
+            var resourceDataName = TransformName(type);
+            type.Update(
+                relativeFilePath: TransformRelativeFilePath(resourceDataName),
+                name: resourceDataName,
+                @namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
+
             foreach (var serialization in type.SerializationProviders)
             {
                 serialization.Update(
-                    relativeFilePath: TransformRelativeFilePathForSerialization(type),
-                    name: type.Name,
+                    relativeFilePath: TransformRelativeFilePathForSerialization(resourceDataName),
+                    name: resourceDataName,
                     @namespace: ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
             }
         }
@@ -56,6 +63,15 @@ internal class ResourceVisitor : ScmLibraryVisitor
         }
     }
 
-    private static string TransformRelativeFilePathForSerialization(TypeProvider model)
-        => Path.Combine("src", "Generated", $"{model.Name}.Serialization.cs");
+    private static string TransformName(TypeProvider model)
+    {
+        var name = model.Name;
+        return name.EndsWith("Data", StringComparison.Ordinal) ? name : $"{name}Data";
+    }
+
+    private static string TransformRelativeFilePath(string name)
+        => Path.Combine("src", "Generated", $"{name}.cs");
+
+    private static string TransformRelativeFilePathForSerialization(string name)
+        => Path.Combine("src", "Generated", $"{name}.Serialization.cs");
 }
