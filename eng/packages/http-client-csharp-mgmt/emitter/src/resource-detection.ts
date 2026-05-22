@@ -446,8 +446,8 @@ function getDirectResponseModelId(
 
 /**
  * Returns the item model id for a method that returns a resource collection.
- * Some ARM single-page list templates are represented as basic GET methods
- * returning T[], so list detection must not be limited to paging/lropaging.
+ * This covers paging/lropaging methods and basic GET methods that return T[]
+ * directly.
  */
 function getCollectionItemModelIdLocal(
   method: SdkMethod<SdkHttpOperation>

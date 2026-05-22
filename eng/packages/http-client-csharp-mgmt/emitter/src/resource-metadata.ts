@@ -845,33 +845,23 @@ export function resolveFixedEnumNameSegments(
 ): RequestPath {
   let changed = false;
   const segments = [...path.segments];
-  for (
-    let providerIndex = 0;
-    providerIndex < segments.length;
-    providerIndex++
-  ) {
-    if (segments[providerIndex].toLowerCase() !== "providers") continue;
+  const providerIndex = path.lastProvidersSegmentIndex;
+  if (providerIndex < 0) return path;
 
-    const nextProviderIndex = segments.findIndex(
-      (segment, index) =>
-        index > providerIndex && segment.toLowerCase() === "providers"
+  // The provider tail starts as /providers/<namespace>/<type>/{name};
+  // providerIndex + 3 is the first name segment, then type/name pairs repeat.
+  for (let i = providerIndex + 3; i < segments.length; i += 2) {
+    const segment = segments[i];
+    if (!isVariableSegment(segment)) continue;
+
+    const fixedValue = getSingleFixedEnumValueForPathParam(
+      method,
+      getVariableSegmentName(segment)
     );
-    const tailEnd =
-      nextProviderIndex === -1 ? segments.length : nextProviderIndex;
+    if (!fixedValue) continue;
 
-    for (let i = providerIndex + 3; i < tailEnd; i += 2) {
-      const segment = segments[i];
-      if (!isVariableSegment(segment)) continue;
-
-      const fixedValue = getSingleFixedEnumValueForPathParam(
-        method,
-        getVariableSegmentName(segment)
-      );
-      if (!fixedValue) continue;
-
-      segments[i] = fixedValue;
-      changed = true;
-    }
+    segments[i] = fixedValue;
+    changed = true;
   }
 
   return changed ? RequestPath.fromSegments(segments) : path;
