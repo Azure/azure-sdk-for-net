@@ -12,6 +12,7 @@ namespace System.ClientModel.Tests.Internal.Perf
     /// Compares: no proxy vs 1 proxy vs 10 proxies (where the last one handles).
     /// The model is intentionally simple so the benchmark isolates proxy lookup cost.
     /// </summary>
+    [MemoryDiagnoser]
     public class ProxyResolutionBenchmark
     {
         private BenchmarkModel _model;
