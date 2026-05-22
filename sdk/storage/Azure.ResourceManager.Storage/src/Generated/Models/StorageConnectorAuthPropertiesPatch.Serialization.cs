@@ -14,59 +14,59 @@ namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary>
     /// The authentication properties of the backing data source
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManagedIdentityAuthPropertiesUpdate"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StorageConnectorManagedIdentityAuthPatch"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownStorageConnectorAuthPropertiesUpdate))]
-    public abstract partial class StorageConnectorAuthPropertiesUpdate : IJsonModel<StorageConnectorAuthPropertiesUpdate>
+    [PersistableModelProxy(typeof(UnknownStorageConnectorAuthPropertiesPatch))]
+    public abstract partial class StorageConnectorAuthPropertiesPatch : IJsonModel<StorageConnectorAuthPropertiesPatch>
     {
-        /// <summary> Initializes a new instance of <see cref="StorageConnectorAuthPropertiesUpdate"/> for deserialization. </summary>
-        internal StorageConnectorAuthPropertiesUpdate()
+        /// <summary> Initializes a new instance of <see cref="StorageConnectorAuthPropertiesPatch"/> for deserialization. </summary>
+        internal StorageConnectorAuthPropertiesPatch()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageConnectorAuthPropertiesUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual StorageConnectorAuthPropertiesPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorAuthPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorAuthPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStorageConnectorAuthPropertiesUpdate(document.RootElement, options);
+                        return DeserializeStorageConnectorAuthPropertiesPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageConnectorAuthPropertiesUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageConnectorAuthPropertiesPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorAuthPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorAuthPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StorageConnectorAuthPropertiesUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageConnectorAuthPropertiesPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StorageConnectorAuthPropertiesUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<StorageConnectorAuthPropertiesPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageConnectorAuthPropertiesUpdate IPersistableModel<StorageConnectorAuthPropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StorageConnectorAuthPropertiesPatch IPersistableModel<StorageConnectorAuthPropertiesPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StorageConnectorAuthPropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StorageConnectorAuthPropertiesPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StorageConnectorAuthPropertiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StorageConnectorAuthPropertiesPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorAuthPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorAuthPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageConnectorAuthPropertiesUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageConnectorAuthPropertiesPatch)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageConnectorAuthPropertiesUpdate IJsonModel<StorageConnectorAuthPropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StorageConnectorAuthPropertiesPatch IJsonModel<StorageConnectorAuthPropertiesPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageConnectorAuthPropertiesUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual StorageConnectorAuthPropertiesPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorAuthPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorAuthPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageConnectorAuthPropertiesUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageConnectorAuthPropertiesPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStorageConnectorAuthPropertiesUpdate(document.RootElement, options);
+            return DeserializeStorageConnectorAuthPropertiesPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StorageConnectorAuthPropertiesUpdate DeserializeStorageConnectorAuthPropertiesUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static StorageConnectorAuthPropertiesPatch DeserializeStorageConnectorAuthPropertiesPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.Storage.Models
                 switch (discriminator.GetString())
                 {
                     case "ManagedIdentity":
-                        return ManagedIdentityAuthPropertiesUpdate.DeserializeManagedIdentityAuthPropertiesUpdate(element, options);
+                        return StorageConnectorManagedIdentityAuthPatch.DeserializeStorageConnectorManagedIdentityAuthPatch(element, options);
                 }
             }
-            return UnknownStorageConnectorAuthPropertiesUpdate.DeserializeUnknownStorageConnectorAuthPropertiesUpdate(element, options);
+            return UnknownStorageConnectorAuthPropertiesPatch.DeserializeUnknownStorageConnectorAuthPropertiesPatch(element, options);
         }
     }
 }

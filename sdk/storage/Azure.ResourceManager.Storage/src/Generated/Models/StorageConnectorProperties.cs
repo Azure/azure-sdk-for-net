@@ -40,18 +40,18 @@ namespace Azure.ResourceManager.Storage.Models
         /// Not a valid input parameter during creating.
         /// </param>
         /// <param name="description"> Arbitrary description of this Storage Connector. Max 250 characters. </param>
-        /// <param name="testConnection"> Test connection to backing data source before creating the storage connector. </param>
+        /// <param name="shouldTestConnection"> Test connection to backing data source before creating the storage connector. </param>
         /// <param name="dataSourceType"> The type of backing data source for this Storage Connector. </param>
         /// <param name="source"> Information about how to communicate with and authenticate to the backing data store. </param>
         /// <param name="provisioningState"> Represents the provisioning state of the storage connector. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageConnectorProperties(string uniqueId, StorageConnectorState? state, string creationTime, string description, bool? testConnection, StorageConnectorDataSourceType dataSourceType, StorageConnectorSource source, NativeDataSharingProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageConnectorProperties(string uniqueId, StorageConnectorState? state, string creationTime, string description, bool? shouldTestConnection, StorageConnectorDataSourceType dataSourceType, StorageConnectorSource source, NativeDataSharingProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UniqueId = uniqueId;
             State = state;
             CreationTime = creationTime;
             Description = description;
-            TestConnection = testConnection;
+            ShouldTestConnection = shouldTestConnection;
             DataSourceType = dataSourceType;
             Source = source;
             ProvisioningState = provisioningState;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Test connection to backing data source before creating the storage connector. </summary>
         [WirePath("testConnection")]
-        public bool? TestConnection { get; set; }
+        public bool? ShouldTestConnection { get; set; }
 
         /// <summary> The type of backing data source for this Storage Connector. </summary>
         [WirePath("dataSourceType")]

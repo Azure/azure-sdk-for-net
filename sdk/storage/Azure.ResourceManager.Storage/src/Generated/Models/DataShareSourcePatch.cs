@@ -12,24 +12,24 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The properties of data share source. </summary>
-    public partial class DataShareSourceUpdate : StorageConnectorSourceUpdate
+    public partial class DataShareSourcePatch : StorageConnectorSourcePatch
     {
-        /// <summary> Initializes a new instance of <see cref="DataShareSourceUpdate"/>. </summary>
-        public DataShareSourceUpdate() : base(StorageConnectorSourceType.DataShare)
+        /// <summary> Initializes a new instance of <see cref="DataShareSourcePatch"/>. </summary>
+        public DataShareSourcePatch() : base(StorageConnectorSourceType.DataShare)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataShareSourceUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareSourcePatch"/>. </summary>
         /// <param name="type"> Type of the Storage Connector. Not mutable once the Storage Connector is created.". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="authProperties"> Details for how to authenticate to the backing data store. </param>
-        internal DataShareSourceUpdate(StorageConnectorSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageConnectorAuthPropertiesUpdate authProperties) : base(@type, additionalBinaryDataProperties)
+        internal DataShareSourcePatch(StorageConnectorSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageConnectorAuthPropertiesPatch authProperties) : base(@type, additionalBinaryDataProperties)
         {
             AuthProperties = authProperties;
         }
 
         /// <summary> Details for how to authenticate to the backing data store. </summary>
         [WirePath("authProperties")]
-        public StorageConnectorAuthPropertiesUpdate AuthProperties { get; set; }
+        public StorageConnectorAuthPropertiesPatch AuthProperties { get; set; }
     }
 }

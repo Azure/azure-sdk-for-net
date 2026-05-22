@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="corsRules"> The List of CORS rules. You can include up to five CorsRule elements in the request. </param>
         /// <param name="sku"> Sku name and tier. </param>
         /// <returns> A new <see cref="Storage.BlobServiceData"/> instance for mocking. </returns>
-        public static BlobServiceData BlobServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string defaultServiceVersion = default, DeleteRetentionPolicy deleteRetentionPolicy = default, StaticWebsite staticWebsite = default, bool? isVersioningEnabled = default, bool? isAutomaticSnapshotPolicyEnabled = default, BlobServiceChangeFeed changeFeed = default, RestorePolicy restorePolicy = default, DeleteRetentionPolicy containerDeleteRetentionPolicy = default, LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy = default, IEnumerable<StorageCorsRule> corsRules = default, StorageSku sku = default)
+        public static BlobServiceData BlobServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string defaultServiceVersion = default, DeleteRetentionPolicy deleteRetentionPolicy = default, BlobServiceStaticWebsite staticWebsite = default, bool? isVersioningEnabled = default, bool? isAutomaticSnapshotPolicyEnabled = default, BlobServiceChangeFeed changeFeed = default, RestorePolicy restorePolicy = default, DeleteRetentionPolicy containerDeleteRetentionPolicy = default, LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy = default, IEnumerable<StorageCorsRule> corsRules = default, StorageSku sku = default)
         {
             return new BlobServiceData(
                 id,
@@ -1336,19 +1336,19 @@ namespace Azure.ResourceManager.Storage.Models
         /// Not a valid input parameter during creating.
         /// </param>
         /// <param name="description"> Arbitrary description of this Storage Connector. Max 250 characters. </param>
-        /// <param name="testConnection"> Test connection to backing data source before creating the storage connector. </param>
+        /// <param name="shouldTestConnection"> Test connection to backing data source before creating the storage connector. </param>
         /// <param name="dataSourceType"> The type of backing data source for this Storage Connector. </param>
         /// <param name="source"> Information about how to communicate with and authenticate to the backing data store. </param>
         /// <param name="provisioningState"> Represents the provisioning state of the storage connector. </param>
         /// <returns> A new <see cref="Models.StorageConnectorProperties"/> instance for mocking. </returns>
-        public static StorageConnectorProperties StorageConnectorProperties(string uniqueId = default, StorageConnectorState? state = default, string creationTime = default, string description = default, bool? testConnection = default, StorageConnectorDataSourceType dataSourceType = default, StorageConnectorSource source = default, NativeDataSharingProvisioningState? provisioningState = default)
+        public static StorageConnectorProperties StorageConnectorProperties(string uniqueId = default, StorageConnectorState? state = default, string creationTime = default, string description = default, bool? shouldTestConnection = default, StorageConnectorDataSourceType dataSourceType = default, StorageConnectorSource source = default, NativeDataSharingProvisioningState? provisioningState = default)
         {
             return new StorageConnectorProperties(
                 uniqueId,
                 state,
                 creationTime,
                 description,
-                testConnection,
+                shouldTestConnection,
                 dataSourceType,
                 source,
                 provisioningState,
@@ -1363,7 +1363,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The properties of the Storage Connector. </param>
         /// <returns> A new <see cref="Models.StorageConnectorPatch"/> instance for mocking. </returns>
-        public static StorageConnectorPatch StorageConnectorPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, StorageConnectorPropertiesUpdate properties = default)
+        public static StorageConnectorPatch StorageConnectorPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, StorageConnectorPropertiesPatch properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1383,12 +1383,12 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.TrackedResourceUpdate"/> instance for mocking. </returns>
-        public static TrackedResourceUpdate TrackedResourceUpdate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.StorageTrackedResourcePatch"/> instance for mocking. </returns>
+        public static StorageTrackedResourcePatch StorageTrackedResourcePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TrackedResourceUpdate(
+            return new StorageTrackedResourcePatch(
                 id,
                 name,
                 resourceType,
@@ -1399,10 +1399,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Test existing connection request properties. </summary>
         /// <param name="uniqueId"> The uniqueId of the storage connector as returned by the server. </param>
-        /// <returns> A new <see cref="Models.TestExistingConnectionContent"/> instance for mocking. </returns>
-        public static TestExistingConnectionContent TestExistingConnectionContent(string uniqueId = default)
+        /// <returns> A new <see cref="Models.StorageConnectorTestExistingConnectionContent"/> instance for mocking. </returns>
+        public static StorageConnectorTestExistingConnectionContent StorageConnectorTestExistingConnectionContent(string uniqueId = default)
         {
-            return new TestExistingConnectionContent(uniqueId, additionalBinaryDataProperties: null);
+            return new StorageConnectorTestExistingConnectionContent(uniqueId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Test connection response properties. </summary>
@@ -1416,10 +1416,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// The error message will be empty if the connection was successful.
         /// </param>
         /// <param name="storageConnectorRequestId"> The request Id associated with the request sent to the backing data store for validation. </param>
-        /// <returns> A new <see cref="Models.TestConnectionResult"/> instance for mocking. </returns>
-        public static TestConnectionResult TestConnectionResult(string storageConnectorMethodName = default, string storageConnectorErrorMessage = default, string storageConnectorRequestId = default)
+        /// <returns> A new <see cref="Models.StorageConnectorTestConnectionResult"/> instance for mocking. </returns>
+        public static StorageConnectorTestConnectionResult StorageConnectorTestConnectionResult(string storageConnectorMethodName = default, string storageConnectorErrorMessage = default, string storageConnectorRequestId = default)
         {
-            return new TestConnectionResult(storageConnectorMethodName, storageConnectorErrorMessage, storageConnectorRequestId, additionalBinaryDataProperties: null);
+            return new StorageConnectorTestConnectionResult(storageConnectorMethodName, storageConnectorErrorMessage, storageConnectorRequestId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A DataShare is a tracked ARM resource modeled as a sub-resource of a Storage Account. </summary>
@@ -1490,7 +1490,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The properties of the Storage DataShare. </param>
         /// <returns> A new <see cref="Models.StorageDataSharePatch"/> instance for mocking. </returns>
-        public static StorageDataSharePatch StorageDataSharePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, StorageDataSharePropertiesUpdate properties = default)
+        public static StorageDataSharePatch StorageDataSharePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, StorageDataSharePropertiesPatch properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1518,13 +1518,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// For Update - This property is optional. If set to null or not passed, the existing assets are left unchanged.
         /// If provided with a non-null value, the existing assets are replaced with the specified list.
         /// </param>
-        /// <returns> A new <see cref="Models.StorageDataSharePropertiesUpdate"/> instance for mocking. </returns>
-        public static StorageDataSharePropertiesUpdate StorageDataSharePropertiesUpdate(string description = default, IEnumerable<StorageDataShareAccessPolicy> accessPolicies = default, IEnumerable<StorageDataShareAsset> assets = default)
+        /// <returns> A new <see cref="Models.StorageDataSharePropertiesPatch"/> instance for mocking. </returns>
+        public static StorageDataSharePropertiesPatch StorageDataSharePropertiesPatch(string description = default, IEnumerable<StorageDataShareAccessPolicy> accessPolicies = default, IEnumerable<StorageDataShareAsset> assets = default)
         {
             accessPolicies ??= new ChangeTrackingList<StorageDataShareAccessPolicy>();
             assets ??= new ChangeTrackingList<StorageDataShareAsset>();
 
-            return new StorageDataSharePropertiesUpdate(description, accessPolicies.ToList(), assets.ToList(), additionalBinaryDataProperties: null);
+            return new StorageDataSharePropertiesPatch(description, accessPolicies.ToList(), assets.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A list of private link resources. </summary>
@@ -1548,9 +1548,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="rules"> The storage account object replication rules. </param>
         /// <param name="isMetricsEnabled"> Indicates whether object replication metrics feature is enabled for the policy. </param>
         /// <param name="isPriorityReplicationEnabled"> Indicates whether object replication priority replication feature is enabled for the policy. </param>
-        /// <param name="tagsReplicationEnabled"> Indicates whether object replication tags replication feature is enabled for the policy. </param>
+        /// <param name="isTagsReplicationEnabled"> Indicates whether object replication tags replication feature is enabled for the policy. </param>
         /// <returns> A new <see cref="Storage.ObjectReplicationPolicyData"/> instance for mocking. </returns>
-        public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string policyId = default, DateTimeOffset? enabledOn = default, string sourceAccount = default, string destinationAccount = default, IEnumerable<ObjectReplicationPolicyRule> rules = default, bool? isMetricsEnabled = default, bool? isPriorityReplicationEnabled = default, bool? tagsReplicationEnabled = default)
+        public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string policyId = default, DateTimeOffset? enabledOn = default, string sourceAccount = default, string destinationAccount = default, IEnumerable<ObjectReplicationPolicyRule> rules = default, bool? isMetricsEnabled = default, bool? isPriorityReplicationEnabled = default, bool? isTagsReplicationEnabled = default)
         {
             return new ObjectReplicationPolicyData(
                 id,
@@ -1558,7 +1558,7 @@ namespace Azure.ResourceManager.Storage.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                policyId is null && enabledOn is null && sourceAccount is null && destinationAccount is null && rules is null && isMetricsEnabled is null && isPriorityReplicationEnabled is null && tagsReplicationEnabled is null ? default : new ObjectReplicationPolicyProperties(
+                policyId is null && enabledOn is null && sourceAccount is null && destinationAccount is null && rules is null && isMetricsEnabled is null && isPriorityReplicationEnabled is null && isTagsReplicationEnabled is null ? default : new ObjectReplicationPolicyProperties(
                     policyId,
                     enabledOn,
                     sourceAccount,
@@ -1566,7 +1566,7 @@ namespace Azure.ResourceManager.Storage.Models
                     (rules ?? new ChangeTrackingList<ObjectReplicationPolicyRule>()).ToList(),
                     new ObjectReplicationPolicyPropertiesMetrics(isMetricsEnabled, null),
                     new ObjectReplicationPolicyPropertiesPriorityReplication(isPriorityReplicationEnabled, null),
-                    new ObjectReplicationPolicyPropertiesTagsReplication(tagsReplicationEnabled, null),
+                    new ObjectReplicationPolicyPropertiesTagsReplication(isTagsReplicationEnabled, null),
                     null));
         }
 
@@ -1854,7 +1854,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IEnumerable<ObjectReplicationPolicyRule> rules, bool? isMetricsEnabled, bool? isPriorityReplicationEnabled)
         {
-            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: isMetricsEnabled, isPriorityReplicationEnabled: isPriorityReplicationEnabled, tagsReplicationEnabled: default);
+            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: isMetricsEnabled, isPriorityReplicationEnabled: isPriorityReplicationEnabled, isTagsReplicationEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.BlobServiceData"/>. </summary>
@@ -2358,7 +2358,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IEnumerable<ObjectReplicationPolicyRule> rules, bool? isMetricsEnabled)
         {
-            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: isMetricsEnabled, isPriorityReplicationEnabled: default, tagsReplicationEnabled: default);
+            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: isMetricsEnabled, isPriorityReplicationEnabled: default, isTagsReplicationEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageSkuInformation"/>. </summary>
@@ -2593,7 +2593,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IEnumerable<ObjectReplicationPolicyRule> rules)
         {
-            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: default, isPriorityReplicationEnabled: default, tagsReplicationEnabled: default);
+            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: default, isPriorityReplicationEnabled: default, isTagsReplicationEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GeoReplicationStatistics"/>. </summary>

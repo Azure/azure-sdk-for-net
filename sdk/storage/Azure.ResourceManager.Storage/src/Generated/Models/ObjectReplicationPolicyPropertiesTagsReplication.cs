@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ObjectReplicationPolicyPropertiesTagsReplication"/>. </summary>
-        /// <param name="enabled"> Indicates whether object replication tags replication feature is enabled for the policy. </param>
+        /// <param name="isTagsReplicationEnabled"> Indicates whether object replication tags replication feature is enabled for the policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectReplicationPolicyPropertiesTagsReplication(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ObjectReplicationPolicyPropertiesTagsReplication(bool? isTagsReplicationEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsTagsReplicationEnabled = isTagsReplicationEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether object replication tags replication feature is enabled for the policy. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsTagsReplicationEnabled { get; set; }
     }
 }

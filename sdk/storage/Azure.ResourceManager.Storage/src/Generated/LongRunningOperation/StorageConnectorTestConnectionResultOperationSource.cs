@@ -15,29 +15,29 @@ using Azure.ResourceManager.Storage.Models;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary></summary>
-    internal partial class TestConnectionResultOperationSource : IOperationSource<TestConnectionResult>
+    internal partial class StorageConnectorTestConnectionResultOperationSource : IOperationSource<StorageConnectorTestConnectionResult>
     {
         /// <summary></summary>
-        internal TestConnectionResultOperationSource()
+        internal StorageConnectorTestConnectionResultOperationSource()
         {
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        TestConnectionResult IOperationSource<TestConnectionResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        StorageConnectorTestConnectionResult IOperationSource<StorageConnectorTestConnectionResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return TestConnectionResult.DeserializeTestConnectionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return StorageConnectorTestConnectionResult.DeserializeStorageConnectorTestConnectionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<TestConnectionResult> IOperationSource<TestConnectionResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StorageConnectorTestConnectionResult> IOperationSource<StorageConnectorTestConnectionResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return TestConnectionResult.DeserializeTestConnectionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return StorageConnectorTestConnectionResult.DeserializeStorageConnectorTestConnectionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

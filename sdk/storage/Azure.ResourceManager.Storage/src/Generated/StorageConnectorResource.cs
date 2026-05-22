@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> This method is used to verify that the connection to the backing data store works. This API is designed to be used for monitoring and debugging purposes. From the caller’s perspective, this method does the following: Calls List on the backing data store, attempting to list up to one blob/object/etc. If the above succeeds, and if a blob/object/etc is found, calls Get on that object, attempting to download one byte. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<TestConnectionResult>> TestExistingConnectionAsync(WaitUntil waitUntil, TestExistingConnectionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StorageConnectorTestConnectionResult>> TestExistingConnectionAsync(WaitUntil waitUntil, StorageConnectorTestExistingConnectionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -446,10 +446,10 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorsRestClient.CreateTestExistingConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, TestExistingConnectionContent.ToRequestContent(content), context);
+                HttpMessage message = _connectorsRestClient.CreateTestExistingConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageConnectorTestExistingConnectionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                StorageArmOperation<TestConnectionResult> operation = new StorageArmOperation<TestConnectionResult>(
-                    new TestConnectionResultOperationSource(),
+                StorageArmOperation<StorageConnectorTestConnectionResult> operation = new StorageArmOperation<StorageConnectorTestConnectionResult>(
+                    new StorageConnectorTestConnectionResultOperationSource(),
                     _connectorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="content"> This method is used to verify that the connection to the backing data store works. This API is designed to be used for monitoring and debugging purposes. From the caller’s perspective, this method does the following: Calls List on the backing data store, attempting to list up to one blob/object/etc. If the above succeeds, and if a blob/object/etc is found, calls Get on that object, attempting to download one byte. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<TestConnectionResult> TestExistingConnection(WaitUntil waitUntil, TestExistingConnectionContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StorageConnectorTestConnectionResult> TestExistingConnection(WaitUntil waitUntil, StorageConnectorTestExistingConnectionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -508,10 +508,10 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorsRestClient.CreateTestExistingConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, TestExistingConnectionContent.ToRequestContent(content), context);
+                HttpMessage message = _connectorsRestClient.CreateTestExistingConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageConnectorTestExistingConnectionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                StorageArmOperation<TestConnectionResult> operation = new StorageArmOperation<TestConnectionResult>(
-                    new TestConnectionResultOperationSource(),
+                StorageArmOperation<StorageConnectorTestConnectionResult> operation = new StorageArmOperation<StorageConnectorTestConnectionResult>(
+                    new StorageConnectorTestConnectionResultOperationSource(),
                     _connectorsClientDiagnostics,
                     Pipeline,
                     message.Request,
