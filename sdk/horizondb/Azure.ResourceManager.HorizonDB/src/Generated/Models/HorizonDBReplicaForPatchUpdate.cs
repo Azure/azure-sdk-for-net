@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> HorizonDb replica for update operations. </summary>
-    public partial class HorizonDBReplicaPatch
+    public partial class HorizonDBReplicaForPatchUpdate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDBReplicaPatch"/>. </summary>
-        public HorizonDBReplicaPatch()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBReplicaForPatchUpdate"/>. </summary>
+        public HorizonDBReplicaForPatchUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDBReplicaPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBReplicaForPatchUpdate"/>. </summary>
         /// <param name="properties"> Properties of a HorizonDb replica for update operations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBReplicaPatch(HorizonDBReplicaPropertiesForPatchUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBReplicaForPatchUpdate(HorizonDBReplicaPropertiesForPatchUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -32,5 +32,22 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Properties of a HorizonDb replica for update operations. </summary>
         internal HorizonDBReplicaPropertiesForPatchUpdate Properties { get; set; }
+
+        /// <summary> Role of the replica. </summary>
+        public HorizonDBReplicaRole? HorizonDBReplicaPropertiesForPatchUpdateRole
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Role;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HorizonDBReplicaPropertiesForPatchUpdate();
+                }
+                Properties.Role = value;
+            }
+        }
     }
 }
