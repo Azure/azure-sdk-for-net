@@ -18,9 +18,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         MonitorConditionChange,
         /// <summary> SeverityChange. </summary>
         SeverityChange,
+        /// <summary> ActionRuleTriggered. </summary>
+        ActionRuleTriggered,
+        /// <summary> ActionRuleSuppressed. </summary>
+        ActionRuleSuppressed,
         /// <summary> ActionsTriggered. </summary>
         ActionsTriggered,
         /// <summary> ActionsSuppressed. </summary>
-        ActionsSuppressed
+        ActionsSuppressed,
+        /// <summary> ActionsFailed. </summary>
+        ActionsFailed
     }
 }

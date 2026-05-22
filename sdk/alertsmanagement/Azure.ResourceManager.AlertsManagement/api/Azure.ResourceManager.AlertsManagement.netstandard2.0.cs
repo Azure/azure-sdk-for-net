@@ -184,6 +184,7 @@ namespace Azure.ResourceManager.AlertsManagement
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource>> ChangeStateAsync(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState newState, Azure.ResourceManager.AlertsManagement.Models.ServiceAlertComments comment = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource>> ChangeStateAsync(Azure.ResourceManager.AlertsManagement.Models.ServiceAlertState newState, string comment, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(System.Guid alertId) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, System.Guid alertId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AlertsManagement.Models.AlertEnrichmentResult> GetEnrichments(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1034,7 +1035,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     }
     public abstract partial class ServiceAlertMetadataProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties>
     {
-        internal ServiceAlertMetadataProperties() { }
+        protected ServiceAlertMetadataProperties() { }
         protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadataProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1065,8 +1066,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         StateChange = 1,
         MonitorConditionChange = 2,
         SeverityChange = 3,
-        ActionsTriggered = 4,
-        ActionsSuppressed = 5,
+        ActionRuleTriggered = 4,
+        ActionRuleSuppressed = 5,
+        ActionsTriggered = 6,
+        ActionsSuppressed = 7,
+        ActionsFailed = 8,
     }
     public partial class ServiceAlertModificationItemInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationItemInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationItemInfo>
     {

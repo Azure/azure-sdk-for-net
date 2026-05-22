@@ -16,10 +16,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             ServiceAlertModificationEvent.AlertCreated => "AlertCreated",
             ServiceAlertModificationEvent.StateChange => "StateChange",
-            ServiceAlertModificationEvent.SeverityChange => "SeverityChange",
             ServiceAlertModificationEvent.MonitorConditionChange => "MonitorConditionChange",
+            ServiceAlertModificationEvent.SeverityChange => "SeverityChange",
+            ServiceAlertModificationEvent.ActionRuleTriggered => "ActionRuleTriggered",
+            ServiceAlertModificationEvent.ActionRuleSuppressed => "ActionRuleSuppressed",
             ServiceAlertModificationEvent.ActionsTriggered => "ActionsTriggered",
             ServiceAlertModificationEvent.ActionsSuppressed => "ActionsSuppressed",
+            ServiceAlertModificationEvent.ActionsFailed => "ActionsFailed",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceAlertModificationEvent value.")
         };
 
@@ -34,13 +37,21 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return ServiceAlertModificationEvent.StateChange;
             }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MonitorConditionChange"))
+            {
+                return ServiceAlertModificationEvent.MonitorConditionChange;
+            }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "SeverityChange"))
             {
                 return ServiceAlertModificationEvent.SeverityChange;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MonitorConditionChange"))
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ActionRuleTriggered"))
             {
-                return ServiceAlertModificationEvent.MonitorConditionChange;
+                return ServiceAlertModificationEvent.ActionRuleTriggered;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ActionRuleSuppressed"))
+            {
+                return ServiceAlertModificationEvent.ActionRuleSuppressed;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "ActionsTriggered"))
             {
@@ -49,6 +60,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "ActionsSuppressed"))
             {
                 return ServiceAlertModificationEvent.ActionsSuppressed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ActionsFailed"))
+            {
+                return ServiceAlertModificationEvent.ActionsFailed;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceAlertModificationEvent value.");
         }

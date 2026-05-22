@@ -1,9 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.ResourceManager.AlertsManagement.Models;
 
 namespace Azure.ResourceManager.AlertsManagement
@@ -19,6 +21,21 @@ namespace Azure.ResourceManager.AlertsManagement
     //     tenant alert Id (which yields the same wire path).
     public partial class ServiceAlertResource
     {
+        /// <summary>
+        /// Generate the resource identifier of a subscription-scope ServiceAlertResource.
+        /// Preserved for binary compatibility with the previous AutoRest SDK; new code should use
+        /// <see cref="CreateResourceIdentifier(Guid)"/> for tenant-scope alerts or
+        /// <see cref="ScopedServiceAlertResource.CreateResourceIdentifier(string, Guid)"/> for any scope.
+        /// </summary>
+        /// <param name="subscriptionId"> The subscription id. </param>
+        /// <param name="alertId"> The alert id. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Guid alertId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
         /// <summary> Change the state of an alert. </summary>
         /// <param name="newState"> New state of the alert. </param>
         /// <param name="comment"> reason of change alert state. </param>
