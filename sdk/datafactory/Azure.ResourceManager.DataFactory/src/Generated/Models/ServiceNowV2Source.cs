@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ServiceNowV2Source : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="ServiceNowV2Source"/>. </summary>
-        public ServiceNowV2Source() : base("ServiceNowV2Source") { }
+        public ServiceNowV2Source()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="ServiceNowV2Source"/>. </summary>
         /// <param name="type"> Copy source type. </param>

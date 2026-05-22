@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    logLevel = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    logLevel = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("enableReliableLogging"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    enableReliableLogging = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
+                    enableReliableLogging = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")

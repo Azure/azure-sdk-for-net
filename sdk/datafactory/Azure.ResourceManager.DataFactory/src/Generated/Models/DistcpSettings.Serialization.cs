@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("resourceManagerEndpoint"u8))
                 {
-                    resourceManagerEndpoint = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    resourceManagerEndpoint = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("tempScriptPath"u8))
                 {
-                    tempScriptPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    tempScriptPath = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("distcpOptions"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    distcpOptions = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    distcpOptions = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")

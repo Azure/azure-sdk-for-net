@@ -24,15 +24,19 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="WebActivityAuthentication"/>. </summary>
         /// <param name="webActivityAuthenticationType"> Web activity authentication (Basic/ClientCertificate/MSI/ServicePrincipal). </param>
+        /// <param name="pfx"> Base64-encoded contents of a PFX file or Certificate when used for ServicePrincipal. </param>
         /// <param name="username"> Web activity authentication user name for basic authentication or ClientID when used for ServicePrincipal. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password for the PFX file or basic authentication / Secret when used for ServicePrincipal. </param>
         /// <param name="resource"> Resource for which Azure Auth token will be requested when using MSI Authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="userTenant"> TenantId for which Azure Auth token will be requested when using ServicePrincipal Authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebActivityAuthentication(string webActivityAuthenticationType, DataFactoryElement<string> username, DataFactoryElement<string> resource, DataFactoryElement<string> userTenant, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebActivityAuthentication(string webActivityAuthenticationType, DataFactorySecret pfx, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> resource, DataFactoryElement<string> userTenant, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WebActivityAuthenticationType = webActivityAuthenticationType;
+            Pfx = pfx;
             Username = username;
+            Password = password;
             Resource = resource;
             UserTenant = userTenant;
             Credential = credential;

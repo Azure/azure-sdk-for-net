@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    validationMode = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    validationMode = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("detectDataType"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    detectDataType = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
+                    detectDataType = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("namespaces"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    namespaces = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
+                    namespaces = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("namespacePrefixes"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    namespacePrefixes = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string>>>(prop.Value.GetRawText());
+                    namespacePrefixes = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

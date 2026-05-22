@@ -19,9 +19,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
         public RedshiftUnloadSettings(DataFactoryLinkedServiceReference s3LinkedServiceName, DataFactoryElement<string> bucketName)
-            : this(bucketName)
+            : this()
         {
             S3LinkedServiceName = s3LinkedServiceName;
+            BucketName = bucketName;
         }
     }
 }

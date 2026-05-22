@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class Office365Dataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public Office365Dataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> tableName) : this(tableName)
+        public Office365Dataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> tableName) : this()
         {
             LinkedServiceName = linkedServiceName;
             TableName = tableName;

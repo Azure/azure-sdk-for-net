@@ -25,24 +25,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateLinkResource"/>. </summary>
-        /// <param name="id"> The resource identifier. </param>
-        /// <param name="name"> The resource name. </param>
-        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Core resource properties. </param>
-        internal DataFactoryPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryPrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        internal DataFactoryPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryPrivateLinkResourceProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
-            ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            ETag = eTag;
         }
-
-        /// <summary> Etag identifies change in the resource. </summary>
-        public ETag? ETag { get; }
 
         /// <summary> Core resource properties. </summary>
         public DataFactoryPrivateLinkResourceProperties Properties { get; set; }
+
+        /// <summary> Etag identifies change in the resource. </summary>
+        public ETag? ETag { get; }
     }
 }

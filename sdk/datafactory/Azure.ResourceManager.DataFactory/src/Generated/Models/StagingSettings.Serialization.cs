@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Staging settings. </summary>
     public partial class StagingSettings : IJsonModel<StagingSettings>
     {
+        /// <summary> Initializes a new instance of <see cref="StagingSettings"/> for deserialization. </summary>
+        internal StagingSettings()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual StagingSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -75,6 +80,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 throw new FormatException($"The model {nameof(StagingSettings)} does not support writing '{format}' format.");
             }
+            writer.WritePropertyName("linkedServiceName"u8);
+            writer.WriteObjectValue(LinkedServiceName, options);
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
@@ -85,7 +92,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("enableCompression"u8);
                 writer.WriteObjectValue(EnableCompression, options);
             }
-            if (Optional.IsDefined(LinkedServiceName)) { writer.WritePropertyName("linkedServiceName"u8); writer.WriteObjectValue(LinkedServiceName, options); }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -125,18 +131,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             DataFactoryElement<string> path = default;
             DataFactoryElement<bool> enableCompression = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("linkedServiceName"u8))
+                {
+                    linkedServiceName = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    continue;
+                }
                 if (prop.NameEquals("path"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    path = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    path = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("enableCompression"u8))
@@ -145,12 +157,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    enableCompression = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
+                    enableCompression = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new StagingSettings(path, enableCompression, additionalProperties);
+            return new StagingSettings(linkedServiceName, path, enableCompression, additionalProperties);
         }
     }
 }

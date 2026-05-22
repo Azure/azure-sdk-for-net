@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    skipLineCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
+                    skipLineCount = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("compressionProperties"u8))

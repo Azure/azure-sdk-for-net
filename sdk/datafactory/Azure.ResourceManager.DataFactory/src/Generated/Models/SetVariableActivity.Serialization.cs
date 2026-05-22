@@ -81,15 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
-            if (TypeProperties != null)
-            {
-                writer.WriteObjectValue(TypeProperties, options);
-            }
-            else
-            {
-                writer.WriteStartObject();
-                writer.WriteEndObject();
-            }
+            writer.WriteObjectValue(TypeProperties, options);
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);

@@ -81,13 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
-            using (System.Text.Json.JsonDocument __tpDoc = System.Text.Json.JsonDocument.Parse(System.ClientModel.Primitives.ModelReaderWriter.Write(TypeProperties, options, AzureResourceManagerDataFactoryContext.Default).ToMemory()))
-            {
-                writer.WriteStartObject();
-                foreach (var __tpProp in __tpDoc.RootElement.EnumerateObject()) { __tpProp.WriteTo(writer); }
-                if (Optional.IsDefined(LicenseKey)) { writer.WritePropertyName("licenseKey"u8); writer.WriteObjectValue(LicenseKey, options); }
-                writer.WriteEndObject();
-            }
+            writer.WriteObjectValue(TypeProperties, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>

@@ -104,15 +104,7 @@ namespace Azure.ResourceManager.DataFactory
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-            if (Properties != null)
-            {
                 writer.WriteObjectValue(Properties, options);
-            }
-            else
-            {
-                writer.WriteStartObject();
-                writer.WriteEndObject();
-            }
             }
             if (Optional.IsDefined(Identity))
             {

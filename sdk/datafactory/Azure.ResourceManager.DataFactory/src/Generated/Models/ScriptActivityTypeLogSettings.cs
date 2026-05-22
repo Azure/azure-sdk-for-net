@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -40,22 +39,5 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Log location settings customer needs to provide when enabling log. </summary>
         public LogLocationSettings LogLocationSettings { get; set; }
-
-        /// <summary> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> LogLocationPath
-        {
-            get
-            {
-                return LogLocationSettings is null ? default : LogLocationSettings.Path;
-            }
-            set
-            {
-                if (LogLocationSettings is null)
-                {
-                    LogLocationSettings = new LogLocationSettings();
-                }
-                LogLocationSettings.Path = value;
-            }
-        }
     }
 }

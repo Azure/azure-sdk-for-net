@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class WarehouseSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="WarehouseSource"/>. </summary>
-        public WarehouseSource() : base("WarehouseSource") { }
+        public WarehouseSource()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="WarehouseSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

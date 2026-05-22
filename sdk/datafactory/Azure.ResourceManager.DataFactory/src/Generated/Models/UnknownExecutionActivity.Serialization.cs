@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -114,6 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             PipelineActivityPolicy policy = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -178,6 +180,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     userProperties = array;
                     continue;
                 }
+                if (prop.NameEquals("linkedServiceName"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linkedServiceName = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    continue;
+                }
                 if (prop.NameEquals("policy"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -201,6 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
                 additionalProperties,
+                linkedServiceName,
                 policy);
         }
     }

@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    name = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    name = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    value = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    value = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("direction"u8))

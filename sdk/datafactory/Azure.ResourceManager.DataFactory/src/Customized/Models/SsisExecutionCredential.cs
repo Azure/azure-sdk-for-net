@@ -23,8 +23,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
         public SsisExecutionCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, DataFactorySecretString password)
-            : this(domain, userName)
+            : this()
         {
+            Domain = domain;
+            UserName = userName;
             Password = password;
         }
     }

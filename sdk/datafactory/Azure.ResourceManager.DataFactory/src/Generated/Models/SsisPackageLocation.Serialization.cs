@@ -85,23 +85,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LocationType.Value.ToString());
             }
-            if (Optional.IsDefined(TypeProperties) || Optional.IsDefined(PackagePassword))
+            if (Optional.IsDefined(TypeProperties))
             {
                 writer.WritePropertyName("typeProperties"u8);
-                writer.WriteStartObject();
-                if (Optional.IsDefined(TypeProperties))
-                {
-                    using (System.Text.Json.JsonDocument __tpDoc = System.Text.Json.JsonDocument.Parse(System.ClientModel.Primitives.ModelReaderWriter.Write(TypeProperties, options, AzureResourceManagerDataFactoryContext.Default).ToMemory()))
-                    {
-                        foreach (var __tpProp in __tpDoc.RootElement.EnumerateObject()) { __tpProp.WriteTo(writer); }
-                    }
-                }
-                if (Optional.IsDefined(PackagePassword))
-                {
-                    writer.WritePropertyName("packagePassword"u8);
-                    writer.WriteObjectValue(PackagePassword, options);
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue(TypeProperties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -157,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    packagePath = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    packagePath = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("type"u8))

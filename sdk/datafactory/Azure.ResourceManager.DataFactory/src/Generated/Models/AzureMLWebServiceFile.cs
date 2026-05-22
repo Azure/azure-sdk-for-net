@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,20 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureMLWebServiceFile"/>. </summary>
         /// <param name="filePath"> The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> is null. </exception>
-        public AzureMLWebServiceFile(DataFactoryElement<string> filePath)
-        {
-            Argument.AssertNotNull(filePath, nameof(filePath));
-
-            FilePath = filePath;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureMLWebServiceFile"/>. </summary>
-        /// <param name="filePath"> The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string). </param>
+        /// <param name="linkedServiceName"> Reference to an Azure Storage LinkedService, where Azure ML WebService Input/Output file located. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureMLWebServiceFile(DataFactoryElement<string> filePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureMLWebServiceFile(DataFactoryElement<string> filePath, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FilePath = filePath;
+            LinkedServiceName = linkedServiceName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

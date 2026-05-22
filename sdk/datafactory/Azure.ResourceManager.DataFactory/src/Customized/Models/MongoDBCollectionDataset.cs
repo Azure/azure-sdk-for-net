@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class MongoDBCollectionDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public MongoDBCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collectionName) : this(collectionName)
+        public MongoDBCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collectionName) : this()
         {
             LinkedServiceName = linkedServiceName;
             CollectionName = collectionName;

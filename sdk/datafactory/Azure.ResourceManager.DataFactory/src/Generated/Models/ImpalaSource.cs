@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ImpalaSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="ImpalaSource"/>. </summary>
-        public ImpalaSource() : base("ImpalaSource") { }
+        public ImpalaSource()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="ImpalaSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

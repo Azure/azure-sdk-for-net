@@ -83,7 +83,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("username"u8);
             writer.WriteObjectValue(Username, options);
-            if (Optional.IsDefined(Password)) { writer.WritePropertyName("password"u8); writer.WriteObjectValue(Password, options); }
+            writer.WritePropertyName("password"u8);
+            writer.WriteObjectValue(Password, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -115,11 +116,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             WebAuthenticationType authenticationType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataFactoryElement<string> username = default;
+            DataFactorySecret password = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    uri = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("authenticationType"u8))
@@ -129,7 +131,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("username"u8))
                 {
-                    username = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    username = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    password = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")
@@ -137,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WebBasicAuthentication(uri, authenticationType, additionalBinaryDataProperties, username);
+            return new WebBasicAuthentication(uri, authenticationType, additionalBinaryDataProperties, username, password);
         }
     }
 }

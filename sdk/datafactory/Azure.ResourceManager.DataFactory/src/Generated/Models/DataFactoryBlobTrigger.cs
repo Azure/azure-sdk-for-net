@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folderPath"> The path of the container/folder that will trigger the pipeline. </param>
         /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="folderPath"/> is null. </exception>
-        public DataFactoryBlobTrigger(string folderPath, int maxConcurrency) : base("BlobTrigger")
+        public DataFactoryBlobTrigger(string folderPath, int maxConcurrency)
         {
             Argument.AssertNotNull(folderPath, nameof(folderPath));
 

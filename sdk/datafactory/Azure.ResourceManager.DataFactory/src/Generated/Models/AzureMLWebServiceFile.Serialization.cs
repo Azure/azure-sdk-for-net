@@ -82,7 +82,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("filePath"u8);
             writer.WriteObjectValue(FilePath, options);
-            if (Optional.IsDefined(LinkedServiceName)) { writer.WritePropertyName("linkedServiceName"u8); writer.WriteObjectValue(LinkedServiceName, options); }
+            writer.WritePropertyName("linkedServiceName"u8);
+            writer.WriteObjectValue(LinkedServiceName, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -126,12 +127,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> filePath = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("filePath"u8))
                 {
-                    filePath = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    filePath = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    continue;
+                }
+                if (prop.NameEquals("linkedServiceName"u8))
+                {
+                    linkedServiceName = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureMLWebServiceFile(filePath, additionalBinaryDataProperties);
+            return new AzureMLWebServiceFile(filePath, linkedServiceName, additionalBinaryDataProperties);
         }
     }
 }

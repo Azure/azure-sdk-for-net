@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Log settings. </summary>
     public partial class DataFactoryLogSettings : IJsonModel<DataFactoryLogSettings>
     {
+        /// <summary> Initializes a new instance of <see cref="DataFactoryLogSettings"/> for deserialization. </summary>
+        internal DataFactoryLogSettings()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataFactoryLogSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -141,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    enableCopyActivityLog = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
+                    enableCopyActivityLog = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("copyActivityLogSettings"u8))

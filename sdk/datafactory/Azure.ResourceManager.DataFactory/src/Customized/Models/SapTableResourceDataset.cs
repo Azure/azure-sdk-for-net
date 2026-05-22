@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapTableResourceDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public SapTableResourceDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> tableName) : this(tableName)
+        public SapTableResourceDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> tableName) : this()
         {
             LinkedServiceName = linkedServiceName;
             TableName = tableName;

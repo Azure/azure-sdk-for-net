@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class EloquaSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="EloquaSource"/>. </summary>
-        public EloquaSource() : base("EloquaSource") { }
+        public EloquaSource()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="EloquaSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

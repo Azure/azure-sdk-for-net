@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ZohoSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="ZohoSource"/>. </summary>
-        public ZohoSource() : base("ZohoSource") { }
+        public ZohoSource()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="ZohoSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

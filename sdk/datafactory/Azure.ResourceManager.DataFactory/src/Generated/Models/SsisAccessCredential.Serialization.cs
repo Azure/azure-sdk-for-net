@@ -84,7 +84,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteObjectValue(Domain, options);
             writer.WritePropertyName("userName"u8);
             writer.WriteObjectValue(UserName, options);
-            if (Optional.IsDefined(Password)) { writer.WritePropertyName("password"u8); writer.WriteObjectValue(Password, options); }
+            writer.WritePropertyName("password"u8);
+            writer.WriteObjectValue(Password, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -129,17 +130,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> domain = default;
             DataFactoryElement<string> userName = default;
+            DataFactorySecret password = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("domain"u8))
                 {
-                    domain = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    domain = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("userName"u8))
                 {
-                    userName = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    userName = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    password = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")
@@ -147,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SsisAccessCredential(domain, userName, additionalBinaryDataProperties);
+            return new SsisAccessCredential(domain, userName, password, additionalBinaryDataProperties);
         }
     }
 }

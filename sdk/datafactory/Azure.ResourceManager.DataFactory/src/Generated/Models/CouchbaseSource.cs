@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class CouchbaseSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="CouchbaseSource"/>. </summary>
-        public CouchbaseSource() : base("CouchbaseSource") { }
+        public CouchbaseSource()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="CouchbaseSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

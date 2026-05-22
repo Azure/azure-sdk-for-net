@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SqlMISource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="SqlMISource"/>. </summary>
-        public SqlMISource() : base("SqlMISource") { }
+        public SqlMISource()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="SqlMISource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

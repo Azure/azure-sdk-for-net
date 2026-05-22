@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SquareSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="SquareSource"/>. </summary>
-        public SquareSource() : base("SquareSource") { }
+        public SquareSource()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="SquareSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

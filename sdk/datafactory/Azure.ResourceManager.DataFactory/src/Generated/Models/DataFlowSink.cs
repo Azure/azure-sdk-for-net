@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -27,10 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Transformation name. </param>
         /// <param name="description"> Transformation description. </param>
         /// <param name="dataset"> Dataset reference. </param>
+        /// <param name="linkedService"> Linked service reference. </param>
         /// <param name="flowlet"> Flowlet Reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataFlowSink(string name, string description, DatasetReference dataset, DataFlowReference flowlet, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, description, dataset, flowlet, additionalBinaryDataProperties)
+        /// <param name="schemaLinkedService"> Schema linked service reference. </param>
+        /// <param name="rejectedDataLinkedService"> Rejected data linked service reference. </param>
+        internal DataFlowSink(string name, string description, DatasetReference dataset, DataFactoryLinkedServiceReference linkedService, DataFlowReference flowlet, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryLinkedServiceReference schemaLinkedService, DataFactoryLinkedServiceReference rejectedDataLinkedService) : base(name, description, dataset, linkedService, flowlet, additionalBinaryDataProperties)
         {
+            SchemaLinkedService = schemaLinkedService;
+            RejectedDataLinkedService = rejectedDataLinkedService;
         }
     }
 }

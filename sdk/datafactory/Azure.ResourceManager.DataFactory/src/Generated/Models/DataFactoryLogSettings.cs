@@ -18,12 +18,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryLogSettings"/>. </summary>
-        public DataFactoryLogSettings()
-        {
-
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataFactoryLogSettings"/>. </summary>
         /// <param name="enableCopyActivityLog"> Specifies whether to enable copy activity log. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyActivityLogSettings"> Specifies settings for copy activity log. </param>
         /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>
@@ -44,22 +38,5 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Log location settings customer needs to provide when enabling log. </summary>
         public LogLocationSettings LogLocationSettings { get; set; }
-
-        /// <summary> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> LogLocationPath
-        {
-            get
-            {
-                return LogLocationSettings is null ? default : LogLocationSettings.Path;
-            }
-            set
-            {
-                if (LogLocationSettings is null)
-                {
-                    LogLocationSettings = new LogLocationSettings();
-                }
-                LogLocationSettings.Path = value;
-            }
-        }
     }
 }

@@ -82,15 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
-            if (TypeProperties != null)
-            {
-                writer.WriteObjectValue(TypeProperties, options);
-            }
-            else
-            {
-                writer.WriteStartObject();
-                writer.WriteEndObject();
-            }
+            writer.WriteObjectValue(TypeProperties, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -122,6 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string description = default;
             DataFactoryElement<IList<DatasetDataElement>> structure = default;
             DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DatasetFolder folder = default;
@@ -145,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    structure = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetDataElement>>>(prop.Value.GetRawText());
+                    structure = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("schema"u8))
@@ -154,7 +147,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schema = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(prop.Value.GetRawText());
+                    schema = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    continue;
+                }
+                if (prop.NameEquals("linkedServiceName"u8))
+                {
+                    linkedServiceName = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))
@@ -213,6 +211,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 structure,
                 schema,
+                linkedServiceName,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 folder,

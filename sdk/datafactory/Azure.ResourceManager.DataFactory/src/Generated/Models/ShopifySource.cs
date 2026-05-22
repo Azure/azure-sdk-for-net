@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ShopifySource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="ShopifySource"/>. </summary>
-        public ShopifySource() : base("ShopifySource") { }
+        public ShopifySource()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="ShopifySource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

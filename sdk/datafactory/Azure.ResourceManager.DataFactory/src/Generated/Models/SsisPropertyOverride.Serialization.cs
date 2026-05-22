@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    value = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    value = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("isSensitive"u8))

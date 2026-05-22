@@ -80,10 +80,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WebActivityAuthenticationType);
             }
+            if (Optional.IsDefined(Pfx))
+            {
+                writer.WritePropertyName("pfx"u8);
+                writer.WriteObjectValue(Pfx, options);
+            }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteObjectValue(Username, options);
+            }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue(Password, options);
             }
             if (Optional.IsDefined(Resource))
             {
@@ -99,16 +109,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential, options);
-            }
-            if (Optional.IsDefined(Password))
-            {
-                writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password, options);
-            }
-            if (Optional.IsDefined(Pfx))
-            {
-                writer.WritePropertyName("pfx"u8);
-                writer.WriteObjectValue(Pfx, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -153,7 +153,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string webActivityAuthenticationType = default;
+            DataFactorySecret pfx = default;
             DataFactoryElement<string> username = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> resource = default;
             DataFactoryElement<string> userTenant = default;
             DataFactoryCredentialReference credential = default;
@@ -165,13 +167,31 @@ namespace Azure.ResourceManager.DataFactory.Models
                     webActivityAuthenticationType = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("pfx"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    pfx = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    continue;
+                }
                 if (prop.NameEquals("username"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    username = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    username = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("resource"u8))
@@ -180,7 +200,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    resource = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    resource = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("userTenant"u8))
@@ -189,7 +209,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    userTenant = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    userTenant = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("credential"u8))
@@ -208,7 +228,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return new WebActivityAuthentication(
                 webActivityAuthenticationType,
+                pfx,
                 username,
+                password,
                 resource,
                 userTenant,
                 credential,

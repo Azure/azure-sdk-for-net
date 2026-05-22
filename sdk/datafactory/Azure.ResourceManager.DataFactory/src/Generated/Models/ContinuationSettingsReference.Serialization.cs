@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    continuationTtlInMinutes = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
+                    continuationTtlInMinutes = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("idleCondition"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    idleCondition = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    idleCondition = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (prop.NameEquals("customizedCheckpointKey"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    customizedCheckpointKey = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    customizedCheckpointKey = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")

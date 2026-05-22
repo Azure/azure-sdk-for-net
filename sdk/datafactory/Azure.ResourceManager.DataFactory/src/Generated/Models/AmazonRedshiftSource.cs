@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AmazonRedshiftSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="AmazonRedshiftSource"/>. </summary>
-        public AmazonRedshiftSource() : base("AmazonRedshiftSource") { }
+        public AmazonRedshiftSource()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="AmazonRedshiftSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>
@@ -39,18 +41,5 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The Amazon S3 settings needed for the interim Amazon S3 when copying from Amazon Redshift with unload. With this, data from Amazon Redshift source will be unloaded into S3 first and then copied into the targeted sink from the interim S3. </summary>
         public RedshiftUnloadSettings RedshiftUnloadSettings { get; set; }
-
-        /// <summary> The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> RedshiftUnloadBucketName
-        {
-            get
-            {
-                return RedshiftUnloadSettings is null ? default : RedshiftUnloadSettings.BucketName;
-            }
-            set
-            {
-                RedshiftUnloadSettings = new RedshiftUnloadSettings(value);
-            }
-        }
     }
 }

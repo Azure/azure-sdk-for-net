@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class PostgreSqlSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlSource"/>. </summary>
-        public PostgreSqlSource() : base("PostgreSqlSource") { }
+        public PostgreSqlSource()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

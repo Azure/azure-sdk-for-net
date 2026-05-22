@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="location"> The geo-location where the resource lives. </param>
         public DataFactoryData(AzureLocation location) : base(location)
         {
-            Properties = new FactoryProperties();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryData"/>. </summary>

@@ -91,11 +91,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(LinkedServiceName))
-            {
-                writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName, options);
-            }
             if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
@@ -106,6 +101,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema, options);
             }
+            writer.WritePropertyName("linkedServiceName"u8);
+            writer.WriteObjectValue(LinkedServiceName, options);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);

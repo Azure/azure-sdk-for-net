@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class TeradataSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="TeradataSource"/>. </summary>
-        public TeradataSource() : base("TeradataSource") { }
+        public TeradataSource()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="TeradataSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

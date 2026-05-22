@@ -80,9 +80,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 throw new FormatException($"The model {nameof(RedshiftUnloadSettings)} does not support writing '{format}' format.");
             }
+            writer.WritePropertyName("s3LinkedServiceName"u8);
+            writer.WriteObjectValue(S3LinkedServiceName, options);
             writer.WritePropertyName("bucketName"u8);
             writer.WriteObjectValue(BucketName, options);
-            if (Optional.IsDefined(S3LinkedServiceName)) { writer.WritePropertyName("s3LinkedServiceName"u8); writer.WriteObjectValue(S3LinkedServiceName, options); }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -125,13 +126,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
+            DataFactoryLinkedServiceReference s3LinkedServiceName = default;
             DataFactoryElement<string> bucketName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("s3LinkedServiceName"u8))
+                {
+                    s3LinkedServiceName = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
+                    continue;
+                }
                 if (prop.NameEquals("bucketName"u8))
                 {
-                    bucketName = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    bucketName = default /* TODO(#59298): Deserialize* not implemented; stub until generator fix */;
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RedshiftUnloadSettings(bucketName, additionalBinaryDataProperties);
+            return new RedshiftUnloadSettings(s3LinkedServiceName, bucketName, additionalBinaryDataProperties);
         }
     }
 }

@@ -81,24 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
-            if (TypeProperties != null)
-            {
-                using (System.Text.Json.JsonDocument __tpDoc = System.Text.Json.JsonDocument.Parse(System.ClientModel.Primitives.ModelReaderWriter.Write(TypeProperties, options, AzureResourceManagerDataFactoryContext.Default).ToMemory()))
-                {
-                    writer.WriteStartObject();
-                    foreach (var __tpProp in __tpDoc.RootElement.EnumerateObject()) { __tpProp.WriteTo(writer); }
-                    if (Optional.IsDefined(ClientSecret)) { writer.WritePropertyName("clientSecret"u8); writer.WriteObjectValue(ClientSecret, options); }
-                    if (Optional.IsDefined(RefreshToken)) { writer.WritePropertyName("refreshToken"u8); writer.WriteObjectValue(RefreshToken, options); }
-                    writer.WriteEndObject();
-                }
-            }
-            else
-            {
-                writer.WriteStartObject();
-                    if (Optional.IsDefined(ClientSecret)) { writer.WritePropertyName("clientSecret"u8); writer.WriteObjectValue(ClientSecret, options); }
-                    if (Optional.IsDefined(RefreshToken)) { writer.WritePropertyName("refreshToken"u8); writer.WriteObjectValue(RefreshToken, options); }
-                writer.WriteEndObject();
-            }
+            writer.WriteObjectValue(TypeProperties, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>

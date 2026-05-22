@@ -81,22 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
-            if (TypeProperties != null)
-            {
-                using (System.Text.Json.JsonDocument __tpDoc = System.Text.Json.JsonDocument.Parse(System.ClientModel.Primitives.ModelReaderWriter.Write(TypeProperties, options, AzureResourceManagerDataFactoryContext.Default).ToMemory()))
-                {
-                    writer.WriteStartObject();
-                    foreach (var __tpProp in __tpDoc.RootElement.EnumerateObject()) { __tpProp.WriteTo(writer); }
-                    if (Optional.IsDefined(Staging)) { writer.WritePropertyName("staging"u8); writer.WriteObjectValue(Staging, options); }
-                    writer.WriteEndObject();
-                }
-            }
-            else
-            {
-                writer.WriteStartObject();
-                if (Optional.IsDefined(Staging)) { writer.WritePropertyName("staging"u8); writer.WriteObjectValue(Staging, options); }
-                writer.WriteEndObject();
-            }
+            writer.WriteObjectValue(TypeProperties, options);
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);

@@ -271,22 +271,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("mapper"u8))
                 {
-                    mapper = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    mapper = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("reducer"u8))
                 {
-                    reducer = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    reducer = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("input"u8))
                 {
-                    input = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    input = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("output"u8))
                 {
-                    output = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    output = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("filePaths"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    combiner = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    combiner = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("commandEnvironment"u8))

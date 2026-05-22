@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapEccResourceDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public SapEccResourceDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path) : this(path)
+        public SapEccResourceDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path) : this()
         {
             LinkedServiceName = linkedServiceName;
             Path = path;

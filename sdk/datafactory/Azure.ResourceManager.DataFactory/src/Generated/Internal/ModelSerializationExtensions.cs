@@ -246,9 +246,6 @@ namespace Azure.ResourceManager.DataFactory
                 case TimeSpan timeSpan:
                     writer.WriteStringValue(timeSpan, "P");
                     break;
-                case object dfType when dfType.GetType().Namespace == "Azure.Core.Expressions.DataFactory":
-                    JsonSerializer.Serialize(writer, dfType, dfType.GetType());
-                    break;
                 default:
                     throw new NotSupportedException($"Not supported type {value.GetType()}");
             }

@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("message"u8))
                 {
-                    message = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    message = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("errorCode"u8))
                 {
-                    errorCode = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
+                    errorCode = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

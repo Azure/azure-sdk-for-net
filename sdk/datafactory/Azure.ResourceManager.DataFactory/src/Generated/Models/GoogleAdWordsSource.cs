@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class GoogleAdWordsSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="GoogleAdWordsSource"/>. </summary>
-        public GoogleAdWordsSource() : base("GoogleAdWordsSource") { }
+        public GoogleAdWordsSource()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="GoogleAdWordsSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

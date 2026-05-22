@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="events"> The list of event types that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Azure Event Grid Topic. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="events"/> or <paramref name="scope"/> is null. </exception>
-        public CustomEventsTrigger(IEnumerable<BinaryData> events, string scope) : base("CustomEventsTrigger")
+        public CustomEventsTrigger(IEnumerable<BinaryData> events, string scope)
         {
             Argument.AssertNotNull(events, nameof(events));
             Argument.AssertNotNull(scope, nameof(scope));

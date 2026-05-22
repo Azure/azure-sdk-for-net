@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("waitTimeInSeconds"u8))
                 {
-                    waitTimeInSeconds = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
+                    waitTimeInSeconds = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

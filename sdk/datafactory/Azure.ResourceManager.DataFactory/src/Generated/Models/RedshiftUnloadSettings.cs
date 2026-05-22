@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,20 +18,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RedshiftUnloadSettings"/>. </summary>
-        /// <param name="bucketName"> The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bucketName"/> is null. </exception>
-        public RedshiftUnloadSettings(DataFactoryElement<string> bucketName)
-        {
-            Argument.AssertNotNull(bucketName, nameof(bucketName));
-
-            BucketName = bucketName;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RedshiftUnloadSettings"/>. </summary>
+        /// <param name="s3LinkedServiceName"> The name of the Amazon S3 linked service which will be used for the unload operation when copying from the Amazon Redshift source. </param>
         /// <param name="bucketName"> The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedshiftUnloadSettings(DataFactoryElement<string> bucketName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedshiftUnloadSettings(DataFactoryLinkedServiceReference s3LinkedServiceName, DataFactoryElement<string> bucketName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            S3LinkedServiceName = s3LinkedServiceName;
             BucketName = bucketName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

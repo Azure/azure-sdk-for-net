@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class PhoenixSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="PhoenixSource"/>. </summary>
-        public PhoenixSource() : base("PhoenixSource") { }
+        public PhoenixSource()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="PhoenixSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

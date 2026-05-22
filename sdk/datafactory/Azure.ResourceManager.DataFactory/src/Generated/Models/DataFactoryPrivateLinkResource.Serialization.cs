@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataFactoryPrivateLinkResourceProperties properties = default;
+            ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -157,15 +157,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("etag"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -173,6 +164,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     properties = DataFactoryPrivateLinkResourceProperties.DeserializeDataFactoryPrivateLinkResourceProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("etag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -185,9 +185,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 name,
                 resourceType,
                 systemData,
-                eTag,
                 additionalBinaryDataProperties,
-                properties);
+                properties,
+                eTag);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="DataFactoryScheduleTrigger"/>. </summary>
         /// <param name="recurrence"> Recurrence schedule configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recurrence"/> is null. </exception>
-        public DataFactoryScheduleTrigger(ScheduleTriggerRecurrence recurrence) : base("ScheduleTrigger")
+        public DataFactoryScheduleTrigger(ScheduleTriggerRecurrence recurrence)
         {
             Argument.AssertNotNull(recurrence, nameof(recurrence));
 

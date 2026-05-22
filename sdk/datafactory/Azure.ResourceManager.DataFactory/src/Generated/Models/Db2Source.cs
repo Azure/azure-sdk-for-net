@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class Db2Source : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="Db2Source"/>. </summary>
-        public Db2Source() : base("Db2Source") { }
+        public Db2Source()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="Db2Source"/>. </summary>
         /// <param name="type"> Copy source type. </param>

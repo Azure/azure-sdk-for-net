@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class PrestoSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="PrestoSource"/>. </summary>
-        public PrestoSource() : base("PrestoSource") { }
+        public PrestoSource()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="PrestoSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

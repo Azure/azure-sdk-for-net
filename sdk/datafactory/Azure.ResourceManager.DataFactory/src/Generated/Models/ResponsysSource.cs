@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ResponsysSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="ResponsysSource"/>. </summary>
-        public ResponsysSource() : base("ResponsysSource") { }
+        public ResponsysSource()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="ResponsysSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

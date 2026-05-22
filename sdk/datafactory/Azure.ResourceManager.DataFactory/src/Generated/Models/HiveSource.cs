@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class HiveSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="HiveSource"/>. </summary>
-        public HiveSource() : base("HiveSource") { }
+        public HiveSource()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="HiveSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

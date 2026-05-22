@@ -102,15 +102,7 @@ namespace Azure.ResourceManager.DataFactory
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            if (Properties != null)
-            {
-                writer.WriteObjectValue(Properties, options);
-            }
-            else
-            {
-                writer.WriteStartObject();
-                writer.WriteEndObject();
-            }
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
