@@ -14,56 +14,56 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The static website properties for blob storage. </summary>
-    public partial class StaticWebsite : IJsonModel<StaticWebsite>
+    public partial class BlobServiceStaticWebsite : IJsonModel<BlobServiceStaticWebsite>
     {
-        /// <summary> Initializes a new instance of <see cref="StaticWebsite"/> for deserialization. </summary>
-        internal StaticWebsite()
+        /// <summary> Initializes a new instance of <see cref="BlobServiceStaticWebsite"/> for deserialization. </summary>
+        internal BlobServiceStaticWebsite()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StaticWebsite PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BlobServiceStaticWebsite PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StaticWebsite>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BlobServiceStaticWebsite>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStaticWebsite(document.RootElement, options);
+                        return DeserializeBlobServiceStaticWebsite(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StaticWebsite)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobServiceStaticWebsite)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StaticWebsite>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BlobServiceStaticWebsite>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StaticWebsite)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobServiceStaticWebsite)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StaticWebsite>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BlobServiceStaticWebsite>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StaticWebsite IPersistableModel<StaticWebsite>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BlobServiceStaticWebsite IPersistableModel<BlobServiceStaticWebsite>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StaticWebsite>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BlobServiceStaticWebsite>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StaticWebsite>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BlobServiceStaticWebsite>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,13 +74,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StaticWebsite>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BlobServiceStaticWebsite>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticWebsite)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobServiceStaticWebsite)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(IndexDocument))
             {
                 writer.WritePropertyName("indexDocument"u8);
@@ -115,30 +115,30 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StaticWebsite IJsonModel<StaticWebsite>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BlobServiceStaticWebsite IJsonModel<BlobServiceStaticWebsite>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StaticWebsite JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BlobServiceStaticWebsite JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StaticWebsite>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BlobServiceStaticWebsite>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticWebsite)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobServiceStaticWebsite)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStaticWebsite(document.RootElement, options);
+            return DeserializeBlobServiceStaticWebsite(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StaticWebsite DeserializeStaticWebsite(JsonElement element, ModelReaderWriterOptions options)
+        internal static BlobServiceStaticWebsite DeserializeBlobServiceStaticWebsite(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool enabled = default;
+            bool isEnabled = default;
             string indexDocument = default;
             string defaultIndexDocumentPath = default;
             string errorDocument404Path = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (prop.NameEquals("enabled"u8))
                 {
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("indexDocument"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StaticWebsite(enabled, indexDocument, defaultIndexDocumentPath, errorDocument404Path, additionalBinaryDataProperties);
+            return new BlobServiceStaticWebsite(isEnabled, indexDocument, defaultIndexDocumentPath, errorDocument404Path, additionalBinaryDataProperties);
         }
     }
 }
