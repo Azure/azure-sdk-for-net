@@ -588,18 +588,18 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="queueName">The name of the session-enabled queue.</param>
-        /// <param name="updatedAfter">Only sessions whose session state was updated after this time are returned.</param>
+        /// <param name="sessionStateUpdatedAfter">Only sessions whose session state was updated after this time are returned.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An <see cref="IAsyncEnumerable{T}"/> of session ID strings that can be iterated with <c>await foreach</c>.</returns>
         public virtual async IAsyncEnumerable<string> GetMessageSessionsAsync(
             string queueName,
-            DateTimeOffset updatedAfter,
+            DateTimeOffset sessionStateUpdatedAfter,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             ValidateEntityName(queueName);
             await foreach (var sessionId in GetMessageSessionsCoreAsync(
-                queueName, updatedAfter.UtcDateTime,
+                queueName, sessionStateUpdatedAfter.UtcDateTime,
                 cancellationToken).ConfigureAwait(false))
             {
                 yield return sessionId;
@@ -637,20 +637,20 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="topicName">The name of the topic.</param>
         /// <param name="subscriptionName">The name of the subscription.</param>
-        /// <param name="updatedAfter">Only sessions whose session state was updated after this time are returned.</param>
+        /// <param name="sessionStateUpdatedAfter">Only sessions whose session state was updated after this time are returned.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An <see cref="IAsyncEnumerable{T}"/> of session ID strings that can be iterated with <c>await foreach</c>.</returns>
         public virtual async IAsyncEnumerable<string> GetMessageSessionsAsync(
             string topicName,
             string subscriptionName,
-            DateTimeOffset updatedAfter,
+            DateTimeOffset sessionStateUpdatedAfter,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             ValidateEntityName(topicName);
             var entityPath = EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName);
             await foreach (var sessionId in GetMessageSessionsCoreAsync(
-                entityPath, updatedAfter.UtcDateTime,
+                entityPath, sessionStateUpdatedAfter.UtcDateTime,
                 cancellationToken).ConfigureAwait(false))
             {
                 yield return sessionId;

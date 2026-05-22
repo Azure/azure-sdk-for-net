@@ -104,7 +104,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         }
 
         [Test]
-        public async Task GetMessageSessions_WithUpdatedAfter()
+        public async Task GetMessageSessions_WithSessionStateUpdatedAfter()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false, enableSession: true))

@@ -114,7 +114,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         }
 
         [Test]
-        public async Task GetMessageSessions_PassesUtcDateTimeMaxValueWhenNoUpdatedAfter()
+        public async Task GetMessageSessions_PassesUtcDateTimeMaxValueWhenNoSessionStateUpdatedAfter()
         {
             var mockTransportReceiver = new Mock<TransportReceiver>();
             var mockConnection = GetMockConnection(mockTransportReceiver);
@@ -147,7 +147,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         }
 
         [Test]
-        public async Task GetMessageSessions_PassesUpdatedAfterAsUtc()
+        public async Task GetMessageSessions_PassesSessionStateUpdatedAfterAsUtc()
         {
             var mockTransportReceiver = new Mock<TransportReceiver>();
             var mockConnection = GetMockConnection(mockTransportReceiver);
@@ -172,7 +172,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             }
 
             Assert.That(capturedTimestamp, Is.EqualTo(nonUtcOffset.UtcDateTime),
-                "The updatedAfter overload must convert the offset to UTC before passing it to the transport.");
+                "The sessionStateUpdatedAfter overload must convert the offset to UTC before passing it to the transport.");
         }
 
         [Test]
