@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     internal static partial class ContainerAppCookieExpirationConventionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ContainerAppCookieExpirationConvention value) => value switch
         {
             ContainerAppCookieExpirationConvention.FixedTime => "FixedTime",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContainerAppCookieExpirationConvention value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ContainerAppCookieExpirationConvention ToContainerAppCookieExpirationConvention(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FixedTime")) return ContainerAppCookieExpirationConvention.FixedTime;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IdentityProviderDerived")) return ContainerAppCookieExpirationConvention.IdentityProviderDerived;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FixedTime"))
+            {
+                return ContainerAppCookieExpirationConvention.FixedTime;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IdentityProviderDerived"))
+            {
+                return ContainerAppCookieExpirationConvention.IdentityProviderDerived;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContainerAppCookieExpirationConvention value.");
         }
     }

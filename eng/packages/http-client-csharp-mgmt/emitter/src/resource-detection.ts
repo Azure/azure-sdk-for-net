@@ -26,7 +26,9 @@ import {
   isResourceInstancePath,
   sortResourceMethods,
   RequestPath,
-  extractNameConstraintOverrides
+  extractNameConstraintOverrides,
+  extractResourceNameOverride,
+  detectDynamicTypeSegments
 } from "./resource-metadata.js";
 import {
   DecoratorInfo,
@@ -115,6 +117,14 @@ export function buildArmProviderSchema(
     }
   }
 
+  const reportWarning = (message: string) =>
+    sdkContext.program.reportDiagnostic({
+      code: "general-warning",
+      severity: "warning",
+      message,
+      target: NoTarget
+    });
+
   // Step 2a: locate GETs whose direct response is a candidate model. Each
   // such GET path becomes an instance path. Multiple GETs returning the same
   // model produce multiple instance paths (multi-path resource).
@@ -128,6 +138,13 @@ export function buildArmProviderSchema(
       operationPath: RequestPath;
     }>;
     explicitResourceName?: string;
+    /**
+     * Per-enum-value resource-name override map for an expandable
+     * `{parentType}` Read op (from `@@clientOption(op, "resource-name",
+     * #{...}, "csharp")`). Plumbed through expansion via
+     * `resourceNameOverrides`. `undefined` for non-expandable Read ops.
+     */
+    resourceNameOverrideMap?: Map<string, string>;
   };
   const resourceEntries: ResourceEntry[] = [];
   const consumedMethodIds = new Set<string>();
@@ -142,12 +159,47 @@ export function buildArmProviderSchema(
     const path = new RequestPath(method.operation.path);
     if (!isResourceInstancePath(sdkMethod, path)) continue;
 
+    let explicitResourceName = getExplicitResourceName(sdkMethod);
+    let resourceNameOverrideMap: Map<string, string> | undefined;
+    const clientOptionOverride = extractResourceNameOverride(
+      sdkMethod,
+      sdkContext.program
+    );
+    if (clientOptionOverride !== undefined) {
+      const isExpandable = detectDynamicTypeSegments(path).length > 0;
+      if (typeof clientOptionOverride === "string") {
+        if (isExpandable) {
+          $lib.reportDiagnostic(sdkContext.program, {
+            code: "resource-name-string-on-expandable",
+            format: { value: clientOptionOverride, path: path.path },
+            target: NoTarget
+          });
+        } else {
+          // Plain string override on an ordinary Read op. Folds into the
+          // existing explicit-name mechanism so it's applied uniformly with
+          // legacy decorators in step 3.
+          explicitResourceName = clientOptionOverride;
+        }
+      } else {
+        if (!isExpandable) {
+          $lib.reportDiagnostic(sdkContext.program, {
+            code: "resource-name-map-on-non-expandable",
+            format: { path: path.path },
+            target: NoTarget
+          });
+        } else {
+          resourceNameOverrideMap = clientOptionOverride;
+        }
+      }
+    }
+
     const entry: ResourceEntry = {
       modelId: respModelId,
       instancePath: path,
       client,
       methods: [],
-      explicitResourceName: getExplicitResourceName(sdkMethod)
+      explicitResourceName,
+      resourceNameOverrideMap
     };
     resourceEntries.push(entry);
     entry.methods.push({
@@ -263,19 +315,25 @@ export function buildArmProviderSchema(
 
   const nonResourceMethodsArray: NonResourceMethod[] = [];
 
-  const reportWarning = (message: string) =>
-    sdkContext.program.reportDiagnostic({
-      code: "general-warning",
-      severity: "warning",
-      message,
-      target: NoTarget
-    });
+  // Build the per-template-path override map for expansion (only entries with
+  // a map-form `@@clientOption(..., "resource-name", #{...}, ...)`).
+  const resourceNameOverrides = new Map<string, Map<string, string>>();
+  for (const entry of resourceEntries) {
+    if (entry.resourceNameOverrideMap) {
+      resourceNameOverrides.set(
+        entry.instancePath.path,
+        entry.resourceNameOverrideMap
+      );
+    }
+  }
 
   // Step 2c: expand resources with dynamic parent type segments before any
   // path-based parent inference runs, so the inference sees concrete paths.
   const { expandedResources } = expandArmResources(resources, {
     serviceMethods,
-    diagnosticReporter: reportWarning
+    diagnosticReporter: reportWarning,
+    resourceNameOverrides:
+      resourceNameOverrides.size > 0 ? resourceNameOverrides : undefined
   });
 
   // Step 3: resolve parent relationships by walking up each resource's
