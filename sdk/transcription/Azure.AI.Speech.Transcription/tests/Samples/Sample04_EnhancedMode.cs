@@ -56,7 +56,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
             TranscriptionResult result = response.Value;
 
-            var channelPhrases = result.PhrasesByChannel.First();
+            var channelPhrases = result.CombinedPhrases.First();
             Console.WriteLine(channelPhrases.Text);
             #endregion Snippet:TranscribeWithEnhancedMode
         }
@@ -99,7 +99,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             TranscriptionResult result = response.Value;
 
             Console.WriteLine("Translated to Korean:");
-            var channelPhrases = result.PhrasesByChannel.First();
+            var channelPhrases = result.CombinedPhrases.First();
             Console.WriteLine(channelPhrases.Text);
             #endregion Snippet:TranslateWithEnhancedMode
         }
@@ -141,7 +141,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
             TranscriptionResult result = response.Value;
 
-            var channelPhrases = result.PhrasesByChannel.First();
+            var channelPhrases = result.CombinedPhrases.First();
             Console.WriteLine(channelPhrases.Text);
             #endregion Snippet:EnhancedModeWithPrompts
         }
@@ -187,8 +187,8 @@ namespace Azure.AI.Speech.Transcription.Samples
             ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
             TranscriptionResult result = response.Value;
 
-            var channelPhrases = result.PhrasesByChannel.First();
-            foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
+            var channelPhrases = result.CombinedPhrases.First();
+            foreach (TranscribedPhrase phrase in result.Phrases)
             {
                 Console.WriteLine($"[Speaker {phrase.Speaker}] {phrase.Text}");
             }

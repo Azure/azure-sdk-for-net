@@ -1,14 +1,12 @@
 # Release History
 
-## 1.2.0-beta.4 (Unreleased)
+## 1.2.0-beta.4 (2026-05-14)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Make `VMSizeProfile.Rank` as optional
+- Make `ZoneAllocationPolicy.DistributionStrategy` as required
+- Make `ZonePreference.Rank` as optional
 
 ## 1.2.0-beta.3 (2026-05-01)
 

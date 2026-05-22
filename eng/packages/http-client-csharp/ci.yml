@@ -48,6 +48,10 @@ extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
     InitializationSteps:
+      - task: UseNode@1
+        displayName: 'Install Node.js 22.x'
+        inputs:
+          version: '22.x'
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
     EmitterPackageJsonOutputPath: eng/azure-typespec-http-client-csharp-emitter-package.json
     EmitterPackagePath: eng/packages/http-client-csharp

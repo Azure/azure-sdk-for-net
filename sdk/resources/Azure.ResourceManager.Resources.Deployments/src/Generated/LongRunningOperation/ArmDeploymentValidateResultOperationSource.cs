@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.Resources
         ArmDeploymentValidateResult IOperationSource<ArmDeploymentValidateResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ArmDeploymentValidateResult result = ArmDeploymentValidateResult.DeserializeArmDeploymentValidateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return ArmDeploymentValidateResult.DeserializeArmDeploymentValidateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.Resources
         async ValueTask<ArmDeploymentValidateResult> IOperationSource<ArmDeploymentValidateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ArmDeploymentValidateResult result = ArmDeploymentValidateResult.DeserializeArmDeploymentValidateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return ArmDeploymentValidateResult.DeserializeArmDeploymentValidateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
