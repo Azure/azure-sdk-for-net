@@ -13,9 +13,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.TrafficManager
 {
+    // TODO - this rename attribute is also incorrect. we need to remove it and do it correctly.
     [CodeGenType("TrafficManagerUserMetricResource")]
     public partial class TrafficManagerUserMetricsResource
     {
+        // TODO - we need to remove these customizations to fix this issue: https://github.com/Azure/azure-sdk-for-net/issues/59410
+        // These customizations are incorrectly introduced when we migrate this RP to the new typespec generator.
         /// <summary> Create or update a TrafficManagerUserMetric. </summary>
         /// <param name="waitUntil"> Completion option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
