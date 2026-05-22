@@ -34,10 +34,12 @@ namespace Azure.Storage.Blobs.Models
         public DownloadTransferValidationOptions TransferValidation { get; set; }
 
         /// <summary>
-        /// When set to true, enables locality-aware routing for blob parallel downloads.
-        /// Get Blob Layout will be called to obtain the blob's data layout
-        /// and route subsequent range requests to optimal endpoints.
-        /// Default is false.
+        /// When set to true, enables locality-aware routing for the parallel range
+        /// requests issued by the download. The blob's layout is fetched on demand
+        /// and cached (with automatic background refresh), and each range download
+        /// is routed to the optimal endpoint for the chunk being read. This is a
+        /// performance optimization only - the bytes returned are identical to a
+        /// non-locality-aware download. Default is false.
         /// </summary>
         public bool EnableDataLocality { get; set; }
     }

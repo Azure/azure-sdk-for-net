@@ -5213,7 +5213,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             int downloadOffset = 0;
             int downloadLength = 4 * Constants.MB;
 
-            // Act - ask GetLayout for just the single entry covering
+            // Act - call GetLayout for just the single entry covering
             // our read offset by passing Range = new HttpRange(downloadOffset, 1).
             // The service responds with exactly one segment and its endpoint, so
             // there's no pagination or client-side range scanning to do.
@@ -5317,7 +5317,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             int downloadOffset = 12 * Constants.MB;
             int downloadLength = 4 * Constants.MB;
 
-            // Act - ask GetLayout for just the single entry covering
+            // Act - call GetLayout for just the single entry covering
             // our read offset by passing Range = new HttpRange(downloadOffset, 1).
             // The service responds with exactly one segment and its endpoint, so
             // there's no pagination or client-side range scanning to do.
@@ -5435,7 +5435,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             int downloadOffset = 0;
             int downloadLength = 4 * Constants.MB;
 
-            // Act - ask GetLayout for just the single entry covering
+            // Act - call GetLayout for just the single entry covering
             // our read offset by passing Range = new HttpRange(downloadOffset, 1).
             // The service responds with exactly one segment and its endpoint, so
             // there's no pagination or client-side range scanning to do.
@@ -5536,7 +5536,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             int downloadOffset = 12 * Constants.MB;
             int downloadLength = 4 * Constants.MB;
 
-            // Act - ask GetLayout for just the single entry covering
+            // Act - call GetLayout for just the single entry covering
             // our read offset by passing Range = new HttpRange(downloadOffset, 1).
             // The service responds with exactly one segment and its endpoint, so
             // there's no pagination or client-side range scanning to do.

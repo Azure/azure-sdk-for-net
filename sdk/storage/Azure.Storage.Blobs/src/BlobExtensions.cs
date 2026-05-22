@@ -961,7 +961,7 @@ namespace Azure.Storage.Blobs
             }
 
             return overlapIndex == layoutSegments.Count
-                ? null
+                ? null // should theoretically never happen since layout returned by service will always cover range
                 : layoutSegments[overlapIndex].Endpoint;
         }
         #endregion

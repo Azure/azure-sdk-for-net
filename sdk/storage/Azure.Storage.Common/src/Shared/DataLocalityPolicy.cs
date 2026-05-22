@@ -11,7 +11,7 @@ namespace Azure.Storage
     /// Pipeline policy that, when an ideal endpoint has been set on the
     /// <see cref="HttpMessage"/> properties under <see cref="LayoutEndpointKey"/>,
     /// rewrites the outgoing request URI to that endpoint while preserving the
-    /// original host on the <c>Host</c> header.
+    /// original host on the Host header.
     /// </summary>
     /// <remarks>
     /// This policy is currently used only by the Blob and Data Lake parallel

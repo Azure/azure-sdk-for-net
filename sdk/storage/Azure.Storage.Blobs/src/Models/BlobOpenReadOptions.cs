@@ -37,9 +37,11 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// When set to true, enables locality-aware routing for the buffered range
-        /// requests issued by the returned read stream. Get Blob Layout will be called
-        /// up front so that every range download is routed to the optimal endpoint for the
-        /// chunk being read. Default is false.
+        /// requests issued by the returned read stream. The blob's layout is fetched
+        /// on demand and cached (with automatic background refresh), and each range
+        /// download is routed to the optimal endpoint for the chunk being read.
+        /// This is a performance optimization only - the bytes returned are identical
+        /// to a non-locality-aware download. Default is false.
         /// </summary>
         public bool EnableDataLocality { get; set; }
 
