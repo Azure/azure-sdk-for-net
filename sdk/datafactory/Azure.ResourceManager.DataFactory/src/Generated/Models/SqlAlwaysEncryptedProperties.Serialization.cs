@@ -92,6 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential, options);
             }
+            if (Optional.IsDefined(ServicePrincipalKey)) { writer.WritePropertyName("servicePrincipalKey"u8); writer.WriteObjectValue(ServicePrincipalKey, options); }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    servicePrincipalId = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    servicePrincipalId = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("credential"u8))

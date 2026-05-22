@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("notebookPath"u8))
                 {
-                    notebookPath = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    notebookPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("baseParameters"u8))

@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    compressionCodec = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    compressionCodec = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

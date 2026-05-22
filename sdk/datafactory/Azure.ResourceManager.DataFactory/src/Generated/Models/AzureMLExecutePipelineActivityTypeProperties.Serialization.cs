@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    mlPipelineId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    mlPipelineId = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("mlPipelineEndpointId"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    mlPipelineEndpointId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    mlPipelineEndpointId = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("version"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    version = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    version = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("experimentName"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    experimentName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    experimentName = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("mlPipelineParameters"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    mlPipelineParameters = ModelReaderWriter.Read<DataFactoryElement<IDictionary<string, string>>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    mlPipelineParameters = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string>>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("dataPathAssignments"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    mlParentRunId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    mlParentRunId = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("continueOnStepFailure"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    continueOnStepFailure = ModelReaderWriter.Read<DataFactoryElement<bool>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continueOnStepFailure = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

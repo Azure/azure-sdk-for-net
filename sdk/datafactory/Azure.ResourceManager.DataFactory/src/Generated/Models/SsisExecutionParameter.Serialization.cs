@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    value = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    value = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

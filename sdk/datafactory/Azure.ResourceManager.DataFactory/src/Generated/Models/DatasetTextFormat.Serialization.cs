@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    serializer = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    serializer = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("deserializer"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    deserializer = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    deserializer = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("columnDelimiter"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    columnDelimiter = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    columnDelimiter = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("rowDelimiter"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    rowDelimiter = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    rowDelimiter = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("escapeChar"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    escapeChar = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    escapeChar = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("quoteChar"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    quoteChar = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    quoteChar = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("nullValue"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    nullValue = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    nullValue = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("encodingName"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    encodingName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    encodingName = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("treatEmptyAsNull"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    treatEmptyAsNull = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    treatEmptyAsNull = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("skipLineCount"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    skipLineCount = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    skipLineCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("firstRowAsHeader"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    firstRowAsHeader = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    firstRowAsHeader = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

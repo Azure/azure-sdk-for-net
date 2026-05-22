@@ -75,6 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeKeyAuthorization)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Key)) { writer.WritePropertyName("key"u8); writer.WriteObjectValue(Key, options); }
         }
 
         /// <param name="reader"> The JSON reader. </param>

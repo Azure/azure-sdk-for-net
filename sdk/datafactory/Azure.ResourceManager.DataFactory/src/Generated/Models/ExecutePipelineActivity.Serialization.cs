@@ -86,7 +86,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteObjectValue(Policy, options);
             }
             writer.WritePropertyName("typeProperties"u8);
-            writer.WriteObjectValue(TypeProperties, options);
+            if (TypeProperties != null)
+            {
+                writer.WriteObjectValue(TypeProperties, options);
+            }
+            else
+            {
+                writer.WriteStartObject();
+                writer.WriteEndObject();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>

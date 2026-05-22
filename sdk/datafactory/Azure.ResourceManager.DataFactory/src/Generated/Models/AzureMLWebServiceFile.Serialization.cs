@@ -82,6 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("filePath"u8);
             writer.WriteObjectValue(FilePath, options);
+            if (Optional.IsDefined(LinkedServiceName)) { writer.WritePropertyName("linkedServiceName"u8); writer.WriteObjectValue(LinkedServiceName, options); }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("filePath"u8))
                 {
-                    filePath = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    filePath = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

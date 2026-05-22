@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    interimSchemaName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    interimSchemaName = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("keys"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    keys = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    keys = JsonSerializer.Deserialize<DataFactoryElement<IList<string>>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

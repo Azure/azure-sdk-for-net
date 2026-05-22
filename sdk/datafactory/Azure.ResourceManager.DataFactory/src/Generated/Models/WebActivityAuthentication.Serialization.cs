@@ -100,6 +100,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue(Password, options);
+            }
+            if (Optional.IsDefined(Pfx))
+            {
+                writer.WritePropertyName("pfx"u8);
+                writer.WriteObjectValue(Pfx, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -161,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    username = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    username = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("resource"u8))
@@ -170,7 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    resource = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    resource = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("userTenant"u8))
@@ -179,7 +189,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    userTenant = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    userTenant = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("credential"u8))

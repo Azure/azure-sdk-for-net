@@ -94,6 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("dualStandbyPairName"u8);
                 writer.WriteStringValue(DualStandbyPairName);
             }
+            if (Optional.IsDefined(CatalogAdminPassword)) { writer.WritePropertyName("catalogAdminPassword"u8); writer.WriteObjectValue(CatalogAdminPassword, options); }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);

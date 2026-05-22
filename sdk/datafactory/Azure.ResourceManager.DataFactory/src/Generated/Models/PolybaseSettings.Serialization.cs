@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    rejectValue = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    rejectValue = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("rejectSampleValue"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    rejectSampleValue = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    rejectSampleValue = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("useTypeDefault"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    useTypeDefault = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    useTypeDefault = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

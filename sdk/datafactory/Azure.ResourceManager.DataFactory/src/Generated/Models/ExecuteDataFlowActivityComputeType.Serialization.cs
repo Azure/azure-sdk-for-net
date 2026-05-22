@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    computeType = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    computeType = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("coreCount"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    coreCount = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    coreCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

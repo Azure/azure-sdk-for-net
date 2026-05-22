@@ -76,10 +76,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(JsonDataset)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(TypeProperties))
+            writer.WritePropertyName("typeProperties"u8);
+            if (TypeProperties != null)
             {
-                writer.WritePropertyName("typeProperties"u8);
                 writer.WriteObjectValue(TypeProperties, options);
+            }
+            else
+            {
+                writer.WriteStartObject();
+                writer.WriteEndObject();
             }
         }
 
@@ -135,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    structure = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    structure = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetDataElement>>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("schema"u8))
@@ -144,7 +149,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schema = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    schema = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))

@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionColumnName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    partitionColumnName = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("partitionUpperBound"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionUpperBound = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    partitionUpperBound = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("partitionLowerBound"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionLowerBound = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    partitionLowerBound = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("maxPartitionsNumber"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxPartitionsNumber = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    maxPartitionsNumber = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

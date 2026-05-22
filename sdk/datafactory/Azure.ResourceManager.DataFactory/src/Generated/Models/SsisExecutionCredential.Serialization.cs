@@ -84,6 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteObjectValue(Domain, options);
             writer.WritePropertyName("userName"u8);
             writer.WriteObjectValue(UserName, options);
+            if (Optional.IsDefined(Password)) { writer.WritePropertyName("password"u8); writer.WriteObjectValue(Password, options); }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,12 +134,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("domain"u8))
                 {
-                    domain = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    domain = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("userName"u8))
                 {
-                    userName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    userName = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

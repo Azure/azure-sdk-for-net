@@ -14,7 +14,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Custom setup script properties for a managed dedicated integration runtime. </summary>
-    internal partial class IntegrationRuntimeCustomSetupScriptProperties : IJsonModel<IntegrationRuntimeCustomSetupScriptProperties>
+    public partial class IntegrationRuntimeCustomSetupScriptProperties : IJsonModel<IntegrationRuntimeCustomSetupScriptProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("blobContainerUri"u8);
                 writer.WriteStringValue(BlobContainerUri.AbsoluteUri);
             }
+            if (Optional.IsDefined(SasToken)) { writer.WritePropertyName("sasToken"u8); writer.WriteObjectValue(SasToken, options); }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

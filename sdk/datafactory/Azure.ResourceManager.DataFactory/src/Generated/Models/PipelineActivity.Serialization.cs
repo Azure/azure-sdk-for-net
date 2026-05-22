@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// A pipeline activity.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ControlActivity"/>, <see cref="ExecutionActivity"/>, <see cref="CopyActivity"/>, <see cref="HDInsightHiveActivity"/>, <see cref="HDInsightPigActivity"/>, <see cref="HDInsightMapReduceActivity"/>, <see cref="HDInsightStreamingActivity"/>, <see cref="HDInsightSparkActivity"/>, <see cref="ExecuteSsisPackageActivity"/>, <see cref="CustomActivity"/>, <see cref="SqlServerStoredProcedureActivity"/>, <see cref="ExecutePipelineActivity"/>, <see cref="DeleteActivity"/>, <see cref="AzureDataExplorerCommandActivity"/>, <see cref="LookupActivity"/>, <see cref="WebActivity"/>, <see cref="GetDatasetMetadataActivity"/>, <see cref="IfConditionActivity"/>, <see cref="SwitchActivity"/>, <see cref="ForEachActivity"/>, <see cref="AzureMLBatchExecutionActivity"/>, <see cref="AzureMLUpdateResourceActivity"/>, <see cref="AzureMLExecutePipelineActivity"/>, <see cref="DataLakeAnalyticsUsqlActivity"/>, <see cref="WaitActivity"/>, <see cref="FailActivity"/>, <see cref="UntilActivity"/>, <see cref="ValidationActivity"/>, <see cref="FilterActivity"/>, <see cref="DatabricksNotebookActivity"/>, <see cref="DatabricksSparkJarActivity"/>, <see cref="DatabricksSparkPythonActivity"/>, <see cref="DatabricksJobActivity"/>, <see cref="SetVariableActivity"/>, <see cref="AppendVariableActivity"/>, <see cref="AzureFunctionActivity"/>, <see cref="WebHookActivity"/>, <see cref="ExecuteDataFlowActivity"/>, <see cref="ExecuteWranglingDataflowActivity"/>, <see cref="DataFactoryScriptActivity"/>, <see cref="SynapseNotebookActivity"/>, and <see cref="SynapseSparkJobDefinitionActivity"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownPipelineActivity))]
+    [PersistableModelProxy(typeof(UnknownActivity))]
     public abstract partial class PipelineActivity : IJsonModel<PipelineActivity>
     {
         /// <summary> Initializes a new instance of <see cref="PipelineActivity"/> for deserialization. </summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return SynapseSparkJobDefinitionActivity.DeserializeSynapseSparkJobDefinitionActivity(element, options);
                 }
             }
-            return UnknownPipelineActivity.DeserializeUnknownPipelineActivity(element, options);
+            return UnknownActivity.DeserializeUnknownPipelineActivity(element, options);
         }
     }
 }

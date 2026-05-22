@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Azure Data Factory nested object which identifies data within different data stores, such as tables, files, folders, and documents.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AmazonS3Dataset"/>, <see cref="AvroDataset"/>, <see cref="ExcelDataset"/>, <see cref="ParquetDataset"/>, <see cref="DelimitedTextDataset"/>, <see cref="JsonDataset"/>, <see cref="XmlDataset"/>, <see cref="OrcDataset"/>, <see cref="BinaryDataset"/>, <see cref="IcebergDataset"/>, <see cref="AzureBlobDataset"/>, <see cref="AzureTableDataset"/>, <see cref="AzureSqlTableDataset"/>, <see cref="AzureSqlMITableDataset"/>, <see cref="AzureSqlDWTableDataset"/>, <see cref="CassandraTableDataset"/>, <see cref="CustomDataset"/>, <see cref="CosmosDBSqlApiCollectionDataset"/>, <see cref="DocumentDBCollectionDataset"/>, <see cref="DynamicsEntityDataset"/>, <see cref="DynamicsCrmEntityDataset"/>, <see cref="CommonDataServiceForAppsEntityDataset"/>, <see cref="AzureDataLakeStoreDataset"/>, <see cref="AzureBlobFSDataset"/>, <see cref="Office365Dataset"/>, <see cref="FileShareDataset"/>, <see cref="MongoDBCollectionDataset"/>, <see cref="MongoDBAtlasCollectionDataset"/>, <see cref="MongoDBV2CollectionDataset"/>, <see cref="CosmosDBMongoDBApiCollectionDataset"/>, <see cref="ODataResourceDataset"/>, <see cref="OracleTableDataset"/>, <see cref="AmazonRdsForOracleTableDataset"/>, <see cref="TeradataTableDataset"/>, <see cref="AzureMySqlTableDataset"/>, <see cref="AmazonRedshiftTableDataset"/>, <see cref="Db2TableDataset"/>, <see cref="RelationalTableDataset"/>, <see cref="InformixTableDataset"/>, <see cref="OdbcTableDataset"/>, <see cref="MySqlTableDataset"/>, <see cref="PostgreSqlTableDataset"/>, <see cref="PostgreSqlV2TableDataset"/>, <see cref="MicrosoftAccessTableDataset"/>, <see cref="SalesforceObjectDataset"/>, <see cref="SalesforceServiceCloudObjectDataset"/>, <see cref="SybaseTableDataset"/>, <see cref="SapBWCubeDataset"/>, <see cref="SapCloudForCustomerResourceDataset"/>, <see cref="SapEccResourceDataset"/>, <see cref="SapHanaTableDataset"/>, <see cref="SapOpenHubTableDataset"/>, <see cref="SqlServerTableDataset"/>, <see cref="AmazonRdsForSqlServerTableDataset"/>, <see cref="RestResourceDataset"/>, <see cref="SapTableResourceDataset"/>, <see cref="SapOdpResourceDataset"/>, <see cref="WebTableDataset"/>, <see cref="AzureSearchIndexDataset"/>, <see cref="DataFactoryHttpDataset"/>, <see cref="AmazonMwsObjectDataset"/>, <see cref="AzurePostgreSqlTableDataset"/>, <see cref="ConcurObjectDataset"/>, <see cref="CouchbaseTableDataset"/>, <see cref="DrillTableDataset"/>, <see cref="EloquaObjectDataset"/>, <see cref="GoogleBigQueryObjectDataset"/>, <see cref="GoogleBigQueryV2ObjectDataset"/>, <see cref="GreenplumTableDataset"/>, <see cref="HBaseObjectDataset"/>, <see cref="HiveObjectDataset"/>, <see cref="HubspotObjectDataset"/>, <see cref="ImpalaObjectDataset"/>, <see cref="JiraObjectDataset"/>, <see cref="MagentoObjectDataset"/>, <see cref="MariaDBTableDataset"/>, <see cref="AzureMariaDBTableDataset"/>, <see cref="MarketoObjectDataset"/>, <see cref="PaypalObjectDataset"/>, <see cref="PhoenixObjectDataset"/>, <see cref="PrestoObjectDataset"/>, <see cref="QuickBooksObjectDataset"/>, <see cref="ServiceNowObjectDataset"/>, <see cref="ShopifyObjectDataset"/>, <see cref="SparkObjectDataset"/>, <see cref="SquareObjectDataset"/>, <see cref="XeroObjectDataset"/>, <see cref="ZohoObjectDataset"/>, <see cref="NetezzaTableDataset"/>, <see cref="VerticaTableDataset"/>, <see cref="SalesforceMarketingCloudObjectDataset"/>, <see cref="ResponsysObjectDataset"/>, <see cref="DynamicsAXResourceDataset"/>, <see cref="OracleServiceCloudObjectDataset"/>, <see cref="AzureDataExplorerTableDataset"/>, <see cref="GoogleAdWordsObjectDataset"/>, <see cref="SnowflakeDataset"/>, <see cref="SnowflakeV2Dataset"/>, <see cref="SharePointOnlineListResourceDataset"/>, <see cref="AzureDatabricksDeltaLakeDataset"/>, <see cref="LakeHouseTableDataset"/>, <see cref="SalesforceV2ObjectDataset"/>, <see cref="SalesforceServiceCloudV2ObjectDataset"/>, <see cref="WarehouseTableDataset"/>, and <see cref="ServiceNowV2ObjectDataset"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataFactoryDatasetProperties))]
+    [PersistableModelProxy(typeof(UnknownDataset))]
     public abstract partial class DataFactoryDatasetProperties : IJsonModel<DataFactoryDatasetProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DataFactoryDatasetProperties"/> for deserialization. </summary>
@@ -90,6 +90,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(LinkedServiceName))
+            {
+                writer.WritePropertyName("linkedServiceName"u8);
+                writer.WriteObjectValue(LinkedServiceName, options);
             }
             if (Optional.IsDefined(Structure))
             {
@@ -394,7 +399,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return ServiceNowV2ObjectDataset.DeserializeServiceNowV2ObjectDataset(element, options);
                 }
             }
-            return UnknownDataFactoryDatasetProperties.DeserializeUnknownDataFactoryDatasetProperties(element, options);
+            return UnknownDataset.DeserializeUnknownDataFactoryDatasetProperties(element, options);
         }
     }
 }

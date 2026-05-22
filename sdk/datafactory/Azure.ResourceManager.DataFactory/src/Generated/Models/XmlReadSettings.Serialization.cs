@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    validationMode = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    validationMode = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("detectDataType"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    detectDataType = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    detectDataType = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("namespaces"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    namespaces = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    namespaces = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("namespacePrefixes"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    namespacePrefixes = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    namespacePrefixes = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string>>>(prop.Value.GetRawText());
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

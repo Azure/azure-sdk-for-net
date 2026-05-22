@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("path"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    path = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    path = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

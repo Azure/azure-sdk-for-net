@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    storageIntegration = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    storageIntegration = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

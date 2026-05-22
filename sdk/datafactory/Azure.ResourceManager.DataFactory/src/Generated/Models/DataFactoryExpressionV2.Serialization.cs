@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    v2Value = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    v2Value = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("operators"u8))

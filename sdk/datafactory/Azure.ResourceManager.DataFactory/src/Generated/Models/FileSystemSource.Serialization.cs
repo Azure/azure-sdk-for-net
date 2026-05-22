@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryCount = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    sourceRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("sourceRetryWait"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryWait = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    sourceRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("maxConcurrentConnections"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxConcurrentConnections = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("disableMetricsCollection"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableMetricsCollection = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("recursive"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    recursive = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    recursive = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("additionalColumns"u8))

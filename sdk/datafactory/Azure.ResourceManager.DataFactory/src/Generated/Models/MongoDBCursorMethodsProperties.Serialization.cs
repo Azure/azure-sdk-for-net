@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    project = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    project = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("sort"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sort = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    sort = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("skip"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    skip = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    skip = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("limit"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    limit = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    limit = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

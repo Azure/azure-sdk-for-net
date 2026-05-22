@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    keys = ModelReaderWriter.Read<DataFactoryElement<IList<string>>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    keys = JsonSerializer.Deserialize<DataFactoryElement<IList<string>>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

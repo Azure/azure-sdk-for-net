@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Data Factory nested object which contains a flow with data movements and transformations.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataFactoryMappingDataFlowProperties"/>, <see cref="DataFactoryFlowletProperties"/>, and <see cref="DataFactoryWranglingDataFlowProperties"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataFactoryDataFlowProperties))]
+    [PersistableModelProxy(typeof(UnknownDataFlow))]
     public abstract partial class DataFactoryDataFlowProperties : IJsonModel<DataFactoryDataFlowProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DataFactoryWranglingDataFlowProperties.DeserializeDataFactoryWranglingDataFlowProperties(element, options);
                 }
             }
-            return UnknownDataFactoryDataFlowProperties.DeserializeUnknownDataFactoryDataFlowProperties(element, options);
+            return UnknownDataFlow.DeserializeUnknownDataFactoryDataFlowProperties(element, options);
         }
     }
 }

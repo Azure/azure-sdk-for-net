@@ -81,7 +81,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
-            writer.WriteObjectValue(TypeProperties, options);
+            if (TypeProperties != null)
+            {
+                using (System.Text.Json.JsonDocument __tpDoc = System.Text.Json.JsonDocument.Parse(System.ClientModel.Primitives.ModelReaderWriter.Write(TypeProperties, options, AzureResourceManagerDataFactoryContext.Default).ToMemory()))
+                {
+                    writer.WriteStartObject();
+                    foreach (var __tpProp in __tpDoc.RootElement.EnumerateObject()) { __tpProp.WriteTo(writer); }
+                    if (Optional.IsDefined(UserToken)) { writer.WritePropertyName("userToken"u8); writer.WriteObjectValue(UserToken, options); }
+                    writer.WriteEndObject();
+                }
+            }
+            else
+            {
+                writer.WriteStartObject();
+                    if (Optional.IsDefined(UserToken)) { writer.WritePropertyName("userToken"u8); writer.WriteObjectValue(UserToken, options); }
+                writer.WriteEndObject();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>

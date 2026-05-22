@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    value = ModelReaderWriter.Read<DataFactoryElement<BinaryData>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    value = JsonSerializer.Deserialize<DataFactoryElement<BinaryData>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryCount = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    sourceRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("sourceRetryWait"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryWait = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    sourceRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("maxConcurrentConnections"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxConcurrentConnections = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("disableMetricsCollection"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableMetricsCollection = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("requestMethod"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    requestMethod = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    requestMethod = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("requestBody"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    requestBody = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    requestBody = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("additionalHeaders"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    additionalHeaders = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    additionalHeaders = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("paginationRules"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    paginationRules = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    paginationRules = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("httpRequestTimeout"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    httpRequestTimeout = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    httpRequestTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("requestInterval"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    additionalColumns = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    additionalColumns = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string>>>(prop.Value.GetRawText());
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

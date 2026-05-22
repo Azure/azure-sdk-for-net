@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    fileMissing = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    fileMissing = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("dataInconsistency"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dataInconsistency = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    dataInconsistency = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

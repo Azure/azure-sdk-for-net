@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryCount = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    sourceRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("sourceRetryWait"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryWait = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    sourceRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("maxConcurrentConnections"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxConcurrentConnections = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("disableMetricsCollection"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableMetricsCollection = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("allowedGroups"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    allowedGroups = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    allowedGroups = JsonSerializer.Deserialize<DataFactoryElement<IList<string>>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("userScopeFilterUri"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    userScopeFilterUri = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    userScopeFilterUri = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("dateFilterColumn"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dateFilterColumn = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    dateFilterColumn = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("startTime"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    startOn = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    startOn = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    endOn = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    endOn = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("outputColumns"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    outputColumns = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    outputColumns = JsonSerializer.Deserialize<DataFactoryElement<IList<Office365TableOutputColumn>>>(prop.Value.GetRawText());
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxRowsPerFile = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    maxRowsPerFile = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("fileNamePrefix"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    fileNamePrefix = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    fileNamePrefix = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

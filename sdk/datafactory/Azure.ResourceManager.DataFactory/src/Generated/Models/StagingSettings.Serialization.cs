@@ -85,6 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("enableCompression"u8);
                 writer.WriteObjectValue(EnableCompression, options);
             }
+            if (Optional.IsDefined(LinkedServiceName)) { writer.WritePropertyName("linkedServiceName"u8); writer.WriteObjectValue(LinkedServiceName, options); }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    path = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    path = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("enableCompression"u8))
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    enableCompression = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    enableCompression = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

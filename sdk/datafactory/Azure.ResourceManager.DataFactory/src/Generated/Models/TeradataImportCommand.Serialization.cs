@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    additionalFormatOptions = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    additionalFormatOptions = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string>>>(prop.Value.GetRawText());
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

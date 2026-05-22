@@ -96,6 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("flowlet"u8);
                 writer.WriteObjectValue(Flowlet, options);
             }
+            if (Optional.IsDefined(LinkedService)) { writer.WritePropertyName("linkedService"u8); writer.WriteObjectValue(LinkedService, options); }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

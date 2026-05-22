@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    preserveZipFileNameAsFolder = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    preserveZipFileNameAsFolder = JsonSerializer.Deserialize<DataFactoryElement<bool>>(prop.Value.GetRawText());
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

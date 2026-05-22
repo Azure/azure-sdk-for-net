@@ -82,7 +82,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
-            writer.WriteObjectValue(TypeProperties, options);
+            if (TypeProperties != null)
+            {
+                writer.WriteObjectValue(TypeProperties, options);
+            }
+            else
+            {
+                writer.WriteStartObject();
+                writer.WriteEndObject();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -137,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    structure = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    structure = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetDataElement>>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("schema"u8))
@@ -146,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schema = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    schema = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))

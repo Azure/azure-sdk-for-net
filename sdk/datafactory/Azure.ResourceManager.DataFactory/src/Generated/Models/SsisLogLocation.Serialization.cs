@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("logPath"u8))
                 {
-                    logPath = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    logPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("type"u8))

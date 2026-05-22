@@ -80,6 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DataFlowSource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(SchemaLinkedService)) { writer.WritePropertyName("schemaLinkedService"u8); writer.WriteObjectValue(SchemaLinkedService, options); }
         }
 
         /// <param name="reader"> The JSON reader. </param>

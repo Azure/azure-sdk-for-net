@@ -81,6 +81,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(WebClientCertificateAuthentication)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Password)) { writer.WritePropertyName("password"u8); writer.WriteObjectValue(Password, options); }
+            if (Optional.IsDefined(Pfx)) { writer.WritePropertyName("pfx"u8); writer.WriteObjectValue(Pfx, options); }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -115,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    uri = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("authenticationType"u8))

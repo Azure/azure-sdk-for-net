@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    count = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    count = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("intervalInSeconds"u8))

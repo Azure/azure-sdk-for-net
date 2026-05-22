@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Log location settings. </summary>
-    internal partial class LogLocationSettings : IJsonModel<LogLocationSettings>
+    public partial class LogLocationSettings : IJsonModel<LogLocationSettings>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -80,6 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("path"u8);
                 writer.WriteObjectValue(Path, options);
             }
+            if (Optional.IsDefined(LinkedServiceName)) { writer.WritePropertyName("linkedServiceName"u8); writer.WriteObjectValue(LinkedServiceName, options); }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    path = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    path = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

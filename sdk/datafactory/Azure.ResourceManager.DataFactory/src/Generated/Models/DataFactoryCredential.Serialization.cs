@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// The Azure Data Factory nested object which contains the information and credential which can be used to connect with related store or compute resource.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServicePrincipalCredential"/> and <see cref="DataFactoryManagedIdentityCredentialProperties"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataFactoryCredential))]
+    [PersistableModelProxy(typeof(UnknownCredential))]
     public abstract partial class DataFactoryCredential : IJsonModel<DataFactoryCredential>
     {
         /// <param name="data"> The data to parse. </param>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DataFactoryManagedIdentityCredentialProperties.DeserializeDataFactoryManagedIdentityCredentialProperties(element, options);
                 }
             }
-            return UnknownDataFactoryCredential.DeserializeUnknownDataFactoryCredential(element, options);
+            return UnknownCredential.DeserializeUnknownDataFactoryCredential(element, options);
         }
     }
 }

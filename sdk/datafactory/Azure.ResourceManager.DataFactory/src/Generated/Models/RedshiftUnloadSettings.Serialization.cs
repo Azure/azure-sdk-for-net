@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Amazon S3 settings needed for the interim Amazon S3 when copying from Amazon Redshift with unload. With this, data from Amazon Redshift source will be unloaded into S3 first and then copied into the targeted sink from the interim S3. </summary>
-    internal partial class RedshiftUnloadSettings : IJsonModel<RedshiftUnloadSettings>
+    public partial class RedshiftUnloadSettings : IJsonModel<RedshiftUnloadSettings>
     {
         /// <summary> Initializes a new instance of <see cref="RedshiftUnloadSettings"/> for deserialization. </summary>
         internal RedshiftUnloadSettings()
@@ -82,6 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("bucketName"u8);
             writer.WriteObjectValue(BucketName, options);
+            if (Optional.IsDefined(S3LinkedServiceName)) { writer.WritePropertyName("s3LinkedServiceName"u8); writer.WriteObjectValue(S3LinkedServiceName, options); }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (prop.NameEquals("bucketName"u8))
                 {
-                    bucketName = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    bucketName = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

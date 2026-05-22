@@ -75,10 +75,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntime)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(TypeProperties))
+            writer.WritePropertyName("typeProperties"u8);
+            if (TypeProperties != null)
             {
-                writer.WritePropertyName("typeProperties"u8);
                 writer.WriteObjectValue(TypeProperties, options);
+            }
+            else
+            {
+                writer.WriteStartObject();
+                writer.WriteEndObject();
             }
         }
 

@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dateFormat = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    dateFormat = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("timestampFormat"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    timestampFormat = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    timestampFormat = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

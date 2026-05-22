@@ -81,7 +81,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("typeProperties"u8);
-            writer.WriteObjectValue(TypeProperties, options);
+            if (TypeProperties != null)
+            {
+                using (System.Text.Json.JsonDocument __tpDoc = System.Text.Json.JsonDocument.Parse(System.ClientModel.Primitives.ModelReaderWriter.Write(TypeProperties, options, AzureResourceManagerDataFactoryContext.Default).ToMemory()))
+                {
+                    writer.WriteStartObject();
+                    foreach (var __tpProp in __tpDoc.RootElement.EnumerateObject()) { __tpProp.WriteTo(writer); }
+                    if (Optional.IsDefined(ResourceLinkedService)) { writer.WritePropertyName("resourceLinkedService"u8); writer.WriteObjectValue(ResourceLinkedService, options); }
+                    if (Optional.IsDefined(ReferenceObjects)) { writer.WritePropertyName("referenceObjects"u8); writer.WriteObjectValue(ReferenceObjects, options); }
+                    writer.WriteEndObject();
+                }
+            }
+            else
+            {
+                writer.WriteStartObject();
+                if (Optional.IsDefined(ResourceLinkedService)) { writer.WritePropertyName("resourceLinkedService"u8); writer.WriteObjectValue(ResourceLinkedService, options); }
+                if (Optional.IsDefined(ReferenceObjects)) { writer.WritePropertyName("referenceObjects"u8); writer.WriteObjectValue(ReferenceObjects, options); }
+                writer.WriteEndObject();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>

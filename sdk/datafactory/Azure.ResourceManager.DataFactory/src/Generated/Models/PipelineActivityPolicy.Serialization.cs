@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    timeout = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    timeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("retry"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    retry = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    retry = JsonSerializer.Deserialize<DataFactoryElement<int>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("retryIntervalInSeconds"u8))

@@ -80,6 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteObjectValue(FolderPath, options);
             }
+            if (Optional.IsDefined(LinkedService)) { writer.WritePropertyName("linkedService"u8); writer.WriteObjectValue(LinkedService, options); }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folderPath = default /* TODO(#59298): DeserializeDataFactoryElement is not implemented; stub until generator fix */;
+                    folderPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

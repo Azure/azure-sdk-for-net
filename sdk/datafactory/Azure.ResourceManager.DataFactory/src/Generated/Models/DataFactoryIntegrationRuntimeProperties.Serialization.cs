@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure Data Factory nested object which serves as a compute resource for activities.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataFactoryIntegrationRuntimeProperties))]
+    [PersistableModelProxy(typeof(UnknownIntegrationRuntime))]
     public abstract partial class DataFactoryIntegrationRuntimeProperties : IJsonModel<DataFactoryIntegrationRuntimeProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return SelfHostedIntegrationRuntime.DeserializeSelfHostedIntegrationRuntime(element, options);
                 }
             }
-            return UnknownDataFactoryIntegrationRuntimeProperties.DeserializeUnknownDataFactoryIntegrationRuntimeProperties(element, options);
+            return UnknownIntegrationRuntime.DeserializeUnknownDataFactoryIntegrationRuntimeProperties(element, options);
         }
     }
 }

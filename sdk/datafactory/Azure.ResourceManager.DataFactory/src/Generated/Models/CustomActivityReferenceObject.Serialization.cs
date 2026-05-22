@@ -84,6 +84,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(LinkedServices) && LinkedServices.Count > 0)
+            {
+                writer.WritePropertyName("linkedServices"u8);
+                writer.WriteStartArray();
+                foreach (var item in LinkedServices)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

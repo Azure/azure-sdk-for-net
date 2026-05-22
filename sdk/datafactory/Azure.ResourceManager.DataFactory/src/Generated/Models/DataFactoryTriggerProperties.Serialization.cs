@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Azure data factory nested object which contains information about creating pipeline run
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MultiplePipelineTrigger"/>, <see cref="DataFactoryScheduleTrigger"/>, <see cref="DataFactoryBlobTrigger"/>, <see cref="DataFactoryBlobEventsTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="TumblingWindowTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, and <see cref="ChainingTrigger"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataFactoryTriggerProperties))]
+    [PersistableModelProxy(typeof(UnknownTrigger))]
     public abstract partial class DataFactoryTriggerProperties : IJsonModel<DataFactoryTriggerProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return ChainingTrigger.DeserializeChainingTrigger(element, options);
                 }
             }
-            return UnknownDataFactoryTriggerProperties.DeserializeUnknownDataFactoryTriggerProperties(element, options);
+            return UnknownTrigger.DeserializeUnknownDataFactoryTriggerProperties(element, options);
         }
     }
 }
