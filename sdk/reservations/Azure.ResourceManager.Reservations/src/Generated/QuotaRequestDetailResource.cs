@@ -71,6 +71,17 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="providerId"> The providerId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="id"> The id. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerId, AzureLocation location, Guid id)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimitsRequests/{id}";
+            return new ResourceIdentifier(resourceId);
+        }
+
         /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
