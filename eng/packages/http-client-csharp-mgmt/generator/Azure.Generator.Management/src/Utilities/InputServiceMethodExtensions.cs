@@ -36,6 +36,10 @@ namespace Azure.Generator.Management.Utilities
             {
                 responseBodyType = GetLongRunningResponseBodyType(lroMethod);
             }
+            else if (method is InputLongRunningPagingServiceMethod lroPagingMethod)
+            {
+                responseBodyType = lroPagingMethod.LongRunningServiceMetadata.ReturnType;
+            }
             else
             {
                 responseBodyType = GetOperationResponseBodyType(method);

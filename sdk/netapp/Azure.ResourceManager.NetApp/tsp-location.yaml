@@ -1,5 +1,5 @@
 directory: specification/netapp/resource-manager/Microsoft.NetApp/NetApp
-commit: b7fdf7f42665de0a0e24b13c38e80bb09439e096
+commit: 94218f78f3179dd960cf1cb95a41ebacee1920cd
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

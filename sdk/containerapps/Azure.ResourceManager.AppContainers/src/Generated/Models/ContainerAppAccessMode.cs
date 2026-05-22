@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct ContainerAppAccessMode : IEquatable<ContainerAppAccessMode>
     {
         private readonly string _value;
+        /// <summary> ReadOnly. </summary>
+        private const string ReadOnlyValue = "ReadOnly";
+        /// <summary> ReadWrite. </summary>
+        private const string ReadWriteValue = "ReadWrite";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppAccessMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppAccessMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ReadOnlyValue = "ReadOnly";
-        private const string ReadWriteValue = "ReadWrite";
+            _value = value;
+        }
 
         /// <summary> ReadOnly. </summary>
         public static ContainerAppAccessMode ReadOnly { get; } = new ContainerAppAccessMode(ReadOnlyValue);
+
         /// <summary> ReadWrite. </summary>
         public static ContainerAppAccessMode ReadWrite { get; } = new ContainerAppAccessMode(ReadWriteValue);
+
         /// <summary> Determines if two <see cref="ContainerAppAccessMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppAccessMode left, ContainerAppAccessMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerAppAccessMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppAccessMode left, ContainerAppAccessMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppAccessMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerAppAccessMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerAppAccessMode(string value) => new ContainerAppAccessMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerAppAccessMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerAppAccessMode?(string value) => value == null ? null : new ContainerAppAccessMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppAccessMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerAppAccessMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

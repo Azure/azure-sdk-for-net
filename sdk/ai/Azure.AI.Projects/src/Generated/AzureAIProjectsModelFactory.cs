@@ -366,6 +366,132 @@ namespace Azure.AI.Projects
             return new EmbeddingConfiguration(modelDeploymentName, embeddingField, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Model Version Definition. </summary>
+        /// <param name="systemData"> System related metadata. </param>
+        /// <param name="blobUri"> URI of the model artifact in blob storage. </param>
+        /// <param name="weightType"> The weight type of the model. </param>
+        /// <param name="baseModel"> Base model asset ID. </param>
+        /// <param name="source"> The source of the model. </param>
+        /// <param name="loraConfig"> Adapter-specific configuration. Required when weight_type is lora; ignored otherwise. May be auto-populated from adapter_config.json when present in the uploaded files — user-provided values take precedence over auto-detected values. </param>
+        /// <param name="artifactProfile"> The artifact profile of the model. </param>
+        /// <param name="warnings"> Service-computed advisory warnings derived from the artifact profile. </param>
+        /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The version of the resource. </param>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <returns> A new <see cref="Projects.ModelVersion"/> instance for mocking. </returns>
+        public static ModelVersion ModelVersion(SystemDataV3 systemData = default, Uri blobUri = default, FoundryModelWeightType? weightType = default, string baseModel = default, ModelSourceData source = default, LoraConfig loraConfig = default, ArtifactProfile artifactProfile = default, IEnumerable<FoundryModelWarning> warnings = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        {
+            warnings ??= new ChangeTrackingList<FoundryModelWarning>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ModelVersion(
+                systemData,
+                blobUri,
+                weightType,
+                baseModel,
+                source,
+                loraConfig,
+                artifactProfile,
+                warnings.ToList(),
+                id,
+                name,
+                version,
+                description,
+                tags,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> System metadata for a resource. </summary>
+        /// <param name="createdAt"> Timestamp of resource creation. </param>
+        /// <param name="createdBy"> Identity that created the resource. </param>
+        /// <param name="createdByType"> Type of identity that created the resource. </param>
+        /// <param name="lastModifiedAt"> Timestamp of last resource modification. </param>
+        /// <returns> A new <see cref="Projects.SystemDataV3"/> instance for mocking. </returns>
+        public static SystemDataV3 SystemDataV3(DateTimeOffset? createdAt = default, string createdBy = default, string createdByType = default, DateTimeOffset? lastModifiedAt = default)
+        {
+            return new SystemDataV3(createdAt, createdBy, createdByType, lastModifiedAt, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Source information for the model. </summary>
+        /// <param name="sourceType"> The source type of the model. </param>
+        /// <param name="jobId"> The job ID that produced this model. </param>
+        /// <returns> A new <see cref="Projects.ModelSourceData"/> instance for mocking. </returns>
+        public static ModelSourceData ModelSourceData(FoundryModelSourceType? sourceType = default, string jobId = default)
+        {
+            return new ModelSourceData(sourceType, jobId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Adapter-specific metadata for LoRA models. Drives serving engine configuration at deployment time. </summary>
+        /// <param name="rank"> LoRA rank (r). Positive integer. Common values: 8, 16, 32, 64. </param>
+        /// <param name="alpha"> LoRA scaling factor (α). Positive integer; typically 2× the rank. </param>
+        /// <param name="targetModules"> Model layers modified by the adapter (e.g., q_proj, v_proj). Auto-detected from adapter_config.json if omitted. </param>
+        /// <param name="dropout"> Dropout rate used during training. Informational — not used at serving time. </param>
+        /// <returns> A new <see cref="Projects.LoraConfig"/> instance for mocking. </returns>
+        public static LoraConfig LoraConfig(int? rank = default, int? alpha = default, IEnumerable<string> targetModules = default, float? dropout = default)
+        {
+            targetModules ??= new ChangeTrackingList<string>();
+
+            return new LoraConfig(rank, alpha, targetModules.ToList(), dropout, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Artifact profile of the model. </summary>
+        /// <param name="category"> The category of the artifact profile. </param>
+        /// <param name="signals"> Signals detected in the model artifact. </param>
+        /// <returns> A new <see cref="Projects.ArtifactProfile"/> instance for mocking. </returns>
+        public static ArtifactProfile ArtifactProfile(FoundryModelArtifactProfileCategory category = default, IEnumerable<FoundryModelArtifactProfileSignal> signals = default)
+        {
+            signals ??= new ChangeTrackingList<FoundryModelArtifactProfileSignal>();
+
+            return new ArtifactProfile(category, signals.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A warning associated with a model. </summary>
+        /// <param name="code"> The warning code. </param>
+        /// <param name="message"> The warning message. </param>
+        /// <returns> A new <see cref="Projects.FoundryModelWarning"/> instance for mocking. </returns>
+        public static FoundryModelWarning FoundryModelWarning(FoundryModelWarningCode? code = default, string message = default)
+        {
+            return new FoundryModelWarning(code, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The CreateAsyncResponse. </summary>
+        /// <param name="location"> URL to poll for operation status. </param>
+        /// <param name="operationResult"> URL to the operation result, or null if the operation is still in progress. </param>
+        /// <returns> A new <see cref="Projects.CreateAsyncResponse"/> instance for mocking. </returns>
+        public static CreateAsyncResponse CreateAsyncResponse(Uri location = default, Uri operationResult = default)
+        {
+            return new CreateAsyncResponse(location, operationResult, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a request for a pending upload of a model version. </summary>
+        /// <param name="pendingUploadId"> If PendingUploadId is not provided, a random GUID will be used. </param>
+        /// <param name="connectionName"> Azure Storage Account connection name to use for generating temporary SAS token. </param>
+        /// <returns> A new <see cref="Projects.ModelPendingUploadRequest"/> instance for mocking. </returns>
+        public static ModelPendingUploadRequest ModelPendingUploadRequest(string pendingUploadId = default, string connectionName = default)
+        {
+            return new ModelPendingUploadRequest(pendingUploadId, connectionName, "TemporaryBlobReference", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the response for a model pending upload request. </summary>
+        /// <param name="blobReference"> Container-level read, write, list SAS. </param>
+        /// <param name="pendingUploadId"> ID for this upload request. </param>
+        /// <param name="version"> Version of asset to be created if user did not specify version when initially creating upload. </param>
+        /// <returns> A new <see cref="Projects.ModelPendingUploadResponse"/> instance for mocking. </returns>
+        public static ModelPendingUploadResponse ModelPendingUploadResponse(AIProjectBlobReference blobReference = default, string pendingUploadId = default, string version = default)
+        {
+            return new ModelPendingUploadResponse(blobReference, pendingUploadId, version, "TemporaryBlobReference", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request to fetch credentials for a model asset. </summary>
+        /// <param name="blobUri"> Blob URI of the model asset to fetch credentials for. </param>
+        /// <returns> A new <see cref="Projects.ModelCredentialRequest"/> instance for mocking. </returns>
+        public static ModelCredentialRequest ModelCredentialRequest(Uri blobUri = default)
+        {
+            return new ModelCredentialRequest(blobUri, additionalBinaryDataProperties: null);
+        }
+
         /// <summary>
         /// Model Deployment Definition
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.ModelDeployment"/>.
@@ -596,18 +722,6 @@ namespace Azure.AI.Projects
             return new ModelSamplingParams(temperature, topP, seed, maxCompletionTokens, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Represents a target specifying an Azure AI agent. </summary>
-        /// <param name="name"> The unique identifier of the Azure AI agent. </param>
-        /// <param name="version"> The version of the Azure AI agent. </param>
-        /// <param name="toolDescriptions"> The parameters used to control the sampling behavior of the agent during text generation. </param>
-        /// <returns> A new <see cref="Evaluation.AzureAIAgentTarget"/> instance for mocking. </returns>
-        public static AzureAIAgentTarget AzureAIAgentTarget(string name = default, string version = default, IEnumerable<ToolDescription> toolDescriptions = default)
-        {
-            toolDescriptions ??= new ChangeTrackingList<ToolDescription>();
-
-            return new AzureAIAgentTarget("azure_ai_agent", additionalBinaryDataProperties: null, name, version, toolDescriptions.ToList());
-        }
-
         /// <summary> Description of a tool that can be used by an agent. </summary>
         /// <param name="name"> The name of the tool. </param>
         /// <param name="description"> A brief description of the tool's purpose. </param>
@@ -615,6 +729,14 @@ namespace Azure.AI.Projects
         public static ToolDescription ToolDescription(string name = default, string description = default)
         {
             return new ToolDescription(name, description, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Memory search options. </summary>
+        /// <param name="maxMemories"> Maximum number of memory items to return. </param>
+        /// <returns> A new <see cref="Memory.MemorySearchResultOptions"/> instance for mocking. </returns>
+        public static MemorySearchResultOptions MemorySearchResultOptions(int? maxMemories = default)
+        {
+            return new MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Taxonomy category definition. </summary>
@@ -780,35 +902,37 @@ namespace Azure.AI.Projects
                 promptText);
         }
 
-        /// <summary> Rubric-based evaluator definition — stores rubric criteria produced by the generate API. Used for both quality and safety evaluators. </summary>
+        /// <summary> Rubric-based evaluator definition — stores dimensions produced by the generate API. Used for both quality and safety evaluators. </summary>
         /// <param name="initParameters"> The JSON schema (Draft 2020-12) for the evaluator's input parameters. This includes parameters like type, properties, required. </param>
         /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
-        /// <param name="rubricCriteria"> Rubric criteria — the scoring blueprint used by the LLM judge. Quality evaluators include a non-editable residual criterion with rubric_id 'general_quality' (always_applicable: true); safety evaluators include 'general_policy_compliance'. Both use the same rubric structure. </param>
+        /// <param name="dimensions"> The set of dimensions — the scoring blueprint used by the LLM judge. Quality evaluators include a non-editable residual dimension with id 'general_quality' (always_applicable: true); safety evaluators include 'general_policy_compliance'. Both use the same Dimension structure. </param>
+        /// <param name="passThreshold"> Pass/fail threshold for the aggregate rubric score, on the same normalized 0.0-1.0 scale as the emitted `score`. When the runtime weighted average meets or exceeds this value, the result is `pass`. Defaults to 0.5 (equivalent to a raw 1-5 weighted average of 3.0). The 'any dimension scored 1 → fail' rule still applies regardless of this threshold. </param>
         /// <returns> A new <see cref="Projects.RubricBasedEvaluatorDefinition"/> instance for mocking. </returns>
-        public static RubricBasedEvaluatorDefinition RubricBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, IEnumerable<RubricCriterion> rubricCriteria = default)
+        public static RubricBasedEvaluatorDefinition RubricBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, IEnumerable<EvaluationsDimension> dimensions = default, float? passThreshold = default)
         {
             metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
-            rubricCriteria ??= new ChangeTrackingList<RubricCriterion>();
+            dimensions ??= new ChangeTrackingList<EvaluationsDimension>();
 
             return new RubricBasedEvaluatorDefinition(
-                EvaluatorDefinitionType.Rubrics,
+                EvaluatorDefinitionType.Rubric,
                 initParameters,
                 dataSchema,
                 metrics,
                 additionalBinaryDataProperties: null,
-                rubricCriteria.ToList());
+                dimensions.ToList(),
+                passThreshold);
         }
 
-        /// <summary> A single rubric criterion — one measurable quality dimension in an evaluator's scoring blueprint. </summary>
-        /// <param name="rubricId"> Stable identifier for this rubric criterion (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated catalog; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </param>
-        /// <param name="description"> What this criterion measures (e.g., 'Correctly identifies the user's reservation intent and pursues the appropriate workflow'). </param>
-        /// <param name="weight"> Relative weight of this criterion (1-10). The generation pipeline assigns exactly one criterion weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </param>
-        /// <param name="alwaysApplicable"> When true, the LLM judge always scores this criterion regardless of relevance (skips applicability assessment). The service-generated general quality/policy criterion has this set to true and is non-editable. Users may set this on their own custom criteria. </param>
-        /// <returns> A new <see cref="Projects.RubricCriterion"/> instance for mocking. </returns>
-        public static RubricCriterion RubricCriterion(string rubricId = default, string description = default, int weight = default, bool? alwaysApplicable = default)
+        /// <summary> A single dimension — one independent, measurable quality dimension within a rubric evaluator's scoring blueprint. </summary>
+        /// <param name="id"> Stable identifier for this dimension (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated set; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </param>
+        /// <param name="description"> What this dimension measures (e.g., 'Correctly identifies the user's reservation intent and pursues the appropriate workflow'). </param>
+        /// <param name="weight"> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </param>
+        /// <param name="alwaysApplicable"> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. </param>
+        /// <returns> A new <see cref="Evaluation.EvaluationsDimension"/> instance for mocking. </returns>
+        public static EvaluationsDimension EvaluationsDimension(string id = default, string description = default, int weight = default, bool? alwaysApplicable = default)
         {
-            return new RubricCriterion(rubricId, description, weight, alwaysApplicable, additionalBinaryDataProperties: null);
+            return new EvaluationsDimension(id, description, weight, alwaysApplicable, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Service-managed provenance artifacts produced by an evaluator generation job. Present only on EvaluatorVersion resources created via the generation pipeline. The combined-JSONL Foundry Dataset is read-only and resolves to a versioned dataset in a service-reserved namespace. </summary>
@@ -831,23 +955,31 @@ namespace Azure.AI.Projects
             return new DatasetReference(name, version, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Request body for getting evaluator credentials. </summary>
+        /// <param name="blobUri"> The blob URI for the evaluator storage. Example: `https://account.blob.core.windows.net:443/container`. </param>
+        /// <returns> A new <see cref="Projects.EvaluatorCredentialRequest"/> instance for mocking. </returns>
+        public static EvaluatorCredentialRequest EvaluatorCredentialRequest(Uri blobUri = default)
+        {
+            return new EvaluatorCredentialRequest(blobUri, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Caller-supplied inputs for an evaluator generation job. </summary>
-        /// <param name="name"> Display name for this generation job. </param>
         /// <param name="sources"> Source materials for generation — agent descriptions, prompts, traces, or datasets. Each entry is an `EvaluatorGenerationJobSource` variant discriminated by `type`. </param>
-        /// <param name="category"> Category determines the rubric generation focus: 'quality' (default) produces quality-focused rubric criteria, 'safety' produces policy-derived safety rubric criteria. Both use the same rubric structure. Singular because quality and safety generation are mutually exclusive pipelines — the output EvaluatorVersion.categories is an array (e.g., ['agents', 'quality']). </param>
         /// <param name="model"> The LLM model to use for rubric generation (e.g., 'gpt-4o'). Required — users must provide their own model rather than relying on service-owned capacity. </param>
-        /// <param name="evaluatorName"> The evaluator name to create or update. If an evaluator with this name already exists, the service retrieves the latest version's criteria as context for improvement. </param>
+        /// <param name="evaluatorName"> The evaluator name (immutable identifier). 1-256 characters; allowed characters are ASCII letters, digits, underscore (`_`), period (`.`), tilde (`~`), and hyphen (`-`). The prefix `builtin.` is reserved for system-managed evaluators and is rejected by the service. If an evaluator with this name already exists in the project (and is rubric-subtype), the service creates a new version under the same name and uses the prior version's `dimensions` as context for incremental improvement (foundation of the post-//build adaptive loop). Old versions remain queryable via `get_version(name, version)`. If the existing evaluator is not a rubric-subtype evaluator (built-in, prompt-based, code-based), the request is rejected with `400 Bad Request`. </param>
+        /// <param name="evaluatorDisplayName"> Optional human-friendly display name for the resulting evaluator. Surfaced as `EvaluatorVersion.display_name` on the persisted evaluator. When omitted, the service uses `evaluator_name` as the display name. The `evaluator_` prefix disambiguates this from the immutable `evaluator_name` identifier. </param>
+        /// <param name="evaluatorDescription"> Optional human-friendly description for the resulting evaluator. Surfaced as `EvaluatorVersion.description` on the persisted evaluator. Typically collected from the UI alongside `evaluator_display_name`. The `evaluator_` prefix disambiguates this from any other description fields on related models. </param>
         /// <returns> A new <see cref="Projects.EvaluatorGenerationInputs"/> instance for mocking. </returns>
-        public static EvaluatorGenerationInputs EvaluatorGenerationInputs(string name = default, IEnumerable<EvaluatorGenerationJobSource> sources = default, EvaluatorCategory? category = default, string model = default, string evaluatorName = default)
+        public static EvaluatorGenerationInputs EvaluatorGenerationInputs(IEnumerable<EvaluatorGenerationJobSource> sources = default, string model = default, string evaluatorName = default, string evaluatorDisplayName = default, string evaluatorDescription = default)
         {
             sources ??= new ChangeTrackingList<EvaluatorGenerationJobSource>();
 
             return new EvaluatorGenerationInputs(
-                name,
                 sources.ToList(),
-                category,
                 model,
                 evaluatorName,
+                evaluatorDisplayName,
+                evaluatorDescription,
                 additionalBinaryDataProperties: null);
         }
 
@@ -883,14 +1015,13 @@ namespace Azure.AI.Projects
 
         /// <summary> Traces source for evaluator generation jobs — conversation traces from Application Insights. </summary>
         /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
-        /// <param name="agentId"> The unique agent ID used to filter traces. Optional — when omitted, traces are filtered by `agent_name` (and `agent_version` if specified). </param>
-        /// <param name="agentName"> The agent name to fetch traces for. </param>
+        /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
+        /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
         /// <param name="startTime"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
         /// <param name="endTime"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
-        /// <param name="maxTraces"> Maximum number of traces to retrieve. </param>
         /// <returns> A new <see cref="Projects.TracesEvaluatorGenerationJobSource"/> instance for mocking. </returns>
-        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, int? maxTraces = default)
+        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startTime = default, DateTimeOffset? endTime = default)
         {
             return new TracesEvaluatorGenerationJobSource(
                 EvaluatorGenerationJobSourceType.Traces,
@@ -900,8 +1031,7 @@ namespace Azure.AI.Projects
                 agentName,
                 agentVersion,
                 startTime,
-                endTime,
-                maxTraces);
+                endTime);
         }
 
         /// <summary> Dataset source for evaluator generation jobs — reference to a dataset. </summary>
@@ -1291,10 +1421,18 @@ namespace Azure.AI.Projects
         /// <param name="isUserProfileEnabled"> Whether to enable user profile extraction and storage. Default is true. </param>
         /// <param name="userProfileDetails"> Specific categories or types of user profile information to extract and store. </param>
         /// <param name="isChatSummaryEnabled"> Whether to enable chat summary extraction and storage. Default is true. </param>
+        /// <param name="proceduralMemoryEnabled"> Whether to enable procedural memory extraction and storage. Default is true. </param>
+        /// <param name="defaultTtlSeconds"> The default time-to-live for memories in seconds.  A value of 0 indicates that memories do not expire. </param>
         /// <returns> A new <see cref="Memory.MemoryStoreDefaultOptions"/> instance for mocking. </returns>
-        public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled = default, string userProfileDetails = default, bool isChatSummaryEnabled = default)
+        public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled = default, string userProfileDetails = default, bool isChatSummaryEnabled = default, bool? proceduralMemoryEnabled = default, TimeSpan? defaultTtlSeconds = default)
         {
-            return new MemoryStoreDefaultOptions(isUserProfileEnabled, userProfileDetails, isChatSummaryEnabled, additionalBinaryDataProperties: null);
+            return new MemoryStoreDefaultOptions(
+                isUserProfileEnabled,
+                userProfileDetails,
+                isChatSummaryEnabled,
+                proceduralMemoryEnabled,
+                defaultTtlSeconds,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> A memory store that can store and retrieve user memories. </summary>
@@ -1356,14 +1494,6 @@ namespace Azure.AI.Projects
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Memory search options. </summary>
-        /// <param name="maxMemories"> Maximum number of memory items to return. </param>
-        /// <returns> A new <see cref="Memory.MemorySearchResultOptions"/> instance for mocking. </returns>
-        public static MemorySearchResultOptions MemorySearchResultOptions(int? maxMemories = default)
-        {
-            return new MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Memory search response. </summary>
         /// <param name="searchId"> The unique ID of this search request. Use this value as previous_search_id in subsequent requests to perform incremental searches. </param>
         /// <param name="memories"> Related memory items found during the search operation. </param>
@@ -1382,6 +1512,78 @@ namespace Azure.AI.Projects
         public static MemorySearchItem MemorySearchItem(MemoryItem memoryItem = default)
         {
             return new MemorySearchItem(memoryItem, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A single memory item stored in the memory store, containing content and metadata.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Memory.UserProfileMemoryItem"/>, <see cref="Memory.ChatSummaryMemoryItem"/>, and <see cref="Projects.ProceduralMemoryItem"/>.
+        /// </summary>
+        /// <param name="memoryId"> The unique ID of the memory item. </param>
+        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+        /// <param name="content"> The content of the memory. </param>
+        /// <param name="kind"> The kind of the memory item. </param>
+        /// <returns> A new <see cref="Memory.MemoryItem"/> instance for mocking. </returns>
+        public static MemoryItem MemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default, string kind = default)
+        {
+            return new UnknownMemoryItem(
+                memoryId,
+                updatedAt,
+                scope,
+                content,
+                new MemoryItemKind(kind),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A memory item specifically containing user profile information extracted from conversations, such as preferences, interests, and personal details. </summary>
+        /// <param name="memoryId"> The unique ID of the memory item. </param>
+        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+        /// <param name="content"> The content of the memory. </param>
+        /// <returns> A new <see cref="Memory.UserProfileMemoryItem"/> instance for mocking. </returns>
+        public static UserProfileMemoryItem UserProfileMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        {
+            return new UserProfileMemoryItem(
+                memoryId,
+                updatedAt,
+                scope,
+                content,
+                MemoryItemKind.UserProfile,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A memory item containing a summary extracted from conversations. </summary>
+        /// <param name="memoryId"> The unique ID of the memory item. </param>
+        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+        /// <param name="content"> The content of the memory. </param>
+        /// <returns> A new <see cref="Memory.ChatSummaryMemoryItem"/> instance for mocking. </returns>
+        public static ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        {
+            return new ChatSummaryMemoryItem(
+                memoryId,
+                updatedAt,
+                scope,
+                content,
+                MemoryItemKind.ChatSummary,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A memory item containing a procedure extracted from conversations. </summary>
+        /// <param name="memoryId"> The unique ID of the memory item. </param>
+        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+        /// <param name="content"> The content of the memory. </param>
+        /// <returns> A new <see cref="Projects.ProceduralMemoryItem"/> instance for mocking. </returns>
+        public static ProceduralMemoryItem ProceduralMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        {
+            return new ProceduralMemoryItem(
+                memoryId,
+                updatedAt,
+                scope,
+                content,
+                MemoryItemKind.Procedural,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Usage statistics of a memory store operation. </summary>
@@ -1450,17 +1652,217 @@ namespace Azure.AI.Projects
             return new MemoryStoreDeleteScopeResponse("memory_store.scope.deleted", name, scope, isDeleted, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Response for deleting a memory item from a memory store. </summary>
+        /// <param name="memoryId"> The unique ID of the deleted memory item. </param>
+        /// <param name="deleted"> Whether the memory item was successfully deleted. </param>
+        /// <returns> A new <see cref="Projects.DeleteMemoryResponse"/> instance for mocking. </returns>
+        public static DeleteMemoryResponse DeleteMemoryResponse(string memoryId = default, bool deleted = default)
+        {
+            return new DeleteMemoryResponse("memory_store.item.deleted", memoryId, deleted, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Base model for a routine trigger.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.ScheduleRoutineTrigger"/>, <see cref="Projects.TimerRoutineTrigger"/>, and <see cref="Projects.GitHubIssueOpenedRoutineTrigger"/>.
+        /// </summary>
+        /// <param name="type"> The trigger type. </param>
+        /// <returns> A new <see cref="Projects.RoutineTrigger"/> instance for mocking. </returns>
+        public static RoutineTrigger RoutineTrigger(string @type = default)
+        {
+            return new UnknownRoutineTrigger(new RoutineTriggerType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A recurring cron-based routine trigger. </summary>
+        /// <param name="cronExpression"> A 5-field cron expression. The service enforces a minimum interval of five minutes by default. </param>
+        /// <param name="timeZone"> An IANA or Windows time zone identifier for the schedule. </param>
+        /// <returns> A new <see cref="Projects.ScheduleRoutineTrigger"/> instance for mocking. </returns>
+        public static ScheduleRoutineTrigger ScheduleRoutineTrigger(string cronExpression = default, string timeZone = default)
+        {
+            return new ScheduleRoutineTrigger(RoutineTriggerType.Schedule, additionalBinaryDataProperties: null, cronExpression, timeZone);
+        }
+
+        /// <summary> A one-shot timer routine trigger. </summary>
+        /// <param name="at"> A future timer expression. Supported values include an ISO-8601 timestamp with an explicit offset, a local timestamp paired with time_zone, or a positive duration from now. </param>
+        /// <param name="timeZone"> An optional IANA or Windows time zone identifier when the timer uses a local timestamp. </param>
+        /// <returns> A new <see cref="Projects.TimerRoutineTrigger"/> instance for mocking. </returns>
+        public static TimerRoutineTrigger TimerRoutineTrigger(string at = default, string timeZone = default)
+        {
+            return new TimerRoutineTrigger(RoutineTriggerType.Timer, additionalBinaryDataProperties: null, at, timeZone);
+        }
+
+        /// <summary> A GitHub issue-opened routine trigger. </summary>
+        /// <param name="connectionId"> The workspace connection identifier that resolves the GitHub configuration for the trigger. </param>
+        /// <param name="assignee"> The GitHub assignee or organization filter that scopes which issues can fire the trigger. </param>
+        /// <param name="repository"> The GitHub repository filter that scopes which issues can fire the trigger. </param>
+        /// <returns> A new <see cref="Projects.GitHubIssueOpenedRoutineTrigger"/> instance for mocking. </returns>
+        public static GitHubIssueOpenedRoutineTrigger GitHubIssueOpenedRoutineTrigger(string connectionId = default, string assignee = default, string repository = default)
+        {
+            return new GitHubIssueOpenedRoutineTrigger(RoutineTriggerType.GithubIssueOpened, additionalBinaryDataProperties: null, connectionId, assignee, repository);
+        }
+
+        /// <summary>
+        /// Base model for a routine action.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.InvokeAgentResponsesApiRoutineAction"/> and <see cref="Projects.InvokeAgentInvocationsApiRoutineAction"/>.
+        /// </summary>
+        /// <param name="type"> The action type. </param>
+        /// <returns> A new <see cref="Projects.RoutineAction"/> instance for mocking. </returns>
+        public static RoutineAction RoutineAction(string @type = default)
+        {
+            return new UnknownRoutineAction(new RoutineActionType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Dispatches a routine through the responses API. Exactly one of agent_name or agent_endpoint_id must be provided. </summary>
+        /// <param name="agentName"> The project-scoped agent name for responses API dispatch. </param>
+        /// <param name="agentEndpointId"> The endpoint-scoped agent identifier for responses API dispatch. </param>
+        /// <param name="conversationId"> An optional existing conversation identifier to continue during the downstream dispatch. </param>
+        /// <returns> A new <see cref="Projects.InvokeAgentResponsesApiRoutineAction"/> instance for mocking. </returns>
+        public static InvokeAgentResponsesApiRoutineAction InvokeAgentResponsesApiRoutineAction(string agentName = default, string agentEndpointId = default, string conversationId = default)
+        {
+            return new InvokeAgentResponsesApiRoutineAction(RoutineActionType.InvokeAgentResponsesApi, additionalBinaryDataProperties: null, agentName, agentEndpointId, conversationId);
+        }
+
+        /// <summary> Dispatches a routine through the raw invocations API. </summary>
+        /// <param name="agentEndpointId"> The endpoint-scoped agent identifier for invocations API dispatch. </param>
+        /// <param name="sessionId"> An optional existing hosted-agent session identifier to continue during the downstream dispatch. </param>
+        /// <returns> A new <see cref="Projects.InvokeAgentInvocationsApiRoutineAction"/> instance for mocking. </returns>
+        public static InvokeAgentInvocationsApiRoutineAction InvokeAgentInvocationsApiRoutineAction(string agentEndpointId = default, string sessionId = default)
+        {
+            return new InvokeAgentInvocationsApiRoutineAction(RoutineActionType.InvokeAgentInvocationsApi, additionalBinaryDataProperties: null, agentEndpointId, sessionId);
+        }
+
+        /// <summary> A routine definition returned by the service. </summary>
+        /// <param name="name"> The routine name. </param>
+        /// <param name="description"> A human-readable description of the routine. </param>
+        /// <param name="enabled"> Whether the routine is enabled. </param>
+        /// <param name="triggers"> The triggers configured for the routine. </param>
+        /// <param name="action"> The action executed when the routine fires. </param>
+        /// <param name="createdAt"> The time when the routine was created. </param>
+        /// <param name="updatedAt"> The time when the routine was last updated. </param>
+        /// <returns> A new <see cref="Projects.ProjectsRoutine"/> instance for mocking. </returns>
+        public static ProjectsRoutine ProjectsRoutine(string name = default, string description = default, bool enabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, DateTimeOffset? createdAt = default, DateTimeOffset? updatedAt = default)
+        {
+            triggers ??= new ChangeTrackingDictionary<string, RoutineTrigger>();
+
+            return new ProjectsRoutine(
+                name,
+                description,
+                enabled,
+                triggers,
+                action,
+                createdAt,
+                updatedAt,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A single routine run returned from the run history API. </summary>
+        /// <param name="id"> The MLflow run identifier for the routine attempt. </param>
+        /// <param name="status"> The underlying MLflow run status. </param>
+        /// <param name="phase"> The AgentExtensions lifecycle phase for the routine attempt. </param>
+        /// <param name="triggerType"> The trigger type that produced the routine attempt. </param>
+        /// <param name="attemptSource"> The source path that created the routine attempt. </param>
+        /// <param name="actionType"> The action type dispatched for the routine attempt. </param>
+        /// <param name="triggeredAt"> The logical trigger time recorded for the routine attempt. </param>
+        /// <param name="startedAt"> The time when the underlying run started. </param>
+        /// <param name="endedAt"> The time when the underlying run reached a terminal state. </param>
+        /// <param name="dispatchId"> The dispatch identifier associated with the routine attempt. </param>
+        /// <param name="actionCorrelationId"> The downstream action correlation identifier, when available. </param>
+        /// <param name="responseId"> The downstream response or invocation identifier, when available. </param>
+        /// <param name="taskId"> The workspace task identifier linked to the routine attempt, when available. </param>
+        /// <param name="errorType"> The fully qualified error type captured for a failed attempt, when available. </param>
+        /// <param name="errorMessage"> The truncated failure message captured for a failed attempt, when available. </param>
+        /// <param name="diagnostics"> Diagnostic data captured for the routine attempt. </param>
+        /// <returns> A new <see cref="Projects.RoutineRun"/> instance for mocking. </returns>
+        public static RoutineRun RoutineRun(string id = default, string status = default, RoutineRunPhase? phase = default, RoutineTriggerType triggerType = default, RoutineAttemptSource? attemptSource = default, RoutineActionType? actionType = default, DateTimeOffset? triggeredAt = default, DateTimeOffset startedAt = default, DateTimeOffset? endedAt = default, string dispatchId = default, string actionCorrelationId = default, string responseId = default, string taskId = default, string errorType = default, string errorMessage = default, RoutineRunDiagnostics diagnostics = default)
+        {
+            return new RoutineRun(
+                id,
+                status,
+                phase,
+                triggerType,
+                attemptSource,
+                actionType,
+                triggeredAt,
+                startedAt,
+                endedAt,
+                dispatchId,
+                actionCorrelationId,
+                responseId,
+                taskId,
+                errorType,
+                errorMessage,
+                diagnostics,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Generic diagnostics captured on a routine run. </summary>
+        /// <param name="parameters"> MLflow parameters recorded on the run, keyed by parameter name. </param>
+        /// <param name="tags"> MLflow tags recorded on the run, keyed by tag name. </param>
+        /// <param name="metrics"> Latest MLflow metric values recorded on the run, keyed by metric name. </param>
+        /// <returns> A new <see cref="Projects.RoutineRunDiagnostics"/> instance for mocking. </returns>
+        public static RoutineRunDiagnostics RoutineRunDiagnostics(IDictionary<string, string> parameters = default, IDictionary<string, string> tags = default, IDictionary<string, double> metrics = default)
+        {
+            parameters ??= new ChangeTrackingDictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            metrics ??= new ChangeTrackingDictionary<string, double>();
+
+            return new RoutineRunDiagnostics(parameters, tags, metrics, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Base model for a manual dispatch payload.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.InvokeAgentResponsesApiDispatchPayload"/> and <see cref="Projects.InvokeAgentInvocationsApiDispatchPayload"/>.
+        /// </summary>
+        /// <param name="type"> The manual dispatch payload type. </param>
+        /// <returns> A new <see cref="Projects.RoutineDispatchPayload"/> instance for mocking. </returns>
+        public static RoutineDispatchPayload RoutineDispatchPayload(string @type = default)
+        {
+            return new UnknownRoutineDispatchPayload(new RoutineDispatchPayloadType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A manual payload used to test a responses API routine dispatch. </summary>
+        /// <param name="input"> The user input sent to the downstream responses target. </param>
+        /// <returns> A new <see cref="Projects.InvokeAgentResponsesApiDispatchPayload"/> instance for mocking. </returns>
+        public static InvokeAgentResponsesApiDispatchPayload InvokeAgentResponsesApiDispatchPayload(string input = default)
+        {
+            return new InvokeAgentResponsesApiDispatchPayload(RoutineDispatchPayloadType.InvokeAgentResponsesApi, additionalBinaryDataProperties: null, input);
+        }
+
+        /// <summary> A manual payload used to test an invocations API routine dispatch. </summary>
+        /// <param name="input"> The raw input sent to the downstream invocations target. </param>
+        /// <returns> A new <see cref="Projects.InvokeAgentInvocationsApiDispatchPayload"/> instance for mocking. </returns>
+        public static InvokeAgentInvocationsApiDispatchPayload InvokeAgentInvocationsApiDispatchPayload(string input = default)
+        {
+            return new InvokeAgentInvocationsApiDispatchPayload(RoutineDispatchPayloadType.InvokeAgentInvocationsApi, additionalBinaryDataProperties: null, input);
+        }
+
+        /// <summary> Identifiers returned after a routine dispatch is queued. </summary>
+        /// <param name="dispatchId"> The dispatch identifier created for the routine dispatch. </param>
+        /// <param name="actionCorrelationId"> A downstream action correlation identifier, when available. </param>
+        /// <param name="taskId"> A workspace task identifier created for the dispatch, when available. </param>
+        /// <returns> A new <see cref="Projects.DispatchRoutineResponse"/> instance for mocking. </returns>
+        public static DispatchRoutineResponse DispatchRoutineResponse(string dispatchId = default, string actionCorrelationId = default, string taskId = default)
+        {
+            return new DispatchRoutineResponse(dispatchId, actionCorrelationId, taskId, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Caller-supplied inputs for a data generation job. </summary>
         /// <param name="name"> The display name of the data generation job. </param>
         /// <param name="sources"> The sources used for the data generation job. </param>
         /// <param name="options"> The options for the data generation job. </param>
         /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
+        /// <param name="outputOptions"> Optional caller-supplied metadata for the job's output. See individual fields for whether they apply to file outputs (fine-tuning scenarios), dataset outputs (evaluation scenario), or both. </param>
         /// <returns> A new <see cref="Projects.DataGenerationJobInputs"/> instance for mocking. </returns>
-        public static DataGenerationJobInputs DataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobOptions options = default, DataGenerationJobScenario scenario = default)
+        public static DataGenerationJobInputs DataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobOptions options = default, DataGenerationJobScenario scenario = default, DataGenerationJobOutputOptions outputOptions = default)
         {
             sources ??= new ChangeTrackingList<DataGenerationJobSource>();
 
-            return new DataGenerationJobInputs(name, sources.ToList(), options, scenario, additionalBinaryDataProperties: null);
+            return new DataGenerationJobInputs(
+                name,
+                sources.ToList(),
+                options,
+                scenario,
+                outputOptions,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1496,14 +1898,13 @@ namespace Azure.AI.Projects
 
         /// <summary> Traces source for data generation jobs — conversation traces from Application Insights. </summary>
         /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
-        /// <param name="agentId"> The unique agent ID used to filter traces. Optional — when omitted, traces are filtered by `agent_name` (and `agent_version` if specified). </param>
-        /// <param name="agentName"> The agent name to fetch traces for. </param>
+        /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
+        /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
         /// <param name="startTime"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
         /// <param name="endTime"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
-        /// <param name="maxTraces"> Maximum number of traces to retrieve. </param>
         /// <returns> A new <see cref="Projects.TracesDataGenerationJobSource"/> instance for mocking. </returns>
-        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, int? maxTraces = default)
+        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startTime = default, DateTimeOffset? endTime = default)
         {
             return new TracesDataGenerationJobSource(
                 DataGenerationJobSourceType.Traces,
@@ -1513,8 +1914,7 @@ namespace Azure.AI.Projects
                 agentName,
                 agentVersion,
                 startTime,
-                endTime,
-                maxTraces);
+                endTime);
         }
 
         /// <summary> Dataset source for data generation jobs — reference to a dataset. </summary>
@@ -1597,6 +1997,18 @@ namespace Azure.AI.Projects
             return new ToolUseFineTuningDataGenerationJobOptions(DataGenerationJobKind.ToolUse, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Output options for data generation job. </summary>
+        /// <param name="name"> Name to assign to the output. Used as the filename for Azure OpenAI file outputs (fine-tuning scenarios) and as the dataset name for dataset outputs (evaluation scenario). </param>
+        /// <param name="description"> Description to assign to the output. Applies only to dataset outputs (evaluation scenario); ignored for Azure OpenAI file outputs. </param>
+        /// <param name="tags"> Tags to assign to the output. Applies only to dataset outputs (evaluation scenario); ignored for Azure OpenAI file outputs. </param>
+        /// <returns> A new <see cref="Projects.DataGenerationJobOutputOptions"/> instance for mocking. </returns>
+        public static DataGenerationJobOutputOptions DataGenerationJobOutputOptions(string name = default, string description = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DataGenerationJobOutputOptions(name, description, tags, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Result produced by a successful data generation job. </summary>
         /// <param name="outputs"> The final job outputs: Azure OpenAI files for fine-tuning, or datasets for evaluation. </param>
         /// <param name="generatedSamples"> The number of samples actually generated. </param>
@@ -1631,12 +2043,12 @@ namespace Azure.AI.Projects
 
         /// <summary> Dataset output for a data generation job. </summary>
         /// <param name="id"> The id of the output dataset created. </param>
-        /// <param name="name"> The name of the output dataset and can be optionally set during job creation time. </param>
+        /// <param name="name"> The name of the output dataset. </param>
         /// <param name="version"> The version of the output dataset. </param>
-        /// <param name="description"> Description of the output dataset and can be optionally set during job creation time. </param>
-        /// <param name="tags"> Tag dictionary of the output dataset and can be optionally set during job creation time. </param>
+        /// <param name="description"> Description of the output dataset. </param>
+        /// <param name="tags"> Tag dictionary of the output dataset. </param>
         /// <returns> A new <see cref="Projects.DatasetDataGenerationJobOutput"/> instance for mocking. </returns>
-        public static DatasetDataGenerationJobOutput DatasetDataGenerationJobOutput(string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        public static DatasetDataGenerationJobOutput DatasetDataGenerationJobOutput(string id = default, string name = default, string version = default, string description = default, IReadOnlyDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1704,6 +2116,17 @@ namespace Azure.AI.Projects
         public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, string codeText)
         {
             return CodeBasedEvaluatorDefinition(initParameters: initParameters, dataSchema: dataSchema, metrics: metrics, codeText: codeText, entryPoint: default, imageTag: default, blobUri: default);
+        }
+
+        /// <summary> Default memory store configurations. </summary>
+        /// <param name="isUserProfileEnabled"> Whether to enable user profile extraction and storage. Default is true. </param>
+        /// <param name="userProfileDetails"> Specific categories or types of user profile information to extract and store. </param>
+        /// <param name="isChatSummaryEnabled"> Whether to enable chat summary extraction and storage. Default is true. </param>
+        /// <returns> A new <see cref="Memory.MemoryStoreDefaultOptions"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled, string userProfileDetails, bool isChatSummaryEnabled)
+        {
+            return MemoryStoreDefaultOptions(isUserProfileEnabled: isUserProfileEnabled, userProfileDetails: userProfileDetails, isChatSummaryEnabled: isChatSummaryEnabled, proceduralMemoryEnabled: default, defaultTtlSeconds: default);
         }
 
         /// <summary> Represents a request for a pending upload. </summary>

@@ -18,8 +18,13 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="EntraAuthorizationScheme"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntraAuthorizationScheme(AgentEndpointAuthorizationSchemeType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        /// <param name="isolationKeySource"> The source from which the per-user isolation key is derived for requests authorized via this scheme. Defaults to Entra-based isolation when omitted. </param>
+        internal EntraAuthorizationScheme(AgentEndpointAuthorizationSchemeType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IsolationKeySource isolationKeySource) : base(@type, additionalBinaryDataProperties)
         {
+            IsolationKeySource = isolationKeySource;
         }
+
+        /// <summary> The source from which the per-user isolation key is derived for requests authorized via this scheme. Defaults to Entra-based isolation when omitted. </summary>
+        public IsolationKeySource IsolationKeySource { get; set; }
     }
 }

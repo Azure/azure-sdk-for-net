@@ -4,10 +4,19 @@
 import {
   DecoratedType,
   getClientOptions,
+  SdkEnumType,
   SdkHttpOperation,
-  SdkMethod
+  SdkMethod,
+  SdkPathParameter
 } from "@azure-tools/typespec-client-generator-core";
+import { NoTarget, Program } from "@typespec/compiler";
 import pluralize from "pluralize";
+import { $lib } from "./lib/lib.js";
+
+type SdkHttpOperationParameter = SdkHttpOperation["parameters"][number];
+type SdkHttpOperationEnumPathParameter = SdkPathParameter & {
+  type: SdkEnumType;
+};
 
 // ─── Path utilities ─────────────────────────────────────────────────────────
 
@@ -17,6 +26,13 @@ import pluralize from "pluralize";
  */
 export function isVariableSegment(segment: string): boolean {
   return segment.startsWith("{") && segment.endsWith("}");
+}
+
+/**
+ * Gets the parameter name from a variable segment like {resourceName}.
+ */
+export function getVariableSegmentName(segment: string): string {
+  return segment.slice(1, -1);
 }
 
 /**
@@ -44,10 +60,19 @@ export class RequestPath {
 
   /** The original raw path string */
   public readonly path: string;
+  /** Index of the last "providers" segment, or -1 when the path has none. */
+  public readonly lastProvidersSegmentIndex: number;
 
   constructor(path: string) {
     this.path = path;
     this.segments = path.split("/").filter((s) => s.length > 0);
+    let lastProvidersSegmentIndex = -1;
+    for (let i = 0; i < this.segments.length; i++) {
+      if (this.segments[i].toLowerCase() === "providers") {
+        lastProvidersSegmentIndex = i;
+      }
+    }
+    this.lastProvidersSegmentIndex = lastProvidersSegmentIndex;
   }
 
   /** Serializes to the raw path string (used by JSON.stringify) */
@@ -124,19 +149,88 @@ export class RequestPath {
   }
 
   /**
+   * Returns true when this path has an ARM resource instance shape:
+   * /<scope>/providers/<namespace>/<type>/<name>[/<type>/<name>...].
+   * This only validates the path shape. Variable type segments are checked
+   * later against operation metadata because only the operation can tell
+   * whether the path parameter is a closed enum of resource types.
+   */
+  isResourceInstancePath(): boolean {
+    // Tenant, subscription, and resource group are resource-like ARM scopes
+    // without a /providers/<namespace>/<type>/<name> tail.
+    if (
+      this.isTenantPath() ||
+      this.isSubscriptionPath() ||
+      this.isResourceGroupPath()
+    ) {
+      return true;
+    }
+
+    const providersIndex = this.lastProvidersSegmentIndex;
+    // Normal resource instances must be under the innermost provider
+    // namespace. This intentionally does not validate the scope prefix so
+    // extension resource paths such as /{resourceUri}/providers/... can pass.
+    if (providersIndex < 0) return false;
+
+    const tailLength = this.length - providersIndex - 1;
+    // The provider tail must be namespace plus one or more type/name pairs:
+    // <namespace>/<type>/<name>[/<type>/<name>...]. That means at least
+    // three segments and an odd tail length. A dangling type/action segment
+    // (for example .../locations/{location}/defaultProvider) is not a
+    // resource instance.
+    if (tailLength < 3 || tailLength % 2 === 0) return false;
+
+    // The namespace identifies the resource provider and must be literal.
+    // Type segments may be variables, but only if later operation metadata
+    // proves they are closed enums.
+    return !isVariableSegment(this.segments[providersIndex + 1]);
+  }
+
+  isTenantPath(): boolean {
+    return (
+      this.length === 0 ||
+      (this.length === 2 &&
+        this.segments[0] === "tenants" &&
+        isVariableSegment(this.segments[1]))
+    );
+  }
+
+  isSubscriptionPath(): boolean {
+    return (
+      this.length === 2 &&
+      this.segments[0] === "subscriptions" &&
+      isVariableSegment(this.segments[1])
+    );
+  }
+
+  isResourceGroupPath(): boolean {
+    return (
+      this.length === 4 &&
+      this.segments[0] === "subscriptions" &&
+      isVariableSegment(this.segments[1]) &&
+      this.segments[2] === "resourceGroups" &&
+      isVariableSegment(this.segments[3])
+    );
+  }
+
+  isManagementGroupPath(): boolean {
+    return (
+      this.length === 4 &&
+      this.segments[0] === "providers" &&
+      this.segments[1] === "Microsoft.Management" &&
+      this.segments[2] === "managementGroups" &&
+      isVariableSegment(this.segments[3])
+    );
+  }
+
+  /**
    * Gets the scope path — the portion of the path before the last "/providers/" segment.
    * E.g., for ".../providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/...",
    * the scope is ".../providers/Microsoft.Compute/virtualMachines/{vmName}".
    * Returns an empty RequestPath if the path has no "/providers/" segment (tenant scope).
    */
   get scopePath(): RequestPath {
-    // Find the last "providers" segment index
-    let lastProvidersIndex = -1;
-    for (let i = 0; i < this.segments.length; i++) {
-      if (this.segments[i].toLowerCase() === "providers") {
-        lastProvidersIndex = i;
-      }
-    }
+    const lastProvidersIndex = this.lastProvidersSegmentIndex;
     if (lastProvidersIndex < 0) return RequestPath.empty;
     return RequestPath.fromSegments(this.segments.slice(0, lastProvidersIndex));
   }
@@ -169,26 +263,16 @@ export class RequestPath {
    * Returns undefined for paths with no determinable resource type (e.g., /{resourceUri}).
    */
   get resourceType(): string | undefined {
-    // Find the last "providers" segment index
-    let lastProvidersIndex = -1;
-    for (let i = 0; i < this.segments.length; i++) {
-      if (this.segments[i].toLowerCase() === "providers") {
-        lastProvidersIndex = i;
-      }
-    }
+    const lastProvidersIndex = this.lastProvidersSegmentIndex;
 
     if (lastProvidersIndex === -1) {
       // No providers segment — return well-known resource types
-      if (this.segments.length === 0) {
+      if (this.isTenantPath()) {
         return "Microsoft.Resources/tenants";
-      } else if (
-        this.segments.length >= 3 &&
-        this.segments[0] === "subscriptions" &&
-        this.segments[2] === "resourceGroups"
-      ) {
-        return "Microsoft.Resources/resourceGroups";
-      } else if (this.segments[0] === "subscriptions") {
+      } else if (this.isSubscriptionPath()) {
         return "Microsoft.Resources/subscriptions";
+      } else if (this.isResourceGroupPath()) {
+        return "Microsoft.Resources/resourceGroups";
       } else if (this.segments[0] === "tenants") {
         return "Microsoft.Resources/tenants";
       }
@@ -215,17 +299,10 @@ export class RequestPath {
   get operationScope(): ResourceScopeKind {
     const scope = this.scopePath;
 
-    // No scope (no /providers/ segment) — tenant scope
-    if (scope.length === 0) return ResourceScopeKind.Tenant;
-
-    // Check the immediate scope against well-known patterns.
-    // If the scope doesn't match any known pattern (e.g., it contains another /providers/
-    // segment like nested extension resources), it's an Extension.
-    if (scope.equals(ResourceGroupScope))
-      return ResourceScopeKind.ResourceGroup;
-    if (scope.equals(SubscriptionScope)) return ResourceScopeKind.Subscription;
-    if (scope.equals(ManagementGroupScope))
-      return ResourceScopeKind.ManagementGroup;
+    if (scope.isTenantPath()) return ResourceScopeKind.Tenant;
+    if (scope.isSubscriptionPath()) return ResourceScopeKind.Subscription;
+    if (scope.isResourceGroupPath()) return ResourceScopeKind.ResourceGroup;
+    if (scope.isManagementGroupPath()) return ResourceScopeKind.ManagementGroup;
 
     // Everything else is an extension resource
     return ResourceScopeKind.Extension;
@@ -245,15 +322,6 @@ export class RequestPath {
     return this.path;
   }
 }
-
-// Well-known scope paths for operationScope detection
-const ResourceGroupScope = new RequestPath(
-  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
-);
-const SubscriptionScope = new RequestPath("/subscriptions/{subscriptionId}");
-const ManagementGroupScope = new RequestPath(
-  "/providers/Microsoft.Management/managementGroups/{managementGroupId}"
-);
 
 /**
  * Finds the candidate whose path is the longest prefix match against the target path.
@@ -423,6 +491,95 @@ export function extractNameConstraintOverrides(
   };
 }
 
+const resourceNameKey = "resource-name";
+
+/**
+ * The parsed value of the `@@clientOption(op, "resource-name", ...)` decorator
+ * applied to an ARM resource's Read operation.
+ *
+ * - A plain `string` renames the single resource that Read identifies.
+ * - A `Map<string, string>` is used when the Read operation expands into
+ *   multiple concrete resources (via `{parentType}` segment expansion). The
+ *   map keys are the enum/union values that get substituted for the
+ *   `{parentType}` segment (e.g. `"eventGridTopics"`), and the values are
+ *   the desired resource (SDK class) names.
+ */
+export type ResourceNameOverride = string | Map<string, string>;
+
+/**
+ * Extracts a resource-name override from an ARM resource's Read operation
+ * `@@clientOption(op, "resource-name", value, "csharp")` decorator.
+ *
+ * Returns:
+ * - a non-empty `string` if the decorator value is a string,
+ * - a non-empty `Map<string, string>` if the decorator value is a record with
+ *   non-empty string entries,
+ * - `undefined` if the decorator is not set or the value is malformed.
+ *
+ * Malformed values (mixed types, empty strings, empty maps) are reported via
+ * the optional `program` and treated as if the decorator was absent.
+ */
+export function extractResourceNameOverride(
+  operation: DecoratedType | undefined,
+  program?: Program
+): ResourceNameOverride | undefined {
+  if (!operation) return undefined;
+  const value = getClientOptions(operation, resourceNameKey);
+  if (value === undefined || value === null) return undefined;
+
+  if (typeof value === "string") {
+    if (value.length === 0) {
+      if (program) {
+        $lib.reportDiagnostic(program, {
+          code: "resource-name-empty-string",
+          format: {},
+          target: NoTarget
+        });
+      }
+      return undefined;
+    }
+    return value;
+  }
+
+  if (typeof value === "object") {
+    const record = value as Record<string, unknown>;
+    const map = new Map<string, string>();
+    for (const [key, v] of Object.entries(record)) {
+      if (typeof v !== "string" || v.length === 0 || key.length === 0) {
+        if (program) {
+          $lib.reportDiagnostic(program, {
+            code: "resource-name-bad-entry",
+            format: { key },
+            target: NoTarget
+          });
+        }
+        continue;
+      }
+      map.set(key, v);
+    }
+    if (map.size === 0) {
+      if (program) {
+        $lib.reportDiagnostic(program, {
+          code: "resource-name-empty-record",
+          format: {},
+          target: NoTarget
+        });
+      }
+      return undefined;
+    }
+    return map;
+  }
+
+  if (program) {
+    $lib.reportDiagnostic(program, {
+      code: "resource-name-bad-type",
+      format: { actualType: typeof value },
+      target: NoTarget
+    });
+  }
+  return undefined;
+}
+
 export interface NonResourceMethod {
   methodId: string;
   operationPath: RequestPath;
@@ -468,6 +625,7 @@ export interface ResourceMethod {
 
 export enum ResourceOperationKind {
   Action = "Action",
+  CheckExistence = "CheckExistence",
   Create = "Create",
   Delete = "Delete",
   Read = "Read",
@@ -500,7 +658,7 @@ export function resolveResourceApiVersions(
 
 /**
  * Get the sort order for a resource operation kind.
- * Create operations come first, followed by other CRUD operations (Read, Update, Delete), then List, then Action.
+ * Create operations come first, followed by other resource instance operations (Read, CheckExistence, Update, Delete), then List, then Action.
  */
 function getKindSortOrder(kind: ResourceOperationKind): number {
   switch (kind) {
@@ -508,14 +666,16 @@ function getKindSortOrder(kind: ResourceOperationKind): number {
       return 1;
     case ResourceOperationKind.Read:
       return 2;
-    case ResourceOperationKind.Update:
+    case ResourceOperationKind.CheckExistence:
       return 3;
-    case ResourceOperationKind.Delete:
+    case ResourceOperationKind.Update:
       return 4;
-    case ResourceOperationKind.List:
+    case ResourceOperationKind.Delete:
       return 5;
-    case ResourceOperationKind.Action:
+    case ResourceOperationKind.List:
       return 6;
+    case ResourceOperationKind.Action:
+      return 7;
     default:
       return 99;
   }
@@ -538,6 +698,173 @@ export function sortResourceMethods(methods: ResourceMethod[]): void {
     // For methods with the same kind, sort by methodId
     return a.methodId.localeCompare(b.methodId);
   });
+}
+
+/**
+ * Assigns non-resource methods to resources based on three matching strategies:
+ * 1. Prefix matching: if the method's operationPath has a prefix that matches a resource's
+ *    resourceIdPattern, the method is moved to that resource as an Action.
+ * 2. Resource model ID matching: if prefix matching fails but the method has a resourceModelId,
+ *    it is matched to a valid resource with the same model ID and assigned as a List operation.
+ *    This handles extension resources where list paths have different parent structures.
+ * 3. Resource type matching: if both prefix and model ID matching fail, the resource type
+ *    is extracted from the operation path using RequestPath.resourceType (which includes
+ *    the provider namespace) and compared against each resource's metadata.resourceType.
+ *    The provider hierarchy depth must also match to prevent cross-scope false matches.
+ *    This handles operations from resolveArmResources that lack resourceModelId but share
+ *    a resource type with a known resource.
+ *
+ * @param resources - The list of valid resources
+ * @param nonResourceMethods - The array of non-resource methods (will be mutated: matched methods are removed)
+ */
+export function assignNonResourceMethodsToResources(
+  resources: ArmResourceSchema[],
+  nonResourceMethods: NonResourceMethod[]
+): void {
+  const methodsToRemove = new Set<string>();
+
+  for (const method of nonResourceMethods) {
+    const bestMatch = findLongestPrefixMatch(
+      method.operationPath,
+      resources,
+      (r) => r.metadata.resourceIdPattern,
+      true
+    );
+
+    if (bestMatch) {
+      bestMatch.metadata.methods.push({
+        methodId: method.methodId,
+        kind: ResourceOperationKind.Action,
+        operationPath: method.operationPath,
+        scope: {
+          kind: method.scope.kind,
+          scopeIdPattern: bestMatch.metadata.resourceIdPattern!,
+          scopeResourceType: method.scope.scopeResourceType
+        }
+      });
+      methodsToRemove.add(method.methodId);
+    } else if (method.resourceModelId) {
+      // Prefix matching failed; try matching by resource model ID.
+      const match = resources.find(
+        (r) => r.resourceModelId === method.resourceModelId
+      );
+      if (match) {
+        match.metadata.methods.push({
+          methodId: method.methodId,
+          kind: ResourceOperationKind.List,
+          operationPath: method.operationPath,
+          scope: method.scope
+        });
+        methodsToRemove.add(method.methodId);
+      }
+    } else {
+      // Both prefix and model ID matching failed; try matching by resource type.
+      const operationType = method.operationPath.resourceType;
+      if (operationType !== undefined) {
+        const match = resources.find((r) => {
+          if (
+            !r.metadata.resourceIdPattern ||
+            !method.operationPath.hasSameScopeNesting(
+              r.metadata.resourceIdPattern
+            )
+          ) {
+            return false;
+          }
+          return (
+            r.metadata.resourceType === operationType &&
+            operationPathEndsWithResourceType(
+              method.operationPath,
+              operationType
+            )
+          );
+        });
+        if (match) {
+          match.metadata.methods.push({
+            methodId: method.methodId,
+            kind: ResourceOperationKind.List,
+            operationPath: method.operationPath,
+            scope: method.scope
+          });
+          methodsToRemove.add(method.methodId);
+        }
+      }
+    }
+  }
+
+  if (methodsToRemove.size > 0) {
+    for (let i = nonResourceMethods.length - 1; i >= 0; i--) {
+      if (methodsToRemove.has(nonResourceMethods[i].methodId)) {
+        nonResourceMethods.splice(i, 1);
+      }
+    }
+
+    for (const resource of resources) {
+      sortResourceMethods(resource.metadata.methods);
+    }
+  }
+}
+
+function operationPathEndsWithResourceType(
+  operationPath: RequestPath,
+  resourceType: string
+): boolean {
+  const lastTypeSegment = resourceType.split("/").at(-1);
+  return (
+    lastTypeSegment !== undefined &&
+    operationPath.segments[operationPath.length - 1] === lastTypeSegment
+  );
+}
+
+/**
+ * Returns true when the path has a resource instance shape and any variable
+ * segments in resource type positions are backed by closed enum parameters.
+ * RequestPath can identify those segments structurally, but only the SdkMethod
+ * knows the parameter types needed for dynamic resource type expansion.
+ */
+export function isResourceInstancePath(
+  method: SdkMethod<SdkHttpOperation>,
+  path: RequestPath
+): boolean {
+  if (!path.isResourceInstancePath()) return false;
+
+  const dynamicSegments = detectDynamicTypeSegments(path);
+  for (const segment of dynamicSegments) {
+    if (!findEnumPathParam(method, segment.typeParamName)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+/**
+ * Treats name path parameters with fixed one-value enum types as constants.
+ */
+export function resolveFixedEnumNameSegments(
+  method: SdkMethod<SdkHttpOperation>,
+  path: RequestPath
+): RequestPath {
+  let changed = false;
+  const segments = [...path.segments];
+  const providerIndex = path.lastProvidersSegmentIndex;
+  if (providerIndex < 0) return path;
+
+  // The provider tail starts as /providers/<namespace>/<type>/{name};
+  // providerIndex + 3 is the first name segment, then type/name pairs repeat.
+  for (let i = providerIndex + 3; i < segments.length; i += 2) {
+    const segment = segments[i];
+    if (!isVariableSegment(segment)) continue;
+
+    const fixedValue = getSingleFixedEnumValueForPathParam(
+      method,
+      getVariableSegmentName(segment)
+    );
+    if (!fixedValue) continue;
+
+    segments[i] = fixedValue;
+    changed = true;
+  }
+
+  return changed ? RequestPath.fromSegments(segments) : path;
 }
 
 /**
@@ -683,7 +1010,8 @@ export function expandArmResources(
     options.diagnosticReporter,
     (expanded, original) => {
       expandedToOriginal.set(expanded, original);
-    }
+    },
+    options.resourceNameOverrides
   );
   return { expandedResources, expandedToOriginal };
 }
@@ -691,6 +1019,14 @@ export function expandArmResources(
 export interface ExpandArmResourcesOptions {
   serviceMethods?: Map<string, SdkMethod<SdkHttpOperation>>;
   diagnosticReporter?: (message: string) => void;
+  /**
+   * Optional per-template-path map of `resource-name` `@@clientOption`
+   * overrides keyed by enum value. The outer map key is the pre-expansion
+   * resource instance path (i.e. the path containing the `{parentType}`
+   * placeholder). The inner map keys are the enum/union values that get
+   * substituted for the dynamic segment.
+   */
+  resourceNameOverrides?: Map<string, Map<string, string>>;
 }
 
 export interface ExpandArmResourcesResult {
@@ -956,125 +1292,6 @@ function postProcessExpandedArmResources(
 }
 
 /**
- * Assigns non-resource methods to resources based on three matching strategies:
- * 1. Prefix matching: if the method's operationPath has a prefix that matches a resource's
- *    resourceIdPattern, the method is moved to that resource as an Action.
- * 2. Resource model ID matching: if prefix matching fails but the method has a resourceModelId,
- *    it is matched to a valid resource with the same model ID and assigned as a List operation.
- *    This handles extension resources where list paths have different parent structures.
- * 3. Resource type matching: if both prefix and model ID matching fail, the resource type
- *    is extracted from the operation path using RequestPath.resourceType (which includes
- *    the provider namespace) and compared against each resource's metadata.resourceType.
- *    The provider hierarchy depth must also match to prevent cross-scope false matches.
- *    This handles operations from resolveArmResources that lack resourceModelId but share
- *    a resource type with a known resource.
- *
- * @param resources - The list of valid resources
- * @param nonResourceMethods - The array of non-resource methods (will be mutated: matched methods are removed)
- */
-export function assignNonResourceMethodsToResources(
-  resources: ArmResourceSchema[],
-  nonResourceMethods: NonResourceMethod[]
-): void {
-  const methodsToRemove = new Set<string>();
-
-  for (const method of nonResourceMethods) {
-    const bestMatch = findLongestPrefixMatch(
-      method.operationPath,
-      resources,
-      (r) => r.metadata.resourceIdPattern,
-      true
-    );
-
-    if (bestMatch) {
-      bestMatch.metadata.methods.push({
-        methodId: method.methodId,
-        kind: ResourceOperationKind.Action,
-        operationPath: method.operationPath,
-        scope: {
-          kind: method.scope.kind,
-          scopeIdPattern: bestMatch.metadata.resourceIdPattern!,
-          scopeResourceType: method.scope.scopeResourceType
-        }
-      });
-      methodsToRemove.add(method.methodId);
-    } else if (method.resourceModelId) {
-      // Prefix matching failed — try matching by resource model ID.
-      // This handles extension resources where the list path and resource ID pattern
-      // have different parent path structures but originate from the same resource type.
-      const match = resources.find(
-        (r) => r.resourceModelId === method.resourceModelId
-      );
-      if (match) {
-        match.metadata.methods.push({
-          methodId: method.methodId,
-          kind: ResourceOperationKind.List,
-          operationPath: method.operationPath,
-          scope: method.scope
-        });
-        methodsToRemove.add(method.methodId);
-      }
-    } else {
-      // Both prefix and model ID matching failed — try matching by resource type.
-      const operationType = method.operationPath.resourceType;
-      if (operationType !== undefined) {
-        const match = resources.find((r) => {
-          if (
-            !r.metadata.resourceIdPattern ||
-            !method.operationPath.hasSameScopeNesting(
-              r.metadata.resourceIdPattern
-            )
-          ) {
-            return false;
-          }
-          return (
-            r.metadata.resourceType === operationType &&
-            operationPathEndsWithResourceType(
-              method.operationPath,
-              operationType
-            )
-          );
-        });
-        if (match) {
-          match.metadata.methods.push({
-            methodId: method.methodId,
-            kind: ResourceOperationKind.List,
-            operationPath: method.operationPath,
-            scope: method.scope
-          });
-          methodsToRemove.add(method.methodId);
-        }
-      }
-    }
-  }
-
-  // Remove matched methods from non-resource methods array
-  if (methodsToRemove.size > 0) {
-    for (let i = nonResourceMethods.length - 1; i >= 0; i--) {
-      if (methodsToRemove.has(nonResourceMethods[i].methodId)) {
-        nonResourceMethods.splice(i, 1);
-      }
-    }
-
-    // Re-sort methods in resources that received new methods
-    for (const resource of resources) {
-      sortResourceMethods(resource.metadata.methods);
-    }
-  }
-}
-
-function operationPathEndsWithResourceType(
-  operationPath: RequestPath,
-  resourceType: string
-): boolean {
-  const lastTypeSegment = resourceType.split("/").at(-1);
-  return (
-    lastTypeSegment !== undefined &&
-    operationPath.segments[operationPath.length - 1] === lastTypeSegment
-  );
-}
-
-/**
  * Helper function to determine if a resource path can be the scope for a list operation.
  * The resource path must be a prefix of the list operation path.
  */
@@ -1215,6 +1432,7 @@ function replacePathVariable(
 
 const preferredExpansionMethodKinds = [
   ResourceOperationKind.Read,
+  ResourceOperationKind.CheckExistence,
   ResourceOperationKind.Create,
   ResourceOperationKind.Update,
   ResourceOperationKind.Delete
@@ -1250,12 +1468,19 @@ function buildExpandedResourceName(
  * @param onExpand Optional callback invoked for each expanded resource with a reference
  * to its original (un-expanded) resource. Callers can use it to mirror entries into
  * auxiliary maps keyed by ArmResourceSchema (e.g., schemaToResolvedResource).
+ * @param resourceNameOverrides Optional per-template-path map of
+ * `resource-name` `@@clientOption` overrides keyed by enum value. When the
+ * inner map contains an entry for the enum value being substituted, the
+ * expanded resource's `resourceName` becomes that value instead of the
+ * default `Capitalize(singular(enumValue)) + baseResourceName`. Stale keys
+ * (not matched against any enum value) produce a warning diagnostic.
  */
 export function expandDynamicParentResourcesInSchema(
   resources: ArmResourceSchema[],
   serviceMethods: Map<string, SdkMethod<SdkHttpOperation>>,
   diagnosticReporter?: (message: string) => void,
-  onExpand?: (expanded: ArmResourceSchema, original: ArmResourceSchema) => void
+  onExpand?: (expanded: ArmResourceSchema, original: ArmResourceSchema) => void,
+  resourceNameOverrides?: Map<string, Map<string, string>>
 ): ArmResourceSchema[] {
   const resourcesToRemove: Set<ArmResourceSchema> = new Set();
   const resourcesToAdd: ArmResourceSchema[] = [];
@@ -1271,6 +1496,7 @@ export function expandDynamicParentResourcesInSchema(
       diagnosticReporter?.(
         `Resource at path '${path}' has ${dynamicSegments.length} dynamic type segments. Only single dynamic parent type expansion is supported.`
       );
+      resourcesToRemove.add(resource);
       continue;
     }
 
@@ -1283,10 +1509,16 @@ export function expandDynamicParentResourcesInSchema(
 
     if (!enumValues || enumValues.length === 0) {
       diagnosticReporter?.(
-        `Resource at path '${path}' has dynamic type segment '{${dynamicSegment.typeParamName}}' but no enum values could be found. Resource will not be expanded.`
+        `Resource at path '${path}' has dynamic type segment '{${dynamicSegment.typeParamName}}' but no enum values could be found. Resource will not be emitted.`
       );
+      resourcesToRemove.add(resource);
       continue;
     }
+
+    const overrideMap = resourceNameOverrides?.get(
+      resource.metadata.resourceIdPattern?.path ?? ""
+    );
+    const usedOverrideKeys = overrideMap ? new Set<string>() : undefined;
 
     for (const enumValue of enumValues) {
       const expandedIdPattern = resource.metadata.resourceIdPattern
@@ -1312,10 +1544,13 @@ export function expandDynamicParentResourcesInSchema(
         ? expandedIdPattern.resourceType ?? ""
         : "";
 
-      const expandedResourceName = buildExpandedResourceName(
-        enumValue,
-        resource.metadata.resourceName
-      );
+      const overrideName = overrideMap?.get(enumValue);
+      if (overrideName !== undefined) {
+        usedOverrideKeys!.add(enumValue);
+      }
+      const expandedResourceName =
+        overrideName ??
+        buildExpandedResourceName(enumValue, resource.metadata.resourceName);
 
       const expanded: ArmResourceSchema = {
         resourceModelId: resource.resourceModelId,
@@ -1337,6 +1572,16 @@ export function expandDynamicParentResourcesInSchema(
       onExpand?.(expanded, resource);
     }
 
+    if (overrideMap && usedOverrideKeys) {
+      for (const key of overrideMap.keys()) {
+        if (!usedOverrideKeys.has(key)) {
+          diagnosticReporter?.(
+            `@@clientOption(..., "resource-name", ...) entry '${key}' did not match any expanded resource produced by this Read operation. Check for typos or stale entries.`
+          );
+        }
+      }
+    }
+
     resourcesToRemove.add(resource);
   }
 
@@ -1350,7 +1595,7 @@ export function expandDynamicParentResourcesInSchema(
   ];
 }
 
-function detectDynamicTypeSegments(
+export function detectDynamicTypeSegments(
   path: RequestPath
 ): Array<{ typeParamName: string; nameParamName: string; typeIndex: number }> {
   const results: Array<{
@@ -1358,21 +1603,21 @@ function detectDynamicTypeSegments(
     nameParamName: string;
     typeIndex: number;
   }> = [];
-  let providerIndex = -1;
-  for (let i = 0; i < path.segments.length; i++) {
-    if (path.segments[i].toLowerCase() === "providers") {
-      providerIndex = i;
-    }
-  }
+  const providerIndex = path.lastProvidersSegmentIndex;
   if (providerIndex === -1) return results;
 
-  const segments = path.segments.slice(providerIndex + 1);
-  for (let i = 1; i < segments.length - 1; i += 2) {
-    if (isVariableSegment(segments[i])) {
-      const typeParamName = segments[i].slice(1, -1);
+  for (let i = providerIndex + 2; i < path.length - 1; i += 2) {
+    if (isVariableSegment(path.segments[i])) {
+      const typeParamName = getVariableSegmentName(path.segments[i]);
       const nameParamName =
-        i + 1 < segments.length ? segments[i + 1].slice(1, -1) : "";
-      results.push({ typeParamName, nameParamName, typeIndex: i });
+        i + 1 < path.length && isVariableSegment(path.segments[i + 1])
+          ? getVariableSegmentName(path.segments[i + 1])
+          : "";
+      results.push({
+        typeParamName,
+        nameParamName,
+        typeIndex: i - providerIndex - 1
+      });
     }
   }
   return results;
@@ -1385,19 +1630,9 @@ function findEnumValuesForPathParam(
 ): string[] | undefined {
   const getEnumValues = (method: ResourceMethod): string[] | undefined => {
     const sdkMethod = serviceMethods.get(method.methodId);
-    if (!sdkMethod?.operation) return undefined;
-    for (const param of sdkMethod.operation.parameters) {
-      if (
-        param.kind === "path" &&
-        param.serializedName === paramName &&
-        param.type.kind === "enum"
-      ) {
-        return param.type.values
-          .map((v) => v.value)
-          .filter((v): v is string => typeof v === "string");
-      }
-    }
-    return undefined;
+    return sdkMethod
+      ? getEnumValuesForPathParam(sdkMethod, paramName)
+      : undefined;
   };
 
   // Iterate preferred kinds first, then any remaining methods. This ensures we
@@ -1417,4 +1652,48 @@ function findEnumValuesForPathParam(
   }
 
   return undefined;
+}
+
+function findEnumPathParam(
+  method: SdkMethod<SdkHttpOperation>,
+  paramName: string
+): SdkHttpOperationEnumPathParameter | undefined {
+  if (!method.operation) return undefined;
+  return method.operation.parameters.find((param) =>
+    isMatchingEnumPathParam(param, paramName)
+  );
+}
+
+function isMatchingEnumPathParam(
+  param: SdkHttpOperationParameter,
+  paramName: string
+): param is SdkHttpOperationEnumPathParameter {
+  return (
+    param.kind === "path" &&
+    param.serializedName === paramName &&
+    param.type.kind === "enum"
+  );
+}
+
+function getEnumValuesForPathParam(
+  method: SdkMethod<SdkHttpOperation>,
+  paramName: string
+): string[] | undefined {
+  const param = findEnumPathParam(method, paramName);
+  return param?.type.values
+    .map((v) => v.value)
+    .filter((v): v is string => typeof v === "string");
+}
+
+function getSingleFixedEnumValueForPathParam(
+  method: SdkMethod<SdkHttpOperation>,
+  paramName: string
+): string | undefined {
+  const param = findEnumPathParam(method, paramName);
+  if (!param?.type.isFixed || param.type.values.length !== 1) {
+    return undefined;
+  }
+
+  const value = param.type.values[0].value;
+  return typeof value === "string" ? value : undefined;
 }

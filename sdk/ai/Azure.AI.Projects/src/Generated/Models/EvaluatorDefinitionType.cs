@@ -22,8 +22,8 @@ namespace Azure.AI.Projects.Evaluation
         private const string ServiceValue = "service";
         /// <summary> OpenAI graders. </summary>
         private const string OpenaiGradersValue = "openai_graders";
-        /// <summary> Rubric-based evaluator definition. Stores rubric criteria for both quality and safety evaluators. Can be created via the generate API or manually via createVersion. </summary>
-        private const string RubricsValue = "rubrics";
+        /// <summary> Rubric-based evaluator definition. Stores dimensions (the scoring blueprint) for both quality and safety evaluators. Can be created via the generate API or manually via createVersion. </summary>
+        private const string RubricValue = "rubric";
 
         /// <summary> Initializes a new instance of <see cref="EvaluatorDefinitionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -50,8 +50,8 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> OpenAI graders. </summary>
         public static EvaluatorDefinitionType OpenaiGraders { get; } = new EvaluatorDefinitionType(OpenaiGradersValue);
 
-        /// <summary> Rubric-based evaluator definition. Stores rubric criteria for both quality and safety evaluators. Can be created via the generate API or manually via createVersion. </summary>
-        public static EvaluatorDefinitionType Rubrics { get; } = new EvaluatorDefinitionType(RubricsValue);
+        /// <summary> Rubric-based evaluator definition. Stores dimensions (the scoring blueprint) for both quality and safety evaluators. Can be created via the generate API or manually via createVersion. </summary>
+        public static EvaluatorDefinitionType Rubric { get; } = new EvaluatorDefinitionType(RubricValue);
 
         /// <summary> Determines if two <see cref="EvaluatorDefinitionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
