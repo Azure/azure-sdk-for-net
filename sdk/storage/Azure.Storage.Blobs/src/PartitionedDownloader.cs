@@ -324,10 +324,8 @@ namespace Azure.Storage.Blobs
             BlobRequestConditions conditionsWithEtag,
             CancellationToken cancellationToken)
         {
-            if (parallel <= 1)
-            {
-                throw new ArgumentException("Parallel must be greater than 1 for parallel download.", nameof(parallel));
-            }
+            BlobErrors.VerifyParallelismGreaterThanOne(parallel);
+
             Queue<Task<BufferedDownloadResult>> bufferedTasks = new();
 
             // Easiest to rent whether or not we need it. It's just 8 bytes.
@@ -351,7 +349,12 @@ namespace Azure.Storage.Blobs
             // without buffering content into a rented array.
             using (_arrayPool.RentDisposable(_checksumSize, out byte[] partitionChecksum))
             {
-                await CopyToInternal(initialResponse, destination, new(partitionChecksum, 0, _checksumSize), async: true, cancellationToken).ConfigureAwait(false);
+                await CopyToInternal(
+                    response: initialResponse,
+                    destination: destination,
+                    checksumBuffer: new(partitionChecksum, 0, _checksumSize),
+                    async: true,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (UseMasterCrc)
                 {
                     StorageCrc64Composer.Compose(
@@ -573,7 +576,11 @@ namespace Azure.Storage.Blobs
 
             try
             {
-                await source.CopyToExactInternal(bufferedStream, contentLen, async: true, cancellationToken)
+                await source.CopyToExactInternal(
+                    dst: bufferedStream,
+                    count: contentLen,
+                    async: true,
+                    cancellationToken)
                     .ConfigureAwait(false);
 
                 // Ensure there is no additional data beyond the declared Content-Length.
@@ -581,11 +588,13 @@ namespace Azure.Storage.Blobs
                 // bug returning a stale extraByte count can't silently corrupt payload bytes.
                 using (_arrayPool.RentDisposable(1, out byte[] extraBuffer))
                 {
-                    int extraByte = await source.ReadAsync(extraBuffer, 0, 1, cancellationToken).ConfigureAwait(false);
-                    if (extraByte > 0)
-                    {
-                        throw new InvalidOperationException("The response contained more data than was indicated by the Content-Length header.");
-                    }
+                    int extraByte = await source.ReadAsync(
+                        buffer: extraBuffer,
+                        offset: 0,
+                        count: 1,
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                    BlobErrors.VerifyNoExtraData(extraByte);
                 }
 
                 // Calculate and validate per-chunk responseChecksum
