@@ -63,6 +63,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
             Assert.AreEqual(31, options.EventProcessorOptions.PartitionOwnershipExpirationInterval.TotalSeconds);
             Assert.AreEqual(21, options.EventProcessorOptions.LoadBalancingUpdateInterval.TotalSeconds);
+            Assert.AreEqual("test-host-instance", options.Identifier);
+            Assert.AreEqual("test-host-instance", options.EventProcessorOptions.Identifier);
             Assert.AreEqual("FromEnqueuedTime", options.InitialOffsetOptions.Type.ToString());
             Assert.AreEqual("2020-09-13 12:00:00Z", options.InitialOffsetOptions.EnqueuedTimeUtc.Value.ToString("u"));
             Assert.AreEqual(5, options.ClientRetryOptions.MaximumRetries);
@@ -97,6 +99,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreEqual(123, result.PrefetchCount);
             Assert.AreEqual(TimeSpan.FromSeconds(31), result.PartitionOwnershipExpirationInterval);
             Assert.AreEqual(TimeSpan.FromSeconds(21), result.LoadBalancingUpdateInterval);
+            Assert.AreEqual("test-host-instance", result.Identifier);
             Assert.AreEqual("FromEnqueuedTime", result.InitialOffsetOptions.Type.ToString());
             Assert.AreEqual("2020-09-13 12:00:00Z", result.InitialOffsetOptions.EnqueuedTimeUtc.Value.ToString("u"));
             Assert.AreEqual(5, result.ClientRetryOptions.MaximumRetries);
@@ -272,6 +275,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 { $"{extensionPath}:BatchCheckpointFrequency", "5" },
                 { $"{extensionPath}:PartitionOwnershipExpirationInterval", "00:00:31" },
                 { $"{extensionPath}:LoadBalancingUpdateInterval", "00:00:21" },
+                { $"{extensionPath}:Identifier", "test-host-instance" },
                 { $"{extensionPath}:LoadBalancingStrategy", "greedy" },
                 { $"{extensionPath}:InitialOffsetOptions:Type", "FromEnqueuedTime" },
                 { $"{extensionPath}:InitialOffsetOptions:EnqueuedTimeUTC", "2020-09-13 12:00:00Z" },
