@@ -542,6 +542,30 @@ namespace Azure.ResourceManager.DataMigration.Models
                 properties);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> Provisioning state to track the async operation status. </param>
+        /// <param name="integrationRuntimeState"> Current state of the Integration runtime. </param>
+        /// <returns> A new <see cref="DataMigration.SqlMigrationServiceData"/> instance for mocking. </returns>
+        public static SqlMigrationServiceData SqlMigrationServiceData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string integrationRuntimeState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SqlMigrationServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                provisioningState is null && integrationRuntimeState is null ? default : new SqlMigrationServiceProperties(provisioningState, integrationRuntimeState, null));
+        }
+
         /// <summary> An update to a SQL Migration Service. </summary>
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
         /// <returns> A new <see cref="Models.SqlMigrationServicePatch"/> instance for mocking. </returns>
@@ -4665,6 +4689,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sourcePlatform"> Source platform for the project. </param>
         /// <param name="azureAuthenticationInfo"> Field that defines the Azure active directory application info, used to connect to the target Azure resource. </param>
@@ -4675,9 +4700,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="databasesInfo"> List of DatabaseInfo. </param>
         /// <param name="provisioningState"> The project's provisioning state. </param>
         /// <param name="eTag"> HTTP strong entity tag value. This is ignored if submitted. </param>
-        /// <param name="tags"></param>
         /// <returns> A new <see cref="DataMigration.DataMigrationProjectData"/> instance for mocking. </returns>
-        public static DataMigrationProjectData DataMigrationProjectData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, DataMigrationProjectSourcePlatform? sourcePlatform = default, DataMigrationAadApp azureAuthenticationInfo = default, DataMigrationProjectTargetPlatform? targetPlatform = default, DateTimeOffset? createdOn = default, ServerConnectionInfo sourceConnectionInfo = default, ServerConnectionInfo targetConnectionInfo = default, IEnumerable<DataMigrationProjectDatabaseInfo> databasesInfo = default, DataMigrationProjectProvisioningState? provisioningState = default, ETag? eTag = default, IDictionary<string, string> tags = default)
+        public static DataMigrationProjectData DataMigrationProjectData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataMigrationProjectSourcePlatform? sourcePlatform = default, DataMigrationAadApp azureAuthenticationInfo = default, DataMigrationProjectTargetPlatform? targetPlatform = default, DateTimeOffset? createdOn = default, ServerConnectionInfo sourceConnectionInfo = default, ServerConnectionInfo targetConnectionInfo = default, IEnumerable<DataMigrationProjectDatabaseInfo> databasesInfo = default, DataMigrationProjectProvisioningState? provisioningState = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4687,6 +4711,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 sourcePlatform is null && azureAuthenticationInfo is null && targetPlatform is null && createdOn is null && sourceConnectionInfo is null && targetConnectionInfo is null && databasesInfo is null && provisioningState is null ? default : new ProjectProperties(
                     sourcePlatform.GetValueOrDefault(),
@@ -4698,8 +4723,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     (databasesInfo ?? new ChangeTrackingList<DataMigrationProjectDatabaseInfo>()).ToList(),
                     provisioningState,
                     null),
-                eTag,
-                tags);
+                eTag);
         }
 
         /// <summary> Database Migration Resource for SQL Database. </summary>
@@ -4760,6 +4784,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> The resource's provisioning state. </param>
         /// <param name="publicKey"> The public key of the service, used to encrypt secrets sent to the service. </param>
@@ -4770,9 +4795,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="eTag"> HTTP strong entity tag value. Ignored if submitted. </param>
         /// <param name="kind"> The resource kind. Only 'vm' (the default) is supported. </param>
         /// <param name="sku"> Service SKU. </param>
-        /// <param name="tags"></param>
         /// <returns> A new <see cref="DataMigration.DataMigrationServiceData"/> instance for mocking. </returns>
-        public static DataMigrationServiceData DataMigrationServiceData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, DataMigrationServiceProvisioningState? provisioningState = default, string publicKey = default, string virtualSubnetId = default, string virtualNicId = default, string autoStopDelay = default, bool? shouldDeleteResourcesOnStop = default, ETag? eTag = default, string kind = default, DataMigrationServiceSku sku = default, IDictionary<string, string> tags = default)
+        public static DataMigrationServiceData DataMigrationServiceData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataMigrationServiceProvisioningState? provisioningState = default, string publicKey = default, string virtualSubnetId = default, string virtualNicId = default, string autoStopDelay = default, bool? shouldDeleteResourcesOnStop = default, ETag? eTag = default, string kind = default, DataMigrationServiceSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4782,6 +4806,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 provisioningState is null && publicKey is null && virtualSubnetId is null && virtualNicId is null && autoStopDelay is null && shouldDeleteResourcesOnStop is null ? default : new DataMigrationServiceProperties(
                     provisioningState,
@@ -4793,8 +4818,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     null),
                 eTag,
                 kind,
-                sku,
-                tags);
+                sku);
         }
 
         /// <summary> Service health status. </summary>
@@ -5109,31 +5133,6 @@ namespace Azure.ResourceManager.DataMigration.Models
             return DatabaseMigrationSqlVmProperties(scope: scope, provisioningState: provisioningState, migrationStatus: migrationStatus, startedOn: startedOn, endedOn: endedOn, migrationService: migrationService, migrationOperationId: migrationOperationId, migrationFailureError: migrationFailureError, provisioningError: provisioningError, sourceSqlConnection: sourceSqlConnection, sourceDatabaseName: sourceDatabaseName, sourceServerName: sourceServerName, targetDatabaseCollation: targetDatabaseCollation, sqlServerInstanceId: default, migrationStatusDetails: migrationStatusDetails, backupConfiguration: backupConfiguration, offlineConfiguration: offlineConfiguration);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMigration.SqlMigrationServiceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> Provisioning state to track the async operation status. </param>
-        /// <param name="integrationRuntimeState"> Current state of the Integration runtime. </param>
-        /// <returns> A new <see cref="DataMigration.SqlMigrationServiceData"/> instance for mocking. </returns>
-        public static SqlMigrationServiceData SqlMigrationServiceData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string integrationRuntimeState = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SqlMigrationServiceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                default,
-                tags);
-        }
-
         /// <summary> Initializes a new instance of <see cref="DataMigration.DataMigrationServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -5162,6 +5161,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 provisioningState is null && publicKey is null && virtualSubnetId is null && virtualNicId is null && autoStopDelay is null && shouldDeleteResourcesOnStop is null ? default : new DataMigrationServiceProperties(
                     provisioningState,
@@ -5173,8 +5173,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     default),
                 etag,
                 kind,
-                sku,
-                tags);
+                sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigration.DataMigrationProjectTaskData"/>. </summary>
@@ -5238,6 +5237,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 sourcePlatform is null && azureAuthenticationInfo is null && targetPlatform is null && createdOn is null && sourceConnectionInfo is null && targetConnectionInfo is null && databasesInfo is null && provisioningState is null ? default : new ProjectProperties(
                     sourcePlatform.GetValueOrDefault(),
@@ -5249,8 +5249,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     (databasesInfo ?? new ChangeTrackingList<DataMigrationProjectDatabaseInfo>()).ToList(),
                     provisioningState,
                     default),
-                etag,
-                tags);
+                etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigration.DataMigrationProjectFileData"/>. </summary>

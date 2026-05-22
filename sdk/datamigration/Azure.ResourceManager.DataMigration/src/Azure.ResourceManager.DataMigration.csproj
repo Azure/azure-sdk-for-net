@@ -9,7 +9,4 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Generated\Models\MigrateMISyncCompleteCommandProperties.cs" />
-  </ItemGroup>
 </Project>
