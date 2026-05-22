@@ -159,7 +159,7 @@ export function buildArmProviderSchema(
     const rawPath = new RequestPath(method.operation.path);
     if (!isResourceInstancePath(sdkMethod, rawPath)) continue;
     // Canonicalizing fixed enum names changes resourceIdPattern from a parameter
-    // to a literal; track any full-regeneration API impact before broad rollout.
+    // to a literal
     const path = resolveFixedEnumNameSegments(sdkMethod, rawPath);
 
     let explicitResourceName = getExplicitResourceName(sdkMethod);
