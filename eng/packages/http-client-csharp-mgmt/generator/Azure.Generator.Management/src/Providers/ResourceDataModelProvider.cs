@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator.Input;
-using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.IO;
@@ -29,10 +28,5 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildRelativeFilePath()
             => Path.Combine("src", "Generated", $"{Name}.cs");
-
-        protected override CSharpType? BuildBaseType()
-            => _model.BaseModel is null
-                ? null
-                : ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(_model.BaseModel);
     }
 }

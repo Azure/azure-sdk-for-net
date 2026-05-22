@@ -98,7 +98,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             return;
         }
 
-        var baseProperties = EnumerateRegularBaseModelProperties(model.BaseModelProvider!);
+        var baseProperties = EnumerateBaseModelProperties(model.BaseModelProvider!);
         var removedPropertyNames = new HashSet<string>();
         var remainingProperties = new List<PropertyProvider>();
 
@@ -130,7 +130,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         _regularUpdated.Add(model);
     }
 
-    private static (HashSet<string> PropertyNames, Dictionary<string, string> SerializedNameToPropertyName) EnumerateRegularBaseModelProperties(ModelProvider baseModel)
+    private static (HashSet<string> PropertyNames, Dictionary<string, string> SerializedNameToPropertyName) EnumerateBaseModelProperties(ModelProvider baseModel)
     {
         var basePropertyNames = new HashSet<string>(StringComparer.Ordinal);
         var baseSerializedNameToPropertyName = new Dictionary<string, string>(StringComparer.Ordinal);
@@ -141,10 +141,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             {
                 basePropertyNames.Add(property.Name);
                 var serializedName = property.WireInfo?.SerializedName;
-                if (serializedName is null && currentModel is SystemObjectModelProvider)
-                {
-                    serializedName = GetArmResourceSerializedName(property.Name);
-                }
                 if (serializedName is not null)
                 {
                     baseSerializedNameToPropertyName.TryAdd(serializedName, property.Name);
@@ -154,18 +150,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         }
         return (basePropertyNames, baseSerializedNameToPropertyName);
     }
-
-    private static string? GetArmResourceSerializedName(string propertyName)
-        => propertyName switch
-        {
-            "Id" => "id",
-            "Name" => "name",
-            "ResourceType" => "type",
-            "SystemData" => "systemData",
-            "Tags" => "tags",
-            "Location" => "location",
-            _ => null
-        };
 
     private static void StripOrphanedVirtualModifiers(ModelProvider baseModel, HashSet<string> removedPropertyNames)
     {
