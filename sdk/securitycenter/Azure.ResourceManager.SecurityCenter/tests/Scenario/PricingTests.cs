@@ -33,8 +33,19 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var pricing = await _pricingCollection.GetAsync("VirtualMachines");
             Assert.IsNotNull(pricing);
             Assert.AreEqual("VirtualMachines", pricing.Value.Data.Name);
+            Assert.AreEqual("Standard", pricing.Value.Data.PricingTier.ToString());
             Assert.AreEqual("P2", pricing.Value.Data.SubPlan);
             Assert.AreEqual("Microsoft.Security/pricings", pricing.Value.Data.ResourceType.ToString());
+        }
+
+        [RecordedTest]
+        public async Task GetAll()
+        {
+            var list = await _pricingCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+            Assert.IsTrue(list.Exists(item => item.Data.Name == "VirtualMachines"));
+            Assert.IsTrue(list.Exists(item => item.Data.Name == "SqlServers"));
+            Assert.IsTrue(list.Exists(item => item.Data.Name == "AppServices"));
         }
     }
 }

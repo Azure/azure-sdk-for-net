@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The JFrog Artifactory connector environment data. </summary>
-    internal partial class JFrogEnvironmentData : EnvironmentData
+    public partial class JFrogEnvironmentData : EnvironmentData
     {
         /// <summary> Initializes a new instance of <see cref="JFrogEnvironmentData"/>. </summary>
         public JFrogEnvironmentData() : base(EnvironmentType.JFrogArtifactory)

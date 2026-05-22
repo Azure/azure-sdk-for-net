@@ -127,5 +127,22 @@ namespace Azure.ResourceManager.SecurityCenter
                 Properties.GovernanceEmailNotification = value;
             }
         }
+
+        /// <summary> The additional data for the governance assignment - e.g. links to ticket (optional), see example. </summary>
+        public GovernanceAssignmentAdditionalData AdditionalData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdditionalData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GovernanceAssignmentProperties();
+                }
+                Properties.AdditionalData = value;
+            }
+        }
     }
 }

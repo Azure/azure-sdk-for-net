@@ -68,6 +68,19 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        /// <summary> Gets the Requests. </summary>
+        public IList<JitNetworkAccessRequest> Requests
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new JitNetworkAccessPolicyProperties();
+                }
+                return Properties.Requests;
+            }
+        }
+
         /// <summary> Gets the provisioning state of the Just-in-Time policy. </summary>
         public string ProvisioningState
         {

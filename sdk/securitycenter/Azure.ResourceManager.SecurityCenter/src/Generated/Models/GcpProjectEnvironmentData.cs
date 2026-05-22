@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The GCP project connector environment data. </summary>
-    internal partial class GcpProjectEnvironmentData : EnvironmentData
+    public partial class GcpProjectEnvironmentData : EnvironmentData
     {
         /// <summary> Initializes a new instance of <see cref="GcpProjectEnvironmentData"/>. </summary>
         public GcpProjectEnvironmentData() : base(EnvironmentType.GcpProject)

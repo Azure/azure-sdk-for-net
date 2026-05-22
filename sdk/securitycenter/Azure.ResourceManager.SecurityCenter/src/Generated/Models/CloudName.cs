@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The multi cloud resource's cloud name. </summary>
-    internal readonly partial struct CloudName : IEquatable<CloudName>
+    public readonly partial struct CloudName : IEquatable<CloudName>
     {
         private readonly string _value;
         /// <summary> Azure. </summary>

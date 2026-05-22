@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The IoTSecurityAggregatedAlertPropertiesTopDevicesListItem. </summary>
-    internal partial class IoTSecurityAggregatedAlertPropertiesTopDevicesListItem : IJsonModel<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem>
+    public partial class IoTSecurityAggregatedAlertPropertiesTopDevicesListItem : IJsonModel<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -45,5 +45,12 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var securitySolution = await _securitySolutionCollection.GetAsync(securitySolutionName);
             Assert.IsNotNull(securitySolution);
         }
+
+        [RecordedTest]
+        public async Task GetAll()
+        {
+            var list = await DefaultSubscription.GetSecuritySolutionsAsync().ToEnumerableAsync();
+            Assert.IsEmpty(list);
+        }
     }
 }

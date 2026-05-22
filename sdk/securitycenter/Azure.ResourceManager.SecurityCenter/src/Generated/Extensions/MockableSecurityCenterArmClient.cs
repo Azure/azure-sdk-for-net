@@ -20,8 +20,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableSecurityCenterArmClient : ArmResource
     {
-        private ClientDiagnostics _serverVulnerabilityAssessmentClientDiagnostics;
-        private ServerVulnerabilityAssessment _serverVulnerabilityAssessmentRestClient;
         private ClientDiagnostics _subAssessmentsClientDiagnostics;
         private SubAssessments _subAssessmentsRestClient;
 
@@ -36,10 +34,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         internal MockableSecurityCenterArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics ServerVulnerabilityAssessmentClientDiagnostics => _serverVulnerabilityAssessmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ServerVulnerabilityAssessment ServerVulnerabilityAssessmentRestClient => _serverVulnerabilityAssessmentRestClient ??= new ServerVulnerabilityAssessment(ServerVulnerabilityAssessmentClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
 
         private ClientDiagnostics SubAssessmentsClientDiagnostics => _subAssessmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -1185,21 +1179,29 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return new GetSensitivitySettingsResponseResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SqlVulnerabilityAssessmentSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SqlVulnerabilityAssessmentSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentSettingsResource"/> object. </returns>
-        public virtual SqlVulnerabilityAssessmentSettingsResource GetSqlVulnerabilityAssessmentSettingsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentSettingResource"/> object. </returns>
+        public virtual SqlVulnerabilityAssessmentSettingResource GetSqlVulnerabilityAssessmentSettingResource(ResourceIdentifier id)
         {
-            SqlVulnerabilityAssessmentSettingsResource.ValidateResourceId(id);
-            return new SqlVulnerabilityAssessmentSettingsResource(Client, id);
+            SqlVulnerabilityAssessmentSettingResource.ValidateResourceId(id);
+            return new SqlVulnerabilityAssessmentSettingResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SqlVulnerabilityAssessmentSettingsResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <summary> Gets an object representing a <see cref="SqlVulnerabilityAssessmentSettingResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentSettingsResource"/> object. </returns>
-        public virtual SqlVulnerabilityAssessmentSettingsResource GetSqlVulnerabilityAssessmentSettings(ResourceIdentifier scope)
+        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentSettingResource"/> object. </returns>
+        public virtual SqlVulnerabilityAssessmentSettingResource GetSqlVulnerabilityAssessmentSetting(ResourceIdentifier scope)
         {
-            return new SqlVulnerabilityAssessmentSettingsResource(Client, scope.AppendProviderResource("Microsoft.Security", "sqlVulnerabilityAssessments", "default"));
+            return new SqlVulnerabilityAssessmentSettingResource(Client, scope.AppendProviderResource("Microsoft.Security", "sqlVulnerabilityAssessments", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="SqlVulnerabilityAssessmentScanResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentScanResource"/> object. </returns>
+        public virtual SqlVulnerabilityAssessmentScanResource GetSqlVulnerabilityAssessmentScan(ResourceIdentifier scope)
+        {
+            return new SqlVulnerabilityAssessmentScanResource(Client, (ResourceIdentifier)null);
         }
 
         /// <summary> Gets a collection of <see cref="SqlVulnerabilityAssessmentScanCollection"/> objects within the specified scope. </summary>
@@ -1283,102 +1285,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             Argument.AssertNotNullOrEmpty(subAssessmentName, nameof(subAssessmentName));
 
             return await GetSecuritySubAssessments(scope).GetAsync(subAssessmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a list of server vulnerability assessment onboarding statuses on a given resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ServerVulnerabilityAssessments_ListByExtendedResource. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<ServerVulnerabilityAssessmentsList>> GetByExtendedResourceAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            using DiagnosticScope scope0 = ServerVulnerabilityAssessmentClientDiagnostics.CreateScope("MockableSecurityCenterArmClient.GetByExtendedResource");
-            scope0.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ServerVulnerabilityAssessmentRestClient.CreateGetByExtendedResourceRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Namespace, scope.ResourceType.Type, scope.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ServerVulnerabilityAssessmentsList> response = Response.FromValue(ServerVulnerabilityAssessmentsList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of server vulnerability assessment onboarding statuses on a given resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Security/serverVulnerabilityAssessments. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ServerVulnerabilityAssessments_ListByExtendedResource. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<ServerVulnerabilityAssessmentsList> GetByExtendedResource(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            using DiagnosticScope scope0 = ServerVulnerabilityAssessmentClientDiagnostics.CreateScope("MockableSecurityCenterArmClient.GetByExtendedResource");
-            scope0.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ServerVulnerabilityAssessmentRestClient.CreateGetByExtendedResourceRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Namespace, scope.ResourceType.Type, scope.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ServerVulnerabilityAssessmentsList> response = Response.FromValue(ServerVulnerabilityAssessmentsList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>

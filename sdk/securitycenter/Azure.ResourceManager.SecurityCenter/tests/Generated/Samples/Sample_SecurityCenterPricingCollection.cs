@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityCenterPricingResource
-            SecurityCenterPricingCollection collection = client.GetSecurityCenterPricings(subscriptionResource.Id);
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
 
             // invoke the operation
             string pricingName = "CloudPosture";
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityCenterPricingResource
-            SecurityCenterPricingCollection collection = client.GetSecurityCenterPricings(subscriptionResource.Id);
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
 
             // invoke the operation
             string pricingName = "CloudPosture";
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityCenterPricingResource
-            SecurityCenterPricingCollection collection = client.GetSecurityCenterPricings(subscriptionResource.Id);
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
 
             // invoke the operation
             string pricingName = "CloudPosture";
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityCenterPricingResource
-            SecurityCenterPricingCollection collection = client.GetSecurityCenterPricings(subscriptionResource.Id);
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
 
             // invoke the operation
             string pricingName = "Containers";
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityCenterPricingResource
-            SecurityCenterPricingCollection collection = client.GetSecurityCenterPricings(subscriptionResource.Id);
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
 
             // invoke the operation
             string pricingName = "Dns";
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityCenterPricingResource
-            SecurityCenterPricingCollection collection = client.GetSecurityCenterPricings(subscriptionResource.Id);
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
 
             // invoke the operation
             string pricingName = "StorageAccounts";
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityCenterPricingResource
-            SecurityCenterPricingCollection collection = client.GetSecurityCenterPricings(subscriptionResource.Id);
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
 
             // invoke the operation
             string pricingName = "VirtualMachines";
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityCenterPricingResource
-            SecurityCenterPricingCollection collection = client.GetSecurityCenterPricings(subscriptionResource.Id);
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
 
             // invoke the operation and iterate over the result
             await foreach (SecurityCenterPricingResource item in collection.GetAllAsync())
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityCenterPricingResource
-            SecurityCenterPricingCollection collection = client.GetSecurityCenterPricings(subscriptionResource.Id);
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
 
             // invoke the operation
             string pricingName = "CloudPosture";
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityCenterPricingResource
-            SecurityCenterPricingCollection collection = client.GetSecurityCenterPricings(subscriptionResource.Id);
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
 
             // invoke the operation
             string pricingName = "Containers";
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityCenterPricingResource
-            SecurityCenterPricingCollection collection = client.GetSecurityCenterPricings(subscriptionResource.Id);
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
 
             // invoke the operation
             string pricingName = "Dns";
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityCenterPricingResource
-            SecurityCenterPricingCollection collection = client.GetSecurityCenterPricings(subscriptionResource.Id);
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
 
             // invoke the operation
             string pricingName = "StorageAccounts";
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityCenterPricingResource
-            SecurityCenterPricingCollection collection = client.GetSecurityCenterPricings(subscriptionResource.Id);
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
 
             // invoke the operation
             string pricingName = "VirtualMachines";
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityCenterPricingResource
-            SecurityCenterPricingCollection collection = client.GetSecurityCenterPricings(subscriptionResource.Id);
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
 
             // invoke the operation
             string pricingName = "CloudPosture";
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityCenterPricingResource
-            SecurityCenterPricingCollection collection = client.GetSecurityCenterPricings(subscriptionResource.Id);
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
 
             // invoke the operation
             string pricingName = "Containers";
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityCenterPricingResource
-            SecurityCenterPricingCollection collection = client.GetSecurityCenterPricings(subscriptionResource.Id);
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
 
             // invoke the operation
             string pricingName = "Dns";
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityCenterPricingResource
-            SecurityCenterPricingCollection collection = client.GetSecurityCenterPricings(subscriptionResource.Id);
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
 
             // invoke the operation
             string pricingName = "StorageAccounts";
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this SecurityCenterPricingResource
-            SecurityCenterPricingCollection collection = client.GetSecurityCenterPricings(subscriptionResource.Id);
+            SecurityCenterPricingCollection collection = subscriptionResource.GetSecurityCenterPricings();
 
             // invoke the operation
             string pricingName = "VirtualMachines";

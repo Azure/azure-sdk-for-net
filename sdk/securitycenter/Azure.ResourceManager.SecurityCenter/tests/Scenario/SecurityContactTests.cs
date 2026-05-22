@@ -17,15 +17,14 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     internal class SecurityContactTests : SecurityCenterManagementTestBase
     {
         private SecurityContactCollection _SecurityContactCollection => DefaultSubscription.GetSecurityContacts();
-        private static readonly SecurityContactName _securityContactName = SecurityContactName.Default;
+        private const string _securityContactName = "default";
 
         public SecurityContactTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        private async Task<SecurityContactResource> CreateSecurityContact(SecurityContactName securityContactName = default)
+        private async Task<SecurityContactResource> CreateSecurityContact(string securityContactName = _securityContactName)
         {
-            securityContactName = securityContactName.Equals(default) ? _securityContactName : securityContactName;
             SecurityContactData data = new SecurityContactData()
             {
                 Emails = $"{Recording.GenerateAssetName("john")}@contoso.com",
@@ -41,8 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
-        // Needs re-recording because the generated SecurityContact PUT now uses 2023-12-01-preview with the updated request body.
-        [Ignore("Needs re-recording for updated SecurityContact PUT request.")]
+        [Ignore("Needs re-recording because SecurityContact PUT now uses the 2023-12-01-preview API and isEnabled payload.")]
         public async Task CreateOrUpdate()
         {
             var securityContact = await CreateSecurityContact();
@@ -50,8 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
-        // Needs re-recording because the generated SecurityContact PUT now uses 2023-12-01-preview with the updated request body.
-        [Ignore("Needs re-recording for updated SecurityContact PUT request.")]
+        [Ignore("Needs re-recording because SecurityContact PUT now uses the 2023-12-01-preview API and isEnabled payload.")]
         public async Task Exist()
         {
             await CreateSecurityContact();
@@ -60,8 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
-        // Needs re-recording because the generated SecurityContact PUT now uses 2023-12-01-preview with the updated request body.
-        [Ignore("Needs re-recording for updated SecurityContact PUT request.")]
+        [Ignore("Needs re-recording because SecurityContact PUT now uses the 2023-12-01-preview API and isEnabled payload.")]
         public async Task Get()
         {
             await CreateSecurityContact();
@@ -80,8 +76,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
-        // Needs re-recording because the generated SecurityContact PUT now uses 2023-12-01-preview with the updated request body.
-        [Ignore("Needs re-recording for updated SecurityContact PUT request.")]
+        [Ignore("Needs re-recording because SecurityContact PUT now uses the 2023-12-01-preview API and isEnabled payload.")]
         public async Task Delete()
         {
             var securityContact = await CreateSecurityContact();
@@ -93,12 +88,11 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.IsFalse(flag);
         }
 
-        private void ValidateSecurityContactResource(SecurityContactResource securityContact, SecurityContactName securityContactName = default)
+        private void ValidateSecurityContactResource(SecurityContactResource securityContact, string securityContactName = _securityContactName)
         {
-            securityContactName = securityContactName.Equals(default) ? _securityContactName : securityContactName;
             Assert.IsNotNull(securityContact);
             Assert.IsNotNull(securityContact.Data.Id);
-            Assert.AreEqual(securityContactName.ToString(), securityContact.Data.Name);
+            Assert.AreEqual(securityContactName, securityContact.Data.Name);
             Assert.AreEqual("18800001111", securityContact.Data.Phone);
         }
     }

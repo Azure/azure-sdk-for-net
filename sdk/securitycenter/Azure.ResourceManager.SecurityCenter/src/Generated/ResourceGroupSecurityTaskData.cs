@@ -84,23 +84,5 @@ namespace Azure.ResourceManager.SecurityCenter
                 return Properties is null ? default : Properties.SubState;
             }
         }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AdditionalProperties;
-            }
-        }
-
-        /// <summary> Gets the Name. </summary>
-        public string Name
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Name;
-            }
-        }
     }
 }

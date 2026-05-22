@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Describe the additional data of governance assignment - optional. </summary>
-    internal partial class GovernanceAssignmentAdditionalData
+    public partial class GovernanceAssignmentAdditionalData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

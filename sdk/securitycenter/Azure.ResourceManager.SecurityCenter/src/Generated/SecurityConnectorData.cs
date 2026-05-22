@@ -80,6 +80,23 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        /// <summary> The multi cloud resource's cloud name. </summary>
+        public CloudName? EnvironmentName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnvironmentName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityConnectorProperties();
+                }
+                Properties.EnvironmentName = value;
+            }
+        }
+
         /// <summary> A collection of offerings for the security connector. </summary>
         public IList<SecurityCenterCloudOffering> Offerings
         {
@@ -90,6 +107,23 @@ namespace Azure.ResourceManager.SecurityCenter
                     Properties = new SecurityConnectorProperties();
                 }
                 return Properties.Offerings;
+            }
+        }
+
+        /// <summary> The security connector environment data. </summary>
+        public EnvironmentData EnvironmentData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnvironmentData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityConnectorProperties();
+                }
+                Properties.EnvironmentData = value;
             }
         }
     }

@@ -100,6 +100,26 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        /// <summary> Possible states of the rule. </summary>
+        public RuleState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new AlertsSuppressionRuleProperties();
+                    }
+                    Properties.State = value.Value;
+                }
+            }
+        }
+
         /// <summary> Any comment regarding the rule. </summary>
         public string Comment
         {
@@ -114,6 +134,19 @@ namespace Azure.ResourceManager.SecurityCenter
                     Properties = new AlertsSuppressionRuleProperties();
                 }
                 Properties.Comment = value;
+            }
+        }
+
+        /// <summary> All the conditions inside need to be true in order to suppress the alert. </summary>
+        public IList<SuppressionAlertsScopeElement> SuppressionAlertsScopeAllOf
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AlertsSuppressionRuleProperties();
+                }
+                return Properties.SuppressionAlertsScopeAllOf;
             }
         }
     }

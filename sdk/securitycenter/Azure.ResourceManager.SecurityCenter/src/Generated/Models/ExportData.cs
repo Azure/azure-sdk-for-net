@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary></summary>
-    internal readonly partial struct ExportData : IEquatable<ExportData>
+    public readonly partial struct ExportData : IEquatable<ExportData>
     {
         private readonly string _value;
         /// <summary> Agent raw events. </summary>

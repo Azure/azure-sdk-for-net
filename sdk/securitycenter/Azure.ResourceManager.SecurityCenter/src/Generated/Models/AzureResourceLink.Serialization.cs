@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Describes an Azure resource with kind. </summary>
-    internal partial class AzureResourceLink : IJsonModel<AzureResourceLink>
+    public partial class AzureResourceLink : IJsonModel<AzureResourceLink>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

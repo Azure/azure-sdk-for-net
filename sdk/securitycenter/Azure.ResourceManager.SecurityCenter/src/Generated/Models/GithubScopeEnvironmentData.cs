@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The github scope connector's environment data. </summary>
-    internal partial class GithubScopeEnvironmentData : EnvironmentData
+    public partial class GithubScopeEnvironmentData : EnvironmentData
     {
         /// <summary> Initializes a new instance of <see cref="GithubScopeEnvironmentData"/>. </summary>
         public GithubScopeEnvironmentData() : base(EnvironmentType.GithubScope)

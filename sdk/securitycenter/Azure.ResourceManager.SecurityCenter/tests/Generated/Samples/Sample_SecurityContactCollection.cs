@@ -44,7 +44,11 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             {
                 Emails = "john@contoso.com;jane@contoso.com",
                 Phone = "(214)275-4038",
-                IsEnabled = true,
+                AlertNotifications = new SecurityContactPropertiesAlertNotifications
+                {
+                    State = SecurityAlertNotificationState.On,
+                    MinimalSeverity = SecurityAlertMinimalSeverity.Low,
+                },
                 NotificationsByRole = new SecurityContactPropertiesNotificationsByRole
                 {
                     State = SecurityAlertNotificationByRoleState.On,

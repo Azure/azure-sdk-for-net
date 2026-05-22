@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The JFrog Artifactory connector environment data. </summary>
-    internal partial class JFrogEnvironmentData : EnvironmentData, IJsonModel<JFrogEnvironmentData>
+    public partial class JFrogEnvironmentData : EnvironmentData, IJsonModel<JFrogEnvironmentData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

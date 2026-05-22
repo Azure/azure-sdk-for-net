@@ -209,13 +209,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="preview"> True if this assessment is in preview release status. </param>
         /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
         /// <param name="partnerData"> Describes the partner that created the assessment. </param>
-        /// <param name="isPreview"> Gets or sets the IsPreview. </param>
         /// <param name="publishDates"> Gets or sets the PublishDates. </param>
         /// <param name="plannedDeprecationDate"> Gets or sets the PlannedDeprecationDate. </param>
         /// <param name="tactics"> Gets the Tactics. </param>
         /// <param name="techniques"> Gets the Techniques. </param>
         /// <returns> A new <see cref="SecurityCenter.SubscriptionAssessmentMetadataData"/> instance for mocking. </returns>
-        public static SubscriptionAssessmentMetadataData SubscriptionAssessmentMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, ResourceIdentifier policyDefinitionId = default, string description = default, string remediationDescription = default, IEnumerable<SecurityAssessmentResourceCategory> categories = default, SecurityAssessmentSeverity? severity = default, SecurityAssessmentUserImpact? userImpact = default, ImplementationEffort? implementationEffort = default, IEnumerable<SecurityThreat> threats = default, bool? preview = default, SecurityAssessmentType? assessmentType = default, SecurityAssessmentMetadataPartner partnerData = default, bool? isPreview = default, SecurityAssessmentMetadataPropertiesResponsePublishDates publishDates = default, string plannedDeprecationDate = default, IEnumerable<Tactics> tactics = default, IEnumerable<Techniques> techniques = default)
+        public static SubscriptionAssessmentMetadataData SubscriptionAssessmentMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, ResourceIdentifier policyDefinitionId = default, string description = default, string remediationDescription = default, IEnumerable<SecurityAssessmentResourceCategory> categories = default, SecurityAssessmentSeverity? severity = default, SecurityAssessmentUserImpact? userImpact = default, ImplementationEffort? implementationEffort = default, IEnumerable<SecurityThreat> threats = default, bool? preview = default, SecurityAssessmentType? assessmentType = default, SecurityAssessmentMetadataPartner partnerData = default, SecurityAssessmentMetadataPropertiesResponsePublishDates publishDates = default, string plannedDeprecationDate = default, IEnumerable<Tactics> tactics = default, IEnumerable<Techniques> techniques = default)
         {
             return new SubscriptionAssessmentMetadataData(
                 id,
@@ -223,7 +222,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                displayName is null && policyDefinitionId is null && description is null && remediationDescription is null && categories is null && severity is null && userImpact is null && implementationEffort is null && threats is null && preview is null && assessmentType is null && partnerData is null && isPreview is null && publishDates is null && plannedDeprecationDate is null && tactics is null && techniques is null ? default : new SecurityAssessmentMetadataPropertiesResponse(
+                displayName is null && policyDefinitionId is null && description is null && remediationDescription is null && categories is null && severity is null && userImpact is null && implementationEffort is null && threats is null && preview is null && assessmentType is null && partnerData is null && publishDates is null && plannedDeprecationDate is null && tactics is null && techniques is null ? default : new SecurityAssessmentMetadataPropertiesResponse(
                     displayName,
                     policyDefinitionId,
                     description,
@@ -1053,6 +1052,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new VmScannersBaseConfiguration(scanningMode, exclusionTags, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The AWS connector environment data. </summary>
+        /// <param name="organizationalData"> The AWS account's organizational data. </param>
+        /// <param name="regions"> list of regions to scan. </param>
+        /// <param name="accountName"> The AWS account name. </param>
+        /// <param name="scanInterval"> Scan interval in hours (value should be between 1-hour to 24-hours). </param>
+        /// <returns> A new <see cref="Models.AwsEnvironmentData"/> instance for mocking. </returns>
+        public static AwsEnvironmentData AwsEnvironmentData(AwsOrganizationalInfo organizationalData = default, IEnumerable<string> regions = default, string accountName = default, long? scanInterval = default)
+        {
+            regions ??= new ChangeTrackingList<string>();
+
+            return new AwsEnvironmentData(
+                EnvironmentType.AwsAccount,
+                additionalBinaryDataProperties: null,
+                organizationalData,
+                regions.ToList(),
+                accountName,
+                scanInterval);
+        }
+
         /// <summary> The AWS organization data for the master account. </summary>
         /// <param name="stacksetName"> If the multi cloud account is of membership type organization, this will be the name of the onboarding stackset. </param>
         /// <param name="excludedAccountIds"> If the multi cloud account is of membership type organization, list of accounts excluded from offering. </param>
@@ -1062,6 +1080,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             excludedAccountIds ??= new ChangeTrackingList<string>();
 
             return new AwsOrganizationalDataMaster(OrganizationMembershipType.Organization, additionalBinaryDataProperties: null, stacksetName, excludedAccountIds.ToList());
+        }
+
+        /// <summary> The gcpOrganization data for the parent account. </summary>
+        /// <param name="excludedProjectNumbers"> If the multi cloud account is of membership type organization, list of accounts excluded from offering. </param>
+        /// <param name="serviceAccountEmailAddress"> The service account email address which represents the organization level permissions container. </param>
+        /// <param name="workloadIdentityProviderId"> The GCP workload identity provider id which represents the permissions required to auto provision security connectors. </param>
+        /// <param name="organizationName"> GCP organization name. </param>
+        /// <returns> A new <see cref="Models.GcpOrganizationalDataOrganization"/> instance for mocking. </returns>
+        public static GcpOrganizationalDataOrganization GcpOrganizationalDataOrganization(IEnumerable<string> excludedProjectNumbers = default, string serviceAccountEmailAddress = default, string workloadIdentityProviderId = default, string organizationName = default)
+        {
+            excludedProjectNumbers ??= new ChangeTrackingList<string>();
+
+            return new GcpOrganizationalDataOrganization(
+                OrganizationMembershipType.Organization,
+                additionalBinaryDataProperties: null,
+                excludedProjectNumbers.ToList(),
+                serviceAccountEmailAddress,
+                workloadIdentityProviderId,
+                organizationName);
         }
 
         /// <summary> The details about the project represented by the security connector. </summary>
@@ -2117,12 +2154,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Baseline details. </summary>
         /// <param name="expectedResults"> Expected results. </param>
+        /// <param name="updatedOn"> Baseline update time (UTC). </param>
         /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaseline"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentBaseline SqlVulnerabilityAssessmentBaseline(IEnumerable<IList<string>> expectedResults = default)
+        public static SqlVulnerabilityAssessmentBaseline SqlVulnerabilityAssessmentBaseline(IEnumerable<IList<string>> expectedResults = default, DateTimeOffset? updatedOn = default)
         {
             expectedResults ??= new ChangeTrackingList<IList<string>>();
 
-            return new SqlVulnerabilityAssessmentBaseline(expectedResults.ToList(), additionalBinaryDataProperties: null);
+            return new SqlVulnerabilityAssessmentBaseline(expectedResults.ToList(), updatedOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> vulnerability assessment rule metadata details. </summary>
@@ -2164,6 +2202,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             columnNames ??= new ChangeTrackingList<string>();
 
             return new QueryCheck(query, expectedResult.ToList(), columnNames.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The benchmark references. </summary>
+        /// <param name="benchmark"> The benchmark name. </param>
+        /// <param name="reference"> The benchmark reference. </param>
+        /// <returns> A new <see cref="Models.BenchmarkReference"/> instance for mocking. </returns>
+        public static BenchmarkReference BenchmarkReference(string benchmark = default, string reference = default)
+        {
+            return new BenchmarkReference(benchmark, reference, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2259,10 +2306,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="securityTaskParameters"> Changing set of properties, depending on the task type that is derived from the name field. </param>
         /// <param name="lastStateChangeTimeUtc"> The time this task's details were last changed in UTC. </param>
         /// <param name="subState"> Additional data on the state of the task. </param>
-        /// <param name="additionalProperties"> Gets the AdditionalProperties. </param>
-        /// <param name="name0"> Gets the Name. </param>
         /// <returns> A new <see cref="SecurityCenter.ResourceGroupSecurityTaskData"/> instance for mocking. </returns>
-        public static ResourceGroupSecurityTaskData ResourceGroupSecurityTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string state = default, DateTimeOffset? creationTimeUtc = default, SecurityTaskParameters securityTaskParameters = default, DateTimeOffset? lastStateChangeTimeUtc = default, string subState = default, IDictionary<string, BinaryData> additionalProperties = default, string name0 = default)
+        public static ResourceGroupSecurityTaskData ResourceGroupSecurityTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string state = default, DateTimeOffset? creationTimeUtc = default, SecurityTaskParameters securityTaskParameters = default, DateTimeOffset? lastStateChangeTimeUtc = default, string subState = default)
         {
             return new ResourceGroupSecurityTaskData(
                 id,
@@ -2270,7 +2315,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                state is null && creationTimeUtc is null && securityTaskParameters is null && lastStateChangeTimeUtc is null && subState is null && additionalProperties is null && name0 is null ? default : new SecurityTaskProperties(
+                state is null && creationTimeUtc is null && securityTaskParameters is null && lastStateChangeTimeUtc is null && subState is null ? default : new SecurityTaskProperties(
                     state,
                     creationTimeUtc,
                     securityTaskParameters,
@@ -2696,17 +2741,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IoTSecurityDeviceRecommendation(recommendationDisplayName, reportedSeverity, devicesCount, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> List of Security analytics of your IoT Security solution. </summary>
-        /// <param name="value"> The IoTSecuritySolutionAnalyticsModel items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.IoTSecuritySolutionAnalyticsModelList"/> instance for mocking. </returns>
-        public static IoTSecuritySolutionAnalyticsModelList IoTSecuritySolutionAnalyticsModelList(IEnumerable<IoTSecuritySolutionAnalyticsModelData> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<IoTSecuritySolutionAnalyticsModelData>();
-
-            return new IoTSecuritySolutionAnalyticsModelList(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The type of IoT Security recommendation. </summary>
         /// <param name="recommendationType"> The type of IoT Security recommendation. </param>
         /// <param name="name"></param>
@@ -2727,6 +2761,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             dataTypes ??= new ChangeTrackingList<AdditionalWorkspaceDataType>();
 
             return new AdditionalWorkspacesProperties(workspace, @type, dataTypes.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The IoTSecurityAggregatedAlertPropertiesTopDevicesListItem. </summary>
+        /// <param name="deviceId"> Name of the device. </param>
+        /// <param name="alertsCount"> Number of alerts raised for this device. </param>
+        /// <param name="lastOccurrence"> Most recent time this alert was raised for this device, on this day. </param>
+        /// <returns> A new <see cref="Models.IoTSecurityAggregatedAlertPropertiesTopDevicesListItem"/> instance for mocking. </returns>
+        public static IoTSecurityAggregatedAlertPropertiesTopDevicesListItem IoTSecurityAggregatedAlertPropertiesTopDevicesListItem(string deviceId = default, long? alertsCount = default, string lastOccurrence = default)
+        {
+            return new IoTSecurityAggregatedAlertPropertiesTopDevicesListItem(deviceId, alertsCount, lastOccurrence, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2876,6 +2920,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     weight,
                     definition,
                     null));
+        }
+
+        /// <summary> Describes an Azure resource with kind. </summary>
+        /// <param name="id"> Azure resource Id. </param>
+        /// <returns> A new <see cref="Models.AzureResourceLink"/> instance for mocking. </returns>
+        public static AzureResourceLink AzureResourceLink(string id = default)
+        {
+            return new AzureResourceLink(id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Azure DevOps Repository resource. </summary>
@@ -3067,16 +3119,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 provisioningState is null ? default : new ServerVulnerabilityAssessmentProperties(provisioningState, null));
-        }
-
-        /// <summary> List of server vulnerability assessments. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Models.ServerVulnerabilityAssessmentsList"/> instance for mocking. </returns>
-        public static ServerVulnerabilityAssessmentsList ServerVulnerabilityAssessmentsList(IEnumerable<ServerVulnerabilityAssessmentData> value = default)
-        {
-            value ??= new ChangeTrackingList<ServerVulnerabilityAssessmentData>();
-
-            return new ServerVulnerabilityAssessmentsList(value.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3282,16 +3324,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new UpdateSensitivitySettingsRequest(sensitiveInfoTypesIds.ToList(), sensitivityThresholdLabelOrder, sensitivityThresholdLabelId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A list with a single sensitivity settings resource. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Models.SensitivitySettingsListResult"/> instance for mocking. </returns>
-        public static SensitivitySettingsListResult SensitivitySettingsListResult(IEnumerable<GetSensitivitySettingsResponseData> value = default)
-        {
-            value ??= new ChangeTrackingList<GetSensitivitySettingsResponseData>();
-
-            return new SensitivitySettingsListResult(value.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> SQL Vulnerability Assessment settings resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -3370,6 +3402,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="server"> The server name. </param>
         /// <param name="database"> The database name. </param>
         /// <param name="sqlVersion"> The SQL version. </param>
+        /// <param name="startOn"> The scan start time (UTC). </param>
+        /// <param name="endOn"> Scan results are valid until end time (UTC). </param>
         /// <param name="highSeverityFailedRulesCount"> The number of failed rules with high severity. </param>
         /// <param name="mediumSeverityFailedRulesCount"> The number of failed rules with medium severity. </param>
         /// <param name="lowSeverityFailedRulesCount"> The number of failed rules with low severity. </param>
@@ -3379,7 +3413,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isBaselineApplied"> Baseline created for this database, and has one or more rules. </param>
         /// <param name="lastScanOn"> Last scan time. </param>
         /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentScanProperties"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentScanProperties SqlVulnerabilityAssessmentScanProperties(SqlVulnerabilityAssessmentScanTriggerType? triggerType = default, SqlVulnerabilityAssessmentScanState? state = default, string server = default, string database = default, string sqlVersion = default, int? highSeverityFailedRulesCount = default, int? mediumSeverityFailedRulesCount = default, int? lowSeverityFailedRulesCount = default, int? totalPassedRulesCount = default, int? totalFailedRulesCount = default, int? totalRulesCount = default, bool? isBaselineApplied = default, DateTimeOffset? lastScanOn = default)
+        public static SqlVulnerabilityAssessmentScanProperties SqlVulnerabilityAssessmentScanProperties(SqlVulnerabilityAssessmentScanTriggerType? triggerType = default, SqlVulnerabilityAssessmentScanState? state = default, string server = default, string database = default, string sqlVersion = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? highSeverityFailedRulesCount = default, int? mediumSeverityFailedRulesCount = default, int? lowSeverityFailedRulesCount = default, int? totalPassedRulesCount = default, int? totalFailedRulesCount = default, int? totalRulesCount = default, bool? isBaselineApplied = default, DateTimeOffset? lastScanOn = default)
         {
             return new SqlVulnerabilityAssessmentScanProperties(
                 triggerType,
@@ -3387,6 +3421,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 server,
                 database,
                 sqlVersion,
+                startOn,
+                endOn,
                 highSeverityFailedRulesCount,
                 mediumSeverityFailedRulesCount,
                 lowSeverityFailedRulesCount,

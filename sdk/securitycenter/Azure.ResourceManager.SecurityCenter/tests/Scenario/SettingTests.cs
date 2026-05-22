@@ -33,15 +33,18 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         public async Task CreateOrUpdate()
         {
             string settingName = "JUST_FOR_TEST";
-            SecuritySettingData data = new SecuritySettingData(SettingKind.DataExportSettings);
-            var setting = await _settingCollection.CreateOrUpdateAsync(WaitUntil.Completed, (SettingName)settingName, data);
+            SecuritySettingData data = new SecuritySettingData()
+            {
+                Kind = SettingKind.DataExportSettings,
+            };
+            var setting = await _settingCollection.CreateOrUpdateAsync(WaitUntil.Completed, settingName, data);
             ValidateSetting(setting.Value, _existSettingName);
         }
 
         [RecordedTest]
         public async Task Get()
         {
-            var setting = await _settingCollection.GetAsync((SettingName)_existSettingName);
+            var setting = await _settingCollection.GetAsync(_existSettingName);
             ValidateSetting(setting, _existSettingName);
         }
 
@@ -58,6 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.IsNotNull(setting);
             Assert.IsNotNull(setting.Data.Id);
             Assert.AreEqual(settingName, setting.Data.Name);
+            Assert.AreEqual("DataExportSettings", setting.Data.Kind.ToString());
             Assert.AreEqual("Microsoft.Security/settings", setting.Data.ResourceType.ToString());
         }
     }

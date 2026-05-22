@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Possible states of the rule. </summary>
-    internal enum RuleState
+    public enum RuleState
     {
         /// <summary> Enabled. </summary>
         Enabled,

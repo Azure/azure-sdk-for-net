@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SubAssessmentStatus"/>. </summary>
+        internal SubAssessmentStatus()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SubAssessmentStatus"/>. </summary>
         /// <param name="code"> Programmatic code for the status of the assessment. </param>
         /// <param name="cause"> Programmatic code for the cause of the assessment status. </param>
         /// <param name="description"> Human readable description of the assessment status. </param>

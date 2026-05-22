@@ -39,5 +39,25 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Auto provisioning setting data. </summary>
         internal AutoProvisioningSettingProperties Properties { get; set; }
+
+        /// <summary> Describes what kind of security agent provisioning action to take. </summary>
+        public AutoProvision? AutoProvision
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoProvision;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new AutoProvisioningSettingProperties();
+                    }
+                    Properties.AutoProvision = value.Value;
+                }
+            }
+        }
     }
 }

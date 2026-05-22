@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The type of security control (for example, BuiltIn). </summary>
-    internal readonly partial struct ControlType : IEquatable<ControlType>
+    public readonly partial struct ControlType : IEquatable<ControlType>
     {
         private readonly string _value;
         /// <summary> Microsoft Defender for Cloud managed assessments. </summary>

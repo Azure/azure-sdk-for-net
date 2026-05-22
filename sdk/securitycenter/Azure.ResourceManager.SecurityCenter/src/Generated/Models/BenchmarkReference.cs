@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BenchmarkReference"/>. </summary>
+        internal BenchmarkReference()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BenchmarkReference"/>. </summary>
         /// <param name="benchmark"> The benchmark name. </param>
         /// <param name="reference"> The benchmark reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -26,5 +31,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Reference = reference;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The benchmark name. </summary>
+        public string Benchmark { get; }
+
+        /// <summary> The benchmark reference. </summary>
+        public string Reference { get; }
     }
 }

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             IotSecuritySolutionPatch patch = new IotSecuritySolutionPatch
             {
                 UserDefinedResources = new UserDefinedResourcesProperties("where type != \"microsoft.devices/iothubs\" | where name contains \"v2\"", new string[] { "075423e9-7d33-4166-8bdf-3920b04e3735" }),
-                RecommendationsConfiguration = { new RecommendationConfigurationProperties(IotSecurityRecommendationType.IoTOpenPorts, RecommendationConfigStatus.Disabled), new RecommendationConfigurationProperties(IotSecurityRecommendationType.IoTSharedCredentials, RecommendationConfigStatus.Disabled) },
+                RecommendationsConfiguration = { new RecommendationConfigurationProperties(IotSecurityRecommendationType.IotOpenPorts, RecommendationConfigStatus.Disabled), new RecommendationConfigurationProperties(IotSecurityRecommendationType.IotSharedCredentials, RecommendationConfigStatus.Disabled) },
                 Tags =
 {
 ["foo"] = "bar"

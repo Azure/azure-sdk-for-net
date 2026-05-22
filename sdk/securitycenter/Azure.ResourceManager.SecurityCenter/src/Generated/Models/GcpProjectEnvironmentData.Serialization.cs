@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The GCP project connector environment data. </summary>
-    internal partial class GcpProjectEnvironmentData : EnvironmentData, IJsonModel<GcpProjectEnvironmentData>
+    public partial class GcpProjectEnvironmentData : EnvironmentData, IJsonModel<GcpProjectEnvironmentData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

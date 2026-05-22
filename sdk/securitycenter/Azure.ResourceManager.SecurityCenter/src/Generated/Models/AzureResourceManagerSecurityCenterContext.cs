@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -212,6 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(ExecuteGovernanceRuleParams))]
     [ModelReaderWriterBuildable(typeof(Extension))]
     [ModelReaderWriterBuildable(typeof(ExternalSecuritySolution))]
+    [ModelReaderWriterBuildable(typeof(ExternalSecuritySolutionList))]
     [ModelReaderWriterBuildable(typeof(FilesScanSummary))]
     [ModelReaderWriterBuildable(typeof(GcpDefenderForDatabasesArcAutoProvisioning))]
     [ModelReaderWriterBuildable(typeof(GcpDefenderForServersInfo))]
@@ -281,7 +281,6 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(IoTSecurityDeviceAlert))]
     [ModelReaderWriterBuildable(typeof(IoTSecurityDeviceRecommendation))]
     [ModelReaderWriterBuildable(typeof(IoTSecuritySolutionAnalyticsModelData))]
-    [ModelReaderWriterBuildable(typeof(IoTSecuritySolutionAnalyticsModelList))]
     [ModelReaderWriterBuildable(typeof(IoTSecuritySolutionAnalyticsModelProperties))]
     [ModelReaderWriterBuildable(typeof(IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem))]
     [ModelReaderWriterBuildable(typeof(IoTSecuritySolutionAnalyticsModelResource))]
@@ -459,12 +458,10 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(SecurityWorkspaceSettingResource))]
     [ModelReaderWriterBuildable(typeof(SensitiveDataDiscoveryProperties))]
     [ModelReaderWriterBuildable(typeof(SensitivityLabel))]
-    [ModelReaderWriterBuildable(typeof(SensitivitySettingsListResult))]
     [ModelReaderWriterBuildable(typeof(ServerVulnerabilityAssessmentData))]
     [ModelReaderWriterBuildable(typeof(ServerVulnerabilityAssessmentProperties))]
     [ModelReaderWriterBuildable(typeof(ServerVulnerabilityAssessmentResource))]
     [ModelReaderWriterBuildable(typeof(ServerVulnerabilityAssessmentsAzureSettingProperties))]
-    [ModelReaderWriterBuildable(typeof(ServerVulnerabilityAssessmentsList))]
     [ModelReaderWriterBuildable(typeof(ServerVulnerabilityAssessmentsSettingData))]
     [ModelReaderWriterBuildable(typeof(ServerVulnerabilityAssessmentsSettingResource))]
     [ModelReaderWriterBuildable(typeof(ServerVulnerabilityAssessmentsSettingsList))]
@@ -479,9 +476,9 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentScanOperationResultProperties))]
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentScanProperties))]
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentScanResource))]
+    [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentSettingResource))]
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentSettingsData))]
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentSettingsProperties))]
-    [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentSettingsResource))]
     [ModelReaderWriterBuildable(typeof(StandardAssignmentData))]
     [ModelReaderWriterBuildable(typeof(StandardAssignmentMetadata))]
     [ModelReaderWriterBuildable(typeof(StandardAssignmentProperties))]
@@ -496,7 +493,6 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(StandardProperties))]
     [ModelReaderWriterBuildable(typeof(StandardResource))]
     [ModelReaderWriterBuildable(typeof(SubAssessmentStatus))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAssessmentMetadataData))]
     [ModelReaderWriterBuildable(typeof(SuppressionAlertsScope))]
     [ModelReaderWriterBuildable(typeof(SuppressionAlertsScopeElement))]

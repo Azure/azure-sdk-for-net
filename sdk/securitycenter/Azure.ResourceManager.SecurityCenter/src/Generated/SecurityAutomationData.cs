@@ -87,5 +87,44 @@ namespace Azure.ResourceManager.SecurityCenter
                 Properties.IsEnabled = value;
             }
         }
+
+        /// <summary> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </summary>
+        public IList<AutomationScope> Scopes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationProperties();
+                }
+                return Properties.Scopes;
+            }
+        }
+
+        /// <summary> A collection of the source event types which evaluate the security automation set of rules. </summary>
+        public IList<AutomationSource> Sources
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationProperties();
+                }
+                return Properties.Sources;
+            }
+        }
+
+        /// <summary> A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true. </summary>
+        public IList<AutomationAction> Actions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationProperties();
+                }
+                return Properties.Actions;
+            }
+        }
     }
 }

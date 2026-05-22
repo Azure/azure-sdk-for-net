@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The gcpOrganization data for the member account. </summary>
-    internal partial class GcpOrganizationalDataMember : GcpOrganizationalData
+    public partial class GcpOrganizationalDataMember : GcpOrganizationalData
     {
         /// <summary> Initializes a new instance of <see cref="GcpOrganizationalDataMember"/>. </summary>
         public GcpOrganizationalDataMember() : base(OrganizationMembershipType.Member)

@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary></summary>
-    internal readonly partial struct DataSource : IEquatable<DataSource>
+    public readonly partial struct DataSource : IEquatable<DataSource>
     {
         private readonly string _value;
         /// <summary> Devices twin data. </summary>

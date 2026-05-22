@@ -234,23 +234,6 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Gets or sets the IsPreview. </summary>
-        public bool? IsPreview
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsPreview;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SecurityAssessmentMetadataPropertiesResponse();
-                }
-                Properties.IsPreview = value;
-            }
-        }
-
         /// <summary> Gets or sets the PublishDates. </summary>
         public SecurityAssessmentMetadataPropertiesResponsePublishDates PublishDates
         {

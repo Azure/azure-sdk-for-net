@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private readonly ClientDiagnostics _iotSecuritySolutionClientDiagnostics;
         private readonly IotSecuritySolution _iotSecuritySolutionRestClient;
-        private readonly ClientDiagnostics _iotSecuritySolutionAnalyticsClientDiagnostics;
-        private readonly IotSecuritySolutionAnalytics _iotSecuritySolutionAnalyticsRestClient;
         private readonly IotSecuritySolutionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/iotSecuritySolutions";
@@ -56,8 +54,6 @@ namespace Azure.ResourceManager.SecurityCenter
             TryGetApiVersion(ResourceType, out string iotSecuritySolutionApiVersion);
             _iotSecuritySolutionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
             _iotSecuritySolutionRestClient = new IotSecuritySolution(_iotSecuritySolutionClientDiagnostics, Pipeline, Endpoint, iotSecuritySolutionApiVersion ?? "2019-08-01");
-            _iotSecuritySolutionAnalyticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _iotSecuritySolutionAnalyticsRestClient = new IotSecuritySolutionAnalytics(_iotSecuritySolutionAnalyticsClientDiagnostics, Pipeline, Endpoint, iotSecuritySolutionApiVersion ?? "2019-08-01");
             ValidateResourceId(id);
         }
 
@@ -391,102 +387,6 @@ namespace Azure.ResourceManager.SecurityCenter
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Use this method to get IoT security Analytics metrics in an array.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IoTSecuritySolutionAnalyticsModels_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2019-08-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="IotSecuritySolutionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IoTSecuritySolutionAnalyticsModelList>> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _iotSecuritySolutionAnalyticsClientDiagnostics.CreateScope("IotSecuritySolutionResource.GetAll");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _iotSecuritySolutionAnalyticsRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<IoTSecuritySolutionAnalyticsModelList> response = Response.FromValue(IoTSecuritySolutionAnalyticsModelList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Use this method to get IoT security Analytics metrics in an array.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IoTSecuritySolutionAnalyticsModels_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2019-08-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="IotSecuritySolutionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IoTSecuritySolutionAnalyticsModelList> GetAll(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _iotSecuritySolutionAnalyticsClientDiagnostics.CreateScope("IotSecuritySolutionResource.GetAll");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _iotSecuritySolutionAnalyticsRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<IoTSecuritySolutionAnalyticsModelList> response = Response.FromValue(IoTSecuritySolutionAnalyticsModelList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
             }
             catch (Exception e)
             {

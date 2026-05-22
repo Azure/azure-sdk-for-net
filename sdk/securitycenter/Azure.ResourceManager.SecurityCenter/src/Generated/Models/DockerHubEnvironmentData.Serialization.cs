@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Docker Hub connector environment data. </summary>
-    internal partial class DockerHubEnvironmentData : EnvironmentData, IJsonModel<DockerHubEnvironmentData>
+    public partial class DockerHubEnvironmentData : EnvironmentData, IJsonModel<DockerHubEnvironmentData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

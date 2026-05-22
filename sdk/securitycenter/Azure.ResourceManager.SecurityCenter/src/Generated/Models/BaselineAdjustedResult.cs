@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -15,6 +16,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="BaselineAdjustedResult"/>. </summary>
+        internal BaselineAdjustedResult()
+        {
+            ResultsNotInBaseline = new ChangeTrackingList<IList<string>>();
+            ResultsOnlyInBaseline = new ChangeTrackingList<IList<string>>();
+        }
 
         /// <summary> Initializes a new instance of <see cref="BaselineAdjustedResult"/>. </summary>
         /// <param name="baseline"> Baseline details. </param>
@@ -30,6 +38,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResultsOnlyInBaseline = resultsOnlyInBaseline;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Baseline details. </summary>
+        public SqlVulnerabilityAssessmentBaseline Baseline { get; }
+
+        /// <summary> The rule result status. </summary>
+        public SqlVulnerabilityAssessmentScanResultRuleStatus? Status { get; }
 
         /// <summary> Results that are not in the baseline. </summary>
         public IList<IList<string>> ResultsNotInBaseline { get; }

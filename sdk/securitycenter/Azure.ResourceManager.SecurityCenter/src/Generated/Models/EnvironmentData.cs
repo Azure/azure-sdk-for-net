@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// The security connector environment data.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AwsEnvironmentData"/>, <see cref="GcpProjectEnvironmentData"/>, <see cref="GithubScopeEnvironmentData"/>, <see cref="AzureDevOpsScopeEnvironmentData"/>, <see cref="GitlabScopeEnvironmentData"/>, <see cref="DockerHubEnvironmentData"/>, and <see cref="JFrogEnvironmentData"/>.
     /// </summary>
-    internal abstract partial class EnvironmentData
+    public abstract partial class EnvironmentData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

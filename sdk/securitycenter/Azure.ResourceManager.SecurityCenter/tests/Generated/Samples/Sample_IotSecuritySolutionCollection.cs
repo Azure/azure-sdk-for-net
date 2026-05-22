@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
                 DisabledDataSources = { },
                 IotHubs = { "/subscriptions/075423e9-7d33-4166-8bdf-3920b04e3735/resourceGroups/myRg/providers/Microsoft.Devices/IotHubs/FirstIotHub" },
                 UserDefinedResources = new UserDefinedResourcesProperties("where type != \"microsoft.devices/iothubs\" | where name contains \"iot\"", new string[] { "075423e9-7d33-4166-8bdf-3920b04e3735" }),
-                RecommendationsConfiguration = { new RecommendationConfigurationProperties(IotSecurityRecommendationType.IoTOpenPorts, RecommendationConfigStatus.Disabled), new RecommendationConfigurationProperties(IotSecurityRecommendationType.IoTSharedCredentials, RecommendationConfigStatus.Disabled) },
-                UnmaskedIpLoggingStatus = UnmaskedIpLoggingStatus.Enabled,
+                RecommendationsConfiguration = { new RecommendationConfigurationProperties(IotSecurityRecommendationType.IotOpenPorts, RecommendationConfigStatus.Disabled), new RecommendationConfigurationProperties(IotSecurityRecommendationType.IotSharedCredentials, RecommendationConfigStatus.Disabled) },
+                UnmaskedIPLoggingStatus = UnmaskedIPLoggingStatus.Enabled,
                 Tags = { },
             };
             ArmOperation<IotSecuritySolutionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, solutionName, data);

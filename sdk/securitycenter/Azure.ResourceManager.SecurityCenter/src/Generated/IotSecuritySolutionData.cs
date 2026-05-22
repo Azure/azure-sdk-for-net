@@ -94,6 +94,32 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        /// <summary> List of additional options for exporting to workspace data. </summary>
+        public IList<ExportData> Export
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new IoTSecuritySolutionProperties();
+                }
+                return Properties.Export;
+            }
+        }
+
+        /// <summary> Disabled data sources. Disabling these data sources compromises the system. </summary>
+        public IList<DataSource> DisabledDataSources
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new IoTSecuritySolutionProperties();
+                }
+                return Properties.DisabledDataSources;
+            }
+        }
+
         /// <summary> IoT Hub resource IDs. </summary>
         public IList<string> IotHubs
         {

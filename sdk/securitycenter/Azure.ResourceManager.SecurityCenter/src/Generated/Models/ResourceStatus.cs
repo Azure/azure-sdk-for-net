@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The status of the resource regarding a single assessment. </summary>
-    internal readonly partial struct ResourceStatus : IEquatable<ResourceStatus>
+    public readonly partial struct ResourceStatus : IEquatable<ResourceStatus>
     {
         private readonly string _value;
         /// <summary> This assessment on the resource is healthy. </summary>

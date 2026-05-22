@@ -82,6 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [TestCase(null)]
+        [TestCase(false, Ignore = "Needs re-recording because generated PATCH now wraps tag updates in a properties payload.")]
         [TestCase(true)]
         public async Task AddRemoveTag(bool? useTagResource)
         {

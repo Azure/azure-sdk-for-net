@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="GcpOrganizationalDataOrganization"/> and <see cref="GcpOrganizationalDataMember"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownGcpOrganizationalData))]
-    internal abstract partial class GcpOrganizationalData : IJsonModel<GcpOrganizationalData>
+    public abstract partial class GcpOrganizationalData : IJsonModel<GcpOrganizationalData>
     {
         /// <summary> Initializes a new instance of <see cref="GcpOrganizationalData"/> for deserialization. </summary>
         internal GcpOrganizationalData()
