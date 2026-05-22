@@ -17,51 +17,51 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
-    public partial class StorageTrackedResourcePatch : ResourceData, IJsonModel<StorageTrackedResourcePatch>
+    public partial class TrackedResourceUpdate : ResourceData, IJsonModel<TrackedResourceUpdate>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageTrackedResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrackedResourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStorageTrackedResourcePatch(document.RootElement, options);
+                        return DeserializeTrackedResourceUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageTrackedResourcePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrackedResourceUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageTrackedResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrackedResourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StorageTrackedResourcePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrackedResourceUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StorageTrackedResourcePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TrackedResourceUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageTrackedResourcePatch IPersistableModel<StorageTrackedResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageTrackedResourcePatch)PersistableModelCreateCore(data, options);
+        TrackedResourceUpdate IPersistableModel<TrackedResourceUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => (TrackedResourceUpdate)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StorageTrackedResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TrackedResourceUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StorageTrackedResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TrackedResourceUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageTrackedResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrackedResourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageTrackedResourcePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TrackedResourceUpdate)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Tags))
@@ -98,24 +98,24 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageTrackedResourcePatch IJsonModel<StorageTrackedResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StorageTrackedResourcePatch)JsonModelCreateCore(ref reader, options);
+        TrackedResourceUpdate IJsonModel<TrackedResourceUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TrackedResourceUpdate)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageTrackedResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrackedResourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageTrackedResourcePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TrackedResourceUpdate)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStorageTrackedResourcePatch(document.RootElement, options);
+            return DeserializeTrackedResourceUpdate(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StorageTrackedResourcePatch DeserializeStorageTrackedResourcePatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static TrackedResourceUpdate DeserializeTrackedResourceUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageTrackedResourcePatch(
+            return new TrackedResourceUpdate(
                 id,
                 name,
                 resourceType,

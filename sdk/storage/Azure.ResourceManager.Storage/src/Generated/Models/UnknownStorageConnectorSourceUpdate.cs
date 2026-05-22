@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    internal partial class UnknownStorageConnectorSourcePatch : StorageConnectorSourcePatch
+    internal partial class UnknownStorageConnectorSourceUpdate : StorageConnectorSourceUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownStorageConnectorSourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownStorageConnectorSourceUpdate"/>. </summary>
         /// <param name="type"> Type of the Storage Connector. Not mutable once the Storage Connector is created.". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownStorageConnectorSourcePatch(StorageConnectorSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownStorageConnectorSourceUpdate(StorageConnectorSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

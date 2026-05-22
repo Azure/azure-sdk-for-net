@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ShouldTestConnection))
+            if (Optional.IsDefined(TestConnection))
             {
                 writer.WritePropertyName("testConnection"u8);
-                writer.WriteBooleanValue(ShouldTestConnection.Value);
+                writer.WriteBooleanValue(TestConnection.Value);
             }
             writer.WritePropertyName("dataSourceType"u8);
             writer.WriteStringValue(DataSourceType.ToString());
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Storage.Models
             StorageConnectorState? state = default;
             string creationTime = default;
             string description = default;
-            bool? shouldTestConnection = default;
+            bool? testConnection = default;
             StorageConnectorDataSourceType dataSourceType = default;
             StorageConnectorSource source = default;
             NativeDataSharingProvisioningState? provisioningState = default;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    shouldTestConnection = prop.Value.GetBoolean();
+                    testConnection = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("dataSourceType"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Storage.Models
                 state,
                 creationTime,
                 description,
-                shouldTestConnection,
+                testConnection,
                 dataSourceType,
                 source,
                 provisioningState,

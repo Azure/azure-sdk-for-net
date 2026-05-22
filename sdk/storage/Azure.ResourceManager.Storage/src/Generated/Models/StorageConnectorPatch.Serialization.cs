@@ -17,7 +17,7 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> A Connector is a tracked ARM resource modeled as a sub-resource of a Storage Account. </summary>
-    public partial class StorageConnectorPatch : StorageTrackedResourcePatch, IJsonModel<StorageConnectorPatch>
+    public partial class StorageConnectorPatch : TrackedResourceUpdate, IJsonModel<StorageConnectorPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Storage.Models
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
-            StorageConnectorPropertiesPatch properties = default;
+            StorageConnectorPropertiesUpdate properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    properties = StorageConnectorPropertiesPatch.DeserializeStorageConnectorPropertiesPatch(prop.Value, options);
+                    properties = StorageConnectorPropertiesUpdate.DeserializeStorageConnectorPropertiesUpdate(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

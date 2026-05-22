@@ -13,52 +13,52 @@ using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> The storage datashare properties. </summary>
-    public partial class StorageDataSharePropertiesPatch : IJsonModel<StorageDataSharePropertiesPatch>
+    /// <summary> The storage connector properties. </summary>
+    public partial class StorageConnectorPropertiesUpdate : IJsonModel<StorageConnectorPropertiesUpdate>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageDataSharePropertiesPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual StorageConnectorPropertiesUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageDataSharePropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStorageDataSharePropertiesPatch(document.RootElement, options);
+                        return DeserializeStorageConnectorPropertiesUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageDataSharePropertiesPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageConnectorPropertiesUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageDataSharePropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StorageDataSharePropertiesPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageConnectorPropertiesUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StorageDataSharePropertiesPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<StorageConnectorPropertiesUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageDataSharePropertiesPatch IPersistableModel<StorageDataSharePropertiesPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StorageConnectorPropertiesUpdate IPersistableModel<StorageConnectorPropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StorageDataSharePropertiesPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StorageConnectorPropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StorageDataSharePropertiesPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StorageConnectorPropertiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,35 +69,30 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageDataSharePropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageDataSharePropertiesPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageConnectorPropertiesUpdate)} does not support writing '{format}' format.");
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
             }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(AccessPolicies))
+            if (Optional.IsDefined(TestConnection))
             {
-                writer.WritePropertyName("accessPolicies"u8);
-                writer.WriteStartArray();
-                foreach (StorageDataShareAccessPolicy item in AccessPolicies)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("testConnection"u8);
+                writer.WriteBooleanValue(TestConnection.Value);
             }
-            if (Optional.IsCollectionDefined(Assets))
+            if (Optional.IsDefined(Source))
             {
-                writer.WritePropertyName("assets"u8);
-                writer.WriteStartArray();
-                foreach (StorageDataShareAsset item in Assets)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("source"u8);
+                writer.WriteObjectValue(Source, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -118,66 +113,66 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageDataSharePropertiesPatch IJsonModel<StorageDataSharePropertiesPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StorageConnectorPropertiesUpdate IJsonModel<StorageConnectorPropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageDataSharePropertiesPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual StorageConnectorPropertiesUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageDataSharePropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageDataSharePropertiesPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageConnectorPropertiesUpdate)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStorageDataSharePropertiesPatch(document.RootElement, options);
+            return DeserializeStorageConnectorPropertiesUpdate(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StorageDataSharePropertiesPatch DeserializeStorageDataSharePropertiesPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static StorageConnectorPropertiesUpdate DeserializeStorageConnectorPropertiesUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            StorageConnectorState? state = default;
             string description = default;
-            IList<StorageDataShareAccessPolicy> accessPolicies = default;
-            IList<StorageDataShareAsset> assets = default;
+            bool? testConnection = default;
+            StorageConnectorSourceUpdate source = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("state"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new StorageConnectorState(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("description"u8))
                 {
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("accessPolicies"u8))
+                if (prop.NameEquals("testConnection"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<StorageDataShareAccessPolicy> array = new List<StorageDataShareAccessPolicy>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(StorageDataShareAccessPolicy.DeserializeStorageDataShareAccessPolicy(item, options));
-                    }
-                    accessPolicies = array;
+                    testConnection = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("assets"u8))
+                if (prop.NameEquals("source"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<StorageDataShareAsset> array = new List<StorageDataShareAsset>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(StorageDataShareAsset.DeserializeStorageDataShareAsset(item, options));
-                    }
-                    assets = array;
+                    source = StorageConnectorSourceUpdate.DeserializeStorageConnectorSourceUpdate(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -185,7 +180,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageDataSharePropertiesPatch(description, accessPolicies ?? new ChangeTrackingList<StorageDataShareAccessPolicy>(), assets ?? new ChangeTrackingList<StorageDataShareAsset>(), additionalBinaryDataProperties);
+            return new StorageConnectorPropertiesUpdate(state, description, testConnection, source, additionalBinaryDataProperties);
         }
     }
 }

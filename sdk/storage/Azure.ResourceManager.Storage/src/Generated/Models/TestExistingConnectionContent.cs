@@ -12,25 +12,25 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Test existing connection request properties. </summary>
-    public partial class StorageConnectorTestExistingConnectionContent
+    public partial class TestExistingConnectionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageConnectorTestExistingConnectionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestExistingConnectionContent"/>. </summary>
         /// <param name="uniqueId"> The uniqueId of the storage connector as returned by the server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uniqueId"/> is null. </exception>
-        public StorageConnectorTestExistingConnectionContent(string uniqueId)
+        public TestExistingConnectionContent(string uniqueId)
         {
             Argument.AssertNotNull(uniqueId, nameof(uniqueId));
 
             UniqueId = uniqueId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageConnectorTestExistingConnectionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestExistingConnectionContent"/>. </summary>
         /// <param name="uniqueId"> The uniqueId of the storage connector as returned by the server. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageConnectorTestExistingConnectionContent(string uniqueId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestExistingConnectionContent(string uniqueId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UniqueId = uniqueId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

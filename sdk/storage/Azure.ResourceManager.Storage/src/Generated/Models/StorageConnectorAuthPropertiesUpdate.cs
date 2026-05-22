@@ -13,24 +13,24 @@ namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary>
     /// The authentication properties of the backing data source
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StorageConnectorManagedIdentityAuthPatch"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManagedIdentityAuthPropertiesUpdate"/>.
     /// </summary>
-    public abstract partial class StorageConnectorAuthPropertiesPatch
+    public abstract partial class StorageConnectorAuthPropertiesUpdate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageConnectorAuthPropertiesPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageConnectorAuthPropertiesUpdate"/>. </summary>
         /// <param name="type"> Type of the authentication properties. Controls the type of the authProperties object. </param>
-        private protected StorageConnectorAuthPropertiesPatch(StorageConnectorAuthType @type)
+        private protected StorageConnectorAuthPropertiesUpdate(StorageConnectorAuthType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageConnectorAuthPropertiesPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageConnectorAuthPropertiesUpdate"/>. </summary>
         /// <param name="type"> Type of the authentication properties. Controls the type of the authProperties object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageConnectorAuthPropertiesPatch(StorageConnectorAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageConnectorAuthPropertiesUpdate(StorageConnectorAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

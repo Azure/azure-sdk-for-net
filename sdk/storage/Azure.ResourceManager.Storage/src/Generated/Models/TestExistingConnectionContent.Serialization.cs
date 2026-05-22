@@ -15,66 +15,66 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Test existing connection request properties. </summary>
-    public partial class StorageConnectorTestExistingConnectionContent : IJsonModel<StorageConnectorTestExistingConnectionContent>
+    public partial class TestExistingConnectionContent : IJsonModel<TestExistingConnectionContent>
     {
-        /// <summary> Initializes a new instance of <see cref="StorageConnectorTestExistingConnectionContent"/> for deserialization. </summary>
-        internal StorageConnectorTestExistingConnectionContent()
+        /// <summary> Initializes a new instance of <see cref="TestExistingConnectionContent"/> for deserialization. </summary>
+        internal TestExistingConnectionContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageConnectorTestExistingConnectionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TestExistingConnectionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorTestExistingConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TestExistingConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStorageConnectorTestExistingConnectionContent(document.RootElement, options);
+                        return DeserializeTestExistingConnectionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageConnectorTestExistingConnectionContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TestExistingConnectionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorTestExistingConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TestExistingConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StorageConnectorTestExistingConnectionContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TestExistingConnectionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StorageConnectorTestExistingConnectionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TestExistingConnectionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageConnectorTestExistingConnectionContent IPersistableModel<StorageConnectorTestExistingConnectionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TestExistingConnectionContent IPersistableModel<TestExistingConnectionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StorageConnectorTestExistingConnectionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TestExistingConnectionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="storageConnectorTestExistingConnectionContent"> The <see cref="StorageConnectorTestExistingConnectionContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(StorageConnectorTestExistingConnectionContent storageConnectorTestExistingConnectionContent)
+        /// <param name="testExistingConnectionContent"> The <see cref="TestExistingConnectionContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(TestExistingConnectionContent testExistingConnectionContent)
         {
-            if (storageConnectorTestExistingConnectionContent == null)
+            if (testExistingConnectionContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(storageConnectorTestExistingConnectionContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(testExistingConnectionContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StorageConnectorTestExistingConnectionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TestExistingConnectionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorTestExistingConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TestExistingConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageConnectorTestExistingConnectionContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TestExistingConnectionContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("uniqueId"u8);
             writer.WriteStringValue(UniqueId);
@@ -111,24 +111,24 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageConnectorTestExistingConnectionContent IJsonModel<StorageConnectorTestExistingConnectionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TestExistingConnectionContent IJsonModel<TestExistingConnectionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageConnectorTestExistingConnectionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TestExistingConnectionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorTestExistingConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TestExistingConnectionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageConnectorTestExistingConnectionContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TestExistingConnectionContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStorageConnectorTestExistingConnectionContent(document.RootElement, options);
+            return DeserializeTestExistingConnectionContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StorageConnectorTestExistingConnectionContent DeserializeStorageConnectorTestExistingConnectionContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static TestExistingConnectionContent DeserializeTestExistingConnectionContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageConnectorTestExistingConnectionContent(uniqueId, additionalBinaryDataProperties);
+            return new TestExistingConnectionContent(uniqueId, additionalBinaryDataProperties);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary>
     /// The authentication properties of the backing data source
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StorageConnectorManagedIdentityAuth"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManagedIdentityAuthProperties"/>.
     /// </summary>
     public abstract partial class StorageConnectorAuthProperties
     {
