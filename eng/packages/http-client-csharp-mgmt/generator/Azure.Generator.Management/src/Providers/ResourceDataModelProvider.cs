@@ -6,6 +6,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
+using System.IO;
 
 namespace Azure.Generator.Management.Providers
 {
@@ -24,6 +25,12 @@ namespace Azure.Generator.Management.Providers
             var name = base.BuildName();
             return name.EndsWith("Data", StringComparison.Ordinal) ? name : $"{name}Data";
         }
+
+        protected override string BuildNamespace()
+            => ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace;
+
+        protected override string BuildRelativeFilePath()
+            => Path.Combine("src", "Generated", $"{Name}.cs");
 
         protected override CSharpType? BuildBaseType()
         {

@@ -128,12 +128,7 @@ namespace Azure.Generator.Management
             // First check for standard ARM types that map to system types
             if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var replacedType))
             {
-                var systemBase = new SystemObjectModelProvider(replacedType, model);
-                // After microsoft/typespec#10600, ModelProvider.BaseModelProvider is auto-resolved by
-                // looking up BaseType in CSharpTypeMap. Register the framework type explicitly so
-                // regular models can resolve SystemObjectModelProvider bases.
-                CSharpTypeMap[replacedType] = systemBase;
-                return systemBase;
+                return new SystemObjectModelProvider(replacedType, model);
             }
             if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out _))
             {
@@ -142,12 +137,6 @@ namespace Azure.Generator.Management
 
             if (ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
             {
-                if (model.BaseModel is not null &&
-                    KnownManagementTypes.TryGetInheritableSystemType(model.BaseModel.CrossLanguageDefinitionId, out var baseType) &&
-                    !CSharpTypeMap.ContainsKey(baseType))
-                {
-                    CSharpTypeMap[baseType] = new SystemObjectModelProvider(baseType, model.BaseModel);
-                }
                 return new ResourceDataModelProvider(model);
             }
 
