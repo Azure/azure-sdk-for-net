@@ -42,24 +42,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> The Network Device SKU properties. </summary>
         internal NetworkDeviceSkuProperties Properties { get; }
 
-        /// <summary> Model of the network device. </summary>
-        public string Model
-        {
-            get
-            {
-                return Properties.Model;
-            }
-        }
-
-        /// <summary> Manufacturer of the network device. </summary>
-        public string Manufacturer
-        {
-            get
-            {
-                return Properties.Manufacturer;
-            }
-        }
-
         /// <summary> List of supported version details of network device. </summary>
         public IList<SupportedVersionProperties> SupportedVersions
         {

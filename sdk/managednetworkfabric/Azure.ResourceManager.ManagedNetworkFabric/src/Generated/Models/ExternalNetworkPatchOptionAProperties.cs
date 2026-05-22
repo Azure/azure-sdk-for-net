@@ -12,11 +12,8 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> option A properties object. </summary>
-    public partial class ExternalNetworkPatchOptionAProperties
+    public partial class ExternalNetworkPatchOptionAProperties : Layer3IPPrefixProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ExternalNetworkPatchOptionAProperties"/>. </summary>
         public ExternalNetworkPatchOptionAProperties()
         {
@@ -27,6 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="primaryIpv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIpv4Prefix"> Secondary IPv4 Address Prefix. </param>
         /// <param name="secondaryIpv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="mtu"> MTU to use for option A peering. </param>
         /// <param name="vlanId"> Vlan identifier. Example : 501. </param>
         /// <param name="fabricASN"> Fabric ASN number. Example 65001. </param>
@@ -39,13 +37,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="v6OverV4BgpSession"> V6OverV4 BGP Session state. </param>
         /// <param name="nativeIpv4PrefixLimit"> Native IPv4 prefix limit configuration. </param>
         /// <param name="nativeIpv6PrefixLimit"> Native IPv6 prefix limit configuration. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExternalNetworkPatchOptionAProperties(string primaryIpv4Prefix, string primaryIpv6Prefix, string secondaryIpv4Prefix, string secondaryIpv6Prefix, int? mtu, int? vlanId, long? fabricASN, long? peerASN, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, ExternalNetworkBmpPatchProperties bmpConfiguration, V4OverV6BgpSessionState? v4OverV6BgpSession, V6OverV4BgpSessionState? v6OverV4BgpSession, NativeIpv4PrefixLimitPatchProperties nativeIpv4PrefixLimit, NativeIpv6PrefixLimitPatchProperties nativeIpv6PrefixLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExternalNetworkPatchOptionAProperties(string primaryIpv4Prefix, string primaryIpv6Prefix, string secondaryIpv4Prefix, string secondaryIpv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? mtu, int? vlanId, long? fabricASN, long? peerASN, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, ExternalNetworkBmpPatchProperties bmpConfiguration, V4OverV6BgpSessionState? v4OverV6BgpSession, V6OverV4BgpSessionState? v6OverV4BgpSession, NativeIpv4PrefixLimitPatchProperties nativeIpv4PrefixLimit, NativeIpv6PrefixLimitPatchProperties nativeIpv6PrefixLimit) : base(primaryIpv4Prefix, primaryIpv6Prefix, secondaryIpv4Prefix, secondaryIpv6Prefix, additionalBinaryDataProperties)
         {
-            PrimaryIpv4Prefix = primaryIpv4Prefix;
-            PrimaryIpv6Prefix = primaryIpv6Prefix;
-            SecondaryIpv4Prefix = secondaryIpv4Prefix;
-            SecondaryIpv6Prefix = secondaryIpv6Prefix;
             Mtu = mtu;
             VlanId = vlanId;
             FabricASN = fabricASN;
@@ -58,20 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             V6OverV4BgpSession = v6OverV4BgpSession;
             NativeIpv4PrefixLimit = nativeIpv4PrefixLimit;
             NativeIpv6PrefixLimit = nativeIpv6PrefixLimit;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> IPv4 Address Prefix. </summary>
-        public string PrimaryIpv4Prefix { get; set; }
-
-        /// <summary> IPv6 Address Prefix. </summary>
-        public string PrimaryIpv6Prefix { get; set; }
-
-        /// <summary> Secondary IPv4 Address Prefix. </summary>
-        public string SecondaryIpv4Prefix { get; set; }
-
-        /// <summary> Secondary IPv6 Address Prefix. </summary>
-        public string SecondaryIpv6Prefix { get; set; }
 
         /// <summary> MTU to use for option A peering. </summary>
         public int? Mtu { get; set; }

@@ -14,7 +14,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Extended Community Properties. </summary>
-    public partial class ActionIPExtendedCommunityProperties : IJsonModel<ActionIPExtendedCommunityProperties>
+    public partial class ActionIPExtendedCommunityProperties : IPExtendedCommunityAddOperationProperties, IJsonModel<ActionIPExtendedCommunityProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -63,47 +63,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionIPExtendedCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ActionIPExtendedCommunityProperties)} does not support writing '{format}' format.");
-            }
-            if (Optional.IsDefined(Add))
-            {
-                writer.WritePropertyName("add"u8);
-                writer.WriteObjectValue(Add, options);
-            }
-            if (Optional.IsDefined(Delete))
-            {
-                writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete, options);
-            }
-            if (Optional.IsDefined(Set))
-            {
-                writer.WritePropertyName("set"u8);
-                writer.WriteObjectValue(Set, options);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>

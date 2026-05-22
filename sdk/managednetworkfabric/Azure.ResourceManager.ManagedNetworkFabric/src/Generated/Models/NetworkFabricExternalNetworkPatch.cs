@@ -68,40 +68,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
-        public ImportRoutePolicyPatch ImportRoutePolicy
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ImportRoutePolicy;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExternalNetworkPatchProperties();
-                }
-                Properties.ImportRoutePolicy = value;
-            }
-        }
-
-        /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
-        public ExportRoutePolicyPatch ExportRoutePolicy
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExportRoutePolicy;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExternalNetworkPatchProperties();
-                }
-                Properties.ExportRoutePolicy = value;
-            }
-        }
-
         /// <summary> Peering option list. </summary>
         public PeeringOption? PeeringOption
         {
@@ -120,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> option B properties object. </summary>
-        public L3OptionBPatchProperties OptionBProperties
+        public L3OptionBProperties OptionBProperties
         {
             get
             {

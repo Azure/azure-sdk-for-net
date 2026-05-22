@@ -13,21 +13,26 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network To Network Interconnect resource patch definition. </summary>
-    public partial class NetworkToNetworkInterconnectPatch : ProxyResourceBase
+    public partial class NetworkToNetworkInterconnectPatch : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectPatch"/>. </summary>
         public NetworkToNetworkInterconnectPatch()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectPatch"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. E.g. '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}'. </param>
-        /// <param name="type"> The type of the resource. E.g. 'Microsoft.Compute/virtualMachines' or 'Microsoft.Storage/storageAccounts'. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Resource properties. </param>
-        internal NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkToNetworkInterconnectPatchProperties properties) : base(id, @type, systemData, additionalBinaryDataProperties)
+        internal NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkToNetworkInterconnectPatchProperties properties) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
@@ -35,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         internal NetworkToNetworkInterconnectPatchProperties Properties { get; set; }
 
         /// <summary> Common properties for Layer2Configuration. </summary>
-        public Layer2ConfigurationPatch Layer2Configuration
+        public Layer2Configuration Layer2Configuration
         {
             get
             {
@@ -52,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Common properties for Layer3Configuration. </summary>
-        public OptionBLayer3ConfigurationPatchProperties OptionBLayer3Configuration
+        public OptionBLayer3Configuration OptionBLayer3Configuration
         {
             get
             {
@@ -69,7 +74,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> NPB Static Route Configuration properties. </summary>
-        public NpbStaticRouteConfigurationPatch NpbStaticRouteConfiguration
+        public NpbStaticRouteConfiguration NpbStaticRouteConfiguration
         {
             get
             {
@@ -103,7 +108,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Import Route Policy information. </summary>
-        public ImportRoutePolicyInformationPatch ImportRoutePolicy
+        public ImportRoutePolicyInformation ImportRoutePolicy
         {
             get
             {
@@ -120,7 +125,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Export Route Policy information. </summary>
-        public ExportRoutePolicyInformationPatch ExportRoutePolicy
+        public ExportRoutePolicyInformation ExportRoutePolicy
         {
             get
             {

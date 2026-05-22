@@ -17,35 +17,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SupportedVersionProperties"/>. </summary>
-        internal SupportedVersionProperties()
+        public SupportedVersionProperties()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SupportedVersionProperties"/>. </summary>
         /// <param name="version"> Operating system and firmware combined versions. </param>
-        /// <param name="vendorOsVersion"> Operating system version. </param>
+        /// <param name="vendorOSVersion"> Operating system version. </param>
         /// <param name="vendorFirmwareVersion"> Firmware version. </param>
         /// <param name="isDefault"> If true newly provisioned Fabric will use this device version by default to bootstrap the network devices for the first time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SupportedVersionProperties(string version, string vendorOsVersion, string vendorFirmwareVersion, NetworkFabricBooleanValue? isDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SupportedVersionProperties(string version, string vendorOSVersion, string vendorFirmwareVersion, NetworkFabricBooleanValue? isDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
-            VendorOsVersion = vendorOsVersion;
+            VendorOSVersion = vendorOSVersion;
             VendorFirmwareVersion = vendorFirmwareVersion;
             IsDefault = isDefault;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Operating system and firmware combined versions. </summary>
-        public string Version { get; }
+        public string Version { get; set; }
 
         /// <summary> Operating system version. </summary>
-        public string VendorOsVersion { get; }
+        public string VendorOSVersion { get; set; }
 
         /// <summary> Firmware version. </summary>
-        public string VendorFirmwareVersion { get; }
+        public string VendorFirmwareVersion { get; set; }
 
         /// <summary> If true newly provisioned Fabric will use this device version by default to bootstrap the network devices for the first time. </summary>
-        public NetworkFabricBooleanValue? IsDefault { get; }
+        public NetworkFabricBooleanValue? IsDefault { get; set; }
     }
 }

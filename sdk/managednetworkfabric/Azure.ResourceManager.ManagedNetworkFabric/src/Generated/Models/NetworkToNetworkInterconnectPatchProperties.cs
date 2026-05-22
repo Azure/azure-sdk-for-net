@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="microBfdState"> Micro BFD enabled/disabled state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkToNetworkInterconnectPatchProperties(Layer2ConfigurationPatch layer2Configuration, OptionBLayer3ConfigurationPatchProperties optionBLayer3Configuration, NpbStaticRouteConfigurationPatch npbStaticRouteConfiguration, NniStaticRoutePatchConfiguration staticRouteConfiguration, ImportRoutePolicyInformationPatch importRoutePolicy, ExportRoutePolicyInformationPatch exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, MicroBfdState? microBfdState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkToNetworkInterconnectPatchProperties(Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, NniStaticRoutePatchConfiguration staticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, MicroBfdState? microBfdState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Layer2Configuration = layer2Configuration;
             OptionBLayer3Configuration = optionBLayer3Configuration;
@@ -48,22 +48,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Common properties for Layer2Configuration. </summary>
-        public Layer2ConfigurationPatch Layer2Configuration { get; set; }
+        public Layer2Configuration Layer2Configuration { get; set; }
 
         /// <summary> Common properties for Layer3Configuration. </summary>
-        public OptionBLayer3ConfigurationPatchProperties OptionBLayer3Configuration { get; set; }
+        public OptionBLayer3Configuration OptionBLayer3Configuration { get; set; }
 
         /// <summary> NPB Static Route Configuration properties. </summary>
-        public NpbStaticRouteConfigurationPatch NpbStaticRouteConfiguration { get; set; }
+        public NpbStaticRouteConfiguration NpbStaticRouteConfiguration { get; set; }
 
         /// <summary> Static Route Configuration. </summary>
         public NniStaticRoutePatchConfiguration StaticRouteConfiguration { get; set; }
 
         /// <summary> Import Route Policy information. </summary>
-        public ImportRoutePolicyInformationPatch ImportRoutePolicy { get; set; }
+        public ImportRoutePolicyInformation ImportRoutePolicy { get; set; }
 
         /// <summary> Export Route Policy information. </summary>
-        public ExportRoutePolicyInformationPatch ExportRoutePolicy { get; set; }
+        public ExportRoutePolicyInformation ExportRoutePolicy { get; set; }
 
         /// <summary> Egress Acl. ARM resource ID of Access Control Lists. </summary>
         public ResourceIdentifier EgressAclId { get; set; }

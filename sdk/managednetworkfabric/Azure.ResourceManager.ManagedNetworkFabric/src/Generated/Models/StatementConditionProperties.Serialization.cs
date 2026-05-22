@@ -9,16 +9,17 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Route policy statement condition properties. </summary>
-    public partial class StatementConditionProperties : IJsonModel<StatementConditionProperties>
+    public partial class StatementConditionProperties : IPCommunityIdList, IJsonModel<StatementConditionProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StatementConditionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override IPCommunityIdList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StatementConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StatementConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StatementConditionProperties IPersistableModel<StatementConditionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StatementConditionProperties IPersistableModel<StatementConditionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (StatementConditionProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StatementConditionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -67,33 +68,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StatementConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StatementConditionProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(IpCommunityIds))
-            {
-                writer.WritePropertyName("ipCommunityIds"u8);
-                writer.WriteStartArray();
-                foreach (string item in IpCommunityIds)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(IpExtendedCommunityIds))
             {
                 writer.WritePropertyName("ipExtendedCommunityIds"u8);
                 writer.WriteStartArray();
-                foreach (string item in IpExtendedCommunityIds)
+                foreach (ResourceIdentifier item in IpExtendedCommunityIds)
                 {
                     if (item == null)
                     {
@@ -104,40 +91,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(RoutePolicyConditionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(RoutePolicyConditionType.Value.ToString());
             }
             if (Optional.IsDefined(IpPrefixId))
             {
                 writer.WritePropertyName("ipPrefixId"u8);
                 writer.WriteStringValue(IpPrefixId);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StatementConditionProperties IJsonModel<StatementConditionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StatementConditionProperties IJsonModel<StatementConditionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StatementConditionProperties)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StatementConditionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override IPCommunityIdList JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StatementConditionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -156,11 +128,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IList<string> ipCommunityIds = default;
-            IList<string> ipExtendedCommunityIds = default;
-            RoutePolicyConditionType? @type = default;
-            string ipPrefixId = default;
+            IList<ResourceIdentifier> ipCommunityIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<ResourceIdentifier> ipExtendedCommunityIds = default;
+            RoutePolicyConditionType? routePolicyConditionType = default;
+            ResourceIdentifier ipPrefixId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("ipCommunityIds"u8))
@@ -169,7 +141,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -178,7 +150,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
                     ipCommunityIds = array;
@@ -190,7 +162,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -199,7 +171,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
                     ipExtendedCommunityIds = array;
@@ -211,12 +183,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @type = new RoutePolicyConditionType(prop.Value.GetString());
+                    routePolicyConditionType = new RoutePolicyConditionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ipPrefixId"u8))
                 {
-                    ipPrefixId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipPrefixId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -224,7 +200,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StatementConditionProperties(ipCommunityIds ?? new ChangeTrackingList<string>(), ipExtendedCommunityIds ?? new ChangeTrackingList<string>(), @type, ipPrefixId, additionalBinaryDataProperties);
+            return new StatementConditionProperties(ipCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties, ipExtendedCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>(), routePolicyConditionType, ipPrefixId);
         }
     }
 }

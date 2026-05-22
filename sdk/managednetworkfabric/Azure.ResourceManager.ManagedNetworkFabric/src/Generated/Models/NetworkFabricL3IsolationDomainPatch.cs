@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The L3 Isolation Domain patch resource definition. </summary>
-    public partial class NetworkFabricL3IsolationDomainPatch : TagsUpdate
+    public partial class NetworkFabricL3IsolationDomainPatch : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricL3IsolationDomainPatch"/>. </summary>
         public NetworkFabricL3IsolationDomainPatch()
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Aggregate route configurations. </summary>
-        public AggregateRoutePatchConfiguration AggregateRouteConfiguration
+        public AggregateRouteConfiguration AggregateRouteConfiguration
         {
             get
             {
@@ -100,6 +100,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     Properties = new L3IsolationDomainPatchProperties();
                 }
                 Properties.AggregateRouteConfiguration = value;
+            }
+        }
+
+        /// <summary> Connected Subnet RoutePolicy. </summary>
+        public ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectedSubnetRoutePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainPatchProperties();
+                }
+                Properties.ConnectedSubnetRoutePolicy = value;
             }
         }
 
@@ -134,23 +151,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     Properties = new L3IsolationDomainPatchProperties();
                 }
                 Properties.V6routePrefixLimit = value;
-            }
-        }
-
-        /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
-        public L3ExportRoutePolicyPatch ExportRoutePolicy
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExportRoutePolicy;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new L3IsolationDomainPatchProperties();
-                }
-                Properties.ExportRoutePolicy = value;
             }
         }
 

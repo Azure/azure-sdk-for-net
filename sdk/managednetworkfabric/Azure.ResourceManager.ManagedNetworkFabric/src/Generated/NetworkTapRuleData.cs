@@ -68,23 +68,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary> Input method to configure Network Tap Rule. </summary>
-        public NetworkFabricConfigurationType ConfigurationType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ConfigurationType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkTapRuleProperties();
-                }
-                Properties.ConfigurationType = value;
-            }
-        }
-
         /// <summary> Network Tap Rules file URL. </summary>
         public Uri TapRulesUri
         {
@@ -145,15 +128,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary> The ARM resource Id of the NetworkTap. </summary>
-        public string NetworkTapId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NetworkTapId;
-            }
-        }
-
         /// <summary> The ARM resource Id of the NetworkTap Rules. </summary>
         public IReadOnlyList<ResourceIdentifier> NetworkTapIds
         {
@@ -164,23 +138,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     Properties = new NetworkTapRuleProperties();
                 }
                 return Properties.NetworkTapIds;
-            }
-        }
-
-        /// <summary> Polling interval in seconds. </summary>
-        public int? PollingIntervalInSeconds
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PollingIntervalInSeconds;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkTapRuleProperties();
-                }
-                Properties.PollingIntervalInSeconds = value;
             }
         }
 

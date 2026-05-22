@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ImportRoutePolicyPatch importRoutePolicy = default;
             ExportRoutePolicyPatch exportRoutePolicy = default;
             PeeringOption? peeringOption = default;
-            L3OptionBPatchProperties optionBProperties = default;
+            L3OptionBProperties optionBProperties = default;
             ExternalNetworkPatchOptionAProperties optionAProperties = default;
             ExternalNetworkStaticRoutePatchConfiguration staticRouteConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionBProperties = L3OptionBPatchProperties.DeserializeL3OptionBPatchProperties(prop.Value, options);
+                    optionBProperties = L3OptionBProperties.DeserializeL3OptionBProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("optionAProperties"u8))

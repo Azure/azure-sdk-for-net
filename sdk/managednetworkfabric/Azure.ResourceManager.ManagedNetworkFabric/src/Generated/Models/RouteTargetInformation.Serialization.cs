@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(RouteTargetInformation)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(ImportIpv4RouteTargets))
+            if (Optional.IsCollectionDefined(ImportIPv4RouteTargets))
             {
                 writer.WritePropertyName("importIpv4RouteTargets"u8);
                 writer.WriteStartArray();
-                foreach (string item in ImportIpv4RouteTargets)
+                foreach (string item in ImportIPv4RouteTargets)
                 {
                     if (item == null)
                     {
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ImportIpv6RouteTargets))
+            if (Optional.IsCollectionDefined(ImportIPv6RouteTargets))
             {
                 writer.WritePropertyName("importIpv6RouteTargets"u8);
                 writer.WriteStartArray();
-                foreach (string item in ImportIpv6RouteTargets)
+                foreach (string item in ImportIPv6RouteTargets)
                 {
                     if (item == null)
                     {
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExportIpv4RouteTargets))
+            if (Optional.IsCollectionDefined(ExportIPv4RouteTargets))
             {
                 writer.WritePropertyName("exportIpv4RouteTargets"u8);
                 writer.WriteStartArray();
-                foreach (string item in ExportIpv4RouteTargets)
+                foreach (string item in ExportIPv4RouteTargets)
                 {
                     if (item == null)
                     {
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExportIpv6RouteTargets))
+            if (Optional.IsCollectionDefined(ExportIPv6RouteTargets))
             {
                 writer.WritePropertyName("exportIpv6RouteTargets"u8);
                 writer.WriteStartArray();
-                foreach (string item in ExportIpv6RouteTargets)
+                foreach (string item in ExportIPv6RouteTargets)
                 {
                     if (item == null)
                     {
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IList<string> importIpv4RouteTargets = default;
-            IList<string> importIpv6RouteTargets = default;
-            IList<string> exportIpv4RouteTargets = default;
-            IList<string> exportIpv6RouteTargets = default;
+            IList<string> importIPv4RouteTargets = default;
+            IList<string> importIPv6RouteTargets = default;
+            IList<string> exportIPv4RouteTargets = default;
+            IList<string> exportIPv6RouteTargets = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             array.Add(item.GetString());
                         }
                     }
-                    importIpv4RouteTargets = array;
+                    importIPv4RouteTargets = array;
                     continue;
                 }
                 if (prop.NameEquals("importIpv6RouteTargets"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             array.Add(item.GetString());
                         }
                     }
-                    importIpv6RouteTargets = array;
+                    importIPv6RouteTargets = array;
                     continue;
                 }
                 if (prop.NameEquals("exportIpv4RouteTargets"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             array.Add(item.GetString());
                         }
                     }
-                    exportIpv4RouteTargets = array;
+                    exportIPv4RouteTargets = array;
                     continue;
                 }
                 if (prop.NameEquals("exportIpv6RouteTargets"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             array.Add(item.GetString());
                         }
                     }
-                    exportIpv6RouteTargets = array;
+                    exportIPv6RouteTargets = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RouteTargetInformation(importIpv4RouteTargets ?? new ChangeTrackingList<string>(), importIpv6RouteTargets ?? new ChangeTrackingList<string>(), exportIpv4RouteTargets ?? new ChangeTrackingList<string>(), exportIpv6RouteTargets ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new RouteTargetInformation(importIPv4RouteTargets ?? new ChangeTrackingList<string>(), importIPv6RouteTargets ?? new ChangeTrackingList<string>(), exportIPv4RouteTargets ?? new ChangeTrackingList<string>(), exportIPv6RouteTargets ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

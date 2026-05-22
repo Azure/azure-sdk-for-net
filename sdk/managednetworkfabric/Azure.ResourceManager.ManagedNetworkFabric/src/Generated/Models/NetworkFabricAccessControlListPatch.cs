@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Access Control Lists patch resource definition. </summary>
-    public partial class NetworkFabricAccessControlListPatch : TagsUpdate
+    public partial class NetworkFabricAccessControlListPatch : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListPatch"/>. </summary>
         public NetworkFabricAccessControlListPatch()
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of match configurations. </summary>
-        public IList<AccessControlListMatchConfigurationPatch> MatchConfigurations
+        public IList<AccessControlListMatchConfiguration> MatchConfigurations
         {
             get
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of dynamic match configurations. </summary>
-        public IList<CommonDynamicMatchConfigurationPatch> DynamicMatchConfigurations
+        public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations
         {
             get
             {

@@ -7,32 +7,27 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ManagedNetworkFabric;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Community ID list properties. </summary>
-    internal partial class IPCommunityIdList
+    public partial class IPCommunityIdList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="IPCommunityIdList"/>. </summary>
-        public IPCommunityIdList()
-        {
-            IpCommunityIds = new ChangeTrackingList<string>();
-        }
+        private protected IList<ResourceIdentifier> _ipCommunityIds;
 
         /// <summary> Initializes a new instance of <see cref="IPCommunityIdList"/>. </summary>
         /// <param name="ipCommunityIds"> List of IP Community resource IDs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IPCommunityIdList(IList<string> ipCommunityIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPCommunityIdList(IList<ResourceIdentifier> ipCommunityIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IpCommunityIds = ipCommunityIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of IP Community resource IDs. </summary>
-        public IList<string> IpCommunityIds { get; }
+        public IList<ResourceIdentifier> IpCommunityIds { get; }
     }
 }

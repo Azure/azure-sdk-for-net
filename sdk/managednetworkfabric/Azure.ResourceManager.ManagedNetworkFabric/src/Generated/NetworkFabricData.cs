@@ -20,34 +20,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="networkFabricSku"> Supported Network Fabric SKU.Example: Compute / Aggregate racks. Once the user chooses a particular SKU, only supported racks can be added to the Network Fabric. The SKU determines whether it is a single / multi rack Network Fabric. </param>
-        /// <param name="networkFabricControllerId"> Azure resource ID for the NetworkFabricController the NetworkFabric belongs. </param>
-        /// <param name="serverCountPerRack"> Number of servers.Possible values are from 1-16. </param>
-        /// <param name="ipv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
-        /// <param name="fabricASN"> ASN of CE devices for CE/PE connectivity. </param>
-        /// <param name="terminalServerConfiguration"> Network and credentials configuration currently applied to terminal server. </param>
-        /// <param name="managementNetworkConfiguration"> Configuration to be used to setup the management network. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSku"/>, <paramref name="networkFabricControllerId"/>, <paramref name="ipv4Prefix"/>, <paramref name="terminalServerConfiguration"/> or <paramref name="managementNetworkConfiguration"/> is null. </exception>
-        public NetworkFabricData(AzureLocation location, string networkFabricSku, ResourceIdentifier networkFabricControllerId, int serverCountPerRack, string ipv4Prefix, long fabricASN, NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration) : base(location)
-        {
-            Argument.AssertNotNull(networkFabricSku, nameof(networkFabricSku));
-            Argument.AssertNotNull(networkFabricControllerId, nameof(networkFabricControllerId));
-            Argument.AssertNotNull(ipv4Prefix, nameof(ipv4Prefix));
-            Argument.AssertNotNull(terminalServerConfiguration, nameof(terminalServerConfiguration));
-            Argument.AssertNotNull(managementNetworkConfiguration, nameof(managementNetworkConfiguration));
-
-            Properties = new NetworkFabricProperties(
-                networkFabricSku,
-                networkFabricControllerId,
-                serverCountPerRack,
-                ipv4Prefix,
-                fabricASN,
-                terminalServerConfiguration,
-                managementNetworkConfiguration);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -263,40 +235,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     Properties = new NetworkFabricProperties();
                 }
                 Properties.FabricASN = value;
-            }
-        }
-
-        /// <summary> Network and credentials configuration currently applied to terminal server. </summary>
-        public NetworkFabricPatchablePropertiesTerminalServerConfiguration TerminalServerConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TerminalServerConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkFabricProperties();
-                }
-                Properties.TerminalServerConfiguration = value;
-            }
-        }
-
-        /// <summary> Configuration to be used to setup the management network. </summary>
-        public ManagementNetworkConfigurationPatchableProperties ManagementNetworkConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ManagementNetworkConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkFabricProperties();
-                }
-                Properties.ManagementNetworkConfiguration = value;
             }
         }
 

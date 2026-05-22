@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Extended Community Id list properties. </summary>
-    internal partial class IPExtendedCommunityIdList : IJsonModel<IPExtendedCommunityIdList>
+    public partial class IPExtendedCommunityIdList : IJsonModel<IPExtendedCommunityIdList>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("ipExtendedCommunityIds"u8);
                 writer.WriteStartArray();
-                foreach (string item in IpExtendedCommunityIds)
+                foreach (ResourceIdentifier item in IpExtendedCommunityIds)
                 {
                     if (item == null)
                     {
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IList<string> ipExtendedCommunityIds = default;
+            IList<ResourceIdentifier> ipExtendedCommunityIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
                     ipExtendedCommunityIds = array;
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IPExtendedCommunityIdList(ipExtendedCommunityIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new IPExtendedCommunityIdList(ipExtendedCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

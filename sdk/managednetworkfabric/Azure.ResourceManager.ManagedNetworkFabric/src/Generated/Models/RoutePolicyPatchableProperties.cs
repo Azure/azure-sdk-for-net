@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="RoutePolicyPatchableProperties"/>. </summary>
         public RoutePolicyPatchableProperties()
         {
-            Statements = new ChangeTrackingList<RoutePolicyStatementPatchProperties>();
+            Statements = new ChangeTrackingList<RoutePolicyStatementProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoutePolicyPatchableProperties"/>. </summary>
         /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
         /// <param name="statements"> Route Policy statements. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutePolicyPatchableProperties(CommunityActionType? defaultAction, IList<RoutePolicyStatementPatchProperties> statements, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutePolicyPatchableProperties(CommunityActionType? defaultAction, IList<RoutePolicyStatementProperties> statements, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DefaultAction = defaultAction;
             Statements = statements;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public CommunityActionType? DefaultAction { get; set; }
 
         /// <summary> Route Policy statements. </summary>
-        public IList<RoutePolicyStatementPatchProperties> Statements { get; } = new ChangeTrackingList<RoutePolicyStatementPatchProperties>();
+        public IList<RoutePolicyStatementProperties> Statements { get; } = new ChangeTrackingList<RoutePolicyStatementProperties>();
     }
 }

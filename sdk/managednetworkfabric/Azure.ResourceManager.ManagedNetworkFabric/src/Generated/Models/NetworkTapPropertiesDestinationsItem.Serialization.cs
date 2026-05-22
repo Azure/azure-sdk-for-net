@@ -14,17 +14,12 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The network tap destination properties. </summary>
-    public partial class NetworkTapPropertiesDestinationsItem : IJsonModel<NetworkTapPropertiesDestinationsItem>
+    /// <summary> The NetworkTapPropertiesDestinationsItem. </summary>
+    public partial class NetworkTapPropertiesDestinationsItem : NetworkTapDestinationProperties, IJsonModel<NetworkTapPropertiesDestinationsItem>
     {
-        /// <summary> Initializes a new instance of <see cref="NetworkTapPropertiesDestinationsItem"/> for deserialization. </summary>
-        internal NetworkTapPropertiesDestinationsItem()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetworkTapPropertiesDestinationsItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override NetworkTapDestinationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkTapPropertiesDestinationsItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -40,7 +35,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkTapPropertiesDestinationsItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -57,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkTapPropertiesDestinationsItem IPersistableModel<NetworkTapPropertiesDestinationsItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NetworkTapPropertiesDestinationsItem IPersistableModel<NetworkTapPropertiesDestinationsItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkTapPropertiesDestinationsItem)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NetworkTapPropertiesDestinationsItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -73,53 +68,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkTapPropertiesDestinationsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkTapPropertiesDestinationsItem)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("destinationType"u8);
-            writer.WriteStringValue(DestinationType.ToString());
-            writer.WritePropertyName("destinationId"u8);
-            writer.WriteStringValue(DestinationId);
-            if (Optional.IsDefined(IsolationDomainProperties))
-            {
-                writer.WritePropertyName("isolationDomainProperties"u8);
-                writer.WriteObjectValue(IsolationDomainProperties, options);
-            }
-            if (Optional.IsDefined(DestinationTapRuleId))
-            {
-                writer.WritePropertyName("destinationTapRuleId"u8);
-                writer.WriteStringValue(DestinationTapRuleId);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkTapPropertiesDestinationsItem IJsonModel<NetworkTapPropertiesDestinationsItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NetworkTapPropertiesDestinationsItem IJsonModel<NetworkTapPropertiesDestinationsItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkTapPropertiesDestinationsItem)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NetworkTapPropertiesDestinationsItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override NetworkTapDestinationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkTapPropertiesDestinationsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -139,7 +104,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             string name = default;
-            NetworkTapDestinationType destinationType = default;
+            NetworkTapDestinationType? destinationType = default;
             ResourceIdentifier destinationId = default;
             IsolationDomainProperties isolationDomainProperties = default;
             ResourceIdentifier destinationTapRuleId = default;

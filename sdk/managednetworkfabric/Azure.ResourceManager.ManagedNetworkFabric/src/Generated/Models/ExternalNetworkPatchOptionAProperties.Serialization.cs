@@ -15,11 +15,11 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> option A properties object. </summary>
-    public partial class ExternalNetworkPatchOptionAProperties : IJsonModel<ExternalNetworkPatchOptionAProperties>
+    public partial class ExternalNetworkPatchOptionAProperties : Layer3IPPrefixProperties, IJsonModel<ExternalNetworkPatchOptionAProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExternalNetworkPatchOptionAProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override Layer3IPPrefixProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ExternalNetworkPatchOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ExternalNetworkPatchOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExternalNetworkPatchOptionAProperties IPersistableModel<ExternalNetworkPatchOptionAProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ExternalNetworkPatchOptionAProperties IPersistableModel<ExternalNetworkPatchOptionAProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExternalNetworkPatchOptionAProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ExternalNetworkPatchOptionAProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -68,33 +68,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ExternalNetworkPatchOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExternalNetworkPatchOptionAProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(PrimaryIpv4Prefix))
-            {
-                writer.WritePropertyName("primaryIpv4Prefix"u8);
-                writer.WriteStringValue(PrimaryIpv4Prefix);
-            }
-            if (Optional.IsDefined(PrimaryIpv6Prefix))
-            {
-                writer.WritePropertyName("primaryIpv6Prefix"u8);
-                writer.WriteStringValue(PrimaryIpv6Prefix);
-            }
-            if (Optional.IsDefined(SecondaryIpv4Prefix))
-            {
-                writer.WritePropertyName("secondaryIpv4Prefix"u8);
-                writer.WriteStringValue(SecondaryIpv4Prefix);
-            }
-            if (Optional.IsDefined(SecondaryIpv6Prefix))
-            {
-                writer.WritePropertyName("secondaryIpv6Prefix"u8);
-                writer.WriteStringValue(SecondaryIpv6Prefix);
-            }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Mtu))
             {
                 writer.WritePropertyName("mtu"u8);
@@ -155,30 +136,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("nativeIpv6PrefixLimit"u8);
                 writer.WriteObjectValue(NativeIpv6PrefixLimit, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExternalNetworkPatchOptionAProperties IJsonModel<ExternalNetworkPatchOptionAProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ExternalNetworkPatchOptionAProperties IJsonModel<ExternalNetworkPatchOptionAProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExternalNetworkPatchOptionAProperties)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExternalNetworkPatchOptionAProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override Layer3IPPrefixProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ExternalNetworkPatchOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -201,6 +167,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string primaryIpv6Prefix = default;
             string secondaryIpv4Prefix = default;
             string secondaryIpv6Prefix = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? mtu = default;
             int? vlanId = default;
             long? fabricASN = default;
@@ -213,7 +180,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             V6OverV4BgpSessionState? v6OverV4BgpSession = default;
             NativeIpv4PrefixLimitPatchProperties nativeIpv4PrefixLimit = default;
             NativeIpv6PrefixLimitPatchProperties nativeIpv6PrefixLimit = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("primaryIpv4Prefix"u8))
@@ -354,6 +320,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 primaryIpv6Prefix,
                 secondaryIpv4Prefix,
                 secondaryIpv6Prefix,
+                additionalBinaryDataProperties,
                 mtu,
                 vlanId,
                 fabricASN,
@@ -365,8 +332,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 v4OverV6BgpSession,
                 v6OverV4BgpSession,
                 nativeIpv4PrefixLimit,
-                nativeIpv6PrefixLimit,
-                additionalBinaryDataProperties);
+                nativeIpv6PrefixLimit);
         }
     }
 }

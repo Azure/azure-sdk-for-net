@@ -17,11 +17,11 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network To Network Interconnect resource patch definition. </summary>
-    public partial class NetworkToNetworkInterconnectPatch : ProxyResourceBase, IJsonModel<NetworkToNetworkInterconnectPatch>
+    public partial class NetworkToNetworkInterconnectPatch : ResourceData, IJsonModel<NetworkToNetworkInterconnectPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProxyResourceBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProxyResourceBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -121,7 +121,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            string @type = default;
+            string name = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             NetworkToNetworkInterconnectPatchProperties properties = default;
@@ -136,9 +137,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -164,7 +174,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkToNetworkInterconnectPatch(id, @type, systemData, additionalBinaryDataProperties, properties);
+            return new NetworkToNetworkInterconnectPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties,
+                properties);
         }
     }
 }

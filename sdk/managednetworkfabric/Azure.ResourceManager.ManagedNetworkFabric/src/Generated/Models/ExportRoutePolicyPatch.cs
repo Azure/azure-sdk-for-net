@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
-    public partial class ExportRoutePolicyPatch
+    internal partial class ExportRoutePolicyPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -13,12 +13,12 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Peering optionA properties. </summary>
-    public partial class VpnConfigurationPatchableOptionAProperties : Layer3IPPrefixPatchProperties, IJsonModel<VpnConfigurationPatchableOptionAProperties>
+    /// <summary> The VpnConfigurationPatchableOptionAProperties. </summary>
+    public partial class VpnConfigurationPatchableOptionAProperties : OptionAProperties, IJsonModel<VpnConfigurationPatchableOptionAProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Layer3IPPrefixPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override Layer3IPPrefixProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VpnConfigurationPatchableOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -75,26 +75,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(VpnConfigurationPatchableOptionAProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Mtu))
-            {
-                writer.WritePropertyName("mtu"u8);
-                writer.WriteNumberValue(Mtu.Value);
-            }
-            if (Optional.IsDefined(VlanId))
-            {
-                writer.WritePropertyName("vlanId"u8);
-                writer.WriteNumberValue(VlanId.Value);
-            }
-            if (Optional.IsDefined(PeerASN))
-            {
-                writer.WritePropertyName("peerASN"u8);
-                writer.WriteNumberValue(PeerASN.Value);
-            }
-            if (Optional.IsDefined(BfdConfiguration))
-            {
-                writer.WritePropertyName("bfdConfiguration"u8);
-                writer.WriteObjectValue(BfdConfiguration, options);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -103,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Layer3IPPrefixPatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override Layer3IPPrefixProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VpnConfigurationPatchableOptionAProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -129,8 +109,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? mtu = default;
             int? vlanId = default;
-            long? peerASN = default;
-            BfdPatchConfiguration bfdConfiguration = default;
+            long peerASN = default;
+            BfdConfiguration bfdConfiguration = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("primaryIpv4Prefix"u8))
@@ -164,19 +144,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("vlanId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     vlanId = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("peerASN"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     peerASN = prop.Value.GetInt64();
                     continue;
                 }
@@ -186,7 +158,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bfdConfiguration = BfdPatchConfiguration.DeserializeBfdPatchConfiguration(prop.Value, options);
+                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

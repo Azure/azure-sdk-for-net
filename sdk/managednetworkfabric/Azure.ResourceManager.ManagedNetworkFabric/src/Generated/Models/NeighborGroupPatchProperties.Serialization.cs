@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             string annotation = default;
-            NeighborGroupDestinationPatch destination = default;
+            NeighborGroupDestination destination = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    destination = NeighborGroupDestinationPatch.DeserializeNeighborGroupDestinationPatch(prop.Value, options);
+                    destination = NeighborGroupDestination.DeserializeNeighborGroupDestination(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

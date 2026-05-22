@@ -330,8 +330,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string ipv4Prefix = default;
             string ipv6Prefix = default;
             long fabricASN = default;
-            NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration = default;
-            ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration = default;
+            TerminalServerConfiguration terminalServerConfiguration = default;
+            ManagementNetworkConfigurationProperties managementNetworkConfiguration = default;
             IReadOnlyList<string> racks = default;
             IReadOnlyList<string> l2IsolationDomains = default;
             IReadOnlyList<string> l3IsolationDomains = default;
@@ -446,12 +446,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("terminalServerConfiguration"u8))
                 {
-                    terminalServerConfiguration = NetworkFabricPatchablePropertiesTerminalServerConfiguration.DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(prop.Value, options);
+                    terminalServerConfiguration = TerminalServerConfiguration.DeserializeTerminalServerConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("managementNetworkConfiguration"u8))
                 {
-                    managementNetworkConfiguration = ManagementNetworkConfigurationPatchableProperties.DeserializeManagementNetworkConfigurationPatchableProperties(prop.Value, options);
+                    managementNetworkConfiguration = ManagementNetworkConfigurationProperties.DeserializeManagementNetworkConfigurationProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("racks"u8))

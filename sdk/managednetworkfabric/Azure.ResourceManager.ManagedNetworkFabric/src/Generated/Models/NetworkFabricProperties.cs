@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="terminalServerConfiguration"> Network and credentials configuration currently applied to terminal server. </param>
         /// <param name="managementNetworkConfiguration"> Configuration to be used to setup the management network. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSku"/>, <paramref name="networkFabricControllerId"/>, <paramref name="ipv4Prefix"/>, <paramref name="terminalServerConfiguration"/> or <paramref name="managementNetworkConfiguration"/> is null. </exception>
-        public NetworkFabricProperties(string networkFabricSku, ResourceIdentifier networkFabricControllerId, int serverCountPerRack, string ipv4Prefix, long fabricASN, NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration)
+        public NetworkFabricProperties(string networkFabricSku, ResourceIdentifier networkFabricControllerId, int serverCountPerRack, string ipv4Prefix, long fabricASN, TerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationProperties managementNetworkConfiguration)
         {
             Argument.AssertNotNull(networkFabricSku, nameof(networkFabricSku));
             Argument.AssertNotNull(networkFabricControllerId, nameof(networkFabricControllerId));
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="qosConfiguration"> NetworkFabric QoS Configuration. </param>
-        internal NetworkFabricProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, string networkFabricSku, string fabricVersion, IReadOnlyList<string> routerIds, StorageAccountConfiguration storageAccountConfiguration, IReadOnlyList<FabricLockProperties> fabricLocks, ResourceIdentifier networkFabricControllerId, int? rackCount, int serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long fabricASN, NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration, IReadOnlyList<string> racks, IReadOnlyList<string> l2IsolationDomains, IReadOnlyList<string> l3IsolationDomains, int? hardwareAlertThreshold, IList<ResourceIdentifier> controlPlaneAcls, IList<FeatureFlagProperties> featureFlags, IList<ResourceIdentifier> trustedIpPrefixes, UniqueRouteDistinguisherProperties uniqueRdConfiguration, int? storageArrayCount, IReadOnlyList<string> activeCommitBatches, SecretRotationSummary secretRotationSummary, LastOperationProperties lastOperation, AuthorizedTransceiverProperties authorizedTransceiver, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, QosProperties qosConfiguration) : base(annotation, additionalBinaryDataProperties)
+        internal NetworkFabricProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, string networkFabricSku, string fabricVersion, IReadOnlyList<string> routerIds, StorageAccountConfiguration storageAccountConfiguration, IReadOnlyList<FabricLockProperties> fabricLocks, ResourceIdentifier networkFabricControllerId, int? rackCount, int serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long fabricASN, TerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationProperties managementNetworkConfiguration, IReadOnlyList<string> racks, IReadOnlyList<string> l2IsolationDomains, IReadOnlyList<string> l3IsolationDomains, int? hardwareAlertThreshold, IList<ResourceIdentifier> controlPlaneAcls, IList<FeatureFlagProperties> featureFlags, IList<ResourceIdentifier> trustedIpPrefixes, UniqueRouteDistinguisherProperties uniqueRdConfiguration, int? storageArrayCount, IReadOnlyList<string> activeCommitBatches, SecretRotationSummary secretRotationSummary, LastOperationProperties lastOperation, AuthorizedTransceiverProperties authorizedTransceiver, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, QosProperties qosConfiguration) : base(annotation, additionalBinaryDataProperties)
         {
             NetworkFabricSku = networkFabricSku;
             FabricVersion = fabricVersion;
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public long FabricASN { get; set; }
 
         /// <summary> Network and credentials configuration currently applied to terminal server. </summary>
-        public NetworkFabricPatchablePropertiesTerminalServerConfiguration TerminalServerConfiguration { get; set; }
+        public TerminalServerConfiguration TerminalServerConfiguration { get; set; }
 
         /// <summary> Configuration to be used to setup the management network. </summary>
-        public ManagementNetworkConfigurationPatchableProperties ManagementNetworkConfiguration { get; set; }
+        public ManagementNetworkConfigurationProperties ManagementNetworkConfiguration { get; set; }
 
         /// <summary> List of NetworkRack resource IDs under the Network Fabric. The number of racks allowed depends on the Network Fabric SKU. </summary>
         public IReadOnlyList<string> Racks { get; } = new ChangeTrackingList<string>();

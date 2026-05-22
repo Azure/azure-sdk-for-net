@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public AggregateRouteConfiguration AggregateRouteConfiguration { get; set; }
 
         /// <summary> Connected Subnet RoutePolicy. </summary>
-        internal ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy { get; set; }
+        public ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy { get; set; }
 
         /// <summary> ARM Resource ID of the Network Fabric. </summary>
         public ResourceIdentifier NetworkFabricId { get; set; }
@@ -109,23 +109,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Administrative state of the resource. </summary>
         public NetworkFabricAdministrativeState? AdministrativeState { get; }
-
-        /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
-        public L3ExportRoutePolicy ExportRoutePolicy
-        {
-            get
-            {
-                return ConnectedSubnetRoutePolicy is null ? default : ConnectedSubnetRoutePolicy.ExportRoutePolicy;
-            }
-            set
-            {
-                if (ConnectedSubnetRoutePolicy is null)
-                {
-                    ConnectedSubnetRoutePolicy = new ConnectedSubnetRoutePolicy();
-                }
-                ConnectedSubnetRoutePolicy.ExportRoutePolicy = value;
-            }
-        }
 
         /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
         public L3ExportRoutePolicy StaticExportRoutePolicy

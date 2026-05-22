@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Route Policy patch resource definition. </summary>
-    public partial class NetworkFabricRoutePolicyPatch : TagsUpdate
+    public partial class NetworkFabricRoutePolicyPatch : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyPatch"/>. </summary>
         public NetworkFabricRoutePolicyPatch()
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Route Policy statements. </summary>
-        public IList<RoutePolicyStatementPatchProperties> Statements
+        public IList<RoutePolicyStatementProperties> Statements
         {
             get
             {

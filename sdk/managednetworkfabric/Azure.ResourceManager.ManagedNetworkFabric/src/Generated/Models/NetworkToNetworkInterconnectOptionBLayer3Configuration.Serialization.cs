@@ -13,8 +13,8 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> OptionB Layer3 Configuration properties. </summary>
-    public partial class NetworkToNetworkInterconnectOptionBLayer3Configuration : Layer3IPPrefixProperties, IJsonModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>
+    /// <summary> The NetworkToNetworkInterconnectOptionBLayer3Configuration. </summary>
+    public partial class NetworkToNetworkInterconnectOptionBLayer3Configuration : OptionBLayer3Configuration, IJsonModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -75,45 +75,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectOptionBLayer3Configuration)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("peerASN"u8);
-            writer.WriteNumberValue(PeerASN);
-            writer.WritePropertyName("vlanId"u8);
-            writer.WriteNumberValue(VlanId);
-            if (options.Format != "W" && Optional.IsDefined(FabricASN))
-            {
-                writer.WritePropertyName("fabricASN"u8);
-                writer.WriteNumberValue(FabricASN.Value);
-            }
-            if (Optional.IsCollectionDefined(PeLoopbackIpAddress))
-            {
-                writer.WritePropertyName("peLoopbackIpAddress"u8);
-                writer.WriteStartArray();
-                foreach (string item in PeLoopbackIpAddress)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(BmpConfiguration))
-            {
-                writer.WritePropertyName("bmpConfiguration"u8);
-                writer.WriteObjectValue(BmpConfiguration, options);
-            }
-            if (Optional.IsCollectionDefined(PrefixLimits))
-            {
-                writer.WritePropertyName("prefixLimits"u8);
-                writer.WriteStartArray();
-                foreach (OptionBLayer3PrefixLimitProperties item in PrefixLimits)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -147,7 +108,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string secondaryIpv6Prefix = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long peerASN = default;
-            int vlanId = default;
+            int? vlanId = default;
             long? fabricASN = default;
             IList<string> peLoopbackIpAddress = default;
             NniBmpProperties bmpConfiguration = default;

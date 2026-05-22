@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(VendorOsVersion))
+            if (Optional.IsDefined(VendorOSVersion))
             {
                 writer.WritePropertyName("vendorOsVersion"u8);
-                writer.WriteStringValue(VendorOsVersion);
+                writer.WriteStringValue(VendorOSVersion);
             }
             if (Optional.IsDefined(VendorFirmwareVersion))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             string version = default;
-            string vendorOsVersion = default;
+            string vendorOSVersion = default;
             string vendorFirmwareVersion = default;
             NetworkFabricBooleanValue? isDefault = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("vendorOsVersion"u8))
                 {
-                    vendorOsVersion = prop.Value.GetString();
+                    vendorOSVersion = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("vendorFirmwareVersion"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SupportedVersionProperties(version, vendorOsVersion, vendorFirmwareVersion, isDefault, additionalBinaryDataProperties);
+            return new SupportedVersionProperties(version, vendorOSVersion, vendorFirmwareVersion, isDefault, additionalBinaryDataProperties);
         }
     }
 }

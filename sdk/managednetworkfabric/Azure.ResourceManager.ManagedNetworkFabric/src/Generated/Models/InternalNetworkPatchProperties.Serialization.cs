@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("connectedIPv4Subnets"u8);
                 writer.WriteStartArray();
-                foreach (ConnectedSubnetPatch item in ConnectedIPv4Subnets)
+                foreach (ConnectedSubnet item in ConnectedIPv4Subnets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("connectedIPv6Subnets"u8);
                 writer.WriteStartArray();
-                foreach (ConnectedSubnetPatch item in ConnectedIPv6Subnets)
+                foreach (ConnectedSubnet item in ConnectedIPv6Subnets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -194,15 +194,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             string annotation = default;
             int? mtu = default;
-            IList<ConnectedSubnetPatch> connectedIPv4Subnets = default;
-            IList<ConnectedSubnetPatch> connectedIPv6Subnets = default;
+            IList<ConnectedSubnet> connectedIPv4Subnets = default;
+            IList<ConnectedSubnet> connectedIPv6Subnets = default;
             ImportRoutePolicy importRoutePolicy = default;
             ExportRoutePolicy exportRoutePolicy = default;
             ResourceIdentifier ingressAclId = default;
             ResourceIdentifier egressAclId = default;
             IsMonitoringEnabled? isMonitoringEnabled = default;
-            BgpPatchConfiguration bgpConfiguration = default;
-            StaticRoutePatchConfiguration staticRouteConfiguration = default;
+            BgpConfiguration bgpConfiguration = default;
+            StaticRouteConfiguration staticRouteConfiguration = default;
             NativeIpv4PrefixLimitPatchProperties nativeIpv4PrefixLimit = default;
             NativeIpv6PrefixLimitPatchProperties nativeIpv6PrefixLimit = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -228,10 +228,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<ConnectedSubnetPatch> array = new List<ConnectedSubnetPatch>();
+                    List<ConnectedSubnet> array = new List<ConnectedSubnet>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConnectedSubnetPatch.DeserializeConnectedSubnetPatch(item, options));
+                        array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item, options));
                     }
                     connectedIPv4Subnets = array;
                     continue;
@@ -242,10 +242,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<ConnectedSubnetPatch> array = new List<ConnectedSubnetPatch>();
+                    List<ConnectedSubnet> array = new List<ConnectedSubnet>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConnectedSubnetPatch.DeserializeConnectedSubnetPatch(item, options));
+                        array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item, options));
                     }
                     connectedIPv6Subnets = array;
                     continue;
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bgpConfiguration = BgpPatchConfiguration.DeserializeBgpPatchConfiguration(prop.Value, options);
+                    bgpConfiguration = BgpConfiguration.DeserializeBgpConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("staticRouteConfiguration"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    staticRouteConfiguration = StaticRoutePatchConfiguration.DeserializeStaticRoutePatchConfiguration(prop.Value, options);
+                    staticRouteConfiguration = StaticRouteConfiguration.DeserializeStaticRouteConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("nativeIpv4PrefixLimit"u8))
@@ -339,8 +339,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new InternalNetworkPatchProperties(
                 annotation,
                 mtu,
-                connectedIPv4Subnets ?? new ChangeTrackingList<ConnectedSubnetPatch>(),
-                connectedIPv6Subnets ?? new ChangeTrackingList<ConnectedSubnetPatch>(),
+                connectedIPv4Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
+                connectedIPv6Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
                 importRoutePolicy,
                 exportRoutePolicy,
                 ingressAclId,

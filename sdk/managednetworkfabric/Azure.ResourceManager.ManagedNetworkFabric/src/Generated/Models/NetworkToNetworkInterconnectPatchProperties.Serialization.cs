@@ -162,12 +162,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Layer2ConfigurationPatch layer2Configuration = default;
-            OptionBLayer3ConfigurationPatchProperties optionBLayer3Configuration = default;
-            NpbStaticRouteConfigurationPatch npbStaticRouteConfiguration = default;
+            Layer2Configuration layer2Configuration = default;
+            OptionBLayer3Configuration optionBLayer3Configuration = default;
+            NpbStaticRouteConfiguration npbStaticRouteConfiguration = default;
             NniStaticRoutePatchConfiguration staticRouteConfiguration = default;
-            ImportRoutePolicyInformationPatch importRoutePolicy = default;
-            ExportRoutePolicyInformationPatch exportRoutePolicy = default;
+            ImportRoutePolicyInformation importRoutePolicy = default;
+            ExportRoutePolicyInformation exportRoutePolicy = default;
             ResourceIdentifier egressAclId = default;
             ResourceIdentifier ingressAclId = default;
             MicroBfdState? microBfdState = default;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    layer2Configuration = Layer2ConfigurationPatch.DeserializeLayer2ConfigurationPatch(prop.Value, options);
+                    layer2Configuration = Layer2Configuration.DeserializeLayer2Configuration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("optionBLayer3Configuration"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionBLayer3Configuration = OptionBLayer3ConfigurationPatchProperties.DeserializeOptionBLayer3ConfigurationPatchProperties(prop.Value, options);
+                    optionBLayer3Configuration = OptionBLayer3Configuration.DeserializeOptionBLayer3Configuration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("npbStaticRouteConfiguration"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    npbStaticRouteConfiguration = NpbStaticRouteConfigurationPatch.DeserializeNpbStaticRouteConfigurationPatch(prop.Value, options);
+                    npbStaticRouteConfiguration = NpbStaticRouteConfiguration.DeserializeNpbStaticRouteConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("staticRouteConfiguration"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    importRoutePolicy = ImportRoutePolicyInformationPatch.DeserializeImportRoutePolicyInformationPatch(prop.Value, options);
+                    importRoutePolicy = ImportRoutePolicyInformation.DeserializeImportRoutePolicyInformation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("exportRoutePolicy"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    exportRoutePolicy = ExportRoutePolicyInformationPatch.DeserializeExportRoutePolicyInformationPatch(prop.Value, options);
+                    exportRoutePolicy = ExportRoutePolicyInformation.DeserializeExportRoutePolicyInformation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("egressAclId"u8))

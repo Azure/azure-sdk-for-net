@@ -13,14 +13,9 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> option A properties. </summary>
-    public partial class VpnConfigurationOptionAProperties : Layer3IPPrefixProperties, IJsonModel<VpnConfigurationOptionAProperties>
+    /// <summary> The VpnConfigurationOptionAProperties. </summary>
+    public partial class VpnConfigurationOptionAProperties : OptionAProperties, IJsonModel<VpnConfigurationOptionAProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="VpnConfigurationOptionAProperties"/> for deserialization. </summary>
-        internal VpnConfigurationOptionAProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override Layer3IPPrefixProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -80,20 +75,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(VpnConfigurationOptionAProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Mtu))
-            {
-                writer.WritePropertyName("mtu"u8);
-                writer.WriteNumberValue(Mtu.Value);
-            }
-            writer.WritePropertyName("vlanId"u8);
-            writer.WriteNumberValue(VlanId);
-            writer.WritePropertyName("peerASN"u8);
-            writer.WriteNumberValue(PeerASN);
-            if (Optional.IsDefined(BfdConfiguration))
-            {
-                writer.WritePropertyName("bfdConfiguration"u8);
-                writer.WriteObjectValue(BfdConfiguration, options);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -127,7 +108,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string secondaryIpv6Prefix = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? mtu = default;
-            int vlanId = default;
+            int? vlanId = default;
             long peerASN = default;
             BfdConfiguration bfdConfiguration = default;
             foreach (var prop in element.EnumerateObject())

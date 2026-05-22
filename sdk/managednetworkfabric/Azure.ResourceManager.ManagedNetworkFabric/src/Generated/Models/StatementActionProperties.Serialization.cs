@@ -86,15 +86,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
-            if (Optional.IsDefined(IpCommunityProperties))
+            if (Optional.IsDefined(IPCommunityProperties))
             {
                 writer.WritePropertyName("ipCommunityProperties"u8);
-                writer.WriteObjectValue(IpCommunityProperties, options);
+                writer.WriteObjectValue(IPCommunityProperties, options);
             }
-            if (Optional.IsDefined(IpExtendedCommunityProperties))
+            if (Optional.IsDefined(IPExtendedCommunityProperties))
             {
                 writer.WritePropertyName("ipExtendedCommunityProperties"u8);
-                writer.WriteObjectValue(IpExtendedCommunityProperties, options);
+                writer.WriteObjectValue(IPExtendedCommunityProperties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

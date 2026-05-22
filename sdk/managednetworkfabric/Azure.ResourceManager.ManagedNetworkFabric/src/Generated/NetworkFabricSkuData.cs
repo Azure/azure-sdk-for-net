@@ -51,24 +51,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary> Maximum number of compute racks available for this Network Fabric SKU. The value of max count racks is 4 for 4 rack SKU and 8 for 8 rack SKU. </summary>
-        public int? MaxComputeRacks
-        {
-            get
-            {
-                return Properties.MaxComputeRacks;
-            }
-        }
-
-        /// <summary> Maximum number of servers available for this Network Fabric SKU. </summary>
-        public int? MaximumServerCount
-        {
-            get
-            {
-                return Properties.MaximumServerCount;
-            }
-        }
-
         /// <summary> List of supported Network Fabric SKU versions. </summary>
         public IReadOnlyList<string> SupportedVersions
         {

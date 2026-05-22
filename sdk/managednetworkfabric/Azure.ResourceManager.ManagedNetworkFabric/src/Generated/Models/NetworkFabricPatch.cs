@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Network Fabric resource definition. </summary>
-    public partial class NetworkFabricPatch : TagsUpdate
+    public partial class NetworkFabricPatch : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricPatch"/>. </summary>
         public NetworkFabricPatch()
@@ -135,40 +135,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     Properties = new NetworkFabricPatchProperties();
                 }
                 Properties.FabricASN = value;
-            }
-        }
-
-        /// <summary> Network and credentials configuration already applied to terminal server. </summary>
-        public TerminalServerPatchableProperties TerminalServerConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TerminalServerConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkFabricPatchProperties();
-                }
-                Properties.TerminalServerConfiguration = value;
-            }
-        }
-
-        /// <summary> Configuration to be used to setup the management network. </summary>
-        public ManagementNetworkPatchConfiguration ManagementNetworkConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ManagementNetworkConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkFabricPatchProperties();
-                }
-                Properties.ManagementNetworkConfiguration = value;
             }
         }
 

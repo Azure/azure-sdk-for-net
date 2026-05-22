@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfaceProperties"/>. </summary>
-        internal NetworkDeviceInterfaceProperties()
+        public NetworkDeviceInterfaceProperties()
         {
             SupportedConnectorTypes = new ChangeTrackingList<SupportedConnectorProperties>();
         }
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Interface identifier. Example: HundredGigE0/0. </summary>
-        public string Identifier { get; }
+        public string Identifier { get; set; }
 
         /// <summary> Interface type. </summary>
-        public string InterfaceType { get; }
+        public string InterfaceType { get; set; }
 
         /// <summary> List of supported connector types. </summary>
         public IList<SupportedConnectorProperties> SupportedConnectorTypes { get; }

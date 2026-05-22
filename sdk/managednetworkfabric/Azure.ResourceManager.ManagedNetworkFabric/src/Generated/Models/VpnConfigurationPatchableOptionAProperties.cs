@@ -10,11 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Peering optionA properties. </summary>
-    public partial class VpnConfigurationPatchableOptionAProperties : Layer3IPPrefixPatchProperties
+    /// <summary> The VpnConfigurationPatchableOptionAProperties. </summary>
+    public partial class VpnConfigurationPatchableOptionAProperties : OptionAProperties
     {
         /// <summary> Initializes a new instance of <see cref="VpnConfigurationPatchableOptionAProperties"/>. </summary>
-        public VpnConfigurationPatchableOptionAProperties()
+        /// <param name="vlanId"> Vlan Id.Example : 501. </param>
+        /// <param name="peerASN"> Peer ASN number.Example : 28. </param>
+        public VpnConfigurationPatchableOptionAProperties(int? vlanId, long peerASN) : base(vlanId, peerASN)
         {
         }
 
@@ -28,24 +30,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="vlanId"> Vlan Id.Example : 501. </param>
         /// <param name="peerASN"> Peer ASN number.Example : 28. </param>
         /// <param name="bfdConfiguration"> BFD Configuration properties. </param>
-        internal VpnConfigurationPatchableOptionAProperties(string primaryIpv4Prefix, string primaryIpv6Prefix, string secondaryIpv4Prefix, string secondaryIpv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? mtu, int? vlanId, long? peerASN, BfdPatchConfiguration bfdConfiguration) : base(primaryIpv4Prefix, primaryIpv6Prefix, secondaryIpv4Prefix, secondaryIpv6Prefix, additionalBinaryDataProperties)
+        internal VpnConfigurationPatchableOptionAProperties(string primaryIpv4Prefix, string primaryIpv6Prefix, string secondaryIpv4Prefix, string secondaryIpv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? mtu, int? vlanId, long peerASN, BfdConfiguration bfdConfiguration) : base(primaryIpv4Prefix, primaryIpv6Prefix, secondaryIpv4Prefix, secondaryIpv6Prefix, additionalBinaryDataProperties, mtu, vlanId, peerASN, bfdConfiguration)
         {
-            Mtu = mtu;
-            VlanId = vlanId;
-            PeerASN = peerASN;
-            BfdConfiguration = bfdConfiguration;
         }
-
-        /// <summary> MTU to use for option A peering. </summary>
-        public int? Mtu { get; set; }
-
-        /// <summary> Vlan Id.Example : 501. </summary>
-        public int? VlanId { get; set; }
-
-        /// <summary> Peer ASN number.Example : 28. </summary>
-        public long? PeerASN { get; set; }
-
-        /// <summary> BFD Configuration properties. </summary>
-        public BfdPatchConfiguration BfdConfiguration { get; set; }
     }
 }

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of Connected IPv4 Subnets. </summary>
-        public IList<ConnectedSubnetPatch> ConnectedIPv4Subnets
+        public IList<ConnectedSubnet> ConnectedIPv4Subnets
         {
             get
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of connected IPv6 Subnets. </summary>
-        public IList<ConnectedSubnetPatch> ConnectedIPv6Subnets
+        public IList<ConnectedSubnet> ConnectedIPv6Subnets
         {
             get
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> BGP configuration properties. </summary>
-        public BgpPatchConfiguration BgpConfiguration
+        public BgpConfiguration BgpConfiguration
         {
             get
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Static Route Configuration properties. </summary>
-        public StaticRoutePatchConfiguration StaticRouteConfiguration
+        public StaticRouteConfiguration StaticRouteConfiguration
         {
             get
             {

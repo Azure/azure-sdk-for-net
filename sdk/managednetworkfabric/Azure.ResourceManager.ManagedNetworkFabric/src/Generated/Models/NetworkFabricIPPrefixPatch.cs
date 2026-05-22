@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The IP Prefix patch resource definition. </summary>
-    public partial class NetworkFabricIPPrefixPatch : TagsUpdate
+    public partial class NetworkFabricIPPrefixPatch : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPPrefixPatch"/>. </summary>
         public NetworkFabricIPPrefixPatch()

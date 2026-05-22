@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="featureFlags"> NetworkFabric feature flag configuration information. </param>
         /// <param name="authorizedTransceiver"> Authorized transciever configuration for NetworkFabric. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricPatchProperties(string annotation, int? rackCount, int? serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long? fabricASN, TerminalServerPatchableProperties terminalServerConfiguration, ManagementNetworkPatchConfiguration managementNetworkConfiguration, StorageAccountPatchConfiguration storageAccountConfiguration, int? hardwareAlertThreshold, IList<ResourceIdentifier> controlPlaneAcls, IList<ResourceIdentifier> trustedIpPrefixes, UniqueRouteDistinguisherPatchProperties uniqueRdConfiguration, QosPatchProperties qosConfiguration, IList<FeatureFlagProperties> featureFlags, AuthorizedTransceiverPatchProperties authorizedTransceiver, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkFabricPatchProperties(string annotation, int? rackCount, int? serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long? fabricASN, NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration, StorageAccountPatchConfiguration storageAccountConfiguration, int? hardwareAlertThreshold, IList<ResourceIdentifier> controlPlaneAcls, IList<ResourceIdentifier> trustedIpPrefixes, UniqueRouteDistinguisherPatchProperties uniqueRdConfiguration, QosPatchProperties qosConfiguration, IList<FeatureFlagProperties> featureFlags, AuthorizedTransceiverPatchProperties authorizedTransceiver, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             RackCount = rackCount;
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public long? FabricASN { get; set; }
 
         /// <summary> Network and credentials configuration already applied to terminal server. </summary>
-        public TerminalServerPatchableProperties TerminalServerConfiguration { get; set; }
+        public NetworkFabricPatchablePropertiesTerminalServerConfiguration TerminalServerConfiguration { get; set; }
 
         /// <summary> Configuration to be used to setup the management network. </summary>
-        public ManagementNetworkPatchConfiguration ManagementNetworkConfiguration { get; set; }
+        public ManagementNetworkConfigurationPatchableProperties ManagementNetworkConfiguration { get; set; }
 
         /// <summary> Bring your own storage account configurations for Network Fabric. </summary>
         public StorageAccountPatchConfiguration StorageAccountConfiguration { get; set; }

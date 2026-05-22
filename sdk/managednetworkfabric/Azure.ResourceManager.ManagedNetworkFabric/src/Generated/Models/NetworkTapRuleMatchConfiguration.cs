@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             MatchConfigurationName = matchConfigurationName;
             SequenceNumber = sequenceNumber;
-            IpAddressType = ipAddressType;
+            IPAddressType = ipAddressType;
             MatchConditions = matchConditions;
             Actions = actions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public long? SequenceNumber { get; set; }
 
         /// <summary> Type of IP Address. IPv4 or IPv6. </summary>
-        public NetworkFabricIPAddressType? IpAddressType { get; set; }
+        public NetworkFabricIPAddressType? IPAddressType { get; set; }
 
         /// <summary> List of the match conditions. </summary>
         public IList<NetworkTapRuleMatchCondition> MatchConditions { get; }

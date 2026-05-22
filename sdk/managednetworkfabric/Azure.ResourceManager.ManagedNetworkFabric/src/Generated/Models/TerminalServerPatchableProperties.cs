@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TerminalServerPatchableProperties"/>. </summary>
-        public TerminalServerPatchableProperties()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TerminalServerPatchableProperties"/>. </summary>
         /// <param name="username"> Username for the terminal server connection. </param>
         /// <param name="password"> Password for the terminal server connection. </param>
         /// <param name="serialNumber"> Serial Number of Terminal server. </param>
@@ -41,15 +36,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             SecondaryIpv6Prefix = secondaryIpv6Prefix;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Username for the terminal server connection. </summary>
-        public string Username { get; set; }
-
-        /// <summary> Password for the terminal server connection. </summary>
-        public string Password { get; set; }
-
-        /// <summary> Serial Number of Terminal server. </summary>
-        public string SerialNumber { get; set; }
 
         /// <summary> IPv4 Address Prefix. </summary>
         public string PrimaryIpv4Prefix { get; set; }

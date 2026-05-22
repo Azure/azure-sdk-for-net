@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Extension-NoExtension. </summary>
         private const string NoExtensionValue = "NoExtension";
         /// <summary> Extension-NPB. </summary>
-        private const string NPBValue = "NPB";
+        private const string NpbValue = "NPB";
 
         /// <summary> Initializes a new instance of <see cref="StaticRouteConfigurationExtension"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static StaticRouteConfigurationExtension NoExtension { get; } = new StaticRouteConfigurationExtension(NoExtensionValue);
 
         /// <summary> Extension-NPB. </summary>
-        public static StaticRouteConfigurationExtension NPB { get; } = new StaticRouteConfigurationExtension(NPBValue);
+        public static StaticRouteConfigurationExtension Npb { get; } = new StaticRouteConfigurationExtension(NpbValue);
 
         /// <summary> Determines if two <see cref="StaticRouteConfigurationExtension"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -5,34 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.ResourceManager.ManagedNetworkFabric;
-
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Base tracked resource type for PATCH updates. </summary>
     public partial class TagsUpdate
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="TagsUpdate"/>. </summary>
-        public TagsUpdate()
-        {
-            Tags = new ChangeTrackingDictionary<string, string>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TagsUpdate"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TagsUpdate(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Tags = tags;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
     }
 }

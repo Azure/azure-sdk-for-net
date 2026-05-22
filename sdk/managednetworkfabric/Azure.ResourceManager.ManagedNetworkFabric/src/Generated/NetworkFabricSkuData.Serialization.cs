@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// <summary> The Network Fabric SKU resource definition. </summary>
     public partial class NetworkFabricSkuData : ResourceData, IJsonModel<NetworkFabricSkuData>
     {
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricSkuData"/> for deserialization. </summary>
-        internal NetworkFabricSkuData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

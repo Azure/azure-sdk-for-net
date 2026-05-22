@@ -15,7 +15,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
-    public partial class ExportRoutePolicyPatch : IJsonModel<ExportRoutePolicyPatch>
+    internal partial class ExportRoutePolicyPatch : IJsonModel<ExportRoutePolicyPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

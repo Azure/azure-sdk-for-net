@@ -228,8 +228,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string ipv4Prefix = default;
             string ipv6Prefix = default;
             long? fabricASN = default;
-            TerminalServerPatchableProperties terminalServerConfiguration = default;
-            ManagementNetworkPatchConfiguration managementNetworkConfiguration = default;
+            NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration = default;
+            ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration = default;
             StorageAccountPatchConfiguration storageAccountConfiguration = default;
             int? hardwareAlertThreshold = default;
             IList<ResourceIdentifier> controlPlaneAcls = default;
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    terminalServerConfiguration = TerminalServerPatchableProperties.DeserializeTerminalServerPatchableProperties(prop.Value, options);
+                    terminalServerConfiguration = NetworkFabricPatchablePropertiesTerminalServerConfiguration.DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("managementNetworkConfiguration"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    managementNetworkConfiguration = ManagementNetworkPatchConfiguration.DeserializeManagementNetworkPatchConfiguration(prop.Value, options);
+                    managementNetworkConfiguration = ManagementNetworkConfigurationPatchableProperties.DeserializeManagementNetworkConfigurationPatchableProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("storageAccountConfiguration"u8))

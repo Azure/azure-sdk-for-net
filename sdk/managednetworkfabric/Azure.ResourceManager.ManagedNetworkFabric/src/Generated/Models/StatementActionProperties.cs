@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             LocalPreference = localPreference;
             ActionType = actionType;
-            IpCommunityProperties = ipCommunityProperties;
-            IpExtendedCommunityProperties = ipExtendedCommunityProperties;
+            IPCommunityProperties = ipCommunityProperties;
+            IPExtendedCommunityProperties = ipExtendedCommunityProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public RoutePolicyActionType ActionType { get; set; }
 
         /// <summary> IP Community Properties. </summary>
-        public ActionIPCommunityProperties IpCommunityProperties { get; set; }
+        public ActionIPCommunityProperties IPCommunityProperties { get; set; }
 
         /// <summary> IP Extended Community Properties. </summary>
-        public ActionIPExtendedCommunityProperties IpExtendedCommunityProperties { get; set; }
+        public ActionIPExtendedCommunityProperties IPExtendedCommunityProperties { get; set; }
     }
 }

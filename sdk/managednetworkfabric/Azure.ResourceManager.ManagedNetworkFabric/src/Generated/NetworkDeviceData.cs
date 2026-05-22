@@ -156,15 +156,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary> Reference to network rack resource id. </summary>
-        public string NetworkRackId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NetworkRackId;
-            }
-        }
-
         /// <summary> Management IPv4 Address. </summary>
         public string ManagementIpv4Address
         {

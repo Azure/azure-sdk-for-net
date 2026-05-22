@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The NetworkTapRule resource definition. </summary>
-    public partial class NetworkTapRulePatch : TagsUpdate
+    public partial class NetworkTapRulePatch : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkTapRulePatch"/>. </summary>
         public NetworkTapRulePatch()
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of match configurations. </summary>
-        public IList<NetworkTapRuleMatchConfigurationPatch> MatchConfigurations
+        public IList<NetworkTapRuleMatchConfiguration> MatchConfigurations
         {
             get
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of dynamic match configurations. </summary>
-        public IList<CommonDynamicMatchConfigurationPatch> DynamicMatchConfigurations
+        public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations
         {
             get
             {

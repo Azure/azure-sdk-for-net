@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -16,18 +15,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected VpnConfigurationPatchableProperties _infrastructureVpnConfiguration;
+        private protected VpnConfigurationPatchableProperties _workloadVpnConfiguration;
 
         /// <summary> Initializes a new instance of <see cref="ManagementNetworkConfigurationPatchableProperties"/>. </summary>
-        /// <param name="infrastructureVpnConfiguration"> VPN Configuration properties. </param>
-        /// <param name="workloadVpnConfiguration"> VPN Configuration properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="infrastructureVpnConfiguration"/> or <paramref name="workloadVpnConfiguration"/> is null. </exception>
-        public ManagementNetworkConfigurationPatchableProperties(VpnConfigurationPatchableProperties infrastructureVpnConfiguration, VpnConfigurationPatchableProperties workloadVpnConfiguration)
+        public ManagementNetworkConfigurationPatchableProperties()
         {
-            Argument.AssertNotNull(infrastructureVpnConfiguration, nameof(infrastructureVpnConfiguration));
-            Argument.AssertNotNull(workloadVpnConfiguration, nameof(workloadVpnConfiguration));
-
-            InfrastructureVpnConfiguration = infrastructureVpnConfiguration;
-            WorkloadVpnConfiguration = workloadVpnConfiguration;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementNetworkConfigurationPatchableProperties"/>. </summary>

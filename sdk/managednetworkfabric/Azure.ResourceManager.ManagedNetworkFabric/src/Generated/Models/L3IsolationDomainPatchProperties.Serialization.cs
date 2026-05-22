@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string annotation = default;
             RedistributeConnectedSubnet? redistributeConnectedSubnets = default;
             RedistributeStaticRoute? redistributeStaticRoutes = default;
-            AggregateRoutePatchConfiguration aggregateRouteConfiguration = default;
-            ConnectedSubnetRoutePolicyPatch connectedSubnetRoutePolicy = default;
+            AggregateRouteConfiguration aggregateRouteConfiguration = default;
+            ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = default;
             StaticRouteRoutePolicyPatch staticRouteRoutePolicy = default;
             RoutePrefixLimitPatchProperties v4routePrefixLimit = default;
             RoutePrefixLimitPatchProperties v6routePrefixLimit = default;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    aggregateRouteConfiguration = AggregateRoutePatchConfiguration.DeserializeAggregateRoutePatchConfiguration(prop.Value, options);
+                    aggregateRouteConfiguration = AggregateRouteConfiguration.DeserializeAggregateRouteConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("connectedSubnetRoutePolicy"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    connectedSubnetRoutePolicy = ConnectedSubnetRoutePolicyPatch.DeserializeConnectedSubnetRoutePolicyPatch(prop.Value, options);
+                    connectedSubnetRoutePolicy = ConnectedSubnetRoutePolicy.DeserializeConnectedSubnetRoutePolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("staticRouteRoutePolicy"u8))

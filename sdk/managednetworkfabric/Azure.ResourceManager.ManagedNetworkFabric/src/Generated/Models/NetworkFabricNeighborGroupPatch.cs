@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The Neighbor Group Patch definition. </summary>
-    public partial class NetworkFabricNeighborGroupPatch : TagsUpdate
+    public partial class NetworkFabricNeighborGroupPatch : NetworkRackPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricNeighborGroupPatch"/>. </summary>
         public NetworkFabricNeighborGroupPatch()
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> An array of destination IPv4 Addresses or IPv6 Addresses. </summary>
-        public NeighborGroupDestinationPatch Destination
+        public NeighborGroupDestination Destination
         {
             get
             {

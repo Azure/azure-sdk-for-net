@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> NniType-CE(Customer Edge). </summary>
         private const string CEValue = "CE";
         /// <summary> NniType-NPB(Network Packet Broker). </summary>
-        private const string NPBValue = "NPB";
+        private const string NpbValue = "NPB";
 
         /// <summary> Initializes a new instance of <see cref="NniType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static NniType CE { get; } = new NniType(CEValue);
 
         /// <summary> NniType-NPB(Network Packet Broker). </summary>
-        public static NniType NPB { get; } = new NniType(NPBValue);
+        public static NniType Npb { get; } = new NniType(NpbValue);
 
         /// <summary> Determines if two <see cref="NniType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -7,22 +7,17 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> OptionB Layer3 Configuration properties. </summary>
-    public partial class NetworkToNetworkInterconnectOptionBLayer3Configuration : Layer3IPPrefixProperties
+    /// <summary> The NetworkToNetworkInterconnectOptionBLayer3Configuration. </summary>
+    public partial class NetworkToNetworkInterconnectOptionBLayer3Configuration : OptionBLayer3Configuration
     {
         /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectOptionBLayer3Configuration"/>. </summary>
         /// <param name="peerASN"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
         /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
-        public NetworkToNetworkInterconnectOptionBLayer3Configuration(long peerASN, int vlanId)
+        public NetworkToNetworkInterconnectOptionBLayer3Configuration(long peerASN, int? vlanId) : base(peerASN, vlanId)
         {
-            PeerASN = peerASN;
-            VlanId = vlanId;
-            PeLoopbackIpAddress = new ChangeTrackingList<string>();
-            PrefixLimits = new ChangeTrackingList<OptionBLayer3PrefixLimitProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectOptionBLayer3Configuration"/>. </summary>
@@ -37,45 +32,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="peLoopbackIpAddress"> Provider Edge (PE) Loopback IP Address. </param>
         /// <param name="bmpConfiguration"> BGP Monitoring Protocol (BMP) Configuration. </param>
         /// <param name="prefixLimits"> OptionB Layer3 prefix limit configuration. </param>
-        internal NetworkToNetworkInterconnectOptionBLayer3Configuration(string primaryIpv4Prefix, string primaryIpv6Prefix, string secondaryIpv4Prefix, string secondaryIpv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties, long peerASN, int vlanId, long? fabricASN, IList<string> peLoopbackIpAddress, NniBmpProperties bmpConfiguration, IList<OptionBLayer3PrefixLimitProperties> prefixLimits) : base(primaryIpv4Prefix, primaryIpv6Prefix, secondaryIpv4Prefix, secondaryIpv6Prefix, additionalBinaryDataProperties)
+        internal NetworkToNetworkInterconnectOptionBLayer3Configuration(string primaryIpv4Prefix, string primaryIpv6Prefix, string secondaryIpv4Prefix, string secondaryIpv6Prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties, long peerASN, int? vlanId, long? fabricASN, IList<string> peLoopbackIpAddress, NniBmpProperties bmpConfiguration, IList<OptionBLayer3PrefixLimitProperties> prefixLimits) : base(primaryIpv4Prefix, primaryIpv6Prefix, secondaryIpv4Prefix, secondaryIpv6Prefix, additionalBinaryDataProperties, peerASN, vlanId, fabricASN, peLoopbackIpAddress, bmpConfiguration, prefixLimits)
         {
-            PeerASN = peerASN;
-            VlanId = vlanId;
-            FabricASN = fabricASN;
-            PeLoopbackIpAddress = peLoopbackIpAddress;
-            BmpConfiguration = bmpConfiguration;
-            PrefixLimits = prefixLimits;
-        }
-
-        /// <summary> ASN of PE devices for CE/PE connectivity.Example : 28. </summary>
-        public long PeerASN { get; set; }
-
-        /// <summary> VLAN for CE/PE Layer 3 connectivity.Example : 501. </summary>
-        public int VlanId { get; set; }
-
-        /// <summary> ASN of CE devices for CE/PE connectivity. </summary>
-        public long? FabricASN { get; }
-
-        /// <summary> Provider Edge (PE) Loopback IP Address. </summary>
-        public IList<string> PeLoopbackIpAddress { get; }
-
-        /// <summary> BGP Monitoring Protocol (BMP) Configuration. </summary>
-        internal NniBmpProperties BmpConfiguration { get; set; }
-
-        /// <summary> OptionB Layer3 prefix limit configuration. </summary>
-        public IList<OptionBLayer3PrefixLimitProperties> PrefixLimits { get; }
-
-        /// <summary> BGP Monitoring Protocol (BMP) Configuration State. </summary>
-        public BmpConfigurationState? BmpConfigurationState
-        {
-            get
-            {
-                return BmpConfiguration is null ? default : BmpConfiguration.ConfigurationState;
-            }
-            set
-            {
-                BmpConfiguration = value.HasValue ? new NniBmpProperties(value.Value) : default;
-            }
         }
     }
 }

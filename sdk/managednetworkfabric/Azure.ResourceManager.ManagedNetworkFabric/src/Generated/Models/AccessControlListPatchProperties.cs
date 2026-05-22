@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="AccessControlListPatchProperties"/>. </summary>
         public AccessControlListPatchProperties()
         {
-            MatchConfigurations = new ChangeTrackingList<AccessControlListMatchConfigurationPatch>();
-            DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfigurationPatch>();
+            MatchConfigurations = new ChangeTrackingList<AccessControlListMatchConfiguration>();
+            DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
             ControlPlaneAclConfiguration = new ChangeTrackingList<ControlPlaneAclPatchProperties>();
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="globalAccessControlListActions"> Global Access Control List (ACL) actions. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessControlListPatchProperties(NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfigurationPatch> matchConfigurations, IList<CommonDynamicMatchConfigurationPatch> dynamicMatchConfigurations, IList<ControlPlaneAclPatchProperties> controlPlaneAclConfiguration, AclType? aclType, DeviceRole? deviceRole, GlobalAccessControlListActionPatchProperties globalAccessControlListActions, string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessControlListPatchProperties(NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IList<AccessControlListMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, IList<ControlPlaneAclPatchProperties> controlPlaneAclConfiguration, AclType? aclType, DeviceRole? deviceRole, GlobalAccessControlListActionPatchProperties globalAccessControlListActions, string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConfigurationType = configurationType;
             AclsUri = aclsUri;
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public CommunityActionType? DefaultAction { get; set; }
 
         /// <summary> List of match configurations. </summary>
-        public IList<AccessControlListMatchConfigurationPatch> MatchConfigurations { get; } = new ChangeTrackingList<AccessControlListMatchConfigurationPatch>();
+        public IList<AccessControlListMatchConfiguration> MatchConfigurations { get; } = new ChangeTrackingList<AccessControlListMatchConfiguration>();
 
         /// <summary> List of dynamic match configurations. </summary>
-        public IList<CommonDynamicMatchConfigurationPatch> DynamicMatchConfigurations { get; } = new ChangeTrackingList<CommonDynamicMatchConfigurationPatch>();
+        public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get; } = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
 
         /// <summary> Access Control List (ACL) configurations. </summary>
         public IList<ControlPlaneAclPatchProperties> ControlPlaneAclConfiguration { get; } = new ChangeTrackingList<ControlPlaneAclPatchProperties>();

@@ -91,19 +91,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        /// <summary> List of Internet Gateway resource Id. </summary>
-        public IReadOnlyList<string> InternetGatewayIds
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new InternetGatewayRuleProperties();
-                }
-                return Properties.InternetGatewayIds;
-            }
-        }
-
         /// <summary> Details status of the last operation performed on the resource. </summary>
         public string LastOperationDetails
         {

@@ -121,6 +121,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary> Connected Subnet RoutePolicy. </summary>
+        public ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectedSubnetRoutePolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new L3IsolationDomainProperties();
+                }
+                Properties.ConnectedSubnetRoutePolicy = value;
+            }
+        }
+
         /// <summary> ARM Resource ID of the Network Fabric. </summary>
         public ResourceIdentifier NetworkFabricId
         {
@@ -196,23 +213,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             get
             {
                 return Properties is null ? default : Properties.AdministrativeState;
-            }
-        }
-
-        /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
-        public L3ExportRoutePolicy ExportRoutePolicy
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExportRoutePolicy;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new L3IsolationDomainProperties();
-                }
-                Properties.ExportRoutePolicy = value;
             }
         }
 
