@@ -150,5 +150,58 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.That(syncToken.Value, Is.EqualTo(value));
             Assert.That(syncToken.SequenceNumber, Is.EqualTo(seqNo));
         }
+
+        [Test]
+        public async Task CachesMultipleTokensFromMixedHeaders()
+        {
+            string headerName = "Sync-Token";
+            string header1Value = "tokenA=valA";
+            string header2Value = "tokenB=valB";
+            string header3Value = "tokenC=valC";
+
+            var syncTokenResponse = new MockResponse(200);
+            // One header with comma-separated tokens
+            syncTokenResponse.AddHeader(new HttpHeader(headerName, $"{header1Value};sn=1,{header2Value};sn=2"));
+            // A separate header with another token
+            syncTokenResponse.AddHeader(new HttpHeader(headerName, $"{header3Value};sn=3"));
+
+            MockTransport transport = CreateMockTransport(syncTokenResponse, new MockResponse(200));
+            var policy = new SyncTokenPolicy();
+
+            await SendGetRequest(transport, policy);
+            await SendGetRequest(transport, policy);
+
+            Assert.That(transport.Requests[1].Headers.TryGetValue(headerName, out string reqValue), Is.True);
+
+            Assert.That(reqValue, Does.Contain(header1Value));
+            Assert.That(reqValue, Does.Contain(header2Value));
+            Assert.That(reqValue, Does.Contain(header3Value));
+        }
+
+        [Test]
+        public async Task CachesLargeNumberOfTokens()
+        {
+            string headerName = "Sync-Token";
+            int tokenCount = 15;
+
+            var syncTokenResponse = new MockResponse(200);
+            for (int i = 0; i < tokenCount; i++)
+            {
+                syncTokenResponse.AddHeader(new HttpHeader(headerName, $"token{i}=val{i};sn={i + 1}"));
+            }
+
+            MockTransport transport = CreateMockTransport(syncTokenResponse, new MockResponse(200));
+            var policy = new SyncTokenPolicy();
+
+            await SendGetRequest(transport, policy);
+            await SendGetRequest(transport, policy);
+
+            Assert.That(transport.Requests[1].Headers.TryGetValue(headerName, out string reqValue), Is.True);
+
+            for (int i = 0; i < tokenCount; i++)
+            {
+                Assert.That(reqValue, Does.Contain($"token{i}=val{i}"));
+            }
+        }
     }
 }
