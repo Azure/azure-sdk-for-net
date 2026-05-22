@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.CognitiveServices
     {
         private readonly ClientDiagnostics _accountsClientDiagnostics;
         private readonly Accounts _accountsRestClient;
-        private readonly ClientDiagnostics _deletedAccountsClientDiagnostics;
-        private readonly DeletedAccounts _deletedAccountsRestClient;
 
         /// <summary> Initializes a new instance of CognitiveServicesAccountCollection for mocking. </summary>
         protected CognitiveServicesAccountCollection()
@@ -44,8 +42,6 @@ namespace Azure.ResourceManager.CognitiveServices
             TryGetApiVersion(CognitiveServicesAccountResource.ResourceType, out string cognitiveServicesAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesAccountResource.ResourceType.Namespace, Diagnostics);
             _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesAccountApiVersion ?? "2026-01-15-preview");
-            _deletedAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesAccountResource.ResourceType.Namespace, Diagnostics);
-            _deletedAccountsRestClient = new DeletedAccounts(_deletedAccountsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesAccountApiVersion ?? "2026-01-15-preview");
             ValidateResourceId(id);
         }
 

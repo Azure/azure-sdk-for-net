@@ -46,10 +46,10 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Project connection id for grounding with bing search. </summary>
-        public string ProjectConnectionId { get; }
+        public string ProjectConnectionId { get; set; }
 
         /// <summary> Name of the custom configuration instance given to config. </summary>
-        public string InstanceName { get; }
+        public string InstanceName { get; set; }
 
         /// <summary> The market where the results come from. </summary>
         public string Market { get; set; }

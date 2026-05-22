@@ -86,27 +86,22 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("agent_id"u8);
                 writer.WriteStringValue(AgentId);
             }
-            writer.WritePropertyName("agent_name"u8);
-            writer.WriteStringValue(AgentName);
+            if (Optional.IsDefined(AgentName))
+            {
+                writer.WritePropertyName("agent_name"u8);
+                writer.WriteStringValue(AgentName);
+            }
             if (Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agent_version"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (Optional.IsDefined(StartTime))
-            {
-                writer.WritePropertyName("start_time"u8);
-                writer.WriteNumberValue(StartTime.Value, "U");
-            }
+            writer.WritePropertyName("start_time"u8);
+            writer.WriteNumberValue(StartTime, "U");
             if (Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("end_time"u8);
                 writer.WriteNumberValue(EndTime.Value, "U");
-            }
-            if (Optional.IsDefined(MaxTraces))
-            {
-                writer.WritePropertyName("max_traces"u8);
-                writer.WriteNumberValue(MaxTraces.Value);
             }
         }
 
@@ -141,9 +136,8 @@ namespace Azure.AI.Projects
             string agentId = default;
             string agentName = default;
             string agentVersion = default;
-            DateTimeOffset? startTime = default;
+            DateTimeOffset startTime = default;
             DateTimeOffset? endTime = default;
-            int? maxTraces = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -173,10 +167,6 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("start_time"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     startTime = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
@@ -187,15 +177,6 @@ namespace Azure.AI.Projects
                         continue;
                     }
                     endTime = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
-                    continue;
-                }
-                if (prop.NameEquals("max_traces"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxTraces = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -211,8 +192,7 @@ namespace Azure.AI.Projects
                 agentName,
                 agentVersion,
                 startTime,
-                endTime,
-                maxTraces);
+                endTime);
         }
     }
 }

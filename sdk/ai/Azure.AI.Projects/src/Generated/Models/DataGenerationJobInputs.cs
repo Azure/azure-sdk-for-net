@@ -37,13 +37,15 @@ namespace Azure.AI.Projects
         /// <param name="sources"> The sources used for the data generation job. </param>
         /// <param name="options"> The options for the data generation job. </param>
         /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
+        /// <param name="outputOptions"> Optional caller-supplied metadata for the job's output. See individual fields for whether they apply to file outputs (fine-tuning scenarios), dataset outputs (evaluation scenario), or both. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationJobInputs(string name, IList<DataGenerationJobSource> sources, DataGenerationJobOptions options, DataGenerationJobScenario scenario, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationJobInputs(string name, IList<DataGenerationJobSource> sources, DataGenerationJobOptions options, DataGenerationJobScenario scenario, DataGenerationJobOutputOptions outputOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Sources = sources;
             Options = options;
             Scenario = scenario;
+            OutputOptions = outputOptions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -58,5 +60,8 @@ namespace Azure.AI.Projects
 
         /// <summary> The scenario of the data generation job. Either for fine-tuning or evaluation. </summary>
         public DataGenerationJobScenario Scenario { get; set; }
+
+        /// <summary> Optional caller-supplied metadata for the job's output. See individual fields for whether they apply to file outputs (fine-tuning scenarios), dataset outputs (evaluation scenario), or both. </summary>
+        public DataGenerationJobOutputOptions OutputOptions { get; set; }
     }
 }
