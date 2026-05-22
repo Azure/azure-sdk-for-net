@@ -277,5 +277,32 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             CognitiveServicesAgentDeploymentResource.ValidateResourceId(id);
             return new CognitiveServicesAgentDeploymentResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="ManagedComputeDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedComputeDeploymentResource"/> object. </returns>
+        public virtual ManagedComputeDeploymentResource GetManagedComputeDeploymentResource(ResourceIdentifier id)
+        {
+            ManagedComputeDeploymentResource.ValidateResourceId(id);
+            return new ManagedComputeDeploymentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ComputeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ComputeResource"/> object. </returns>
+        public virtual ComputeResource GetComputeResource(ResourceIdentifier id)
+        {
+            ComputeResource.ValidateResourceId(id);
+            return new ComputeResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="WorkbenchResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkbenchResource"/> object. </returns>
+        public virtual WorkbenchResource GetWorkbenchResource(ResourceIdentifier id)
+        {
+            WorkbenchResource.ValidateResourceId(id);
+            return new WorkbenchResource(Client, id);
+        }
     }
 }

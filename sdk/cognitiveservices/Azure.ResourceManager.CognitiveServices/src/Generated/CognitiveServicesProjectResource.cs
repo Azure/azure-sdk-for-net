@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string cognitiveServicesProjectApiVersion);
             _projectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesProjectApiVersion ?? "2026-01-15-preview");
+            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesProjectApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -776,6 +776,39 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return GetCognitiveServicesAgentApplications().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of Workbenches in the <see cref="CognitiveServicesProjectResource"/>. </summary>
+        /// <returns> An object representing collection of Workbenches and their operations over a WorkbenchResource. </returns>
+        public virtual WorkbenchCollection GetWorkbenches()
+        {
+            return GetCachedClient(client => new WorkbenchCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified workbench associated with the project. </summary>
+        /// <param name="workbenchName"> The name of the workbench associated with the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workbenchName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workbenchName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WorkbenchResource>> GetWorkbenchAsync(string workbenchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workbenchName, nameof(workbenchName));
+
+            return await GetWorkbenches().GetAsync(workbenchName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified workbench associated with the project. </summary>
+        /// <param name="workbenchName"> The name of the workbench associated with the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workbenchName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workbenchName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WorkbenchResource> GetWorkbench(string workbenchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workbenchName, nameof(workbenchName));
+
+            return GetWorkbenches().Get(workbenchName, cancellationToken);
         }
     }
 }
