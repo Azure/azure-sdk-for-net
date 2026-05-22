@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PartnerNamespacePrivateLinkResourceData resourceData = result.Data;
+            EventGridPrivateLinkResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                PartnerNamespacePrivateLinkResourceData resourceData = item.Data;
+                EventGridPrivateLinkResourceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                PartnerNamespacePrivateLinkResourceData resourceData = result.Data;
+                EventGridPrivateLinkResourceData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

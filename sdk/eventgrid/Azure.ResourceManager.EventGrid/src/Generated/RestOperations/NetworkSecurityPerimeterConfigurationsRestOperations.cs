@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EventGrid
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.EventGrid/", false);
+            uri.AppendPath("/providers/Microsoft.EventGrid/", false);
             uri.AppendPath(resourceType, true);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceName, true);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EventGrid
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.EventGrid/", false);
+            uri.AppendPath("/providers/Microsoft.EventGrid/", false);
             uri.AppendPath(resourceType, true);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceName, true);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EventGrid
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.EventGrid/", false);
+            uri.AppendPath("/providers/Microsoft.EventGrid/", false);
             uri.AppendPath(resourceType, true);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceName, true);

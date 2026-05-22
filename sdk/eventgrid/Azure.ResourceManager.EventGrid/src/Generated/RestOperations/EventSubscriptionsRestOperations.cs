@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.EventGrid
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, true);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.EventGrid/eventSubscriptions/", false);
             uri.AppendPath(eventSubscriptionName, true);
             if (_apiVersion != null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.EventGrid
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, true);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.EventGrid/eventSubscriptions/", false);
             uri.AppendPath(eventSubscriptionName, true);
             if (_apiVersion != null)
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.EventGrid
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, true);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.EventGrid/eventSubscriptions/", false);
             uri.AppendPath(eventSubscriptionName, true);
             if (_apiVersion != null)
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.EventGrid
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, true);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.EventGrid/eventSubscriptions/", false);
             uri.AppendPath(eventSubscriptionName, true);
             if (_apiVersion != null)
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.EventGrid
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, true);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.EventGrid/eventSubscriptions/", false);
             uri.AppendPath(eventSubscriptionName, true);
             uri.AppendPath("/getDeliveryAttributes", false);
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.EventGrid
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, true);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.EventGrid/eventSubscriptions/", false);
             uri.AppendPath(eventSubscriptionName, true);
             uri.AppendPath("/getFullUrl", false);
