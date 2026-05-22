@@ -23,9 +23,7 @@ namespace Azure.Search.Documents
         {
             Facets = new ChangeTrackingList<string>();
             ScoringParameters = new ChangeTrackingList<string>();
-#if AZURE_SEARCH_PREVIEW
-            SemanticFields = new ChangeTrackingList<string>();
-#endif
+            SemanticFields = new ChangeTrackingList<string>(); // search-preview:2026-05-01-preview
             VectorQueries = new ChangeTrackingList<VectorQuery>();
         }
 
@@ -318,7 +316,7 @@ namespace Azure.Search.Documents
             }
         }
 
-#if AZURE_SEARCH_PREVIEW
+        // search-preview:2026-05-01-preview {
         /// <summary> The query parameters to configure hybrid search behaviors. </summary>
         [CodeGenMember("HybridSearch")]
         private HybridSearch HybridSearch
@@ -404,7 +402,7 @@ namespace Azure.Search.Documents
                 }
             }
         }
-#endif
+        // search-preview:2026-05-01-preview }
 
         /// <summary>
         /// Shallow copy one SearchOptions instance to another.

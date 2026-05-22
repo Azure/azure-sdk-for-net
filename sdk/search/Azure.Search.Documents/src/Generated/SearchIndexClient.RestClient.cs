@@ -800,7 +800,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateUploadKnowledgeSourceFileRequest(string sourceName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUploadKnowledgeSourceFileRequest(string sourceName, string contentDisposition, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -816,6 +816,7 @@ namespace Azure.Search.Documents.Indexes
             request.Uri = uri;
             request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/octet-stream");
+            request.Headers.SetValue("Content-Disposition", contentDisposition);
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;

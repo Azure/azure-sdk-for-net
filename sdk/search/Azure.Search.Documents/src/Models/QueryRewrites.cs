@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#if AZURE_SEARCH_PREVIEW
+// search-preview:2026-05-01-preview (entire class)
 
 using System;
 using System.Text;
@@ -89,5 +89,3 @@ namespace Azure.Search.Documents.Models
         }
     }
 }
-
-#endif

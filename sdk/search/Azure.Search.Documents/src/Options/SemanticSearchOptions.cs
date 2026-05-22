@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Allows the user to set an upper bound on the amount of time it takes for semantic enrichment to finish processing before the request fails. </summary>
         public TimeSpan? MaxWait { get; set; }
 
-#if AZURE_SEARCH_PREVIEW
+        // search-preview:2026-05-01-preview {
         /// <summary> A value that specifies the language of the search query. </summary>
         public QueryLanguage? QueryLanguage { get; set; }
 
@@ -59,6 +59,6 @@ namespace Azure.Search.Documents.Models
         /// The list of field names used for semantic ranking.
         /// </summary>
         public IList<string> SemanticFields { get; internal set; } = new List<string>();
-#endif
+        // search-preview:2026-05-01-preview }
     }
 }
