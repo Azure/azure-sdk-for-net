@@ -14,59 +14,59 @@ namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary>
     /// The storage connector backing data source information
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataShareSourcePatch"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataShareSourceUpdate"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownStorageConnectorSourcePatch))]
-    public abstract partial class StorageConnectorSourcePatch : IJsonModel<StorageConnectorSourcePatch>
+    [PersistableModelProxy(typeof(UnknownStorageConnectorSourceUpdate))]
+    public abstract partial class StorageConnectorSourceUpdate : IJsonModel<StorageConnectorSourceUpdate>
     {
-        /// <summary> Initializes a new instance of <see cref="StorageConnectorSourcePatch"/> for deserialization. </summary>
-        internal StorageConnectorSourcePatch()
+        /// <summary> Initializes a new instance of <see cref="StorageConnectorSourceUpdate"/> for deserialization. </summary>
+        internal StorageConnectorSourceUpdate()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageConnectorSourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual StorageConnectorSourceUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorSourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorSourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStorageConnectorSourcePatch(document.RootElement, options);
+                        return DeserializeStorageConnectorSourceUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageConnectorSourcePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageConnectorSourceUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorSourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorSourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StorageConnectorSourcePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageConnectorSourceUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StorageConnectorSourcePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<StorageConnectorSourceUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageConnectorSourcePatch IPersistableModel<StorageConnectorSourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StorageConnectorSourceUpdate IPersistableModel<StorageConnectorSourceUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StorageConnectorSourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StorageConnectorSourceUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StorageConnectorSourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StorageConnectorSourceUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorSourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorSourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageConnectorSourcePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageConnectorSourceUpdate)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageConnectorSourcePatch IJsonModel<StorageConnectorSourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StorageConnectorSourceUpdate IJsonModel<StorageConnectorSourceUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageConnectorSourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual StorageConnectorSourceUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorSourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageConnectorSourceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageConnectorSourcePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageConnectorSourceUpdate)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStorageConnectorSourcePatch(document.RootElement, options);
+            return DeserializeStorageConnectorSourceUpdate(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StorageConnectorSourcePatch DeserializeStorageConnectorSourcePatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static StorageConnectorSourceUpdate DeserializeStorageConnectorSourceUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.Storage.Models
                 switch (discriminator.GetString())
                 {
                     case "DataShare":
-                        return DataShareSourcePatch.DeserializeDataShareSourcePatch(element, options);
+                        return DataShareSourceUpdate.DeserializeDataShareSourceUpdate(element, options);
                 }
             }
-            return UnknownStorageConnectorSourcePatch.DeserializeUnknownStorageConnectorSourcePatch(element, options);
+            return UnknownStorageConnectorSourceUpdate.DeserializeUnknownStorageConnectorSourceUpdate(element, options);
         }
     }
 }

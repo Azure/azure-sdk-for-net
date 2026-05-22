@@ -315,6 +315,23 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="TrafficManagerGeographicHierarchyResource"/> along with the instance operations that can be performed on it in the <see cref="TenantResource"/>.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerTenantResource.GetTrafficManagerGeographicHierarchy()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> Returns a <see cref="TrafficManagerGeographicHierarchyResource"/> object. </returns>
+        public static TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchy(this TenantResource tenantResource)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableTrafficManagerTenantResource(tenantResource).GetTrafficManagerGeographicHierarchy();
+        }
+
+        /// <summary>
         /// Checks the availability of a Traffic Manager Relative DNS name.
         /// <item>
         /// <term> Mocking. </term>

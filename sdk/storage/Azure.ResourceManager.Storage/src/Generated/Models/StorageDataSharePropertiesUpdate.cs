@@ -12,19 +12,19 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The storage datashare properties. </summary>
-    public partial class StorageDataSharePropertiesPatch
+    public partial class StorageDataSharePropertiesUpdate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageDataSharePropertiesPatch"/>. </summary>
-        public StorageDataSharePropertiesPatch()
+        /// <summary> Initializes a new instance of <see cref="StorageDataSharePropertiesUpdate"/>. </summary>
+        public StorageDataSharePropertiesUpdate()
         {
             AccessPolicies = new ChangeTrackingList<StorageDataShareAccessPolicy>();
             Assets = new ChangeTrackingList<StorageDataShareAsset>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageDataSharePropertiesPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageDataSharePropertiesUpdate"/>. </summary>
         /// <param name="description"> Arbitrary description of this Data Share. Max 250 characters. </param>
         /// <param name="accessPolicies">
         /// List of access policies that specify the permission allowed to a managed identity.
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// If provided with a non-null value, the existing assets are replaced with the specified list.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageDataSharePropertiesPatch(string description, IList<StorageDataShareAccessPolicy> accessPolicies, IList<StorageDataShareAsset> assets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageDataSharePropertiesUpdate(string description, IList<StorageDataShareAccessPolicy> accessPolicies, IList<StorageDataShareAsset> assets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             AccessPolicies = accessPolicies;

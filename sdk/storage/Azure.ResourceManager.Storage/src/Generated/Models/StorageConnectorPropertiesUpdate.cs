@@ -12,30 +12,30 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The storage connector properties. </summary>
-    public partial class StorageConnectorPropertiesPatch
+    public partial class StorageConnectorPropertiesUpdate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageConnectorPropertiesPatch"/>. </summary>
-        public StorageConnectorPropertiesPatch()
+        /// <summary> Initializes a new instance of <see cref="StorageConnectorPropertiesUpdate"/>. </summary>
+        public StorageConnectorPropertiesUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageConnectorPropertiesPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageConnectorPropertiesUpdate"/>. </summary>
         /// <param name="state">
         /// State - Active or Inactive. Whether or not the Storage Connector should start as active (default: Active)
         /// (While set to false on the Storage Connector, all data plane requests using this Storage Connector fail, and this Storage Connector is not billed if it would be otherwise.
         /// </param>
         /// <param name="description"> Arbitrary description of this Storage Connector. Max 250 characters. </param>
-        /// <param name="shouldTestConnection"> Test connection to backing data source before creating the storage connector. </param>
+        /// <param name="testConnection"> Test connection to backing data source before creating the storage connector. </param>
         /// <param name="source"> Information about how to communicate with and authenticate to the backing data store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageConnectorPropertiesPatch(StorageConnectorState? state, string description, bool? shouldTestConnection, StorageConnectorSourcePatch source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageConnectorPropertiesUpdate(StorageConnectorState? state, string description, bool? testConnection, StorageConnectorSourceUpdate source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             Description = description;
-            ShouldTestConnection = shouldTestConnection;
+            TestConnection = testConnection;
             Source = source;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Test connection to backing data source before creating the storage connector. </summary>
         [WirePath("testConnection")]
-        public bool? ShouldTestConnection { get; set; }
+        public bool? TestConnection { get; set; }
 
         /// <summary> Information about how to communicate with and authenticate to the backing data store. </summary>
         [WirePath("source")]
-        public StorageConnectorSourcePatch Source { get; set; }
+        public StorageConnectorSourceUpdate Source { get; set; }
     }
 }

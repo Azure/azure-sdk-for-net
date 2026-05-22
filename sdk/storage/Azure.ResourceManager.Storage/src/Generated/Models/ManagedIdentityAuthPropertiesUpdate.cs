@@ -12,18 +12,18 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The managed identity auth properties for dataShare connection. </summary>
-    public partial class StorageConnectorManagedIdentityAuthPatch : StorageConnectorAuthPropertiesPatch
+    public partial class ManagedIdentityAuthPropertiesUpdate : StorageConnectorAuthPropertiesUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="StorageConnectorManagedIdentityAuthPatch"/>. </summary>
-        public StorageConnectorManagedIdentityAuthPatch() : base(StorageConnectorAuthType.ManagedIdentity)
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentityAuthPropertiesUpdate"/>. </summary>
+        public ManagedIdentityAuthPropertiesUpdate() : base(StorageConnectorAuthType.ManagedIdentity)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageConnectorManagedIdentityAuthPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentityAuthPropertiesUpdate"/>. </summary>
         /// <param name="type"> Type of the authentication properties. Controls the type of the authProperties object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identityResourceId"> ARM ResourceId of the managed identity that should be used to authenticate to the backing data source. </param>
-        internal StorageConnectorManagedIdentityAuthPatch(StorageConnectorAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string identityResourceId) : base(@type, additionalBinaryDataProperties)
+        internal ManagedIdentityAuthPropertiesUpdate(StorageConnectorAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string identityResourceId) : base(@type, additionalBinaryDataProperties)
         {
             IdentityResourceId = identityResourceId;
         }

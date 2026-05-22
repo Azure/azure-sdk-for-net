@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Indicates whether object replication tags replication feature is enabled for the policy. </summary>
         [WirePath("tagsReplication.enabled")]
-        public bool? IsTagsReplicationEnabled
+        public bool? TagsReplicationEnabled
         {
             get
             {
-                return TagsReplication is null ? default : TagsReplication.IsTagsReplicationEnabled;
+                return TagsReplication is null ? default : TagsReplication.Enabled;
             }
             set
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     TagsReplication = new ObjectReplicationPolicyPropertiesTagsReplication();
                 }
-                TagsReplication.IsTagsReplicationEnabled = value;
+                TagsReplication.Enabled = value;
             }
         }
     }

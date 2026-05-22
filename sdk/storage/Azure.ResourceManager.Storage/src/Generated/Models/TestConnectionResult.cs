@@ -12,24 +12,24 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Test connection response properties. </summary>
-    public partial class StorageConnectorTestConnectionResult
+    public partial class TestConnectionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageConnectorTestConnectionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestConnectionResult"/>. </summary>
         /// <param name="storageConnectorMethodName">
         /// Indicates the method used to validate the connection to the backing data store.
         /// Valid values are `GetBlob` and `ListBlobs` for failure, and `TestExistingConnection` for success.
         /// </param>
         /// <param name="storageConnectorRequestId"> The request Id associated with the request sent to the backing data store for validation. </param>
-        internal StorageConnectorTestConnectionResult(string storageConnectorMethodName, string storageConnectorRequestId)
+        internal TestConnectionResult(string storageConnectorMethodName, string storageConnectorRequestId)
         {
             StorageConnectorMethodName = storageConnectorMethodName;
             StorageConnectorRequestId = storageConnectorRequestId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageConnectorTestConnectionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestConnectionResult"/>. </summary>
         /// <param name="storageConnectorMethodName">
         /// Indicates the method used to validate the connection to the backing data store.
         /// Valid values are `GetBlob` and `ListBlobs` for failure, and `TestExistingConnection` for success.
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// </param>
         /// <param name="storageConnectorRequestId"> The request Id associated with the request sent to the backing data store for validation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageConnectorTestConnectionResult(string storageConnectorMethodName, string storageConnectorErrorMessage, string storageConnectorRequestId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestConnectionResult(string storageConnectorMethodName, string storageConnectorErrorMessage, string storageConnectorRequestId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageConnectorMethodName = storageConnectorMethodName;
             StorageConnectorErrorMessage = storageConnectorErrorMessage;
