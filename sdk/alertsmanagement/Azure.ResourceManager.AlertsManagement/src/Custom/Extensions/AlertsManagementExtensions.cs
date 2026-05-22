@@ -14,6 +14,24 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
+    // Custom partial of the generator-emitted AlertsManagementExtensions. Two reasons for the
+    // additions below:
+    //
+    //  1. Restore back-compat extension methods that the MPG generator no longer emits:
+    //     - GetServiceAlerts(SubscriptionResource) / GetServiceAlertSummary(SubscriptionResource, ...):
+    //       In the v1.1.x AutoRest SDK these lived on SubscriptionResource, but the regenerated
+    //       TypeSpec spec places the equivalents on ArmClient (scope-based, via
+    //       MockableAlertsManagementArmClient). Forwarding wrappers are added here so existing
+    //       callers compile unchanged and the published GA binary contract is preserved.
+    //
+    //  2. Re-expose the AlertProcessingRule* / SmartGroup* / GetServiceAlert(Guid) entry points as
+    //     [Obsolete(..., error: true)] / [EditorBrowsable(Never)] stubs throwing NotSupportedException.
+    //     - AlertProcessingRule APIs were extracted into the sibling 'Azure.ResourceManager.
+    //       AlertProcessingRules' package; SmartGroup APIs are deferred to a future dedicated package;
+    //       GetServiceAlert(Guid) was replaced by ArmClient.GetServiceAlertResource(id) /
+    //       ServiceAlertCollection.Get(alertId.ToString()) in the new emitter shape.
+    //     - Keeping these obsolete stubs satisfies ApiCompat against v1.1.x while compile-time-
+    //       redirecting new code to the correct API.
     public static partial class AlertsManagementExtensions
     {
         private const string AlertProcessingRuleRemovedMessage = "The AlertProcessingRule APIs have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the equivalent APIs (e.g., AlertProcessingRulesExtensions, MockableAlertProcessingRulesArmClient, MockableAlertProcessingRulesResourceGroupResource, MockableAlertProcessingRulesSubscriptionResource, ArmAlertProcessingRulesModelFactory) instead.";

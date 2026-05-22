@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Backward compatibility stub: this type was removed in the TypeSpec migration.
-
 #nullable disable
 
 using System;
@@ -16,6 +14,20 @@ using Azure.ResourceManager.AlertsManagement.Models;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
+    // Back-compat ApiCompat shim — kept solely to preserve the binary contract of the previously
+    // published GA package (Azure.ResourceManager.AlertsManagement v1.1.x).
+    //
+    // Why it lives here instead of being regenerated:
+    //   The SmartGroup operation group is deliberately out of scope for this migration's TypeSpec spec
+    //   (specification/alertsmanagement/.../Microsoft.AlertsManagement/AlertsManagement). The
+    //   underlying service operations still exist but will be shipped from a separate dedicated package
+    //   in a future release, so the MPG generator does not (and must not) emit these types here.
+    //
+    // What this stub provides:
+    //   The type is declared with the original v1.1.x signature so that consumer assemblies compiled
+    //   against the old GA still load, but every member throws NotSupportedException at runtime. The
+    //   type is also marked [Obsolete(..., error: true)] + [EditorBrowsable(Never)] so the C# compiler
+    //   redirects new callers to the future dedicated SmartGroup package.
     /// <summary> A class representing a collection of <see cref="SmartGroupResource"/> and their operations. </summary>
     [Obsolete("The SmartGroup types have been removed from this package and will be shipped in a separate package in a future release.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
