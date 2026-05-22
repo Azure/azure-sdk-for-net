@@ -651,6 +651,7 @@ public class AgentsTests : AgentsTestBase
         // Create
         MemoryItem customerData = await projectClient.MemoryStores.CreateMemoryAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, content: "The orange lover.", kind: MemoryItemKind.UserProfile);
         MemoryItem orangeSKU = await projectClient.MemoryStores.CreateMemoryAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, content: "Orange SKU is 658954.", kind: MemoryItemKind.ChatSummary);
+        MemoryItem other = await projectClient.MemoryStores.CreateMemoryAsync(name: store.Name, scope: "Out_of_scope", content: "Orange SKU is 658954.", kind: MemoryItemKind.ChatSummary);
         Assert.That(customerData.Content, Is.EqualTo("The orange lover."));
         // Read
         MemoryItem item = await projectClient.MemoryStores.GetMemoryAsync(name: store.Name, memoryId: customerData.MemoryId);
@@ -658,9 +659,10 @@ public class AgentsTests : AgentsTestBase
         Assert.That(item.Content, Is.EqualTo(customerData.Content));
         Assert.That(item.Scope, Is.EqualTo(MEMORY_STORE_SCOPE));
         // List
-        List<string> itemIds = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name).Select(x => x.MemoryId).ToListAsync();
-        Assert.That(itemIds, Has.Count.EqualTo(1));
-        Assert.That(itemIds[0], Is.EqualTo(customerData.MemoryId));
+        HashSet<string> itemIds = [.. await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE).Select(x => x.MemoryId).ToListAsync()];
+        Assert.That(itemIds, Has.Count.EqualTo(2));
+        Assert.That(itemIds, Does.Contain(customerData.MemoryId));
+        Assert.That(itemIds, Does.Contain(orangeSKU.MemoryId));
         // Update
         string newContent = "Some other description.";
         item = await projectClient.MemoryStores.UpdateMemoryAsync(name: store.Name, memoryId: customerData.MemoryId, newContent);
@@ -673,7 +675,7 @@ public class AgentsTests : AgentsTestBase
         DeleteMemoryStoreResponse delResult = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: store.Name);
         Assert.That(delResult.IsDeleted, Is.True);
         Assert.That(
-            (await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name).ToEnumerableAsync())
+            (await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE).ToEnumerableAsync())
                 .Select(x => x.MemoryId)
                 .Any(x => x == customerData.MemoryId),
             Is.False,
@@ -697,25 +699,25 @@ public class AgentsTests : AgentsTestBase
                 kind: MemoryItemKind.ChatSummary
             );
         }
-        List<MemoryItem> records = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, limit: PAGE_SIZE, order: "asc").ToListAsync();
+        List<MemoryItem> records = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, limit: PAGE_SIZE, order: "asc").ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Go forward.
-        List<MemoryItem> forward = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, order: "asc", after: records[0].MemoryId, limit: PAGE_SIZE).ToListAsync();
+        List<MemoryItem> forward = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, order: "asc", after: records[0].MemoryId, limit: PAGE_SIZE).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
         Assert.That(forward[0].MemoryId, Is.EqualTo(records[1].MemoryId));
         Assert.That(forward[forward.Count - 1].MemoryId, Is.EqualTo(records[records.Count - 1].MemoryId));
         //// Two limits:
-        forward = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, order: "asc", after: records[0].MemoryId, before: records[3].MemoryId, limit: PAGE_SIZE).ToListAsync();
+        forward = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, order: "asc", after: records[0].MemoryId, before: records[3].MemoryId, limit: PAGE_SIZE).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(2));
         Assert.That(forward[0].MemoryId, Is.EqualTo(records[1].MemoryId));
         Assert.That(forward[1].MemoryId, Is.EqualTo(records[2].MemoryId));
         // Go backwards.
-        List<MemoryItem> backwards = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, order: "desc", before: records[0].MemoryId, limit: PAGE_SIZE).ToListAsync();
+        List<MemoryItem> backwards = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, order: "desc", before: records[0].MemoryId, limit: PAGE_SIZE).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
         Assert.That(backwards[0].MemoryId, Is.EqualTo(records[records.Count - 1].MemoryId));
         Assert.That(backwards[backwards.Count - 1].MemoryId, Is.EqualTo(records[1].MemoryId));
         // Two limits.
-        backwards = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, order: "desc", after: records[records.Count - 1].MemoryId, before: records[records.Count - 4].MemoryId, limit: PAGE_SIZE).ToListAsync();
+        backwards = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, order: "desc", after: records[records.Count - 1].MemoryId, before: records[records.Count - 4].MemoryId, limit: PAGE_SIZE).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(2));
         Assert.That(backwards[0].MemoryId, Is.EqualTo(records[records.Count - 2].MemoryId));
         Assert.That(backwards[1].MemoryId, Is.EqualTo(records[records.Count - 3].MemoryId));
