@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.Storage.Tests
             BlobServiceResource blobService = account.GetBlobService();
             blobService = await blobService.GetAsync();
             BlobServiceData blobServiceData = blobService.Data;
-            blobServiceData.StaticWebsite = new StaticWebsite(true)
+            blobServiceData.StaticWebsite = new BlobServiceStaticWebsite(true)
             {
                 IndexDocument = "index.html",
                 ErrorDocument404Path = "errors/404.html"
@@ -889,13 +889,13 @@ namespace Azure.ResourceManager.Storage.Tests
             //verify round-trip via GetAsync
             blobService = await blobService.GetAsync();
             Assert.IsNotNull(blobService.Data.StaticWebsite);
-            Assert.IsTrue(blobService.Data.StaticWebsite.Enabled);
+            Assert.IsTrue(blobService.Data.StaticWebsite.IsEnabled);
             Assert.AreEqual("index.html", blobService.Data.StaticWebsite.IndexDocument);
             Assert.AreEqual("errors/404.html", blobService.Data.StaticWebsite.ErrorDocument404Path);
 
             //update static website with DefaultIndexDocumentPath
             blobServiceData = blobService.Data;
-            blobServiceData.StaticWebsite = new StaticWebsite(true)
+            blobServiceData.StaticWebsite = new BlobServiceStaticWebsite(true)
             {
                 DefaultIndexDocumentPath = "site/home.html"
             };
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.Storage.Tests
             //verify DefaultIndexDocumentPath round-trip via GetAsync
             blobService = await blobService.GetAsync();
             Assert.IsNotNull(blobService.Data.StaticWebsite);
-            Assert.IsTrue(blobService.Data.StaticWebsite.Enabled);
+            Assert.IsTrue(blobService.Data.StaticWebsite.IsEnabled);
             Assert.AreEqual("site/home.html", blobService.Data.StaticWebsite.DefaultIndexDocumentPath);
             //confirm legacy properties are cleared when only DefaultIndexDocumentPath is set
             Assert.IsNull(blobService.Data.StaticWebsite.IndexDocument);
