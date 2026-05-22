@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class EventGridNamespaceClientOperationSource : IOperationSource<EventGridNamespaceClientResource>
+    /// <summary></summary>
+    internal partial class EventGridNamespaceClientOperationSource : IOperationSource<EventGridNamespaceClientResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal EventGridNamespaceClientOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         EventGridNamespaceClientResource IOperationSource<EventGridNamespaceClientResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EventGridNamespaceClientData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            EventGridNamespaceClientData data = EventGridNamespaceClientData.DeserializeEventGridNamespaceClientData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new EventGridNamespaceClientResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<EventGridNamespaceClientResource> IOperationSource<EventGridNamespaceClientResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EventGridNamespaceClientData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
-            return await Task.FromResult(new EventGridNamespaceClientResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            EventGridNamespaceClientData data = EventGridNamespaceClientData.DeserializeEventGridNamespaceClientData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new EventGridNamespaceClientResource(_client, data);
         }
     }
 }

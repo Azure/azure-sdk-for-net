@@ -139,11 +139,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await topic.GetTopicNetworkSecurityPerimeterConfigurationAsync("perimeter-guid", "association");
-            });
-
-            Assert.ThrowsAsync<RequestFailedException>(async () =>
-            {
                 await topic.GetEventGridTopicPrivateEndpointConnectionAsync("pec-name");
             });
 

@@ -1,0 +1,10 @@
+# EventGridPrivateLinkResourceData no longer inherits from ResourceData after the
+# TypeSpec migration. The corresponding TypeSpec model (PrivateLinkResource in
+# specification/eventgrid/.../PrivateLinkResource.tsp) uses @customAzureResource
+# instead of @armResourceOperations, and the MPG C# generator
+# (InheritableSystemObjectModelVisitor.UpdateFullConstructor) crashes when the
+# @@Legacy.hierarchyBuilding decorator is applied to add a system base class to
+# this model. The intentional breaking change is captured in the updated
+# api/Azure.ResourceManager.EventGrid.*.cs surface; this baseline entry
+# acknowledges the same change against the published 1.1.0 contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData' does not inherit from base type 'Azure.ResourceManager.Models.ResourceData' in the implementation but it does in the contract.

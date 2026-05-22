@@ -8,85 +8,70 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary>
-    /// A class representing the EventGridPrivateLinkResource data model.
-    /// Information of the private link resource.
-    /// </summary>
-    public partial class EventGridPrivateLinkResourceData : ResourceData
+    /// <summary> Information of the private link resource. </summary>
+    public partial class EventGridPrivateLinkResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EventGridPrivateLinkResourceData"/>. </summary>
         internal EventGridPrivateLinkResourceData()
         {
-            RequiredMembers = new ChangeTrackingList<string>();
-            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EventGridPrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"></param>
-        /// <param name="displayName"></param>
-        /// <param name="requiredMembers"></param>
-        /// <param name="requiredZoneNames"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, string displayName, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Properties of the private link resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
+        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EventGridPrivateLinkResourceData(EventGridPrivateLinkResourceProperties properties, ResourceIdentifier id, string name, ResourceType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            GroupId = groupId;
-            DisplayName = displayName;
-            RequiredMembers = requiredMembers;
-            RequiredZoneNames = requiredZoneNames;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            Id = id;
+            Name = name;
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the group id. </summary>
+        /// <summary> Properties of the private link resource. </summary>
+        [WirePath("properties")]
+        internal EventGridPrivateLinkResourceProperties Properties { get; }
+
+        /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
+        [WirePath("id")]
+        public ResourceIdentifier Id { get; }
+
+        /// <summary> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </summary>
+        [WirePath("name")]
+        public string Name { get; }
+
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        [WirePath("type")]
+        public ResourceType? Type { get; }
+
+        /// <summary> Gets the GroupId. </summary>
         [WirePath("properties.groupId")]
-        public string GroupId { get; }
-        /// <summary> Gets the display name. </summary>
+        public string GroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GroupId;
+            }
+        }
+
+        /// <summary> Gets the DisplayName. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; }
-        /// <summary> Gets the required members. </summary>
-        [WirePath("properties.requiredMembers")]
-        public IReadOnlyList<string> RequiredMembers { get; }
-        /// <summary> Gets the required zone names. </summary>
-        [WirePath("properties.requiredZoneNames")]
-        public IReadOnlyList<string> RequiredZoneNames { get; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+        }
     }
 }

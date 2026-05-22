@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             EventSubscriptionCollection collection = client.GetEventSubscriptions(new ResourceIdentifier(scope));
 
             // invoke the operation and iterate over the result
-            await foreach (EventSubscriptionResource item in collection.GetAllAsync())
+            await foreach (EventSubscriptionResource item in collection.GetAllAsync(filter: null, top: null))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             EventSubscriptionCollection collection = client.GetEventSubscriptions(new ResourceIdentifier(scope));
 
             // invoke the operation and iterate over the result
-            await foreach (EventSubscriptionResource item in collection.GetAllAsync())
+            await foreach (EventSubscriptionResource item in collection.GetAllAsync(filter: null, top: null))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -877,7 +877,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             EventSubscriptionCollection collection = client.GetEventSubscriptions(new ResourceIdentifier(scope));
 
             // invoke the operation and iterate over the result
-            await foreach (EventSubscriptionResource item in collection.GetAllAsync())
+            await foreach (EventSubscriptionResource item in collection.GetAllAsync(filter: null, top: null))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -910,7 +910,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             EventSubscriptionCollection collection = client.GetEventSubscriptions(new ResourceIdentifier(scope));
 
             // invoke the operation and iterate over the result
-            await foreach (EventSubscriptionResource item in collection.GetAllAsync())
+            await foreach (EventSubscriptionResource item in collection.GetAllAsync(filter: null, top: null))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class PartnerDestinationOperationSource : IOperationSource<PartnerDestinationResource>
+    /// <summary></summary>
+    internal partial class PartnerDestinationOperationSource : IOperationSource<PartnerDestinationResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal PartnerDestinationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         PartnerDestinationResource IOperationSource<PartnerDestinationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PartnerDestinationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            PartnerDestinationData data = PartnerDestinationData.DeserializePartnerDestinationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new PartnerDestinationResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<PartnerDestinationResource> IOperationSource<PartnerDestinationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PartnerDestinationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
-            return await Task.FromResult(new PartnerDestinationResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            PartnerDestinationData data = PartnerDestinationData.DeserializePartnerDestinationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PartnerDestinationResource(_client, data);
         }
     }
 }

@@ -101,7 +101,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
 ["tag2"] = "value2"
 },
             };
-            PartnerTopicResource result = await partnerTopic.UpdateAsync(patch);
+            await partnerTopic.UpdateAsync(patch);
+            PartnerTopicResource result = (await partnerTopic.GetAsync()).Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

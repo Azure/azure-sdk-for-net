@@ -71,12 +71,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             var updateData = new PartnerNamespaceChannelPatch()
             {
-                PartnerTopicInfo = new PartnerUpdateTopicInfo()
+                EventTypeInfo = new PartnerTopicEventTypeInfo()
                 {
-                    EventTypeInfo = new PartnerTopicEventTypeInfo()
-                    {
-                        Kind = EventDefinitionKind.Inline,
-                    }
+                    Kind = EventDefinitionKind.Inline,
                 }
             };
             var updateResponse = await channel.Value.UpdateAsync(updateData, new System.Threading.CancellationToken());

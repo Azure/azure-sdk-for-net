@@ -13,6 +13,7 @@ using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using ExtendedLocation = Azure.ResourceManager.EventGrid.Models.ExtendedLocation;
 
 namespace Azure.ResourceManager.EventGrid.Samples
 {

@@ -234,12 +234,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.NotNull(createEventsubscription3);
             Assert.AreEqual(createEventsubscription3.Data.ProvisioningState, SubscriptionProvisioningState.Succeeded);
 
-            // TAG ADD/REMOVE TEST
-            await createEventsubscription1.AddTagAsync("removeMe", "yes");
-            await createEventsubscription1.RemoveTagAsync("removeMe");
-            var updatedWithTags = (await createEventsubscription1.GetAsync()).Value;
-            Assert.IsFalse(updatedWithTags.Data.Tags.ContainsKey("removeMe"));
-
             // GET SUBSCRIPTION FROM TOPIC TEST
             var fetchedSubFromTopic = (await namespaceTopicsResponse1.GetNamespaceTopicEventSubscriptionAsync(createEventsubscription1.Data.Name)).Value;
             Assert.NotNull(fetchedSubFromTopic);

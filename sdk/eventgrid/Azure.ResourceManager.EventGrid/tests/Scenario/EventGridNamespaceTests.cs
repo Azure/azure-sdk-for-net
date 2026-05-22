@@ -336,7 +336,6 @@ namespace Azure.ResourceManager.EventGrid.Tests
                     {"updatedTag2", "updatedValue2"}
                 },
                 Sku = namespaceSku,
-                TopicsConfiguration = new UpdateTopicsConfigurationInfo(),
             };
 
             // Validate Custom Domain Ownership
@@ -347,9 +346,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             Assert.NotNull(customDomainValidationResponse);
             Assert.IsNotNull(customDomainValidationResponse.Value);
-            namespacePatch.TopicsConfiguration.CustomDomains.Add(new CustomDomainConfiguration()
+            namespacePatch.TopicsCustomDomains.Add(new CustomDomainConfiguration("www.contoso.com")
             {
-                FullyQualifiedDomainName = "www.contoso.com",
                 Identity = new CustomDomainIdentity()
                 {
                     IdentityType = CustomDomainIdentityType.UserAssigned,
@@ -377,7 +375,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains.FirstOrDefault().FullyQualifiedDomainName, "www.contoso.com");
 
             // Delete 1st custom domain
-            namespacePatch.TopicsConfiguration.CustomDomains.RemoveAt(0);
+            namespacePatch.TopicsCustomDomains.RemoveAt(0);
             var updateNamespaceResponse2 = (await getUpdatedNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
             Assert.NotNull(updateNamespaceResponse2);
             Assert.AreEqual(NamespaceProvisioningState.Succeeded, updateNamespaceResponse2.Data.ProvisioningState);
@@ -457,9 +455,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 TokenIssuer = "sts.windows.net",
                 IssuerCertificates =
                 {
-                    new IssuerCertificateInfo()
+                    new IssuerCertificateInfo(KeyVaultCertificateUrl)
                     {
-                        CertificateUri = new Uri(KeyVaultCertificateUrl),
                         Identity = new CustomJwtAuthenticationManagedIdentity(CustomJwtAuthenticationManagedIdentityType.UserAssigned)
                         {
                             UserAssignedIdentity = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk-eventgrid-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdk-eventgrid-test-userAssignedManagedIdentity")
@@ -480,9 +477,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // Verify custom JWT authentication
             Assert.NotNull(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication);
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.Count, 1);
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.FirstOrDefault().CertificateUri.AbsoluteUri, KeyVaultCertificateUrl);
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.FirstOrDefault().CertificateUri, KeyVaultCertificateUrl);
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.TokenIssuer, "sts.windows.net");
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.FirstOrDefault().Identity.IdentityType, CustomJwtAuthenticationManagedIdentityType.UserAssigned);
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.CustomJwtAuthentication.IssuerCertificates.FirstOrDefault().Identity.Type, CustomJwtAuthenticationManagedIdentityType.UserAssigned);
 
             // Delete all namespaces
             await getNamespaceResponse.DeleteAsync(WaitUntil.Completed);
@@ -551,13 +548,12 @@ namespace Azure.ResourceManager.EventGrid.Tests
             namespacePatch.TopicSpacesConfiguration.ClientAuthentication = new ClientAuthenticationSettings();
             namespacePatch.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication = new WebhookAuthenticationSettings()
             {
-                Identity = new CustomWebhookAuthenticationManagedIdentity()
+                Identity = new CustomWebhookAuthenticationManagedIdentity(CustomWebhookAuthenticationManagedIdentityType.UserAssigned)
                 {
-                    IdentityType = CustomWebhookAuthenticationManagedIdentityType.UserAssigned,
                     UserAssignedIdentity = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/sdk-eventgrid-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sdk-eventgrid-test-userAssignedManagedIdentity")
                 },
                 EndpointUri = new Uri(EventSubscriptionDestinationEndpoint),
-                AzureActiveDirectoryApplicationIdOrUri = new Uri(AzureActiveDirectoryApplicationId),
+                AzureActiveDirectoryApplicationIdOrUri = AzureActiveDirectoryApplicationId,
                 AzureActiveDirectoryTenantId = AzureActiveDirectoryTenantId
             };
 
@@ -575,7 +571,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.EndpointUri, EventSubscriptionDestinationEndpoint);
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryApplicationIdOrUri, AzureActiveDirectoryApplicationId);
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.AzureActiveDirectoryTenantId, AzureActiveDirectoryTenantId);
-            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.Identity.IdentityType, CustomWebhookAuthenticationManagedIdentityType.UserAssigned);
+            Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicSpacesConfiguration.ClientAuthentication.WebhookAuthentication.Identity.Type, CustomWebhookAuthenticationManagedIdentityType.UserAssigned);
 
             // Delete all namespaces
             await getNamespaceResponse.DeleteAsync(WaitUntil.Completed);

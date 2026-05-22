@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary>
-    /// A class representing the EventGridNamespacePermissionBinding data model.
-    /// The Permission binding resource.
-    /// </summary>
+    /// <summary> The Permission binding resource. </summary>
     public partial class EventGridNamespacePermissionBindingData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EventGridNamespacePermissionBindingData"/>. </summary>
         public EventGridNamespacePermissionBindingData()
@@ -57,52 +25,108 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Initializes a new instance of <see cref="EventGridNamespacePermissionBindingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Description for the Permission Binding resource. </param>
-        /// <param name="topicSpaceName">
-        /// The name of the Topic Space resource that the permission is bound to.
-        /// The Topic space needs to be a resource under the same namespace the permission binding is a part of.
-        /// </param>
-        /// <param name="permission"> The allowed permission. </param>
-        /// <param name="clientGroupName">
-        /// The name of the client group resource that the permission is bound to.
-        /// The client group needs to be a resource under the same namespace the permission binding is a part of.
-        /// </param>
-        /// <param name="provisioningState"> Provisioning state of the PermissionBinding resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridNamespacePermissionBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string topicSpaceName, PermissionType? permission, string clientGroupName, PermissionBindingProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of permission binding. </param>
+        internal EventGridNamespacePermissionBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PermissionBindingProperties properties) : base(id, name, resourceType, systemData)
         {
-            Description = description;
-            TopicSpaceName = topicSpaceName;
-            Permission = permission;
-            ClientGroupName = clientGroupName;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> The properties of permission binding. </summary>
+        [WirePath("properties")]
+        internal PermissionBindingProperties Properties { get; set; }
 
         /// <summary> Description for the Permission Binding resource. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PermissionBindingProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary>
         /// The name of the Topic Space resource that the permission is bound to.
         /// The Topic space needs to be a resource under the same namespace the permission binding is a part of.
         /// </summary>
         [WirePath("properties.topicSpaceName")]
-        public string TopicSpaceName { get; set; }
+        public string TopicSpaceName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TopicSpaceName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PermissionBindingProperties();
+                }
+                Properties.TopicSpaceName = value;
+            }
+        }
+
         /// <summary> The allowed permission. </summary>
         [WirePath("properties.permission")]
-        public PermissionType? Permission { get; set; }
+        public PermissionType? Permission
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Permission;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PermissionBindingProperties();
+                }
+                Properties.Permission = value;
+            }
+        }
+
         /// <summary>
         /// The name of the client group resource that the permission is bound to.
         /// The client group needs to be a resource under the same namespace the permission binding is a part of.
         /// </summary>
         [WirePath("properties.clientGroupName")]
-        public string ClientGroupName { get; set; }
+        public string ClientGroupName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientGroupName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PermissionBindingProperties();
+                }
+                Properties.ClientGroupName = value;
+            }
+        }
+
         /// <summary> Provisioning state of the PermissionBinding resource. </summary>
         [WirePath("properties.provisioningState")]
-        public PermissionBindingProvisioningState? ProvisioningState { get; }
+        public PermissionBindingProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

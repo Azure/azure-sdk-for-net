@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> Unknown version of InputSchemaMapping. </summary>
     internal partial class UnknownInputSchemaMapping : EventGridInputSchemaMapping
     {
         /// <summary> Initializes a new instance of <see cref="UnknownInputSchemaMapping"/>. </summary>
         /// <param name="inputSchemaMappingType"> Type of the custom mapping. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownInputSchemaMapping(InputSchemaMappingType inputSchemaMappingType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(inputSchemaMappingType, serializedAdditionalRawData)
-        {
-            InputSchemaMappingType = inputSchemaMappingType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownInputSchemaMapping"/> for deserialization. </summary>
-        internal UnknownInputSchemaMapping()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownInputSchemaMapping(InputSchemaMappingType inputSchemaMappingType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(inputSchemaMappingType != default ? inputSchemaMappingType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

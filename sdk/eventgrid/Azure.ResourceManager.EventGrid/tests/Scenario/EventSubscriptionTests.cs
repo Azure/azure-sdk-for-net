@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(domainTopicEventSubscriptions.Count(), 1);
 
             // List event subscriptions
-            var eventSubscriptionsPage = await subscriptionCollection.GetAllAsync().ToEnumerableAsync();
+            var eventSubscriptionsPage = await subscriptionCollection.GetAllAsync(filter: null, top: null).ToEnumerableAsync();
             Assert.NotNull(eventSubscriptionsPage.FirstOrDefault(x => x.Data.Name.Equals(eventSubscriptionName)));
 
             // Delete the event subscription
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(EventSubscriptionProvisioningState.Succeeded, eventSubscriptionResponse.Data.ProvisioningState);
 
             // List event subscriptions by Azure subscription
-            var eventSubscriptionsList = await subscriptionCollection.GetAllAsync().ToEnumerableAsync();
+            var eventSubscriptionsList = await subscriptionCollection.GetAllAsync(filter: null, top: null).ToEnumerableAsync();
             Assert.NotNull(eventSubscriptionsList.FirstOrDefault(x => x.Data.Name.Equals(eventSubscriptionName)));
 
             // Delete the event subscription

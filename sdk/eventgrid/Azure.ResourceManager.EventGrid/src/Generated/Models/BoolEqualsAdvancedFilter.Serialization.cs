@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class BoolEqualsAdvancedFilter : IUtf8JsonSerializable, IJsonModel<BoolEqualsAdvancedFilter>
+    /// <summary> BoolEquals Advanced Filter. </summary>
+    public partial class BoolEqualsAdvancedFilter : AdvancedFilter, IJsonModel<BoolEqualsAdvancedFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BoolEqualsAdvancedFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AdvancedFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BoolEqualsAdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBoolEqualsAdvancedFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BoolEqualsAdvancedFilter)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BoolEqualsAdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BoolEqualsAdvancedFilter)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BoolEqualsAdvancedFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BoolEqualsAdvancedFilter IPersistableModel<BoolEqualsAdvancedFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => (BoolEqualsAdvancedFilter)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BoolEqualsAdvancedFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BoolEqualsAdvancedFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BoolEqualsAdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BoolEqualsAdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BoolEqualsAdvancedFilter)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Value))
             {
@@ -43,158 +82,62 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
         }
 
-        BoolEqualsAdvancedFilter IJsonModel<BoolEqualsAdvancedFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BoolEqualsAdvancedFilter IJsonModel<BoolEqualsAdvancedFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BoolEqualsAdvancedFilter)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AdvancedFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BoolEqualsAdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BoolEqualsAdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BoolEqualsAdvancedFilter)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBoolEqualsAdvancedFilter(document.RootElement, options);
         }
 
-        internal static BoolEqualsAdvancedFilter DeserializeBoolEqualsAdvancedFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BoolEqualsAdvancedFilter DeserializeBoolEqualsAdvancedFilter(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? value = default;
             AdvancedFilterOperatorType operatorType = default;
             string key = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool? value = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("value"u8))
+                if (prop.NameEquals("operatorType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    operatorType = new AdvancedFilterOperatorType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("key"u8))
+                {
+                    key = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("value"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    value = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("operatorType"u8))
-                {
-                    operatorType = new AdvancedFilterOperatorType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("key"u8))
-                {
-                    key = property.Value.GetString();
+                    value = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new BoolEqualsAdvancedFilter(operatorType, key, serializedAdditionalRawData, value);
+            return new BoolEqualsAdvancedFilter(operatorType, key, additionalBinaryDataProperties, value);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  value: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Value))
-                {
-                    builder.Append("  value: ");
-                    var boolValue = Value.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperatorType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  operatorType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  operatorType: ");
-                builder.AppendLine($"'{OperatorType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Key), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  key: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Key))
-                {
-                    builder.Append("  key: ");
-                    if (Key.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Key}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Key}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<BoolEqualsAdvancedFilter>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BoolEqualsAdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(BoolEqualsAdvancedFilter)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        BoolEqualsAdvancedFilter IPersistableModel<BoolEqualsAdvancedFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BoolEqualsAdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBoolEqualsAdvancedFilter(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BoolEqualsAdvancedFilter)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BoolEqualsAdvancedFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
