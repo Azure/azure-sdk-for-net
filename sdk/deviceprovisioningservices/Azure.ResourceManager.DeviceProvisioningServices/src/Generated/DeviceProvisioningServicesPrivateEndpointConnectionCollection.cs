@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// Each <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="DeviceProvisioningServiceResource"/>.
     /// To get a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionCollection"/> instance call the GetDeviceProvisioningServicesPrivateEndpointConnections method from an instance of <see cref="DeviceProvisioningServiceResource"/>.
     /// </summary>
-    public partial class DeviceProvisioningServicesPrivateEndpointConnectionCollection : ArmCollection
+    public partial class DeviceProvisioningServicesPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionResource>, IAsyncEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionResource>
     {
         private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
         private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
@@ -500,6 +501,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<DeviceProvisioningServicesPrivateEndpointConnectionResource> IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<DeviceProvisioningServicesPrivateEndpointConnectionResource> IAsyncEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
