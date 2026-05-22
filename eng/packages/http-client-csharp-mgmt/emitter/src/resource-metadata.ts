@@ -4,17 +4,18 @@
 import {
   DecoratedType,
   getClientOptions,
+  SdkEnumType,
   SdkHttpOperation,
-  SdkMethod
+  SdkMethod,
+  SdkPathParameter
 } from "@azure-tools/typespec-client-generator-core";
 import { NoTarget, Program } from "@typespec/compiler";
 import pluralize from "pluralize";
 import { $lib } from "./lib/lib.js";
 
 type SdkHttpOperationParameter = SdkHttpOperation["parameters"][number];
-type SdkHttpOperationEnumPathParameter = SdkHttpOperationParameter & {
-  kind: "path";
-  type: { kind: "enum"; values: { value: unknown }[] };
+type SdkHttpOperationEnumPathParameter = SdkPathParameter & {
+  type: SdkEnumType;
 };
 
 // ─── Path utilities ─────────────────────────────────────────────────────────
@@ -25,6 +26,13 @@ type SdkHttpOperationEnumPathParameter = SdkHttpOperationParameter & {
  */
 export function isVariableSegment(segment: string): boolean {
   return segment.startsWith("{") && segment.endsWith("}");
+}
+
+/**
+ * Gets the parameter name from a variable segment like {resourceName}.
+ */
+export function getVariableSegmentName(segment: string): string {
+  return segment.slice(1, -1);
 }
 
 /**
@@ -829,6 +837,47 @@ export function isResourceInstancePath(
 }
 
 /**
+ * Treats name path parameters with fixed one-value enum types as constants.
+ */
+export function resolveFixedEnumNameSegments(
+  method: SdkMethod<SdkHttpOperation>,
+  path: RequestPath
+): RequestPath {
+  let changed = false;
+  const segments = [...path.segments];
+  for (
+    let providerIndex = 0;
+    providerIndex < segments.length;
+    providerIndex++
+  ) {
+    if (segments[providerIndex].toLowerCase() !== "providers") continue;
+
+    const nextProviderIndex = segments.findIndex(
+      (segment, index) =>
+        index > providerIndex && segment.toLowerCase() === "providers"
+    );
+    const tailEnd =
+      nextProviderIndex === -1 ? segments.length : nextProviderIndex;
+
+    for (let i = providerIndex + 3; i < tailEnd; i += 2) {
+      const segment = segments[i];
+      if (!isVariableSegment(segment)) continue;
+
+      const fixedValue = getSingleFixedEnumValueForPathParam(
+        method,
+        getVariableSegmentName(segment)
+      );
+      if (!fixedValue) continue;
+
+      segments[i] = fixedValue;
+      changed = true;
+    }
+  }
+
+  return changed ? RequestPath.fromSegments(segments) : path;
+}
+
+/**
  * Represents a resource in the ARM provider schema.
  */
 export interface ArmResourceSchema {
@@ -1569,9 +1618,11 @@ export function detectDynamicTypeSegments(
 
   for (let i = providerIndex + 2; i < path.length - 1; i += 2) {
     if (isVariableSegment(path.segments[i])) {
-      const typeParamName = path.segments[i].slice(1, -1);
+      const typeParamName = getVariableSegmentName(path.segments[i]);
       const nameParamName =
-        i + 1 < path.length ? path.segments[i + 1].slice(1, -1) : "";
+        i + 1 < path.length && isVariableSegment(path.segments[i + 1])
+          ? getVariableSegmentName(path.segments[i + 1])
+          : "";
       results.push({
         typeParamName,
         nameParamName,
@@ -1642,4 +1693,17 @@ function getEnumValuesForPathParam(
   return param?.type.values
     .map((v) => v.value)
     .filter((v): v is string => typeof v === "string");
+}
+
+function getSingleFixedEnumValueForPathParam(
+  method: SdkMethod<SdkHttpOperation>,
+  paramName: string
+): string | undefined {
+  const param = findEnumPathParam(method, paramName);
+  if (!param?.type.isFixed || param.type.values.length !== 1) {
+    return undefined;
+  }
+
+  const value = param.type.values[0].value;
+  return typeof value === "string" ? value : undefined;
 }
