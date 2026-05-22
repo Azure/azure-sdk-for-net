@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete("This method is obsolete and will be removed in a future release")]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use Update(ContainerAppConnectedEnvironmentPatch, CancellationToken) instead.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ContainerAppConnectedEnvironmentResource> Update(CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException("This method is not supported. Use the new version of this factory method instead.");
+            throw new NotSupportedException("This overload is not supported. Use Update(ContainerAppConnectedEnvironmentPatch, CancellationToken) instead.");
         }
 
         /// <summary>
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [Obsolete("This method is obsolete and will be removed in a future release")]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use UpdateAsync(ContainerAppConnectedEnvironmentPatch, CancellationToken) instead.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<ContainerAppConnectedEnvironmentResource>> UpdateAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException("This method is not supported. Use the new version of this factory method instead.");
+            throw new NotSupportedException("This overload is not supported. Use UpdateAsync(ContainerAppConnectedEnvironmentPatch, CancellationToken) instead.");
         }
     }
 }
