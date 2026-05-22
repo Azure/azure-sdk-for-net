@@ -8,12 +8,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    // Justification: GA exposed AppliedScopes as a settable IList<string> on
-    // ReservationPurchaseContent. The new generator emits a get-only flattened property; this
-    // shim restores the GA setter by replacing the underlying collection contents.
     [CodeGenSuppress("AppliedScopes")]
     public partial class ReservationPurchaseContent
     {
+        // The generator can project appliedScopes?: string[] as IList<string>, but it emits a
+        // get-only collection by default; customization preserves the GA setter behavior.
         public IList<string> AppliedScopes
         {
             get
