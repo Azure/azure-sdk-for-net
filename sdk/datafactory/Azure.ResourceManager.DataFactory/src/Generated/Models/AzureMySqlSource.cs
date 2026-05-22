@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureMySqlSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="AzureMySqlSource"/>. </summary>
-        public AzureMySqlSource()
-        {
-        }
+        public AzureMySqlSource() : base("AzureMySqlSource") { }
 
         /// <summary> Initializes a new instance of <see cref="AzureMySqlSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

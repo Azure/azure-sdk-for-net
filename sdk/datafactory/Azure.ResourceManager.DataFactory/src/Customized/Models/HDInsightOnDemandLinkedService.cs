@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Property restored as workaround for issue #59298. </summary>
-        public IList<DataFactoryLinkedServiceReference> AdditionalLinkedServiceNames { get; } = new List<DataFactoryLinkedServiceReference>();
+        public IList<DataFactoryLinkedServiceReference> AdditionalLinkedServiceNames { get; set; }
     }
 }

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AmazonMwsObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public AmazonMwsObjectDataset(DataFactoryLinkedServiceReference linkedServiceName)
-            : base(linkedServiceName)
+        public AmazonMwsObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
         {
+            LinkedServiceName = linkedServiceName;
         }
     }
 }

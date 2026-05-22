@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class OdbcSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="OdbcSource"/>. </summary>
-        public OdbcSource()
-        {
-        }
+        public OdbcSource() : base("OdbcSource") { }
 
         /// <summary> Initializes a new instance of <see cref="OdbcSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

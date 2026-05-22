@@ -10,15 +10,15 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class UnknownDataFactoryTriggerProperties : DataFactoryTriggerProperties
+    internal partial class UnknownTrigger : DataFactoryTriggerProperties
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataFactoryTriggerProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownTrigger"/>. </summary>
         /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"></param>
-        internal UnknownDataFactoryTriggerProperties(string @type, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties) : base(@type ?? "unknown", description, runtimeState, annotations, additionalProperties)
+        internal UnknownTrigger(string @type, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties) : base(@type ?? "unknown", description, runtimeState, annotations, additionalProperties)
         {
         }
     }

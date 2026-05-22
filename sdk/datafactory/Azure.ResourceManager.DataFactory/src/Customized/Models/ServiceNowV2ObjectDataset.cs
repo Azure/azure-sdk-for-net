@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ServiceNowV2ObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public ServiceNowV2ObjectDataset(DataFactoryLinkedServiceReference linkedServiceName)
-            : base(linkedServiceName)
+        public ServiceNowV2ObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
         {
+            LinkedServiceName = linkedServiceName;
         }
     }
 }

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class NetezzaTableDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public NetezzaTableDataset(DataFactoryLinkedServiceReference linkedServiceName)
-            : base(linkedServiceName)
+        public NetezzaTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
         {
+            LinkedServiceName = linkedServiceName;
         }
     }
 }

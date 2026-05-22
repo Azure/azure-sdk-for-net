@@ -16,9 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AmazonRdsForSqlServerSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="AmazonRdsForSqlServerSource"/>. </summary>
-        public AmazonRdsForSqlServerSource()
-        {
-        }
+        public AmazonRdsForSqlServerSource() : base("AmazonRdsForSqlServerSource") { }
 
         /// <summary> Initializes a new instance of <see cref="AmazonRdsForSqlServerSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

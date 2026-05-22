@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class XeroSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="XeroSource"/>. </summary>
-        public XeroSource()
-        {
-        }
+        public XeroSource() : base("XeroSource") { }
 
         /// <summary> Initializes a new instance of <see cref="XeroSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

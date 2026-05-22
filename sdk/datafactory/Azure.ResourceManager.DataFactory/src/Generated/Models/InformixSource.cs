@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class InformixSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="InformixSource"/>. </summary>
-        public InformixSource()
-        {
-        }
+        public InformixSource() : base("InformixSource") { }
 
         /// <summary> Initializes a new instance of <see cref="InformixSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

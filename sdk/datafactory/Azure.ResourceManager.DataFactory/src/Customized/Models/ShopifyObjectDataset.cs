@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ShopifyObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public ShopifyObjectDataset(DataFactoryLinkedServiceReference linkedServiceName)
-            : base(linkedServiceName)
+        public ShopifyObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
         {
+            LinkedServiceName = linkedServiceName;
         }
     }
 }

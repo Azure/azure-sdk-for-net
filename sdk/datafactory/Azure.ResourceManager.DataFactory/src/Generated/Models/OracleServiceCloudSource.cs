@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class OracleServiceCloudSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="OracleServiceCloudSource"/>. </summary>
-        public OracleServiceCloudSource()
-        {
-        }
+        public OracleServiceCloudSource() : base("OracleServiceCloudSource") { }
 
         /// <summary> Initializes a new instance of <see cref="OracleServiceCloudSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

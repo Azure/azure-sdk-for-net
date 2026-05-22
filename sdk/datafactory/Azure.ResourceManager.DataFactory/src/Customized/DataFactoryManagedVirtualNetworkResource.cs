@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DataFactory.Models;
 
@@ -46,12 +47,14 @@ namespace Azure.ResourceManager.DataFactory
             return Update(waitUntil, data, ifMatch != null ? new ETag(ifMatch) : (ETag?)null, cancellationToken);
         }
 
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<DataFactoryPrivateEndpointResource>> GetDataFactoryPrivateEndpointAsync(string managedPrivateEndpointName, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
             return await GetDataFactoryPrivateEndpointAsync(managedPrivateEndpointName, ifNoneMatch != null ? new ETag(ifNoneMatch) : (ETag?)null, cancellationToken).ConfigureAwait(false);
         }
 
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<DataFactoryPrivateEndpointResource> GetDataFactoryPrivateEndpoint(string managedPrivateEndpointName, string ifNoneMatch, CancellationToken cancellationToken = default)
         {

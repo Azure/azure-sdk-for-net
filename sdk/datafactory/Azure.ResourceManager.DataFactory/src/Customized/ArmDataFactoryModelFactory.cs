@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory;
@@ -25,6 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="properties"> Managed identity credential properties. </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <returns> A new <see cref="DataFactoryManagedIdentityCredentialData"/> instance for mocking. </returns>
+        [Obsolete("This class is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataFactoryManagedIdentityCredentialData DataFactoryManagedIdentityCredentialData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataFactoryManagedIdentityCredentialProperties properties = default, ETag? eTag = default)
         {

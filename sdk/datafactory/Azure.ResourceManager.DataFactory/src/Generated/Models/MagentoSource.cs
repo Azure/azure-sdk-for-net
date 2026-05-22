@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class MagentoSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="MagentoSource"/>. </summary>
-        public MagentoSource()
-        {
-        }
+        public MagentoSource() : base("MagentoSource") { }
 
         /// <summary> Initializes a new instance of <see cref="MagentoSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

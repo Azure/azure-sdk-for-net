@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class LakeHouseTableDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public LakeHouseTableDataset(DataFactoryLinkedServiceReference linkedServiceName)
-            : base(linkedServiceName)
+        public LakeHouseTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
         {
+            LinkedServiceName = linkedServiceName;
         }
     }
 }

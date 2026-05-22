@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SybaseSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="SybaseSource"/>. </summary>
-        public SybaseSource()
-        {
-        }
+        public SybaseSource() : base("SybaseSource") { }
 
         /// <summary> Initializes a new instance of <see cref="SybaseSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

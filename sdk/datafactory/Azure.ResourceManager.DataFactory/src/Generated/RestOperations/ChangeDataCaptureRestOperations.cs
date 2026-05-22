@@ -119,6 +119,7 @@ namespace Azure.ResourceManager.DataFactory
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -189,6 +190,7 @@ namespace Azure.ResourceManager.DataFactory
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -213,6 +215,7 @@ namespace Azure.ResourceManager.DataFactory
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

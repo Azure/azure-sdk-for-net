@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
             uri.AppendPath(factoryName, true);
-            uri.AppendPath("/privateEndpointConnections", false);
+            uri.AppendPath("/privateEndPointConnections", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

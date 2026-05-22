@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public IList<DataFactoryLinkedServiceDebugInfo> LinkedServices { get; }
 
         /// <summary> Staging info for debug session. </summary>
-        internal DataFlowStagingInfo Staging { get; set; }
+        public DataFlowStagingInfo Staging { get; set; }
 
         /// <summary> Data flow debug settings. </summary>
         public DataFlowDebugPackageDebugSettings DebugSettings { get; set; }

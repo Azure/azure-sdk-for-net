@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new ChangeTrackingList<BinaryData>();
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new UnknownDataFactoryTriggerProperties(triggerType, description, runtimeState, annotations.ToList(), additionalProperties);
+            return new UnknownTrigger(triggerType, description, runtimeState, annotations.ToList(), additionalProperties);
         }
 
         /// <summary> Base class for all triggers that support one to many model for trigger to pipeline. </summary>
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new UnknownDataFactoryIntegrationRuntimeProperties(new IntegrationRuntimeType(integrationRuntimeType), description, additionalProperties);
+            return new UnknownIntegrationRuntime(new IntegrationRuntimeType(integrationRuntimeType), description, additionalProperties);
         }
 
         /// <summary> The compute resource properties for managed integration runtime. </summary>
@@ -947,7 +947,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             annotations ??= new ChangeTrackingList<BinaryData>();
 
-            return new UnknownDataFactoryDataFlowProperties(@type, description, annotations.ToList(), folderName is null ? default : new DataFlowFolder(folderName, null), additionalBinaryDataProperties: null);
+            return new UnknownDataFlow(@type, description, annotations.ToList(), folderName is null ? default : new DataFlowFolder(folderName, null), additionalBinaryDataProperties: null);
         }
 
         /// <param name="description"> The description of the data flow. </param>
@@ -1077,7 +1077,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new ChangeTrackingList<BinaryData>();
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new UnknownDataFactoryDatasetProperties(
+            return new UnknownDataset(
                 datasetType,
                 description,
                 structure,
@@ -4493,7 +4493,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new ChangeTrackingList<BinaryData>();
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new UnknownDataFactoryLinkedServiceProperties(
+            return new UnknownLinkedService(
                 linkedServiceType,
                 linkedServiceVersion,
                 connectVia,
@@ -9381,9 +9381,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static DataFactoryPrivateLinkResource DataFactoryPrivateLinkResource(string id = default, string name = default, string @type = default, ETag? eTag = default, DataFactoryPrivateLinkResourceProperties properties = default)
         {
             return new DataFactoryPrivateLinkResource(
-                id,
+                id != null ? new ResourceIdentifier(id) : null,
                 name,
-                @type,
+                @type != null ? new ResourceType(@type) : default,
+                default,
                 eTag,
                 additionalBinaryDataProperties: null,
                 properties);
@@ -10039,7 +10040,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new UnknownPipelineActivity(
+            return new UnknownActivity(
                 name,
                 @type,
                 description,
@@ -10610,7 +10611,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new UnknownCopyActivitySource(
+            return new UnknownCopySource(
                 @type,
                 sourceRetryCount,
                 sourceRetryWait,
@@ -17223,7 +17224,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new ChangeTrackingList<BinaryData>();
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new UnknownDataFactoryCredential(@type, description, annotations.ToList(), additionalProperties);
+            return new UnknownCredential(@type, description, annotations.ToList(), additionalProperties);
         }
 
         /// <param name="description"> Credential description. </param>
@@ -17529,7 +17530,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryPrivateLinkResource(
                 id,
                 name,
-                default,
+                resourceType,
+                systemData,
                 eTag,
                 additionalBinaryDataProperties: null,
                 properties);

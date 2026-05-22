@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class PostgreSqlV2TableDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public PostgreSqlV2TableDataset(DataFactoryLinkedServiceReference linkedServiceName)
-            : base(linkedServiceName)
+        public PostgreSqlV2TableDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
         {
+            LinkedServiceName = linkedServiceName;
         }
     }
 }

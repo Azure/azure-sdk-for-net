@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SalesforceV2Source : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="SalesforceV2Source"/>. </summary>
-        public SalesforceV2Source()
-        {
-        }
+        public SalesforceV2Source() : base("SalesforceV2Source") { }
 
         /// <summary> Initializes a new instance of <see cref="SalesforceV2Source"/>. </summary>
         /// <param name="type"> Copy source type. </param>

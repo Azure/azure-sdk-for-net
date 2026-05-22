@@ -7,30 +7,42 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class DataFactoryPrivateLinkResource : SubResource
+    public partial class DataFactoryPrivateLinkResource : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateLinkResource"/>. </summary>
-        internal DataFactoryPrivateLinkResource()
+        public DataFactoryPrivateLinkResource()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateLinkResource"/>. </summary>
         /// <param name="id"> The resource identifier. </param>
         /// <param name="name"> The resource name. </param>
-        /// <param name="type"> The resource type. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Core resource properties. </param>
-        internal DataFactoryPrivateLinkResource(string id, string name, string @type, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryPrivateLinkResourceProperties properties) : base(id, name, @type, eTag, additionalBinaryDataProperties)
+        internal DataFactoryPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryPrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
         {
+            ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
+        /// <summary> Etag identifies change in the resource. </summary>
+        public ETag? ETag { get; }
+
         /// <summary> Core resource properties. </summary>
-        public DataFactoryPrivateLinkResourceProperties Properties { get; }
+        public DataFactoryPrivateLinkResourceProperties Properties { get; set; }
     }
 }

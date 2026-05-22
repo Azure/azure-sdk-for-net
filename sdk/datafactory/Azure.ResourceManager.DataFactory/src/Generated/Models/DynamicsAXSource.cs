@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DynamicsAXSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="DynamicsAXSource"/>. </summary>
-        public DynamicsAXSource()
-        {
-        }
+        public DynamicsAXSource() : base("DynamicsAXSource") { }
 
         /// <summary> Initializes a new instance of <see cref="DynamicsAXSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

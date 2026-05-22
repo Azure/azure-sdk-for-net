@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Custom setup script properties for a managed dedicated integration runtime. </summary>
-    internal partial class IntegrationRuntimeCustomSetupScriptProperties
+    public partial class IntegrationRuntimeCustomSetupScriptProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapCloudForCustomerSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerSource"/>. </summary>
-        public SapCloudForCustomerSource()
-        {
-        }
+        public SapCloudForCustomerSource() : base("SapCloudForCustomerSource") { }
 
         /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

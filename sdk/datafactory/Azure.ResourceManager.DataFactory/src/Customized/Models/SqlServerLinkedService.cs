@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public SqlServerLinkedService(DataFactoryElement<string> connectionString)
+        public SqlServerLinkedService(DataFactoryElement<string> connectionString) : this()
         {
             Argument.AssertNotNull(connectionString, nameof(connectionString));
 

@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class VerticaSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="VerticaSource"/>. </summary>
-        public VerticaSource()
-        {
-        }
+        public VerticaSource() : base("VerticaSource") { }
 
         /// <summary> Initializes a new instance of <see cref="VerticaSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

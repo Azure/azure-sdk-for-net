@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class QuickBooksSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="QuickBooksSource"/>. </summary>
-        public QuickBooksSource()
-        {
-        }
+        public QuickBooksSource() : base("QuickBooksSource") { }
 
         /// <summary> Initializes a new instance of <see cref="QuickBooksSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

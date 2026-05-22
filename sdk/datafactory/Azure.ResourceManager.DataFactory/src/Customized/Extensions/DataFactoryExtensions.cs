@@ -52,17 +52,21 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary> Back-compat overload of GetDataFactory taking <paramref name="ifNoneMatch"/> as a string. </summary>
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<DataFactoryResource> GetDataFactory(this ResourceGroupResource resourceGroupResource, string factoryName, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDataFactory(factoryName, ifNoneMatch != null ? new ETag(ifNoneMatch) : (ETag?)null, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return resourceGroupResource.GetCachedClient(client => new MockableDataFactoryResourceGroupResource(client, resourceGroupResource.Id)).GetDataFactory(factoryName, ifNoneMatch, cancellationToken);
         }
 
         /// <summary> Back-compat overload of GetDataFactoryAsync taking <paramref name="ifNoneMatch"/> as a string. </summary>
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Task<Response<DataFactoryResource>> GetDataFactoryAsync(this ResourceGroupResource resourceGroupResource, string factoryName, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDataFactoryAsync(factoryName, ifNoneMatch != null ? new ETag(ifNoneMatch) : (ETag?)null, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return resourceGroupResource.GetCachedClient(client => new MockableDataFactoryResourceGroupResource(client, resourceGroupResource.Id)).GetDataFactoryAsync(factoryName, ifNoneMatch, cancellationToken);
         }
     }
 }

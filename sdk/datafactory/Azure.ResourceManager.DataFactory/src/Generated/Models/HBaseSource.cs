@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class HBaseSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="HBaseSource"/>. </summary>
-        public HBaseSource()
-        {
-        }
+        public HBaseSource() : base("HBaseSource") { }
 
         /// <summary> Initializes a new instance of <see cref="HBaseSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

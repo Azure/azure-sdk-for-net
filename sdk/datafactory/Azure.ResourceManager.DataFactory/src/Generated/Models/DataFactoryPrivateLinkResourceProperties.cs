@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateLinkResourceProperties"/>. </summary>
-        internal DataFactoryPrivateLinkResourceProperties()
+        public DataFactoryPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();

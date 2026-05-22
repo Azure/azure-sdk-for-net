@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SalesforceSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="SalesforceSource"/>. </summary>
-        public SalesforceSource()
-        {
-        }
+        public SalesforceSource() : base("SalesforceSource") { }
 
         /// <summary> Initializes a new instance of <see cref="SalesforceSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

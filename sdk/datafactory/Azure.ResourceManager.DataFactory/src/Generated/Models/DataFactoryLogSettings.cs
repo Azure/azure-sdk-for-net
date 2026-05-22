@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public CopyActivityLogSettings CopyActivityLogSettings { get; set; }
 
         /// <summary> Log location settings customer needs to provide when enabling log. </summary>
-        internal LogLocationSettings LogLocationSettings { get; set; }
+        public LogLocationSettings LogLocationSettings { get; set; }
 
         /// <summary> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> LogLocationPath

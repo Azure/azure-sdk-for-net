@@ -1469,9 +1469,9 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="content"> The parameters for getting a SSIS object metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SsisObjectMetadataListResult>> GetAllIntegrationRuntimeObjectMetadataAsync(GetSsisObjectMetadataContent content = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<SsisObjectMetadataListResult>> GetAllIntegrationRuntimeObjectMetadataInternalAsync(GetSsisObjectMetadataContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata");
+            using DiagnosticScope scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadataInternal");
             scope.Start();
             try
             {
@@ -1518,9 +1518,9 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="content"> The parameters for getting a SSIS object metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SsisObjectMetadataListResult> GetAllIntegrationRuntimeObjectMetadata(GetSsisObjectMetadataContent content = default, CancellationToken cancellationToken = default)
+        internal virtual Response<SsisObjectMetadataListResult> GetAllIntegrationRuntimeObjectMetadataInternal(GetSsisObjectMetadataContent content = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata");
+            using DiagnosticScope scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadataInternal");
             scope.Start();
             try
             {
@@ -1662,9 +1662,9 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IntegrationRuntimeOutboundNetworkDependenciesResult>> GetOutboundNetworkDependenciesAsync(CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<IntegrationRuntimeOutboundNetworkDependenciesResult>> GetOutboundNetworkDependenciesInternalAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _integrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies");
+            using DiagnosticScope scope = _integrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetOutboundNetworkDependenciesInternal");
             scope.Start();
             try
             {
@@ -1710,9 +1710,9 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IntegrationRuntimeOutboundNetworkDependenciesResult> GetOutboundNetworkDependencies(CancellationToken cancellationToken = default)
+        internal virtual Response<IntegrationRuntimeOutboundNetworkDependenciesResult> GetOutboundNetworkDependenciesInternal(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _integrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies");
+            using DiagnosticScope scope = _integrationRuntimesClientDiagnostics.CreateScope("DataFactoryIntegrationRuntimeResource.GetOutboundNetworkDependenciesInternal");
             scope.Start();
             try
             {

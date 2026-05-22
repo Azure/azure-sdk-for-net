@@ -10,9 +10,9 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class UnknownDataFactoryLinkedServiceProperties : DataFactoryLinkedServiceProperties
+    internal partial class UnknownLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataFactoryLinkedServiceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
-        internal UnknownDataFactoryLinkedServiceProperties(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties) : base(linkedServiceType ?? "unknown", linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        internal UnknownLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties) : base(linkedServiceType ?? "unknown", linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
         }
     }

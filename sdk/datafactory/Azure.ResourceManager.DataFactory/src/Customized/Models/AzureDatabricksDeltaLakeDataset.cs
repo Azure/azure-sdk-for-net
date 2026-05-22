@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureDatabricksDeltaLakeDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public AzureDatabricksDeltaLakeDataset(DataFactoryLinkedServiceReference linkedServiceName)
-            : base(linkedServiceName)
+        public AzureDatabricksDeltaLakeDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
         {
+            LinkedServiceName = linkedServiceName;
         }
     }
 }

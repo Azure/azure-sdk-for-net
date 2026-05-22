@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class MarketoSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="MarketoSource"/>. </summary>
-        public MarketoSource()
-        {
-        }
+        public MarketoSource() : base("MarketoSource") { }
 
         /// <summary> Initializes a new instance of <see cref="MarketoSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

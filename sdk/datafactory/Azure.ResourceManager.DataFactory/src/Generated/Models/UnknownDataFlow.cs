@@ -10,15 +10,15 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class UnknownDataFactoryDataFlowProperties : DataFactoryDataFlowProperties
+    internal partial class UnknownDataFlow : DataFactoryDataFlowProperties
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataFactoryDataFlowProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDataFlow"/>. </summary>
         /// <param name="type"> Type of data flow. </param>
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
         /// <param name="folder"> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataFactoryDataFlowProperties(string @type, string description, IList<BinaryData> annotations, DataFlowFolder folder, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", description, annotations, folder, additionalBinaryDataProperties)
+        internal UnknownDataFlow(string @type, string description, IList<BinaryData> annotations, DataFlowFolder folder, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", description, annotations, folder, additionalBinaryDataProperties)
         {
         }
     }

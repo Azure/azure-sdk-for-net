@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DynamicsAXResourceDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public DynamicsAXResourceDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path)
-            : base(linkedServiceName)
+        public DynamicsAXResourceDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path) : this(path)
         {
+            LinkedServiceName = linkedServiceName;
             Path = path;
         }
     }

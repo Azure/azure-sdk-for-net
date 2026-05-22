@@ -16,9 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SqlDWSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="SqlDWSource"/>. </summary>
-        public SqlDWSource()
-        {
-        }
+        public SqlDWSource() : base("SqlDWSource") { }
 
         /// <summary> Initializes a new instance of <see cref="SqlDWSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

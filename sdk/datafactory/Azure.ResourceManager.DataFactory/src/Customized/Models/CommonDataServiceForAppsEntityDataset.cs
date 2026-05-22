@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class CommonDataServiceForAppsEntityDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public CommonDataServiceForAppsEntityDataset(DataFactoryLinkedServiceReference linkedServiceName)
-            : base(linkedServiceName)
+        public CommonDataServiceForAppsEntityDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
         {
+            LinkedServiceName = linkedServiceName;
         }
     }
 }

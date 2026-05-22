@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DrillSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="DrillSource"/>. </summary>
-        public DrillSource()
-        {
-        }
+        public DrillSource() : base("DrillSource") { }
 
         /// <summary> Initializes a new instance of <see cref="DrillSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>

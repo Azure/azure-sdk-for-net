@@ -20,12 +20,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatasetSchemaDataElement"/>. </summary>
-        internal DatasetSchemaDataElement()
-        {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DatasetSchemaDataElement"/>. </summary>
         /// <param name="schemaColumnName"> Name of the schema column. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaColumnType"> Type of the schema column. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -37,12 +31,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Name of the schema column. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SchemaColumnName { get; }
+        public DataFactoryElement<string> SchemaColumnName { get; set; }
 
         /// <summary> Type of the schema column. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SchemaColumnType { get; }
+        public DataFactoryElement<string> SchemaColumnType { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties => new ReadOnlyDictionary<string, BinaryData>(_additionalBinaryDataProperties);
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

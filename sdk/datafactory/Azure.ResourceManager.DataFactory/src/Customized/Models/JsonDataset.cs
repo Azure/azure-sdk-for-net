@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class JsonDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public JsonDataset(DataFactoryLinkedServiceReference linkedServiceName)
-            : base(linkedServiceName)
+        public JsonDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
         {
+            LinkedServiceName = linkedServiceName;
         }
 
         /// <summary> Property restored as workaround for issue #59298. </summary>

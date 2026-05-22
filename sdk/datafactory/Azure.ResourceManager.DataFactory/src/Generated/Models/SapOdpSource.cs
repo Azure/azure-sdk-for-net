@@ -16,9 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapOdpSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="SapOdpSource"/>. </summary>
-        public SapOdpSource()
-        {
-        }
+        public SapOdpSource() : base("SapOdpSource") { }
 
         /// <summary> Initializes a new instance of <see cref="SapOdpSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>
