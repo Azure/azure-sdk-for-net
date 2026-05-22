@@ -1,7 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Threading;
@@ -1454,7 +1455,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 async: false,
-                cancellationToken).EnsureCompleted();
+                cancellationToken,
+                layoutEndpoint: options?.LayoutEndpoint).EnsureCompleted();
         }
 
         /// <summary>
@@ -1503,7 +1505,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
                 async: true,
-                cancellationToken).ConfigureAwait(false);
+                cancellationToken,
+                layoutEndpoint: options?.LayoutEndpoint).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1518,6 +1521,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="operationName"></param>
         /// <param name="async"></param>
         /// <param name="cancellationToken"></param>
+        /// <param name="layoutEndpoint">
+        /// Optional layout endpoint for this download. When non-null, the request
+        /// is routed to this endpoint via <see cref="DataLocalityPolicy"/>.
+        /// </param>
         /// <returns></returns>
         private async ValueTask<Response<BlobDownloadStreamingResult>> DownloadStreamingDirect(
             HttpRange range,
@@ -1526,7 +1533,8 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler,
             string operationName,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string layoutEndpoint = null)
         {
             HttpRange requestedRange = range;
             if (UsingClientSideEncryption)
@@ -1537,7 +1545,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
 
-            var response = await DownloadStreamingInternal(range, conditions, transferValidationOverride, progressHandler, operationName, async, cancellationToken).ConfigureAwait(false);
+            var response = await DownloadStreamingInternal(range, conditions, transferValidationOverride, progressHandler, operationName, async, cancellationToken, layoutEndpoint: layoutEndpoint).ConfigureAwait(false);
 
             // if using clientside encryption, wrap the auto-retry stream in a decryptor
             // we already return a nonseekable stream; returning a crypto stream is fine
@@ -1581,6 +1589,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="cancellationToken">
         /// Cancellation token.
         /// </param>
+        /// <param name="layoutCache">
+        /// Optional. Auto-refreshing cache of layout segments from GetBlobLayout for
+        /// locality-aware routing. When provided, the cache is awaited to obtain the
+        /// current segments and the download chunk is intersected with them to
+        /// determine the optimal endpoint.
+        /// </param>
+        /// <param name="layoutEndpoint">
+        /// Optional. Caller-supplied layout endpoint string.
+        /// Wins over <paramref name="layoutCache"/> when both are provided. When set,
+        /// the request is routed to this endpoint via <see cref="DataLocalityPolicy"/>.
+        /// </param>
         /// <returns></returns>
         internal virtual async ValueTask<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
             HttpRange range,
@@ -1589,7 +1608,9 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler,
             string operationName,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache = null,
+            string layoutEndpoint = null)
         {
             DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
@@ -1615,6 +1636,27 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName: nameof(BlobBaseClient.DownloadStreaming),
                         parameterName: nameof(conditions));
 
+                    // Resolve the layout endpoint either from the caller-supplied value
+                    // or from the auto-refreshing cache.
+                    if (layoutEndpoint == null && layoutCache != null)
+                    {
+                        BlobLayoutSegmentCacheValue cachedValue = await layoutCache
+                            .GetAsync(async, cancellationToken)
+                            .ConfigureAwait(false);
+                        layoutEndpoint = BlobExtensions.GetLayoutEndpoint(range, cachedValue.Segments);
+                    }
+
+                    // Add the layout endpoint to the Http message properties so DataLocalityPolicy can route the request
+                    if (layoutEndpoint != null)
+                    {
+                        disposableBucket.Add(
+                            HttpPipeline.CreateHttpMessagePropertiesScope(
+                                new Dictionary<string, object>
+                                {
+                                    { DataLocalityPolicy.LayoutEndpointKey, layoutEndpoint }
+                                }));
+                    }
+
                     // Start downloading the blob
                     Response<BlobDownloadStreamingResult> response = await StartDownloadAsync(
                         range,
@@ -1636,14 +1678,30 @@ namespace Azure.Storage.Blobs.Specialized
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
-                    ValueTask<Response<BlobDownloadStreamingResult>> Factory(long offset, bool async, CancellationToken cancellationToken)
-                        => StartDownloadAsync(
+                    async ValueTask<Response<BlobDownloadStreamingResult>> Factory(long offset, bool async, CancellationToken cancellationToken)
+                    {
+                        // Re-establish the layout endpoint scope for retry requests,
+                        // since the original scope from disposableBucket will have
+                        // been disposed by the time retries occur.
+                        using DisposableBucket retryBucket = new();
+                        if (layoutEndpoint != null)
+                        {
+                            retryBucket.Add(
+                                HttpPipeline.CreateHttpMessagePropertiesScope(
+                                    new Dictionary<string, object>
+                                    {
+                                        { DataLocalityPolicy.LayoutEndpointKey, layoutEndpoint }
+                                    }));
+                        }
+
+                        return await StartDownloadAsync(
                             range,
                             conditionsWithEtag,
                             validationOptions,
                             offset,
                             async,
-                            cancellationToken);
+                            cancellationToken).ConfigureAwait(false);
+                    }
                     async ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.RawDecodedData DecodedData)> StructuredMessageFactory(
                         long offset, bool async, CancellationToken cancellationToken)
                     {
@@ -2338,7 +2396,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Range ?? default,
                 options?.TransferValidation,
                 async: false,
-                cancellationToken).EnsureCompleted();
+                cancellationToken,
+                layoutEndpoint: options?.LayoutEndpoint).EnsureCompleted();
 
         /// <summary>
         /// The <see cref="DownloadContentAsync(BlobDownloadOptions, CancellationToken)"/>
@@ -2391,7 +2450,8 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Range ?? default,
                 options?.TransferValidation,
                 async: true,
-                cancellationToken).ConfigureAwait(false);
+                cancellationToken,
+                layoutEndpoint: options?.LayoutEndpoint).ConfigureAwait(false);
 
         private async Task<Response<BlobDownloadResult>> DownloadContentInternal(
             BlobRequestConditions conditions,
@@ -2399,7 +2459,8 @@ namespace Azure.Storage.Blobs.Specialized
             HttpRange range,
             DownloadTransferValidationOptions transferValidationOverride,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string layoutEndpoint = null)
         {
             conditions.ValidateConditionsNotPresent(
                 invalidConditions:
@@ -2415,7 +2476,8 @@ namespace Azure.Storage.Blobs.Specialized
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadContent)}",
                 async: async,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
+                cancellationToken: cancellationToken,
+                layoutEndpoint: layoutEndpoint).ConfigureAwait(false);
 
             // Return an exploding Response on 304
             if (response.IsUnavailable())
@@ -2672,6 +2734,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransferValidation,
+                options?.EnableDataLocality ?? false,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2713,6 +2776,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransferValidation,
+                options?.EnableDataLocality ?? false,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2753,6 +2817,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransferValidation,
+                options?.EnableDataLocality ?? false,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -2794,6 +2859,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 options?.TransferOptions ?? default,
                 options?.TransferValidation,
+                options?.EnableDataLocality ?? false,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -3024,6 +3090,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="transferValidationOverride">
         /// Override for client options on transfer validation.
         /// </param>
+        /// <param name="enableDataLocality">
+        /// Optional. When true, enables locality-aware routing for parallel downloads.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -3046,12 +3115,13 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             DownloadTransferValidationOptions transferValidationOverride = default,
+            bool enableDataLocality = false,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
             DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
 
-            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions, validationOptions, progressHandler);
+            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions, validationOptions, progressHandler, enableDataLocality: enableDataLocality);
 
             if (UsingClientSideEncryption)
             {
@@ -3094,6 +3164,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
                 transferValidationOverride: options?.TransferValidation,
+                enableDataLocality: options?.EnableDataLocality ?? false,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -3129,6 +3200,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 allowModifications: options?.AllowModifications ?? false,
                 transferValidationOverride: options?.TransferValidation,
+                enableDataLocality: options?.EnableDataLocality ?? false,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -3176,6 +3248,7 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 allowModifications: false,
                 transferValidationOverride: default,
+                enableDataLocality: false,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -3222,6 +3295,7 @@ namespace Azure.Storage.Blobs.Specialized
                     conditions: allowBlobModifications ? new BlobRequestConditions() : null,
                     allowModifications: allowBlobModifications,
                     transferValidationOverride: default,
+                    enableDataLocality: false,
                     async: false,
                     cancellationToken: cancellationToken).EnsureCompleted();
 
@@ -3269,6 +3343,7 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 allowModifications: false,
                 transferValidationOverride: default,
+                enableDataLocality: false,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -3315,6 +3390,7 @@ namespace Azure.Storage.Blobs.Specialized
                     conditions: allowBlobModifications ? new BlobRequestConditions() : null,
                     allowModifications: allowBlobModifications,
                     transferValidationOverride: default,
+                    enableDataLocality: false,
                     async: true,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -3339,6 +3415,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="transferValidationOverride">
         /// Optional override for settings in the client options.
+        /// </param>
+        /// <param name="enableDataLocality">
+        /// Whether locality-aware routing is enabled. When true, a layout cache
+        /// is built upfront so that every buffer fill, starting with the first
+        /// chunk download, is routed to the optimal endpoint for the chunk
+        /// being read.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -3365,6 +3447,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions,
             bool allowModifications,
             DownloadTransferValidationOptions transferValidationOverride,
+            bool enableDataLocality,
 #pragma warning disable CA1801
             bool async,
             CancellationToken cancellationToken)
@@ -3395,31 +3478,96 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     scope.Start();
 
-                    // This also makes sure that we fail fast if file doesn't exist.
-                    Response<BlobProperties> blobProperties = await GetPropertiesInternal(
-                        conditions: conditions,
-                        async,
-                        new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                    ETag etag;
+                    long blobContentLength;
+                    Metadata bootstrapMetadata;
+                    BlobLayoutSegmentCacheValue? seedCacheValue = null;
+                    BlobLayoutInfo layoutProperties = null;
 
-                    ETag etag = blobProperties.Value.ETag;
+                    // When data locality is enabled, GetLayout returns ETag/length/metadata
+                    // AND the layout segments, so we don't also need GetProperties on the success path.
+                    // On either data locality disabled or a soft GetLayout failure, we fall
+                    // through to a single GetProperties.
+                    if (enableDataLocality)
+                    {
+                        BlobLayoutSegment[] seedSegments;
+                        (layoutProperties, seedSegments) = await FetchLayoutInternal(
+                            range: default,
+                            conditions,
+                            async,
+                            cancellationToken).ConfigureAwait(false);
+                        seedCacheValue = new BlobLayoutSegmentCacheValue(seedSegments);
+                    }
+
+                    if (layoutProperties != null)
+                    {
+                        etag = layoutProperties.ETag;
+                        blobContentLength = layoutProperties.BlobContentLength;
+                        bootstrapMetadata = layoutProperties.Metadata;
+                    }
+                    else
+                    {
+                        // Data Locality disabled OR GetLayout soft failure: GetProperties bootstrap.
+                        Response<BlobProperties> blobProperties = await GetPropertiesInternal(
+                            conditions: conditions,
+                            async,
+                            new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                        etag = blobProperties.Value.ETag;
+                        blobContentLength = blobProperties.Value.ContentLength;
+                        bootstrapMetadata = blobProperties.Value.Metadata;
+                    }
+
                     var readConditions = conditions;
                     if (!allowModifications)
                     {
                         readConditions = readConditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
                     }
 
-                    long blobContentLength = blobProperties.Value.ContentLength;
                     ClientSideDecryptor.ContentEncryptionKeyCache contentEncryptionKeyCache = default;
                     EncryptionData encryptionData = null;
                     if (UsingClientSideEncryption && !allowModifications)
                     {
                         contentEncryptionKeyCache = new();
-                        encryptionData = BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(blobProperties?.Value?.Metadata);
+                        encryptionData = BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(bootstrapMetadata);
                     }
 
                     LazyLoadingReadOnlyStream<BlobProperties>.PredictEncryptedRangeAdjustment rangeAdjustmentFunc = UsingClientSideEncryption
                         ? r => BlobClientSideDecryptor.GetEncryptedBlobRange(r, encryptionData)
                         : LazyLoadingReadOnlyStream<BlobProperties>.NoRangeAdjustment;
+
+                    // When locality is enabled, build the layout cache so all chunk downloads
+                    // can be routed to optimal endpoints. The cache is seeded from the bootstrap
+                    // call so the first chunk doesn't trigger a duplicate GetLayout. The seed
+                    // carries the bootstrap-time expiry, so if the stream is held past
+                    // LayoutLifetime before the first read, the seed is discarded and the
+                    // cache fetches fresh rather than serving a stale layout.
+                    AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache = null;
+                    if (enableDataLocality)
+                    {
+                        layoutCache = new AutoRefreshingCache<BlobLayoutSegmentCacheValue>(
+                            acquire: async (acquireAsync, ct) =>
+                            {
+                                if (seedCacheValue.HasValue)
+                                {
+                                    BlobLayoutSegmentCacheValue seed = seedCacheValue.Value;
+                                    seedCacheValue = null;
+                                    if (seed.ExpiresOn > DateTimeOffset.UtcNow)
+                                    {
+                                        return seed;
+                                    }
+                                }
+#pragma warning disable AZC0108 // 'async' parameter for the 'FetchLayoutInternal' method call should be 'true'.
+                                (_, BlobLayoutSegment[] segments) = await FetchLayoutInternal(
+                                    range: default,
+                                    readConditions,
+                                    acquireAsync,
+                                    ct).ConfigureAwait(false);
+#pragma warning restore AZC0108 // 'async' parameter for the 'FetchLayoutInternal' method call should be 'true'.
+                                return new BlobLayoutSegmentCacheValue(segments);
+                            },
+                            backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
+                    }
+
                     return new LazyLoadingReadOnlyStream<BlobProperties>(
                         async (HttpRange range,
                         DownloadTransferValidationOptions downloadValidationOptions,
@@ -3439,7 +3587,8 @@ namespace Azure.Storage.Blobs.Specialized
                                 progressHandler: default,
                                 operationName,
                                 async,
-                                cancellationToken).ConfigureAwait(false);
+                                cancellationToken,
+                                layoutCache: layoutCache).ConfigureAwait(false);
 
                             if (UsingClientSideEncryption)
                             {
@@ -3478,7 +3627,7 @@ namespace Azure.Storage.Blobs.Specialized
                 finally
                 {
                     scope.Dispose();
-                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobBaseClient));
                 }
             }
         }
@@ -5201,7 +5350,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        internal async Task<Response<BlobProperties>> GetPropertiesInternal(
+        internal virtual async Task<Response<BlobProperties>> GetPropertiesInternal(
             BlobRequestConditions conditions,
             bool async,
             RequestContext context,
@@ -5277,6 +5426,247 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion GetProperties
+
+        #region GetLayout
+        /// <summary>
+        /// The <see cref="GetLayoutAsync"/> operation returns all user-defined metadata,
+        /// standard HTTP properties, and system properties for the blob.
+        /// In addition, it may optionally return the layout of the blob.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="BlobGetLayoutOptions"/> for shaping the request.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Pageable{BlobLayoutInfo}"/> describing the
+        /// blob's layout and properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual Pageable<BlobLayoutInfo> GetLayout(
+            BlobGetLayoutOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            new GetLayoutAsyncCollection(
+                this,
+                range: options?.Range ?? default,
+                conditions: options?.Conditions)
+            .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetLayoutAsync"/> operation returns all user-defined metadata,
+        /// standard HTTP properties, and system properties for the blob.
+        /// In addition, it may optionally return the layout of the blob.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="BlobGetLayoutOptions"/> for shaping the request.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="AsyncPageable{BlobLayoutInfo}"/> describing the
+        /// blob's layout and properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual AsyncPageable<BlobLayoutInfo> GetLayoutAsync(
+            BlobGetLayoutOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            new GetLayoutAsyncCollection(
+                this,
+                range: options?.Range ?? default,
+                conditions: options?.Conditions)
+            .ToAsyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetLayoutAsync"/> operation returns all user-defined metadata,
+        /// standard HTTP properties, and system properties for the blob.
+        /// In addition, it may optionally return the layout of the blob.
+        /// </summary>
+        /// <param name="marker">
+        /// An optional string value that identifies the segment of the list
+        /// of blobs to be returned with the next listing operation.  The
+        /// operation returns a non-empty <see cref="ListBlobsFlatSegmentResponse.NextMarker"/>
+        /// if the listing operation did not return all blobs remaining to be
+        /// listed with the current segment.  The NextMarker value can
+        /// be used as the value for the <paramref name="marker"/> parameter
+        /// in a subsequent call to request the next segment of list items.
+        /// </param>
+        /// <param name="maxResults">
+        /// Optional. Specifies the maximum number of ranges to return.
+        /// </param>
+        /// <param name="range">
+        /// If provided, returns metadata only for the specified range.
+        /// If not provided, returns the metadata for the entire blob.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// conditions on getting the blob's properties and layout.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="ResponseWithHeaders{BlobLayout, BlobGetLayoutHeaders}"/> containing
+        /// the wire-level layout envelope and typed response headers. The collection
+        /// caller is responsible for projecting this to a public <see cref="BlobLayoutInfo"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        internal async Task<ResponseWithHeaders<BlobLayout, BlobGetLayoutHeaders>> GetLayoutInternal(
+            string marker,
+            int? maxResults,
+            HttpRange range,
+            BlobRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            string operationName = $"{nameof(BlobBaseClient)}.{nameof(GetLayout)}";
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlobBaseClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                    operationName: nameof(BlobBaseClient.GetLayout),
+                    parameterName: nameof(conditions));
+
+                try
+                {
+                    scope.Start();
+
+                    if (async)
+                    {
+                        return await BlobRestClient.GetLayoutAsync(
+                            marker: marker,
+                            maxresults: maxResults,
+                            range: range.ToString(),
+                            leaseId: conditions?.LeaseId,
+                            ifTags: conditions?.TagConditions,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        return BlobRestClient.GetLayout(
+                            marker: marker,
+                            maxresults: maxResults,
+                            range: range.ToString(),
+                            leaseId: conditions?.LeaseId,
+                            ifTags: conditions?.TagConditions,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            cancellationToken: cancellationToken);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Fetches the blob layout for the given range using
+        /// <see cref="GetLayoutAsync"/>.
+        /// Eagerly materializes all layout items into a sorted array, and also
+        /// returns the first page's <see cref="BlobLayoutInfo"/> so callers can
+        /// read response properties from the layout call directly when bootstrapping a download.
+        /// Returns (null, null) on a soft failure. When the service indicates
+        /// the blob has no layout (e.g. a 204 with no segments), Segments is
+        /// an empty array so the cache can store the answer for the full TTL.
+        /// Callers that only need segments can discard Properties.
+        /// </summary>
+        internal async Task<(BlobLayoutInfo Properties, BlobLayoutSegment[] Segments)> FetchLayoutInternal(
+            HttpRange range,
+            BlobRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            BlobLayoutInfo properties = null;
+            List<BlobLayoutSegment> allSegments = new();
+            BlobGetLayoutOptions options = new BlobGetLayoutOptions
+            {
+                Range = range,
+                Conditions = conditions,
+            };
+            try
+            {
+                if (async)
+                {
+                    await foreach (BlobLayoutInfo layoutInfo in GetLayoutAsync(options, cancellationToken).ConfigureAwait(false))
+                    {
+                        properties ??= layoutInfo;
+                        allSegments.AddRange(layoutInfo.ToBlobLayoutSegments());
+                    }
+                }
+                else
+                {
+                    foreach (BlobLayoutInfo layoutInfo in GetLayout(options, cancellationToken))
+                    {
+                        properties ??= layoutInfo;
+                        allSegments.AddRange(layoutInfo.ToBlobLayoutSegments());
+                    }
+                }
+            }
+            catch (RequestFailedException ex)
+                when (ex.Status == 400 || ex.Status >= 500)
+            {
+                // Soft failure: return (null, null) so the cache treats this as
+                // a "no data locality available" answer and caches it for the full TTL.
+                return (null, null);
+            }
+
+            return (properties, allSegments.ToArray());
+        }
+        #endregion GetLayout
 
         #region SetHttpHeaders
         /// <summary>

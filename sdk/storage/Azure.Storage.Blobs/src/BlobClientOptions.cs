@@ -264,6 +264,7 @@ namespace Azure.Storage.Blobs
 
             this.Initialize();
             AddHeadersAndQueryParameters();
+            this.AddPolicy(DataLocalityPolicy.Shared, HttpPipelinePosition.PerCall);
         }
 
         /// <summary>

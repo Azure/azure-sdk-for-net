@@ -71,6 +71,11 @@ namespace Azure.Storage.Blobs
 
         private readonly ArrayPool<byte> _arrayPool;
 
+        /// <summary>
+        /// Whether locality-aware routing is enabled for this download.
+        /// </summary>
+        private readonly bool _enableDataLocality;
+
         private readonly int DefaultConcurrentTransfersCount = Math.Min(Math.Max(Environment.ProcessorCount * 2, 8), 32);
 
         public PartitionedDownloader(
@@ -78,10 +83,12 @@ namespace Azure.Storage.Blobs
             StorageTransferOptions transferOptions = default,
             DownloadTransferValidationOptions transferValidation = default,
             IProgress<long> progress = default,
-            ArrayPool<byte> arrayPool = default)
+            ArrayPool<byte> arrayPool = default,
+            bool enableDataLocality = false)
         {
             _client = client;
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
+            _enableDataLocality = enableDataLocality;
 
             // Set _maxWorkerCount
             if (transferOptions.MaximumConcurrency.HasValue
@@ -273,6 +280,30 @@ namespace Azure.Storage.Blobs
                 ETag etag = initialResponse.Value.Details.ETag;
                 BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
 
+                AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache = null;
+
+                // When data locality is enabled and the service recommends it
+                // via the x-ms-download-hint header, build a cache that lazily
+                // fetches the blob layout so subsequent range requests can be
+                // routed to optimal endpoints.
+                if (_enableDataLocality
+                    && initialResponse.Value.Details.DownloadHint == DownloadHint.Layout)
+                {
+                    layoutCache = new AutoRefreshingCache<BlobLayoutSegmentCacheValue>(
+                        acquire: async (acquireAsync, ct) =>
+                        {
+#pragma warning disable AZC0108 // 'async' parameter for the 'FetchLayoutInternal' method call should be 'true'.
+                            (_, BlobLayoutSegment[] segments) = await _client.FetchLayoutInternal(
+                                new HttpRange(initialLength, totalLength - initialLength),
+                                conditionsWithEtag,
+                                acquireAsync,
+                                ct).ConfigureAwait(false);
+#pragma warning restore AZC0108 // 'async' parameter for the 'FetchLayoutInternal' method call should be 'true'.
+                            return new BlobLayoutSegmentCacheValue(segments);
+                        },
+                        backgroundAcquireTimeout: TimeSpan.FromSeconds(30));
+                }
+
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                 // Rule checker cannot understand this section, but this
                 // massively reduces code duplication.
@@ -310,7 +341,8 @@ namespace Azure.Storage.Blobs
                             _progress,
                             _innerOperationName,
                             async,
-                            cancellationToken);
+                            cancellationToken,
+                            layoutCache);
                     if (runningTasks != null)
                     {
                         // Add the next Task (which will start the download but

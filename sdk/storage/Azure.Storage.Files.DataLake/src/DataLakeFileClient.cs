@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6216,6 +6216,71 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion OpenWrite
+
+        #region GetLayout
+        /// <summary>
+        /// The <see cref="GetLayoutAsync"/> operation returns all user-defined metadata,
+        /// standard HTTP properties, and system properties for the file.
+        /// In addition, it may optionally return the layout of the file.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="DataLakeFileGetLayoutOptions"/> for shaping the request.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Pageable{DataLakeFileLayoutInfo}"/> describing the
+        /// file's layout and properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Pageable<DataLakeFileLayoutInfo> GetLayout(
+            DataLakeFileGetLayoutOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            new GetLayoutAsyncCollection(
+                _blockBlobClient,
+                options.ToBlobGetLayoutOptions())
+            .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The <see cref="GetLayoutAsync"/> operation returns all user-defined metadata,
+        /// standard HTTP properties, and system properties for the file.
+        /// In addition, it may optionally return the layout of the file.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="DataLakeFileGetLayoutOptions"/> for shaping the request.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{DataLakeFileLayoutInfo}"/> describing the
+        /// file's layout and properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<DataLakeFileLayoutInfo> GetLayoutAsync(
+            DataLakeFileGetLayoutOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            new GetLayoutAsyncCollection(
+                _blockBlobClient,
+                options.ToBlobGetLayoutOptions())
+            .ToAsyncCollection(cancellationToken);
+
+        #endregion GetLayout
 
         #region PartitionedUploader
         internal PartitionedUploader<DataLakeFileUploadOptions, PathInfo> GetPartitionedUploader(

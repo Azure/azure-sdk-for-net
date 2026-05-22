@@ -1102,5 +1102,145 @@ namespace Azure.Storage.Files.DataLake.Models
                 Tags = tags
             };
         #endregion GetPathTagResult
+
+        #region DataLakeFileLayoutEndpointsEndpointItem
+        /// <summary>
+        /// Creates a new <see cref="Models.DataLakeFileLayoutEndpointsEndpointItem"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileLayoutEndpointsEndpointItem DataLakeFileLayoutEndpointsEndpointItem(
+            int index,
+            string value)
+            => new DataLakeFileLayoutEndpointsEndpointItem()
+            {
+                Index = index,
+                Value = value
+            };
+        #endregion DataLakeFileLayoutEndpointsEndpointItem
+
+        #region DataLakeFileLayoutEndpoints
+        /// <summary>
+        /// Creates a new <see cref="Models.DataLakeFileLayoutEndpoints"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileLayoutEndpoints DataLakeFileLayoutEndpoints(
+            IEnumerable<DataLakeFileLayoutEndpointsEndpointItem> endpoint)
+            => new DataLakeFileLayoutEndpoints()
+            {
+                Endpoint = endpoint == null ? null : new List<DataLakeFileLayoutEndpointsEndpointItem>(endpoint)
+            };
+        #endregion DataLakeFileLayoutEndpoints
+
+        #region DataLakeFileLayoutRangesRangeItem
+        /// <summary>
+        /// Creates a new <see cref="Models.DataLakeFileLayoutRangesRangeItem"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileLayoutRangesRangeItem DataLakeFileLayoutRangesRangeItem(
+            long start,
+            long end,
+            int endpointIndex)
+            => new DataLakeFileLayoutRangesRangeItem()
+            {
+                Start = start,
+                End = end,
+                EndpointIndex = endpointIndex
+            };
+        #endregion DataLakeFileLayoutRangesRangeItem
+
+        #region DataLakeFileLayoutRanges
+        /// <summary>
+        /// Creates a new <see cref="Models.DataLakeFileLayoutRanges"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileLayoutRanges DataLakeFileLayoutRanges(
+            IEnumerable<DataLakeFileLayoutRangesRangeItem> range)
+            => new DataLakeFileLayoutRanges()
+            {
+                Range = range == null ? null : new List<DataLakeFileLayoutRangesRangeItem>(range)
+            };
+        #endregion DataLakeFileLayoutRanges
+
+        #region DataLakeFileLayoutInfo
+        /// <summary>
+        /// Creates a new <see cref="Models.DataLakeFileLayoutInfo"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileLayoutInfo DataLakeFileLayoutInfo(
+            DataLakeFileLayoutRanges ranges,
+            DataLakeFileLayoutEndpoints endpoints,
+            DateTimeOffset lastModified,
+            DateTimeOffset createdOn,
+            IDictionary<string, string> metadata,
+            DateTimeOffset copyCompletedOn,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus? fileCopyStatus,
+            bool isIncrementalCopy,
+            DataLakeLeaseDuration leaseDuration,
+            DataLakeLeaseState leaseState,
+            DataLakeLeaseStatus leaseStatus,
+            long contentLength,
+            string contentType,
+            ETag eTag,
+            byte[] contentHash,
+            string contentEncoding,
+            string contentDisposition,
+            string contentLanguage,
+            string cacheControl,
+            string acceptRanges,
+            bool isServerEncrypted,
+            string encryptionKeySha256,
+            string encryptionScope,
+            string accessTier,
+            bool accessTierInferred,
+            string smartAccessTier,
+            string archiveStatus,
+            DateTimeOffset accessTierChangedOn,
+            DateTimeOffset expiresOn,
+            long fileContentLength,
+            string fileContentType,
+            string fileContentEncoding,
+            byte[] fileContentMD5,
+            DateTimeOffset fileCreatedOn)
+            => new DataLakeFileLayoutInfo()
+            {
+                Ranges = ranges,
+                Endpoints = endpoints,
+                LastModified = lastModified,
+                CreatedOn = createdOn,
+                Metadata = metadata,
+                CopyCompletedOn = copyCompletedOn,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = fileCopyStatus,
+                IsIncrementalCopy = isIncrementalCopy,
+                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ETag = eTag,
+                ContentHash = contentHash,
+                ContentEncoding = contentEncoding,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                CacheControl = cacheControl,
+                AcceptRanges = acceptRanges,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+                AccessTier = accessTier,
+                AccessTierInferred = accessTierInferred,
+                SmartAccessTier = smartAccessTier,
+                ArchiveStatus = archiveStatus,
+                AccessTierChangedOn = accessTierChangedOn,
+                ExpiresOn = expiresOn,
+                FileContentLength = fileContentLength,
+                FileContentType = fileContentType,
+                FileContentEncoding = fileContentEncoding,
+                FileContentMD5 = fileContentMD5,
+                FileCreatedOn = fileCreatedOn
+            };
+        #endregion DataLakeFileLayoutInfo
     }
 }
