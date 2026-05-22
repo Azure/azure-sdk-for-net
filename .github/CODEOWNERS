@@ -279,17 +279,17 @@
 # ServiceOwners: @Kishp01 @rajeshka @shankarsama
 
 # PRLabel: %Event Hubs
-/sdk/eventhub/    @axisc @hmlam @j7nw4r @jsquire @sjkwak
+/sdk/eventhub/    @axisc @hmlam @j7nw4r @SwayGom @jsquire @sjkwak
 
 # PRLabel: %Event Hubs %Functions
-/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/    @axisc @hmlam @j7nw4r @jsquire @sjkwak
+/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/    @axisc @hmlam @j7nw4r @SwayGom @jsquire @sjkwak
 
 # AzureSdkOwners: @jsquire
 # ServiceLabel: %Event Hubs
-# ServiceOwners: @axisc @hmlam @j7nw4r @sjkwak
+# ServiceOwners: @axisc @hmlam @j7nw4r @SwayGom @sjkwak
 
 # PRLabel: %Functions %Service Bus
-/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/    @EldertGrootenboer @j7nw4r @jsquire @skarri-microsoft
+/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/    @EldertGrootenboer @j7nw4r @SwayGom @jsquire @skarri-microsoft
 
 # AzureSdkOwners: @jsquire
 # ServiceLabel: %Functions
@@ -422,11 +422,11 @@
 # ServiceOwners: @efrainretana @mattgotteiner
 
 # PRLabel: %Service Bus
-/sdk/servicebus/    @EldertGrootenboer @j7nw4r @jsquire @skarri-microsoft
+/sdk/servicebus/    @EldertGrootenboer @j7nw4r @SwayGom @jsquire @skarri-microsoft
 
 # AzureSdkOwners: @jsquire
 # ServiceLabel: %Service Bus
-# ServiceOwners: @EldertGrootenboer @j7nw4r @skarri-microsoft
+# ServiceOwners: @EldertGrootenboer @j7nw4r @SwayGom @skarri-microsoft
 
 # PRLabel: %SignalR
 /sdk/signalr/    @chenkennt @JialinXin @vicancy @Y-Sindo
