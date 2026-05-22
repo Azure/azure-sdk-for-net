@@ -16,20 +16,18 @@ using TypeSpecCodeGenSuppress = Microsoft.TypeSpec.Generator.Customizations.Code
 
 namespace Azure.ResourceManager.Reservations
 {
-    // Justification: GA modelled MergeReservation/SplitReservation as
-    // ArmOperation<IList<ReservationDetailData>> and Return as a synchronous
-    // Response<ReservationRefundResult>. The new generator emits Pageable shapes for Merge/Split
-    // and an LRO for Return. It also omits the GA CreateResourceIdentifier and direct
-    // GetReservationDetail forwarding methods. These shims preserve the GA-shape methods.
     [TypeSpecCodeGenSuppress("MergeReservation", typeof(WaitUntil), typeof(MergeContent), typeof(CancellationToken))]
     [TypeSpecCodeGenSuppress("MergeReservationAsync", typeof(WaitUntil), typeof(MergeContent), typeof(CancellationToken))]
     [TypeSpecCodeGenSuppress("SplitReservation", typeof(WaitUntil), typeof(SplitContent), typeof(CancellationToken))]
     [TypeSpecCodeGenSuppress("SplitReservationAsync", typeof(WaitUntil), typeof(SplitContent), typeof(CancellationToken))]
     public partial class ReservationOrderResource
     {
+        //// The new generator no longer emits the GA CreateResourceIdentifier helper, so customization is required to preserve it.
         public static ResourceIdentifier CreateResourceIdentifier(Guid reservationOrderId)
             => new ResourceIdentifier($"/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}");
 
+        //The new generator no longer generates direct-forwarding convenience APIs like `GA` on the parent resource by default,
+        // so customization is required to preserve that behavior.
         [ForwardsClientCalls]
         public virtual Task<Response<ReservationDetailResource>> GetReservationDetailAsync(Guid reservationId, string expand = default, CancellationToken cancellationToken = default)
             => GetReservationDetails().GetAsync(reservationId, expand, cancellationToken);
@@ -38,6 +36,8 @@ namespace Azure.ResourceManager.Reservations
         public virtual Response<ReservationDetailResource> GetReservationDetail(Guid reservationId, string expand = default, CancellationToken cancellationToken = default)
             => GetReservationDetails().Get(reservationId, expand, cancellationToken);
 
+        //GA modelled `MergeReservation` as ArmOperation<IList<ReservationDetailData>> while the new generator emits Pageable shapes.
+        // Customization is required to preserve the GA method signatures and behavior.
         public virtual async Task<ArmOperation<IList<ReservationDetailData>>> MergeReservationAsync(WaitUntil waitUntil, MergeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -100,6 +100,8 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
+        //GA modelled `SplitReservation` as ArmOperation<IList<ReservationDetailData>> while the new generator emits Pageable shapes.
+        // Customization is required to preserve the GA method signatures and behavior.
         public virtual async Task<ArmOperation<IList<ReservationDetailData>>> SplitReservationAsync(WaitUntil waitUntil, SplitContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -161,7 +163,9 @@ namespace Azure.ResourceManager.Reservations
                 throw;
             }
         }
-
+        //This signature needs to be customized because, under the new generator, the service definition is projected as an LRO,
+        // while the GA SDK previously exposed it as a synchronous Response<ReservationRefundResult>.
+        // To avoid breaking GA API compatibility, we need to suppress or bypass the generated LRO surface and manually preserve the old signature.
         [ForwardsClientCalls]
         public virtual async Task<Response<ReservationRefundResult>> ReturnAsync(ReservationRefundContent content, CancellationToken cancellationToken = default)
         {
