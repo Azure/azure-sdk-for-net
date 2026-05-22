@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> The static website properties for blob storage. </summary>
         [WirePath("properties.staticWebsite")]
-        public StaticWebsite StaticWebsite
+        public BlobServiceStaticWebsite StaticWebsite
         {
             get
             {
