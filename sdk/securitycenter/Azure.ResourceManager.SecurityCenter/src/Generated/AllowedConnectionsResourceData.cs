@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> List of connectable resources. </summary>
-        public IReadOnlyList<ConnectableResource> ConnectableResources
+        public IReadOnlyList<ConnectableResourceInfo> ConnectableResources
         {
             get
             {

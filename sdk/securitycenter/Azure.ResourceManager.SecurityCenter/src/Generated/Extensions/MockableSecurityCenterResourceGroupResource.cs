@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
     {
         private ClientDiagnostics _alertsClientDiagnostics;
         private Alerts _alertsRestClient;
+        private ClientDiagnostics _externalSecuritySolutionsClientDiagnostics;
+        private ExternalSecuritySolutions _externalSecuritySolutionsRestClient;
         private ClientDiagnostics _jitNetworkAccessPoliciesClientDiagnostics;
         private JitNetworkAccessPolicies _jitNetworkAccessPoliciesRestClient;
         private ClientDiagnostics _apiCollectionsClientDiagnostics;
@@ -43,6 +45,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Endpoint, "2022-01-01");
+
+        private ClientDiagnostics ExternalSecuritySolutionsClientDiagnostics => _externalSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ExternalSecuritySolutions ExternalSecuritySolutionsRestClient => _externalSecuritySolutionsRestClient ??= new ExternalSecuritySolutions(ExternalSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
 
         private ClientDiagnostics JitNetworkAccessPoliciesClientDiagnostics => _jitNetworkAccessPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -309,75 +315,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             Argument.AssertNotNullOrEmpty(discoveredSecuritySolutionName, nameof(discoveredSecuritySolutionName));
 
             return GetDiscoveredSecuritySolutions().Get(ascLocation, discoveredSecuritySolutionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ExternalSecuritySolutions in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of ExternalSecuritySolutions and their operations over a ExternalSecuritySolutionResource. </returns>
-        public virtual ExternalSecuritySolutionCollection GetExternalSecuritySolutions()
-        {
-            return GetCachedClient(client => new ExternalSecuritySolutionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a specific external Security Solution.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/ExternalSecuritySolutions/{externalSecuritySolutionsName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExternalSecuritySolutions_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> or <paramref name="externalSecuritySolutionsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> or <paramref name="externalSecuritySolutionsName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ExternalSecuritySolutionResource>> GetExternalSecuritySolutionAsync(string ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
-            Argument.AssertNotNullOrEmpty(externalSecuritySolutionsName, nameof(externalSecuritySolutionsName));
-
-            return await GetExternalSecuritySolutions().GetAsync(ascLocation, externalSecuritySolutionsName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a specific external Security Solution.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/ExternalSecuritySolutions/{externalSecuritySolutionsName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExternalSecuritySolutions_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> or <paramref name="externalSecuritySolutionsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> or <paramref name="externalSecuritySolutionsName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ExternalSecuritySolutionResource> GetExternalSecuritySolution(string ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
-            Argument.AssertNotNullOrEmpty(externalSecuritySolutionsName, nameof(externalSecuritySolutionsName));
-
-            return GetExternalSecuritySolutions().Get(ascLocation, externalSecuritySolutionsName, cancellationToken);
         }
 
         /// <summary> Gets a collection of JitNetworkAccessPolicies in the <see cref="ResourceGroupResource"/>. </summary>
@@ -1028,15 +965,15 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         }
 
         /// <summary>
-        /// Policies for protecting resources using Just-in-Time access control for the subscription, location
+        /// Gets a specific external Security Solution.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/jitNetworkAccessPolicies. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/ExternalSecuritySolutions/{externalSecuritySolutionsName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> JitNetworkAccessPoliciesOperationGroup_ListByResourceGroup. </description>
+        /// <description> ExternalSecuritySolutions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -1044,27 +981,50 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        internal virtual AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> or <paramref name="externalSecuritySolutionsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> or <paramref name="externalSecuritySolutionsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ExternalSecuritySolution>> GetAsync(string ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
+            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
+            Argument.AssertNotNullOrEmpty(externalSecuritySolutionsName, nameof(externalSecuritySolutionsName));
+
+            using DiagnosticScope scope = ExternalSecuritySolutionsClientDiagnostics.CreateScope("MockableSecurityCenterResourceGroupResource.Get");
+            scope.Start();
+            try
             {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPoliciesGetJitNetworkAccessPoliciesAsyncCollectionResultOfT(JitNetworkAccessPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetJitNetworkAccessPolicies"), data => new JitNetworkAccessPolicyResource(Client, data));
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ExternalSecuritySolutionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ascLocation, externalSecuritySolutionsName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ExternalSecuritySolution> response = Response.FromValue(ExternalSecuritySolution.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Policies for protecting resources using Just-in-Time access control for the subscription, location
+        /// Gets a specific external Security Solution.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/jitNetworkAccessPolicies. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/ExternalSecuritySolutions/{externalSecuritySolutionsName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> JitNetworkAccessPoliciesOperationGroup_ListByResourceGroup. </description>
+        /// <description> ExternalSecuritySolutions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -1072,15 +1032,38 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        internal virtual Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> or <paramref name="externalSecuritySolutionsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> or <paramref name="externalSecuritySolutionsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ExternalSecuritySolution> Get(string ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
+            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
+            Argument.AssertNotNullOrEmpty(externalSecuritySolutionsName, nameof(externalSecuritySolutionsName));
+
+            using DiagnosticScope scope = ExternalSecuritySolutionsClientDiagnostics.CreateScope("MockableSecurityCenterResourceGroupResource.Get");
+            scope.Start();
+            try
             {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPoliciesGetJitNetworkAccessPoliciesCollectionResultOfT(JitNetworkAccessPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetJitNetworkAccessPolicies"), data => new JitNetworkAccessPolicyResource(Client, data));
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ExternalSecuritySolutionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ascLocation, externalSecuritySolutionsName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ExternalSecuritySolution> response = Response.FromValue(ExternalSecuritySolution.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

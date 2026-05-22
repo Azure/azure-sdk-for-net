@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateGetByHomeRegionRequest(Guid subscriptionId, string ascLocation, RequestContext context)
+        internal HttpMessage CreateGetExternalSecuritySolutionsByHomeRegionRequest(Guid subscriptionId, string ascLocation, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateNextGetByHomeRegionRequest(Uri nextPage, Guid subscriptionId, string ascLocation, RequestContext context)
+        internal HttpMessage CreateNextGetExternalSecuritySolutionsByHomeRegionRequest(Uri nextPage, Guid subscriptionId, string ascLocation, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

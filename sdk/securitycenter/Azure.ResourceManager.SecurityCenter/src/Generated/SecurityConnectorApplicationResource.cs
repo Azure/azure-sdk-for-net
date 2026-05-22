@@ -57,12 +57,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
-        /// <summary> Gets the data representing this Feature. </summary>
-        public virtual Azure.ResourceManager.SecurityCenter.SecurityApplicationData Data
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>

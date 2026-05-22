@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceStandardData"/>. </summary>
-        public RegulatoryComplianceStandardData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceStandardData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -39,13 +34,6 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Regulatory compliance standard data. </summary>
         internal RegulatoryComplianceStandardProperties Properties { get; }
-
-        /// <summary> Aggregative state based on the standard's supported controls states. </summary>
-        public System.Nullable<Azure.ResourceManager.SecurityCenter.Models.RegulatoryComplianceState> State
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
 
         /// <summary> The number of supported regulatory compliance controls of the given standard with a passed state. </summary>
         public int? PassedControls

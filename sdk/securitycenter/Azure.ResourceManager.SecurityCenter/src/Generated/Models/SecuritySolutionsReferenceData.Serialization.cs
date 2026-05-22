@@ -17,7 +17,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The SecuritySolutionsReferenceData. </summary>
-    public partial class SecuritySolutionsReferenceData : IJsonModel<SecuritySolutionsReferenceData>
+    public partial class SecuritySolutionsReferenceData : ResourceData, IJsonModel<SecuritySolutionsReferenceData>
     {
         /// <summary> Initializes a new instance of <see cref="SecuritySolutionsReferenceData"/> for deserialization. </summary>
         internal SecuritySolutionsReferenceData()
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SecuritySolutionsReferenceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SecuritySolutionsReferenceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SecuritySolutionsReferenceData IPersistableModel<SecuritySolutionsReferenceData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SecuritySolutionsReferenceData IPersistableModel<SecuritySolutionsReferenceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SecuritySolutionsReferenceData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SecuritySolutionsReferenceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -82,26 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 throw new FormatException($"The model {nameof(SecuritySolutionsReferenceData)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
-            }
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -109,30 +90,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SecuritySolutionsReferenceData IJsonModel<SecuritySolutionsReferenceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SecuritySolutionsReferenceData IJsonModel<SecuritySolutionsReferenceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SecuritySolutionsReferenceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SecuritySolutionsReferenceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SecuritySolutionsReferenceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -153,11 +119,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType? @type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AzureLocation? location = default;
             SecuritySolutionsReferenceDataProperties properties = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -180,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    @type = new ResourceType(prop.Value.GetString());
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -214,11 +180,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecuritySolutionsReferenceData(
                 id,
                 name,
-                @type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 location,
-                properties,
-                additionalBinaryDataProperties);
+                properties);
         }
     }
 }

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal SuppressionAlertsScope SuppressionAlertsScope { get; set; }
 
         /// <summary> All the conditions inside need to be true in order to suppress the alert. </summary>
-        public IList<ScopeElement> SuppressionAlertsScopeAllOf
+        public IList<SuppressionAlertsScopeElement> SuppressionAlertsScopeAllOf
         {
             get
             {

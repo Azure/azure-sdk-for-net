@@ -419,9 +419,32 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> The security automation resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Task<Response<Models.SecurityAutomationValidationStatus>> ValidateAsync(SecurityAutomationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityAutomationValidationStatus>> ValidateAsync(SecurityAutomationData data, CancellationToken cancellationToken = default)
         {
-            throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _automationsClientDiagnostics.CreateScope("SecurityAutomationResource.Validate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationsRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecurityAutomationData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityAutomationValidationStatus> response = Response.FromValue(SecurityAutomationValidationStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -448,9 +471,32 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data"> The security automation resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<Models.SecurityAutomationValidationStatus> Validate(SecurityAutomationData data, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityAutomationValidationStatus> Validate(SecurityAutomationData data, CancellationToken cancellationToken = default)
         {
-            throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _automationsClientDiagnostics.CreateScope("SecurityAutomationResource.Validate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationsRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecurityAutomationData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityAutomationValidationStatus> response = Response.FromValue(SecurityAutomationValidationStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Add a tag to the current resource. </summary>

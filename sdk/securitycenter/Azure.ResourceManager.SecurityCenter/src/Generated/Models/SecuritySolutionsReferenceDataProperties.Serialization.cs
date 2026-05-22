@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The SecuritySolutionsReferenceDataProperties. </summary>
-    internal partial class SecuritySolutionsReferenceDataProperties : IJsonModel<SecuritySolutionsReferenceDataProperties>
+    public partial class SecuritySolutionsReferenceDataProperties : IJsonModel<SecuritySolutionsReferenceDataProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SecuritySolutionsReferenceDataProperties"/> for deserialization. </summary>
         internal SecuritySolutionsReferenceDataProperties()

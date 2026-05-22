@@ -251,64 +251,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Lists Microsoft Defender for Cloud pricing configurations of the scopeId, that match the optional given $filter. Valid scopes are: subscription id or a specific resource id (Supported resources are: 'VirtualMachines, VMSS and ARC Machines'). Valid $filter is: 'name in ({planName1},{planName2},...)'. If $filter is not provided, the unfiltered list will be returned. If '$filter=name in (planName1,planName2)' is provided, the returned list includes the pricings set for 'planName1' and 'planName2' only.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scopeId}/providers/Microsoft.Security/pricings. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Pricings_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> OData filter. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityCenterPricingResource"/> that may take multiple service requests to iterate over. </returns>
-        internal virtual AsyncPageable<SecurityCenterPricingResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<SecurityCenterPricingData, SecurityCenterPricingResource>(new PricingsGetAllAsyncCollectionResultOfT(_pricingsRestClient, Id.ToString(), filter, context, "SecurityCenterPricingCollection.GetAll"), data => new SecurityCenterPricingResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists Microsoft Defender for Cloud pricing configurations of the scopeId, that match the optional given $filter. Valid scopes are: subscription id or a specific resource id (Supported resources are: 'VirtualMachines, VMSS and ARC Machines'). Valid $filter is: 'name in ({planName1},{planName2},...)'. If $filter is not provided, the unfiltered list will be returned. If '$filter=name in (planName1,planName2)' is provided, the returned list includes the pricings set for 'planName1' and 'planName2' only.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scopeId}/providers/Microsoft.Security/pricings. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Pricings_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> OData filter. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityCenterPricingResource"/> that may take multiple service requests to iterate over. </returns>
-        internal virtual Pageable<SecurityCenterPricingResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<SecurityCenterPricingData, SecurityCenterPricingResource>(new PricingsGetAllCollectionResultOfT(_pricingsRestClient, Id.ToString(), filter, context, "SecurityCenterPricingCollection.GetAll"), data => new SecurityCenterPricingResource(Client, data));
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -546,12 +488,12 @@ namespace Azure.ResourceManager.SecurityCenter
 
         IEnumerator<SecurityCenterPricingResource> IEnumerable<SecurityCenterPricingResource>.GetEnumerator()
         {
-            return GetAll(null, default).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(null, default).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>

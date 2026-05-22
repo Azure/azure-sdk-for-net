@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Describe the additional data of governance assignment - optional. </summary>
-    public partial class GovernanceAssignmentAdditionalData : IJsonModel<GovernanceAssignmentAdditionalData>
+    internal partial class GovernanceAssignmentAdditionalData : IJsonModel<GovernanceAssignmentAdditionalData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

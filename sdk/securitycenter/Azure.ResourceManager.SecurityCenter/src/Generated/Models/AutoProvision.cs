@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Describes what kind of security agent provisioning action to take. </summary>
-    public readonly partial struct AutoProvision : IEquatable<AutoProvision>
+    internal readonly partial struct AutoProvision : IEquatable<AutoProvision>
     {
         private readonly string _value;
         /// <summary> Install missing security agent on VMs automatically. </summary>

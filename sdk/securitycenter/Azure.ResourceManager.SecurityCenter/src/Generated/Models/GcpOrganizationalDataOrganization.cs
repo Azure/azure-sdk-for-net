@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The gcpOrganization data for the parent account. </summary>
-    public partial class GcpOrganizationalDataOrganization : GcpOrganizationalData
+    internal partial class GcpOrganizationalDataOrganization : GcpOrganizationalData
     {
         /// <summary> Initializes a new instance of <see cref="GcpOrganizationalDataOrganization"/>. </summary>
         public GcpOrganizationalDataOrganization() : base(OrganizationMembershipType.Organization)

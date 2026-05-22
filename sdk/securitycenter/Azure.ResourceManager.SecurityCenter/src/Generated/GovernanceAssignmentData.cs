@@ -127,12 +127,5 @@ namespace Azure.ResourceManager.SecurityCenter
                 Properties.GovernanceEmailNotification = value;
             }
         }
-
-        /// <summary> The additional data for the governance assignment - e.g. links to ticket (optional), see example. </summary>
-        public Azure.ResourceManager.SecurityCenter.Models.GovernanceAssignmentAdditionalInfo AdditionalData
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
     }
 }

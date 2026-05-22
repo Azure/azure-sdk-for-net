@@ -1,5 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Suppress CS0618: restored tests exercise obsolete compatibility shims kept for the migrated API surface. -->
+    <NoWarn>$(NoWarn);CS0618</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Generated\**" />
+    <EmbeddedResource Remove="Generated\**" />
+    <None Remove="Generated\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.Compute" />
+    <PackageReference Include="Azure.ResourceManager.IotHub" />
+    <PackageReference Include="Azure.ResourceManager.Logic" />
+    <PackageReference Include="Azure.ResourceManager.Network" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.SecurityCenter.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="TestData\WorkflowDefinition.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

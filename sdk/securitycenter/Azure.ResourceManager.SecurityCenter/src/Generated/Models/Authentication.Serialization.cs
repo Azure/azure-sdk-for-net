@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AccessTokenAuthentication"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAuthentication))]
-    public abstract partial class Authentication : IJsonModel<Authentication>
+    internal abstract partial class Authentication : IJsonModel<Authentication>
     {
         /// <summary> Initializes a new instance of <see cref="Authentication"/> for deserialization. </summary>
         internal Authentication()

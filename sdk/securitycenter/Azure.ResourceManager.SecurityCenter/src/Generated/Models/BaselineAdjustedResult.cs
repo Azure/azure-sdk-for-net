@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -16,13 +15,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="BaselineAdjustedResult"/>. </summary>
-        public BaselineAdjustedResult()
-        {
-            ResultsNotInBaseline = new ChangeTrackingList<IList<string>>();
-            ResultsOnlyInBaseline = new ChangeTrackingList<IList<string>>();
-        }
 
         /// <summary> Initializes a new instance of <see cref="BaselineAdjustedResult"/>. </summary>
         /// <param name="baseline"> Baseline details. </param>
@@ -37,20 +29,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResultsNotInBaseline = resultsNotInBaseline;
             ResultsOnlyInBaseline = resultsOnlyInBaseline;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> Baseline details. </summary>
-        public Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentBaseline Baseline
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
-        /// <summary> The rule result status. </summary>
-        public System.Nullable<Azure.ResourceManager.SecurityCenter.Models.SqlVulnerabilityAssessmentScanResultRuleStatus> Status
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> Results that are not in the baseline. </summary>

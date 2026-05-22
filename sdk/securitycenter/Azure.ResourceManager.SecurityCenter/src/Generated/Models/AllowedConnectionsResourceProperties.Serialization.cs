@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("connectableResources"u8);
                 writer.WriteStartArray();
-                foreach (ConnectableResource item in ConnectableResources)
+                foreach (ConnectableResourceInfo item in ConnectableResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             DateTimeOffset? calculatedOn = default;
-            IReadOnlyList<ConnectableResource> connectableResources = default;
+            IReadOnlyList<ConnectableResourceInfo> connectableResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<ConnectableResource> array = new List<ConnectableResource>();
+                    List<ConnectableResourceInfo> array = new List<ConnectableResourceInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConnectableResource.DeserializeConnectableResource(item, options));
+                        array.Add(ConnectableResourceInfo.DeserializeConnectableResourceInfo(item, options));
                     }
                     connectableResources = array;
                     continue;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AllowedConnectionsResourceProperties(calculatedOn, connectableResources ?? new ChangeTrackingList<ConnectableResource>(), additionalBinaryDataProperties);
+            return new AllowedConnectionsResourceProperties(calculatedOn, connectableResources ?? new ChangeTrackingList<ConnectableResourceInfo>(), additionalBinaryDataProperties);
         }
     }
 }

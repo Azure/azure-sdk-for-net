@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The github scope connector's environment data. </summary>
-    public partial class GithubScopeEnvironmentData : EnvironmentData, IJsonModel<GithubScopeEnvironmentData>
+    internal partial class GithubScopeEnvironmentData : EnvironmentData, IJsonModel<GithubScopeEnvironmentData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceControlData"/>. </summary>
-        public RegulatoryComplianceControlData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceControlData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -47,13 +42,6 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return Properties is null ? default : Properties.Description;
             }
-        }
-
-        /// <summary> Aggregative state based on the control's supported assessments states. </summary>
-        public System.Nullable<Azure.ResourceManager.SecurityCenter.Models.RegulatoryComplianceState> State
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary> The number of supported regulatory compliance assessments of the given control with a passed state. </summary>

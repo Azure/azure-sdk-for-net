@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AwsEnvironmentData"/>, <see cref="GcpProjectEnvironmentData"/>, <see cref="GithubScopeEnvironmentData"/>, <see cref="AzureDevOpsScopeEnvironmentData"/>, <see cref="GitlabScopeEnvironmentData"/>, <see cref="DockerHubEnvironmentData"/>, and <see cref="JFrogEnvironmentData"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEnvironmentData))]
-    public abstract partial class EnvironmentData : IJsonModel<EnvironmentData>
+    internal abstract partial class EnvironmentData : IJsonModel<EnvironmentData>
     {
         /// <summary> Initializes a new instance of <see cref="EnvironmentData"/> for deserialization. </summary>
         internal EnvironmentData()

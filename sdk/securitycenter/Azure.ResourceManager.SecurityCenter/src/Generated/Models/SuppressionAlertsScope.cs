@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="SuppressionAlertsScope"/>. </summary>
         /// <param name="allOf"> All the conditions inside need to be true in order to suppress the alert. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allOf"/> is null. </exception>
-        public SuppressionAlertsScope(IEnumerable<ScopeElement> allOf)
+        public SuppressionAlertsScope(IEnumerable<SuppressionAlertsScopeElement> allOf)
         {
             Argument.AssertNotNull(allOf, nameof(allOf));
 
@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="SuppressionAlertsScope"/>. </summary>
         /// <param name="allOf"> All the conditions inside need to be true in order to suppress the alert. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SuppressionAlertsScope(IList<ScopeElement> allOf, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SuppressionAlertsScope(IList<SuppressionAlertsScopeElement> allOf, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllOf = allOf;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> All the conditions inside need to be true in order to suppress the alert. </summary>
-        public IList<ScopeElement> AllOf { get; }
+        public IList<SuppressionAlertsScopeElement> AllOf { get; }
     }
 }

@@ -1,6 +1,11 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.TestFramework
@@ -10,13 +15,7 @@ namespace Azure.ResourceManager.TestFramework
         [OneTimeSetUp]
         public void SetExceptionList()
         {
-            ExceptionList = new string[]
-            {
-                "ConnectableResource",
-                "ConnectedResource",
-                "TagsResource",
-                "TopologySingleResource",
-            };
+            ExceptionList = new string[] { "SecurityTopologyResource", "TopologySingleResource" };
         }
     }
 }

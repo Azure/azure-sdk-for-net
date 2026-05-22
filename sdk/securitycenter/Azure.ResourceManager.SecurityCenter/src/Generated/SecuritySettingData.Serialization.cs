@@ -18,11 +18,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary> The kind of the security setting. </summary>
     public partial class SecuritySettingData : ResourceData, IJsonModel<SecuritySettingData>
     {
-        /// <summary> Initializes a new instance of <see cref="SecuritySettingData"/> for deserialization. </summary>
-        public SecuritySettingData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

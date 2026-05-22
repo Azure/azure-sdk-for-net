@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityTaskProperties"/>. </summary>
-        public SecurityTaskProperties()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityTaskProperties"/>. </summary>
         /// <param name="state"> State of the task (Active, Resolved etc.). </param>
         /// <param name="creationTimeUtc"> The time this task was discovered in UTC. </param>
         /// <param name="securityTaskParameters"> Changing set of properties, depending on the task type that is derived from the name field. </param>

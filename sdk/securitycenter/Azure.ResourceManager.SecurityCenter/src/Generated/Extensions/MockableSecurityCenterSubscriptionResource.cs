@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private SecurityConnectors _securityConnectorsRestClient;
         private ClientDiagnostics _discoveredSecuritySolutionsClientDiagnostics;
         private DiscoveredSecuritySolutions _discoveredSecuritySolutionsRestClient;
-        private ClientDiagnostics _externalSecuritySolutionsClientDiagnostics;
-        private ExternalSecuritySolutions _externalSecuritySolutionsRestClient;
         private ClientDiagnostics _jitNetworkAccessPoliciesClientDiagnostics;
         private JitNetworkAccessPolicies _jitNetworkAccessPoliciesRestClient;
         private ClientDiagnostics _standardsClientDiagnostics;
@@ -47,6 +45,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private Alerts _alertsRestClient;
         private ClientDiagnostics _mdeOnboardingsClientDiagnostics;
         private MdeOnboardings _mdeOnboardingsRestClient;
+        private ClientDiagnostics _externalSecuritySolutionsClientDiagnostics;
+        private ExternalSecuritySolutions _externalSecuritySolutionsRestClient;
         private ClientDiagnostics _securitySolutionsClientDiagnostics;
         private SecuritySolutions _securitySolutionsRestClient;
         private ClientDiagnostics _tasksClientDiagnostics;
@@ -84,10 +84,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
         private DiscoveredSecuritySolutions DiscoveredSecuritySolutionsRestClient => _discoveredSecuritySolutionsRestClient ??= new DiscoveredSecuritySolutions(DiscoveredSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
 
-        private ClientDiagnostics ExternalSecuritySolutionsClientDiagnostics => _externalSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ExternalSecuritySolutions ExternalSecuritySolutionsRestClient => _externalSecuritySolutionsRestClient ??= new ExternalSecuritySolutions(ExternalSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
-
         private ClientDiagnostics JitNetworkAccessPoliciesClientDiagnostics => _jitNetworkAccessPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private JitNetworkAccessPolicies JitNetworkAccessPoliciesRestClient => _jitNetworkAccessPoliciesRestClient ??= new JitNetworkAccessPolicies(JitNetworkAccessPoliciesClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
@@ -123,6 +119,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private ClientDiagnostics MdeOnboardingsClientDiagnostics => _mdeOnboardingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private MdeOnboardings MdeOnboardingsRestClient => _mdeOnboardingsRestClient ??= new MdeOnboardings(MdeOnboardingsClientDiagnostics, Pipeline, Endpoint, "2021-10-01-preview");
+
+        private ClientDiagnostics ExternalSecuritySolutionsClientDiagnostics => _externalSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ExternalSecuritySolutions ExternalSecuritySolutionsRestClient => _externalSecuritySolutionsRestClient ??= new ExternalSecuritySolutions(ExternalSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
 
         private ClientDiagnostics SecuritySolutionsClientDiagnostics => _securitySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -1113,72 +1113,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         }
 
         /// <summary>
-        /// Gets a list of external Security Solutions for the subscription and location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/ExternalSecuritySolutions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExternalSecuritySolutions_ListByHomeRegion. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="ExternalSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExternalSecuritySolutionResource> GetExternalSecuritySolutionsAsync(string ascLocation, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ExternalSecuritySolutionData, ExternalSecuritySolutionResource>(new ExternalSecuritySolutionsGetByHomeRegionAsyncCollectionResultOfT(ExternalSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetExternalSecuritySolutions"), data => new ExternalSecuritySolutionResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets a list of external Security Solutions for the subscription and location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/ExternalSecuritySolutions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExternalSecuritySolutions_ListByHomeRegion. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="ExternalSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExternalSecuritySolutionResource> GetExternalSecuritySolutions(string ascLocation, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ExternalSecuritySolutionData, ExternalSecuritySolutionResource>(new ExternalSecuritySolutionsGetByHomeRegionCollectionResultOfT(ExternalSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetExternalSecuritySolutions"), data => new ExternalSecuritySolutionResource(Client, data));
-        }
-
-        /// <summary>
         /// Policies for protecting resources using Just-in-Time access control for the subscription, location
         /// <list type="bullet">
         /// <item>
@@ -1659,262 +1593,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         }
 
         /// <summary>
-        /// The configuration or data needed to onboard the machine to MDE
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MdeOnboardings_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2021-10-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MdeOnboardingDataList>> GetMdeOnboardingsAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = MdeOnboardingsClientDiagnostics.CreateScope("MockableSecurityCenterSubscriptionResource.GetMdeOnboardings");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = MdeOnboardingsRestClient.CreateGetMdeOnboardingsRequest(Guid.Parse(Id.SubscriptionId), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MdeOnboardingDataList> response = Response.FromValue(MdeOnboardingDataList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The configuration or data needed to onboard the machine to MDE
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/mdeOnboardings. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MdeOnboardings_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2021-10-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MdeOnboardingDataList> GetMdeOnboardings(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = MdeOnboardingsClientDiagnostics.CreateScope("MockableSecurityCenterSubscriptionResource.GetMdeOnboardings");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = MdeOnboardingsRestClient.CreateGetMdeOnboardingsRequest(Guid.Parse(Id.SubscriptionId), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MdeOnboardingDataList> response = Response.FromValue(MdeOnboardingDataList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of discovered Security Solutions for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/discoveredSecuritySolutions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DiscoveredSecuritySolutionsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiscoveredSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DiscoveredSecuritySolutionResource> GetDiscoveredSecuritySolutionsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DiscoveredSecuritySolutionData, DiscoveredSecuritySolutionResource>(new DiscoveredSecuritySolutionsGetDiscoveredSecuritySolutionsAsyncCollectionResultOfT(DiscoveredSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetDiscoveredSecuritySolutions"), data => new DiscoveredSecuritySolutionResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets a list of discovered Security Solutions for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/discoveredSecuritySolutions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DiscoveredSecuritySolutionsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiscoveredSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DiscoveredSecuritySolutionResource> GetDiscoveredSecuritySolutions(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DiscoveredSecuritySolutionData, DiscoveredSecuritySolutionResource>(new DiscoveredSecuritySolutionsGetDiscoveredSecuritySolutionsCollectionResultOfT(DiscoveredSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetDiscoveredSecuritySolutions"), data => new DiscoveredSecuritySolutionResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets a list of external security solutions for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/externalSecuritySolutions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExternalSecuritySolutionsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExternalSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExternalSecuritySolutionResource> GetExternalSecuritySolutionsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ExternalSecuritySolutionData, ExternalSecuritySolutionResource>(new ExternalSecuritySolutionsGetExternalSecuritySolutionsAsyncCollectionResultOfT(ExternalSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetExternalSecuritySolutions"), data => new ExternalSecuritySolutionResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets a list of external security solutions for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/externalSecuritySolutions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExternalSecuritySolutionsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExternalSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExternalSecuritySolutionResource> GetExternalSecuritySolutions(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ExternalSecuritySolutionData, ExternalSecuritySolutionResource>(new ExternalSecuritySolutionsGetExternalSecuritySolutionsCollectionResultOfT(ExternalSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetExternalSecuritySolutions"), data => new ExternalSecuritySolutionResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets a list of Security Solutions for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySolutionsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecuritySolutionResource> GetSecuritySolutionsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<SecuritySolutionData, SecuritySolutionResource>(new SecuritySolutionsGetSecuritySolutionsAsyncCollectionResultOfT(SecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecuritySolutions"), data => new SecuritySolutionResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets a list of Security Solutions for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySolutionsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecuritySolutionResource> GetSecuritySolutions(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<SecuritySolutionData, SecuritySolutionResource>(new SecuritySolutionsGetSecuritySolutionsCollectionResultOfT(SecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecuritySolutions"), data => new SecuritySolutionResource(Client, data));
-        }
-
-        /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
         /// <list type="bullet">
         /// <item>
@@ -2140,118 +1818,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
                 CancellationToken = cancellationToken
             };
             return new SecureScoreControlDefinitionsGetSecureScoreControlDefinitionsBySubscriptionCollectionResultOfT(SecureScoreControlDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecureScoreControlDefinitionsBySubscription");
-        }
-
-        /// <summary>
-        /// Gets the list of all possible traffic between resources for the subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/allowedConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AllowedConnectionsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AllowedConnectionsResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AllowedConnectionsResource> GetAllowedConnectionsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<AllowedConnectionsResourceData, AllowedConnectionsResource>(new AllowedConnectionsGetAllowedConnectionsAsyncCollectionResultOfT(AllowedConnectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetAllowedConnections"), data => new AllowedConnectionsResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets the list of all possible traffic between resources for the subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/allowedConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AllowedConnectionsOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AllowedConnectionsResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AllowedConnectionsResource> GetAllowedConnections(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<AllowedConnectionsResourceData, AllowedConnectionsResource>(new AllowedConnectionsGetAllowedConnectionsCollectionResultOfT(AllowedConnectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetAllowedConnections"), data => new AllowedConnectionsResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets a list that allows to build a topology view of a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/topologies. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TopologyOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TopologyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TopologyResource> GetTopologiesAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<TopologyResourceData, TopologyResource>(new TopologyGetTopologiesAsyncCollectionResultOfT(TopologyRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetTopologies"), data => new TopologyResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets a list that allows to build a topology view of a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/topologies. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TopologyOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TopologyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TopologyResource> GetTopologies(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<TopologyResourceData, TopologyResource>(new TopologyGetTopologiesCollectionResultOfT(TopologyRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetTopologies"), data => new TopologyResource(Client, data));
         }
 
         /// <summary>

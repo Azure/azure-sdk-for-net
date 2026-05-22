@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -20,11 +19,6 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenterLocationData"/>. </summary>
-        public SecurityCenterLocationData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenterLocationData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -35,38 +29,6 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
-        }
-
-        /// <summary>
-        /// An empty set of properties
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public System.BinaryData Properties
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
     }
 }

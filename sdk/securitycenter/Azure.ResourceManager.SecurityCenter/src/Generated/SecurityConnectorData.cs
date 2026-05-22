@@ -80,13 +80,6 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> The multi cloud resource's cloud name. </summary>
-        public System.Nullable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName> EnvironmentName
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
         /// <summary> A collection of offerings for the security connector. </summary>
         public IList<SecurityCenterCloudOffering> Offerings
         {
@@ -98,13 +91,6 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 return Properties.Offerings;
             }
-        }
-
-        /// <summary> The security connector environment data. </summary>
-        public Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment EnvironmentData
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
     }
 }

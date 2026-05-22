@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 throw new FormatException($"The model {nameof(SecurityTaskParameters)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Optional.IsDefined(TaskName))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WriteStringValue(TaskName);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -118,18 +118,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            string name = default;
+            string taskName = default;
             ChangeTrackingDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    taskName = prop.Value.GetString();
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new SecurityTaskParameters(name, new ReadOnlyDictionary<string, BinaryData>(additionalProperties));
+            return new SecurityTaskParameters(taskName, new ReadOnlyDictionary<string, BinaryData>(additionalProperties));
         }
     }
 }

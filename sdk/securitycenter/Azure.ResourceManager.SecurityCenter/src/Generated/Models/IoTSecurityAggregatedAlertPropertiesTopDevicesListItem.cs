@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The IoTSecurityAggregatedAlertPropertiesTopDevicesListItem. </summary>
-    public partial class IoTSecurityAggregatedAlertPropertiesTopDevicesListItem
+    internal partial class IoTSecurityAggregatedAlertPropertiesTopDevicesListItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

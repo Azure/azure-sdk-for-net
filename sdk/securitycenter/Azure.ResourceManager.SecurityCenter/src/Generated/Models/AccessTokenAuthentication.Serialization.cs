@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The environment authentication details. </summary>
-    public partial class AccessTokenAuthentication : Authentication, IJsonModel<AccessTokenAuthentication>
+    internal partial class AccessTokenAuthentication : Authentication, IJsonModel<AccessTokenAuthentication>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

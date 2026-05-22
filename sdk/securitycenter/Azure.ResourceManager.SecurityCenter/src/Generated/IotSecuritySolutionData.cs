@@ -94,18 +94,6 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> List of additional options for exporting to workspace data. </summary>
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionExportOption> Export
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
-        /// <summary> Disabled data sources. Disabling these data sources compromises the system. </summary>
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionDataSource> DisabledDataSources
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
         /// <summary> IoT Hub resource IDs. </summary>
         public IList<string> IotHubs
         {

@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BenchmarkReference"/>. </summary>
-        public BenchmarkReference()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BenchmarkReference"/>. </summary>
         /// <param name="benchmark"> The benchmark name. </param>
         /// <param name="reference"> The benchmark reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -30,20 +25,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Benchmark = benchmark;
             Reference = reference;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary> The benchmark name. </summary>
-        public System.String Benchmark
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
-        /// <summary> The benchmark reference. </summary>
-        public System.String Reference
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
     }
 }

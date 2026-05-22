@@ -58,12 +58,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
-        /// <summary> Gets the data representing this Feature. </summary>
-        public virtual Azure.ResourceManager.SecurityCenter.GovernanceRuleData Data
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="scope"> The scope. </param>
         /// <param name="ruleId"> The ruleId. </param>

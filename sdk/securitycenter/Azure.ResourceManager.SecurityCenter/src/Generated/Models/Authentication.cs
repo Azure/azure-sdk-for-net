@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// The environment authentication details
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AccessTokenAuthentication"/>.
     /// </summary>
-    public abstract partial class Authentication
+    internal abstract partial class Authentication
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

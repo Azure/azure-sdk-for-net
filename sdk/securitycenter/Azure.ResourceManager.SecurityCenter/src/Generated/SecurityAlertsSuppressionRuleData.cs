@@ -100,13 +100,6 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Possible states of the rule. </summary>
-        public System.Nullable<Azure.ResourceManager.SecurityCenter.Models.SecurityAlertsSuppressionRuleState> State
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
         /// <summary> Any comment regarding the rule. </summary>
         public string Comment
         {
@@ -122,13 +115,6 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 Properties.Comment = value;
             }
-        }
-
-        /// <summary> All the conditions inside need to be true in order to suppress the alert. </summary>
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SuppressionAlertsScopeElement> SuppressionAlertsScopeAllOf
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-            set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
     }
 }

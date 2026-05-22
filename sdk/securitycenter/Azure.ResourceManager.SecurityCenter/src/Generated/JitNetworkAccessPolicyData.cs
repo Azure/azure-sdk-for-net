@@ -68,12 +68,6 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Gets the Requests. </summary>
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.JitNetworkAccessRequestInfo> Requests
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
         /// <summary> Gets the provisioning state of the Just-in-Time policy. </summary>
         public string ProvisioningState
         {

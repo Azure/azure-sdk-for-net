@@ -33,6 +33,8 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly OperationResults _operationResultsRestClient;
         private readonly ClientDiagnostics _operationStatusesClientDiagnostics;
         private readonly OperationStatuses _operationStatusesRestClient;
+        private readonly ClientDiagnostics _externalSecuritySolutionsClientDiagnostics;
+        private readonly ExternalSecuritySolutions _externalSecuritySolutionsRestClient;
         private readonly ClientDiagnostics _securitySolutionsReferenceDataClientDiagnostics;
         private readonly SecuritySolutionsReferenceData _securitySolutionsReferenceDataRestClient;
         private readonly SecurityCenterLocationData _data;
@@ -67,6 +69,8 @@ namespace Azure.ResourceManager.SecurityCenter
             _operationResultsRestClient = new OperationResults(_operationResultsClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2025-10-01-preview");
             _operationStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
             _operationStatusesRestClient = new OperationStatuses(_operationStatusesClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2025-10-01-preview");
+            _externalSecuritySolutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            _externalSecuritySolutionsRestClient = new ExternalSecuritySolutions(_externalSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2020-01-01");
             _securitySolutionsReferenceDataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
             _securitySolutionsReferenceDataRestClient = new SecuritySolutionsReferenceData(_securitySolutionsReferenceDataClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2020-01-01");
             ValidateResourceId(id);

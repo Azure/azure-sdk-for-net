@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The AzureDevOps scope connector's environment data. </summary>
-    public partial class AzureDevOpsScopeEnvironmentData : EnvironmentData, IJsonModel<AzureDevOpsScopeEnvironmentData>
+    internal partial class AzureDevOpsScopeEnvironmentData : EnvironmentData, IJsonModel<AzureDevOpsScopeEnvironmentData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

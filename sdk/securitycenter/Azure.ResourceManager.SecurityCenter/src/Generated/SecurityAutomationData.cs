@@ -87,23 +87,5 @@ namespace Azure.ResourceManager.SecurityCenter
                 Properties.IsEnabled = value;
             }
         }
-
-        /// <summary> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </summary>
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityAutomationScope> Scopes
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
-        /// <summary> A collection of the source event types which evaluate the security automation set of rules. </summary>
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityAutomationSource> Sources
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
-        /// <summary> A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true. </summary>
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityAutomationAction> Actions
-        {
-            get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
     }
 }

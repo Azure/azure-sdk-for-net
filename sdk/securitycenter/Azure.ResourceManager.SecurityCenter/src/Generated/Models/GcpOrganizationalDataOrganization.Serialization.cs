@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The gcpOrganization data for the parent account. </summary>
-    public partial class GcpOrganizationalDataOrganization : GcpOrganizationalData, IJsonModel<GcpOrganizationalDataOrganization>
+    internal partial class GcpOrganizationalDataOrganization : GcpOrganizationalData, IJsonModel<GcpOrganizationalDataOrganization>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

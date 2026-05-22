@@ -1089,24 +1089,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ExternalSecuritySolutionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetExternalSecuritySolutionResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ExternalSecuritySolutionResource"/> object. </returns>
-        public static ExternalSecuritySolutionResource GetExternalSecuritySolutionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSecurityCenterArmClient(client).GetExternalSecuritySolutionResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="JitNetworkAccessPolicyResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -2600,63 +2582,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Gets a collection of ExternalSecuritySolutions in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetExternalSecuritySolutions()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ExternalSecuritySolutions and their operations over a ExternalSecuritySolutionResource. </returns>
-        public static ExternalSecuritySolutionCollection GetExternalSecuritySolutions(this ResourceGroupResource resourceGroupResource)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetExternalSecuritySolutions();
-        }
-
-        /// <summary>
-        /// Gets a specific external Security Solution.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetExternalSecuritySolutionAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ExternalSecuritySolutionResource>> GetExternalSecuritySolutionAsync(this ResourceGroupResource resourceGroupResource, string ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetExternalSecuritySolutionAsync(ascLocation, externalSecuritySolutionsName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a specific external Security Solution.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetExternalSecuritySolution(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ExternalSecuritySolutionResource> GetExternalSecuritySolution(this ResourceGroupResource resourceGroupResource, string ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetExternalSecuritySolution(ascLocation, externalSecuritySolutionsName, cancellationToken);
-        }
-
-        /// <summary>
         /// Gets a collection of JitNetworkAccessPolicies in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -3194,33 +3119,41 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Policies for protecting resources using Just-in-Time access control for the subscription, location
+        /// Gets a specific external Security Solution.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetJitNetworkAccessPoliciesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<ExternalSecuritySolution>> GetAsync(this ResourceGroupResource resourceGroupResource, string ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
         {
-            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetJitNetworkAccessPoliciesAsync(cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetAsync(ascLocation, externalSecuritySolutionsName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Policies for protecting resources using Just-in-Time access control for the subscription, location
+        /// Gets a specific external Security Solution.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetJitNetworkAccessPolicies(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.Get(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<ExternalSecuritySolution> Get(this ResourceGroupResource resourceGroupResource, string ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
         {
-            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetJitNetworkAccessPolicies(cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).Get(ascLocation, externalSecuritySolutionsName, cancellationToken);
         }
 
         /// <summary>
@@ -4050,44 +3983,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Gets a list of external Security Solutions for the subscription and location.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetExternalSecuritySolutionsAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ExternalSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ExternalSecuritySolutionResource> GetExternalSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, string ascLocation, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetExternalSecuritySolutionsAsync(ascLocation, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of external Security Solutions for the subscription and location.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetExternalSecuritySolutions(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ExternalSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ExternalSecuritySolutionResource> GetExternalSecuritySolutions(this SubscriptionResource subscriptionResource, string ascLocation, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetExternalSecuritySolutions(ascLocation, cancellationToken);
-        }
-
-        /// <summary>
         /// Policies for protecting resources using Just-in-Time access control for the subscription, location
         /// <item>
         /// <term> Mocking. </term>
@@ -4384,132 +4279,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The configuration or data needed to onboard the machine to MDE
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetMdeOnboardingsAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static AsyncPageable<Models.MdeOnboarding> GetMdeOnboardingsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
-        /// <summary>
-        /// The configuration or data needed to onboard the machine to MDE
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetMdeOnboardings(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Pageable<Models.MdeOnboarding> GetMdeOnboardings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
-        /// <summary>
-        /// Gets a list of discovered Security Solutions for the subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetDiscoveredSecuritySolutionsAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DiscoveredSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
-        /// <summary>
-        /// Gets a list of discovered Security Solutions for the subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetDiscoveredSecuritySolutions(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DiscoveredSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.DiscoveredSecuritySolution> GetDiscoveredSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
-        /// <summary>
-        /// Gets a list of external security solutions for the subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetExternalSecuritySolutionsAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ExternalSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.ExternalSecuritySolution> GetExternalSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
-        /// <summary>
-        /// Gets a list of external security solutions for the subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetExternalSecuritySolutions(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ExternalSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.ExternalSecuritySolution> GetExternalSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
-        /// <summary>
-        /// Gets a list of Security Solutions for the subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecuritySolutionsAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.SecuritySolution> GetSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
-        /// <summary>
-        /// Gets a list of Security Solutions for the subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecuritySolutions(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.SecuritySolution> GetSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
-        /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
         /// <item>
         /// <term> Mocking. </term>
@@ -4655,70 +4424,6 @@ namespace Azure.ResourceManager.SecurityCenter
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecureScoreControlDefinitionsBySubscription(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of all possible traffic between resources for the subscription
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetAllowedConnectionsAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AllowedConnectionsResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.SecurityCenterAllowedConnection> GetAllowedConnectionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
-        /// <summary>
-        /// Gets the list of all possible traffic between resources for the subscription
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetAllowedConnections(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AllowedConnectionsResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.SecurityCenterAllowedConnection> GetAllowedConnections(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
-        /// <summary>
-        /// Gets a list that allows to build a topology view of a subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetTopologiesAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="TopologyResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.SecurityTopologyResource> GetTopologiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
-        }
-
-        /// <summary>
-        /// Gets a list that allows to build a topology view of a subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetTopologies(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="TopologyResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.SecurityTopologyResource> GetTopologies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface.");
         }
 
         /// <summary>

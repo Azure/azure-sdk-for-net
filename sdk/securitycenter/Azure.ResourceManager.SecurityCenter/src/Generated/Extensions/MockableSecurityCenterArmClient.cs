@@ -622,15 +622,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return new DiscoveredSecuritySolutionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ExternalSecuritySolutionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExternalSecuritySolutionResource"/> object. </returns>
-        public virtual ExternalSecuritySolutionResource GetExternalSecuritySolutionResource(ResourceIdentifier id)
-        {
-            ExternalSecuritySolutionResource.ValidateResourceId(id);
-            return new ExternalSecuritySolutionResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="JitNetworkAccessPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="JitNetworkAccessPolicyResource"/> object. </returns>

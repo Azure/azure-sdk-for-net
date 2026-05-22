@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The AWS connector environment data. </summary>
-    public partial class AwsEnvironmentData : EnvironmentData, IJsonModel<AwsEnvironmentData>
+    internal partial class AwsEnvironmentData : EnvironmentData, IJsonModel<AwsEnvironmentData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityTaskParameters"/>. </summary>
-        /// <param name="name"> Name of the task type. </param>
+        /// <param name="taskName"> Name of the task type. </param>
         /// <param name="additionalProperties"></param>
-        internal SecurityTaskParameters(string name, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal SecurityTaskParameters(string taskName, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
-            Name = name;
+            TaskName = taskName;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>(additionalProperties);
         }
 
         /// <summary> Name of the task type. </summary>
-        public string Name { get; }
+        public string TaskName { get; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties => new ReadOnlyDictionary<string, BinaryData>(_additionalBinaryDataProperties);

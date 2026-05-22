@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="AllowedConnectionsResourceProperties"/>. </summary>
         internal AllowedConnectionsResourceProperties()
         {
-            ConnectableResources = new ChangeTrackingList<ConnectableResource>();
+            ConnectableResources = new ChangeTrackingList<ConnectableResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AllowedConnectionsResourceProperties"/>. </summary>
         /// <param name="calculatedOn"> The UTC time on which the allowed connections resource was calculated. </param>
         /// <param name="connectableResources"> List of connectable resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AllowedConnectionsResourceProperties(DateTimeOffset? calculatedOn, IReadOnlyList<ConnectableResource> connectableResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AllowedConnectionsResourceProperties(DateTimeOffset? calculatedOn, IReadOnlyList<ConnectableResourceInfo> connectableResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CalculatedOn = calculatedOn;
             ConnectableResources = connectableResources;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public DateTimeOffset? CalculatedOn { get; }
 
         /// <summary> List of connectable resources. </summary>
-        public IReadOnlyList<ConnectableResource> ConnectableResources { get; } = new ChangeTrackingList<ConnectableResource>();
+        public IReadOnlyList<ConnectableResourceInfo> ConnectableResources { get; } = new ChangeTrackingList<ConnectableResourceInfo>();
     }
 }
