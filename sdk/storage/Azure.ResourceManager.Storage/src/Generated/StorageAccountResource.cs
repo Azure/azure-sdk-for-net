@@ -1705,6 +1705,20 @@ namespace Azure.ResourceManager.Storage
             return new QueueServiceResource(Client, Id.AppendChildResource("queueServices", "default"));
         }
 
+        /// <summary> Gets an object representing a <see cref="StorageAccountManagementPolicyResource"/> along with the instance operations that can be performed on it in the <see cref="StorageAccountResource"/>. </summary>
+        /// <returns> Returns a <see cref="StorageAccountManagementPolicyResource"/> object. </returns>
+        public virtual StorageAccountManagementPolicyResource GetStorageAccountManagementPolicy()
+        {
+            return new StorageAccountManagementPolicyResource(Client, Id.AppendChildResource("managementPolicies", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="BlobInventoryPolicyResource"/> along with the instance operations that can be performed on it in the <see cref="StorageAccountResource"/>. </summary>
+        /// <returns> Returns a <see cref="BlobInventoryPolicyResource"/> object. </returns>
+        public virtual BlobInventoryPolicyResource GetBlobInventoryPolicy()
+        {
+            return new BlobInventoryPolicyResource(Client, Id.AppendChildResource("inventoryPolicies", "default"));
+        }
+
         /// <summary> Gets a collection of StoragePrivateEndpointConnections in the <see cref="StorageAccountResource"/>. </summary>
         /// <returns> An object representing collection of StoragePrivateEndpointConnections and their operations over a StoragePrivateEndpointConnectionResource. </returns>
         public virtual StoragePrivateEndpointConnectionCollection GetStoragePrivateEndpointConnections()
