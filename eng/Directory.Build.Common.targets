@@ -196,6 +196,14 @@
     </AdditionalFiles>
   </ItemGroup>
 
+  <!-- Per-package analyzer allow-list: pass to the Roslyn analyzer via AdditionalFiles -->
+  <ItemGroup Condition="'$(EnableClientSdkAnalyzers)' == 'true'
+                     and Exists('$(RepoEngPath)\analyzerallowlist\$(MSBuildProjectName).txt')">
+    <AdditionalFiles Include="$(RepoEngPath)\analyzerallowlist\$(MSBuildProjectName).txt">
+      <Visible>false</Visible>
+    </AdditionalFiles>
+  </ItemGroup>
+
   <!-- disable enhanced analysis-->
   <ItemGroup Condition="'$(DisableEnhancedAnalysis)' == 'true'">
     <EditorConfigFiles Include="$(RepoEngPath)/globalconfigs/disable_enhanced_analysis.globalconfig" />

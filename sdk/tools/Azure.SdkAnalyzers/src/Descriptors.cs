@@ -34,5 +34,15 @@ namespace Azure.SdkAnalyzers
             DiagnosticSeverity.Warning,
             true,
             "Methods that accept a CancellationToken should propagate it to RequestContext parameters in Azure SDK method calls to ensure proper cancellation support.");
+
+        public static DiagnosticDescriptor AZC0021 = new(
+            nameof(AZC0021),
+            "Inline analyzer suppression not in allow-list",
+            "Suppression of '{0}' on '{1}' is not in the allow-list. Remove the suppression or add a CODE:SYMBOL entry to the package's file in eng/analyzerallowlist/.",
+            DiagnosticCategory.Usage,
+            DiagnosticSeverity.Error,
+            true,
+            "Inline analyzer suppressions (#pragma warning disable, [SuppressMessage]) must have a matching CODE:SYMBOL entry in the package's allow-list file.",
+            customTags: new[] { WellKnownDiagnosticTags.NotConfigurable });
     }
 }

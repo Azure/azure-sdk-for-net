@@ -1,0 +1,8 @@
+# Analyzer allow-list for Azure.Identity
+#
+# nowarn: entries - codes allowed in <NoWarn> in the .csproj
+# CODE:SYMBOL entries - inline suppression approvals
+
+# ── NoWarn (transitional — migrate to inline) ─────────────────
+nowarn:3021
+nowarn:AZC0011
