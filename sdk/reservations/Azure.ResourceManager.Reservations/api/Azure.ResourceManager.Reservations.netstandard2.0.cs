@@ -1216,6 +1216,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.ReservationKind left, Azure.ResourceManager.Reservations.Models.ReservationKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.ReservationKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Reservations.Models.ReservationKind? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.ReservationKind left, Azure.ResourceManager.Reservations.Models.ReservationKind right) { throw null; }
         public override string ToString() { throw null; }
     }

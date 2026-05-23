@@ -7,50 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    // Custom shim: TSP source uses a single-value string literal `kind?: "Microsoft.Compute"`
-    // which the mgmt generator does not emit as a type, but the previous GA surface exposed
-    // ReservationKind as a public extensible enum. Re-introduce it here to preserve API compat.
     /// <summary> Resource Provider type to be reserved. </summary>
     public readonly partial struct ReservationKind : IEquatable<ReservationKind>
     {
         private readonly string _value;
+        /// <summary> Microsoft.Compute. </summary>
+        private const string MicrosoftComputeValue = "Microsoft.Compute";
 
         /// <summary> Initializes a new instance of <see cref="ReservationKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReservationKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftComputeValue = "Microsoft.Compute";
+            _value = value;
+        }
 
         /// <summary> Microsoft.Compute. </summary>
         public static ReservationKind MicrosoftCompute { get; } = new ReservationKind(MicrosoftComputeValue);
 
         /// <summary> Determines if two <see cref="ReservationKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReservationKind left, ReservationKind right) => left.Equals(right);
 
         /// <summary> Determines if two <see cref="ReservationKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReservationKind left, ReservationKind right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="ReservationKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReservationKind(string value) => new ReservationKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReservationKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReservationKind?(string value) => value == null ? null : new ReservationKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReservationKind other && Equals(other);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool Equals(ReservationKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
