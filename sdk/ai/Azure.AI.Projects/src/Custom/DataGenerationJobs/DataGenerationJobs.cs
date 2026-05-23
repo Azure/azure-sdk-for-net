@@ -85,7 +85,7 @@ public partial class DataGenerationJobs
                     type: kind,
                     options: localRequestOptions),
             dataItemDeserializer: DataGenerationJob.DeserializeDataGenerationJob,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [scenario?.ToString(), kind.ToString()]),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [scenario?.ToString()]),
             cancellationToken.ToRequestOptions());
     }
 
@@ -199,9 +199,9 @@ public partial class DataGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual void DeleteGenerationJob(string jobId, CancellationToken cancellationToken = default)
+    public virtual ClientResult DeleteGenerationJob(string jobId, CancellationToken cancellationToken = default)
     {
-        DeleteGenerationJob(
+        return DeleteGenerationJob(
             jobId: jobId,
             foundryFeatures: default,
             cancellationToken: cancellationToken);
@@ -213,9 +213,9 @@ public partial class DataGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public async virtual Task DeleteGenerationJobAsync(string jobId, CancellationToken cancellationToken = default)
+    public async virtual Task<ClientResult> DeleteGenerationJobAsync(string jobId, CancellationToken cancellationToken = default)
     {
-        await DeleteGenerationJobAsync(
+        return await DeleteGenerationJobAsync(
             jobId: jobId,
             foundryFeatures: default,
             cancellationToken: cancellationToken).ConfigureAwait(false);

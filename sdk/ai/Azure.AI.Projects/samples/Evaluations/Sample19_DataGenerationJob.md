@@ -5,49 +5,41 @@ In this example we will demonstrate how the data can be generated using `DataGen
 1. First, we need to create clients and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateClients_DataGenerationJob
-var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+string endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+string modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 // Create client with debugging enabled
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 OpenAIFileClient fileClient = projectClient.ProjectOpenAIClient.GetOpenAIFileClient();
 ```
 
-2. Generate a data file, which will be a source of facts, used for data generation. In our scenario, we will generate 10 questions and answer pairs.
+2. In our scenario, we will generate 16 questions and answer pairs based on the provided prompt and will save them into the data set named "dataset-generation-eval-sample".
 
-Synchronous sample:
-```C# Snippet:Sample_UploadFile_DataGenerationJob_Sync
-string filePath = "sample_file_for_upload.txt";
-File.WriteAllText(
-    path: filePath,
-    contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-OpenAIFile uploadedFile = fileClient.UploadFile(filePath: filePath, purpose: FileUploadPurpose.Assistants);
-File.Delete(filePath);
-DataGenerationJob job = new()
+```C# Snippet:Sample_UploadFile_DataGenerationJob
+DataGenerationJobOutputOptions outputOptions = new()
 {
-    Inputs = new DataGenerationJobInputs(
-        name: "sampleGeneration",
-        sources: [new FileDataGenerationJobSource(uploadedFile.Id)],
-        options: new SimpleQnADataGenerationJobOptions(maxSamples: 10),
-        scenario: new DataGenerationJobScenario()
-    ),
+    Name = "dataset-generation-eval-sample",
+    Description = "QnA pairs generated from the Contoso refund policy prompt.",
 };
-```
-
-Asynchronous sample:
-```C# Snippet:Sample_UploadFile_DataGenerationJob_Async
-string filePath = "sample_file_for_upload.txt";
-File.WriteAllText(
-    path: filePath,
-    contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-OpenAIFile uploadedFile = await fileClient.UploadFileAsync(filePath: filePath, purpose: FileUploadPurpose.Assistants);
-File.Delete(filePath);
+outputOptions.Tags["sample"] = "dataset-generation-with-evaluation";
 DataGenerationJob job = new()
 {
     Inputs = new DataGenerationJobInputs(
         name: "sampleGeneration",
-        sources: [new FileDataGenerationJobSource(uploadedFile.Id)],
-        options: new SimpleQnADataGenerationJobOptions(maxSamples: 10),
-        scenario: new DataGenerationJobScenario()
-    ),
+        sources: [new PromptDataGenerationJobSource(prompt: "Contoso offers a full refund within 30 days of purchase for any product " +
+                "returned in its original condition. After 30 days, store credit may be " +
+                "issued at the discretion of customer support. Digital goods are " +
+                "non-refundable once downloaded."){
+            Description = "Contoso refund policy"
+        }],
+        options: new SimpleQnADataGenerationJobOptions(maxSamples: 16)
+        {
+            ModelOptions = new(modelDeploymentName)
+        },
+        scenario: DataGenerationJobScenario.Evaluation
+    )
+    {
+        OutputOptions = outputOptions
+    },
 };
 ```
 
@@ -65,7 +57,7 @@ DataGenerationJob runningJob = await projectClient.DataGenerationJobs.CreateGene
 Console.WriteLine($"Created job ID: {runningJob.Id}");
 ```
 
-4. Wait for the job to arrive at a final state.
+4. Wait for the job to arrive at a final state and print out data set ID and version.
 
 Synchronous sample:
 ```C# Snippet:Sample_GetJob_DataGenerationJob_Sync
@@ -80,6 +72,10 @@ if (runningJob.Status == JobStatus.Failed)
     throw new InvalidOperationException($"The job {runningJob.Id} has failed.");
 }
 Console.WriteLine($"The job ID: {runningJob.Id} completed");
+if (runningJob.Result.Outputs[0] is DatasetDataGenerationJobOutput dataOutput)
+{
+    Console.WriteLine($"Created the dataset {dataOutput.Name}, v. {dataOutput.Version}");
+}
 ```
 
 Asynchronous sample:
@@ -95,46 +91,39 @@ if (runningJob.Status == JobStatus.Failed)
     throw new InvalidOperationException($"The job {runningJob.Id} has failed.");
 }
 Console.WriteLine($"The job ID: {runningJob.Id} completed");
-```
-
-5. When the data were generated, download the file generated and display its contents.
-
-Synchronous sample:
-```C# Snippet:Sample_GetJobOutputs_DataGenerationJob_Sync
-if (runningJob.Result.Outputs is FileDataGenerationJobOutput fileOutput)
+if (runningJob.Result.Outputs[0] is DatasetDataGenerationJobOutput dataOutput)
 {
-    Console.WriteLine($"Downloading results file {fileOutput.Filename}.");
-    BinaryData outData = fileClient.DownloadFile(fileOutput.Id);
-    Console.WriteLine("=========File Contents=========");
-    Console.WriteLine(outData.ToString());
-    Console.WriteLine("===============================");
+    Console.WriteLine($"Created the dataset {dataOutput.Name}, v. {dataOutput.Version}");
 }
 ```
 
-Asynchronous sample:
-```C# Snippet:Sample_GetJobOutputs_DataGenerationJob_Async
-if (runningJob.Result.Outputs is FileDataGenerationJobOutput fileOutput)
-{
-    Console.WriteLine($"Downloading results file {fileOutput.Filename}.");
-    BinaryData outData = await fileClient.DownloadFileAsync(fileOutput.Id);
-    Console.WriteLine("=========File Contents=========");
-    Console.WriteLine(outData.ToString());
-    Console.WriteLine("===============================");
-}
-```
-
-6. The job also can be cancelled as it is demonstrated below.
+5. The job also can be cancelled as it is demonstrated below.
 
 Synchronous sample:
 ```C# Snippet:Sample_CancelingJob_DataGenerationJob_Sync
+outputOptions = new()
+{
+    Name = "another-dataset",
+    Description = "QnA pairs generated from the Contoso refund policy prompt.",
+};
 job = new()
 {
     Inputs = new DataGenerationJobInputs(
         name: "sampleGeneration",
-        sources: [new FileDataGenerationJobSource(uploadedFile.Id)],
-        options: new SimpleQnADataGenerationJobOptions(maxSamples: 1000),
-        scenario: new DataGenerationJobScenario()
-    ),
+        sources: [new PromptDataGenerationJobSource(prompt: "Zawa offers a full refund within 130 days of purchase for any product " +
+                "returned in its original condition. After 30 days, store credit may be " +
+                "issued at the discretion of customer support."){
+            Description = "Zawa refund policy"
+        }],
+        options: new SimpleQnADataGenerationJobOptions(maxSamples: 1000)
+        {
+            ModelOptions = new(modelDeploymentName)
+        },
+        scenario: DataGenerationJobScenario.Evaluation
+    )
+    {
+        OutputOptions = outputOptions
+    },
 };
 DataGenerationJob jobToCancel = projectClient.DataGenerationJobs.CreateGenerationJob(job);
 jobToCancel = projectClient.DataGenerationJobs.CancelGenerationJob(jobToCancel.Id);
@@ -153,14 +142,29 @@ Console.WriteLine($"The job {jobToCancel.Id} was canceled.");
 
 Asynchronous sample:
 ```C# Snippet:Sample_CancelingJob_DataGenerationJob_Async
+outputOptions = new()
+{
+    Name = "another-dataset",
+    Description = "QnA pairs generated from the Contoso refund policy prompt.",
+};
 job = new()
 {
     Inputs = new DataGenerationJobInputs(
         name: "sampleGeneration",
-        sources: [new FileDataGenerationJobSource(uploadedFile.Id)],
-        options: new SimpleQnADataGenerationJobOptions(maxSamples: 1000),
-        scenario: new DataGenerationJobScenario()
-    ),
+        sources: [new PromptDataGenerationJobSource(prompt: "Zawa offers a full refund within 130 days of purchase for any product " +
+                "returned in its original condition. After 30 days, store credit may be " +
+                "issued at the discretion of customer support."){
+            Description = "Zawa refund policy"
+        }],
+        options: new SimpleQnADataGenerationJobOptions(maxSamples: 1000)
+        {
+            ModelOptions = new(modelDeploymentName)
+        },
+        scenario: DataGenerationJobScenario.Evaluation
+    )
+    {
+        OutputOptions = outputOptions
+    },
 };
 DataGenerationJob jobToCancel = await projectClient.DataGenerationJobs.CreateGenerationJobAsync(job);
 jobToCancel = await projectClient.DataGenerationJobs.CancelGenerationJobAsync(jobToCancel.Id);
