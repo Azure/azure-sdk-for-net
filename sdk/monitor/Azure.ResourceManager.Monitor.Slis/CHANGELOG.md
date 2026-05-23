@@ -4,7 +4,16 @@
 
 ### Features Added
 
+- Added `SliSamplingType.Average` for average sampling.
+- Added `SliSamplingType.Count` for count sampling.
+- Added `SliSamplingType.Avg` as an obsolete alias that forwards to `SliSamplingType.Average`.
+
 ### Breaking Changes
+
+- Replaced `SliSamplingType.Avg` with `SliSamplingType.Average`. The `Avg` member remains available as an obsolete alias for migration from earlier betas.
+- Changed `SliSamplingType` wire values for `Max`, `Min`, and `Sum` from `max`, `min`, and `sum` to `Max`, `Min`, and `Sum`.
+- Changed `SliConditionOperator` wire values from symbolic operators to named operators: `==` to `eq`, `!=` to `ne`, `>` to `gt`, `>=` to `gte`, `<` to `lt`, `<=` to `lte`, `@in` to `in`, `!in` to `notin`, `!contains` to `notcontains`, and `!startswith` to `notstartswith`.
+- Changed `WindowUptimeCriteriaComparator` wire values from symbolic operators to named operators: `>` to `gt`, `>=` to `gte`, `<` to `lt`, and `<=` to `lte`.
 
 ### Bugs Fixed
 
