@@ -28,7 +28,7 @@ resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-
 
 // Monitoring Reader role (43d0d8ad-25c7-4714-9337-8ba259a2fe2e)
 // Grants the test SP read access for getting metrics and AMW accounts
-var monitoringReaderRoleId = '43d0d8ad-25c7-4714-9337-8ba259a2fe2e'
+var monitoringReaderRoleId = '43d0d8ad-25c7-4714-9337-8ba259a9fe05'
 
 resource monitoringReaderAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(resourceGroup().id, testApplicationOid, monitoringReaderRoleId)

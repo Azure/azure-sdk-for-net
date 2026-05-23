@@ -6,6 +6,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Slis.Models;
 using NUnit.Framework;
 
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Tests
         }
 
         [Test]
-        [RecordedTest]
+        [LiveOnly]
         public async Task SliCrudLifecycle()
         {
             ResourceIdentifier serviceGroupId = new($"/providers/Microsoft.Management/serviceGroups/{_serviceGroupName}");
@@ -65,8 +66,9 @@ namespace Azure.ResourceManager.Monitor.Slis.Tests
 
         private MonitorSliData CreateSliResourceData()
         {
-            return new MonitorSliData
+            var sliData = new MonitorSliData
             {
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned),
                 Properties = new MonitorSliProperties(
                     description: "Live test SLI - measures latency of test API",
                     category: SliCategory.Latency,
@@ -105,6 +107,12 @@ namespace Azure.ResourceManager.Monitor.Slis.Tests
                             signalFormula: "A")
                     })
             };
+            sliData.Identity.UserAssignedIdentities[new ResourceIdentifier(_managedIdentityResourceId)] = new UserAssignedIdentity();
+            if (!string.Equals(_managedIdentityResourceId, _sourceManagedIdentityResourceId, System.StringComparison.OrdinalIgnoreCase))
+            {
+                sliData.Identity.UserAssignedIdentities[new ResourceIdentifier(_sourceManagedIdentityResourceId)] = new UserAssignedIdentity();
+            }
+            return sliData;
         }
     }
 }
