@@ -3,12 +3,5 @@
     <IsClientLibrary>true</IsClientLibrary>
   </PropertyGroup>
 
-  <ItemGroup>
-    <AdditionalFiles Remove="$(RepoEngPath)\stylecop.json"/>
-    <AdditionalFiles Include="$(MSBuildThisFileDirectory)\stylecop.json">
-      <Visible>false</Visible>
-    </AdditionalFiles>
-  </ItemGroup>
-
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)..\, Directory.Build.props))\Directory.Build.props" />
 </Project>

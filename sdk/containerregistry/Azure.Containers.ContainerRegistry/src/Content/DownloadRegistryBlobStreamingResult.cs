@@ -9,7 +9,9 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary>
     /// The result from downloading a blob from the registry.
     /// </summary>
+#pragma warning disable AZC0035 // Model factory method is not applicable for this type
     public class DownloadRegistryBlobStreamingResult : IDisposable
+#pragma warning restore AZC0035
     {
         internal DownloadRegistryBlobStreamingResult(string digest, Stream content)
         {

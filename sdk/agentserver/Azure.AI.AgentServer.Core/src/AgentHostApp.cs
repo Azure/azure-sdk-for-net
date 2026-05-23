@@ -3,6 +3,8 @@
 
 using Microsoft.AspNetCore.Builder;
 
+#pragma warning disable AZC0100 // ConfigureAwait(false) must be used.
+
 namespace Azure.AI.AgentServer.Core;
 
 /// <summary>
@@ -55,3 +57,5 @@ public sealed class AgentHostApp
         }
     }
 }
+
+#pragma warning restore AZC0100

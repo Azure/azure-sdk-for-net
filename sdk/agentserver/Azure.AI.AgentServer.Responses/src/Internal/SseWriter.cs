@@ -7,6 +7,8 @@ using System.Text.Json.Nodes;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 
+#pragma warning disable AZC0100 // ConfigureAwait(false) must be used.
+
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
@@ -72,3 +74,5 @@ internal sealed class SseWriter
         await _session.Stream.FlushAsync(CancellationToken.None).ConfigureAwait(false);
     }
 }
+
+#pragma warning restore AZC0100

@@ -6,6 +6,8 @@ using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 
+#pragma warning disable AZC0100 // ConfigureAwait(false) must be used.
+
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
@@ -196,3 +198,5 @@ internal sealed class ResponseContextImpl : ResponseContext
             .ToList();
     }
 }
+
+#pragma warning restore AZC0100

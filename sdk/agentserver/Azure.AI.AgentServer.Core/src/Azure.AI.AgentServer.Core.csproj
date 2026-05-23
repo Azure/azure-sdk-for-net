@@ -11,7 +11,6 @@
     <!-- AZC0100: Server-side hosting library on ASP.NET Core async pipeline — ConfigureAwait(false) is unnecessary and harmful.
          AZC0004: Async-only API — no sync variants needed (same exemption as AMQP-based SDKs).
          See AGENTS.md §0.VI for rationale. -->
-    <NoWarn>$(NoWarn);AZC0100;AZC0004</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />

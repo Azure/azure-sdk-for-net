@@ -4,6 +4,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
 
+#pragma warning disable AZC0100 // ConfigureAwait(false) must be used.
+
 namespace Azure.AI.AgentServer.Core.Internal;
 
 /// <summary>
@@ -28,3 +30,5 @@ internal sealed class RequestIdBaggagePropagator : IMiddleware
         await next(context);
     }
 }
+
+#pragma warning restore AZC0100

@@ -5,6 +5,8 @@ using System.Reflection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
+#pragma warning disable AZC0100 // ConfigureAwait(false) must be used.
+
 namespace Azure.AI.AgentServer.Core.Internal;
 
 /// <summary>
@@ -63,3 +65,5 @@ internal sealed class ServerVersionMiddleware : IMiddleware
         await next(context);
     }
 }
+
+#pragma warning restore AZC0100

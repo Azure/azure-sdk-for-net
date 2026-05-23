@@ -1,8 +1,10 @@
-// Copyright (c) .NET Foundation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "AzureWebJobs", Scope = "member", Target = "Microsoft.Azure.WebJobs.ServiceBus.MessagingProvider.#GetConnectionString(System.String)")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Prefetch", Scope = "member", Target = "Microsoft.Azure.WebJobs.ServiceBus.ServiceBusConfiguration.#PrefetchCount")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Scope = "type", Target = "Microsoft.Azure.WebJobs.ServiceBus.EventHubListener+Listenter")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Scope = "type", Target = "Microsoft.Azure.WebJobs.ServiceBus.EventHubListener+Listener")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1014:MarkAssembliesWithClsCompliant")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "WebJobs extension library does not follow Azure SDK client design guidelines.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0015:DO provide return type of Pageable<T>/AsyncPageable<T>/Operation<T>/Task<Operation<T>>/Response/Response<T>/Task<Response>/Task<Response<T>> for service methods.", Justification = "WebJobs extension library does not follow Azure SDK client design guidelines.")]
