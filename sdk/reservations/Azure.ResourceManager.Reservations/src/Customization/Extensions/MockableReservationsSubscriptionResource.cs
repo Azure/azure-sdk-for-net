@@ -17,14 +17,6 @@ namespace Azure.ResourceManager.Reservations.Mocking
     // the GA convenience surface and mocking target.
     public partial class MockableReservationsSubscriptionResource
     {
-        [ForwardsClientCalls]
-        public virtual Task<Response<QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(string providerId, AzureLocation location, Guid id, CancellationToken cancellationToken = default)
-            => GetQuotaRequestDetails(providerId, location).GetAsync(id, cancellationToken);
-
-        [ForwardsClientCalls]
-        public virtual Response<QuotaRequestDetailResource> GetQuotaRequestDetail(string providerId, AzureLocation location, Guid id, CancellationToken cancellationToken = default)
-            => GetQuotaRequestDetails(providerId, location).Get(id, cancellationToken);
-
         public virtual AsyncPageable<Models.ReservationCatalog> GetCatalogAsync(string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
             => GetCatalogAsync(reservedResourceType, location, publisherId, offerId, planId, filter: default, skip: default, take: default, cancellationToken);
 
