@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Tests
         }
 
         [Test]
-        [LiveOnly]
+        [RecordedTest]
         public async Task SliCrudLifecycle()
         {
             ResourceIdentifier serviceGroupId = new($"/providers/Microsoft.Management/serviceGroups/{_serviceGroupName}");
@@ -89,19 +89,22 @@ namespace Azure.ResourceManager.Monitor.Slis.Tests
                                     signalSourceId: "A",
                                     sourceAmwAccountManagedIdentity: new ResourceIdentifier(_sourceManagedIdentityResourceId),
                                     sourceAmwAccountResourceId: new ResourceIdentifier(_sourceAmwResourceId),
-                                    metricNamespace: "TestMetrics",
-                                    metricName: "TestLatency",
+                                    // Source metric is a real Azure Managed Prometheus metric scraped by AKS.
+                                    // Test infra (bicep) deploys an AKS cluster with the Azure Monitor metrics addon
+                                    // pointed at the source AMW; container_cpu_usage_seconds_total is always populated.
+                                    metricNamespace: "customdefault",
+                                    metricName: "container_cpu_usage_seconds_total",
                                     filters: new[]
                                     {
-                                        new SliCondition(SliConditionOperator.Equal, "TestApi")
+                                        new SliCondition(SliConditionOperator.NotEqual, "POD")
                                         {
-                                            DimensionName = "ApiName"
+                                            DimensionName = "container"
                                         }
                                     },
-                                    spatialAggregation: new SliSpatialAggregation(SliSpatialAggregationType.Average, new[] { "Region" }),
-                                    temporalAggregation: new SliTemporalAggregation(SliTemporalAggregationType.Average)
+                                    spatialAggregation: new SliSpatialAggregation(SliSpatialAggregationType.Sum, new[] { "instance" }),
+                                    temporalAggregation: new SliTemporalAggregation(SliTemporalAggregationType.Rate)
                                     {
-                                        WindowSizeMinutes = 5
+                                        WindowSizeMinutes = 1
                                     })
                             },
                             signalFormula: "A")
