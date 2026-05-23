@@ -1,12 +1,14 @@
 # Release History
 
-## 1.0.0-beta.25 (Unreleased)
+## 1.0.0-beta.25 (2026-05-23)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed the blueprint attribute key from `blueprint_id` to `microsoft.a365.agent.blueprint.id` to align telemetry attributes with A365 schema.
 
 ### Other Changes
 
