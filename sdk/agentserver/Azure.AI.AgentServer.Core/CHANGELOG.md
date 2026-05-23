@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Fixed the blueprint attribute key from `blueprint_id` to `microsoft.a365.agent.blueprint.id` to align telemetry attributes with A365 schema.
+- Fixed the blueprint telemetry attribute key from `gen_ai.agent.blueprint.id` to `microsoft.a365.agent.blueprint.id` to align with A365 schema.
 
 ### Other Changes
 
