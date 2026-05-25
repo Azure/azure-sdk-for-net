@@ -3,12 +3,10 @@
 
 #nullable disable
 
-using Azure.Core;
 using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    [CodeGenSuppress("GetSqlVulnerabilityAssessmentScanResource", typeof(ArmClient), typeof(ResourceIdentifier))]
     // Suppress generated methods whose return types changed so ApiCompat shims can preserve the previous GA signatures.
     [CodeGenSuppress("GetAllowedConnectionsAsync", typeof(Azure.ResourceManager.Resources.SubscriptionResource), typeof(System.Threading.CancellationToken))]
     [CodeGenSuppress("GetAllowedConnections", typeof(Azure.ResourceManager.Resources.SubscriptionResource), typeof(System.Threading.CancellationToken))]
