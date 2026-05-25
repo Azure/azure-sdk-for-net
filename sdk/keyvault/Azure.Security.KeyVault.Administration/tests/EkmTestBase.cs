@@ -25,7 +25,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
         protected override void Start()
         {
-            TestEnvironment.AssertEkmEnabled();   // the "is_ekm" gate
+            TestEnvironment.AssertEkmEnabled();
             Client = GetClient();
             base.Start();
         }

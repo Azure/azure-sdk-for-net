@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Security.KeyVault.Administration.Models;
 using NUnit.Framework;
 
@@ -14,12 +15,10 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public KeyVaultEkmClientLiveTests(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record to re-record */)
         {
-            // Scrub EKM-specific fields from recordings so the host FQDN, CA bytes,
-            // subject CN, and proxy client cert are never persisted.
-            JsonPathSanitizers.Add("$..host");
-            JsonPathSanitizers.Add("$..serverSubjectCommonName");
-            JsonPathSanitizers.Add("$..serverCaCertificates");
-            JsonPathSanitizers.Add("$..certificate");
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer("(?<=\"server_ca_certificates\"\\s*:\\s*)\\[[^\\]]*\\]")
+            {
+                Value = "[\"AA==\"]"
+            });
         }
 
         [RecordedTest]
@@ -60,8 +59,6 @@ namespace Azure.Security.KeyVault.Administration.Tests
         [TearDown]
         public async Task EnsureConnectionDeleted()
         {
-            // Best-effort cleanup so a failed lifecycle test doesn't leave a stale connection on the HSM.
-            // Skip in Playback (no real service) and when the client wasn't initialized (e.g. test was ignored).
             if (Mode == RecordedTestMode.Playback || Client is null)
             {
                 return;
@@ -76,7 +73,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
-                // Already gone — fine.
+                // Already Deleted
             }
         }
 
