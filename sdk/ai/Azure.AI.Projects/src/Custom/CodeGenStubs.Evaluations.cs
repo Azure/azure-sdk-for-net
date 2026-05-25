@@ -7,7 +7,6 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("AgentClusterInsightRequest")] public partial class AgentClusterInsightRequest { }
 [CodeGenType("AgentClusterInsightResult")] public partial class AgentClusterInsightResult { }
 [CodeGenType("AttackStrategy")] public readonly partial struct AttackStrategy { }
-[CodeGenType("AzureAIAgentTarget")] public partial class AzureAIAgentTarget { }
 [CodeGenType("AzureAIModelTarget")] public partial class AzureAIModelTarget { }
 [CodeGenType("AzureOpenAIModelConfiguration")] public partial class AzureOpenAIModelConfiguration { }
 [CodeGenType("ChartCoordinate")] public partial class ChartCoordinate { }
@@ -16,6 +15,7 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("ClusterTokenUsage")] public partial class ClusterTokenUsage { }
 [CodeGenType("CronTrigger")] public partial class CronTrigger { }
 [CodeGenType("DailyRecurrenceSchedule")] public partial class DailyRecurrenceSchedule { }
+[CodeGenType("Dimension")] public partial class EvaluationsDimension { }
 [CodeGenType("EvalResult")] public partial class EvalResult { }
 [CodeGenType("EvalRunResultCompareItem")] public partial class EvalRunResultCompareItem { }
 [CodeGenType("EvalRunResultComparison")] public partial class EvalRunResultComparison { }

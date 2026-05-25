@@ -1,5 +1,5 @@
 directory: specification/ai-foundry/data-plane/Foundry/src/sdk-extensions-openai
-commit: b4de814e0b475880111db5c641b78ef85c8a3157
+commit: d70b666663d37cc99887311c19996b3ae29ce927
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 - specification/ai-foundry/data-plane/Foundry/src/common
