@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(SapEccLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("url"u8);
-            writer.WriteObjectValue(Uri, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Uri, options);
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

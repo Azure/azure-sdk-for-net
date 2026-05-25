@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(GoogleBigQueryV2LinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("projectId"u8);
-            writer.WriteObjectValue(ProjectId, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ProjectId, options);
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteObjectValue(ClientId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ClientId, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

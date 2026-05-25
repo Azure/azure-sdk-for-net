@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PackagePath))
             {
                 writer.WritePropertyName("packagePath"u8);
-                writer.WriteObjectValue(PackagePath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PackagePath, options);
             }
             if (Optional.IsDefined(LocationType))
             {

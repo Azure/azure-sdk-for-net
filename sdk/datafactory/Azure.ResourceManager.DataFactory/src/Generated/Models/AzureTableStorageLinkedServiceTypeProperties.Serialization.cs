@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ServiceEndpoint))
             {
                 writer.WritePropertyName("serviceEndpoint"u8);
-                writer.WriteObjectValue(ServiceEndpoint, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServiceEndpoint, options);
             }
             if (Optional.IsDefined(Credential))
             {

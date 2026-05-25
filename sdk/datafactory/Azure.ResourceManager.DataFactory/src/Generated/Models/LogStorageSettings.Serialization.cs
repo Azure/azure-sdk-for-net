@@ -81,21 +81,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(LogStorageSettings)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName, options);
+            writer.WriteObjectValue<DataFactoryLinkedServiceReference>(LinkedServiceName, options);
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
-                writer.WriteObjectValue(Path, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Path, options);
             }
             if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
-                writer.WriteObjectValue(LogLevel, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(LogLevel, options);
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
                 writer.WritePropertyName("enableReliableLogging"u8);
-                writer.WriteObjectValue(EnableReliableLogging, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(EnableReliableLogging, options);
             }
             foreach (var item in AdditionalProperties)
             {

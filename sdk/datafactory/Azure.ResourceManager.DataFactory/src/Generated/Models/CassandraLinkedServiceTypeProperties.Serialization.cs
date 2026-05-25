@@ -81,21 +81,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(CassandraLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("host"u8);
-            writer.WriteObjectValue(Host, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Host, options);
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
-                writer.WriteObjectValue(AuthenticationType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AuthenticationType, options);
             }
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-                writer.WriteObjectValue(Port, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Port, options);
             }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

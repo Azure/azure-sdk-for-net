@@ -78,32 +78,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
-                writer.WriteObjectValue(Host, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Host, options);
             }
             if (Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
-                writer.WriteObjectValue(UserId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(UserId, options);
             }
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
             }
             if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri"u8);
-                writer.WriteObjectValue(SasUri, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SasUri, options);
             }
             if (Optional.IsDefined(FileShare))
             {
                 writer.WritePropertyName("fileShare"u8);
-                writer.WriteObjectValue(FileShare, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(FileShare, options);
             }
             if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
-                writer.WriteObjectValue(Snapshot, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Snapshot, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ServiceEndpoint))
             {
                 writer.WritePropertyName("serviceEndpoint"u8);
-                writer.WriteObjectValue(ServiceEndpoint, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServiceEndpoint, options);
             }
             if (Optional.IsDefined(Credential))
             {

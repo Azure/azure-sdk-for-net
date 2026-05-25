@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(WebTableDatasetTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("index"u8);
-            writer.WriteObjectValue(Index, options);
+            writer.WriteObjectValue<DataFactoryElement<int>>(Index, options);
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
-                writer.WriteObjectValue(Path, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Path, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

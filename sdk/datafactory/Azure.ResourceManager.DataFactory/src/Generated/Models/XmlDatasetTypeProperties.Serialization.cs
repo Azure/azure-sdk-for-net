@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
-                writer.WriteObjectValue(EncodingName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(EncodingName, options);
             }
             if (Optional.IsDefined(NullValue))
             {
                 writer.WritePropertyName("nullValue"u8);
-                writer.WriteObjectValue(NullValue, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(NullValue, options);
             }
             if (Optional.IsDefined(Compression))
             {

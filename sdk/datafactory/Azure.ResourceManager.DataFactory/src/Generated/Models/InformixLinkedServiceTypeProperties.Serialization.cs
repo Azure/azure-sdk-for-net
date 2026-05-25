@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(InformixLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("connectionString"u8);
-            writer.WriteObjectValue(ConnectionString, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
-                writer.WriteObjectValue(AuthenticationType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AuthenticationType, options);
             }
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

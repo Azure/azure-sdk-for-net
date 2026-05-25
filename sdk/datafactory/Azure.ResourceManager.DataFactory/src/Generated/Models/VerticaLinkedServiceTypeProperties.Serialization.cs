@@ -78,27 +78,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
             }
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-                writer.WriteObjectValue(Server, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Server, options);
             }
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-                writer.WriteObjectValue(Port, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Port, options);
             }
             if (Optional.IsDefined(Uid))
             {
                 writer.WritePropertyName("uid"u8);
-                writer.WriteObjectValue(Uid, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Uid, options);
             }
             if (Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
-                writer.WriteObjectValue(Database, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Database, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

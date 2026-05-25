@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureBlobFSDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public AzureBlobFSDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public AzureBlobFSDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("AzureBlobFSFile", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

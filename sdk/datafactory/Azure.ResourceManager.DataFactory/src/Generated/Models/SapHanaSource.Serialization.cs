@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
-                writer.WriteObjectValue(Query, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Query, options);
             }
             if (Optional.IsDefined(PacketSize))
             {
                 writer.WritePropertyName("packetSize"u8);
-                writer.WriteObjectValue(PacketSize, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(PacketSize, options);
             }
             if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
-                writer.WriteObjectValue(PartitionOption, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PartitionOption, options);
             }
             if (Optional.IsDefined(PartitionSettings))
             {

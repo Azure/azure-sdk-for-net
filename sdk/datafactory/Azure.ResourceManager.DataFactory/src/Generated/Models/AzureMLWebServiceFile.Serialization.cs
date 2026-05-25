@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(AzureMLWebServiceFile)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("filePath"u8);
-            writer.WriteObjectValue(FilePath, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(FilePath, options);
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName, options);
+            writer.WriteObjectValue<DataFactoryLinkedServiceReference>(LinkedServiceName, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

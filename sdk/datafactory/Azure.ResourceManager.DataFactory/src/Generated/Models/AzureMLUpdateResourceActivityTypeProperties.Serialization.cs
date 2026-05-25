@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(AzureMLUpdateResourceActivityTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("trainedModelName"u8);
-            writer.WriteObjectValue(TrainedModelName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(TrainedModelName, options);
             writer.WritePropertyName("trainedModelFilePath"u8);
-            writer.WriteObjectValue(TrainedModelFilePath, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(TrainedModelFilePath, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

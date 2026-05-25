@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                writer.WriteObjectValue(ServicePrincipalId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
             if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
-                writer.WriteObjectValue(ServicePrincipalKey, options);
+                writer.WriteObjectValue<DataFactorySecret>(ServicePrincipalKey, options);
             }
             if (Optional.IsDefined(Credential))
             {

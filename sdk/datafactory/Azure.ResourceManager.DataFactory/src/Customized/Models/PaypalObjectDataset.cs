@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class PaypalObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public PaypalObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public PaypalObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("PaypalObject", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

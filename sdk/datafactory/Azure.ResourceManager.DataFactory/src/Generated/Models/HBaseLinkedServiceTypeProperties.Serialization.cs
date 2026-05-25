@@ -81,43 +81,43 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(HBaseLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("host"u8);
-            writer.WriteObjectValue(Host, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Host, options);
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-                writer.WriteObjectValue(Port, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Port, options);
             }
             if (Optional.IsDefined(HttpPath))
             {
                 writer.WritePropertyName("httpPath"u8);
-                writer.WriteObjectValue(HttpPath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(HttpPath, options);
             }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
             if (Optional.IsDefined(EnableSsl))
             {
                 writer.WritePropertyName("enableSsl"u8);
-                writer.WriteObjectValue(EnableSsl, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(EnableSsl, options);
             }
             if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath"u8);
-                writer.WriteObjectValue(TrustedCertPath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(TrustedCertPath, options);
             }
             if (Optional.IsDefined(AllowHostNameCNMismatch))
             {
                 writer.WritePropertyName("allowHostNameCNMismatch"u8);
-                writer.WriteObjectValue(AllowHostNameCNMismatch, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(AllowHostNameCNMismatch, options);
             }
             if (Optional.IsDefined(AllowSelfSignedServerCert))
             {
                 writer.WritePropertyName("allowSelfSignedServerCert"u8);
-                writer.WriteObjectValue(AllowSelfSignedServerCert, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(AllowSelfSignedServerCert, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

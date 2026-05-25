@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DatabricksSparkJarActivityTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("mainClassName"u8);
-            writer.WriteObjectValue(MainClassName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(MainClassName, options);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);

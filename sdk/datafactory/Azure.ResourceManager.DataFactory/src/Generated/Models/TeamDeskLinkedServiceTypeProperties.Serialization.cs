@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WritePropertyName("url"u8);
-            writer.WriteObjectValue(Uri, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Uri, options);
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

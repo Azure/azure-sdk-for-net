@@ -79,47 +79,47 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ColumnDelimiter))
             {
                 writer.WritePropertyName("columnDelimiter"u8);
-                writer.WriteObjectValue(ColumnDelimiter, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ColumnDelimiter, options);
             }
             if (Optional.IsDefined(RowDelimiter))
             {
                 writer.WritePropertyName("rowDelimiter"u8);
-                writer.WriteObjectValue(RowDelimiter, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(RowDelimiter, options);
             }
             if (Optional.IsDefined(EscapeChar))
             {
                 writer.WritePropertyName("escapeChar"u8);
-                writer.WriteObjectValue(EscapeChar, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(EscapeChar, options);
             }
             if (Optional.IsDefined(QuoteChar))
             {
                 writer.WritePropertyName("quoteChar"u8);
-                writer.WriteObjectValue(QuoteChar, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(QuoteChar, options);
             }
             if (Optional.IsDefined(NullValue))
             {
                 writer.WritePropertyName("nullValue"u8);
-                writer.WriteObjectValue(NullValue, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(NullValue, options);
             }
             if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
-                writer.WriteObjectValue(EncodingName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(EncodingName, options);
             }
             if (Optional.IsDefined(TreatEmptyAsNull))
             {
                 writer.WritePropertyName("treatEmptyAsNull"u8);
-                writer.WriteObjectValue(TreatEmptyAsNull, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(TreatEmptyAsNull, options);
             }
             if (Optional.IsDefined(SkipLineCount))
             {
                 writer.WritePropertyName("skipLineCount"u8);
-                writer.WriteObjectValue(SkipLineCount, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(SkipLineCount, options);
             }
             if (Optional.IsDefined(FirstRowAsHeader))
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
-                writer.WriteObjectValue(FirstRowAsHeader, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(FirstRowAsHeader, options);
             }
         }
 

@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(StagingSettings)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName, options);
+            writer.WriteObjectValue<DataFactoryLinkedServiceReference>(LinkedServiceName, options);
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
-                writer.WriteObjectValue(Path, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Path, options);
             }
             if (Optional.IsDefined(EnableCompression))
             {
                 writer.WritePropertyName("enableCompression"u8);
-                writer.WriteObjectValue(EnableCompression, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(EnableCompression, options);
             }
             foreach (var item in AdditionalProperties)
             {

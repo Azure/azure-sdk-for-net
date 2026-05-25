@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(AzureFunctionLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("functionAppUrl"u8);
-            writer.WriteObjectValue(FunctionAppUri, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(FunctionAppUri, options);
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
-                writer.WriteObjectValue(ResourceId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ResourceId, options);
             }
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Authentication, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

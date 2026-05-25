@@ -81,21 +81,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(ShopifyLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("host"u8);
-            writer.WriteObjectValue(Host, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Host, options);
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
-                writer.WriteObjectValue(UseEncryptedEndpoints, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(UseEncryptedEndpoints, options);
             }
             if (Optional.IsDefined(UseHostVerification))
             {
                 writer.WritePropertyName("useHostVerification"u8);
-                writer.WriteObjectValue(UseHostVerification, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(UseHostVerification, options);
             }
             if (Optional.IsDefined(UsePeerVerification))
             {
                 writer.WritePropertyName("usePeerVerification"u8);
-                writer.WriteObjectValue(UsePeerVerification, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(UsePeerVerification, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
@@ -89,27 +89,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                writer.WriteObjectValue(ServicePrincipalId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
             if (Optional.IsDefined(ServicePrincipalCredentialType))
             {
                 writer.WritePropertyName("servicePrincipalCredentialType"u8);
-                writer.WriteObjectValue(ServicePrincipalCredentialType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalCredentialType, options);
             }
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
-                writer.WriteObjectValue(Tenant, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Tenant, options);
             }
             if (Optional.IsDefined(AzureCloudType))
             {
                 writer.WritePropertyName("azureCloudType"u8);
-                writer.WriteObjectValue(AzureCloudType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AzureCloudType, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

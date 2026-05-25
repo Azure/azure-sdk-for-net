@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(SapOdpResourceDatasetTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("context"u8);
-            writer.WriteObjectValue(Context, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Context, options);
             writer.WritePropertyName("objectName"u8);
-            writer.WriteObjectValue(ObjectName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ObjectName, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

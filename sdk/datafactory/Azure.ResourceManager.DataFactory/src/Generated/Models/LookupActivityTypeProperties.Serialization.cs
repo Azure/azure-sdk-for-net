@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FirstRowOnly))
             {
                 writer.WritePropertyName("firstRowOnly"u8);
-                writer.WriteObjectValue(FirstRowOnly, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(FirstRowOnly, options);
             }
             if (Optional.IsDefined(TreatDecimalAsString))
             {
                 writer.WritePropertyName("treatDecimalAsString"u8);
-                writer.WriteObjectValue(TreatDecimalAsString, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(TreatDecimalAsString, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

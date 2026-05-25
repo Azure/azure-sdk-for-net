@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
-                writer.WriteObjectValue(SasToken, options);
+                writer.WriteObjectValue<DataFactorySecretString>(SasToken, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

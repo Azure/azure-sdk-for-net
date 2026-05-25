@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PreserveCompressionFileNameAsFolder))
             {
                 writer.WritePropertyName("preserveCompressionFileNameAsFolder"u8);
-                writer.WriteObjectValue(PreserveCompressionFileNameAsFolder, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(PreserveCompressionFileNameAsFolder, options);
             }
         }
 

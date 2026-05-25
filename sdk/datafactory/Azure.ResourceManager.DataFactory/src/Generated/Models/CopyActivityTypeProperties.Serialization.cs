@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EnableStaging))
             {
                 writer.WritePropertyName("enableStaging"u8);
-                writer.WriteObjectValue(EnableStaging, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(EnableStaging, options);
             }
             if (Optional.IsDefined(StagingSettings))
             {
@@ -109,17 +109,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ParallelCopies))
             {
                 writer.WritePropertyName("parallelCopies"u8);
-                writer.WriteObjectValue(ParallelCopies, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(ParallelCopies, options);
             }
             if (Optional.IsDefined(DataIntegrationUnits))
             {
                 writer.WritePropertyName("dataIntegrationUnits"u8);
-                writer.WriteObjectValue(DataIntegrationUnits, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(DataIntegrationUnits, options);
             }
             if (Optional.IsDefined(EnableSkipIncompatibleRow))
             {
                 writer.WritePropertyName("enableSkipIncompatibleRow"u8);
-                writer.WriteObjectValue(EnableSkipIncompatibleRow, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(EnableSkipIncompatibleRow, options);
             }
             if (Optional.IsDefined(RedirectIncompatibleRowSettings))
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ValidateDataConsistency))
             {
                 writer.WritePropertyName("validateDataConsistency"u8);
-                writer.WriteObjectValue(ValidateDataConsistency, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(ValidateDataConsistency, options);
             }
             if (Optional.IsDefined(SkipErrorFile))
             {

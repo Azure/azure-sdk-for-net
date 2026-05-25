@@ -81,23 +81,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(ServiceNowV2LinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue(Endpoint, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Endpoint, options);
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteObjectValue(ClientId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ClientId, options);
             }
             if (Optional.IsDefined(GrantType))
             {
                 writer.WritePropertyName("grantType"u8);
-                writer.WriteObjectValue(GrantType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(GrantType, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

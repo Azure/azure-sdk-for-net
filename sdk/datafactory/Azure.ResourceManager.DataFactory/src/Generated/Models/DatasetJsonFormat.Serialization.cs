@@ -91,17 +91,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(NestingSeparator))
             {
                 writer.WritePropertyName("nestingSeparator"u8);
-                writer.WriteObjectValue(NestingSeparator, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(NestingSeparator, options);
             }
             if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
-                writer.WriteObjectValue(EncodingName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(EncodingName, options);
             }
             if (Optional.IsDefined(JsonNodeReference))
             {
                 writer.WritePropertyName("jsonNodeReference"u8);
-                writer.WriteObjectValue(JsonNodeReference, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(JsonNodeReference, options);
             }
             if (Optional.IsDefined(JsonPathDefinition))
             {

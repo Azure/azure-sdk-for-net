@@ -81,43 +81,43 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(RestServiceLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("url"u8);
-            writer.WriteObjectValue(Uri, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Uri, options);
             if (Optional.IsDefined(EnableServerCertificateValidation))
             {
                 writer.WritePropertyName("enableServerCertificateValidation"u8);
-                writer.WriteObjectValue(EnableServerCertificateValidation, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(EnableServerCertificateValidation, options);
             }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
             if (Optional.IsDefined(AuthHeaders))
             {
                 writer.WritePropertyName("authHeaders"u8);
-                writer.WriteObjectValue(AuthHeaders, options);
+                writer.WriteObjectValue<DataFactoryElement<BinaryData>>(AuthHeaders, options);
             }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                writer.WriteObjectValue(ServicePrincipalId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
-                writer.WriteObjectValue(Tenant, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Tenant, options);
             }
             if (Optional.IsDefined(AzureCloudType))
             {
                 writer.WritePropertyName("azureCloudType"u8);
-                writer.WriteObjectValue(AzureCloudType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AzureCloudType, options);
             }
             if (Optional.IsDefined(AadResourceId))
             {
                 writer.WritePropertyName("aadResourceId"u8);
-                writer.WriteObjectValue(AadResourceId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AadResourceId, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -132,27 +132,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteObjectValue(ClientId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ClientId, options);
             }
             if (Optional.IsDefined(TokenEndpoint))
             {
                 writer.WritePropertyName("tokenEndpoint"u8);
-                writer.WriteObjectValue(TokenEndpoint, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(TokenEndpoint, options);
             }
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Resource, options);
             }
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Scope, options);
             }
             if (Optional.IsDefined(ServicePrincipalCredentialType))
             {
                 writer.WritePropertyName("servicePrincipalCredentialType"u8);
-                writer.WriteObjectValue(ServicePrincipalCredentialType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalCredentialType, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

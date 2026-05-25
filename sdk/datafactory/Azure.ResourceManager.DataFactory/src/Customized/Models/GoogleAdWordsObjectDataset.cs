@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class GoogleAdWordsObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public GoogleAdWordsObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public GoogleAdWordsObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("GoogleAdWordsObject", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

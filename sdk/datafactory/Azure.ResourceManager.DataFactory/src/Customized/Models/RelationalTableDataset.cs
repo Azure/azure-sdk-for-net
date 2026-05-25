@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class RelationalTableDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public RelationalTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public RelationalTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("RelationalTable", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

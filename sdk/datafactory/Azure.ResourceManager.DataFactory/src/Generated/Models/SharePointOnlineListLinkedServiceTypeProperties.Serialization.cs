@@ -81,15 +81,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(SharePointOnlineListLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("siteUrl"u8);
-            writer.WriteObjectValue(SiteUri, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(SiteUri, options);
             writer.WritePropertyName("tenantId"u8);
-            writer.WriteObjectValue(TenantId, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(TenantId, options);
             writer.WritePropertyName("servicePrincipalId"u8);
-            writer.WriteObjectValue(ServicePrincipalId, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             if (Optional.IsDefined(ServicePrincipalCredentialType))
             {
                 writer.WritePropertyName("servicePrincipalCredentialType"u8);
-                writer.WriteObjectValue(ServicePrincipalCredentialType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalCredentialType, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

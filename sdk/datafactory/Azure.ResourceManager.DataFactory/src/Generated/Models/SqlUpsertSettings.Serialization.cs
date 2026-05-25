@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UseTempDB))
             {
                 writer.WritePropertyName("useTempDB"u8);
-                writer.WriteObjectValue(UseTempDB, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(UseTempDB, options);
             }
             if (Optional.IsDefined(InterimSchemaName))
             {
                 writer.WritePropertyName("interimSchemaName"u8);
-                writer.WriteObjectValue(InterimSchemaName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(InterimSchemaName, options);
             }
             if (Optional.IsDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
-                writer.WriteObjectValue(Keys, options);
+                writer.WriteObjectValue<DataFactoryElement<IList<string>>>(Keys, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

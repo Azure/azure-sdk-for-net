@@ -85,17 +85,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
-                writer.WriteObjectValue(Runtime, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Runtime, options);
             }
             if (Optional.IsDefined(LoggingLevel))
             {
                 writer.WritePropertyName("loggingLevel"u8);
-                writer.WriteObjectValue(LoggingLevel, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(LoggingLevel, options);
             }
             if (Optional.IsDefined(EnvironmentPath))
             {
                 writer.WritePropertyName("environmentPath"u8);
-                writer.WriteObjectValue(EnvironmentPath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(EnvironmentPath, options);
             }
             if (Optional.IsDefined(ExecutionCredential))
             {

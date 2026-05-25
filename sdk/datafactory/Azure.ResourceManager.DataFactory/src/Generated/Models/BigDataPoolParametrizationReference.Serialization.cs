@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
-            writer.WriteObjectValue(ReferenceName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ReferenceName, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class HiveObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public HiveObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public HiveObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("HiveObject", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConfigurationPath))
             {
                 writer.WritePropertyName("configurationPath"u8);
-                writer.WriteObjectValue(ConfigurationPath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ConfigurationPath, options);
             }
             if (Optional.IsDefined(ConfigurationAccessCredential))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PackageContent))
             {
                 writer.WritePropertyName("packageContent"u8);
-                writer.WriteObjectValue(PackageContent, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PackageContent, options);
             }
             if (Optional.IsDefined(PackageLastModifiedDate))
             {

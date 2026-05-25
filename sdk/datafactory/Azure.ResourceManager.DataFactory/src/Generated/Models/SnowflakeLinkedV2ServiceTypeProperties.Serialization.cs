@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(SnowflakeLinkedV2ServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("accountIdentifier"u8);
-            writer.WriteObjectValue(AccountIdentifier, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(AccountIdentifier, options);
             if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
-                writer.WriteObjectValue(User, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(User, options);
             }
             writer.WritePropertyName("database"u8);
-            writer.WriteObjectValue(Database, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Database, options);
             writer.WritePropertyName("warehouse"u8);
-            writer.WriteObjectValue(Warehouse, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Warehouse, options);
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
@@ -99,32 +99,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteObjectValue(ClientId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ClientId, options);
             }
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteObjectValue(TenantId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(TenantId, options);
             }
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Scope, options);
             }
             if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
-                writer.WriteObjectValue(Role, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Role, options);
             }
             if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
-                writer.WriteObjectValue(Host, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Host, options);
             }
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue(Schema, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Schema, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UseUtcTimestamps))
             {
                 writer.WritePropertyName("useUtcTimestamps"u8);
-                writer.WriteObjectValue(UseUtcTimestamps, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(UseUtcTimestamps, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

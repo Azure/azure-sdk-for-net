@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AvroCompressionCodec))
             {
                 writer.WritePropertyName("avroCompressionCodec"u8);
-                writer.WriteObjectValue(AvroCompressionCodec, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AvroCompressionCodec, options);
             }
             if (Optional.IsDefined(AvroCompressionLevel))
             {

@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(AzureDatabricksDetltaLakeLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("domain"u8);
-            writer.WriteObjectValue(Domain, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Domain, options);
             if (Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
-                writer.WriteObjectValue(ClusterId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ClusterId, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
-                writer.WriteObjectValue(WorkspaceResourceId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(WorkspaceResourceId, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

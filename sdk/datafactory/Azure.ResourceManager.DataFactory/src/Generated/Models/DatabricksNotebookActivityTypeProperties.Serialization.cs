@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DatabricksNotebookActivityTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("notebookPath"u8);
-            writer.WriteObjectValue(NotebookPath, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(NotebookPath, options);
             if (Optional.IsCollectionDefined(BaseParameters))
             {
                 writer.WritePropertyName("baseParameters"u8);

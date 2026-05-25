@@ -79,32 +79,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AllowedGroups))
             {
                 writer.WritePropertyName("allowedGroups"u8);
-                writer.WriteObjectValue(AllowedGroups, options);
+                writer.WriteObjectValue<DataFactoryElement<IList<string>>>(AllowedGroups, options);
             }
             if (Optional.IsDefined(UserScopeFilterUri))
             {
                 writer.WritePropertyName("userScopeFilterUri"u8);
-                writer.WriteObjectValue(UserScopeFilterUri, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(UserScopeFilterUri, options);
             }
             if (Optional.IsDefined(DateFilterColumn))
             {
                 writer.WritePropertyName("dateFilterColumn"u8);
-                writer.WriteObjectValue(DateFilterColumn, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(DateFilterColumn, options);
             }
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteObjectValue(StartOn, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(StartOn, options);
             }
             if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteObjectValue(EndOn, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(EndOn, options);
             }
             if (Optional.IsDefined(OutputColumns))
             {
                 writer.WritePropertyName("outputColumns"u8);
-                writer.WriteObjectValue(OutputColumns, options);
+                writer.WriteObjectValue<DataFactoryElement<IList<Office365TableOutputColumn>>>(OutputColumns, options);
             }
         }
 

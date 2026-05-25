@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class InformixTableDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public InformixTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public InformixTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("InformixTable", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

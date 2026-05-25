@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("query"u8);
-            writer.WriteObjectValue(Query, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Query, options);
             if (Optional.IsDefined(NoTruncation))
             {
                 writer.WritePropertyName("noTruncation"u8);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                writer.WriteObjectValue(QueryTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(QueryTimeout, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {

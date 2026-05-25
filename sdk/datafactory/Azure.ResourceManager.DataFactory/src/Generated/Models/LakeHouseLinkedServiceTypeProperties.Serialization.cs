@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
-                writer.WriteObjectValue(WorkspaceId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(WorkspaceId, options);
             }
             if (Optional.IsDefined(ArtifactId))
             {
                 writer.WritePropertyName("artifactId"u8);
-                writer.WriteObjectValue(ArtifactId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ArtifactId, options);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                writer.WriteObjectValue(ServicePrincipalId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
-                writer.WriteObjectValue(Tenant, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Tenant, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ServicePrincipalCredentialType))
             {
                 writer.WritePropertyName("servicePrincipalCredentialType"u8);
-                writer.WriteObjectValue(ServicePrincipalCredentialType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalCredentialType, options);
             }
             if (Optional.IsDefined(Credential))
             {

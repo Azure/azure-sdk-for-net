@@ -79,27 +79,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
-                writer.WriteObjectValue(RequestMethod, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(RequestMethod, options);
             }
             if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody"u8);
-                writer.WriteObjectValue(RequestBody, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(RequestBody, options);
             }
             if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
-                writer.WriteObjectValue(AdditionalHeaders, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AdditionalHeaders, options);
             }
             if (Optional.IsDefined(PaginationRules))
             {
                 writer.WritePropertyName("paginationRules"u8);
-                writer.WriteObjectValue(PaginationRules, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PaginationRules, options);
             }
             if (Optional.IsDefined(HttpRequestTimeout))
             {
                 writer.WritePropertyName("httpRequestTimeout"u8);
-                writer.WriteObjectValue(HttpRequestTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(HttpRequestTimeout, options);
             }
             if (Optional.IsDefined(RequestInterval))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
-                writer.WriteObjectValue(AdditionalColumns, options);
+                writer.WriteObjectValue<DataFactoryElement<IDictionary<string, string>>>(AdditionalColumns, options);
             }
         }
 

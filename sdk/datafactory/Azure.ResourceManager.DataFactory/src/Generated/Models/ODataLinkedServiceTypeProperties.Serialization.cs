@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(ODataLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("url"u8);
-            writer.WriteObjectValue(Uri, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Uri, options);
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
@@ -90,32 +90,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
             if (Optional.IsDefined(AuthHeaders))
             {
                 writer.WritePropertyName("authHeaders"u8);
-                writer.WriteObjectValue(AuthHeaders, options);
+                writer.WriteObjectValue<DataFactoryElement<IDictionary<string, string>>>(AuthHeaders, options);
             }
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
-                writer.WriteObjectValue(Tenant, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Tenant, options);
             }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                writer.WriteObjectValue(ServicePrincipalId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
             if (Optional.IsDefined(AzureCloudType))
             {
                 writer.WritePropertyName("azureCloudType"u8);
-                writer.WriteObjectValue(AzureCloudType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AzureCloudType, options);
             }
             if (Optional.IsDefined(AadResourceId))
             {
                 writer.WritePropertyName("aadResourceId"u8);
-                writer.WriteObjectValue(AadResourceId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AadResourceId, options);
             }
             if (Optional.IsDefined(AadServicePrincipalCredentialType))
             {

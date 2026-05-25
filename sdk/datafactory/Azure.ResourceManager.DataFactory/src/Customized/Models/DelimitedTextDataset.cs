@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DelimitedTextDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public DelimitedTextDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public DelimitedTextDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("DelimitedText", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

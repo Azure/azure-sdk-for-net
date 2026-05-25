@@ -15,11 +15,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DrillSource : TabularSource
     {
         /// <summary> Initializes a new instance of <see cref="DrillSource"/>. </summary>
-        public DrillSource()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DrillSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

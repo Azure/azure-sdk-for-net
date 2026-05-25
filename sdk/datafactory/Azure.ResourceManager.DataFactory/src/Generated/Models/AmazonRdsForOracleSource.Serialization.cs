@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(OracleReaderQuery))
             {
                 writer.WritePropertyName("oracleReaderQuery"u8);
-                writer.WriteObjectValue(OracleReaderQuery, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(OracleReaderQuery, options);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                writer.WriteObjectValue(QueryTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(QueryTimeout, options);
             }
             if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
-                writer.WriteObjectValue(PartitionOption, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PartitionOption, options);
             }
             if (Optional.IsDefined(PartitionSettings))
             {
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(NumberPrecision))
             {
                 writer.WritePropertyName("numberPrecision"u8);
-                writer.WriteObjectValue(NumberPrecision, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(NumberPrecision, options);
             }
             if (Optional.IsDefined(NumberScale))
             {
                 writer.WritePropertyName("numberScale"u8);
-                writer.WriteObjectValue(NumberScale, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(NumberScale, options);
             }
         }
 

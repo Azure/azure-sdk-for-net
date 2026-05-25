@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class MagentoObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public MagentoObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public MagentoObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("MagentoObject", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

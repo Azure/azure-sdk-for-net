@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(BucketName))
             {
                 writer.WritePropertyName("bucketName"u8);
-                writer.WriteObjectValue(BucketName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(BucketName, options);
             }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteObjectValue(Version, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Version, options);
             }
         }
 

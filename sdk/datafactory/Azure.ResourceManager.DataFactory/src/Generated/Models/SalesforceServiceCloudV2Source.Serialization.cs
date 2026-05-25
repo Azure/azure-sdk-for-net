@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SoqlQuery))
             {
                 writer.WritePropertyName("SOQLQuery"u8);
-                writer.WriteObjectValue(SoqlQuery, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SoqlQuery, options);
             }
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
-                writer.WriteObjectValue(Query, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Query, options);
             }
             if (Optional.IsDefined(IncludeDeletedObjects))
             {
                 writer.WritePropertyName("includeDeletedObjects"u8);
-                writer.WriteObjectValue(IncludeDeletedObjects, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(IncludeDeletedObjects, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {

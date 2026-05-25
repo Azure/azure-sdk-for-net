@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(LogLocationSettings)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName, options);
+            writer.WriteObjectValue<DataFactoryLinkedServiceReference>(LinkedServiceName, options);
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
-                writer.WriteObjectValue(Path, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Path, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

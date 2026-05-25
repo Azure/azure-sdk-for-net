@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RelativeUri))
             {
                 writer.WritePropertyName("relativeUrl"u8);
-                writer.WriteObjectValue(RelativeUri, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(RelativeUri, options);
             }
         }
 

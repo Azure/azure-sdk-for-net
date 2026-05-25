@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AzureTableSourceQuery))
             {
                 writer.WritePropertyName("azureTableSourceQuery"u8);
-                writer.WriteObjectValue(AzureTableSourceQuery, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AzureTableSourceQuery, options);
             }
             if (Optional.IsDefined(AzureTableSourceIgnoreTableNotFound))
             {
                 writer.WritePropertyName("azureTableSourceIgnoreTableNotFound"u8);
-                writer.WriteObjectValue(AzureTableSourceIgnoreTableNotFound, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(AzureTableSourceIgnoreTableNotFound, options);
             }
         }
 

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -93,37 +93,37 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
-                writer.WriteObjectValue(Host, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Host, options);
             }
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-                writer.WriteObjectValue(Port, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Port, options);
             }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
             if (Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
-                writer.WriteObjectValue(Database, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Database, options);
             }
             if (Optional.IsDefined(SslMode))
             {
                 writer.WritePropertyName("sslMode"u8);
-                writer.WriteObjectValue(SslMode, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(SslMode, options);
             }
             if (Optional.IsDefined(ConnectionTimeout))
             {
                 writer.WritePropertyName("connectionTimeout"u8);
-                writer.WriteObjectValue(ConnectionTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(ConnectionTimeout, options);
             }
             if (Optional.IsDefined(CommandTimeout))
             {
                 writer.WritePropertyName("commandTimeout"u8);
-                writer.WriteObjectValue(CommandTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(CommandTimeout, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

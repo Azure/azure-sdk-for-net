@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
-                writer.WriteObjectValue(PreCopyScript, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PreCopyScript, options);
             }
         }
 

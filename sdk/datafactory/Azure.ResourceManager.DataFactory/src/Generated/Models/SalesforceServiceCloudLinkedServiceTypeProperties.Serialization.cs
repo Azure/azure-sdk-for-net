@@ -78,22 +78,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EnvironmentUri))
             {
                 writer.WritePropertyName("environmentUrl"u8);
-                writer.WriteObjectValue(EnvironmentUri, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(EnvironmentUri, options);
             }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
-                writer.WriteObjectValue(ApiVersion, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ApiVersion, options);
             }
             if (Optional.IsDefined(ExtendedProperties))
             {
                 writer.WritePropertyName("extendedProperties"u8);
-                writer.WriteObjectValue(ExtendedProperties, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ExtendedProperties, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

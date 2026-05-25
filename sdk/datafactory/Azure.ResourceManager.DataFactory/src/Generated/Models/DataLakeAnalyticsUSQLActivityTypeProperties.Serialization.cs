@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DataLakeAnalyticsUSQLActivityTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("scriptPath"u8);
-            writer.WriteObjectValue(ScriptPath, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ScriptPath, options);
             if (Optional.IsDefined(DegreeOfParallelism))
             {
                 writer.WritePropertyName("degreeOfParallelism"u8);
-                writer.WriteObjectValue(DegreeOfParallelism, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(DegreeOfParallelism, options);
             }
             if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
-                writer.WriteObjectValue(Priority, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Priority, options);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
-                writer.WriteObjectValue(RuntimeVersion, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(RuntimeVersion, options);
             }
             if (Optional.IsDefined(CompilationMode))
             {
                 writer.WritePropertyName("compilationMode"u8);
-                writer.WriteObjectValue(CompilationMode, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(CompilationMode, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

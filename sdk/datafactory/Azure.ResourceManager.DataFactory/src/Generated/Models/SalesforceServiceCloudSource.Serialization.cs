@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
-                writer.WriteObjectValue(Query, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Query, options);
             }
             if (Optional.IsDefined(ReadBehavior))
             {
                 writer.WritePropertyName("readBehavior"u8);
-                writer.WriteObjectValue(ReadBehavior, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ReadBehavior, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {

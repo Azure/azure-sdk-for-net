@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
-                writer.WriteObjectValue(LinkedService, options);
+                writer.WriteObjectValue<DataFactoryLinkedServiceReference>(LinkedService, options);
             }
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
-                writer.WriteObjectValue(FolderPath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(FolderPath, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
-                writer.WriteObjectValue(Query, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Query, options);
             }
             if (Optional.IsDefined(NestingSeparator))
             {
                 writer.WritePropertyName("nestingSeparator"u8);
-                writer.WriteObjectValue(NestingSeparator, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(NestingSeparator, options);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                writer.WriteObjectValue(QueryTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(QueryTimeout, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {

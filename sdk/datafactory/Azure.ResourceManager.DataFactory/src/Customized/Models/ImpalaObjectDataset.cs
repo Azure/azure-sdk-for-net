@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ImpalaObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public ImpalaObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public ImpalaObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("ImpalaObject", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

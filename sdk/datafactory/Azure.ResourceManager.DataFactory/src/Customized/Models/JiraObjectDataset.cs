@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class JiraObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public JiraObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public JiraObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("JiraObject", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

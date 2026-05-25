@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(StorageIntegration))
             {
                 writer.WritePropertyName("storageIntegration"u8);
-                writer.WriteObjectValue(StorageIntegration, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(StorageIntegration, options);
             }
         }
 

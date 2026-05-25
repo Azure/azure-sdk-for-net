@@ -81,15 +81,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(SapBWLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("server"u8);
-            writer.WriteObjectValue(Server, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Server, options);
             writer.WritePropertyName("systemNumber"u8);
-            writer.WriteObjectValue(SystemNumber, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(SystemNumber, options);
             writer.WritePropertyName("clientId"u8);
-            writer.WriteObjectValue(ClientId, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ClientId, options);
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DynamicsEntityDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public DynamicsEntityDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public DynamicsEntityDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("DynamicsEntity", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

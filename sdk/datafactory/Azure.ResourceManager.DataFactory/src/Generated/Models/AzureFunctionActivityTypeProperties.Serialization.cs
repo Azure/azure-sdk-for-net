@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("functionName"u8);
-            writer.WriteObjectValue(FunctionName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(FunctionName, options);
             if (Optional.IsCollectionDefined(RequestHeaders))
             {
                 writer.WritePropertyName("headers"u8);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
-                writer.WriteObjectValue(Body, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Body, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

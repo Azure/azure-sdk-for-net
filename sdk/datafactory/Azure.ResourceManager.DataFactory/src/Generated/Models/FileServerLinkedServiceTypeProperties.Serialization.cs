@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(FileServerLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("host"u8);
-            writer.WriteObjectValue(Host, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Host, options);
             if (Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
-                writer.WriteObjectValue(UserId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(UserId, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

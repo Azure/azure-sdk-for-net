@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TableActionOption))
             {
                 writer.WritePropertyName("tableActionOption"u8);
-                writer.WriteObjectValue(TableActionOption, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(TableActionOption, options);
             }
             if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
-                writer.WriteObjectValue(PartitionOption, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PartitionOption, options);
             }
             if (Optional.IsDefined(PartitionNameList))
             {

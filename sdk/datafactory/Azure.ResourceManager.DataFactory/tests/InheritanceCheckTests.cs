@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.TestFramework
         [OneTimeSetUp]
         public void SetExceptionList()
         {
-            ExceptionList = new string[] { "DataFactoryPrivateLinkResource", "SubResource" };
+            ExceptionList = new string[] { "DataFactoryPrivateLinkResource" };
         }
     }
 }

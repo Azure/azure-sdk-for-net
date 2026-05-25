@@ -107,17 +107,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
-                writer.WriteObjectValue(File, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(File, options);
             }
             if (Optional.IsDefined(ScanFolder))
             {
                 writer.WritePropertyName("scanFolder"u8);
-                writer.WriteObjectValue(ScanFolder, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(ScanFolder, options);
             }
             if (Optional.IsDefined(ClassName))
             {
                 writer.WritePropertyName("className"u8);
-                writer.WriteObjectValue(ClassName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ClassName, options);
             }
             if (Optional.IsCollectionDefined(Files))
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExecutorSize))
             {
                 writer.WritePropertyName("executorSize"u8);
-                writer.WriteObjectValue(ExecutorSize, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ExecutorSize, options);
             }
             if (Optional.IsDefined(Conf))
             {
@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DriverSize))
             {
                 writer.WritePropertyName("driverSize"u8);
-                writer.WriteObjectValue(DriverSize, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(DriverSize, options);
             }
             if (Optional.IsDefined(NumExecutors))
             {
                 writer.WritePropertyName("numExecutors"u8);
-                writer.WriteObjectValue(NumExecutors, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(NumExecutors, options);
             }
             if (Optional.IsDefined(ConfigurationType))
             {

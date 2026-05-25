@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PageSize))
             {
                 writer.WritePropertyName("pageSize"u8);
-                writer.WriteObjectValue(PageSize, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(PageSize, options);
             }
         }
 

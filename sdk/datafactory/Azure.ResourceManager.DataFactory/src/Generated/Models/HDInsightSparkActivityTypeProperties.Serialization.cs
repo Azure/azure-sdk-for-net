@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(HDInsightSparkActivityTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("rootPath"u8);
-            writer.WriteObjectValue(RootPath, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(RootPath, options);
             writer.WritePropertyName("entryFilePath"u8);
-            writer.WriteObjectValue(EntryFilePath, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(EntryFilePath, options);
             if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ProxyUser))
             {
                 writer.WritePropertyName("proxyUser"u8);
-                writer.WriteObjectValue(ProxyUser, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ProxyUser, options);
             }
             if (Optional.IsCollectionDefined(SparkConfig))
             {

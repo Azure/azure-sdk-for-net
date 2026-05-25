@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class WarehouseTableDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public WarehouseTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public WarehouseTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("WarehouseTable", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

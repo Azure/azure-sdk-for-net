@@ -85,22 +85,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SheetName))
             {
                 writer.WritePropertyName("sheetName"u8);
-                writer.WriteObjectValue(SheetName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SheetName, options);
             }
             if (Optional.IsDefined(SheetIndex))
             {
                 writer.WritePropertyName("sheetIndex"u8);
-                writer.WriteObjectValue(SheetIndex, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(SheetIndex, options);
             }
             if (Optional.IsDefined(Range))
             {
                 writer.WritePropertyName("range"u8);
-                writer.WriteObjectValue(Range, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Range, options);
             }
             if (Optional.IsDefined(FirstRowAsHeader))
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
-                writer.WriteObjectValue(FirstRowAsHeader, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(FirstRowAsHeader, options);
             }
             if (Optional.IsDefined(Compression))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(NullValue))
             {
                 writer.WritePropertyName("nullValue"u8);
-                writer.WriteObjectValue(NullValue, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(NullValue, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

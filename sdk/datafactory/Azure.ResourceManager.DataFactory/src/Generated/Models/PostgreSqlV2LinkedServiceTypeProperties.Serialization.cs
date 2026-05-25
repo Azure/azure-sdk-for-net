@@ -81,79 +81,79 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(PostgreSqlV2LinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("server"u8);
-            writer.WriteObjectValue(Server, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Server, options);
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-                writer.WriteObjectValue(Port, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Port, options);
             }
             writer.WritePropertyName("username"u8);
-            writer.WriteObjectValue(Username, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             writer.WritePropertyName("database"u8);
-            writer.WriteObjectValue(Database, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Database, options);
             writer.WritePropertyName("authenticationType"u8);
-            writer.WriteObjectValue(AuthenticationType, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(AuthenticationType, options);
             writer.WritePropertyName("sslMode"u8);
-            writer.WriteObjectValue(SslMode, options);
+            writer.WriteObjectValue<DataFactoryElement<int>>(SslMode, options);
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue(Schema, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Schema, options);
             }
             if (Optional.IsDefined(Pooling))
             {
                 writer.WritePropertyName("pooling"u8);
-                writer.WriteObjectValue(Pooling, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(Pooling, options);
             }
             if (Optional.IsDefined(ConnectionTimeout))
             {
                 writer.WritePropertyName("connectionTimeout"u8);
-                writer.WriteObjectValue(ConnectionTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(ConnectionTimeout, options);
             }
             if (Optional.IsDefined(CommandTimeout))
             {
                 writer.WritePropertyName("commandTimeout"u8);
-                writer.WriteObjectValue(CommandTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(CommandTimeout, options);
             }
             if (Optional.IsDefined(TrustServerCertificate))
             {
                 writer.WritePropertyName("trustServerCertificate"u8);
-                writer.WriteObjectValue(TrustServerCertificate, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(TrustServerCertificate, options);
             }
             if (Optional.IsDefined(SslCertificate))
             {
                 writer.WritePropertyName("sslCertificate"u8);
-                writer.WriteObjectValue(SslCertificate, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SslCertificate, options);
             }
             if (Optional.IsDefined(SslKey))
             {
                 writer.WritePropertyName("sslKey"u8);
-                writer.WriteObjectValue(SslKey, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SslKey, options);
             }
             if (Optional.IsDefined(SslPassword))
             {
                 writer.WritePropertyName("sslPassword"u8);
-                writer.WriteObjectValue(SslPassword, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SslPassword, options);
             }
             if (Optional.IsDefined(ReadBufferSize))
             {
                 writer.WritePropertyName("readBufferSize"u8);
-                writer.WriteObjectValue(ReadBufferSize, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(ReadBufferSize, options);
             }
             if (Optional.IsDefined(LogParameters))
             {
                 writer.WritePropertyName("logParameters"u8);
-                writer.WriteObjectValue(LogParameters, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(LogParameters, options);
             }
             if (Optional.IsDefined(Timezone))
             {
                 writer.WritePropertyName("timezone"u8);
-                writer.WriteObjectValue(Timezone, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Timezone, options);
             }
             if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
-                writer.WriteObjectValue(Encoding, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Encoding, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ExcelDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public ExcelDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public ExcelDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("Excel", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

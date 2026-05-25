@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(WriteBehavior))
             {
                 writer.WritePropertyName("writeBehavior"u8);
-                writer.WriteObjectValue(WriteBehavior, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(WriteBehavior, options);
             }
         }
 

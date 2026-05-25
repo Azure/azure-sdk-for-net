@@ -79,22 +79,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AzureTableDefaultPartitionKeyValue))
             {
                 writer.WritePropertyName("azureTableDefaultPartitionKeyValue"u8);
-                writer.WriteObjectValue(AzureTableDefaultPartitionKeyValue, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AzureTableDefaultPartitionKeyValue, options);
             }
             if (Optional.IsDefined(AzureTablePartitionKeyName))
             {
                 writer.WritePropertyName("azureTablePartitionKeyName"u8);
-                writer.WriteObjectValue(AzureTablePartitionKeyName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AzureTablePartitionKeyName, options);
             }
             if (Optional.IsDefined(AzureTableRowKeyName))
             {
                 writer.WritePropertyName("azureTableRowKeyName"u8);
-                writer.WriteObjectValue(AzureTableRowKeyName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AzureTableRowKeyName, options);
             }
             if (Optional.IsDefined(AzureTableInsertType))
             {
                 writer.WritePropertyName("azureTableInsertType"u8);
-                writer.WriteObjectValue(AzureTableInsertType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AzureTableInsertType, options);
             }
         }
 

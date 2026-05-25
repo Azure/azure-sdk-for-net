@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(SqlServerStoredProcedureActivityTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("storedProcedureName"u8);
-            writer.WriteObjectValue(StoredProcedureName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(StoredProcedureName, options);
             if (Optional.IsDefined(StoredProcedureParameters))
             {
                 writer.WritePropertyName("storedProcedureParameters"u8);

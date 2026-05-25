@@ -81,15 +81,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(Office365LinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("office365TenantId"u8);
-            writer.WriteObjectValue(Office365TenantId, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Office365TenantId, options);
             writer.WritePropertyName("servicePrincipalTenantId"u8);
-            writer.WriteObjectValue(ServicePrincipalTenantId, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalTenantId, options);
             writer.WritePropertyName("servicePrincipalId"u8);
-            writer.WriteObjectValue(ServicePrincipalId, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             if (Optional.IsDefined(ServicePrincipalCredentialType))
             {
                 writer.WritePropertyName("servicePrincipalCredentialType"u8);
-                writer.WriteObjectValue(ServicePrincipalCredentialType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalCredentialType, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

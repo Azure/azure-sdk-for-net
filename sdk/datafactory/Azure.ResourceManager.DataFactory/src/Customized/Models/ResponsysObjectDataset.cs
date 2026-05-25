@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ResponsysObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public ResponsysObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public ResponsysObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("ResponsysObject", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

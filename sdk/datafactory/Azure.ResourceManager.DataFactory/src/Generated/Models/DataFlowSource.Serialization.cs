@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SchemaLinkedService))
             {
                 writer.WritePropertyName("schemaLinkedService"u8);
-                writer.WriteObjectValue(SchemaLinkedService, options);
+                writer.WriteObjectValue<DataFactoryLinkedServiceReference>(SchemaLinkedService, options);
             }
         }
 

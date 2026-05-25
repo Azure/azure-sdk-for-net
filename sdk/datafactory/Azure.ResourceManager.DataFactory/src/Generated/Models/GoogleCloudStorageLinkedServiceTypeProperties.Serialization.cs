@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AccessKeyId))
             {
                 writer.WritePropertyName("accessKeyId"u8);
-                writer.WriteObjectValue(AccessKeyId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AccessKeyId, options);
             }
             if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUrl"u8);
-                writer.WriteObjectValue(ServiceUri, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServiceUri, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(IsServerVersionAbove32))
             {
                 writer.WritePropertyName("isServerVersionAbove32"u8);
-                writer.WriteObjectValue(IsServerVersionAbove32, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(IsServerVersionAbove32, options);
             }
             writer.WritePropertyName("connectionString"u8);
-            writer.WriteObjectValue(ConnectionString, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
             writer.WritePropertyName("database"u8);
-            writer.WriteObjectValue(Database, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Database, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

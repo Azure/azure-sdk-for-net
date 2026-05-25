@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(AzureBatchLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("accountName"u8);
-            writer.WriteObjectValue(AccountName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(AccountName, options);
             writer.WritePropertyName("batchUri"u8);
-            writer.WriteObjectValue(BatchUri, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(BatchUri, options);
             writer.WritePropertyName("poolName"u8);
-            writer.WriteObjectValue(PoolName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(PoolName, options);
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);

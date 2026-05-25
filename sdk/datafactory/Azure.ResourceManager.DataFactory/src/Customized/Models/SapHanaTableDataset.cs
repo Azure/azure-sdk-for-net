@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapHanaTableDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public SapHanaTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public SapHanaTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("SapHanaTable", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

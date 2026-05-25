@@ -105,22 +105,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TraceLevel))
             {
                 writer.WritePropertyName("traceLevel"u8);
-                writer.WriteObjectValue(TraceLevel, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(TraceLevel, options);
             }
             if (Optional.IsDefined(ContinueOnError))
             {
                 writer.WritePropertyName("continueOnError"u8);
-                writer.WriteObjectValue(ContinueOnError, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(ContinueOnError, options);
             }
             if (Optional.IsDefined(RunConcurrently))
             {
                 writer.WritePropertyName("runConcurrently"u8);
-                writer.WriteObjectValue(RunConcurrently, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(RunConcurrently, options);
             }
             if (Optional.IsDefined(SourceStagingConcurrency))
             {
                 writer.WritePropertyName("sourceStagingConcurrency"u8);
-                writer.WriteObjectValue(SourceStagingConcurrency, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(SourceStagingConcurrency, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

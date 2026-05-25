@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class QuickBooksObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public QuickBooksObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public QuickBooksObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("QuickBooksObject", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

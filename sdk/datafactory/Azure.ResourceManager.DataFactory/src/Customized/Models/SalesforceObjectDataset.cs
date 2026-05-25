@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SalesforceObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public SalesforceObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public SalesforceObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("SalesforceObject", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

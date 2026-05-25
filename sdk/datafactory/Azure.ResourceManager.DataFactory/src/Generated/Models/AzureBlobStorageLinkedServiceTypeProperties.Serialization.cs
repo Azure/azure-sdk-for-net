@@ -78,37 +78,37 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
             }
             if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri"u8);
-                writer.WriteObjectValue(SasUri, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SasUri, options);
             }
             if (Optional.IsDefined(ServiceEndpoint))
             {
                 writer.WritePropertyName("serviceEndpoint"u8);
-                writer.WriteObjectValue(ServiceEndpoint, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServiceEndpoint, options);
             }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                writer.WriteObjectValue(ServicePrincipalId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
-                writer.WriteObjectValue(Tenant, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Tenant, options);
             }
             if (Optional.IsDefined(AzureCloudType))
             {
                 writer.WritePropertyName("azureCloudType"u8);
-                writer.WriteObjectValue(AzureCloudType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AzureCloudType, options);
             }
             if (Optional.IsDefined(AccountKind))
             {
                 writer.WritePropertyName("accountKind"u8);
-                writer.WriteObjectValue(AccountKind, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AccountKind, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ContainerUri))
             {
                 writer.WritePropertyName("containerUri"u8);
-                writer.WriteObjectValue(ContainerUri, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ContainerUri, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

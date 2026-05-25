@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class XeroObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public XeroObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public XeroObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("XeroObject", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

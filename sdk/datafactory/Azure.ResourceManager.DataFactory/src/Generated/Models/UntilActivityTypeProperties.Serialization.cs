@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
-                writer.WriteObjectValue(Timeout, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Timeout, options);
             }
             writer.WritePropertyName("activities"u8);
             writer.WriteStartArray();

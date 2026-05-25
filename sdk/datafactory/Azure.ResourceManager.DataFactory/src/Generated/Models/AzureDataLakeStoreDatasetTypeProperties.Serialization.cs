@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
-                writer.WriteObjectValue(FolderPath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(FolderPath, options);
             }
             if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
-                writer.WriteObjectValue(FileName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(FileName, options);
             }
             if (Optional.IsDefined(Format))
             {

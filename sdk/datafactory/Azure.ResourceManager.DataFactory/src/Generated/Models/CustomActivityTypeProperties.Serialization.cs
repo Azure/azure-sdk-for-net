@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(CustomActivityTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("command"u8);
-            writer.WriteObjectValue(Command, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Command, options);
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
-                writer.WriteObjectValue(FolderPath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(FolderPath, options);
             }
             if (Optional.IsDefined(ReferenceObjects))
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AutoUserSpecification))
             {
                 writer.WritePropertyName("autoUserSpecification"u8);
-                writer.WriteObjectValue(AutoUserSpecification, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AutoUserSpecification, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

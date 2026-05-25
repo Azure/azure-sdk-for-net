@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SqlReaderQuery))
             {
                 writer.WritePropertyName("sqlReaderQuery"u8);
-                writer.WriteObjectValue(SqlReaderQuery, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SqlReaderQuery, options);
             }
             if (Optional.IsDefined(SqlReaderStoredProcedureName))
             {
                 writer.WritePropertyName("sqlReaderStoredProcedureName"u8);
-                writer.WriteObjectValue(SqlReaderStoredProcedureName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SqlReaderStoredProcedureName, options);
             }
             if (Optional.IsDefined(StoredProcedureParameters))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(IsolationLevel))
             {
                 writer.WritePropertyName("isolationLevel"u8);
-                writer.WriteObjectValue(IsolationLevel, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(IsolationLevel, options);
             }
             if (Optional.IsDefined(ProduceAdditionalTypes))
             {

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LogRefreshInterval))
             {
                 writer.WritePropertyName("logRefreshInterval"u8);
-                writer.WriteObjectValue(LogRefreshInterval, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(LogRefreshInterval, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

@@ -81,18 +81,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(AmazonRedshiftLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("server"u8);
-            writer.WriteObjectValue(Server, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Server, options);
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
             writer.WritePropertyName("database"u8);
-            writer.WriteObjectValue(Database, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Database, options);
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-                writer.WriteObjectValue(Port, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Port, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

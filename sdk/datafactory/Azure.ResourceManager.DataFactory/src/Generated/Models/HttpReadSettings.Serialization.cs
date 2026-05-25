@@ -79,22 +79,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
-                writer.WriteObjectValue(RequestMethod, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(RequestMethod, options);
             }
             if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody"u8);
-                writer.WriteObjectValue(RequestBody, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(RequestBody, options);
             }
             if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
-                writer.WriteObjectValue(AdditionalHeaders, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AdditionalHeaders, options);
             }
             if (Optional.IsDefined(RequestTimeout))
             {
                 writer.WritePropertyName("requestTimeout"u8);
-                writer.WriteObjectValue(RequestTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(RequestTimeout, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {

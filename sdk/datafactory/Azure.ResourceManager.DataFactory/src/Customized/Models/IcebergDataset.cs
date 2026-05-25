@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class IcebergDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public IcebergDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public IcebergDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("Iceberg", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

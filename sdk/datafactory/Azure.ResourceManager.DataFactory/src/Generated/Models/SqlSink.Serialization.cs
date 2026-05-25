@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SqlWriterStoredProcedureName))
             {
                 writer.WritePropertyName("sqlWriterStoredProcedureName"u8);
-                writer.WriteObjectValue(SqlWriterStoredProcedureName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SqlWriterStoredProcedureName, options);
             }
             if (Optional.IsDefined(SqlWriterTableType))
             {
                 writer.WritePropertyName("sqlWriterTableType"u8);
-                writer.WriteObjectValue(SqlWriterTableType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SqlWriterTableType, options);
             }
             if (Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
-                writer.WriteObjectValue(PreCopyScript, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PreCopyScript, options);
             }
             if (Optional.IsDefined(StoredProcedureParameters))
             {
@@ -106,22 +106,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(StoredProcedureTableTypeParameterName))
             {
                 writer.WritePropertyName("storedProcedureTableTypeParameterName"u8);
-                writer.WriteObjectValue(StoredProcedureTableTypeParameterName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(StoredProcedureTableTypeParameterName, options);
             }
             if (Optional.IsDefined(TableOption))
             {
                 writer.WritePropertyName("tableOption"u8);
-                writer.WriteObjectValue(TableOption, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(TableOption, options);
             }
             if (Optional.IsDefined(SqlWriterUseTableLock))
             {
                 writer.WritePropertyName("sqlWriterUseTableLock"u8);
-                writer.WriteObjectValue(SqlWriterUseTableLock, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(SqlWriterUseTableLock, options);
             }
             if (Optional.IsDefined(WriteBehavior))
             {
                 writer.WritePropertyName("writeBehavior"u8);
-                writer.WriteObjectValue(WriteBehavior, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(WriteBehavior, options);
             }
             if (Optional.IsDefined(UpsertSettings))
             {

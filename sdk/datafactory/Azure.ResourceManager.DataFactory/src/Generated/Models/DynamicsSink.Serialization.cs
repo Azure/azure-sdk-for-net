@@ -86,22 +86,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(IgnoreNullValues))
             {
                 writer.WritePropertyName("ignoreNullValues"u8);
-                writer.WriteObjectValue(IgnoreNullValues, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(IgnoreNullValues, options);
             }
             if (Optional.IsDefined(AlternateKeyName))
             {
                 writer.WritePropertyName("alternateKeyName"u8);
-                writer.WriteObjectValue(AlternateKeyName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AlternateKeyName, options);
             }
             if (Optional.IsDefined(BypassBusinessLogicExecution))
             {
                 writer.WritePropertyName("bypassBusinessLogicExecution"u8);
-                writer.WriteObjectValue(BypassBusinessLogicExecution, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(BypassBusinessLogicExecution, options);
             }
             if (Optional.IsDefined(BypassPowerAutomateFlows))
             {
                 writer.WritePropertyName("bypassPowerAutomateFlows"u8);
-                writer.WriteObjectValue(BypassPowerAutomateFlows, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(BypassPowerAutomateFlows, options);
             }
         }
 

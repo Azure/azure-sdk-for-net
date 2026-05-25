@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
-                writer.WriteObjectValue(Count, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Count, options);
             }
             if (Optional.IsDefined(IntervalInSeconds))
             {

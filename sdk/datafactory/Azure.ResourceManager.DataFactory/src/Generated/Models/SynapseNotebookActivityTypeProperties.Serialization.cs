@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExecutorSize))
             {
                 writer.WritePropertyName("executorSize"u8);
-                writer.WriteObjectValue(ExecutorSize, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ExecutorSize, options);
             }
             if (Optional.IsDefined(Conf))
             {
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DriverSize))
             {
                 writer.WritePropertyName("driverSize"u8);
-                writer.WriteObjectValue(DriverSize, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(DriverSize, options);
             }
             if (Optional.IsDefined(NumExecutors))
             {
                 writer.WritePropertyName("numExecutors"u8);
-                writer.WriteObjectValue(NumExecutors, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(NumExecutors, options);
             }
             if (Optional.IsDefined(ConfigurationType))
             {

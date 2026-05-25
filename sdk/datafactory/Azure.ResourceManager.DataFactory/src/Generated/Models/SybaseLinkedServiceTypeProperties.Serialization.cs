@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(SybaseLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("server"u8);
-            writer.WriteObjectValue(Server, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Server, options);
             writer.WritePropertyName("database"u8);
-            writer.WriteObjectValue(Database, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Database, options);
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue(Schema, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Schema, options);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

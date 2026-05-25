@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(OrcCompressionCodec))
             {
                 writer.WritePropertyName("orcCompressionCodec"u8);
-                writer.WriteObjectValue(OrcCompressionCodec, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(OrcCompressionCodec, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

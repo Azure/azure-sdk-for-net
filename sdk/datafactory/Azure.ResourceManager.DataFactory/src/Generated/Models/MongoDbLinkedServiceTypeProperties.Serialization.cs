@@ -81,38 +81,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(MongoDbLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("server"u8);
-            writer.WriteObjectValue(Server, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Server, options);
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
             writer.WritePropertyName("databaseName"u8);
-            writer.WriteObjectValue(DatabaseName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(DatabaseName, options);
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
             if (Optional.IsDefined(AuthSource))
             {
                 writer.WritePropertyName("authSource"u8);
-                writer.WriteObjectValue(AuthSource, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AuthSource, options);
             }
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-                writer.WriteObjectValue(Port, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Port, options);
             }
             if (Optional.IsDefined(EnableSsl))
             {
                 writer.WritePropertyName("enableSsl"u8);
-                writer.WriteObjectValue(EnableSsl, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(EnableSsl, options);
             }
             if (Optional.IsDefined(AllowSelfSignedServerCert))
             {
                 writer.WritePropertyName("allowSelfSignedServerCert"u8);
-                writer.WriteObjectValue(AllowSelfSignedServerCert, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(AllowSelfSignedServerCert, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

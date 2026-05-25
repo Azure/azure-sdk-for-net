@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(BlockSizeInMB))
             {
                 writer.WritePropertyName("blockSizeInMB"u8);
-                writer.WriteObjectValue(BlockSizeInMB, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(BlockSizeInMB, options);
             }
         }
 

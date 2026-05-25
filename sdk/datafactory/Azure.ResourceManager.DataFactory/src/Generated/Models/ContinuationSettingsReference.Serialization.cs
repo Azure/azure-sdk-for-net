@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ContinuationTtlInMinutes))
             {
                 writer.WritePropertyName("continuationTtlInMinutes"u8);
-                writer.WriteObjectValue(ContinuationTtlInMinutes, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(ContinuationTtlInMinutes, options);
             }
             if (Optional.IsDefined(IdleCondition))
             {
                 writer.WritePropertyName("idleCondition"u8);
-                writer.WriteObjectValue(IdleCondition, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(IdleCondition, options);
             }
             if (Optional.IsDefined(CustomizedCheckpointKey))
             {
                 writer.WritePropertyName("customizedCheckpointKey"u8);
-                writer.WriteObjectValue(CustomizedCheckpointKey, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(CustomizedCheckpointKey, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

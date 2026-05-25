@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(WebLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("url"u8);
-            writer.WriteObjectValue(Uri, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Uri, options);
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)

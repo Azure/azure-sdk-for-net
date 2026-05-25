@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
-                writer.WriteObjectValue(FileSystem, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(FileSystem, options);
             }
         }
 

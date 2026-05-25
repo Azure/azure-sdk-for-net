@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SkipLineCount))
             {
                 writer.WritePropertyName("skipLineCount"u8);
-                writer.WriteObjectValue(SkipLineCount, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(SkipLineCount, options);
             }
             if (Optional.IsDefined(CompressionProperties))
             {

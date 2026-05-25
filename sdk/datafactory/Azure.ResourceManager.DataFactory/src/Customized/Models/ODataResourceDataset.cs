@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ODataResourceDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public ODataResourceDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public ODataResourceDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("ODataResource", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

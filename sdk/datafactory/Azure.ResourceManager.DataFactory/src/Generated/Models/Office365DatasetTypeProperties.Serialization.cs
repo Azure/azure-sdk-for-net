@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(Office365DatasetTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("tableName"u8);
-            writer.WriteObjectValue(TableName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(TableName, options);
             if (Optional.IsDefined(Predicate))
             {
                 writer.WritePropertyName("predicate"u8);
-                writer.WriteObjectValue(Predicate, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Predicate, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

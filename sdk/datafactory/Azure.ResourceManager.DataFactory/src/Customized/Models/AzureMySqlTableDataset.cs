@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureMySqlTableDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public AzureMySqlTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public AzureMySqlTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("AzureMySqlTable", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

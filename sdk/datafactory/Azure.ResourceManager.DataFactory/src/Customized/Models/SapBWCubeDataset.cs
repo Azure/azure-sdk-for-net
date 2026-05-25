@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapBWCubeDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public SapBWCubeDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public SapBWCubeDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("SapBwCube", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

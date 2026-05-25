@@ -78,62 +78,62 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
             }
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-                writer.WriteObjectValue(Server, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Server, options);
             }
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-                writer.WriteObjectValue(Port, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Port, options);
             }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
             if (Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
-                writer.WriteObjectValue(Database, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Database, options);
             }
             if (Optional.IsDefined(SslMode))
             {
                 writer.WritePropertyName("sslMode"u8);
-                writer.WriteObjectValue(SslMode, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(SslMode, options);
             }
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
-                writer.WriteObjectValue(Timeout, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Timeout, options);
             }
             if (Optional.IsDefined(CommandTimeout))
             {
                 writer.WritePropertyName("commandTimeout"u8);
-                writer.WriteObjectValue(CommandTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(CommandTimeout, options);
             }
             if (Optional.IsDefined(TrustServerCertificate))
             {
                 writer.WritePropertyName("trustServerCertificate"u8);
-                writer.WriteObjectValue(TrustServerCertificate, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(TrustServerCertificate, options);
             }
             if (Optional.IsDefined(ReadBufferSize))
             {
                 writer.WritePropertyName("readBufferSize"u8);
-                writer.WriteObjectValue(ReadBufferSize, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(ReadBufferSize, options);
             }
             if (Optional.IsDefined(Timezone))
             {
                 writer.WritePropertyName("timezone"u8);
-                writer.WriteObjectValue(Timezone, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Timezone, options);
             }
             if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
-                writer.WriteObjectValue(Encoding, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Encoding, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -143,22 +143,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                writer.WriteObjectValue(ServicePrincipalId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
             if (Optional.IsDefined(ServicePrincipalCredentialType))
             {
                 writer.WritePropertyName("servicePrincipalCredentialType"u8);
-                writer.WriteObjectValue(ServicePrincipalCredentialType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalCredentialType, options);
             }
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
-                writer.WriteObjectValue(Tenant, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Tenant, options);
             }
             if (Optional.IsDefined(AzureCloudType))
             {
                 writer.WritePropertyName("azureCloudType"u8);
-                writer.WriteObjectValue(AzureCloudType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AzureCloudType, options);
             }
             if (Optional.IsDefined(Credential))
             {

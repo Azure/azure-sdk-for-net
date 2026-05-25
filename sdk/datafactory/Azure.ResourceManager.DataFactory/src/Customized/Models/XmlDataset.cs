@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class XmlDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public XmlDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public XmlDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("Xml", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

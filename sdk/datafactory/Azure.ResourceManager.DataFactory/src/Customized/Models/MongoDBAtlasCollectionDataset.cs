@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class MongoDBAtlasCollectionDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public MongoDBAtlasCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collection) : this()
+        public MongoDBAtlasCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collection) : base("MongoDbAtlasCollection", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
             Collection = collection;
         }
     }

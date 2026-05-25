@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
-                writer.WriteObjectValue(Table, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Table, options);
             }
             if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
-                writer.WriteObjectValue(Dataset, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Dataset, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

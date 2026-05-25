@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class MariaDBTableDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public MariaDBTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public MariaDBTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("MariaDBTable", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

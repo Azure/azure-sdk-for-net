@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(SsisChildPackage)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("packagePath"u8);
-            writer.WriteObjectValue(PackagePath, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(PackagePath, options);
             if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
             writer.WritePropertyName("packageContent"u8);
-            writer.WriteObjectValue(PackageContent, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(PackageContent, options);
             if (Optional.IsDefined(PackageLastModifiedDate))
             {
                 writer.WritePropertyName("packageLastModifiedDate"u8);

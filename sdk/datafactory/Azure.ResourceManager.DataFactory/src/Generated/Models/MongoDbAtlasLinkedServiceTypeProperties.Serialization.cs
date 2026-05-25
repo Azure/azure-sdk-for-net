@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(MongoDbAtlasLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("connectionString"u8);
-            writer.WriteObjectValue(ConnectionString, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
             writer.WritePropertyName("database"u8);
-            writer.WriteObjectValue(Database, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Database, options);
             if (Optional.IsDefined(DriverVersion))
             {
                 writer.WritePropertyName("driverVersion"u8);
-                writer.WriteObjectValue(DriverVersion, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(DriverVersion, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

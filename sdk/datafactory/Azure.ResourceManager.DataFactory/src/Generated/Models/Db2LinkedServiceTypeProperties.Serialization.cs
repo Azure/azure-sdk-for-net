@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
             }
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-                writer.WriteObjectValue(Server, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Server, options);
             }
             if (Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
-                writer.WriteObjectValue(Database, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Database, options);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
@@ -98,17 +98,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
             if (Optional.IsDefined(PackageCollection))
             {
                 writer.WritePropertyName("packageCollection"u8);
-                writer.WriteObjectValue(PackageCollection, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PackageCollection, options);
             }
             if (Optional.IsDefined(CertificateCommonName))
             {
                 writer.WritePropertyName("certificateCommonName"u8);
-                writer.WriteObjectValue(CertificateCommonName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(CertificateCommonName, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

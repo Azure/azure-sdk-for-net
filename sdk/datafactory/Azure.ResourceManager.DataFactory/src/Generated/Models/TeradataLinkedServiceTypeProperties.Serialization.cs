@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
             }
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-                writer.WriteObjectValue(Server, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Server, options);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
@@ -93,37 +93,37 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
             if (Optional.IsDefined(SslMode))
             {
                 writer.WritePropertyName("sslMode"u8);
-                writer.WriteObjectValue(SslMode, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SslMode, options);
             }
             if (Optional.IsDefined(PortNumber))
             {
                 writer.WritePropertyName("portNumber"u8);
-                writer.WriteObjectValue(PortNumber, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(PortNumber, options);
             }
             if (Optional.IsDefined(HttpsPortNumber))
             {
                 writer.WritePropertyName("httpsPortNumber"u8);
-                writer.WriteObjectValue(HttpsPortNumber, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(HttpsPortNumber, options);
             }
             if (Optional.IsDefined(UseDataEncryption))
             {
                 writer.WritePropertyName("useDataEncryption"u8);
-                writer.WriteObjectValue(UseDataEncryption, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(UseDataEncryption, options);
             }
             if (Optional.IsDefined(CharacterSet))
             {
                 writer.WritePropertyName("characterSet"u8);
-                writer.WriteObjectValue(CharacterSet, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(CharacterSet, options);
             }
             if (Optional.IsDefined(MaxRespSize))
             {
                 writer.WritePropertyName("maxRespSize"u8);
-                writer.WriteObjectValue(MaxRespSize, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(MaxRespSize, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

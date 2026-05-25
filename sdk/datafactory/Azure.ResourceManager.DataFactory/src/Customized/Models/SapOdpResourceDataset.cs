@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapOdpResourceDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public SapOdpResourceDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> context, DataFactoryElement<string> objectName) : this()
+        public SapOdpResourceDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> context, DataFactoryElement<string> objectName) : base("SapOdpResource", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
             Context = context;
             ObjectName = objectName;
         }

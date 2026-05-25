@@ -78,27 +78,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(MLPipelineId))
             {
                 writer.WritePropertyName("mlPipelineId"u8);
-                writer.WriteObjectValue(MLPipelineId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(MLPipelineId, options);
             }
             if (Optional.IsDefined(MLPipelineEndpointId))
             {
                 writer.WritePropertyName("mlPipelineEndpointId"u8);
-                writer.WriteObjectValue(MLPipelineEndpointId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(MLPipelineEndpointId, options);
             }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteObjectValue(Version, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Version, options);
             }
             if (Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName"u8);
-                writer.WriteObjectValue(ExperimentName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ExperimentName, options);
             }
             if (Optional.IsDefined(MLPipelineParameters))
             {
                 writer.WritePropertyName("mlPipelineParameters"u8);
-                writer.WriteObjectValue(MLPipelineParameters, options);
+                writer.WriteObjectValue<DataFactoryElement<IDictionary<string, string>>>(MLPipelineParameters, options);
             }
             if (Optional.IsDefined(DataPathAssignments))
             {
@@ -115,12 +115,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(MLParentRunId))
             {
                 writer.WritePropertyName("mlParentRunId"u8);
-                writer.WriteObjectValue(MLParentRunId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(MLParentRunId, options);
             }
             if (Optional.IsDefined(ContinueOnStepFailure))
             {
                 writer.WritePropertyName("continueOnStepFailure"u8);
-                writer.WriteObjectValue(ContinueOnStepFailure, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(ContinueOnStepFailure, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

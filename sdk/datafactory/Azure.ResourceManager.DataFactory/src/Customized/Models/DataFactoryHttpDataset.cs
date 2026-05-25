@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DataFactoryHttpDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public DataFactoryHttpDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public DataFactoryHttpDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("HttpFile", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

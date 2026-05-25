@@ -90,22 +90,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
-                writer.WriteObjectValue(Endpoint, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Endpoint, options);
             }
             if (Optional.IsDefined(CompanyId))
             {
                 writer.WritePropertyName("companyId"u8);
-                writer.WriteObjectValue(CompanyId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(CompanyId, options);
             }
             if (Optional.IsDefined(ConsumerKey))
             {
                 writer.WritePropertyName("consumerKey"u8);
-                writer.WriteObjectValue(ConsumerKey, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ConsumerKey, options);
             }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
-                writer.WriteObjectValue(UseEncryptedEndpoints, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(UseEncryptedEndpoints, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

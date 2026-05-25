@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DynamicsAXLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("url"u8);
-            writer.WriteObjectValue(Uri, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Uri, options);
             writer.WritePropertyName("servicePrincipalId"u8);
-            writer.WriteObjectValue(ServicePrincipalId, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             writer.WritePropertyName("tenant"u8);
-            writer.WriteObjectValue(Tenant, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Tenant, options);
             writer.WritePropertyName("aadResourceId"u8);
-            writer.WriteObjectValue(AadResourceId, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(AadResourceId, options);
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);

@@ -81,31 +81,31 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(AmazonS3DatasetTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("bucketName"u8);
-            writer.WriteObjectValue(BucketName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(BucketName, options);
             if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
-                writer.WriteObjectValue(Key, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Key, options);
             }
             if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
-                writer.WriteObjectValue(Prefix, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Prefix, options);
             }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteObjectValue(Version, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Version, options);
             }
             if (Optional.IsDefined(ModifiedDatetimeStart))
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
-                writer.WriteObjectValue(ModifiedDatetimeStart, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ModifiedDatetimeStart, options);
             }
             if (Optional.IsDefined(ModifiedDatetimeEnd))
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
-                writer.WriteObjectValue(ModifiedDatetimeEnd, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ModifiedDatetimeEnd, options);
             }
             if (Optional.IsDefined(Format))
             {

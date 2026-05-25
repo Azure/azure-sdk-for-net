@@ -83,27 +83,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Pfx))
             {
                 writer.WritePropertyName("pfx"u8);
-                writer.WriteObjectValue(Pfx, options);
+                writer.WriteObjectValue<DataFactorySecret>(Pfx, options);
             }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password, options);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
             }
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Resource, options);
             }
             if (Optional.IsDefined(UserTenant))
             {
                 writer.WritePropertyName("userTenant"u8);
-                writer.WriteObjectValue(UserTenant, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(UserTenant, options);
             }
             if (Optional.IsDefined(Credential))
             {

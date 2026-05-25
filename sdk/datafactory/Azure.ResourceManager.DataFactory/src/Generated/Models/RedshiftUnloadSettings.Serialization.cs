@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(RedshiftUnloadSettings)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("s3LinkedServiceName"u8);
-            writer.WriteObjectValue(S3LinkedServiceName, options);
+            writer.WriteObjectValue<DataFactoryLinkedServiceReference>(S3LinkedServiceName, options);
             writer.WritePropertyName("bucketName"u8);
-            writer.WriteObjectValue(BucketName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(BucketName, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

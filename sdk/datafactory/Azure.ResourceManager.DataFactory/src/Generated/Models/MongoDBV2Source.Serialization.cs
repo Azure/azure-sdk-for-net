@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Filter, options);
             }
             if (Optional.IsDefined(CursorMethods))
             {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
-                writer.WriteObjectValue(BatchSize, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(BatchSize, options);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                writer.WriteObjectValue(QueryTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(QueryTimeout, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {

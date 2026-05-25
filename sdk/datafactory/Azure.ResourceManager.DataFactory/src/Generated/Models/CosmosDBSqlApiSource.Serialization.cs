@@ -79,22 +79,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
-                writer.WriteObjectValue(Query, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Query, options);
             }
             if (Optional.IsDefined(PageSize))
             {
                 writer.WritePropertyName("pageSize"u8);
-                writer.WriteObjectValue(PageSize, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(PageSize, options);
             }
             if (Optional.IsDefined(PreferredRegions))
             {
                 writer.WritePropertyName("preferredRegions"u8);
-                writer.WriteObjectValue(PreferredRegions, options);
+                writer.WriteObjectValue<DataFactoryElement<IList<string>>>(PreferredRegions, options);
             }
             if (Optional.IsDefined(DetectDatetime))
             {
                 writer.WritePropertyName("detectDatetime"u8);
-                writer.WriteObjectValue(DetectDatetime, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(DetectDatetime, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {

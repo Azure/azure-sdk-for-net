@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class OracleTableDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public OracleTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public OracleTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("OracleTable", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

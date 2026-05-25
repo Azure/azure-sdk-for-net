@@ -79,22 +79,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExcludeLastRequest))
             {
                 writer.WritePropertyName("excludeLastRequest"u8);
-                writer.WriteObjectValue(ExcludeLastRequest, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(ExcludeLastRequest, options);
             }
             if (Optional.IsDefined(BaseRequestId))
             {
                 writer.WritePropertyName("baseRequestId"u8);
-                writer.WriteObjectValue(BaseRequestId, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(BaseRequestId, options);
             }
             if (Optional.IsDefined(CustomRfcReadTableFunctionModule))
             {
                 writer.WritePropertyName("customRfcReadTableFunctionModule"u8);
-                writer.WriteObjectValue(CustomRfcReadTableFunctionModule, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(CustomRfcReadTableFunctionModule, options);
             }
             if (Optional.IsDefined(SapDataColumnDelimiter))
             {
                 writer.WritePropertyName("sapDataColumnDelimiter"u8);
-                writer.WriteObjectValue(SapDataColumnDelimiter, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SapDataColumnDelimiter, options);
             }
         }
 

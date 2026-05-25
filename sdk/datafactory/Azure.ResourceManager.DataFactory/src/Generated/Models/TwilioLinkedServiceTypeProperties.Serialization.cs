@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(TwilioLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("userName"u8);
-            writer.WriteObjectValue(UserName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

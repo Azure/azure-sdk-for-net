@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ScriptBlockExecutionTimeout))
             {
                 writer.WritePropertyName("scriptBlockExecutionTimeout"u8);
-                writer.WriteObjectValue(ScriptBlockExecutionTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ScriptBlockExecutionTimeout, options);
             }
             if (Optional.IsCollectionDefined(Scripts))
             {
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ReturnMultistatementResult))
             {
                 writer.WritePropertyName("returnMultistatementResult"u8);
-                writer.WriteObjectValue(ReturnMultistatementResult, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(ReturnMultistatementResult, options);
             }
             if (Optional.IsDefined(TreatDecimalAsString))
             {
                 writer.WritePropertyName("treatDecimalAsString"u8);
-                writer.WriteObjectValue(TreatDecimalAsString, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(TreatDecimalAsString, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

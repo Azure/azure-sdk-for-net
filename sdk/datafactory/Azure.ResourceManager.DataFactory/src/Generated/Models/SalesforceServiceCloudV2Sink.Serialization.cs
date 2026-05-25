@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExternalIdFieldName))
             {
                 writer.WritePropertyName("externalIdFieldName"u8);
-                writer.WriteObjectValue(ExternalIdFieldName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ExternalIdFieldName, options);
             }
             if (Optional.IsDefined(IgnoreNullValues))
             {
                 writer.WritePropertyName("ignoreNullValues"u8);
-                writer.WriteObjectValue(IgnoreNullValues, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(IgnoreNullValues, options);
             }
         }
 

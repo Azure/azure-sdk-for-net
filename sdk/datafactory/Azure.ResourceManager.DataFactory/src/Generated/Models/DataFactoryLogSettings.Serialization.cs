@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EnableCopyActivityLog))
             {
                 writer.WritePropertyName("enableCopyActivityLog"u8);
-                writer.WriteObjectValue(EnableCopyActivityLog, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(EnableCopyActivityLog, options);
             }
             if (Optional.IsDefined(CopyActivityLogSettings))
             {

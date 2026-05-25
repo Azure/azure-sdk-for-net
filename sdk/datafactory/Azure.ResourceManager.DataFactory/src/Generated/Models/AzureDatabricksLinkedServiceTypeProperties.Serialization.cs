@@ -81,41 +81,41 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(AzureDatabricksLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("domain"u8);
-            writer.WriteObjectValue(Domain, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Domain, options);
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Authentication, options);
             }
             if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
-                writer.WriteObjectValue(WorkspaceResourceId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(WorkspaceResourceId, options);
             }
             if (Optional.IsDefined(ExistingClusterId))
             {
                 writer.WritePropertyName("existingClusterId"u8);
-                writer.WriteObjectValue(ExistingClusterId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ExistingClusterId, options);
             }
             if (Optional.IsDefined(InstancePoolId))
             {
                 writer.WritePropertyName("instancePoolId"u8);
-                writer.WriteObjectValue(InstancePoolId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(InstancePoolId, options);
             }
             if (Optional.IsDefined(NewClusterVersion))
             {
                 writer.WritePropertyName("newClusterVersion"u8);
-                writer.WriteObjectValue(NewClusterVersion, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(NewClusterVersion, options);
             }
             if (Optional.IsDefined(NewClusterNumOfWorker))
             {
                 writer.WritePropertyName("newClusterNumOfWorker"u8);
-                writer.WriteObjectValue(NewClusterNumOfWorker, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(NewClusterNumOfWorker, options);
             }
             if (Optional.IsDefined(NewClusterNodeType))
             {
                 writer.WritePropertyName("newClusterNodeType"u8);
-                writer.WriteObjectValue(NewClusterNodeType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(NewClusterNodeType, options);
             }
             if (Optional.IsCollectionDefined(NewClusterSparkConf))
             {
@@ -189,22 +189,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(NewClusterLogDestination))
             {
                 writer.WritePropertyName("newClusterLogDestination"u8);
-                writer.WriteObjectValue(NewClusterLogDestination, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(NewClusterLogDestination, options);
             }
             if (Optional.IsDefined(NewClusterDriverNodeType))
             {
                 writer.WritePropertyName("newClusterDriverNodeType"u8);
-                writer.WriteObjectValue(NewClusterDriverNodeType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(NewClusterDriverNodeType, options);
             }
             if (Optional.IsDefined(NewClusterInitScripts))
             {
                 writer.WritePropertyName("newClusterInitScripts"u8);
-                writer.WriteObjectValue(NewClusterInitScripts, options);
+                writer.WriteObjectValue<DataFactoryElement<IList<string>>>(NewClusterInitScripts, options);
             }
             if (Optional.IsDefined(NewClusterEnableElasticDisk))
             {
                 writer.WritePropertyName("newClusterEnableElasticDisk"u8);
-                writer.WriteObjectValue(NewClusterEnableElasticDisk, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(NewClusterEnableElasticDisk, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
-                writer.WriteObjectValue(PolicyId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PolicyId, options);
             }
             if (Optional.IsDefined(Credential))
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DataSecurityMode))
             {
                 writer.WritePropertyName("dataSecurityMode"u8);
-                writer.WriteObjectValue(DataSecurityMode, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(DataSecurityMode, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

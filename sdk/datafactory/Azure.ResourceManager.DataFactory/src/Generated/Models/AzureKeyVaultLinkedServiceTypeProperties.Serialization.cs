@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(AzureKeyVaultLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("baseUrl"u8);
-            writer.WriteObjectValue(BaseUri, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(BaseUri, options);
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);

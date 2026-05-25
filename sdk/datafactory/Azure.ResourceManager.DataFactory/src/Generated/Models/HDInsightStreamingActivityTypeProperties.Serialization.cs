@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStringValue(GetDebugInfo.Value.ToString());
             }
             writer.WritePropertyName("mapper"u8);
-            writer.WriteObjectValue(Mapper, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Mapper, options);
             writer.WritePropertyName("reducer"u8);
-            writer.WriteObjectValue(Reducer, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Reducer, options);
             writer.WritePropertyName("input"u8);
-            writer.WriteObjectValue(Input, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Input, options);
             writer.WritePropertyName("output"u8);
-            writer.WriteObjectValue(Output, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Output, options);
             writer.WritePropertyName("filePaths"u8);
             writer.WriteStartArray();
             foreach (BinaryData item in FilePaths)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Combiner))
             {
                 writer.WritePropertyName("combiner"u8);
-                writer.WriteObjectValue(Combiner, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Combiner, options);
             }
             if (Optional.IsCollectionDefined(CommandEnvironment))
             {

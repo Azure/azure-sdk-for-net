@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStringValue(GetDebugInfo.Value.ToString());
             }
             writer.WritePropertyName("className"u8);
-            writer.WriteObjectValue(ClassName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ClassName, options);
             writer.WritePropertyName("jarFilePath"u8);
-            writer.WriteObjectValue(JarFilePath, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(JarFilePath, options);
             if (Optional.IsCollectionDefined(JarLibs))
             {
                 writer.WritePropertyName("jarLibs"u8);

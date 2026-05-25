@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class HubspotObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public HubspotObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public HubspotObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("HubspotObject", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

@@ -81,28 +81,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(AzureDataLakeAnalyticsLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("accountName"u8);
-            writer.WriteObjectValue(AccountName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(AccountName, options);
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                writer.WriteObjectValue(ServicePrincipalId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
             writer.WritePropertyName("tenant"u8);
-            writer.WriteObjectValue(Tenant, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Tenant, options);
             if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
-                writer.WriteObjectValue(SubscriptionId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SubscriptionId, options);
             }
             if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
-                writer.WriteObjectValue(ResourceGroupName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ResourceGroupName, options);
             }
             if (Optional.IsDefined(DataLakeAnalyticsUri))
             {
                 writer.WritePropertyName("dataLakeAnalyticsUri"u8);
-                writer.WriteObjectValue(DataLakeAnalyticsUri, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(DataLakeAnalyticsUri, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

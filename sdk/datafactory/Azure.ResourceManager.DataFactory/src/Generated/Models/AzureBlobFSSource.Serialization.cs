@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TreatEmptyAsNull))
             {
                 writer.WritePropertyName("treatEmptyAsNull"u8);
-                writer.WriteObjectValue(TreatEmptyAsNull, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(TreatEmptyAsNull, options);
             }
             if (Optional.IsDefined(SkipHeaderLineCount))
             {
                 writer.WritePropertyName("skipHeaderLineCount"u8);
-                writer.WriteObjectValue(SkipHeaderLineCount, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(SkipHeaderLineCount, options);
             }
             if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
-                writer.WriteObjectValue(Recursive, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(Recursive, options);
             }
         }
 

@@ -83,22 +83,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
-                writer.WriteObjectValue(SourceRetryCount, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(SourceRetryCount, options);
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
-                writer.WriteObjectValue(SourceRetryWait, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SourceRetryWait, options);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(MaxConcurrentConnections, options);
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
-                writer.WriteObjectValue(DisableMetricsCollection, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(DisableMetricsCollection, options);
             }
             foreach (var item in AdditionalProperties)
             {

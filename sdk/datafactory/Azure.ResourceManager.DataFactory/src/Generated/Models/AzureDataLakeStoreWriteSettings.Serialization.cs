@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExpiryDateTime))
             {
                 writer.WritePropertyName("expiryDateTime"u8);
-                writer.WriteObjectValue(ExpiryDateTime, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ExpiryDateTime, options);
             }
         }
 

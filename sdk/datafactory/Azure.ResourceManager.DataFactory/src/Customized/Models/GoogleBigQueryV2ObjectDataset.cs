@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class GoogleBigQueryV2ObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public GoogleBigQueryV2ObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public GoogleBigQueryV2ObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("GoogleBigQueryV2Object", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

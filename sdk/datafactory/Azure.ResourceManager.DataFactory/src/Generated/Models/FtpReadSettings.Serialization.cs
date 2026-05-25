@@ -79,47 +79,47 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
-                writer.WriteObjectValue(Recursive, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(Recursive, options);
             }
             if (Optional.IsDefined(WildcardFolderPath))
             {
                 writer.WritePropertyName("wildcardFolderPath"u8);
-                writer.WriteObjectValue(WildcardFolderPath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(WildcardFolderPath, options);
             }
             if (Optional.IsDefined(WildcardFileName))
             {
                 writer.WritePropertyName("wildcardFileName"u8);
-                writer.WriteObjectValue(WildcardFileName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(WildcardFileName, options);
             }
             if (Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
-                writer.WriteObjectValue(EnablePartitionDiscovery, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(EnablePartitionDiscovery, options);
             }
             if (Optional.IsDefined(PartitionRootPath))
             {
                 writer.WritePropertyName("partitionRootPath"u8);
-                writer.WriteObjectValue(PartitionRootPath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PartitionRootPath, options);
             }
             if (Optional.IsDefined(DeleteFilesAfterCompletion))
             {
                 writer.WritePropertyName("deleteFilesAfterCompletion"u8);
-                writer.WriteObjectValue(DeleteFilesAfterCompletion, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(DeleteFilesAfterCompletion, options);
             }
             if (Optional.IsDefined(FileListPath))
             {
                 writer.WritePropertyName("fileListPath"u8);
-                writer.WriteObjectValue(FileListPath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(FileListPath, options);
             }
             if (Optional.IsDefined(UseBinaryTransfer))
             {
                 writer.WritePropertyName("useBinaryTransfer"u8);
-                writer.WriteObjectValue(UseBinaryTransfer, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(UseBinaryTransfer, options);
             }
             if (Optional.IsDefined(DisableChunking))
             {
                 writer.WritePropertyName("disableChunking"u8);
-                writer.WriteObjectValue(DisableChunking, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(DisableChunking, options);
             }
         }
 

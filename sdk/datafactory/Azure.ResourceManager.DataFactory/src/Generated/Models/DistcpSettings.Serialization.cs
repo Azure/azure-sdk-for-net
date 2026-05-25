@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DistcpSettings)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("resourceManagerEndpoint"u8);
-            writer.WriteObjectValue(ResourceManagerEndpoint, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ResourceManagerEndpoint, options);
             writer.WritePropertyName("tempScriptPath"u8);
-            writer.WriteObjectValue(TempScriptPath, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(TempScriptPath, options);
             if (Optional.IsDefined(DistcpOptions))
             {
                 writer.WritePropertyName("distcpOptions"u8);
-                writer.WriteObjectValue(DistcpOptions, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(DistcpOptions, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

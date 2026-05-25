@@ -83,32 +83,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
-                writer.WriteObjectValue(WriteBatchSize, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(WriteBatchSize, options);
             }
             if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
-                writer.WriteObjectValue(WriteBatchTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(WriteBatchTimeout, options);
             }
             if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
-                writer.WriteObjectValue(SinkRetryCount, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(SinkRetryCount, options);
             }
             if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
-                writer.WriteObjectValue(SinkRetryWait, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SinkRetryWait, options);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(MaxConcurrentConnections, options);
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
-                writer.WriteObjectValue(DisableMetricsCollection, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(DisableMetricsCollection, options);
             }
             foreach (var item in AdditionalProperties)
             {

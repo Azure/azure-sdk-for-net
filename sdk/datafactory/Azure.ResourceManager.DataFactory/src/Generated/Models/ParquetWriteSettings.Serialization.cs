@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
-                writer.WriteObjectValue(MaxRowsPerFile, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(MaxRowsPerFile, options);
             }
             if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
-                writer.WriteObjectValue(FileNamePrefix, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(FileNamePrefix, options);
             }
         }
 

@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
-                writer.WriteObjectValue(Timeout, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Timeout, options);
             }
             if (Optional.IsDefined(Retry))
             {
                 writer.WritePropertyName("retry"u8);
-                writer.WriteObjectValue(Retry, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Retry, options);
             }
             if (Optional.IsDefined(RetryIntervalInSeconds))
             {

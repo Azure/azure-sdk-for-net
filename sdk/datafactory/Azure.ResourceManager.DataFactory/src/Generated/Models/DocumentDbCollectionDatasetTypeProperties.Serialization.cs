@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DocumentDbCollectionDatasetTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("collectionName"u8);
-            writer.WriteObjectValue(CollectionName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(CollectionName, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

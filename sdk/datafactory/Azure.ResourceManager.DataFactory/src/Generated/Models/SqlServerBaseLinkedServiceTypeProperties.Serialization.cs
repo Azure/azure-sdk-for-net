@@ -78,97 +78,97 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-                writer.WriteObjectValue(Server, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Server, options);
             }
             if (Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
-                writer.WriteObjectValue(Database, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Database, options);
             }
             if (Optional.IsDefined(Encrypt))
             {
                 writer.WritePropertyName("encrypt"u8);
-                writer.WriteObjectValue(Encrypt, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Encrypt, options);
             }
             if (Optional.IsDefined(TrustServerCertificate))
             {
                 writer.WritePropertyName("trustServerCertificate"u8);
-                writer.WriteObjectValue(TrustServerCertificate, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(TrustServerCertificate, options);
             }
             if (Optional.IsDefined(HostNameInCertificate))
             {
                 writer.WritePropertyName("hostNameInCertificate"u8);
-                writer.WriteObjectValue(HostNameInCertificate, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(HostNameInCertificate, options);
             }
             if (Optional.IsDefined(ApplicationIntent))
             {
                 writer.WritePropertyName("applicationIntent"u8);
-                writer.WriteObjectValue(ApplicationIntent, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ApplicationIntent, options);
             }
             if (Optional.IsDefined(ConnectTimeout))
             {
                 writer.WritePropertyName("connectTimeout"u8);
-                writer.WriteObjectValue(ConnectTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(ConnectTimeout, options);
             }
             if (Optional.IsDefined(ConnectRetryCount))
             {
                 writer.WritePropertyName("connectRetryCount"u8);
-                writer.WriteObjectValue(ConnectRetryCount, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(ConnectRetryCount, options);
             }
             if (Optional.IsDefined(ConnectRetryInterval))
             {
                 writer.WritePropertyName("connectRetryInterval"u8);
-                writer.WriteObjectValue(ConnectRetryInterval, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(ConnectRetryInterval, options);
             }
             if (Optional.IsDefined(LoadBalanceTimeout))
             {
                 writer.WritePropertyName("loadBalanceTimeout"u8);
-                writer.WriteObjectValue(LoadBalanceTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(LoadBalanceTimeout, options);
             }
             if (Optional.IsDefined(CommandTimeout))
             {
                 writer.WritePropertyName("commandTimeout"u8);
-                writer.WriteObjectValue(CommandTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(CommandTimeout, options);
             }
             if (Optional.IsDefined(IntegratedSecurity))
             {
                 writer.WritePropertyName("integratedSecurity"u8);
-                writer.WriteObjectValue(IntegratedSecurity, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(IntegratedSecurity, options);
             }
             if (Optional.IsDefined(FailoverPartner))
             {
                 writer.WritePropertyName("failoverPartner"u8);
-                writer.WriteObjectValue(FailoverPartner, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(FailoverPartner, options);
             }
             if (Optional.IsDefined(MaxPoolSize))
             {
                 writer.WritePropertyName("maxPoolSize"u8);
-                writer.WriteObjectValue(MaxPoolSize, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(MaxPoolSize, options);
             }
             if (Optional.IsDefined(MinPoolSize))
             {
                 writer.WritePropertyName("minPoolSize"u8);
-                writer.WriteObjectValue(MinPoolSize, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(MinPoolSize, options);
             }
             if (Optional.IsDefined(MultipleActiveResultSets))
             {
                 writer.WritePropertyName("multipleActiveResultSets"u8);
-                writer.WriteObjectValue(MultipleActiveResultSets, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(MultipleActiveResultSets, options);
             }
             if (Optional.IsDefined(MultiSubnetFailover))
             {
                 writer.WritePropertyName("multiSubnetFailover"u8);
-                writer.WriteObjectValue(MultiSubnetFailover, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(MultiSubnetFailover, options);
             }
             if (Optional.IsDefined(PacketSize))
             {
                 writer.WritePropertyName("packetSize"u8);
-                writer.WriteObjectValue(PacketSize, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(PacketSize, options);
             }
             if (Optional.IsDefined(Pooling))
             {
                 writer.WritePropertyName("pooling"u8);
-                writer.WriteObjectValue(Pooling, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(Pooling, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

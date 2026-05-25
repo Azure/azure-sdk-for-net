@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class GreenplumTableDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public GreenplumTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public GreenplumTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("GreenplumTable", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

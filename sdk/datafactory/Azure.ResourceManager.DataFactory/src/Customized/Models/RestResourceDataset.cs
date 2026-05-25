@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class RestResourceDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public RestResourceDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public RestResourceDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("RestResource", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("pfx"u8);
-            writer.WriteObjectValue(Pfx, options);
+            writer.WriteObjectValue<DataFactorySecret>(Pfx, options);
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password, options);
+            writer.WriteObjectValue<DataFactorySecret>(Password, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>

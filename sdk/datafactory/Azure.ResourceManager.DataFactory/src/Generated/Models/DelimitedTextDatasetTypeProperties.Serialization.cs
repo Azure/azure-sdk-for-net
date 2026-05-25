@@ -85,47 +85,47 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ColumnDelimiter))
             {
                 writer.WritePropertyName("columnDelimiter"u8);
-                writer.WriteObjectValue(ColumnDelimiter, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ColumnDelimiter, options);
             }
             if (Optional.IsDefined(RowDelimiter))
             {
                 writer.WritePropertyName("rowDelimiter"u8);
-                writer.WriteObjectValue(RowDelimiter, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(RowDelimiter, options);
             }
             if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
-                writer.WriteObjectValue(EncodingName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(EncodingName, options);
             }
             if (Optional.IsDefined(CompressionCodec))
             {
                 writer.WritePropertyName("compressionCodec"u8);
-                writer.WriteObjectValue(CompressionCodec, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(CompressionCodec, options);
             }
             if (Optional.IsDefined(CompressionLevel))
             {
                 writer.WritePropertyName("compressionLevel"u8);
-                writer.WriteObjectValue(CompressionLevel, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(CompressionLevel, options);
             }
             if (Optional.IsDefined(QuoteChar))
             {
                 writer.WritePropertyName("quoteChar"u8);
-                writer.WriteObjectValue(QuoteChar, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(QuoteChar, options);
             }
             if (Optional.IsDefined(EscapeChar))
             {
                 writer.WritePropertyName("escapeChar"u8);
-                writer.WriteObjectValue(EscapeChar, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(EscapeChar, options);
             }
             if (Optional.IsDefined(FirstRowAsHeader))
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
-                writer.WriteObjectValue(FirstRowAsHeader, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(FirstRowAsHeader, options);
             }
             if (Optional.IsDefined(NullValue))
             {
                 writer.WritePropertyName("nullValue"u8);
-                writer.WriteObjectValue(NullValue, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(NullValue, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

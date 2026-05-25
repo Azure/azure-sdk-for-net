@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(AzureSynapseArtifactsLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue(Endpoint, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Endpoint, options);
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Authentication, options);
             }
             if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
-                writer.WriteObjectValue(WorkspaceResourceId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(WorkspaceResourceId, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

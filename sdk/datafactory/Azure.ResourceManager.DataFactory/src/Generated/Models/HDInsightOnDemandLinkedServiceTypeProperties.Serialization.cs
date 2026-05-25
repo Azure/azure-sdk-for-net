@@ -81,22 +81,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(HDInsightOnDemandLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("clusterSize"u8);
-            writer.WriteObjectValue(ClusterSize, options);
+            writer.WriteObjectValue<DataFactoryElement<int>>(ClusterSize, options);
             writer.WritePropertyName("timeToLive"u8);
-            writer.WriteObjectValue(TimeToLiveExpression, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(TimeToLiveExpression, options);
             writer.WritePropertyName("version"u8);
-            writer.WriteObjectValue(Version, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Version, options);
             writer.WritePropertyName("hostSubscriptionId"u8);
-            writer.WriteObjectValue(HostSubscriptionId, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(HostSubscriptionId, options);
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                writer.WriteObjectValue(ServicePrincipalId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
             writer.WritePropertyName("tenant"u8);
-            writer.WriteObjectValue(Tenant, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Tenant, options);
             writer.WritePropertyName("clusterResourceGroup"u8);
-            writer.WriteObjectValue(ClusterResourceGroup, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ClusterResourceGroup, options);
             if (Optional.IsDefined(ClusterResourceGroupAuthType))
             {
                 writer.WritePropertyName("clusterResourceGroupAuthType"u8);
@@ -105,27 +105,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClusterNamePrefix))
             {
                 writer.WritePropertyName("clusterNamePrefix"u8);
-                writer.WriteObjectValue(ClusterNamePrefix, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ClusterNamePrefix, options);
             }
             if (Optional.IsDefined(ClusterUserName))
             {
                 writer.WritePropertyName("clusterUserName"u8);
-                writer.WriteObjectValue(ClusterUserName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ClusterUserName, options);
             }
             if (Optional.IsDefined(ClusterSshUserName))
             {
                 writer.WritePropertyName("clusterSshUserName"u8);
-                writer.WriteObjectValue(ClusterSshUserName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ClusterSshUserName, options);
             }
             if (Optional.IsDefined(ClusterType))
             {
                 writer.WritePropertyName("clusterType"u8);
-                writer.WriteObjectValue(ClusterType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ClusterType, options);
             }
             if (Optional.IsDefined(SparkVersion))
             {
                 writer.WritePropertyName("sparkVersion"u8);
-                writer.WriteObjectValue(SparkVersion, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SparkVersion, options);
             }
             if (Optional.IsDefined(CoreConfiguration))
             {
@@ -277,12 +277,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(VirtualNetworkId))
             {
                 writer.WritePropertyName("virtualNetworkId"u8);
-                writer.WriteObjectValue(VirtualNetworkId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(VirtualNetworkId, options);
             }
             if (Optional.IsDefined(SubnetName))
             {
                 writer.WritePropertyName("subnetName"u8);
-                writer.WriteObjectValue(SubnetName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SubnetName, options);
             }
             if (Optional.IsDefined(Credential))
             {

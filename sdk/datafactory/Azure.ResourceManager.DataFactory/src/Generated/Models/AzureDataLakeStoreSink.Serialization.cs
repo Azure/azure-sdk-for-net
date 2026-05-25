@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior"u8);
-                writer.WriteObjectValue(CopyBehavior, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(CopyBehavior, options);
             }
             if (Optional.IsDefined(EnableAdlsSingleFileParallel))
             {
                 writer.WritePropertyName("enableAdlsSingleFileParallel"u8);
-                writer.WriteObjectValue(EnableAdlsSingleFileParallel, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(EnableAdlsSingleFileParallel, options);
             }
         }
 

@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
-                writer.WriteObjectValue(Query, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Query, options);
             }
             writer.WritePropertyName("exportSettings"u8);
             writer.WriteObjectValue(ExportSettings, options);

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(CosmosDbMongoDbApiCollectionDatasetTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("collection"u8);
-            writer.WriteObjectValue(Collection, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Collection, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

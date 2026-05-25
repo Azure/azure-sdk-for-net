@@ -81,25 +81,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(AzureMLServiceLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("subscriptionId"u8);
-            writer.WriteObjectValue(SubscriptionId, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(SubscriptionId, options);
             writer.WritePropertyName("resourceGroupName"u8);
-            writer.WriteObjectValue(ResourceGroupName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ResourceGroupName, options);
             writer.WritePropertyName("mlWorkspaceName"u8);
-            writer.WriteObjectValue(MLWorkspaceName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(MLWorkspaceName, options);
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Authentication, options);
             }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                writer.WriteObjectValue(ServicePrincipalId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
-                writer.WriteObjectValue(Tenant, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Tenant, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
-                writer.WriteObjectValue(Arguments, options);
+                writer.WriteObjectValue<DataFactoryElement<IList<string>>>(Arguments, options);
             }
             if (Optional.IsDefined(GetDebugInfo))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ScriptPath))
             {
                 writer.WritePropertyName("scriptPath"u8);
-                writer.WriteObjectValue(ScriptPath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ScriptPath, options);
             }
             if (Optional.IsCollectionDefined(Defines))
             {

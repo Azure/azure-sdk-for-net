@@ -83,17 +83,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(MaxConcurrentConnections, options);
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
-                writer.WriteObjectValue(DisableMetricsCollection, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(DisableMetricsCollection, options);
             }
             if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior"u8);
-                writer.WriteObjectValue(CopyBehavior, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(CopyBehavior, options);
             }
             if (Optional.IsCollectionDefined(Metadata))
             {

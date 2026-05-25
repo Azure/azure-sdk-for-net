@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer"u8);
-                writer.WriteObjectValue(Serializer, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Serializer, options);
             }
             if (Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer"u8);
-                writer.WriteObjectValue(Deserializer, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Deserializer, options);
             }
             foreach (var item in AdditionalProperties)
             {

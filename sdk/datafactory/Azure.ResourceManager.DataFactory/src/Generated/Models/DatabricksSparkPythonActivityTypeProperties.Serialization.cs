@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DatabricksSparkPythonActivityTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("pythonFile"u8);
-            writer.WriteObjectValue(PythonFile, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(PythonFile, options);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);

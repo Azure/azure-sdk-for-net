@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapOpenHubTableDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public SapOpenHubTableDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> openHubDestinationName) : this()
+        public SapOpenHubTableDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> openHubDestinationName) : base("SapOpenHubTable", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
             OpenHubDestinationName = openHubDestinationName;
         }
     }

@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExtractionMode))
             {
                 writer.WritePropertyName("extractionMode"u8);
-                writer.WriteObjectValue(ExtractionMode, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ExtractionMode, options);
             }
             if (Optional.IsDefined(SubscriberProcess))
             {
                 writer.WritePropertyName("subscriberProcess"u8);
-                writer.WriteObjectValue(SubscriberProcess, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SubscriberProcess, options);
             }
             if (Optional.IsDefined(Selection))
             {

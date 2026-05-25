@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(SnowflakeLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("connectionString"u8);
-            writer.WriteObjectValue(ConnectionString, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);

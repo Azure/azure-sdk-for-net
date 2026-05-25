@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(SsisLogLocation)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("logPath"u8);
-            writer.WriteObjectValue(LogPath, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(LogPath, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LocationType.ToString());
             writer.WritePropertyName("typeProperties"u8);

@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AmazonRdsForOracleTableDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public AmazonRdsForOracleTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public AmazonRdsForOracleTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("AmazonRdsForOracleTable", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

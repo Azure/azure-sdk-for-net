@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(IngestionMappingName))
             {
                 writer.WritePropertyName("ingestionMappingName"u8);
-                writer.WriteObjectValue(IngestionMappingName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(IngestionMappingName, options);
             }
             if (Optional.IsDefined(IngestionMappingAsJson))
             {
                 writer.WritePropertyName("ingestionMappingAsJson"u8);
-                writer.WriteObjectValue(IngestionMappingAsJson, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(IngestionMappingAsJson, options);
             }
             if (Optional.IsDefined(FlushImmediately))
             {
                 writer.WritePropertyName("flushImmediately"u8);
-                writer.WriteObjectValue(FlushImmediately, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(FlushImmediately, options);
             }
         }
 

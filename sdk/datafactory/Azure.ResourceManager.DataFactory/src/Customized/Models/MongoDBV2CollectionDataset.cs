@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class MongoDBV2CollectionDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public MongoDBV2CollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collection) : this()
+        public MongoDBV2CollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collection) : base("MongoDbV2Collection", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
             Collection = collection;
         }
     }

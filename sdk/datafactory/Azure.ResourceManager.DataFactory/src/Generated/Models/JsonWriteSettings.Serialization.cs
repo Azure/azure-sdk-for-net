@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FilePattern))
             {
                 writer.WritePropertyName("filePattern"u8);
-                writer.WriteObjectValue(FilePattern, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(FilePattern, options);
             }
         }
 

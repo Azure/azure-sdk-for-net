@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CatalogAdminPassword))
             {
                 writer.WritePropertyName("catalogAdminPassword"u8);
-                writer.WriteObjectValue(CatalogAdminPassword, options);
+                writer.WriteObjectValue<DataFactorySecretString>(CatalogAdminPassword, options);
             }
             if (Optional.IsDefined(CatalogPricingTier))
             {

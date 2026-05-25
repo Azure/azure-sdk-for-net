@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
-                writer.WriteObjectValue(RequestMethod, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(RequestMethod, options);
             }
             if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
-                writer.WriteObjectValue(AdditionalHeaders, options);
+                writer.WriteObjectValue<DataFactoryElement<IDictionary<string, string>>>(AdditionalHeaders, options);
             }
             if (Optional.IsDefined(HttpRequestTimeout))
             {
                 writer.WritePropertyName("httpRequestTimeout"u8);
-                writer.WriteObjectValue(HttpRequestTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(HttpRequestTimeout, options);
             }
             if (Optional.IsDefined(RequestInterval))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(HttpCompressionType))
             {
                 writer.WritePropertyName("httpCompressionType"u8);
-                writer.WriteObjectValue(HttpCompressionType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(HttpCompressionType, options);
             }
         }
 

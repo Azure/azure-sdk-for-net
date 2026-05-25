@@ -78,72 +78,72 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-                writer.WriteObjectValue(Server, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Server, options);
             }
             if (Optional.IsDefined(SystemNumber))
             {
                 writer.WritePropertyName("systemNumber"u8);
-                writer.WriteObjectValue(SystemNumber, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SystemNumber, options);
             }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteObjectValue(ClientId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ClientId, options);
             }
             if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
-                writer.WriteObjectValue(Language, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Language, options);
             }
             if (Optional.IsDefined(SystemId))
             {
                 writer.WritePropertyName("systemId"u8);
-                writer.WriteObjectValue(SystemId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SystemId, options);
             }
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
             if (Optional.IsDefined(MessageServer))
             {
                 writer.WritePropertyName("messageServer"u8);
-                writer.WriteObjectValue(MessageServer, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(MessageServer, options);
             }
             if (Optional.IsDefined(MessageServerService))
             {
                 writer.WritePropertyName("messageServerService"u8);
-                writer.WriteObjectValue(MessageServerService, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(MessageServerService, options);
             }
             if (Optional.IsDefined(SncFlag))
             {
                 writer.WritePropertyName("sncMode"u8);
-                writer.WriteObjectValue(SncFlag, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(SncFlag, options);
             }
             if (Optional.IsDefined(SncMyName))
             {
                 writer.WritePropertyName("sncMyName"u8);
-                writer.WriteObjectValue(SncMyName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SncMyName, options);
             }
             if (Optional.IsDefined(SncPartnerName))
             {
                 writer.WritePropertyName("sncPartnerName"u8);
-                writer.WriteObjectValue(SncPartnerName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SncPartnerName, options);
             }
             if (Optional.IsDefined(SncLibraryPath))
             {
                 writer.WritePropertyName("sncLibraryPath"u8);
-                writer.WriteObjectValue(SncLibraryPath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SncLibraryPath, options);
             }
             if (Optional.IsDefined(SncQop))
             {
                 writer.WritePropertyName("sncQop"u8);
-                writer.WriteObjectValue(SncQop, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SncQop, options);
             }
             if (Optional.IsDefined(LogonGroup))
             {
                 writer.WritePropertyName("logonGroup"u8);
-                writer.WriteObjectValue(LogonGroup, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(LogonGroup, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

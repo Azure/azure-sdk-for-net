@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
-                writer.WriteObjectValue(Structure, options);
+                writer.WriteObjectValue<DataFactoryElement<IList<DatasetDataElement>>>(Structure, options);
             }
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue(Schema, options);
+                writer.WriteObjectValue<DataFactoryElement<IList<DatasetSchemaDataElement>>>(Schema, options);
             }
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName, options);
+            writer.WriteObjectValue<DataFactoryLinkedServiceReference>(LinkedServiceName, options);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);

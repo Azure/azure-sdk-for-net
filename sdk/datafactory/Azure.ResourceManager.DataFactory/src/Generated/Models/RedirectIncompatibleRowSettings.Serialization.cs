@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(RedirectIncompatibleRowSettings)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(LinkedServiceName, options);
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
-                writer.WriteObjectValue(Path, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Path, options);
             }
             foreach (var item in AdditionalProperties)
             {

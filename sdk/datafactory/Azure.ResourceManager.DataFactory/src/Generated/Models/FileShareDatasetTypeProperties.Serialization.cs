@@ -78,22 +78,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
-                writer.WriteObjectValue(FolderPath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(FolderPath, options);
             }
             if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
-                writer.WriteObjectValue(FileName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(FileName, options);
             }
             if (Optional.IsDefined(ModifiedDatetimeStart))
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
-                writer.WriteObjectValue(ModifiedDatetimeStart, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ModifiedDatetimeStart, options);
             }
             if (Optional.IsDefined(ModifiedDatetimeEnd))
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
-                writer.WriteObjectValue(ModifiedDatetimeEnd, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ModifiedDatetimeEnd, options);
             }
             if (Optional.IsDefined(Format))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FileFilter))
             {
                 writer.WritePropertyName("fileFilter"u8);
-                writer.WriteObjectValue(FileFilter, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(FileFilter, options);
             }
             if (Optional.IsDefined(Compression))
             {

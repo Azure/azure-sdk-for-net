@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(AzureSearchIndexDatasetTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("indexName"u8);
-            writer.WriteObjectValue(IndexName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(IndexName, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

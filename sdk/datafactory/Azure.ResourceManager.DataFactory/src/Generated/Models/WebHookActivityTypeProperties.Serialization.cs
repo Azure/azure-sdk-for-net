@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("url"u8);
-            writer.WriteObjectValue(Uri, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Uri, options);
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
-                writer.WriteObjectValue(Body, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Body, options);
             }
             if (Optional.IsDefined(Authentication))
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ReportStatusOnCallBack))
             {
                 writer.WritePropertyName("reportStatusOnCallBack"u8);
-                writer.WriteObjectValue(ReportStatusOnCallBack, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(ReportStatusOnCallBack, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

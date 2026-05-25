@@ -78,42 +78,42 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DriverVersion))
             {
                 writer.WritePropertyName("driverVersion"u8);
-                writer.WriteObjectValue(DriverVersion, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(DriverVersion, options);
             }
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
             }
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-                writer.WriteObjectValue(Server, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Server, options);
             }
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-                writer.WriteObjectValue(Port, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Port, options);
             }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
             if (Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
-                writer.WriteObjectValue(Database, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Database, options);
             }
             if (Optional.IsDefined(SslMode))
             {
                 writer.WritePropertyName("sslMode"u8);
-                writer.WriteObjectValue(SslMode, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(SslMode, options);
             }
             if (Optional.IsDefined(UseSystemTrustStore))
             {
                 writer.WritePropertyName("useSystemTrustStore"u8);
-                writer.WriteObjectValue(UseSystemTrustStore, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(UseSystemTrustStore, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -123,37 +123,37 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AllowZeroDateTime))
             {
                 writer.WritePropertyName("allowZeroDateTime"u8);
-                writer.WriteObjectValue(AllowZeroDateTime, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(AllowZeroDateTime, options);
             }
             if (Optional.IsDefined(ConnectionTimeout))
             {
                 writer.WritePropertyName("connectionTimeout"u8);
-                writer.WriteObjectValue(ConnectionTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(ConnectionTimeout, options);
             }
             if (Optional.IsDefined(ConvertZeroDateTime))
             {
                 writer.WritePropertyName("convertZeroDateTime"u8);
-                writer.WriteObjectValue(ConvertZeroDateTime, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(ConvertZeroDateTime, options);
             }
             if (Optional.IsDefined(GuidFormat))
             {
                 writer.WritePropertyName("guidFormat"u8);
-                writer.WriteObjectValue(GuidFormat, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(GuidFormat, options);
             }
             if (Optional.IsDefined(SslCert))
             {
                 writer.WritePropertyName("sslCert"u8);
-                writer.WriteObjectValue(SslCert, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SslCert, options);
             }
             if (Optional.IsDefined(SslKey))
             {
                 writer.WritePropertyName("sslKey"u8);
-                writer.WriteObjectValue(SslKey, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SslKey, options);
             }
             if (Optional.IsDefined(TreatTinyAsBoolean))
             {
                 writer.WritePropertyName("treatTinyAsBoolean"u8);
-                writer.WriteObjectValue(TreatTinyAsBoolean, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(TreatTinyAsBoolean, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

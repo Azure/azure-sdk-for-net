@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AdditionalFormatOptions))
             {
                 writer.WritePropertyName("additionalFormatOptions"u8);
-                writer.WriteObjectValue(AdditionalFormatOptions, options);
+                writer.WriteObjectValue<DataFactoryElement<IDictionary<string, string>>>(AdditionalFormatOptions, options);
             }
         }
 

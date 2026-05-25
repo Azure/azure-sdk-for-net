@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureSqlDWTableDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public AzureSqlDWTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public AzureSqlDWTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("AzureSqlDWTable", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

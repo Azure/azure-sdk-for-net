@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class MarketoObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public MarketoObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public MarketoObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("MarketoObject", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

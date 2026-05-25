@@ -84,19 +84,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(QuoteAllText))
             {
                 writer.WritePropertyName("quoteAllText"u8);
-                writer.WriteObjectValue(QuoteAllText, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(QuoteAllText, options);
             }
             writer.WritePropertyName("fileExtension"u8);
-            writer.WriteObjectValue(FileExtension, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(FileExtension, options);
             if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
-                writer.WriteObjectValue(MaxRowsPerFile, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(MaxRowsPerFile, options);
             }
             if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
-                writer.WriteObjectValue(FileNamePrefix, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(FileNamePrefix, options);
             }
         }
 

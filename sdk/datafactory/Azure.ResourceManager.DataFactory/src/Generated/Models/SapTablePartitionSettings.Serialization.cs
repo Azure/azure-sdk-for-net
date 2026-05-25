@@ -78,22 +78,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
-                writer.WriteObjectValue(PartitionColumnName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PartitionColumnName, options);
             }
             if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
-                writer.WriteObjectValue(PartitionUpperBound, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PartitionUpperBound, options);
             }
             if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
-                writer.WriteObjectValue(PartitionLowerBound, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PartitionLowerBound, options);
             }
             if (Optional.IsDefined(MaxPartitionsNumber))
             {
                 writer.WritePropertyName("maxPartitionsNumber"u8);
-                writer.WriteObjectValue(MaxPartitionsNumber, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(MaxPartitionsNumber, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

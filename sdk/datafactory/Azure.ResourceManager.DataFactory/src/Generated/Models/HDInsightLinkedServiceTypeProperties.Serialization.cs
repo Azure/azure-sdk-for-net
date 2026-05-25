@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(HDInsightLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("clusterUri"u8);
-            writer.WriteObjectValue(ClusterUri, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ClusterUri, options);
             if (Optional.IsDefined(ClusterAuthType))
             {
                 writer.WritePropertyName("clusterAuthType"u8);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(IsEspEnabled))
             {
                 writer.WritePropertyName("isEspEnabled"u8);
-                writer.WriteObjectValue(IsEspEnabled, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(IsEspEnabled, options);
             }
             if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
-                writer.WriteObjectValue(FileSystem, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(FileSystem, options);
             }
             if (Optional.IsDefined(Credential))
             {

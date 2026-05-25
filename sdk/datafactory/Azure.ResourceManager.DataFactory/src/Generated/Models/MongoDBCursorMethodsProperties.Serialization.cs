@@ -78,22 +78,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Project))
             {
                 writer.WritePropertyName("project"u8);
-                writer.WriteObjectValue(Project, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Project, options);
             }
             if (Optional.IsDefined(Sort))
             {
                 writer.WritePropertyName("sort"u8);
-                writer.WriteObjectValue(Sort, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Sort, options);
             }
             if (Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("skip"u8);
-                writer.WriteObjectValue(Skip, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Skip, options);
             }
             if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
-                writer.WriteObjectValue(Limit, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Limit, options);
             }
             foreach (var item in AdditionalProperties)
             {

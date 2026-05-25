@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ParquetDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public ParquetDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public ParquetDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("Parquet", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

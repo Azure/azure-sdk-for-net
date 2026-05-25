@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class CosmosDBSqlApiCollectionDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public CosmosDBSqlApiCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collectionName) : this()
+        public CosmosDBSqlApiCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collectionName) : base("CosmosDbSqlApiCollection", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
             CollectionName = collectionName;
         }
     }

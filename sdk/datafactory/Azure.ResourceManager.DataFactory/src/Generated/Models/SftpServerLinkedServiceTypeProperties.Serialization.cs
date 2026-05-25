@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(SftpServerLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("host"u8);
-            writer.WriteObjectValue(Host, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Host, options);
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-                writer.WriteObjectValue(Port, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Port, options);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -105,17 +105,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PrivateKeyPath))
             {
                 writer.WritePropertyName("privateKeyPath"u8);
-                writer.WriteObjectValue(PrivateKeyPath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PrivateKeyPath, options);
             }
             if (Optional.IsDefined(SkipHostKeyValidation))
             {
                 writer.WritePropertyName("skipHostKeyValidation"u8);
-                writer.WriteObjectValue(SkipHostKeyValidation, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(SkipHostKeyValidation, options);
             }
             if (Optional.IsDefined(HostKeyFingerprint))
             {
                 writer.WritePropertyName("hostKeyFingerprint"u8);
-                writer.WriteObjectValue(HostKeyFingerprint, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(HostKeyFingerprint, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

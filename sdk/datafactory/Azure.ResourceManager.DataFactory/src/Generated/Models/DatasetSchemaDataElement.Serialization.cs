@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SchemaColumnName))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(SchemaColumnName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SchemaColumnName, options);
             }
             if (Optional.IsDefined(SchemaColumnType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteObjectValue(SchemaColumnType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SchemaColumnType, options);
             }
             foreach (var item in AdditionalProperties)
             {

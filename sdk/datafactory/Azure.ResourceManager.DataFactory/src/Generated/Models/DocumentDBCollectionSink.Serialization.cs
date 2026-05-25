@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(NestingSeparator))
             {
                 writer.WritePropertyName("nestingSeparator"u8);
-                writer.WriteObjectValue(NestingSeparator, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(NestingSeparator, options);
             }
             if (Optional.IsDefined(WriteBehavior))
             {
                 writer.WritePropertyName("writeBehavior"u8);
-                writer.WriteObjectValue(WriteBehavior, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(WriteBehavior, options);
             }
         }
 

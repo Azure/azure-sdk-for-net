@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Delay))
             {
                 writer.WritePropertyName("delay"u8);
-                writer.WriteObjectValue(Delay, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Delay, options);
             }
             writer.WritePropertyName("maxConcurrency"u8);
             writer.WriteNumberValue(MaxConcurrency);

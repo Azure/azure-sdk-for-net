@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class Db2TableDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public Db2TableDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public Db2TableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("Db2Table", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

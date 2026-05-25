@@ -81,43 +81,43 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(GoogleBigQueryLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("project"u8);
-            writer.WriteObjectValue(Project, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Project, options);
             if (Optional.IsDefined(AdditionalProjects))
             {
                 writer.WritePropertyName("additionalProjects"u8);
-                writer.WriteObjectValue(AdditionalProjects, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AdditionalProjects, options);
             }
             if (Optional.IsDefined(RequestGoogleDriveScope))
             {
                 writer.WritePropertyName("requestGoogleDriveScope"u8);
-                writer.WriteObjectValue(RequestGoogleDriveScope, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(RequestGoogleDriveScope, options);
             }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteObjectValue(ClientId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ClientId, options);
             }
             if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
-                writer.WriteObjectValue(Email, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Email, options);
             }
             if (Optional.IsDefined(KeyFilePath))
             {
                 writer.WritePropertyName("keyFilePath"u8);
-                writer.WriteObjectValue(KeyFilePath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(KeyFilePath, options);
             }
             if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath"u8);
-                writer.WriteObjectValue(TrustedCertPath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(TrustedCertPath, options);
             }
             if (Optional.IsDefined(UseSystemTrustStore))
             {
                 writer.WritePropertyName("useSystemTrustStore"u8);
-                writer.WriteObjectValue(UseSystemTrustStore, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(UseSystemTrustStore, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

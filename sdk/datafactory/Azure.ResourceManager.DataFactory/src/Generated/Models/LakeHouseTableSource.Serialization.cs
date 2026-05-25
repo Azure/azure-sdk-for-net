@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TimestampAsOf))
             {
                 writer.WritePropertyName("timestampAsOf"u8);
-                writer.WriteObjectValue(TimestampAsOf, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(TimestampAsOf, options);
             }
             if (Optional.IsDefined(VersionAsOf))
             {
                 writer.WritePropertyName("versionAsOf"u8);
-                writer.WriteObjectValue(VersionAsOf, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(VersionAsOf, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {

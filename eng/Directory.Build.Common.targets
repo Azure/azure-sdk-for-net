@@ -351,8 +351,15 @@
   </ItemGroup>
 
   <!-- DataFactory Project Specific Overrides-->
+  <!--
+    Use ProjectReference instead of PackageReference for Azure.Core.Expressions.DataFactory
+    while 1.1.0-beta.1 is unreleased. The DataFactory MPG-generated code calls
+    ModelReaderWriter.Read<DataFactoryElement<T>>(...), which requires IPersistableModel
+    support added in 1.1.0-beta.1. Once that package is published, this can revert
+    to <PackageReference Include="Azure.Core.Expressions.DataFactory"/>.
+  -->
   <ItemGroup Condition="$(MSBuildProjectName) == 'Azure.ResourceManager.DataFactory'">
-    <PackageReference Include="Azure.Core.Expressions.DataFactory"/>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\sdk\core\Azure.Core.Expressions.DataFactory\src\Azure.Core.Expressions.DataFactory.csproj" />
   </ItemGroup>
 
   <!-- Management Client TEST Project Specific Overrides -->

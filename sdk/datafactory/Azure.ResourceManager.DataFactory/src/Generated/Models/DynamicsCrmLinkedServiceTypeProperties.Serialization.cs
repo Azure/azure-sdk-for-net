@@ -81,48 +81,48 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DynamicsCrmLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("deploymentType"u8);
-            writer.WriteObjectValue(DeploymentType, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(DeploymentType, options);
             if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
-                writer.WriteObjectValue(HostName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(HostName, options);
             }
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-                writer.WriteObjectValue(Port, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Port, options);
             }
             if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUri"u8);
-                writer.WriteObjectValue(ServiceUri, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServiceUri, options);
             }
             if (Optional.IsDefined(OrganizationName))
             {
                 writer.WritePropertyName("organizationName"u8);
-                writer.WriteObjectValue(OrganizationName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(OrganizationName, options);
             }
             writer.WritePropertyName("authenticationType"u8);
-            writer.WriteObjectValue(AuthenticationType, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(AuthenticationType, options);
             if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
-                writer.WriteObjectValue(Domain, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Domain, options);
             }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                writer.WriteObjectValue(ServicePrincipalId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
             if (Optional.IsDefined(ServicePrincipalCredentialType))
             {
                 writer.WritePropertyName("servicePrincipalCredentialType"u8);
-                writer.WriteObjectValue(ServicePrincipalCredentialType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalCredentialType, options);
             }
             if (Optional.IsDefined(Credential))
             {

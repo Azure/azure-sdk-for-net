@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
             }
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-                writer.WriteObjectValue(Server, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Server, options);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
@@ -93,62 +93,62 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
             if (Optional.IsDefined(EncryptionClient))
             {
                 writer.WritePropertyName("encryptionClient"u8);
-                writer.WriteObjectValue(EncryptionClient, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(EncryptionClient, options);
             }
             if (Optional.IsDefined(EncryptionTypesClient))
             {
                 writer.WritePropertyName("encryptionTypesClient"u8);
-                writer.WriteObjectValue(EncryptionTypesClient, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(EncryptionTypesClient, options);
             }
             if (Optional.IsDefined(CryptoChecksumClient))
             {
                 writer.WritePropertyName("cryptoChecksumClient"u8);
-                writer.WriteObjectValue(CryptoChecksumClient, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(CryptoChecksumClient, options);
             }
             if (Optional.IsDefined(CryptoChecksumTypesClient))
             {
                 writer.WritePropertyName("cryptoChecksumTypesClient"u8);
-                writer.WriteObjectValue(CryptoChecksumTypesClient, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(CryptoChecksumTypesClient, options);
             }
             if (Optional.IsDefined(InitialLobFetchSize))
             {
                 writer.WritePropertyName("initialLobFetchSize"u8);
-                writer.WriteObjectValue(InitialLobFetchSize, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(InitialLobFetchSize, options);
             }
             if (Optional.IsDefined(FetchSize))
             {
                 writer.WritePropertyName("fetchSize"u8);
-                writer.WriteObjectValue(FetchSize, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(FetchSize, options);
             }
             if (Optional.IsDefined(StatementCacheSize))
             {
                 writer.WritePropertyName("statementCacheSize"u8);
-                writer.WriteObjectValue(StatementCacheSize, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(StatementCacheSize, options);
             }
             if (Optional.IsDefined(InitializationString))
             {
                 writer.WritePropertyName("initializationString"u8);
-                writer.WriteObjectValue(InitializationString, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(InitializationString, options);
             }
             if (Optional.IsDefined(EnableBulkLoad))
             {
                 writer.WritePropertyName("enableBulkLoad"u8);
-                writer.WriteObjectValue(EnableBulkLoad, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(EnableBulkLoad, options);
             }
             if (Optional.IsDefined(SupportV1DataTypes))
             {
                 writer.WritePropertyName("supportV1DataTypes"u8);
-                writer.WriteObjectValue(SupportV1DataTypes, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(SupportV1DataTypes, options);
             }
             if (Optional.IsDefined(FetchTswtzAsTimestamp))
             {
                 writer.WritePropertyName("fetchTswtzAsTimestamp"u8);
-                writer.WriteObjectValue(FetchTswtzAsTimestamp, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(FetchTswtzAsTimestamp, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

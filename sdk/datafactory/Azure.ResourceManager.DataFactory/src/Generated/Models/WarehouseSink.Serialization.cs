@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
-                writer.WriteObjectValue(PreCopyScript, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PreCopyScript, options);
             }
             if (Optional.IsDefined(AllowCopyCommand))
             {
                 writer.WritePropertyName("allowCopyCommand"u8);
-                writer.WriteObjectValue(AllowCopyCommand, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(AllowCopyCommand, options);
             }
             if (Optional.IsDefined(CopyCommandSettings))
             {
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TableOption))
             {
                 writer.WritePropertyName("tableOption"u8);
-                writer.WriteObjectValue(TableOption, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(TableOption, options);
             }
             if (Optional.IsDefined(WriteBehavior))
             {
                 writer.WritePropertyName("writeBehavior"u8);
-                writer.WriteObjectValue(WriteBehavior, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(WriteBehavior, options);
             }
         }
 

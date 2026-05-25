@@ -79,37 +79,37 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RowCount))
             {
                 writer.WritePropertyName("rowCount"u8);
-                writer.WriteObjectValue(RowCount, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(RowCount, options);
             }
             if (Optional.IsDefined(RowSkips))
             {
                 writer.WritePropertyName("rowSkips"u8);
-                writer.WriteObjectValue(RowSkips, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(RowSkips, options);
             }
             if (Optional.IsDefined(RfcTableFields))
             {
                 writer.WritePropertyName("rfcTableFields"u8);
-                writer.WriteObjectValue(RfcTableFields, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(RfcTableFields, options);
             }
             if (Optional.IsDefined(RfcTableOptions))
             {
                 writer.WritePropertyName("rfcTableOptions"u8);
-                writer.WriteObjectValue(RfcTableOptions, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(RfcTableOptions, options);
             }
             if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
-                writer.WriteObjectValue(BatchSize, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(BatchSize, options);
             }
             if (Optional.IsDefined(CustomRfcReadTableFunctionModule))
             {
                 writer.WritePropertyName("customRfcReadTableFunctionModule"u8);
-                writer.WriteObjectValue(CustomRfcReadTableFunctionModule, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(CustomRfcReadTableFunctionModule, options);
             }
             if (Optional.IsDefined(SapDataColumnDelimiter))
             {
                 writer.WritePropertyName("sapDataColumnDelimiter"u8);
-                writer.WriteObjectValue(SapDataColumnDelimiter, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SapDataColumnDelimiter, options);
             }
             if (Optional.IsDefined(PartitionOption))
             {

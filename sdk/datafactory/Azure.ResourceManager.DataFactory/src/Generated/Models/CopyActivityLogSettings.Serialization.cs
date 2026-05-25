@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
-                writer.WriteObjectValue(LogLevel, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(LogLevel, options);
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
                 writer.WritePropertyName("enableReliableLogging"u8);
-                writer.WriteObjectValue(EnableReliableLogging, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(EnableReliableLogging, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

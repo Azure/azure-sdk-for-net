@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class CassandraTableDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public CassandraTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public CassandraTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("CassandraTable", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

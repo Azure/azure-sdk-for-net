@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(BlobWriterOverwriteFiles))
             {
                 writer.WritePropertyName("blobWriterOverwriteFiles"u8);
-                writer.WriteObjectValue(BlobWriterOverwriteFiles, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(BlobWriterOverwriteFiles, options);
             }
             if (Optional.IsDefined(BlobWriterDateTimeFormat))
             {
                 writer.WritePropertyName("blobWriterDateTimeFormat"u8);
-                writer.WriteObjectValue(BlobWriterDateTimeFormat, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(BlobWriterDateTimeFormat, options);
             }
             if (Optional.IsDefined(BlobWriterAddHeader))
             {
                 writer.WritePropertyName("blobWriterAddHeader"u8);
-                writer.WriteObjectValue(BlobWriterAddHeader, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(BlobWriterAddHeader, options);
             }
             if (Optional.IsDefined(CopyBehavior))
             {

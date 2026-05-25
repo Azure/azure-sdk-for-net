@@ -83,22 +83,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
-                writer.WriteObjectValue(Timeout, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Timeout, options);
             }
             if (Optional.IsDefined(Sleep))
             {
                 writer.WritePropertyName("sleep"u8);
-                writer.WriteObjectValue(Sleep, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(Sleep, options);
             }
             if (Optional.IsDefined(MinimumSize))
             {
                 writer.WritePropertyName("minimumSize"u8);
-                writer.WriteObjectValue(MinimumSize, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(MinimumSize, options);
             }
             if (Optional.IsDefined(ChildItems))
             {
                 writer.WritePropertyName("childItems"u8);
-                writer.WriteObjectValue(ChildItems, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(ChildItems, options);
             }
             writer.WritePropertyName("dataset"u8);
             writer.WriteObjectValue(Dataset, options);

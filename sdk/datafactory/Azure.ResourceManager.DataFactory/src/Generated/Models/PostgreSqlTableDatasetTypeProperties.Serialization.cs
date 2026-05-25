@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
-                writer.WriteObjectValue(TableName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(TableName, options);
             }
             if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
-                writer.WriteObjectValue(Table, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Table, options);
             }
             if (Optional.IsDefined(SchemaTypePropertiesSchema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue(SchemaTypePropertiesSchema, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SchemaTypePropertiesSchema, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

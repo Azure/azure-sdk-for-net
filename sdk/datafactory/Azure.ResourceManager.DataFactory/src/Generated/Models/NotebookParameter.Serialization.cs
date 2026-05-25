@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Value, options);
             }
             if (Optional.IsDefined(ParameterType))
             {

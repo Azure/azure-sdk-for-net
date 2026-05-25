@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(SsisPropertyOverride)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(Value, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Value, options);
             if (Optional.IsDefined(IsSensitive))
             {
                 writer.WritePropertyName("isSensitive"u8);

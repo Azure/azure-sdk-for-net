@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(FailActivityTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("message"u8);
-            writer.WriteObjectValue(Message, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Message, options);
             writer.WritePropertyName("errorCode"u8);
-            writer.WriteObjectValue(ErrorCode, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ErrorCode, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

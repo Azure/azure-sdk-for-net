@@ -78,27 +78,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
-                writer.WriteObjectValue(FolderPath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(FolderPath, options);
             }
             if (Optional.IsDefined(TableRootLocation))
             {
                 writer.WritePropertyName("tableRootLocation"u8);
-                writer.WriteObjectValue(TableRootLocation, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(TableRootLocation, options);
             }
             if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
-                writer.WriteObjectValue(FileName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(FileName, options);
             }
             if (Optional.IsDefined(ModifiedDatetimeStart))
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
-                writer.WriteObjectValue(ModifiedDatetimeStart, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ModifiedDatetimeStart, options);
             }
             if (Optional.IsDefined(ModifiedDatetimeEnd))
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
-                writer.WriteObjectValue(ModifiedDatetimeEnd, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ModifiedDatetimeEnd, options);
             }
             if (Optional.IsDefined(Format))
             {

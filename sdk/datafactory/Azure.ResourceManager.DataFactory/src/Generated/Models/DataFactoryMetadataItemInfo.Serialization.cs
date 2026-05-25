@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Name, options);
             }
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Value, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

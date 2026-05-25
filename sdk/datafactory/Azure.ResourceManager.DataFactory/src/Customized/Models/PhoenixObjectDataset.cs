@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class PhoenixObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public PhoenixObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public PhoenixObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("PhoenixObject", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

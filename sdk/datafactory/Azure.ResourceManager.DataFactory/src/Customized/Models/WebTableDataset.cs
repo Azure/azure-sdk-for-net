@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class WebTableDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public WebTableDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<int> index) : this()
+        public WebTableDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<int> index) : base("WebTable", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
             Index = index;
         }
     }

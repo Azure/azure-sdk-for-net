@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(SapOpenHubTableDatasetTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("openHubDestinationName"u8);
-            writer.WriteObjectValue(OpenHubDestinationName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(OpenHubDestinationName, options);
             if (Optional.IsDefined(ExcludeLastRequest))
             {
                 writer.WritePropertyName("excludeLastRequest"u8);
-                writer.WriteObjectValue(ExcludeLastRequest, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(ExcludeLastRequest, options);
             }
             if (Optional.IsDefined(BaseRequestId))
             {
                 writer.WritePropertyName("baseRequestId"u8);
-                writer.WriteObjectValue(BaseRequestId, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(BaseRequestId, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

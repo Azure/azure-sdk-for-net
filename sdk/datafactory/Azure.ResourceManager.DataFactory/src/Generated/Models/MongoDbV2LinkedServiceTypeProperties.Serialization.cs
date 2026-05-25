@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(MongoDbV2LinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("connectionString"u8);
-            writer.WriteObjectValue(ConnectionString, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(ConnectionString, options);
             writer.WritePropertyName("database"u8);
-            writer.WriteObjectValue(Database, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Database, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

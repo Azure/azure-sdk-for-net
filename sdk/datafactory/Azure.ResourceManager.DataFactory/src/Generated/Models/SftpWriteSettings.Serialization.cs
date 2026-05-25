@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(OperationTimeout))
             {
                 writer.WritePropertyName("operationTimeout"u8);
-                writer.WriteObjectValue(OperationTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(OperationTimeout, options);
             }
             if (Optional.IsDefined(UseTempFileRename))
             {
                 writer.WritePropertyName("useTempFileRename"u8);
-                writer.WriteObjectValue(UseTempFileRename, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(UseTempFileRename, options);
             }
         }
 

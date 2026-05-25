@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
-                writer.WriteObjectValue(ComputeType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ComputeType, options);
             }
             if (Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
-                writer.WriteObjectValue(CoreCount, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(CoreCount, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

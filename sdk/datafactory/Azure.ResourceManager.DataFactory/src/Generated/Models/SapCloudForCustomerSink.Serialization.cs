@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(HttpRequestTimeout))
             {
                 writer.WritePropertyName("httpRequestTimeout"u8);
-                writer.WriteObjectValue(HttpRequestTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(HttpRequestTimeout, options);
             }
         }
 

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (DataFactoryLinkedServiceReference item in LinkedServices)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<DataFactoryLinkedServiceReference>(item, options);
                 }
                 writer.WriteEndArray();
             }

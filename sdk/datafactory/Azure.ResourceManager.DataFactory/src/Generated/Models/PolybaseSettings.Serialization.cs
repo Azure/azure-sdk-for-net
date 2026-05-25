@@ -83,17 +83,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RejectValue))
             {
                 writer.WritePropertyName("rejectValue"u8);
-                writer.WriteObjectValue(RejectValue, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(RejectValue, options);
             }
             if (Optional.IsDefined(RejectSampleValue))
             {
                 writer.WritePropertyName("rejectSampleValue"u8);
-                writer.WriteObjectValue(RejectSampleValue, options);
+                writer.WriteObjectValue<DataFactoryElement<int>>(RejectSampleValue, options);
             }
             if (Optional.IsDefined(UseTypeDefault))
             {
                 writer.WritePropertyName("useTypeDefault"u8);
-                writer.WriteObjectValue(UseTypeDefault, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(UseTypeDefault, options);
             }
             foreach (var item in AdditionalProperties)
             {

@@ -84,22 +84,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ValidationMode))
             {
                 writer.WritePropertyName("validationMode"u8);
-                writer.WriteObjectValue(ValidationMode, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ValidationMode, options);
             }
             if (Optional.IsDefined(DetectDataType))
             {
                 writer.WritePropertyName("detectDataType"u8);
-                writer.WriteObjectValue(DetectDataType, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(DetectDataType, options);
             }
             if (Optional.IsDefined(Namespaces))
             {
                 writer.WritePropertyName("namespaces"u8);
-                writer.WriteObjectValue(Namespaces, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(Namespaces, options);
             }
             if (Optional.IsDefined(NamespacePrefixes))
             {
                 writer.WritePropertyName("namespacePrefixes"u8);
-                writer.WriteObjectValue(NamespacePrefixes, options);
+                writer.WriteObjectValue<DataFactoryElement<IDictionary<string, string>>>(NamespacePrefixes, options);
             }
         }
 

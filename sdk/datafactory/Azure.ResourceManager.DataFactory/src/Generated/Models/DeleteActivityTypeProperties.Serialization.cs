@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
-                writer.WriteObjectValue(Recursive, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(Recursive, options);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EnableLogging))
             {
                 writer.WritePropertyName("enableLogging"u8);
-                writer.WriteObjectValue(EnableLogging, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(EnableLogging, options);
             }
             if (Optional.IsDefined(LogStorageSettings))
             {

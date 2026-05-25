@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
-                writer.WriteObjectValue(Container, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Container, options);
             }
         }
 

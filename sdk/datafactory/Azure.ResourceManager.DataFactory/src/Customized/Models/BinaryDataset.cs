@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class BinaryDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public BinaryDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public BinaryDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("Binary", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

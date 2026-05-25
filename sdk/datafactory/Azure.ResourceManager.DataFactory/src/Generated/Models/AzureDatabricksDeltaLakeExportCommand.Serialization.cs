@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
-                writer.WriteObjectValue(DateFormat, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(DateFormat, options);
             }
             if (Optional.IsDefined(TimestampFormat))
             {
                 writer.WritePropertyName("timestampFormat"u8);
-                writer.WriteObjectValue(TimestampFormat, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(TimestampFormat, options);
             }
         }
 

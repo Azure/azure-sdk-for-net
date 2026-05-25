@@ -81,36 +81,36 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(AzureDataLakeStoreLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("dataLakeStoreUri"u8);
-            writer.WriteObjectValue(DataLakeStoreUri, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(DataLakeStoreUri, options);
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                writer.WriteObjectValue(ServicePrincipalId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
-                writer.WriteObjectValue(Tenant, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Tenant, options);
             }
             if (Optional.IsDefined(AzureCloudType))
             {
                 writer.WritePropertyName("azureCloudType"u8);
-                writer.WriteObjectValue(AzureCloudType, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AzureCloudType, options);
             }
             if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
-                writer.WriteObjectValue(AccountName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(AccountName, options);
             }
             if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
-                writer.WriteObjectValue(SubscriptionId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(SubscriptionId, options);
             }
             if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
-                writer.WriteObjectValue(ResourceGroupName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ResourceGroupName, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {

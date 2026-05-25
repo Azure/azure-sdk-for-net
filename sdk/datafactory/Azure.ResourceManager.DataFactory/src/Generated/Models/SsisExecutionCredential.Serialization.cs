@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(SsisExecutionCredential)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("domain"u8);
-            writer.WriteObjectValue(Domain, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Domain, options);
             writer.WritePropertyName("userName"u8);
-            writer.WriteObjectValue(UserName, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password, options);
+            writer.WriteObjectValue<DataFactorySecretString>(Password, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FileMissing))
             {
                 writer.WritePropertyName("fileMissing"u8);
-                writer.WriteObjectValue(FileMissing, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(FileMissing, options);
             }
             if (Optional.IsDefined(DataInconsistency))
             {
                 writer.WritePropertyName("dataInconsistency"u8);
-                writer.WriteObjectValue(DataInconsistency, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(DataInconsistency, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

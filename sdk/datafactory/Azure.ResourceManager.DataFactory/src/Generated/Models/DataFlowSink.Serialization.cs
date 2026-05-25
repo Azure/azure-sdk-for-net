@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SchemaLinkedService))
             {
                 writer.WritePropertyName("schemaLinkedService"u8);
-                writer.WriteObjectValue(SchemaLinkedService, options);
+                writer.WriteObjectValue<DataFactoryLinkedServiceReference>(SchemaLinkedService, options);
             }
             if (Optional.IsDefined(RejectedDataLinkedService))
             {
                 writer.WritePropertyName("rejectedDataLinkedService"u8);
-                writer.WriteObjectValue(RejectedDataLinkedService, options);
+                writer.WriteObjectValue<DataFactoryLinkedServiceReference>(RejectedDataLinkedService, options);
             }
         }
 

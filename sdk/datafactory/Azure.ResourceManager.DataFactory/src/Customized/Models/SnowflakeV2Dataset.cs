@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SnowflakeV2Dataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public SnowflakeV2Dataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public SnowflakeV2Dataset(DataFactoryLinkedServiceReference linkedServiceName) : base("SnowflakeV2Table", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

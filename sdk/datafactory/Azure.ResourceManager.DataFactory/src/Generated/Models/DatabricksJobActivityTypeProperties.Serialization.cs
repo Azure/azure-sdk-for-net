@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DatabricksJobActivityTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("jobId"u8);
-            writer.WriteObjectValue(JobId, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(JobId, options);
             if (Optional.IsCollectionDefined(JobParameters))
             {
                 writer.WritePropertyName("jobParameters"u8);

@@ -81,21 +81,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(AzureMLLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("mlEndpoint"u8);
-            writer.WriteObjectValue(MLEndpoint, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(MLEndpoint, options);
             if (Optional.IsDefined(UpdateResourceEndpoint))
             {
                 writer.WritePropertyName("updateResourceEndpoint"u8);
-                writer.WriteObjectValue(UpdateResourceEndpoint, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(UpdateResourceEndpoint, options);
             }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                writer.WriteObjectValue(ServicePrincipalId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
-                writer.WriteObjectValue(Tenant, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Tenant, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Authentication, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

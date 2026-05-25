@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CompressionCodec))
             {
                 writer.WritePropertyName("compressionCodec"u8);
-                writer.WriteObjectValue(CompressionCodec, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(CompressionCodec, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

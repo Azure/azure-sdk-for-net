@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class PrestoObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public PrestoObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public PrestoObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("PrestoObject", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

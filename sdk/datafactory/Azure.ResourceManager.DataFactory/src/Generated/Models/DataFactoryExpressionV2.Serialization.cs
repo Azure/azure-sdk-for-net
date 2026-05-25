@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(V2Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(V2Value, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(V2Value, options);
             }
             if (Optional.IsCollectionDefined(Operators))
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (DataFactoryElement<string> item in Operators)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<DataFactoryElement<string>>(item, options);
                 }
                 writer.WriteEndArray();
             }

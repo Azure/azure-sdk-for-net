@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
-                writer.WriteObjectValue(Recursive, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(Recursive, options);
             }
         }
 

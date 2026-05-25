@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AvroDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public AvroDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public AvroDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("Avro", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
 
         /// <summary> Property restored as workaround for issue #59298. </summary>

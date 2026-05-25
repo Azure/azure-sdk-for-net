@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
-                writer.WriteObjectValue(PartitionColumnName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PartitionColumnName, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

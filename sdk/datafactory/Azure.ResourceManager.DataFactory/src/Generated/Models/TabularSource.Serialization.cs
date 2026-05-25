@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                writer.WriteObjectValue(QueryTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(QueryTimeout, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {

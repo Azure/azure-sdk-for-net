@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(AzureDataExplorerCommandActivityTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("command"u8);
-            writer.WriteObjectValue(Command, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Command, options);
             if (Optional.IsDefined(CommandTimeout))
             {
                 writer.WritePropertyName("commandTimeout"u8);
-                writer.WriteObjectValue(CommandTimeout, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(CommandTimeout, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(HttpLinkedServiceTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("url"u8);
-            writer.WriteObjectValue(Uri, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Uri, options);
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
@@ -90,22 +90,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
             if (Optional.IsDefined(AuthHeaders))
             {
                 writer.WritePropertyName("authHeaders"u8);
-                writer.WriteObjectValue(AuthHeaders, options);
+                writer.WriteObjectValue<DataFactoryElement<IDictionary<string, string>>>(AuthHeaders, options);
             }
             if (Optional.IsDefined(EmbeddedCertData))
             {
                 writer.WritePropertyName("embeddedCertData"u8);
-                writer.WriteObjectValue(EmbeddedCertData, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(EmbeddedCertData, options);
             }
             if (Optional.IsDefined(CertThumbprint))
             {
                 writer.WritePropertyName("certThumbprint"u8);
-                writer.WriteObjectValue(CertThumbprint, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(CertThumbprint, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EnableServerCertificateValidation))
             {
                 writer.WritePropertyName("enableServerCertificateValidation"u8);
-                writer.WriteObjectValue(EnableServerCertificateValidation, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(EnableServerCertificateValidation, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

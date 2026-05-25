@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(WaitActivityTypeProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("waitTimeInSeconds"u8);
-            writer.WriteObjectValue(WaitTimeInSeconds, options);
+            writer.WriteObjectValue<DataFactoryElement<int>>(WaitTimeInSeconds, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

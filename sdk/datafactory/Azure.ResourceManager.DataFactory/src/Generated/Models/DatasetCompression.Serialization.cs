@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(DatasetCompression)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteObjectValue(DatasetCompressionType, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(DatasetCompressionType, options);
             if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
-                writer.WriteObjectValue(Level, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Level, options);
             }
             foreach (var item in AdditionalProperties)
             {

@@ -19,9 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ConcurObjectDataset
     {
         /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public ConcurObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : this()
+        public ConcurObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("ConcurObject", linkedServiceName)
         {
-            LinkedServiceName = linkedServiceName;
         }
     }
 }

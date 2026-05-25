@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 throw new FormatException($"The model {nameof(ScriptActivityScriptBlock)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("text"u8);
-            writer.WriteObjectValue(Text, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Text, options);
             writer.WritePropertyName("type"u8);
-            writer.WriteObjectValue(QueryType, options);
+            writer.WriteObjectValue<DataFactoryElement<string>>(QueryType, options);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);

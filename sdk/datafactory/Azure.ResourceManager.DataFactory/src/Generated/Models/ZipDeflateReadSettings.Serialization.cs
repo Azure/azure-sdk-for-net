@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PreserveZipFileNameAsFolder))
             {
                 writer.WritePropertyName("preserveZipFileNameAsFolder"u8);
-                writer.WriteObjectValue(PreserveZipFileNameAsFolder, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(PreserveZipFileNameAsFolder, options);
             }
         }
 

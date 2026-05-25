@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClientCustomerId))
             {
                 writer.WritePropertyName("clientCustomerID"u8);
-                writer.WriteObjectValue(ClientCustomerId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ClientCustomerId, options);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
@@ -100,42 +100,42 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteObjectValue(ClientId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(ClientId, options);
             }
             if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
-                writer.WriteObjectValue(Email, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(Email, options);
             }
             if (Optional.IsDefined(KeyFilePath))
             {
                 writer.WritePropertyName("keyFilePath"u8);
-                writer.WriteObjectValue(KeyFilePath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(KeyFilePath, options);
             }
             if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath"u8);
-                writer.WriteObjectValue(TrustedCertPath, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(TrustedCertPath, options);
             }
             if (Optional.IsDefined(UseSystemTrustStore))
             {
                 writer.WritePropertyName("useSystemTrustStore"u8);
-                writer.WriteObjectValue(UseSystemTrustStore, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(UseSystemTrustStore, options);
             }
             if (Optional.IsDefined(LoginCustomerId))
             {
                 writer.WritePropertyName("loginCustomerID"u8);
-                writer.WriteObjectValue(LoginCustomerId, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(LoginCustomerId, options);
             }
             if (Optional.IsDefined(GoogleAdsApiVersion))
             {
                 writer.WritePropertyName("googleAdsApiVersion"u8);
-                writer.WriteObjectValue(GoogleAdsApiVersion, options);
+                writer.WriteObjectValue<DataFactoryElement<string>>(GoogleAdsApiVersion, options);
             }
             if (Optional.IsDefined(SupportLegacyDataTypes))
             {
                 writer.WritePropertyName("supportLegacyDataTypes"u8);
-                writer.WriteObjectValue(SupportLegacyDataTypes, options);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(SupportLegacyDataTypes, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
