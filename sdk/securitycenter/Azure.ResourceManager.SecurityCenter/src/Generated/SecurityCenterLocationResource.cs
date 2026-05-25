@@ -31,8 +31,6 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly Alerts _alertsRestClient;
         private readonly ClientDiagnostics _operationResultsClientDiagnostics;
         private readonly OperationResults _operationResultsRestClient;
-        private readonly ClientDiagnostics _operationStatusesClientDiagnostics;
-        private readonly OperationStatuses _operationStatusesRestClient;
         private readonly ClientDiagnostics _externalSecuritySolutionsClientDiagnostics;
         private readonly ExternalSecuritySolutions _externalSecuritySolutionsRestClient;
         private readonly ClientDiagnostics _securitySolutionsReferenceDataClientDiagnostics;
@@ -67,8 +65,6 @@ namespace Azure.ResourceManager.SecurityCenter
             _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2022-01-01");
             _operationResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
             _operationResultsRestClient = new OperationResults(_operationResultsClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2025-10-01-preview");
-            _operationStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _operationStatusesRestClient = new OperationStatuses(_operationStatusesClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2025-10-01-preview");
             _externalSecuritySolutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
             _externalSecuritySolutionsRestClient = new ExternalSecuritySolutions(_externalSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2020-01-01");
             _securitySolutionsReferenceDataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
