@@ -3,6 +3,8 @@
 
 using System;
 using Azure.Core.TestFramework;
+using Azure.Core;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Tests
@@ -73,6 +75,32 @@ namespace Azure.Security.KeyVault.Tests
         public string Sku => GetOptionalVariable("SKU") ?? "premium";
 
         /// <summary>
+        /// Gets a value indicating whether EKM is enabled.
+        /// </summary>
+        public bool IsEkmEnabled => string.Equals(GetOptionalVariable("AZURE_KEYVAULT_EKM_ENABLED"), "true", StringComparison.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// EKM proxy FQDN. Recorded so playback works without the real proxy.
+        /// </summary>
+        public string EkmHost => GetRecordedOptionalVariable("AZURE_KEYVAULT_EKM_HOST");
+
+        /// <summary>
+        /// Optional EKM proxy path prefix.
+        /// </summary>
+        public string EkmPathPrefix => GetRecordedOptionalVariable("AZURE_KEYVAULT_EKM_PATH_PREFIX");
+
+        /// <summary>
+        /// Subject common name of the EKM proxy server certificate.
+        /// </summary>
+        public string EkmServerSubjectCommonName => GetRecordedOptionalVariable("AZURE_KEYVAULT_EKM_SERVER_SUBJECT_CN");
+
+        /// <summary>
+        /// Base64-encoded DER bytes of the EKM server CA certificate.
+        /// Not recorded — only read during Record/Live on the developer's machine.
+        /// </summary>
+        public string EkmServerCaCertBase64 => GetOptionalVariable("AZURE_KEYVAULT_EKM_SERVER_CA_CERT");
+
+        /// <summary>
         /// Gets the value of the "AZURE_KEYVAULT_ATTESTATION_URL" variable.
         /// </summary>
         public Uri AttestationUri => Uri.TryCreate(GetRecordedOptionalVariable("AZURE_KEYVAULT_ATTESTATION_URL"), UriKind.Absolute, out Uri attestationUri)
@@ -89,6 +117,50 @@ namespace Azure.Security.KeyVault.Tests
             {
                 throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
             }
+        }
+
+        /// <summary>
+        /// Throws <see cref="IgnoreException"/> in Live/Record modes when EKM is not enabled.
+        /// Playback always proceeds and uses recordings.
+        /// </summary>
+        public void AssertEkmEnabled()
+        {
+            if (Mode != RecordedTestMode.Playback && !IsEkmEnabled)
+            {
+                throw new IgnoreException(
+                    "EKM live tests require AZURE_KEYVAULT_EKM_ENABLED=true and a provisioned EKM proxy.");
+            }
+        }
+
+        /// <summary>
+        /// Local-developer credential chain used when recording or running live tests.
+        ///
+        /// The base implementation in <see cref="TestEnvironment.CreateDeveloperCredential"/>
+        /// uses <see cref="InteractiveBrowserCredential"/> configured with the WAM broker and
+        /// <c>IntPtr.Zero</c> as the parent window handle. When tests run from
+        /// <c>dotnet test</c> or Test Explorer there is no foreground window the broker can
+        /// attach to, so it fails with:
+        /// "A window handle must be configured. See https://aka.ms/msal-net-wam#parent-window-handles".
+        ///
+        /// This override prefers silent credentials already present on a dev box
+        /// (<c>az login</c>, Visual Studio, VS Code, <c>Connect-AzAccount</c>) and falls back
+        /// to a system-browser <see cref="InteractiveBrowserCredential"/> WITHOUT WAM,
+        /// which does not require a parent window handle and works in headless test hosts.
+        /// </summary>
+        protected override TokenCredential CreateDeveloperCredential()
+        {
+            // Explicitly construct InteractiveBrowserCredentialOptions WITHOUT enabling the
+            // WAM broker; this routes the sign-in through the default system browser using a
+            // localhost redirect, which works in headless test hosts (dotnet test / Test
+            // Explorer) where no parent window handle is available.
+            InteractiveBrowserCredentialOptions browserOptions = new();
+
+            return new ChainedTokenCredential(
+                new AzureCliCredential(),
+                new VisualStudioCredential(),
+                new VisualStudioCodeCredential(),
+                new AzurePowerShellCredential(),
+                new InteractiveBrowserCredential(browserOptions));
         }
     }
 }
