@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The risk level of the threat that was detected. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified. </summary>
-    public readonly partial struct AlertSeverity : IEquatable<AlertSeverity>
+    public readonly partial struct SecurityAlertSeverity : IEquatable<SecurityAlertSeverity>
     {
         private readonly string _value;
         /// <summary> Informational. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> High. </summary>
         private const string HighValue = "High";
 
-        /// <summary> Initializes a new instance of <see cref="AlertSeverity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AlertSeverity(string value)
+        public SecurityAlertSeverity(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Informational. </summary>
-        public static AlertSeverity Informational { get; } = new AlertSeverity(InformationalValue);
+        public static SecurityAlertSeverity Informational { get; } = new SecurityAlertSeverity(InformationalValue);
 
         /// <summary> Low. </summary>
-        public static AlertSeverity Low { get; } = new AlertSeverity(LowValue);
+        public static SecurityAlertSeverity Low { get; } = new SecurityAlertSeverity(LowValue);
 
         /// <summary> Medium. </summary>
-        public static AlertSeverity Medium { get; } = new AlertSeverity(MediumValue);
+        public static SecurityAlertSeverity Medium { get; } = new SecurityAlertSeverity(MediumValue);
 
         /// <summary> High. </summary>
-        public static AlertSeverity High { get; } = new AlertSeverity(HighValue);
+        public static SecurityAlertSeverity High { get; } = new SecurityAlertSeverity(HighValue);
 
-        /// <summary> Determines if two <see cref="AlertSeverity"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityAlertSeverity"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AlertSeverity left, AlertSeverity right) => left.Equals(right);
+        public static bool operator ==(SecurityAlertSeverity left, SecurityAlertSeverity right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AlertSeverity"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityAlertSeverity"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AlertSeverity left, AlertSeverity right) => !left.Equals(right);
+        public static bool operator !=(SecurityAlertSeverity left, SecurityAlertSeverity right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AlertSeverity"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityAlertSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertSeverity(string value) => new AlertSeverity(value);
+        public static implicit operator SecurityAlertSeverity(string value) => new SecurityAlertSeverity(value);
 
-        /// <summary> Converts a string to a <see cref="AlertSeverity"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityAlertSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertSeverity?(string value) => value == null ? null : new AlertSeverity(value);
+        public static implicit operator SecurityAlertSeverity?(string value) => value == null ? null : new SecurityAlertSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AlertSeverity other && Equals(other);
+        public override bool Equals(object obj) => obj is SecurityAlertSeverity other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AlertSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SecurityAlertSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

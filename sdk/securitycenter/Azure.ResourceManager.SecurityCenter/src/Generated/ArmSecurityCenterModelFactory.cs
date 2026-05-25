@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="description"> Description of the suspicious activity that was detected. </param>
         /// <param name="severity"> The risk level of the threat that was detected. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified. </param>
         /// <param name="intent"> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center's supported kill chain intents. </param>
-        /// <param name="startTimeUtc"> The UTC time of the first event or activity included in the alert in ISO8601 format. </param>
-        /// <param name="endTimeUtc"> The UTC time of the last event or activity included in the alert in ISO8601 format. </param>
+        /// <param name="startOn"> The UTC time of the first event or activity included in the alert in ISO8601 format. </param>
+        /// <param name="endOn"> The UTC time of the last event or activity included in the alert in ISO8601 format. </param>
         /// <param name="resourceIdentifiers"> The resource identifiers that can be used to direct the alert to the right product exposure group (tenant, workspace, subscription etc.). There can be multiple identifiers of different type per alert. </param>
         /// <param name="remediationSteps"> Manual action items to take to remediate the alert. </param>
         /// <param name="vendorName"> The name of the vendor that raises the alert. </param>
         /// <param name="status"> The life cycle status of the alert. </param>
         /// <param name="extendedLinks"> Links related to the alert. </param>
         /// <param name="alertUri"> A direct link to the alert page in Azure Portal. </param>
-        /// <param name="timeGeneratedUtc"> The UTC time the alert was generated in ISO8601 format. </param>
+        /// <param name="generatedOn"> The UTC time the alert was generated in ISO8601 format. </param>
         /// <param name="productName"> The name of the product which published this alert (Microsoft Sentinel, Microsoft Defender for Identity, Microsoft Defender for Endpoint, Microsoft Defender for Office, Microsoft Defender for Cloud Apps, and so on). </param>
-        /// <param name="processingEndTimeUtc"> The UTC processing end time of the alert in ISO8601 format. </param>
+        /// <param name="processingEndOn"> The UTC processing end time of the alert in ISO8601 format. </param>
         /// <param name="entities"> A list of entities related to the alert. </param>
         /// <param name="isIncident"> This field determines whether the alert is an incident (a compound grouping of several alerts) or a single alert. </param>
         /// <param name="correlationKey"> Key for corelating related alerts. Alerts with the same correlation key considered to be related. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="subTechniques"> Kill chain related sub-techniques behind the alert. </param>
         /// <param name="supportingEvidence"> Changing set of properties depending on the supportingEvidence type. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityAlertData"/> instance for mocking. </returns>
-        public static SecurityAlertData SecurityAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string version = default, string alertType = default, string systemAlertId = default, string productComponentName = default, string alertDisplayName = default, string description = default, AlertSeverity? severity = default, Intent? intent = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? endTimeUtc = default, IEnumerable<SecurityAlertResourceIdentifier> resourceIdentifiers = default, IEnumerable<string> remediationSteps = default, string vendorName = default, AlertStatus? status = default, IEnumerable<IDictionary<string, string>> extendedLinks = default, string alertUri = default, DateTimeOffset? timeGeneratedUtc = default, string productName = default, DateTimeOffset? processingEndTimeUtc = default, IEnumerable<AlertEntity> entities = default, bool? isIncident = default, string correlationKey = default, IDictionary<string, string> extendedProperties = default, string compromisedEntity = default, IEnumerable<string> techniques = default, IEnumerable<string> subTechniques = default, AlertPropertiesSupportingEvidence supportingEvidence = default)
+        public static SecurityAlertData SecurityAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string version = default, string alertType = default, string systemAlertId = default, string productComponentName = default, string alertDisplayName = default, string description = default, SecurityAlertSeverity? severity = default, KillChainIntent? intent = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<SecurityAlertResourceIdentifier> resourceIdentifiers = default, IEnumerable<string> remediationSteps = default, string vendorName = default, SecurityAlertStatus? status = default, IEnumerable<IDictionary<string, string>> extendedLinks = default, Uri alertUri = default, DateTimeOffset? generatedOn = default, string productName = default, DateTimeOffset? processingEndOn = default, IEnumerable<SecurityAlertEntity> entities = default, bool? isIncident = default, string correlationKey = default, IDictionary<string, string> extendedProperties = default, string compromisedEntity = default, IEnumerable<string> techniques = default, IEnumerable<string> subTechniques = default, SecurityAlertSupportingEvidence supportingEvidence = default)
         {
             return new SecurityAlertData(
                 id,
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                version is null && alertType is null && systemAlertId is null && productComponentName is null && alertDisplayName is null && description is null && severity is null && intent is null && startTimeUtc is null && endTimeUtc is null && resourceIdentifiers is null && remediationSteps is null && vendorName is null && status is null && extendedLinks is null && alertUri is null && timeGeneratedUtc is null && productName is null && processingEndTimeUtc is null && entities is null && isIncident is null && correlationKey is null && extendedProperties is null && compromisedEntity is null && techniques is null && subTechniques is null && supportingEvidence is null ? default : new AlertProperties(
+                version is null && alertType is null && systemAlertId is null && productComponentName is null && alertDisplayName is null && description is null && severity is null && intent is null && startOn is null && endOn is null && resourceIdentifiers is null && remediationSteps is null && vendorName is null && status is null && extendedLinks is null && alertUri is null && generatedOn is null && productName is null && processingEndOn is null && entities is null && isIncident is null && correlationKey is null && extendedProperties is null && compromisedEntity is null && techniques is null && subTechniques is null && supportingEvidence is null ? default : new AlertProperties(
                     version,
                     alertType,
                     systemAlertId,
@@ -67,18 +67,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description,
                     severity,
                     intent,
-                    startTimeUtc,
-                    endTimeUtc,
+                    startOn,
+                    endOn,
                     (resourceIdentifiers ?? new ChangeTrackingList<SecurityAlertResourceIdentifier>()).ToList(),
                     (remediationSteps ?? new ChangeTrackingList<string>()).ToList(),
                     vendorName,
                     status,
                     (extendedLinks ?? new ChangeTrackingList<IDictionary<string, string>>()).ToList(),
                     alertUri,
-                    timeGeneratedUtc,
+                    generatedOn,
                     productName,
-                    processingEndTimeUtc,
-                    (entities ?? new ChangeTrackingList<AlertEntity>()).ToList(),
+                    processingEndOn,
+                    (entities ?? new ChangeTrackingList<SecurityAlertEntity>()).ToList(),
                     isIncident,
                     correlationKey,
                     extendedProperties,
@@ -115,39 +115,36 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Changing set of properties depending on the entity type. </summary>
-        /// <param name="type"> Type of entity. </param>
+        /// <param name="alertEntityType"> Type of entity. </param>
         /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.AlertEntity"/> instance for mocking. </returns>
-        public static AlertEntity AlertEntity(string @type = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        /// <returns> A new <see cref="Models.SecurityAlertEntity"/> instance for mocking. </returns>
+        public static SecurityAlertEntity SecurityAlertEntity(string alertEntityType = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new AlertEntity(@type, additionalProperties);
+            return new SecurityAlertEntity(alertEntityType, additionalProperties);
         }
 
         /// <summary> Changing set of properties depending on the supportingEvidence type. </summary>
-        /// <param name="type"> Type of the supportingEvidence. </param>
+        /// <param name="securityAlertSupportingEvidenceType"> Type of the supportingEvidence. </param>
         /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.AlertPropertiesSupportingEvidence"/> instance for mocking. </returns>
-        public static AlertPropertiesSupportingEvidence AlertPropertiesSupportingEvidence(string @type = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        /// <returns> A new <see cref="Models.SecurityAlertSupportingEvidence"/> instance for mocking. </returns>
+        public static SecurityAlertSupportingEvidence SecurityAlertSupportingEvidence(string securityAlertSupportingEvidenceType = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new AlertPropertiesSupportingEvidence(@type, additionalProperties);
+            return new SecurityAlertSupportingEvidence(securityAlertSupportingEvidenceType, additionalProperties);
         }
 
-        /// <summary>
-        /// Describes properties of an alert simulation request
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AlertSimulatorBundlesRequestProperties"/>.
-        /// </summary>
+        /// <summary> Describes properties of an alert simulation request. </summary>
         /// <param name="kind"> The kind of alert simulation. </param>
         /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.AlertSimulatorRequestProperties"/> instance for mocking. </returns>
-        public static AlertSimulatorRequestProperties AlertSimulatorRequestProperties(string kind = default, IDictionary<string, BinaryData> additionalProperties = default)
+        /// <returns> A new <see cref="Models.SecurityAlertSimulatorRequestProperties"/> instance for mocking. </returns>
+        public static SecurityAlertSimulatorRequestProperties SecurityAlertSimulatorRequestProperties(string kind = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new UnknownAlertSimulatorRequestProperties(new SecurityCenterKind(kind), additionalProperties);
+            return new SecurityAlertSimulatorRequestProperties(new SecurityCenterKind(kind), additionalProperties);
         }
 
         /// <summary> Simulate alerts according to this bundles. </summary>
@@ -206,7 +203,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="userImpact"> The user impact of the assessment. </param>
         /// <param name="implementationEffort"> The implementation effort required to remediate this assessment. </param>
         /// <param name="threats"> Gets the Threats. </param>
-        /// <param name="preview"> True if this assessment is in preview release status. </param>
+        /// <param name="isPreview"> True if this assessment is in preview release status. </param>
         /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
         /// <param name="partnerData"> Describes the partner that created the assessment. </param>
         /// <param name="publishDates"> Gets or sets the PublishDates. </param>
@@ -214,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="tactics"> Gets the Tactics. </param>
         /// <param name="techniques"> Gets the Techniques. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityAssessmentMetadataData"/> instance for mocking. </returns>
-        public static SecurityAssessmentMetadataData SecurityAssessmentMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, ResourceIdentifier policyDefinitionId = default, string description = default, string remediationDescription = default, IEnumerable<SecurityAssessmentResourceCategory> categories = default, SecurityAssessmentSeverity? severity = default, SecurityAssessmentUserImpact? userImpact = default, ImplementationEffort? implementationEffort = default, IEnumerable<SecurityThreat> threats = default, bool? preview = default, SecurityAssessmentType? assessmentType = default, SecurityAssessmentMetadataPartner partnerData = default, SecurityAssessmentMetadataPropertiesResultPublishOn publishDates = default, string plannedDeprecationDate = default, IEnumerable<Tactics> tactics = default, IEnumerable<Techniques> techniques = default)
+        public static SecurityAssessmentMetadataData SecurityAssessmentMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, ResourceIdentifier policyDefinitionId = default, string description = default, string remediationDescription = default, IEnumerable<SecurityAssessmentResourceCategory> categories = default, SecurityAssessmentSeverity? severity = default, SecurityAssessmentUserImpact? userImpact = default, ImplementationEffort? implementationEffort = default, IEnumerable<SecurityThreat> threats = default, bool? isPreview = default, SecurityAssessmentType? assessmentType = default, SecurityAssessmentMetadataPartner partnerData = default, SecurityAssessmentPublishDates publishDates = default, string plannedDeprecationDate = default, IEnumerable<SecurityAssessmentTactic> tactics = default, IEnumerable<SecurityAssessmentTechnique> techniques = default)
         {
             return new SecurityAssessmentMetadataData(
                 id,
@@ -222,7 +219,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                displayName is null && policyDefinitionId is null && description is null && remediationDescription is null && categories is null && severity is null && userImpact is null && implementationEffort is null && threats is null && preview is null && assessmentType is null && partnerData is null && publishDates is null && plannedDeprecationDate is null && tactics is null && techniques is null ? default : new SecurityAssessmentMetadataPropertiesResult(
+                displayName is null && policyDefinitionId is null && description is null && remediationDescription is null && categories is null && severity is null && userImpact is null && implementationEffort is null && threats is null && isPreview is null && assessmentType is null && partnerData is null && publishDates is null && plannedDeprecationDate is null && tactics is null && techniques is null ? default : new SecurityAssessmentMetadataPropertiesResult(
                     displayName,
                     policyDefinitionId,
                     description,
@@ -232,14 +229,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     userImpact,
                     implementationEffort,
                     (threats ?? new ChangeTrackingList<SecurityThreat>()).ToList(),
-                    preview,
+                    isPreview,
                     assessmentType.GetValueOrDefault(),
                     partnerData,
                     null,
                     publishDates,
                     plannedDeprecationDate,
-                    (tactics ?? new ChangeTrackingList<Tactics>()).ToList(),
-                    (techniques ?? new ChangeTrackingList<Techniques>()).ToList()));
+                    (tactics ?? new ChangeTrackingList<SecurityAssessmentTactic>()).ToList(),
+                    (techniques ?? new ChangeTrackingList<SecurityAssessmentTechnique>()).ToList()));
         }
 
         /// <summary> Describes properties of an assessment metadata response. </summary>
@@ -252,7 +249,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="userImpact"> The user impact of the assessment. </param>
         /// <param name="implementationEffort"> The implementation effort required to remediate this assessment. </param>
         /// <param name="threats"></param>
-        /// <param name="preview"> True if this assessment is in preview release status. </param>
+        /// <param name="isPreview"> True if this assessment is in preview release status. </param>
         /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
         /// <param name="partnerData"> Describes the partner that created the assessment. </param>
         /// <param name="publishDates"></param>
@@ -260,12 +257,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="tactics"></param>
         /// <param name="techniques"></param>
         /// <returns> A new <see cref="Models.SecurityAssessmentMetadataPropertiesResult"/> instance for mocking. </returns>
-        public static SecurityAssessmentMetadataPropertiesResult SecurityAssessmentMetadataPropertiesResult(string displayName = default, ResourceIdentifier policyDefinitionId = default, string description = default, string remediationDescription = default, IEnumerable<SecurityAssessmentResourceCategory> categories = default, SecurityAssessmentSeverity severity = default, SecurityAssessmentUserImpact? userImpact = default, ImplementationEffort? implementationEffort = default, IEnumerable<SecurityThreat> threats = default, bool? preview = default, SecurityAssessmentType assessmentType = default, SecurityAssessmentMetadataPartner partnerData = default, SecurityAssessmentMetadataPropertiesResultPublishOn publishDates = default, string plannedDeprecationDate = default, IEnumerable<Tactics> tactics = default, IEnumerable<Techniques> techniques = default)
+        public static SecurityAssessmentMetadataPropertiesResult SecurityAssessmentMetadataPropertiesResult(string displayName = default, ResourceIdentifier policyDefinitionId = default, string description = default, string remediationDescription = default, IEnumerable<SecurityAssessmentResourceCategory> categories = default, SecurityAssessmentSeverity severity = default, SecurityAssessmentUserImpact? userImpact = default, ImplementationEffort? implementationEffort = default, IEnumerable<SecurityThreat> threats = default, bool? isPreview = default, SecurityAssessmentType assessmentType = default, SecurityAssessmentMetadataPartner partnerData = default, SecurityAssessmentPublishDates publishDates = default, string plannedDeprecationDate = default, IEnumerable<SecurityAssessmentTactic> tactics = default, IEnumerable<SecurityAssessmentTechnique> techniques = default)
         {
             categories ??= new ChangeTrackingList<SecurityAssessmentResourceCategory>();
             threats ??= new ChangeTrackingList<SecurityThreat>();
-            tactics ??= new ChangeTrackingList<Tactics>();
-            techniques ??= new ChangeTrackingList<Techniques>();
+            tactics ??= new ChangeTrackingList<SecurityAssessmentTactic>();
+            techniques ??= new ChangeTrackingList<SecurityAssessmentTechnique>();
 
             return new SecurityAssessmentMetadataPropertiesResult(
                 displayName,
@@ -277,7 +274,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 userImpact,
                 implementationEffort,
                 threats.ToList(),
-                preview,
+                isPreview,
                 assessmentType,
                 partnerData,
                 additionalBinaryDataProperties: null,
@@ -297,11 +294,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="userImpact"> The user impact of the assessment. </param>
         /// <param name="implementationEffort"> The implementation effort required to remediate this assessment. </param>
         /// <param name="threats"></param>
-        /// <param name="preview"> True if this assessment is in preview release status. </param>
+        /// <param name="isPreview"> True if this assessment is in preview release status. </param>
         /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
         /// <param name="partnerData"> Describes the partner that created the assessment. </param>
         /// <returns> A new <see cref="Models.SecurityAssessmentMetadataProperties"/> instance for mocking. </returns>
-        public static SecurityAssessmentMetadataProperties SecurityAssessmentMetadataProperties(string displayName = default, ResourceIdentifier policyDefinitionId = default, string description = default, string remediationDescription = default, IEnumerable<SecurityAssessmentResourceCategory> categories = default, SecurityAssessmentSeverity severity = default, SecurityAssessmentUserImpact? userImpact = default, ImplementationEffort? implementationEffort = default, IEnumerable<SecurityThreat> threats = default, bool? preview = default, SecurityAssessmentType assessmentType = default, SecurityAssessmentMetadataPartner partnerData = default)
+        public static SecurityAssessmentMetadataProperties SecurityAssessmentMetadataProperties(string displayName = default, ResourceIdentifier policyDefinitionId = default, string description = default, string remediationDescription = default, IEnumerable<SecurityAssessmentResourceCategory> categories = default, SecurityAssessmentSeverity severity = default, SecurityAssessmentUserImpact? userImpact = default, ImplementationEffort? implementationEffort = default, IEnumerable<SecurityThreat> threats = default, bool? isPreview = default, SecurityAssessmentType assessmentType = default, SecurityAssessmentMetadataPartner partnerData = default)
         {
             categories ??= new ChangeTrackingList<SecurityAssessmentResourceCategory>();
             threats ??= new ChangeTrackingList<SecurityThreat>();
@@ -316,7 +313,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 userImpact,
                 implementationEffort,
                 threats.ToList(),
-                preview,
+                isPreview,
                 assessmentType,
                 partnerData,
                 additionalBinaryDataProperties: null);
@@ -326,17 +323,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="description"> The security automation description. </param>
         /// <param name="isEnabled"> Indicates whether the security automation is enabled. </param>
         /// <param name="scopes"> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </param>
         /// <param name="sources"> A collection of the source event types which evaluate the security automation set of rules. </param>
         /// <param name="actions"> A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityAutomationData"/> instance for mocking. </returns>
-        public static SecurityAutomationData SecurityAutomationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, bool? isEnabled = default, IEnumerable<AutomationScope> scopes = default, IEnumerable<AutomationSource> sources = default, IEnumerable<AutomationAction> actions = default, string kind = default, ETag? eTag = default)
+        public static SecurityAutomationData SecurityAutomationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string description = default, bool? isEnabled = default, IEnumerable<AutomationScope> scopes = default, IEnumerable<AutomationSource> sources = default, IEnumerable<AutomationAction> actions = default, IDictionary<string, string> tags = default, string kind = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -346,7 +343,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
                 description is null && isEnabled is null && scopes is null && sources is null && actions is null ? default : new AutomationProperties(
                     description,
@@ -355,6 +351,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     (sources ?? new ChangeTrackingList<AutomationSource>()).ToList(),
                     (actions ?? new ChangeTrackingList<AutomationAction>()).ToList(),
                     null),
+                tags,
                 kind,
                 eTag);
         }
@@ -1039,43 +1036,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     skippedResources,
                     unsupportedResources,
                     null));
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="hierarchyIdentifier"> The multi cloud resource identifier (account id in case of AWS connector, project number in case of GCP connector). </param>
-        /// <param name="hierarchyIdentifierTrialEndOn"> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </param>
-        /// <param name="environmentName"> The multi cloud resource's cloud name. </param>
-        /// <param name="offerings"> A collection of offerings for the security connector. </param>
-        /// <param name="environmentData"> The security connector environment data. </param>
-        /// <param name="kind"> Kind of the resource. </param>
-        /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityConnectorData"/> instance for mocking. </returns>
-        public static SecurityConnectorData SecurityConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string hierarchyIdentifier = default, DateTimeOffset? hierarchyIdentifierTrialEndOn = default, CloudName? environmentName = default, IEnumerable<SecurityCenterCloudOffering> offerings = default, SecurityConnectorEnvironmentInfo environmentData = default, string kind = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SecurityConnectorData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                hierarchyIdentifier is null && hierarchyIdentifierTrialEndOn is null && environmentName is null && offerings is null && environmentData is null ? default : new SecurityConnectorProperties(
-                    hierarchyIdentifier,
-                    hierarchyIdentifierTrialEndOn,
-                    environmentName,
-                    (offerings ?? new ChangeTrackingList<SecurityCenterCloudOffering>()).ToList(),
-                    environmentData,
-                    null),
-                kind,
-                eTag);
         }
 
         /// <summary> Configuration for VM scanning. </summary>
@@ -2339,12 +2299,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="state"> State of the task (Active, Resolved etc.). </param>
-        /// <param name="creationTimeUtc"> The time this task was discovered in UTC. </param>
-        /// <param name="securityTaskParameters"> Changing set of properties, depending on the task type that is derived from the name field. </param>
-        /// <param name="lastStateChangeTimeUtc"> The time this task's details were last changed in UTC. </param>
+        /// <param name="createdOn"> The time this task was discovered in UTC. </param>
+        /// <param name="lastStateChangedOn"> The time this task's details were last changed in UTC. </param>
         /// <param name="subState"> Additional data on the state of the task. </param>
+        /// <param name="securityTaskParameters"> Changing set of properties, depending on the task type that is derived from the name field. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityTaskData"/> instance for mocking. </returns>
-        public static SecurityTaskData SecurityTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string state = default, DateTimeOffset? creationTimeUtc = default, SecurityTaskInfo securityTaskParameters = default, DateTimeOffset? lastStateChangeTimeUtc = default, string subState = default)
+        public static SecurityTaskData SecurityTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string state = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastStateChangedOn = default, string subState = default, SecurityTaskProperties securityTaskParameters = default)
         {
             return new SecurityTaskData(
                 id,
@@ -2352,29 +2312,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                state is null && creationTimeUtc is null && securityTaskParameters is null && lastStateChangeTimeUtc is null && subState is null ? default : new SecurityTaskProperties(
+                state is null && createdOn is null && lastStateChangedOn is null && subState is null && securityTaskParameters is null ? default : new SecurityTaskPropertiesGenerated(
                     state,
-                    creationTimeUtc,
+                    createdOn,
                     securityTaskParameters,
-                    lastStateChangeTimeUtc,
+                    lastStateChangedOn,
                     subState,
                     null));
         }
 
         /// <summary> Describes properties of a task. </summary>
         /// <param name="state"> State of the task (Active, Resolved etc.). </param>
-        /// <param name="creationTimeUtc"> The time this task was discovered in UTC. </param>
+        /// <param name="createdOn"> The time this task was discovered in UTC. </param>
         /// <param name="securityTaskParameters"> Changing set of properties, depending on the task type that is derived from the name field. </param>
-        /// <param name="lastStateChangeTimeUtc"> The time this task's details were last changed in UTC. </param>
+        /// <param name="lastStateChangedOn"> The time this task's details were last changed in UTC. </param>
         /// <param name="subState"> Additional data on the state of the task. </param>
-        /// <returns> A new <see cref="Models.SecurityTaskProperties"/> instance for mocking. </returns>
-        public static SecurityTaskProperties SecurityTaskProperties(string state = default, DateTimeOffset? creationTimeUtc = default, SecurityTaskInfo securityTaskParameters = default, DateTimeOffset? lastStateChangeTimeUtc = default, string subState = default)
+        /// <returns> A new <see cref="Models.SecurityTaskPropertiesGenerated"/> instance for mocking. </returns>
+        public static SecurityTaskPropertiesGenerated SecurityTaskPropertiesGenerated(string state = default, DateTimeOffset? createdOn = default, SecurityTaskProperties securityTaskParameters = default, DateTimeOffset? lastStateChangedOn = default, string subState = default)
         {
-            return new SecurityTaskProperties(
+            return new SecurityTaskPropertiesGenerated(
                 state,
-                creationTimeUtc,
+                createdOn,
                 securityTaskParameters,
-                lastStateChangeTimeUtc,
+                lastStateChangedOn,
                 subState,
                 additionalBinaryDataProperties: null);
         }
@@ -2382,12 +2342,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
         /// <param name="taskName"> Name of the task type. </param>
         /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.SecurityTaskInfo"/> instance for mocking. </returns>
-        public static SecurityTaskInfo SecurityTaskInfo(string taskName = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        /// <returns> A new <see cref="Models.SecurityTaskProperties"/> instance for mocking. </returns>
+        public static SecurityTaskProperties SecurityTaskProperties(string taskName = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new SecurityTaskInfo(taskName, additionalProperties);
+            return new SecurityTaskProperties(taskName, additionalProperties);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2787,51 +2747,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             value ??= new ChangeTrackingList<IoTSecuritySolutionAnalyticsModelData>();
 
             return new IoTSecuritySolutionAnalyticsModelList(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="workspace"> Workspace resource ID. </param>
-        /// <param name="displayName"> Resource display name. </param>
-        /// <param name="status"> Status of the IoT Security solution. </param>
-        /// <param name="export"> List of additional options for exporting to workspace data. </param>
-        /// <param name="disabledDataSources"> Disabled data sources. Disabling these data sources compromises the system. </param>
-        /// <param name="iotHubs"> IoT Hub resource IDs. </param>
-        /// <param name="userDefinedResources"> Properties of the IoT Security solution's user defined resources. </param>
-        /// <param name="autoDiscoveredResources"> List of resources that were automatically discovered as relevant to the security solution. </param>
-        /// <param name="recommendationsConfiguration"> List of the configuration status for each recommendation type. </param>
-        /// <param name="unmaskedIpLoggingStatus"> Unmasked IP address logging status. </param>
-        /// <param name="additionalWorkspaces"> List of additional workspaces. </param>
-        /// <returns> A new <see cref="SecurityCenter.IotSecuritySolutionData"/> instance for mocking. </returns>
-        public static IotSecuritySolutionData IotSecuritySolutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string workspace = default, string displayName = default, SecuritySolutionStatus? status = default, IEnumerable<ExportData> export = default, IEnumerable<DataSource> disabledDataSources = default, IEnumerable<string> iotHubs = default, UserDefinedResourcesProperties userDefinedResources = default, IEnumerable<string> autoDiscoveredResources = default, IEnumerable<RecommendationConfigurationProperties> recommendationsConfiguration = default, UnmaskedIpLoggingStatus? unmaskedIpLoggingStatus = default, IEnumerable<AdditionalWorkspacesProperties> additionalWorkspaces = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new IotSecuritySolutionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                workspace is null && displayName is null && status is null && export is null && disabledDataSources is null && iotHubs is null && userDefinedResources is null && autoDiscoveredResources is null && recommendationsConfiguration is null && unmaskedIpLoggingStatus is null && additionalWorkspaces is null ? default : new IoTSecuritySolutionProperties(
-                    workspace,
-                    displayName,
-                    status,
-                    (export ?? new ChangeTrackingList<ExportData>()).ToList(),
-                    (disabledDataSources ?? new ChangeTrackingList<DataSource>()).ToList(),
-                    (iotHubs ?? new ChangeTrackingList<string>()).ToList(),
-                    userDefinedResources,
-                    (autoDiscoveredResources ?? new ChangeTrackingList<string>()).ToList(),
-                    (recommendationsConfiguration ?? new ChangeTrackingList<RecommendationConfigurationProperties>()).ToList(),
-                    unmaskedIpLoggingStatus,
-                    (additionalWorkspaces ?? new ChangeTrackingList<AdditionalWorkspacesProperties>()).ToList(),
-                    null));
         }
 
         /// <summary> The type of IoT Security recommendation. </summary>

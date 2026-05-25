@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
 
-            Tactics = new ChangeTrackingList<Tactics>();
-            Techniques = new ChangeTrackingList<Techniques>();
+            Tactics = new ChangeTrackingList<SecurityAssessmentTactic>();
+            Techniques = new ChangeTrackingList<SecurityAssessmentTechnique>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataPropertiesResult"/>. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="userImpact"> The user impact of the assessment. </param>
         /// <param name="implementationEffort"> The implementation effort required to remediate this assessment. </param>
         /// <param name="threats"></param>
-        /// <param name="preview"> True if this assessment is in preview release status. </param>
+        /// <param name="isPreview"> True if this assessment is in preview release status. </param>
         /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
         /// <param name="partnerData"> Describes the partner that created the assessment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="plannedDeprecationDate"></param>
         /// <param name="tactics"></param>
         /// <param name="techniques"></param>
-        internal SecurityAssessmentMetadataPropertiesResult(string displayName, ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? preview, SecurityAssessmentType assessmentType, SecurityAssessmentMetadataPartner partnerData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityAssessmentMetadataPropertiesResultPublishOn publishDates, string plannedDeprecationDate, IList<Tactics> tactics, IList<Techniques> techniques) : base(displayName, policyDefinitionId, description, remediationDescription, categories, severity, userImpact, implementationEffort, threats, preview, assessmentType, partnerData, additionalBinaryDataProperties)
+        internal SecurityAssessmentMetadataPropertiesResult(string displayName, ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? isPreview, SecurityAssessmentType assessmentType, SecurityAssessmentMetadataPartner partnerData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityAssessmentPublishDates publishDates, string plannedDeprecationDate, IList<SecurityAssessmentTactic> tactics, IList<SecurityAssessmentTechnique> techniques) : base(displayName, policyDefinitionId, description, remediationDescription, categories, severity, userImpact, implementationEffort, threats, isPreview, assessmentType, partnerData, additionalBinaryDataProperties)
         {
             PublishDates = publishDates;
             PlannedDeprecationDate = plannedDeprecationDate;
@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Gets or sets the PublishDates. </summary>
-        public SecurityAssessmentMetadataPropertiesResultPublishOn PublishDates { get; set; }
+        public SecurityAssessmentPublishDates PublishDates { get; set; }
 
         /// <summary> Gets or sets the PlannedDeprecationDate. </summary>
         public string PlannedDeprecationDate { get; set; }
 
         /// <summary> Gets the Tactics. </summary>
-        public IList<Tactics> Tactics { get; } = new ChangeTrackingList<Tactics>();
+        public IList<SecurityAssessmentTactic> Tactics { get; } = new ChangeTrackingList<SecurityAssessmentTactic>();
 
         /// <summary> Gets the Techniques. </summary>
-        public IList<Techniques> Techniques { get; } = new ChangeTrackingList<Techniques>();
+        public IList<SecurityAssessmentTechnique> Techniques { get; } = new ChangeTrackingList<SecurityAssessmentTechnique>();
     }
 }

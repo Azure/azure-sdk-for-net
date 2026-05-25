@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Preview))
+            if (Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("preview"u8);
-                writer.WriteBooleanValue(Preview.Value);
+                writer.WriteBooleanValue(IsPreview.Value);
             }
             writer.WritePropertyName("assessmentType"u8);
             writer.WriteStringValue(AssessmentType.ToString());
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             SecurityAssessmentUserImpact? userImpact = default;
             ImplementationEffort? implementationEffort = default;
             IList<SecurityThreat> threats = default;
-            bool? preview = default;
+            bool? isPreview = default;
             SecurityAssessmentType assessmentType = default;
             SecurityAssessmentMetadataPartner partnerData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    preview = prop.Value.GetBoolean();
+                    isPreview = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("assessmentType"u8))
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 userImpact,
                 implementationEffort,
                 threats ?? new ChangeTrackingList<SecurityThreat>(),
-                preview,
+                isPreview,
                 assessmentType,
                 partnerData,
                 additionalBinaryDataProperties);

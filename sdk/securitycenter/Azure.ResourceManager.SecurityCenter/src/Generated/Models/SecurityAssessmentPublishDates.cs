@@ -11,27 +11,27 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The SecurityAssessmentMetadataPropertiesResultPublishOn. </summary>
-    public partial class SecurityAssessmentMetadataPropertiesResultPublishOn
+    /// <summary> The SecurityAssessmentPublishDates. </summary>
+    public partial class SecurityAssessmentPublishDates
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataPropertiesResultPublishOn"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentPublishDates"/>. </summary>
         /// <param name="public"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="public"/> is null. </exception>
-        public SecurityAssessmentMetadataPropertiesResultPublishOn(string @public)
+        public SecurityAssessmentPublishDates(string @public)
         {
             Argument.AssertNotNull(@public, nameof(@public));
 
             Public = @public;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataPropertiesResultPublishOn"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentPublishDates"/>. </summary>
         /// <param name="ga"></param>
         /// <param name="public"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAssessmentMetadataPropertiesResultPublishOn(string ga, string @public, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityAssessmentPublishDates(string ga, string @public, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GA = ga;
             Public = @public;

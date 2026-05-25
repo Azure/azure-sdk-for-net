@@ -20,25 +20,20 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityTaskData"/>. </summary>
-        internal SecurityTaskData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityTaskData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes properties of a task. </param>
-        internal SecurityTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityTaskProperties properties) : base(id, name, resourceType, systemData)
+        internal SecurityTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityTaskPropertiesGenerated properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> Describes properties of a task. </summary>
-        internal SecurityTaskProperties Properties { get; }
+        internal SecurityTaskPropertiesGenerated Properties { get; }
 
         /// <summary> State of the task (Active, Resolved etc.). </summary>
         public string State
@@ -50,29 +45,20 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The time this task was discovered in UTC. </summary>
-        public DateTimeOffset? CreationTimeUtc
+        public DateTimeOffset? CreatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.CreationTimeUtc;
-            }
-        }
-
-        /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
-        public SecurityTaskInfo SecurityTaskParameters
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SecurityTaskParameters;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
         /// <summary> The time this task's details were last changed in UTC. </summary>
-        public DateTimeOffset? LastStateChangeTimeUtc
+        public DateTimeOffset? LastStateChangedOn
         {
             get
             {
-                return Properties is null ? default : Properties.LastStateChangeTimeUtc;
+                return Properties is null ? default : Properties.LastStateChangedOn;
             }
         }
 

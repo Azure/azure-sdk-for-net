@@ -13,28 +13,28 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Changing set of properties depending on the entity type. </summary>
-    public partial class AlertEntity
+    public partial class SecurityAlertEntity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AlertEntity"/>. </summary>
-        internal AlertEntity()
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertEntity"/>. </summary>
+        internal SecurityAlertEntity()
         {
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertEntity"/>. </summary>
-        /// <param name="type"> Type of entity. </param>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertEntity"/>. </summary>
+        /// <param name="alertEntityType"> Type of entity. </param>
         /// <param name="additionalProperties"></param>
-        internal AlertEntity(string @type, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal SecurityAlertEntity(string alertEntityType, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
-            Type = @type;
+            AlertEntityType = alertEntityType;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>(additionalProperties);
         }
 
         /// <summary> Type of entity. </summary>
-        public string Type { get; }
+        public string AlertEntityType { get; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalProperties => new ReadOnlyDictionary<string, BinaryData>(_additionalBinaryDataProperties);

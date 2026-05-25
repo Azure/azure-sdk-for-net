@@ -13,7 +13,6 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> describes security alert properties. </summary>
     internal partial class AlertProperties : IJsonModel<AlertProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -114,15 +113,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("intent"u8);
                 writer.WriteStringValue(Intent.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
-                writer.WriteStringValue(StartTimeUtc.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
-                writer.WriteStringValue(EndTimeUtc.Value, "O");
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ResourceIdentifiers))
             {
@@ -188,28 +187,28 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (options.Format != "W" && Optional.IsDefined(AlertUri))
             {
                 writer.WritePropertyName("alertUri"u8);
-                writer.WriteStringValue(AlertUri);
+                writer.WriteStringValue(AlertUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeGeneratedUtc))
+            if (options.Format != "W" && Optional.IsDefined(GeneratedOn))
             {
                 writer.WritePropertyName("timeGeneratedUtc"u8);
-                writer.WriteStringValue(TimeGeneratedUtc.Value, "O");
+                writer.WriteStringValue(GeneratedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ProductName))
             {
                 writer.WritePropertyName("productName"u8);
                 writer.WriteStringValue(ProductName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProcessingEndTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(ProcessingEndOn))
             {
                 writer.WritePropertyName("processingEndTimeUtc"u8);
-                writer.WriteStringValue(ProcessingEndTimeUtc.Value, "O");
+                writer.WriteStringValue(ProcessingEndOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Entities))
             {
                 writer.WritePropertyName("entities"u8);
                 writer.WriteStartArray();
-                foreach (AlertEntity item in Entities)
+                foreach (SecurityAlertEntity item in Entities)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -329,27 +328,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string productComponentName = default;
             string alertDisplayName = default;
             string description = default;
-            AlertSeverity? severity = default;
-            Intent? intent = default;
-            DateTimeOffset? startTimeUtc = default;
-            DateTimeOffset? endTimeUtc = default;
+            SecurityAlertSeverity? severity = default;
+            KillChainIntent? intent = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? endOn = default;
             IReadOnlyList<SecurityAlertResourceIdentifier> resourceIdentifiers = default;
             IReadOnlyList<string> remediationSteps = default;
             string vendorName = default;
-            AlertStatus? status = default;
+            SecurityAlertStatus? status = default;
             IReadOnlyList<IDictionary<string, string>> extendedLinks = default;
-            string alertUri = default;
-            DateTimeOffset? timeGeneratedUtc = default;
+            Uri alertUri = default;
+            DateTimeOffset? generatedOn = default;
             string productName = default;
-            DateTimeOffset? processingEndTimeUtc = default;
-            IReadOnlyList<AlertEntity> entities = default;
+            DateTimeOffset? processingEndOn = default;
+            IReadOnlyList<SecurityAlertEntity> entities = default;
             bool? isIncident = default;
             string correlationKey = default;
             IDictionary<string, string> extendedProperties = default;
             string compromisedEntity = default;
             IReadOnlyList<string> techniques = default;
             IReadOnlyList<string> subTechniques = default;
-            AlertPropertiesSupportingEvidence supportingEvidence = default;
+            SecurityAlertSupportingEvidence supportingEvidence = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -389,7 +388,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    severity = new AlertSeverity(prop.Value.GetString());
+                    severity = new SecurityAlertSeverity(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("intent"u8))
@@ -398,7 +397,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    intent = new Intent(prop.Value.GetString());
+                    intent = new KillChainIntent(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("startTimeUtc"u8))
@@ -407,7 +406,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    startTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTimeUtc"u8))
@@ -416,7 +415,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    endTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("resourceIdentifiers"u8))
@@ -465,7 +464,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    status = new AlertStatus(prop.Value.GetString());
+                    status = new SecurityAlertStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("extendedLinks"u8))
@@ -503,7 +502,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (prop.NameEquals("alertUri"u8))
                 {
-                    alertUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    alertUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("timeGeneratedUtc"u8))
@@ -512,7 +515,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    timeGeneratedUtc = prop.Value.GetDateTimeOffset("O");
+                    generatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("productName"u8))
@@ -526,7 +529,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    processingEndTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    processingEndOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("entities"u8))
@@ -535,10 +538,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<AlertEntity> array = new List<AlertEntity>();
+                    List<SecurityAlertEntity> array = new List<SecurityAlertEntity>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AlertEntity.DeserializeAlertEntity(item, options));
+                        array.Add(SecurityAlertEntity.DeserializeSecurityAlertEntity(item, options));
                     }
                     entities = array;
                     continue;
@@ -631,7 +634,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    supportingEvidence = AlertPropertiesSupportingEvidence.DeserializeAlertPropertiesSupportingEvidence(prop.Value, options);
+                    supportingEvidence = SecurityAlertSupportingEvidence.DeserializeSecurityAlertSupportingEvidence(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -648,18 +651,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 description,
                 severity,
                 intent,
-                startTimeUtc,
-                endTimeUtc,
+                startOn,
+                endOn,
                 resourceIdentifiers ?? new ChangeTrackingList<SecurityAlertResourceIdentifier>(),
                 remediationSteps ?? new ChangeTrackingList<string>(),
                 vendorName,
                 status,
                 extendedLinks ?? new ChangeTrackingList<IDictionary<string, string>>(),
                 alertUri,
-                timeGeneratedUtc,
+                generatedOn,
                 productName,
-                processingEndTimeUtc,
-                entities ?? new ChangeTrackingList<AlertEntity>(),
+                processingEndOn,
+                entities ?? new ChangeTrackingList<SecurityAlertEntity>(),
                 isIncident,
                 correlationKey,
                 extendedProperties ?? new ChangeTrackingDictionary<string, string>(),

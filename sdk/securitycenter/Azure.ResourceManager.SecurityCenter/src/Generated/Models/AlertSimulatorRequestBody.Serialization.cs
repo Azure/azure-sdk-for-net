@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            AlertSimulatorRequestProperties properties = default;
+            SecurityAlertSimulatorRequestProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    properties = AlertSimulatorRequestProperties.DeserializeAlertSimulatorRequestProperties(prop.Value, options);
+                    properties = SecurityAlertSimulatorRequestProperties.DeserializeSecurityAlertSimulatorRequestProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

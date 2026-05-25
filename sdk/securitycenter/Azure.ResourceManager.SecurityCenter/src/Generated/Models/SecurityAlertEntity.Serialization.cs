@@ -13,52 +13,52 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
-    public partial class SecurityTaskInfo : IJsonModel<SecurityTaskInfo>
+    /// <summary> Changing set of properties depending on the entity type. </summary>
+    public partial class SecurityAlertEntity : IJsonModel<SecurityAlertEntity>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SecurityTaskInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SecurityAlertEntity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityTaskInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAlertEntity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSecurityTaskInfo(document.RootElement, options);
+                        return DeserializeSecurityAlertEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityTaskInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityTaskInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAlertEntity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityTaskInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SecurityTaskInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SecurityAlertEntity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SecurityTaskInfo IPersistableModel<SecurityTaskInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SecurityAlertEntity IPersistableModel<SecurityAlertEntity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SecurityTaskInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecurityAlertEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SecurityTaskInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecurityAlertEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityTaskInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAlertEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityTaskInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(TaskName))
+            if (Optional.IsDefined(AlertEntityType))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(TaskName);
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(AlertEntityType);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -95,41 +95,41 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SecurityTaskInfo IJsonModel<SecurityTaskInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SecurityAlertEntity IJsonModel<SecurityAlertEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SecurityTaskInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SecurityAlertEntity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityTaskInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAlertEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityTaskInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSecurityTaskInfo(document.RootElement, options);
+            return DeserializeSecurityAlertEntity(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SecurityTaskInfo DeserializeSecurityTaskInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static SecurityAlertEntity DeserializeSecurityAlertEntity(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string taskName = default;
+            string alertEntityType = default;
             ChangeTrackingDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    taskName = prop.Value.GetString();
+                    alertEntityType = prop.Value.GetString();
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new SecurityTaskInfo(taskName, new ReadOnlyDictionary<string, BinaryData>(additionalProperties));
+            return new SecurityAlertEntity(alertEntityType, new ReadOnlyDictionary<string, BinaryData>(additionalProperties));
         }
     }
 }

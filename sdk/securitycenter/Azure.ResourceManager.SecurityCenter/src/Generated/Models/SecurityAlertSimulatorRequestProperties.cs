@@ -11,27 +11,24 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Describes properties of an alert simulation request
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AlertSimulatorBundlesRequestProperties"/>.
-    /// </summary>
-    public abstract partial class AlertSimulatorRequestProperties
+    /// <summary> Describes properties of an alert simulation request. </summary>
+    public partial class SecurityAlertSimulatorRequestProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AlertSimulatorRequestProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertSimulatorRequestProperties"/>. </summary>
         /// <param name="kind"> The kind of alert simulation. </param>
-        private protected AlertSimulatorRequestProperties(SecurityCenterKind kind)
+        public SecurityAlertSimulatorRequestProperties(SecurityCenterKind kind)
         {
             Kind = kind;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertSimulatorRequestProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertSimulatorRequestProperties"/>. </summary>
         /// <param name="kind"> The kind of alert simulation. </param>
         /// <param name="additionalProperties"></param>
-        internal AlertSimulatorRequestProperties(SecurityCenterKind kind, IDictionary<string, BinaryData> additionalProperties)
+        internal SecurityAlertSimulatorRequestProperties(SecurityCenterKind kind, IDictionary<string, BinaryData> additionalProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalProperties;

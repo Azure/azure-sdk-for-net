@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> True if this assessment is in preview release status. </summary>
-        public bool? Preview
+        public bool? IsPreview
         {
             get
             {
-                return Properties is null ? default : Properties.Preview;
+                return Properties is null ? default : Properties.IsPreview;
             }
             set
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     Properties = new SecurityAssessmentMetadataPropertiesResult();
                 }
-                Properties.Preview = value;
+                Properties.IsPreview = value;
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Gets or sets the PublishDates. </summary>
-        public SecurityAssessmentMetadataPropertiesResultPublishOn PublishDates
+        public SecurityAssessmentPublishDates PublishDates
         {
             get
             {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Gets the Tactics. </summary>
-        public IList<Tactics> Tactics
+        public IList<SecurityAssessmentTactic> Tactics
         {
             get
             {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Gets the Techniques. </summary>
-        public IList<Techniques> Techniques
+        public IList<SecurityAssessmentTechnique> Techniques
         {
             get
             {

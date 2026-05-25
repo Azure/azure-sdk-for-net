@@ -11,7 +11,6 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> describes security alert properties. </summary>
     internal partial class AlertProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifiers = new ChangeTrackingList<SecurityAlertResourceIdentifier>();
             RemediationSteps = new ChangeTrackingList<string>();
             ExtendedLinks = new ChangeTrackingList<IDictionary<string, string>>();
-            Entities = new ChangeTrackingList<AlertEntity>();
+            Entities = new ChangeTrackingList<SecurityAlertEntity>();
             ExtendedProperties = new ChangeTrackingDictionary<string, string>();
             Techniques = new ChangeTrackingList<string>();
             SubTechniques = new ChangeTrackingList<string>();
@@ -38,17 +37,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="description"> Description of the suspicious activity that was detected. </param>
         /// <param name="severity"> The risk level of the threat that was detected. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified. </param>
         /// <param name="intent"> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center's supported kill chain intents. </param>
-        /// <param name="startTimeUtc"> The UTC time of the first event or activity included in the alert in ISO8601 format. </param>
-        /// <param name="endTimeUtc"> The UTC time of the last event or activity included in the alert in ISO8601 format. </param>
+        /// <param name="startOn"> The UTC time of the first event or activity included in the alert in ISO8601 format. </param>
+        /// <param name="endOn"> The UTC time of the last event or activity included in the alert in ISO8601 format. </param>
         /// <param name="resourceIdentifiers"> The resource identifiers that can be used to direct the alert to the right product exposure group (tenant, workspace, subscription etc.). There can be multiple identifiers of different type per alert. </param>
         /// <param name="remediationSteps"> Manual action items to take to remediate the alert. </param>
         /// <param name="vendorName"> The name of the vendor that raises the alert. </param>
         /// <param name="status"> The life cycle status of the alert. </param>
         /// <param name="extendedLinks"> Links related to the alert. </param>
         /// <param name="alertUri"> A direct link to the alert page in Azure Portal. </param>
-        /// <param name="timeGeneratedUtc"> The UTC time the alert was generated in ISO8601 format. </param>
+        /// <param name="generatedOn"> The UTC time the alert was generated in ISO8601 format. </param>
         /// <param name="productName"> The name of the product which published this alert (Microsoft Sentinel, Microsoft Defender for Identity, Microsoft Defender for Endpoint, Microsoft Defender for Office, Microsoft Defender for Cloud Apps, and so on). </param>
-        /// <param name="processingEndTimeUtc"> The UTC processing end time of the alert in ISO8601 format. </param>
+        /// <param name="processingEndOn"> The UTC processing end time of the alert in ISO8601 format. </param>
         /// <param name="entities"> A list of entities related to the alert. </param>
         /// <param name="isIncident"> This field determines whether the alert is an incident (a compound grouping of several alerts) or a single alert. </param>
         /// <param name="correlationKey"> Key for corelating related alerts. Alerts with the same correlation key considered to be related. </param>
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="subTechniques"> Kill chain related sub-techniques behind the alert. </param>
         /// <param name="supportingEvidence"> Changing set of properties depending on the supportingEvidence type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertProperties(string version, string alertType, string systemAlertId, string productComponentName, string alertDisplayName, string description, AlertSeverity? severity, Intent? intent, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, IReadOnlyList<SecurityAlertResourceIdentifier> resourceIdentifiers, IReadOnlyList<string> remediationSteps, string vendorName, AlertStatus? status, IReadOnlyList<IDictionary<string, string>> extendedLinks, string alertUri, DateTimeOffset? timeGeneratedUtc, string productName, DateTimeOffset? processingEndTimeUtc, IReadOnlyList<AlertEntity> entities, bool? isIncident, string correlationKey, IDictionary<string, string> extendedProperties, string compromisedEntity, IReadOnlyList<string> techniques, IReadOnlyList<string> subTechniques, AlertPropertiesSupportingEvidence supportingEvidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertProperties(string version, string alertType, string systemAlertId, string productComponentName, string alertDisplayName, string description, SecurityAlertSeverity? severity, KillChainIntent? intent, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<SecurityAlertResourceIdentifier> resourceIdentifiers, IReadOnlyList<string> remediationSteps, string vendorName, SecurityAlertStatus? status, IReadOnlyList<IDictionary<string, string>> extendedLinks, Uri alertUri, DateTimeOffset? generatedOn, string productName, DateTimeOffset? processingEndOn, IReadOnlyList<SecurityAlertEntity> entities, bool? isIncident, string correlationKey, IDictionary<string, string> extendedProperties, string compromisedEntity, IReadOnlyList<string> techniques, IReadOnlyList<string> subTechniques, SecurityAlertSupportingEvidence supportingEvidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             AlertType = alertType;
@@ -68,17 +67,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Description = description;
             Severity = severity;
             Intent = intent;
-            StartTimeUtc = startTimeUtc;
-            EndTimeUtc = endTimeUtc;
+            StartOn = startOn;
+            EndOn = endOn;
             ResourceIdentifiers = resourceIdentifiers;
             RemediationSteps = remediationSteps;
             VendorName = vendorName;
             Status = status;
             ExtendedLinks = extendedLinks;
             AlertUri = alertUri;
-            TimeGeneratedUtc = timeGeneratedUtc;
+            GeneratedOn = generatedOn;
             ProductName = productName;
-            ProcessingEndTimeUtc = processingEndTimeUtc;
+            ProcessingEndOn = processingEndOn;
             Entities = entities;
             IsIncident = isIncident;
             CorrelationKey = correlationKey;
@@ -109,16 +108,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string Description { get; }
 
         /// <summary> The risk level of the threat that was detected. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified. </summary>
-        public AlertSeverity? Severity { get; }
+        public SecurityAlertSeverity? Severity { get; }
 
         /// <summary> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center's supported kill chain intents. </summary>
-        public Intent? Intent { get; }
+        public KillChainIntent? Intent { get; }
 
         /// <summary> The UTC time of the first event or activity included in the alert in ISO8601 format. </summary>
-        public DateTimeOffset? StartTimeUtc { get; }
+        public DateTimeOffset? StartOn { get; }
 
         /// <summary> The UTC time of the last event or activity included in the alert in ISO8601 format. </summary>
-        public DateTimeOffset? EndTimeUtc { get; }
+        public DateTimeOffset? EndOn { get; }
 
         /// <summary> The resource identifiers that can be used to direct the alert to the right product exposure group (tenant, workspace, subscription etc.). There can be multiple identifiers of different type per alert. </summary>
         public IReadOnlyList<SecurityAlertResourceIdentifier> ResourceIdentifiers { get; } = new ChangeTrackingList<SecurityAlertResourceIdentifier>();
@@ -130,25 +129,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string VendorName { get; }
 
         /// <summary> The life cycle status of the alert. </summary>
-        public AlertStatus? Status { get; }
+        public SecurityAlertStatus? Status { get; }
 
         /// <summary> Links related to the alert. </summary>
         public IReadOnlyList<IDictionary<string, string>> ExtendedLinks { get; } = new ChangeTrackingList<IDictionary<string, string>>();
 
         /// <summary> A direct link to the alert page in Azure Portal. </summary>
-        public string AlertUri { get; }
+        public Uri AlertUri { get; }
 
         /// <summary> The UTC time the alert was generated in ISO8601 format. </summary>
-        public DateTimeOffset? TimeGeneratedUtc { get; }
+        public DateTimeOffset? GeneratedOn { get; }
 
         /// <summary> The name of the product which published this alert (Microsoft Sentinel, Microsoft Defender for Identity, Microsoft Defender for Endpoint, Microsoft Defender for Office, Microsoft Defender for Cloud Apps, and so on). </summary>
         public string ProductName { get; }
 
         /// <summary> The UTC processing end time of the alert in ISO8601 format. </summary>
-        public DateTimeOffset? ProcessingEndTimeUtc { get; }
+        public DateTimeOffset? ProcessingEndOn { get; }
 
         /// <summary> A list of entities related to the alert. </summary>
-        public IReadOnlyList<AlertEntity> Entities { get; } = new ChangeTrackingList<AlertEntity>();
+        public IReadOnlyList<SecurityAlertEntity> Entities { get; } = new ChangeTrackingList<SecurityAlertEntity>();
 
         /// <summary> This field determines whether the alert is an incident (a compound grouping of several alerts) or a single alert. </summary>
         public bool? IsIncident { get; }
@@ -167,8 +166,5 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Kill chain related sub-techniques behind the alert. </summary>
         public IReadOnlyList<string> SubTechniques { get; } = new ChangeTrackingList<string>();
-
-        /// <summary> Changing set of properties depending on the supportingEvidence type. </summary>
-        public AlertPropertiesSupportingEvidence SupportingEvidence { get; }
     }
 }

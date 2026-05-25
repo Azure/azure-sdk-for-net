@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
-                foreach (Tactics item in Tactics)
+                foreach (SecurityAssessmentTactic item in Tactics)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();
-                foreach (Techniques item in Techniques)
+                foreach (SecurityAssessmentTechnique item in Techniques)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             SecurityAssessmentUserImpact? userImpact = default;
             ImplementationEffort? implementationEffort = default;
             IList<SecurityThreat> threats = default;
-            bool? preview = default;
+            bool? isPreview = default;
             SecurityAssessmentType assessmentType = default;
             SecurityAssessmentMetadataPartner partnerData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SecurityAssessmentMetadataPropertiesResultPublishOn publishDates = default;
+            SecurityAssessmentPublishDates publishDates = default;
             string plannedDeprecationDate = default;
-            IList<Tactics> tactics = default;
-            IList<Techniques> techniques = default;
+            IList<SecurityAssessmentTactic> tactics = default;
+            IList<SecurityAssessmentTechnique> techniques = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("displayName"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    preview = prop.Value.GetBoolean();
+                    isPreview = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("assessmentType"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    publishDates = SecurityAssessmentMetadataPropertiesResultPublishOn.DeserializeSecurityAssessmentMetadataPropertiesResultPublishOn(prop.Value, options);
+                    publishDates = SecurityAssessmentPublishDates.DeserializeSecurityAssessmentPublishDates(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("plannedDeprecationDate"u8))
@@ -275,10 +275,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<Tactics> array = new List<Tactics>();
+                    List<SecurityAssessmentTactic> array = new List<SecurityAssessmentTactic>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new Tactics(item.GetString()));
+                        array.Add(new SecurityAssessmentTactic(item.GetString()));
                     }
                     tactics = array;
                     continue;
@@ -289,10 +289,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<Techniques> array = new List<Techniques>();
+                    List<SecurityAssessmentTechnique> array = new List<SecurityAssessmentTechnique>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new Techniques(item.GetString()));
+                        array.Add(new SecurityAssessmentTechnique(item.GetString()));
                     }
                     techniques = array;
                     continue;
@@ -312,14 +312,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 userImpact,
                 implementationEffort,
                 threats ?? new ChangeTrackingList<SecurityThreat>(),
-                preview,
+                isPreview,
                 assessmentType,
                 partnerData,
                 additionalBinaryDataProperties,
                 publishDates,
                 plannedDeprecationDate,
-                tactics ?? new ChangeTrackingList<Tactics>(),
-                techniques ?? new ChangeTrackingList<Techniques>());
+                tactics ?? new ChangeTrackingList<SecurityAssessmentTactic>(),
+                techniques ?? new ChangeTrackingList<SecurityAssessmentTechnique>());
         }
     }
 }

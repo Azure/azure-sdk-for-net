@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Describes properties of a task. </summary>
+    /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
     public partial class SecurityTaskProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -19,38 +21,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="SecurityTaskProperties"/>. </summary>
         internal SecurityTaskProperties()
         {
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityTaskProperties"/>. </summary>
-        /// <param name="state"> State of the task (Active, Resolved etc.). </param>
-        /// <param name="creationTimeUtc"> The time this task was discovered in UTC. </param>
-        /// <param name="securityTaskParameters"> Changing set of properties, depending on the task type that is derived from the name field. </param>
-        /// <param name="lastStateChangeTimeUtc"> The time this task's details were last changed in UTC. </param>
-        /// <param name="subState"> Additional data on the state of the task. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityTaskProperties(string state, DateTimeOffset? creationTimeUtc, SecurityTaskInfo securityTaskParameters, DateTimeOffset? lastStateChangeTimeUtc, string subState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="taskName"> Name of the task type. </param>
+        /// <param name="additionalProperties"></param>
+        internal SecurityTaskProperties(string taskName, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
-            State = state;
-            CreationTimeUtc = creationTimeUtc;
-            SecurityTaskParameters = securityTaskParameters;
-            LastStateChangeTimeUtc = lastStateChangeTimeUtc;
-            SubState = subState;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            TaskName = taskName;
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>(additionalProperties);
         }
 
-        /// <summary> State of the task (Active, Resolved etc.). </summary>
-        public string State { get; }
+        /// <summary> Name of the task type. </summary>
+        public string TaskName { get; }
 
-        /// <summary> The time this task was discovered in UTC. </summary>
-        public DateTimeOffset? CreationTimeUtc { get; }
-
-        /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
-        public SecurityTaskInfo SecurityTaskParameters { get; }
-
-        /// <summary> The time this task's details were last changed in UTC. </summary>
-        public DateTimeOffset? LastStateChangeTimeUtc { get; }
-
-        /// <summary> Additional data on the state of the task. </summary>
-        public string SubState { get; }
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties => new ReadOnlyDictionary<string, BinaryData>(_additionalBinaryDataProperties);
     }
 }

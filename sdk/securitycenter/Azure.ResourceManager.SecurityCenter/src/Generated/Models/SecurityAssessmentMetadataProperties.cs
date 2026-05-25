@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="userImpact"> The user impact of the assessment. </param>
         /// <param name="implementationEffort"> The implementation effort required to remediate this assessment. </param>
         /// <param name="threats"></param>
-        /// <param name="preview"> True if this assessment is in preview release status. </param>
+        /// <param name="isPreview"> True if this assessment is in preview release status. </param>
         /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
         /// <param name="partnerData"> Describes the partner that created the assessment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAssessmentMetadataProperties(string displayName, ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? preview, SecurityAssessmentType assessmentType, SecurityAssessmentMetadataPartner partnerData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityAssessmentMetadataProperties(string displayName, ResourceIdentifier policyDefinitionId, string description, string remediationDescription, IList<SecurityAssessmentResourceCategory> categories, SecurityAssessmentSeverity severity, SecurityAssessmentUserImpact? userImpact, ImplementationEffort? implementationEffort, IList<SecurityThreat> threats, bool? isPreview, SecurityAssessmentType assessmentType, SecurityAssessmentMetadataPartner partnerData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             UserImpact = userImpact;
             ImplementationEffort = implementationEffort;
             Threats = threats;
-            Preview = preview;
+            IsPreview = isPreview;
             AssessmentType = assessmentType;
             PartnerData = partnerData;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IList<SecurityThreat> Threats { get; } = new ChangeTrackingList<SecurityThreat>();
 
         /// <summary> True if this assessment is in preview release status. </summary>
-        public bool? Preview { get; set; }
+        public bool? IsPreview { get; set; }
 
         /// <summary> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </summary>
         public SecurityAssessmentType AssessmentType { get; set; }

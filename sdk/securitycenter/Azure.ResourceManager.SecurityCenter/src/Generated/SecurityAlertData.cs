@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityAlertData"/>. </summary>
-        internal SecurityAlertData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityAlertData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -95,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The risk level of the threat that was detected. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified. </summary>
-        public AlertSeverity? Severity
+        public SecurityAlertSeverity? Severity
         {
             get
             {
@@ -104,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center's supported kill chain intents. </summary>
-        public Intent? Intent
+        public KillChainIntent? Intent
         {
             get
             {
@@ -113,20 +108,20 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The UTC time of the first event or activity included in the alert in ISO8601 format. </summary>
-        public DateTimeOffset? StartTimeUtc
+        public DateTimeOffset? StartOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartTimeUtc;
+                return Properties is null ? default : Properties.StartOn;
             }
         }
 
         /// <summary> The UTC time of the last event or activity included in the alert in ISO8601 format. </summary>
-        public DateTimeOffset? EndTimeUtc
+        public DateTimeOffset? EndOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndTimeUtc;
+                return Properties is null ? default : Properties.EndOn;
             }
         }
 
@@ -158,7 +153,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The life cycle status of the alert. </summary>
-        public AlertStatus? Status
+        public SecurityAlertStatus? Status
         {
             get
             {
@@ -176,7 +171,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> A direct link to the alert page in Azure Portal. </summary>
-        public string AlertUri
+        public Uri AlertUri
         {
             get
             {
@@ -185,11 +180,11 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The UTC time the alert was generated in ISO8601 format. </summary>
-        public DateTimeOffset? TimeGeneratedUtc
+        public DateTimeOffset? GeneratedOn
         {
             get
             {
-                return Properties is null ? default : Properties.TimeGeneratedUtc;
+                return Properties is null ? default : Properties.GeneratedOn;
             }
         }
 
@@ -203,16 +198,16 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The UTC processing end time of the alert in ISO8601 format. </summary>
-        public DateTimeOffset? ProcessingEndTimeUtc
+        public DateTimeOffset? ProcessingEndOn
         {
             get
             {
-                return Properties is null ? default : Properties.ProcessingEndTimeUtc;
+                return Properties is null ? default : Properties.ProcessingEndOn;
             }
         }
 
         /// <summary> A list of entities related to the alert. </summary>
-        public IReadOnlyList<AlertEntity> Entities
+        public IReadOnlyList<SecurityAlertEntity> Entities
         {
             get
             {
@@ -271,15 +266,6 @@ namespace Azure.ResourceManager.SecurityCenter
             get
             {
                 return Properties is null ? default : Properties.SubTechniques;
-            }
-        }
-
-        /// <summary> Changing set of properties depending on the supportingEvidence type. </summary>
-        public AlertPropertiesSupportingEvidence SupportingEvidence
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SupportingEvidence;
             }
         }
     }

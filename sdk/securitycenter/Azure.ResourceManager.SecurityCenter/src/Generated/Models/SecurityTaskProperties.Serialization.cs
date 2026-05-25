@@ -7,13 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text.Json;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Describes properties of a task. </summary>
+    /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
     public partial class SecurityTaskProperties : IJsonModel<SecurityTaskProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -74,45 +74,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 throw new FormatException($"The model {nameof(SecurityTaskProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && Optional.IsDefined(TaskName))
             {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State);
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(TaskName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationTimeUtc))
+            foreach (var item in AdditionalProperties)
             {
-                writer.WritePropertyName("creationTimeUtc"u8);
-                writer.WriteStringValue(CreationTimeUtc.Value, "O");
-            }
-            if (Optional.IsDefined(SecurityTaskParameters))
-            {
-                writer.WritePropertyName("securityTaskParameters"u8);
-                writer.WriteObjectValue(SecurityTaskParameters, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastStateChangeTimeUtc))
-            {
-                writer.WritePropertyName("lastStateChangeTimeUtc"u8);
-                writer.WriteStringValue(LastStateChangeTimeUtc.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(SubState))
-            {
-                writer.WritePropertyName("subState"u8);
-                writer.WriteStringValue(SubState);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
+                writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
         }
 
@@ -141,63 +118,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            string state = default;
-            DateTimeOffset? creationTimeUtc = default;
-            SecurityTaskInfo securityTaskParameters = default;
-            DateTimeOffset? lastStateChangeTimeUtc = default;
-            string subState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string taskName = default;
+            ChangeTrackingDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("state"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    state = prop.Value.GetString();
+                    taskName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("creationTimeUtc"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    creationTimeUtc = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("securityTaskParameters"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    securityTaskParameters = SecurityTaskInfo.DeserializeSecurityTaskInfo(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("lastStateChangeTimeUtc"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    lastStateChangeTimeUtc = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("subState"u8))
-                {
-                    subState = prop.Value.GetString();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new SecurityTaskProperties(
-                state,
-                creationTimeUtc,
-                securityTaskParameters,
-                lastStateChangeTimeUtc,
-                subState,
-                additionalBinaryDataProperties);
+            return new SecurityTaskProperties(taskName, new ReadOnlyDictionary<string, BinaryData>(additionalProperties));
         }
     }
 }

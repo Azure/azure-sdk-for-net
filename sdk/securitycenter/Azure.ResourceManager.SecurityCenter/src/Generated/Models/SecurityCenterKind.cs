@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The kind of alert simulation. </summary>
-    internal readonly partial struct SecurityCenterKind : IEquatable<SecurityCenterKind>
+    public readonly partial struct SecurityCenterKind : IEquatable<SecurityCenterKind>
     {
         private readonly string _value;
         /// <summary> Simulate alerts according to bundles. </summary>

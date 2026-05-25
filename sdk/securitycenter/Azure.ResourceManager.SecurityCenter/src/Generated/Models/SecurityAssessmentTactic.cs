@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Tactic of the assessment. </summary>
-    public readonly partial struct Tactics : IEquatable<Tactics>
+    public readonly partial struct SecurityAssessmentTactic : IEquatable<SecurityAssessmentTactic>
     {
         private readonly string _value;
         /// <summary> Reconnaissance. </summary>
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Impact. </summary>
         private const string ImpactValue = "Impact";
 
-        /// <summary> Initializes a new instance of <see cref="Tactics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentTactic"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Tactics(string value)
+        public SecurityAssessmentTactic(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -55,71 +55,71 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Reconnaissance. </summary>
-        public static Tactics Reconnaissance { get; } = new Tactics(ReconnaissanceValue);
+        public static SecurityAssessmentTactic Reconnaissance { get; } = new SecurityAssessmentTactic(ReconnaissanceValue);
 
         /// <summary> Resource Development. </summary>
-        public static Tactics ResourceDevelopment { get; } = new Tactics(ResourceDevelopmentValue);
+        public static SecurityAssessmentTactic ResourceDevelopment { get; } = new SecurityAssessmentTactic(ResourceDevelopmentValue);
 
         /// <summary> Initial Access. </summary>
-        public static Tactics InitialAccess { get; } = new Tactics(InitialAccessValue);
+        public static SecurityAssessmentTactic InitialAccess { get; } = new SecurityAssessmentTactic(InitialAccessValue);
 
         /// <summary> Execution. </summary>
-        public static Tactics Execution { get; } = new Tactics(ExecutionValue);
+        public static SecurityAssessmentTactic Execution { get; } = new SecurityAssessmentTactic(ExecutionValue);
 
         /// <summary> Persistence. </summary>
-        public static Tactics Persistence { get; } = new Tactics(PersistenceValue);
+        public static SecurityAssessmentTactic Persistence { get; } = new SecurityAssessmentTactic(PersistenceValue);
 
         /// <summary> Privilege Escalation. </summary>
-        public static Tactics PrivilegeEscalation { get; } = new Tactics(PrivilegeEscalationValue);
+        public static SecurityAssessmentTactic PrivilegeEscalation { get; } = new SecurityAssessmentTactic(PrivilegeEscalationValue);
 
         /// <summary> Defense Evasion. </summary>
-        public static Tactics DefenseEvasion { get; } = new Tactics(DefenseEvasionValue);
+        public static SecurityAssessmentTactic DefenseEvasion { get; } = new SecurityAssessmentTactic(DefenseEvasionValue);
 
         /// <summary> Credential Access. </summary>
-        public static Tactics CredentialAccess { get; } = new Tactics(CredentialAccessValue);
+        public static SecurityAssessmentTactic CredentialAccess { get; } = new SecurityAssessmentTactic(CredentialAccessValue);
 
         /// <summary> Discovery. </summary>
-        public static Tactics Discovery { get; } = new Tactics(DiscoveryValue);
+        public static SecurityAssessmentTactic Discovery { get; } = new SecurityAssessmentTactic(DiscoveryValue);
 
         /// <summary> Lateral Movement. </summary>
-        public static Tactics LateralMovement { get; } = new Tactics(LateralMovementValue);
+        public static SecurityAssessmentTactic LateralMovement { get; } = new SecurityAssessmentTactic(LateralMovementValue);
 
         /// <summary> Collection. </summary>
-        public static Tactics Collection { get; } = new Tactics(CollectionValue);
+        public static SecurityAssessmentTactic Collection { get; } = new SecurityAssessmentTactic(CollectionValue);
 
         /// <summary> Command and Control. </summary>
-        public static Tactics CommandAndControl { get; } = new Tactics(CommandAndControlValue);
+        public static SecurityAssessmentTactic CommandAndControl { get; } = new SecurityAssessmentTactic(CommandAndControlValue);
 
         /// <summary> Exfiltration. </summary>
-        public static Tactics Exfiltration { get; } = new Tactics(ExfiltrationValue);
+        public static SecurityAssessmentTactic Exfiltration { get; } = new SecurityAssessmentTactic(ExfiltrationValue);
 
         /// <summary> Impact. </summary>
-        public static Tactics Impact { get; } = new Tactics(ImpactValue);
+        public static SecurityAssessmentTactic Impact { get; } = new SecurityAssessmentTactic(ImpactValue);
 
-        /// <summary> Determines if two <see cref="Tactics"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityAssessmentTactic"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Tactics left, Tactics right) => left.Equals(right);
+        public static bool operator ==(SecurityAssessmentTactic left, SecurityAssessmentTactic right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Tactics"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityAssessmentTactic"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Tactics left, Tactics right) => !left.Equals(right);
+        public static bool operator !=(SecurityAssessmentTactic left, SecurityAssessmentTactic right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Tactics"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityAssessmentTactic"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Tactics(string value) => new Tactics(value);
+        public static implicit operator SecurityAssessmentTactic(string value) => new SecurityAssessmentTactic(value);
 
-        /// <summary> Converts a string to a <see cref="Tactics"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityAssessmentTactic"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Tactics?(string value) => value == null ? null : new Tactics(value);
+        public static implicit operator SecurityAssessmentTactic?(string value) => value == null ? null : new SecurityAssessmentTactic(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Tactics other && Equals(other);
+        public override bool Equals(object obj) => obj is SecurityAssessmentTactic other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Tactics other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SecurityAssessmentTactic other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

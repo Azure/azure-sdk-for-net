@@ -13,57 +13,57 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The SecurityAssessmentMetadataPropertiesResultPublishOn. </summary>
-    public partial class SecurityAssessmentMetadataPropertiesResultPublishOn : IJsonModel<SecurityAssessmentMetadataPropertiesResultPublishOn>
+    /// <summary> The SecurityAssessmentPublishDates. </summary>
+    public partial class SecurityAssessmentPublishDates : IJsonModel<SecurityAssessmentPublishDates>
     {
-        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataPropertiesResultPublishOn"/> for deserialization. </summary>
-        internal SecurityAssessmentMetadataPropertiesResultPublishOn()
+        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentPublishDates"/> for deserialization. </summary>
+        internal SecurityAssessmentPublishDates()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SecurityAssessmentMetadataPropertiesResultPublishOn PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SecurityAssessmentPublishDates PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataPropertiesResultPublishOn>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentPublishDates>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSecurityAssessmentMetadataPropertiesResultPublishOn(document.RootElement, options);
+                        return DeserializeSecurityAssessmentPublishDates(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAssessmentMetadataPropertiesResultPublishOn)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAssessmentPublishDates)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataPropertiesResultPublishOn>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentPublishDates>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAssessmentMetadataPropertiesResultPublishOn)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAssessmentPublishDates)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SecurityAssessmentMetadataPropertiesResultPublishOn>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SecurityAssessmentPublishDates>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SecurityAssessmentMetadataPropertiesResultPublishOn IPersistableModel<SecurityAssessmentMetadataPropertiesResultPublishOn>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SecurityAssessmentPublishDates IPersistableModel<SecurityAssessmentPublishDates>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SecurityAssessmentMetadataPropertiesResultPublishOn>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecurityAssessmentPublishDates>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SecurityAssessmentMetadataPropertiesResultPublishOn>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecurityAssessmentPublishDates>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataPropertiesResultPublishOn>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentPublishDates>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAssessmentMetadataPropertiesResultPublishOn)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAssessmentPublishDates)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(GA))
             {
@@ -105,24 +105,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SecurityAssessmentMetadataPropertiesResultPublishOn IJsonModel<SecurityAssessmentMetadataPropertiesResultPublishOn>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SecurityAssessmentPublishDates IJsonModel<SecurityAssessmentPublishDates>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SecurityAssessmentMetadataPropertiesResultPublishOn JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SecurityAssessmentPublishDates JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataPropertiesResultPublishOn>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentPublishDates>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAssessmentMetadataPropertiesResultPublishOn)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAssessmentPublishDates)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSecurityAssessmentMetadataPropertiesResultPublishOn(document.RootElement, options);
+            return DeserializeSecurityAssessmentPublishDates(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SecurityAssessmentMetadataPropertiesResultPublishOn DeserializeSecurityAssessmentMetadataPropertiesResultPublishOn(JsonElement element, ModelReaderWriterOptions options)
+        internal static SecurityAssessmentPublishDates DeserializeSecurityAssessmentPublishDates(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SecurityAssessmentMetadataPropertiesResultPublishOn(ga, @public, additionalBinaryDataProperties);
+            return new SecurityAssessmentPublishDates(ga, @public, additionalBinaryDataProperties);
         }
     }
 }

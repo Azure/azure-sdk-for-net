@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Simulate alerts according to this bundles. </summary>
-    public partial class AlertSimulatorBundlesRequestProperties : AlertSimulatorRequestProperties
+    public partial class AlertSimulatorBundlesRequestProperties : SecurityAlertSimulatorRequestProperties
     {
         /// <summary> Initializes a new instance of <see cref="AlertSimulatorBundlesRequestProperties"/>. </summary>
         public AlertSimulatorBundlesRequestProperties() : base(SecurityCenterKind.Bundles)

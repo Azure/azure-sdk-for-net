@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The life cycle status of the alert. </summary>
-    public readonly partial struct AlertStatus : IEquatable<AlertStatus>
+    public readonly partial struct SecurityAlertStatus : IEquatable<SecurityAlertStatus>
     {
         private readonly string _value;
         /// <summary> An alert which doesn't specify a value is assigned the status 'Active'. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Alert dismissed as false positive. </summary>
         private const string DismissedValue = "Dismissed";
 
-        /// <summary> Initializes a new instance of <see cref="AlertStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AlertStatus(string value)
+        public SecurityAlertStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> An alert which doesn't specify a value is assigned the status 'Active'. </summary>
-        public static AlertStatus Active { get; } = new AlertStatus(ActiveValue);
+        public static SecurityAlertStatus Active { get; } = new SecurityAlertStatus(ActiveValue);
 
         /// <summary> An alert which is in handling state. </summary>
-        public static AlertStatus InProgress { get; } = new AlertStatus(InProgressValue);
+        public static SecurityAlertStatus InProgress { get; } = new SecurityAlertStatus(InProgressValue);
 
         /// <summary> Alert closed after handling. </summary>
-        public static AlertStatus Resolved { get; } = new AlertStatus(ResolvedValue);
+        public static SecurityAlertStatus Resolved { get; } = new SecurityAlertStatus(ResolvedValue);
 
         /// <summary> Alert dismissed as false positive. </summary>
-        public static AlertStatus Dismissed { get; } = new AlertStatus(DismissedValue);
+        public static SecurityAlertStatus Dismissed { get; } = new SecurityAlertStatus(DismissedValue);
 
-        /// <summary> Determines if two <see cref="AlertStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityAlertStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AlertStatus left, AlertStatus right) => left.Equals(right);
+        public static bool operator ==(SecurityAlertStatus left, SecurityAlertStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AlertStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityAlertStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AlertStatus left, AlertStatus right) => !left.Equals(right);
+        public static bool operator !=(SecurityAlertStatus left, SecurityAlertStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AlertStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityAlertStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertStatus(string value) => new AlertStatus(value);
+        public static implicit operator SecurityAlertStatus(string value) => new SecurityAlertStatus(value);
 
-        /// <summary> Converts a string to a <see cref="AlertStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityAlertStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AlertStatus?(string value) => value == null ? null : new AlertStatus(value);
+        public static implicit operator SecurityAlertStatus?(string value) => value == null ? null : new SecurityAlertStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AlertStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is SecurityAlertStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AlertStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SecurityAlertStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

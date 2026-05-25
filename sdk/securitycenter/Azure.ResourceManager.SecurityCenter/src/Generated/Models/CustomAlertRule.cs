@@ -20,15 +20,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomAlertRule"/>. </summary>
-        /// <param name="ruleType"> The type of the custom alert rule. </param>
-        /// <param name="isEnabled"> Status of the custom alert. </param>
-        private protected CustomAlertRule(string ruleType, bool isEnabled)
-        {
-            RuleType = ruleType;
-            IsEnabled = isEnabled;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CustomAlertRule"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="ruleType"> The type of the custom alert rule. </param>

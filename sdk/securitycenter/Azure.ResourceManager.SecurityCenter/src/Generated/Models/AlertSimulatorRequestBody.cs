@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="AlertSimulatorRequestBody"/>. </summary>
         /// <param name="properties"> Alert Simulator request body data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertSimulatorRequestBody(AlertSimulatorRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertSimulatorRequestBody(SecurityAlertSimulatorRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Alert Simulator request body data. </summary>
-        public AlertSimulatorRequestProperties Properties { get; set; }
+        public SecurityAlertSimulatorRequestProperties Properties { get; set; }
     }
 }

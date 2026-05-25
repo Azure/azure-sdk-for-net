@@ -12,61 +12,52 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary>
-    /// Describes properties of an alert simulation request
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AlertSimulatorBundlesRequestProperties"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownAlertSimulatorRequestProperties))]
-    public abstract partial class AlertSimulatorRequestProperties : IJsonModel<AlertSimulatorRequestProperties>
+    /// <summary> Describes properties of an alert simulation request. </summary>
+    public partial class SecurityAlertSimulatorRequestProperties : IJsonModel<SecurityAlertSimulatorRequestProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="AlertSimulatorRequestProperties"/> for deserialization. </summary>
-        internal AlertSimulatorRequestProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AlertSimulatorRequestProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SecurityAlertSimulatorRequestProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertSimulatorRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAlertSimulatorRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAlertSimulatorRequestProperties(document.RootElement, options);
+                        return DeserializeSecurityAlertSimulatorRequestProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertSimulatorRequestProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAlertSimulatorRequestProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertSimulatorRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAlertSimulatorRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AlertSimulatorRequestProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAlertSimulatorRequestProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AlertSimulatorRequestProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SecurityAlertSimulatorRequestProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AlertSimulatorRequestProperties IPersistableModel<AlertSimulatorRequestProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SecurityAlertSimulatorRequestProperties IPersistableModel<SecurityAlertSimulatorRequestProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AlertSimulatorRequestProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecurityAlertSimulatorRequestProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AlertSimulatorRequestProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecurityAlertSimulatorRequestProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +68,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertSimulatorRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAlertSimulatorRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertSimulatorRequestProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAlertSimulatorRequestProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -100,24 +91,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AlertSimulatorRequestProperties IJsonModel<AlertSimulatorRequestProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SecurityAlertSimulatorRequestProperties IJsonModel<SecurityAlertSimulatorRequestProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AlertSimulatorRequestProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SecurityAlertSimulatorRequestProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertSimulatorRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityAlertSimulatorRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertSimulatorRequestProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAlertSimulatorRequestProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAlertSimulatorRequestProperties(document.RootElement, options);
+            return DeserializeSecurityAlertSimulatorRequestProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AlertSimulatorRequestProperties DeserializeAlertSimulatorRequestProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static SecurityAlertSimulatorRequestProperties DeserializeSecurityAlertSimulatorRequestProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return AlertSimulatorBundlesRequestProperties.DeserializeAlertSimulatorBundlesRequestProperties(element, options);
                 }
             }
-            return UnknownAlertSimulatorRequestProperties.DeserializeUnknownAlertSimulatorRequestProperties(element, options);
+            return UnknownSecurityAlertSimulatorRequestProperties.DeserializeUnknownSecurityAlertSimulatorRequestProperties(element, options);
         }
     }
 }
