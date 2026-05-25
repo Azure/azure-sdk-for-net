@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="arcGatewayUpdate"> Parameters supplied to the Update gateway operation. </param>
+        /// <param name="patch"> Parameters supplied to the Update gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="arcGatewayUpdate"/> is null. </exception>
-        public virtual async Task<Response<ArcGatewayResource>> UpdateAsync(ArcGatewayUpdate arcGatewayUpdate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ArcGatewayResource>> UpdateAsync(ArcGatewayPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(arcGatewayUpdate, nameof(arcGatewayUpdate));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _gatewaysClientDiagnostics.CreateScope("ArcGatewayResource.Update");
             scope.Start();
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ArcGatewayUpdate.ToRequestContent(arcGatewayUpdate), context);
+                HttpMessage message = _gatewaysRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ArcGatewayPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ArcGatewayData> response = Response.FromValue(ArcGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -262,12 +262,12 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="arcGatewayUpdate"> Parameters supplied to the Update gateway operation. </param>
+        /// <param name="patch"> Parameters supplied to the Update gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="arcGatewayUpdate"/> is null. </exception>
-        public virtual Response<ArcGatewayResource> Update(ArcGatewayUpdate arcGatewayUpdate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ArcGatewayResource> Update(ArcGatewayPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(arcGatewayUpdate, nameof(arcGatewayUpdate));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _gatewaysClientDiagnostics.CreateScope("ArcGatewayResource.Update");
             scope.Start();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ArcGatewayUpdate.ToRequestContent(arcGatewayUpdate), context);
+                HttpMessage message = _gatewaysRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ArcGatewayPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ArcGatewayData> response = Response.FromValue(ArcGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.HybridCompute
                 else
                 {
                     ArcGatewayData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ArcGatewayUpdate patch = new ArcGatewayUpdate();
+                    ArcGatewayPatch patch = new ArcGatewayPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.HybridCompute
                 else
                 {
                     ArcGatewayData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ArcGatewayUpdate patch = new ArcGatewayUpdate();
+                    ArcGatewayPatch patch = new ArcGatewayPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.HybridCompute
                 else
                 {
                     ArcGatewayData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ArcGatewayUpdate patch = new ArcGatewayUpdate();
+                    ArcGatewayPatch patch = new ArcGatewayPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<ArcGatewayResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.HybridCompute
                 else
                 {
                     ArcGatewayData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ArcGatewayUpdate patch = new ArcGatewayUpdate();
+                    ArcGatewayPatch patch = new ArcGatewayPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<ArcGatewayResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.HybridCompute
                 else
                 {
                     ArcGatewayData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ArcGatewayUpdate patch = new ArcGatewayUpdate();
+                    ArcGatewayPatch patch = new ArcGatewayPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.HybridCompute
                 else
                 {
                     ArcGatewayData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ArcGatewayUpdate patch = new ArcGatewayUpdate();
+                    ArcGatewayPatch patch = new ArcGatewayPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
