@@ -19,6 +19,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             {
                 Value = "[\"AA==\"]"
             });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..host") { Value = "ekm.contoso.com" });
         }
 
         [RecordedTest]
