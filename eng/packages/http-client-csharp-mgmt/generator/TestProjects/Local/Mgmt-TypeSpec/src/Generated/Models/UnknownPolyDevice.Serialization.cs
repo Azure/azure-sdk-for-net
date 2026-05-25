@@ -58,7 +58,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PolyDeviceData IPersistableModel<PolyDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownPolyDevice)PersistableModelCreateCore(data, options);
+        PolyDeviceData IPersistableModel<PolyDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (PolyDeviceData)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PolyDeviceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -86,7 +89,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PolyDeviceData IJsonModel<PolyDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownPolyDevice)JsonModelCreateCore(ref reader, options);
+        PolyDeviceData IJsonModel<PolyDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (PolyDeviceData)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
