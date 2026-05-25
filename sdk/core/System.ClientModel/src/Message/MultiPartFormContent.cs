@@ -331,6 +331,7 @@ public sealed class MultiPartFormContent : BinaryContent
     /// <param name="name">The form field name for the part.</param>
     /// <param name="content">The <see cref="sbyte"/> to add as a part.</param>
     /// <param name="mediaType">The media type for the part.</param>
+    [CLSCompliant(false)]
     public void Add(string name, sbyte content, string? mediaType = MediaTypeTextPlain)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -397,6 +398,7 @@ public sealed class MultiPartFormContent : BinaryContent
     /// <param name="name">The form field name for the part.</param>
     /// <param name="content">The <see cref="ushort"/> to add as a part.</param>
     /// <param name="mediaType">The media type for the part.</param>
+    [CLSCompliant(false)]
     public void Add(string name, ushort content, string? mediaType = MediaTypeTextPlain)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -419,6 +421,7 @@ public sealed class MultiPartFormContent : BinaryContent
     /// <param name="name">The form field name for the part.</param>
     /// <param name="content">The <see cref="uint"/> to add as a part.</param>
     /// <param name="mediaType">The media type for the part.</param>
+    [CLSCompliant(false)]
     public void Add(string name, uint content, string? mediaType = MediaTypeTextPlain)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -441,6 +444,7 @@ public sealed class MultiPartFormContent : BinaryContent
     /// <param name="name">The form field name for the part.</param>
     /// <param name="content">The <see cref="ulong"/> to add as a part.</param>
     /// <param name="mediaType">The media type for the part.</param>
+    [CLSCompliant(false)]
     public void Add(string name, ulong content, string? mediaType = MediaTypeTextPlain)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
