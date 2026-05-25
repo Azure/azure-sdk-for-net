@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             string state = default;
             DateTimeOffset? creationTimeUtc = default;
-            SecurityTaskParameters securityTaskParameters = default;
+            SecurityTaskInfo securityTaskParameters = default;
             DateTimeOffset? lastStateChangeTimeUtc = default;
             string subState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    securityTaskParameters = SecurityTaskParameters.DeserializeSecurityTaskParameters(prop.Value, options);
+                    securityTaskParameters = SecurityTaskInfo.DeserializeSecurityTaskInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("lastStateChangeTimeUtc"u8))

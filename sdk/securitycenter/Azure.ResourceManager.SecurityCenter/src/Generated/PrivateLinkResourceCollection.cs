@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="privateLinkName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> or <paramref name="privateLinkName"/> is null. </exception>
-        public virtual async Task<ArmOperation<PrivateLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SecurityCenterPrivateLinkResourceData data, PrivateLinkParameters privateLinkName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SecurityCenterPrivateLinkResourceData data, SecurityPrivateLinkInfo privateLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNull(privateLinkName, nameof(privateLinkName));
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="privateLinkName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> or <paramref name="privateLinkName"/> is null. </exception>
-        public virtual ArmOperation<PrivateLinkResource> CreateOrUpdate(WaitUntil waitUntil, SecurityCenterPrivateLinkResourceData data, PrivateLinkParameters privateLinkName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateLinkResource> CreateOrUpdate(WaitUntil waitUntil, SecurityCenterPrivateLinkResourceData data, SecurityPrivateLinkInfo privateLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNull(privateLinkName, nameof(privateLinkName));
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="privateLinkName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> is null. </exception>
-        public virtual async Task<Response<PrivateLinkResource>> GetAsync(PrivateLinkParameters privateLinkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateLinkResource>> GetAsync(SecurityPrivateLinkInfo privateLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(privateLinkName, nameof(privateLinkName));
 
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="privateLinkName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> is null. </exception>
-        public virtual Response<PrivateLinkResource> Get(PrivateLinkParameters privateLinkName, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateLinkResource> Get(SecurityPrivateLinkInfo privateLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(privateLinkName, nameof(privateLinkName));
 
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="privateLinkName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(PrivateLinkParameters privateLinkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(SecurityPrivateLinkInfo privateLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(privateLinkName, nameof(privateLinkName));
 
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="privateLinkName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> is null. </exception>
-        public virtual Response<bool> Exists(PrivateLinkParameters privateLinkName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(SecurityPrivateLinkInfo privateLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(privateLinkName, nameof(privateLinkName));
 
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="privateLinkName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> is null. </exception>
-        public virtual async Task<NullableResponse<PrivateLinkResource>> GetIfExistsAsync(PrivateLinkParameters privateLinkName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<PrivateLinkResource>> GetIfExistsAsync(SecurityPrivateLinkInfo privateLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(privateLinkName, nameof(privateLinkName));
 
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="privateLinkName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> is null. </exception>
-        public virtual NullableResponse<PrivateLinkResource> GetIfExists(PrivateLinkParameters privateLinkName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<PrivateLinkResource> GetIfExists(SecurityPrivateLinkInfo privateLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(privateLinkName, nameof(privateLinkName));
 

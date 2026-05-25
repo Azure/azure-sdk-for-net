@@ -3010,7 +3010,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Get a private link resource. Returns the configuration and status of private endpoint connectivity for Microsoft Defender for Cloud services in the specified region.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetPrivateLinkResourceAsync(PrivateLinkParameters, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetPrivateLinkResourceAsync(SecurityPrivateLinkInfo, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -3018,7 +3018,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PrivateLinkResource>> GetPrivateLinkResourceAsync(this ResourceGroupResource resourceGroupResource, PrivateLinkParameters privateLinkName, CancellationToken cancellationToken = default)
+        public static async Task<Response<PrivateLinkResource>> GetPrivateLinkResourceAsync(this ResourceGroupResource resourceGroupResource, SecurityPrivateLinkInfo privateLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -3029,7 +3029,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Get a private link resource. Returns the configuration and status of private endpoint connectivity for Microsoft Defender for Cloud services in the specified region.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetPrivateLinkResource(PrivateLinkParameters, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetPrivateLinkResource(SecurityPrivateLinkInfo, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -3037,7 +3037,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<PrivateLinkResource> GetPrivateLinkResource(this ResourceGroupResource resourceGroupResource, PrivateLinkParameters privateLinkName, CancellationToken cancellationToken = default)
+        public static Response<PrivateLinkResource> GetPrivateLinkResource(this ResourceGroupResource resourceGroupResource, SecurityPrivateLinkInfo privateLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 

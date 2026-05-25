@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="attestationData"> Additional data about assignment that has Attest effect. </param>
         /// <param name="metadata"> The standard assignment metadata. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StandardAssignmentProperties(string displayName, string description, AssignedStandardItem assignedStandard, Effect? effect, IList<string> excludedScopes, DateTimeOffset? expiresOn, StandardAssignmentPropertiesExemptionData exemptionData, StandardAssignmentPropertiesAttestationData attestationData, StandardAssignmentMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StandardAssignmentProperties(string displayName, string description, AssignedStandardItem assignedStandard, Effect? effect, IList<string> excludedScopes, DateTimeOffset? expiresOn, StandardAssignmentExemptionInfo exemptionData, StandardAssignmentAttestationInfo attestationData, StandardAssignmentMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public DateTimeOffset? ExpiresOn { get; set; }
 
         /// <summary> Additional data about assignment that has Exempt effect. </summary>
-        public StandardAssignmentPropertiesExemptionData ExemptionData { get; set; }
+        public StandardAssignmentExemptionInfo ExemptionData { get; set; }
 
         /// <summary> Additional data about assignment that has Attest effect. </summary>
-        public StandardAssignmentPropertiesAttestationData AttestationData { get; set; }
+        public StandardAssignmentAttestationInfo AttestationData { get; set; }
 
         /// <summary> The standard assignment metadata. </summary>
         public StandardAssignmentMetadata Metadata { get; set; }

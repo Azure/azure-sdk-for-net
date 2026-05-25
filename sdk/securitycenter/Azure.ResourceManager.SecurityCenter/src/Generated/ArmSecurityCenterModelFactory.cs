@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="tactics"> Gets the Tactics. </param>
         /// <param name="techniques"> Gets the Techniques. </param>
         /// <returns> A new <see cref="SecurityCenter.SubscriptionAssessmentMetadataData"/> instance for mocking. </returns>
-        public static SubscriptionAssessmentMetadataData SubscriptionAssessmentMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, ResourceIdentifier policyDefinitionId = default, string description = default, string remediationDescription = default, IEnumerable<SecurityAssessmentResourceCategory> categories = default, SecurityAssessmentSeverity? severity = default, SecurityAssessmentUserImpact? userImpact = default, ImplementationEffort? implementationEffort = default, IEnumerable<SecurityThreat> threats = default, bool? preview = default, SecurityAssessmentType? assessmentType = default, SecurityAssessmentMetadataPartner partnerData = default, SecurityAssessmentMetadataPropertiesResponsePublishDates publishDates = default, string plannedDeprecationDate = default, IEnumerable<Tactics> tactics = default, IEnumerable<Techniques> techniques = default)
+        public static SubscriptionAssessmentMetadataData SubscriptionAssessmentMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, ResourceIdentifier policyDefinitionId = default, string description = default, string remediationDescription = default, IEnumerable<SecurityAssessmentResourceCategory> categories = default, SecurityAssessmentSeverity? severity = default, SecurityAssessmentUserImpact? userImpact = default, ImplementationEffort? implementationEffort = default, IEnumerable<SecurityThreat> threats = default, bool? preview = default, SecurityAssessmentType? assessmentType = default, SecurityAssessmentMetadataPartner partnerData = default, SecurityAssessmentMetadataPropertiesResultPublishOn publishDates = default, string plannedDeprecationDate = default, IEnumerable<Tactics> tactics = default, IEnumerable<Techniques> techniques = default)
         {
             return new SubscriptionAssessmentMetadataData(
                 id,
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                displayName is null && policyDefinitionId is null && description is null && remediationDescription is null && categories is null && severity is null && userImpact is null && implementationEffort is null && threats is null && preview is null && assessmentType is null && partnerData is null && publishDates is null && plannedDeprecationDate is null && tactics is null && techniques is null ? default : new SecurityAssessmentMetadataPropertiesResponse(
+                displayName is null && policyDefinitionId is null && description is null && remediationDescription is null && categories is null && severity is null && userImpact is null && implementationEffort is null && threats is null && preview is null && assessmentType is null && partnerData is null && publishDates is null && plannedDeprecationDate is null && tactics is null && techniques is null ? default : new SecurityAssessmentMetadataPropertiesResult(
                     displayName,
                     policyDefinitionId,
                     description,
@@ -259,15 +259,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="plannedDeprecationDate"></param>
         /// <param name="tactics"></param>
         /// <param name="techniques"></param>
-        /// <returns> A new <see cref="Models.SecurityAssessmentMetadataPropertiesResponse"/> instance for mocking. </returns>
-        public static SecurityAssessmentMetadataPropertiesResponse SecurityAssessmentMetadataPropertiesResponse(string displayName = default, ResourceIdentifier policyDefinitionId = default, string description = default, string remediationDescription = default, IEnumerable<SecurityAssessmentResourceCategory> categories = default, SecurityAssessmentSeverity severity = default, SecurityAssessmentUserImpact? userImpact = default, ImplementationEffort? implementationEffort = default, IEnumerable<SecurityThreat> threats = default, bool? preview = default, SecurityAssessmentType assessmentType = default, SecurityAssessmentMetadataPartner partnerData = default, SecurityAssessmentMetadataPropertiesResponsePublishDates publishDates = default, string plannedDeprecationDate = default, IEnumerable<Tactics> tactics = default, IEnumerable<Techniques> techniques = default)
+        /// <returns> A new <see cref="Models.SecurityAssessmentMetadataPropertiesResult"/> instance for mocking. </returns>
+        public static SecurityAssessmentMetadataPropertiesResult SecurityAssessmentMetadataPropertiesResult(string displayName = default, ResourceIdentifier policyDefinitionId = default, string description = default, string remediationDescription = default, IEnumerable<SecurityAssessmentResourceCategory> categories = default, SecurityAssessmentSeverity severity = default, SecurityAssessmentUserImpact? userImpact = default, ImplementationEffort? implementationEffort = default, IEnumerable<SecurityThreat> threats = default, bool? preview = default, SecurityAssessmentType assessmentType = default, SecurityAssessmentMetadataPartner partnerData = default, SecurityAssessmentMetadataPropertiesResultPublishOn publishDates = default, string plannedDeprecationDate = default, IEnumerable<Tactics> tactics = default, IEnumerable<Techniques> techniques = default)
         {
             categories ??= new ChangeTrackingList<SecurityAssessmentResourceCategory>();
             threats ??= new ChangeTrackingList<SecurityThreat>();
             tactics ??= new ChangeTrackingList<Tactics>();
             techniques ??= new ChangeTrackingList<Techniques>();
 
-            return new SecurityAssessmentMetadataPropertiesResponse(
+            return new SecurityAssessmentMetadataPropertiesResult(
                 displayName,
                 policyDefinitionId,
                 description,
@@ -397,18 +397,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 isTrustedServiceEnabled);
         }
 
-        /// <param name="tagsProperty"> A list of key value pairs that describe the resource. </param>
+        /// <param name="tags"> A list of key value pairs that describe the resource. </param>
         /// <param name="description"> The security automation description. </param>
         /// <param name="isEnabled"> Indicates whether the security automation is enabled. </param>
         /// <param name="scopes"> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </param>
         /// <param name="sources"> A collection of the source event types which evaluate the security automation set of rules. </param>
         /// <param name="actions"> A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true. </param>
         /// <returns> A new <see cref="Models.SecurityAutomationPatch"/> instance for mocking. </returns>
-        public static SecurityAutomationPatch SecurityAutomationPatch(IDictionary<string, string> tagsProperty = default, string description = default, bool? isEnabled = default, IEnumerable<AutomationScope> scopes = default, IEnumerable<AutomationSource> sources = default, IEnumerable<AutomationAction> actions = default)
+        public static SecurityAutomationPatch SecurityAutomationPatch(IDictionary<string, string> tags = default, string description = default, bool? isEnabled = default, IEnumerable<AutomationScope> scopes = default, IEnumerable<AutomationSource> sources = default, IEnumerable<AutomationAction> actions = default)
         {
-            tagsProperty ??= new ChangeTrackingDictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SecurityAutomationPatch(tagsProperty, additionalBinaryDataProperties: null, description is null && isEnabled is null && scopes is null && sources is null && actions is null ? default : new AutomationProperties(
+            return new SecurityAutomationPatch(tags, additionalBinaryDataProperties: null, description is null && isEnabled is null && scopes is null && sources is null && actions is null ? default : new AutomationProperties(
                 description,
                 isEnabled,
                 (scopes ?? new ChangeTrackingList<AutomationScope>()).ToList(),
@@ -418,13 +418,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> A list of key value pairs that describe the resource. </summary>
-        /// <param name="tagsProperty"> A list of key value pairs that describe the resource. </param>
-        /// <returns> A new <see cref="Models.Tags"/> instance for mocking. </returns>
-        public static Tags Tags(IDictionary<string, string> tagsProperty = default)
+        /// <param name="tags"> A list of key value pairs that describe the resource. </param>
+        /// <returns> A new <see cref="Models.SecurityCenterPatchTags"/> instance for mocking. </returns>
+        public static SecurityCenterPatchTags SecurityCenterPatchTags(IDictionary<string, string> tags = default)
         {
-            tagsProperty ??= new ChangeTrackingDictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new Tags(tagsProperty, additionalBinaryDataProperties: null);
+            return new SecurityCenterPatchTags(tags, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The security automation model state property bag. </summary>
@@ -907,12 +907,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new OperationStatus(code, message, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The PrivateLinkParameters. </summary>
+        /// <summary> The SecurityPrivateLinkInfo. </summary>
         /// <param name="privateLinkName"> The name of the private link resource. </param>
-        /// <returns> A new <see cref="Models.PrivateLinkParameters"/> instance for mocking. </returns>
-        public static PrivateLinkParameters PrivateLinkParameters(string privateLinkName = default)
+        /// <returns> A new <see cref="Models.SecurityPrivateLinkInfo"/> instance for mocking. </returns>
+        public static SecurityPrivateLinkInfo SecurityPrivateLinkInfo(string privateLinkName = default)
         {
-            return new PrivateLinkParameters(privateLinkName, additionalBinaryDataProperties: null);
+            return new SecurityPrivateLinkInfo(privateLinkName, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1057,12 +1057,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="regions"> list of regions to scan. </param>
         /// <param name="accountName"> The AWS account name. </param>
         /// <param name="scanInterval"> Scan interval in hours (value should be between 1-hour to 24-hours). </param>
-        /// <returns> A new <see cref="Models.AwsEnvironmentData"/> instance for mocking. </returns>
-        public static AwsEnvironmentData AwsEnvironmentData(AwsOrganizationalInfo organizationalData = default, IEnumerable<string> regions = default, string accountName = default, long? scanInterval = default)
+        /// <returns> A new <see cref="Models.AwsEnvironmentInfo"/> instance for mocking. </returns>
+        public static AwsEnvironmentInfo AwsEnvironmentInfo(AwsOrganizationalInfo organizationalData = default, IEnumerable<string> regions = default, string accountName = default, long? scanInterval = default)
         {
             regions ??= new ChangeTrackingList<string>();
 
-            return new AwsEnvironmentData(
+            return new AwsEnvironmentInfo(
                 EnvironmentType.AwsAccount,
                 additionalBinaryDataProperties: null,
                 organizationalData,
@@ -1203,12 +1203,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> List of RP resources which supports pagination. </summary>
         /// <param name="value"> The AzureDevOpsOrg items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.AzureDevOpsOrgListResponse"/> instance for mocking. </returns>
-        public static AzureDevOpsOrgListResponse AzureDevOpsOrgListResponse(IEnumerable<AzureDevOpsOrgData> value = default, Uri nextLink = default)
+        /// <returns> A new <see cref="Models.AzureDevOpsOrgListResult"/> instance for mocking. </returns>
+        public static AzureDevOpsOrgListResult AzureDevOpsOrgListResult(IEnumerable<AzureDevOpsOrgData> value = default, Uri nextLink = default)
         {
             value ??= new ChangeTrackingList<AzureDevOpsOrgData>();
 
-            return new AzureDevOpsOrgListResponse(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+            return new AzureDevOpsOrgListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
         /// <summary> GitHub Owner resource. </summary>
@@ -1267,12 +1267,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> List of RP resources which supports pagination. </summary>
         /// <param name="value"> The GitHubOwner items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.GitHubOwnerListResponse"/> instance for mocking. </returns>
-        public static GitHubOwnerListResponse GitHubOwnerListResponse(IEnumerable<GitHubOwnerData> value = default, Uri nextLink = default)
+        /// <returns> A new <see cref="Models.GitHubOwnerListResult"/> instance for mocking. </returns>
+        public static GitHubOwnerListResult GitHubOwnerListResult(IEnumerable<GitHubOwnerData> value = default, Uri nextLink = default)
         {
             value ??= new ChangeTrackingList<GitHubOwnerData>();
 
-            return new GitHubOwnerListResponse(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+            return new GitHubOwnerListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
         /// <summary> GitLab Group resource. </summary>
@@ -1339,12 +1339,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> List of RP resources which supports pagination. </summary>
         /// <param name="value"> The GitLabGroup items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.GitLabGroupListResponse"/> instance for mocking. </returns>
-        public static GitLabGroupListResponse GitLabGroupListResponse(IEnumerable<GitLabGroupData> value = default, Uri nextLink = default)
+        /// <returns> A new <see cref="Models.GitLabGroupListResult"/> instance for mocking. </returns>
+        public static GitLabGroupListResult GitLabGroupListResult(IEnumerable<GitLabGroupData> value = default, Uri nextLink = default)
         {
             value ??= new ChangeTrackingList<GitLabGroupData>();
 
-            return new GitLabGroupListResponse(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+            return new GitLabGroupListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
         /// <summary> DevOps Configuration resource. </summary>
@@ -1642,7 +1642,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="location"> Location where the resource is stored. </param>
         /// <returns> A new <see cref="SecurityCenter.JitNetworkAccessPolicyData"/> instance for mocking. </returns>
-        public static JitNetworkAccessPolicyData JitNetworkAccessPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<JitNetworkAccessPolicyVirtualMachine> virtualMachines = default, IEnumerable<JitNetworkAccessRequest> requests = default, string provisioningState = default, string kind = default, AzureLocation? location = default)
+        public static JitNetworkAccessPolicyData JitNetworkAccessPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<JitNetworkAccessPolicyVirtualMachine> virtualMachines = default, IEnumerable<JitNetworkAccessContent> requests = default, string provisioningState = default, string kind = default, AzureLocation? location = default)
         {
             return new JitNetworkAccessPolicyData(
                 id,
@@ -1650,7 +1650,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                new JitNetworkAccessPolicyProperties((virtualMachines ?? new ChangeTrackingList<JitNetworkAccessPolicyVirtualMachine>()).ToList(), (requests ?? new ChangeTrackingList<JitNetworkAccessRequest>()).ToList(), provisioningState, null),
+                new JitNetworkAccessPolicyProperties((virtualMachines ?? new ChangeTrackingList<JitNetworkAccessPolicyVirtualMachine>()).ToList(), (requests ?? new ChangeTrackingList<JitNetworkAccessContent>()).ToList(), provisioningState, null),
                 kind,
                 location);
         }
@@ -1687,17 +1687,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The JitNetworkAccessRequest. </summary>
+        /// <summary> The JitNetworkAccessContent. </summary>
         /// <param name="virtualMachines"></param>
         /// <param name="startTimeUtc"> The start time of the request in UTC. </param>
         /// <param name="requestor"> The identity of the person who made the request. </param>
         /// <param name="justification"> The justification for making the initiate request. </param>
-        /// <returns> A new <see cref="Models.JitNetworkAccessRequest"/> instance for mocking. </returns>
-        public static JitNetworkAccessRequest JitNetworkAccessRequest(IEnumerable<JitNetworkAccessRequestVirtualMachine> virtualMachines = default, DateTimeOffset startTimeUtc = default, string requestor = default, string justification = default)
+        /// <returns> A new <see cref="Models.JitNetworkAccessContent"/> instance for mocking. </returns>
+        public static JitNetworkAccessContent JitNetworkAccessContent(IEnumerable<JitNetworkAccessRequestVirtualMachine> virtualMachines = default, DateTimeOffset startTimeUtc = default, string requestor = default, string justification = default)
         {
             virtualMachines ??= new ChangeTrackingList<JitNetworkAccessRequestVirtualMachine>();
 
-            return new JitNetworkAccessRequest(virtualMachines.ToList(), startTimeUtc, requestor, justification, additionalBinaryDataProperties: null);
+            return new JitNetworkAccessContent(virtualMachines.ToList(), startTimeUtc, requestor, justification, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The JitNetworkAccessRequestVirtualMachine. </summary>
@@ -1735,15 +1735,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The JitNetworkAccessPolicyInitiateRequest. </summary>
+        /// <summary> The JitNetworkAccessPolicyInitiateContent. </summary>
         /// <param name="virtualMachines"> A list of virtual machines &amp; ports to open access for. </param>
         /// <param name="justification"> The justification for making the initiate request. </param>
-        /// <returns> A new <see cref="Models.JitNetworkAccessPolicyInitiateRequest"/> instance for mocking. </returns>
-        public static JitNetworkAccessPolicyInitiateRequest JitNetworkAccessPolicyInitiateRequest(IEnumerable<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines = default, string justification = default)
+        /// <returns> A new <see cref="Models.JitNetworkAccessPolicyInitiateContent"/> instance for mocking. </returns>
+        public static JitNetworkAccessPolicyInitiateContent JitNetworkAccessPolicyInitiateContent(IEnumerable<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines = default, string justification = default)
         {
             virtualMachines ??= new ChangeTrackingList<JitNetworkAccessPolicyInitiateVirtualMachine>();
 
-            return new JitNetworkAccessPolicyInitiateRequest(virtualMachines.ToList(), justification, additionalBinaryDataProperties: null);
+            return new JitNetworkAccessPolicyInitiateContent(virtualMachines.ToList(), justification, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The JitNetworkAccessPolicyInitiateVirtualMachine. </summary>
@@ -1845,7 +1845,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="metadata"> The standard assignment metadata. </param>
         /// <param name="assignedStandardId"> Full resourceId of the Microsoft.Security/standard object. </param>
         /// <returns> A new <see cref="SecurityCenter.StandardAssignmentData"/> instance for mocking. </returns>
-        public static StandardAssignmentData StandardAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, Effect? effect = default, IEnumerable<string> excludedScopes = default, DateTimeOffset? expiresOn = default, StandardAssignmentPropertiesExemptionData exemptionData = default, StandardAssignmentPropertiesAttestationData attestationData = default, StandardAssignmentMetadata metadata = default, string assignedStandardId = default)
+        public static StandardAssignmentData StandardAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, Effect? effect = default, IEnumerable<string> excludedScopes = default, DateTimeOffset? expiresOn = default, StandardAssignmentExemptionInfo exemptionData = default, StandardAssignmentAttestationInfo attestationData = default, StandardAssignmentMetadata metadata = default, string assignedStandardId = default)
         {
             return new StandardAssignmentData(
                 id,
@@ -1870,12 +1870,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="assessmentKey"> Unique key to a security assessment object. </param>
         /// <param name="complianceOn"> Attestation compliance date. </param>
         /// <param name="evidence"> Array of links to attestation evidence. </param>
-        /// <returns> A new <see cref="Models.StandardAssignmentPropertiesAttestationData"/> instance for mocking. </returns>
-        public static StandardAssignmentPropertiesAttestationData StandardAssignmentPropertiesAttestationData(AttestationComplianceState? complianceState = default, string assessmentKey = default, DateTimeOffset? complianceOn = default, IEnumerable<AttestationEvidence> evidence = default)
+        /// <returns> A new <see cref="Models.StandardAssignmentAttestationInfo"/> instance for mocking. </returns>
+        public static StandardAssignmentAttestationInfo StandardAssignmentAttestationInfo(AttestationComplianceState? complianceState = default, string assessmentKey = default, DateTimeOffset? complianceOn = default, IEnumerable<AttestationEvidence> evidence = default)
         {
             evidence ??= new ChangeTrackingList<AttestationEvidence>();
 
-            return new StandardAssignmentPropertiesAttestationData(complianceState, assessmentKey is null ? default : new AssignedAssessmentItem(assessmentKey, null), complianceOn, evidence.ToList(), additionalBinaryDataProperties: null);
+            return new StandardAssignmentAttestationInfo(complianceState, assessmentKey is null ? default : new AssignedAssessmentItem(assessmentKey, null), complianceOn, evidence.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The standard assignment metadata. </summary>
@@ -2307,7 +2307,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="lastStateChangeTimeUtc"> The time this task's details were last changed in UTC. </param>
         /// <param name="subState"> Additional data on the state of the task. </param>
         /// <returns> A new <see cref="SecurityCenter.ResourceGroupSecurityTaskData"/> instance for mocking. </returns>
-        public static ResourceGroupSecurityTaskData ResourceGroupSecurityTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string state = default, DateTimeOffset? creationTimeUtc = default, SecurityTaskParameters securityTaskParameters = default, DateTimeOffset? lastStateChangeTimeUtc = default, string subState = default)
+        public static ResourceGroupSecurityTaskData ResourceGroupSecurityTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string state = default, DateTimeOffset? creationTimeUtc = default, SecurityTaskInfo securityTaskParameters = default, DateTimeOffset? lastStateChangeTimeUtc = default, string subState = default)
         {
             return new ResourceGroupSecurityTaskData(
                 id,
@@ -2331,7 +2331,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="lastStateChangeTimeUtc"> The time this task's details were last changed in UTC. </param>
         /// <param name="subState"> Additional data on the state of the task. </param>
         /// <returns> A new <see cref="Models.SecurityTaskProperties"/> instance for mocking. </returns>
-        public static SecurityTaskProperties SecurityTaskProperties(string state = default, DateTimeOffset? creationTimeUtc = default, SecurityTaskParameters securityTaskParameters = default, DateTimeOffset? lastStateChangeTimeUtc = default, string subState = default)
+        public static SecurityTaskProperties SecurityTaskProperties(string state = default, DateTimeOffset? creationTimeUtc = default, SecurityTaskInfo securityTaskParameters = default, DateTimeOffset? lastStateChangeTimeUtc = default, string subState = default)
         {
             return new SecurityTaskProperties(
                 state,
@@ -2345,12 +2345,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
         /// <param name="taskName"> Name of the task type. </param>
         /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.SecurityTaskParameters"/> instance for mocking. </returns>
-        public static SecurityTaskParameters SecurityTaskParameters(string taskName = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        /// <returns> A new <see cref="Models.SecurityTaskInfo"/> instance for mocking. </returns>
+        public static SecurityTaskInfo SecurityTaskInfo(string taskName = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new SecurityTaskParameters(taskName, additionalProperties);
+            return new SecurityTaskInfo(taskName, additionalProperties);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2403,7 +2403,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="linksAzurePortalUri"> Link to assessment in Azure Portal. </param>
         /// <param name="status"> The result of the assessment. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityAssessmentData"/> instance for mocking. </returns>
-        public static SecurityAssessmentData SecurityAssessmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityAssessmentPropertiesBaseRisk risk = default, SecurityCenterResourceDetails resourceDetails = default, string displayName = default, IDictionary<string, string> additionalData = default, SecurityAssessmentMetadataProperties metadata = default, SecurityAssessmentPartnerData partnersData = default, string linksAzurePortalUri = default, AssessmentStatusResponse status = default)
+        public static SecurityAssessmentData SecurityAssessmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityAssessmentPropertiesBaseRisk risk = default, SecurityCenterResourceDetails resourceDetails = default, string displayName = default, IDictionary<string, string> additionalData = default, SecurityAssessmentMetadataProperties metadata = default, SecurityAssessmentPartnerInfo partnersData = default, string linksAzurePortalUri = default, SecurityAssessmentStatusResult status = default)
         {
             return new SecurityAssessmentData(
                 id,
@@ -2429,10 +2429,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="description"> Human readable description of the assessment status. </param>
         /// <param name="firstEvaluationOn"> The time that the assessment was created and first evaluated. Returned as UTC time in ISO 8601 format. </param>
         /// <param name="statusChangeOn"> The time that the status of the assessment last changed. Returned as UTC time in ISO 8601 format. </param>
-        /// <returns> A new <see cref="Models.AssessmentStatusResponse"/> instance for mocking. </returns>
-        public static AssessmentStatusResponse AssessmentStatusResponse(AssessmentStatusCode code = default, string cause = default, string description = default, DateTimeOffset? firstEvaluationOn = default, DateTimeOffset? statusChangeOn = default)
+        /// <returns> A new <see cref="Models.SecurityAssessmentStatusResult"/> instance for mocking. </returns>
+        public static SecurityAssessmentStatusResult SecurityAssessmentStatusResult(SecurityAssessmentStatusCode code = default, string cause = default, string description = default, DateTimeOffset? firstEvaluationOn = default, DateTimeOffset? statusChangeOn = default)
         {
-            return new AssessmentStatusResponse(
+            return new SecurityAssessmentStatusResult(
                 code,
                 cause,
                 description,
@@ -2508,7 +2508,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="linksAzurePortalUri"> Link to assessment in Azure Portal. </param>
         /// <param name="status"> The result of the assessment. </param>
         /// <returns> A new <see cref="Models.SecurityAssessmentGenerated"/> instance for mocking. </returns>
-        public static SecurityAssessmentGenerated SecurityAssessmentGenerated(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityAssessmentPropertiesBaseRisk risk = default, SecurityCenterResourceDetails resourceDetails = default, string displayName = default, IDictionary<string, string> additionalData = default, SecurityAssessmentMetadataProperties metadata = default, SecurityAssessmentPartnerData partnersData = default, string linksAzurePortalUri = default, AssessmentStatus status = default)
+        public static SecurityAssessmentGenerated SecurityAssessmentGenerated(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityAssessmentPropertiesBaseRisk risk = default, SecurityCenterResourceDetails resourceDetails = default, string displayName = default, IDictionary<string, string> additionalData = default, SecurityAssessmentMetadataProperties metadata = default, SecurityAssessmentPartnerInfo partnersData = default, string linksAzurePortalUri = default, SecurityAssessmentStatus status = default)
         {
             return new SecurityAssessmentGenerated(
                 id,
@@ -3337,12 +3337,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="sensitiveInfoTypesIds"> List of selected sensitive info types' IDs. </param>
         /// <param name="sensitivityThresholdLabelOrder"> The order of the sensitivity threshold label. Any label at or above this order will be considered sensitive. If set to -1, sensitivity by labels is turned off. </param>
         /// <param name="sensitivityThresholdLabelId"> The id of the sensitivity threshold label. Any label at or above this rank will be considered sensitive. </param>
-        /// <returns> A new <see cref="Models.UpdateSensitivitySettingsRequest"/> instance for mocking. </returns>
-        public static UpdateSensitivitySettingsRequest UpdateSensitivitySettingsRequest(IEnumerable<Guid> sensitiveInfoTypesIds = default, float? sensitivityThresholdLabelOrder = default, string sensitivityThresholdLabelId = default)
+        /// <returns> A new <see cref="Models.UpdateSensitivitySettingsContent"/> instance for mocking. </returns>
+        public static UpdateSensitivitySettingsContent UpdateSensitivitySettingsContent(IEnumerable<Guid> sensitiveInfoTypesIds = default, float? sensitivityThresholdLabelOrder = default, string sensitivityThresholdLabelId = default)
         {
             sensitiveInfoTypesIds ??= new ChangeTrackingList<Guid>();
 
-            return new UpdateSensitivitySettingsRequest(sensitiveInfoTypesIds.ToList(), sensitivityThresholdLabelOrder, sensitivityThresholdLabelId, additionalBinaryDataProperties: null);
+            return new UpdateSensitivitySettingsContent(sensitiveInfoTypesIds.ToList(), sensitivityThresholdLabelOrder, sensitivityThresholdLabelId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A list with a single sensitivity settings resource. </summary>

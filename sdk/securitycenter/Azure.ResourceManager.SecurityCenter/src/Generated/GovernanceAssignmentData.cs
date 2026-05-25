@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The additional data for the governance assignment - e.g. links to ticket (optional), see example. </summary>
-        public GovernanceAssignmentAdditionalData AdditionalData
+        public GovernanceAssignmentAdditionalInfo AdditionalData
         {
             get
             {

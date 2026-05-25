@@ -177,8 +177,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Effect? effect = default;
             IList<string> excludedScopes = default;
             DateTimeOffset? expiresOn = default;
-            StandardAssignmentPropertiesExemptionData exemptionData = default;
-            StandardAssignmentPropertiesAttestationData attestationData = default;
+            StandardAssignmentExemptionInfo exemptionData = default;
+            StandardAssignmentAttestationInfo attestationData = default;
             StandardAssignmentMetadata metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    exemptionData = StandardAssignmentPropertiesExemptionData.DeserializeStandardAssignmentPropertiesExemptionData(prop.Value, options);
+                    exemptionData = StandardAssignmentExemptionInfo.DeserializeStandardAssignmentExemptionInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("attestationData"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    attestationData = StandardAssignmentPropertiesAttestationData.DeserializeStandardAssignmentPropertiesAttestationData(prop.Value, options);
+                    attestationData = StandardAssignmentAttestationInfo.DeserializeStandardAssignmentAttestationInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))

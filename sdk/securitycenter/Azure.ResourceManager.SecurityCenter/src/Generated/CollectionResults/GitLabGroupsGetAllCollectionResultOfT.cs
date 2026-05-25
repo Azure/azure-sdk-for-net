@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     yield break;
                 }
-                GitLabGroupListResponse result = GitLabGroupListResponse.FromResponse(response);
+                GitLabGroupListResult result = GitLabGroupListResult.FromResponse(response);
                 yield return Page<GitLabGroupData>.FromValues((IReadOnlyList<GitLabGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

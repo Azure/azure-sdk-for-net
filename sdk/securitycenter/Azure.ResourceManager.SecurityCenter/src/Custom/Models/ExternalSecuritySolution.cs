@@ -7,8 +7,7 @@ using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.Cod
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // Preserve the GA model name while the spec-side replacement prevents the management-plane resource data suffix.
-    /// <summary> External Security Solution. </summary>
+    // Compatibility customization: the spec-side replacement restores the GA model name, while this preserves the GA public constructor and settable Kind property.
     [CodeGenSuppress("ExternalSecuritySolution")]
     [CodeGenSuppress("Kind")]
     public partial class ExternalSecuritySolution
@@ -19,6 +18,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Gets or sets the kind of the external security solution. </summary>
-        public ExternalSecuritySolutionKind? Kind { get => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface."); set => throw new System.NotSupportedException("This member is preserved for compatibility with a previous SecurityCenter API surface."); }
+        public ExternalSecuritySolutionKind? Kind { get; set; }
     }
 }

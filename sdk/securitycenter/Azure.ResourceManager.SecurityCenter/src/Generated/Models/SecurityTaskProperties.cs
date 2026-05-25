@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="lastStateChangeTimeUtc"> The time this task's details were last changed in UTC. </param>
         /// <param name="subState"> Additional data on the state of the task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityTaskProperties(string state, DateTimeOffset? creationTimeUtc, SecurityTaskParameters securityTaskParameters, DateTimeOffset? lastStateChangeTimeUtc, string subState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityTaskProperties(string state, DateTimeOffset? creationTimeUtc, SecurityTaskInfo securityTaskParameters, DateTimeOffset? lastStateChangeTimeUtc, string subState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             CreationTimeUtc = creationTimeUtc;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public DateTimeOffset? CreationTimeUtc { get; }
 
         /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
-        public SecurityTaskParameters SecurityTaskParameters { get; }
+        public SecurityTaskInfo SecurityTaskParameters { get; }
 
         /// <summary> The time this task's details were last changed in UTC. </summary>
         public DateTimeOffset? LastStateChangeTimeUtc { get; }

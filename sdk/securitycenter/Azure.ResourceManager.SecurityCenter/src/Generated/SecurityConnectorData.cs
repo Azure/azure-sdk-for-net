@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The security connector environment data. </summary>
-        public EnvironmentData EnvironmentData
+        public SecurityConnectorEnvironmentInfo EnvironmentData
         {
             get
             {

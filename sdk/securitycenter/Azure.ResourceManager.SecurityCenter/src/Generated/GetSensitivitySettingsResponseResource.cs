@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="content"> The data sensitivity settings to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<GetSensitivitySettingsResponseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, UpdateSensitivitySettingsRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GetSensitivitySettingsResponseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, UpdateSensitivitySettingsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sensitivitySettingsRestClient.CreateCreateOrUpdateRequest(UpdateSensitivitySettingsRequest.ToRequestContent(content), context);
+                HttpMessage message = _sensitivitySettingsRestClient.CreateCreateOrUpdateRequest(UpdateSensitivitySettingsContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GetSensitivitySettingsResponseData> response = Response.FromValue(GetSensitivitySettingsResponseData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="content"> The data sensitivity settings to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<GetSensitivitySettingsResponseResource> CreateOrUpdate(WaitUntil waitUntil, UpdateSensitivitySettingsRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GetSensitivitySettingsResponseResource> CreateOrUpdate(WaitUntil waitUntil, UpdateSensitivitySettingsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sensitivitySettingsRestClient.CreateCreateOrUpdateRequest(UpdateSensitivitySettingsRequest.ToRequestContent(content), context);
+                HttpMessage message = _sensitivitySettingsRestClient.CreateCreateOrUpdateRequest(UpdateSensitivitySettingsContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GetSensitivitySettingsResponseData> response = Response.FromValue(GetSensitivitySettingsResponseData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

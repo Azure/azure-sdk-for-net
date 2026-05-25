@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Data regarding 3rd party partner integration. </summary>
-        public SecurityAssessmentPartnerData PartnersData
+        public SecurityAssessmentPartnerInfo PartnersData
         {
             get
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The result of the assessment. </summary>
-        public AssessmentStatusResponse Status
+        public SecurityAssessmentStatusResult Status
         {
             get
             {

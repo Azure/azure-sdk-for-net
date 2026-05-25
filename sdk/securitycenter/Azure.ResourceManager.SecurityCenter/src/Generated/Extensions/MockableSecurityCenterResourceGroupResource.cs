@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkResourceAsync(PrivateLinkParameters privateLinkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkResourceAsync(SecurityPrivateLinkInfo privateLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(privateLinkName, nameof(privateLinkName));
 
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateLinkResource> GetPrivateLinkResource(PrivateLinkParameters privateLinkName, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateLinkResource> GetPrivateLinkResource(SecurityPrivateLinkInfo privateLinkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(privateLinkName, nameof(privateLinkName));
 

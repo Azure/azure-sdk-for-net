@@ -15,11 +15,11 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The update model of security automation resource. </summary>
-    public partial class SecurityAutomationPatch : Tags, IJsonModel<SecurityAutomationPatch>
+    public partial class SecurityAutomationPatch : SecurityCenterPatchTags, IJsonModel<SecurityAutomationPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Tags PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SecurityCenterPatchTags PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Tags JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SecurityCenterPatchTags JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            IDictionary<string, string> tagsProperty = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AutomationProperties properties = default;
             foreach (var prop in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             dictionary.Add(prop0.Name, prop0.Value.GetString());
                         }
                     }
-                    tagsProperty = dictionary;
+                    tags = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SecurityAutomationPatch(tagsProperty ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties);
+            return new SecurityAutomationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties);
         }
     }
 }

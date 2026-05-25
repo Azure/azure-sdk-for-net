@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SecurityAssessmentMetadataPropertiesResponse properties = default;
+            SecurityAssessmentMetadataPropertiesResult properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    properties = SecurityAssessmentMetadataPropertiesResponse.DeserializeSecurityAssessmentMetadataPropertiesResponse(prop.Value, options);
+                    properties = SecurityAssessmentMetadataPropertiesResult.DeserializeSecurityAssessmentMetadataPropertiesResult(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

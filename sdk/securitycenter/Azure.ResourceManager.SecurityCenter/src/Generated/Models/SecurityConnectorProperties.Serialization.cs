@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             DateTimeOffset? hierarchyIdentifierTrialEndOn = default;
             CloudName? environmentName = default;
             IList<SecurityCenterCloudOffering> offerings = default;
-            EnvironmentData environmentData = default;
+            SecurityConnectorEnvironmentInfo environmentData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    environmentData = EnvironmentData.DeserializeEnvironmentData(prop.Value, options);
+                    environmentData = SecurityConnectorEnvironmentInfo.DeserializeSecurityConnectorEnvironmentInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

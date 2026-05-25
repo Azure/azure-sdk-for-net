@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The update model of security automation resource. </summary>
-    public partial class SecurityAutomationPatch : Tags
+    public partial class SecurityAutomationPatch : SecurityCenterPatchTags
     {
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationPatch"/>. </summary>
         public SecurityAutomationPatch()
@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationPatch"/>. </summary>
-        /// <param name="tagsProperty"> A list of key value pairs that describe the resource. </param>
+        /// <param name="tags"> A list of key value pairs that describe the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Security automation data. </param>
-        internal SecurityAutomationPatch(IDictionary<string, string> tagsProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties, AutomationProperties properties) : base(tagsProperty, additionalBinaryDataProperties)
+        internal SecurityAutomationPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, AutomationProperties properties) : base(tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

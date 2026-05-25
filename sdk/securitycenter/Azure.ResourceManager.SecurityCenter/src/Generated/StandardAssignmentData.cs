@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Additional data about assignment that has Exempt effect. </summary>
-        public StandardAssignmentPropertiesExemptionData ExemptionData
+        public StandardAssignmentExemptionInfo ExemptionData
         {
             get
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Additional data about assignment that has Attest effect. </summary>
-        public StandardAssignmentPropertiesAttestationData AttestationData
+        public StandardAssignmentAttestationInfo AttestationData
         {
             get
             {

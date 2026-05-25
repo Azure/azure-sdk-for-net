@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Gets the Requests. </summary>
-        public IList<JitNetworkAccessRequest> Requests
+        public IList<JitNetworkAccessContent> Requests
         {
             get
             {

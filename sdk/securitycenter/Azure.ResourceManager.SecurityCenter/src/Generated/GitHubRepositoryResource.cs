@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The request model containing details for creating the GitHub issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> CreateAsync(WaitUntil waitUntil, IssueCreationRequest content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateAsync(WaitUntil waitUntil, IssueCreationContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _gitHubIssuesClientDiagnostics.CreateScope("GitHubRepositoryResource.Create");
             scope.Start();
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gitHubIssuesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, IssueCreationRequest.ToRequestContent(content), context);
+                HttpMessage message = _gitHubIssuesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, IssueCreationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation operation = new SecurityCenterArmOperation(_gitHubIssuesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The request model containing details for creating the GitHub issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Create(WaitUntil waitUntil, IssueCreationRequest content = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Create(WaitUntil waitUntil, IssueCreationContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _gitHubIssuesClientDiagnostics.CreateScope("GitHubRepositoryResource.Create");
             scope.Start();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gitHubIssuesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, IssueCreationRequest.ToRequestContent(content), context);
+                HttpMessage message = _gitHubIssuesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, IssueCreationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation operation = new SecurityCenterArmOperation(_gitHubIssuesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)

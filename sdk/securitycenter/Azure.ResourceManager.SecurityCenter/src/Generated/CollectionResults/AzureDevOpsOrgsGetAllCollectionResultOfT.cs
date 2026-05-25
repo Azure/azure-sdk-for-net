@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     yield break;
                 }
-                AzureDevOpsOrgListResponse result = AzureDevOpsOrgListResponse.FromResponse(response);
+                AzureDevOpsOrgListResult result = AzureDevOpsOrgListResult.FromResponse(response);
                 yield return Page<AzureDevOpsOrgData>.FromValues((IReadOnlyList<AzureDevOpsOrgData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

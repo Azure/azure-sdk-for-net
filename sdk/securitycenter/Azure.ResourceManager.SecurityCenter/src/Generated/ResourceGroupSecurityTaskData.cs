@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
-        public SecurityTaskParameters SecurityTaskParameters
+        public SecurityTaskInfo SecurityTaskParameters
         {
             get
             {

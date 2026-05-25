@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceDetails"> Details of the resource that was assessed. </param>
         /// <param name="status"> The result of the assessment. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceDetails"/> or <paramref name="status"/> is null. </exception>
-        public SecurityAssessmentProperties(SecurityCenterResourceDetails resourceDetails, AssessmentStatus status) : base(resourceDetails)
+        public SecurityAssessmentProperties(SecurityCenterResourceDetails resourceDetails, SecurityAssessmentStatus status) : base(resourceDetails)
         {
             Argument.AssertNotNull(resourceDetails, nameof(resourceDetails));
             Argument.AssertNotNull(status, nameof(status));
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="partnersData"> Data regarding 3rd party partner integration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> The result of the assessment. </param>
-        internal SecurityAssessmentProperties(SecurityAssessmentPropertiesBaseRisk risk, SecurityCenterResourceDetails resourceDetails, string displayName, IDictionary<string, string> additionalData, AssessmentLinks links, SecurityAssessmentMetadataProperties metadata, SecurityAssessmentPartnerData partnersData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AssessmentStatus status) : base(risk, resourceDetails, displayName, additionalData, links, metadata, partnersData, additionalBinaryDataProperties)
+        internal SecurityAssessmentProperties(SecurityAssessmentPropertiesBaseRisk risk, SecurityCenterResourceDetails resourceDetails, string displayName, IDictionary<string, string> additionalData, AssessmentLinks links, SecurityAssessmentMetadataProperties metadata, SecurityAssessmentPartnerInfo partnersData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityAssessmentStatus status) : base(risk, resourceDetails, displayName, additionalData, links, metadata, partnersData, additionalBinaryDataProperties)
         {
             Status = status;
         }
 
         /// <summary> The result of the assessment. </summary>
-        public AssessmentStatus Status { get; }
+        public SecurityAssessmentStatus Status { get; }
     }
 }

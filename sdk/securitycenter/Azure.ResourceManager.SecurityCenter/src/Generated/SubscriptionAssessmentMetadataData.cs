@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes properties of an assessment metadata response. </param>
-        internal SubscriptionAssessmentMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityAssessmentMetadataPropertiesResponse properties) : base(id, name, resourceType, systemData)
+        internal SubscriptionAssessmentMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityAssessmentMetadataPropertiesResult properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 
         /// <summary> Describes properties of an assessment metadata response. </summary>
-        internal SecurityAssessmentMetadataPropertiesResponse Properties { get; set; }
+        internal SecurityAssessmentMetadataPropertiesResult Properties { get; set; }
 
         /// <summary> User friendly display name of the assessment. </summary>
         public string DisplayName
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentMetadataPropertiesResponse();
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
                 }
                 Properties.DisplayName = value;
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentMetadataPropertiesResponse();
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
                 }
                 Properties.Description = value;
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentMetadataPropertiesResponse();
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
                 }
                 Properties.RemediationDescription = value;
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentMetadataPropertiesResponse();
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
                 }
                 return Properties.Categories;
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     if (Properties is null)
                     {
-                        Properties = new SecurityAssessmentMetadataPropertiesResponse();
+                        Properties = new SecurityAssessmentMetadataPropertiesResult();
                     }
                     Properties.Severity = value.Value;
                 }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentMetadataPropertiesResponse();
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
                 }
                 Properties.UserImpact = value;
             }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentMetadataPropertiesResponse();
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
                 }
                 Properties.ImplementationEffort = value;
             }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentMetadataPropertiesResponse();
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
                 }
                 return Properties.Threats;
             }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentMetadataPropertiesResponse();
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
                 }
                 Properties.Preview = value;
             }
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     if (Properties is null)
                     {
-                        Properties = new SecurityAssessmentMetadataPropertiesResponse();
+                        Properties = new SecurityAssessmentMetadataPropertiesResult();
                     }
                     Properties.AssessmentType = value.Value;
                 }
@@ -228,14 +228,14 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentMetadataPropertiesResponse();
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
                 }
                 Properties.PartnerData = value;
             }
         }
 
         /// <summary> Gets or sets the PublishDates. </summary>
-        public SecurityAssessmentMetadataPropertiesResponsePublishDates PublishDates
+        public SecurityAssessmentMetadataPropertiesResultPublishOn PublishDates
         {
             get
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentMetadataPropertiesResponse();
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
                 }
                 Properties.PublishDates = value;
             }
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentMetadataPropertiesResponse();
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
                 }
                 Properties.PlannedDeprecationDate = value;
             }
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentMetadataPropertiesResponse();
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
                 }
                 return Properties.Tactics;
             }
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 if (Properties is null)
                 {
-                    Properties = new SecurityAssessmentMetadataPropertiesResponse();
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
                 }
                 return Properties.Techniques;
             }

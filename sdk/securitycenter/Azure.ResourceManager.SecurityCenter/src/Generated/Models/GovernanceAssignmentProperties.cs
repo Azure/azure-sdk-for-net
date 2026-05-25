@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="governanceEmailNotification"> The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners. </param>
         /// <param name="additionalData"> The additional data for the governance assignment - e.g. links to ticket (optional), see example. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GovernanceAssignmentProperties(string owner, DateTimeOffset remediationDueOn, RemediationEta remediationEta, bool? isGracePeriod, GovernanceEmailNotification governanceEmailNotification, GovernanceAssignmentAdditionalData additionalData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GovernanceAssignmentProperties(string owner, DateTimeOffset remediationDueOn, RemediationEta remediationEta, bool? isGracePeriod, GovernanceEmailNotification governanceEmailNotification, GovernanceAssignmentAdditionalInfo additionalData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Owner = owner;
             RemediationDueOn = remediationDueOn;
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public GovernanceEmailNotification GovernanceEmailNotification { get; set; }
 
         /// <summary> The additional data for the governance assignment - e.g. links to ticket (optional), see example. </summary>
-        public GovernanceAssignmentAdditionalData AdditionalData { get; set; }
+        public GovernanceAssignmentAdditionalInfo AdditionalData { get; set; }
     }
 }

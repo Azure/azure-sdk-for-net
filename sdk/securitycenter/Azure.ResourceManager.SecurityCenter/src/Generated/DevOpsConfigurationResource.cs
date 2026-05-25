@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GitHubOwnerListResponse>> GetAvailableGitHubOwnersAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GitHubOwnerListResult>> GetAvailableGitHubOwnersAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _gitHubOwnersClientDiagnostics.CreateScope("DevOpsConfigurationResource.GetAvailableGitHubOwners");
             scope.Start();
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _gitHubOwnersRestClient.CreateGetAvailableGitHubOwnersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<GitHubOwnerListResponse> response = Response.FromValue(GitHubOwnerListResponse.FromResponse(result), result);
+                Response<GitHubOwnerListResult> response = Response.FromValue(GitHubOwnerListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GitHubOwnerListResponse> GetAvailableGitHubOwners(CancellationToken cancellationToken = default)
+        public virtual Response<GitHubOwnerListResult> GetAvailableGitHubOwners(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _gitHubOwnersClientDiagnostics.CreateScope("DevOpsConfigurationResource.GetAvailableGitHubOwners");
             scope.Start();
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _gitHubOwnersRestClient.CreateGetAvailableGitHubOwnersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<GitHubOwnerListResponse> response = Response.FromValue(GitHubOwnerListResponse.FromResponse(result), result);
+                Response<GitHubOwnerListResult> response = Response.FromValue(GitHubOwnerListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GitLabGroupListResponse>> GetAvailableGitLabGroupsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GitLabGroupListResult>> GetAvailableGitLabGroupsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _gitLabGroupsClientDiagnostics.CreateScope("DevOpsConfigurationResource.GetAvailableGitLabGroups");
             scope.Start();
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _gitLabGroupsRestClient.CreateGetAvailableGitLabGroupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<GitLabGroupListResponse> response = Response.FromValue(GitLabGroupListResponse.FromResponse(result), result);
+                Response<GitLabGroupListResult> response = Response.FromValue(GitLabGroupListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GitLabGroupListResponse> GetAvailableGitLabGroups(CancellationToken cancellationToken = default)
+        public virtual Response<GitLabGroupListResult> GetAvailableGitLabGroups(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _gitLabGroupsClientDiagnostics.CreateScope("DevOpsConfigurationResource.GetAvailableGitLabGroups");
             scope.Start();
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _gitLabGroupsRestClient.CreateGetAvailableGitLabGroupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<GitLabGroupListResponse> response = Response.FromValue(GitLabGroupListResponse.FromResponse(result), result);
+                Response<GitLabGroupListResult> response = Response.FromValue(GitLabGroupListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AzureDevOpsOrgListResponse>> GetAvailableAzureDevOpsOrganizationsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AzureDevOpsOrgListResult>> GetAvailableAzureDevOpsOrganizationsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _azureDevOpsOrgsClientDiagnostics.CreateScope("DevOpsConfigurationResource.GetAvailableAzureDevOpsOrganizations");
             scope.Start();
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _azureDevOpsOrgsRestClient.CreateGetAvailableAzureDevOpsOrganizationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AzureDevOpsOrgListResponse> response = Response.FromValue(AzureDevOpsOrgListResponse.FromResponse(result), result);
+                Response<AzureDevOpsOrgListResult> response = Response.FromValue(AzureDevOpsOrgListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AzureDevOpsOrgListResponse> GetAvailableAzureDevOpsOrganizations(CancellationToken cancellationToken = default)
+        public virtual Response<AzureDevOpsOrgListResult> GetAvailableAzureDevOpsOrganizations(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _azureDevOpsOrgsClientDiagnostics.CreateScope("DevOpsConfigurationResource.GetAvailableAzureDevOpsOrganizations");
             scope.Start();
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _azureDevOpsOrgsRestClient.CreateGetAvailableAzureDevOpsOrganizationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AzureDevOpsOrgListResponse> response = Response.FromValue(AzureDevOpsOrgListResponse.FromResponse(result), result);
+                Response<AzureDevOpsOrgListResult> response = Response.FromValue(AzureDevOpsOrgListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

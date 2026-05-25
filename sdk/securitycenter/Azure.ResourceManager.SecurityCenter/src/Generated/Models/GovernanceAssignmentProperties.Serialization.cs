@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             RemediationEta remediationEta = default;
             bool? isGracePeriod = default;
             GovernanceEmailNotification governanceEmailNotification = default;
-            GovernanceAssignmentAdditionalData additionalData = default;
+            GovernanceAssignmentAdditionalInfo additionalData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    additionalData = GovernanceAssignmentAdditionalData.DeserializeGovernanceAssignmentAdditionalData(prop.Value, options);
+                    additionalData = GovernanceAssignmentAdditionalInfo.DeserializeGovernanceAssignmentAdditionalInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

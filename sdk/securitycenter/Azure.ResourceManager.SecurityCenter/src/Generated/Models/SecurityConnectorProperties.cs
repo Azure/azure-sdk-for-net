@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="offerings"> A collection of offerings for the security connector. </param>
         /// <param name="environmentData"> The security connector environment data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityConnectorProperties(string hierarchyIdentifier, DateTimeOffset? hierarchyIdentifierTrialEndOn, CloudName? environmentName, IList<SecurityCenterCloudOffering> offerings, EnvironmentData environmentData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityConnectorProperties(string hierarchyIdentifier, DateTimeOffset? hierarchyIdentifierTrialEndOn, CloudName? environmentName, IList<SecurityCenterCloudOffering> offerings, SecurityConnectorEnvironmentInfo environmentData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HierarchyIdentifier = hierarchyIdentifier;
             HierarchyIdentifierTrialEndOn = hierarchyIdentifierTrialEndOn;
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IList<SecurityCenterCloudOffering> Offerings { get; } = new ChangeTrackingList<SecurityCenterCloudOffering>();
 
         /// <summary> The security connector environment data. </summary>
-        public EnvironmentData EnvironmentData { get; set; }
+        public SecurityConnectorEnvironmentInfo EnvironmentData { get; set; }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             IDictionary<string, string> additionalData = default;
             AssessmentLinks links = default;
             SecurityAssessmentMetadataProperties metadata = default;
-            SecurityAssessmentPartnerData partnersData = default;
+            SecurityAssessmentPartnerInfo partnersData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    partnersData = SecurityAssessmentPartnerData.DeserializeSecurityAssessmentPartnerData(prop.Value, options);
+                    partnersData = SecurityAssessmentPartnerInfo.DeserializeSecurityAssessmentPartnerInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

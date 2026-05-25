@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="metadata"> Describes properties of an assessment metadata. </param>
         /// <param name="partnersData"> Data regarding 3rd party partner integration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAssessmentPropertiesBase(SecurityAssessmentPropertiesBaseRisk risk, SecurityCenterResourceDetails resourceDetails, string displayName, IDictionary<string, string> additionalData, AssessmentLinks links, SecurityAssessmentMetadataProperties metadata, SecurityAssessmentPartnerData partnersData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityAssessmentPropertiesBase(SecurityAssessmentPropertiesBaseRisk risk, SecurityCenterResourceDetails resourceDetails, string displayName, IDictionary<string, string> additionalData, AssessmentLinks links, SecurityAssessmentMetadataProperties metadata, SecurityAssessmentPartnerInfo partnersData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Risk = risk;
             ResourceDetails = resourceDetails;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public SecurityAssessmentMetadataProperties Metadata { get; set; }
 
         /// <summary> Data regarding 3rd party partner integration. </summary>
-        public SecurityAssessmentPartnerData PartnersData { get; set; }
+        public SecurityAssessmentPartnerInfo PartnersData { get; set; }
 
         /// <summary> Link to assessment in Azure Portal. </summary>
         public string LinksAzurePortalUri

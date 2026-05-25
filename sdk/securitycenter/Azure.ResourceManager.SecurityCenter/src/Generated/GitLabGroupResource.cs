@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GitLabGroupListResponse>> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GitLabGroupListResult>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _gitLabSubgroupsClientDiagnostics.CreateScope("GitLabGroupResource.GetAll");
             scope.Start();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _gitLabSubgroupsRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<GitLabGroupListResponse> response = Response.FromValue(GitLabGroupListResponse.FromResponse(result), result);
+                Response<GitLabGroupListResult> response = Response.FromValue(GitLabGroupListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GitLabGroupListResponse> GetAll(CancellationToken cancellationToken = default)
+        public virtual Response<GitLabGroupListResult> GetAll(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _gitLabSubgroupsClientDiagnostics.CreateScope("GitLabGroupResource.GetAll");
             scope.Start();
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _gitLabSubgroupsRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<GitLabGroupListResponse> response = Response.FromValue(GitLabGroupListResponse.FromResponse(result), result);
+                Response<GitLabGroupListResult> response = Response.FromValue(GitLabGroupListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
