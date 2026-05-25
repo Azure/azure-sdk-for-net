@@ -100,8 +100,6 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.SerializedProperties)
             {
-                Assert.That(expectedNames.ContainsKey(property.Key), Is.True, $"The property, {property.Key}, was not expected.");
-
                 PropertyInfo matchingProperty = typeof(ClientLibraryInformation)
                     .GetProperty(expectedNames[property.Key], BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
 
