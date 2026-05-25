@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
@@ -53,13 +54,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
+        /// <param name="statements"> Route Policy statements. </param>
         /// <param name="networkFabricId"> Arm Resource ID of Network Fabric. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
-        public NetworkFabricRoutePolicyData(AzureLocation location, ResourceIdentifier networkFabricId) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="statements"/> or <paramref name="networkFabricId"/> is null. </exception>
+        public NetworkFabricRoutePolicyData(AzureLocation location, IEnumerable<RoutePolicyStatementProperties> statements, ResourceIdentifier networkFabricId) : base(location)
         {
+            Argument.AssertNotNull(statements, nameof(statements));
             Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
 
-            Statements = new ChangeTrackingList<RoutePolicyStatementProperties>();
+            Statements = statements.ToList();
             NetworkFabricId = networkFabricId;
         }
 
@@ -75,17 +78,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="statements"> Route Policy statements. </param>
         /// <param name="networkFabricId"> Arm Resource ID of Network Fabric. </param>
         /// <param name="addressFamilyType"> AddressFamilyType. This parameter decides whether the given ipv4 or ipv6 route policy. </param>
+        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricRoutePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, CommunityActionType? defaultAction, IList<RoutePolicyStatementProperties> statements, ResourceIdentifier networkFabricId, AddressFamilyType? addressFamilyType, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricRoutePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, CommunityActionType? defaultAction, IList<RoutePolicyStatementProperties> statements, ResourceIdentifier networkFabricId, AddressFamilyType? addressFamilyType, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             DefaultAction = defaultAction;
             Statements = statements;
             NetworkFabricId = networkFabricId;
             AddressFamilyType = addressFamilyType;
+            LastOperation = lastOperation;
             ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
             AdministrativeState = administrativeState;
@@ -107,6 +112,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public ResourceIdentifier NetworkFabricId { get; set; }
         /// <summary> AddressFamilyType. This parameter decides whether the given ipv4 or ipv6 route policy. </summary>
         public AddressFamilyType? AddressFamilyType { get; set; }
+        /// <summary> Details of the last operation performed on the resource. </summary>
+        internal LastOperationProperties LastOperation { get; }
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get => LastOperation?.Details;
+        }
+
         /// <summary> Configuration state of the resource. </summary>
         public NetworkFabricConfigurationState? ConfigurationState { get; }
         /// <summary> Provisioning state of the resource. </summary>

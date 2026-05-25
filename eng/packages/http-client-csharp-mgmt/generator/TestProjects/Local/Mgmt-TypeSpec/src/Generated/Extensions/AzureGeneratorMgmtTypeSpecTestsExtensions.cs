@@ -106,21 +106,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="FooConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetFooSettingsResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetFooConfigurationResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
-        public static FooSettingsResource GetFooSettingsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FooConfigurationResource"/> object. </returns>
+        public static FooConfigurationResource GetFooConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetFooSettingsResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetFooConfigurationResource(id);
         }
 
         /// <summary>
@@ -1446,39 +1446,39 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="EventGridTopicEventGridPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="EventGridTopicPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetEventGridTopicEventGridPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetEventGridTopicPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventGridTopicEventGridPrivateEndpointConnectionResource"/> object. </returns>
-        public static EventGridTopicEventGridPrivateEndpointConnectionResource GetEventGridTopicEventGridPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventGridTopicPrivateEndpointConnectionResource"/> object. </returns>
+        public static EventGridTopicPrivateEndpointConnectionResource GetEventGridTopicPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEventGridTopicEventGridPrivateEndpointConnectionResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEventGridTopicPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="EventGridDomainEventGridPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="EventGridDomainPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetEventGridDomainEventGridPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetEventGridDomainPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventGridDomainEventGridPrivateEndpointConnectionResource"/> object. </returns>
-        public static EventGridDomainEventGridPrivateEndpointConnectionResource GetEventGridDomainEventGridPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventGridDomainPrivateEndpointConnectionResource"/> object. </returns>
+        public static EventGridDomainPrivateEndpointConnectionResource GetEventGridDomainPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEventGridDomainEventGridPrivateEndpointConnectionResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEventGridDomainPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -1706,20 +1706,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it in the <see cref="ResourceGroupResource"/>.
+        /// Gets an object representing a <see cref="FooConfigurationResource"/> along with the instance operations that can be performed on it in the <see cref="ResourceGroupResource"/>.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetFooSettings()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetFooConfiguration()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
-        public static FooSettingsResource GetFooSettings(this ResourceGroupResource resourceGroupResource)
+        /// <returns> Returns a <see cref="FooConfigurationResource"/> object. </returns>
+        public static FooConfigurationResource GetFooConfiguration(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetFooSettings();
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetFooConfiguration();
         }
 
         /// <summary>
