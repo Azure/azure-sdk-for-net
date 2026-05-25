@@ -38,7 +38,6 @@ namespace Azure.Security.KeyVault.Administration.Tests
         [AsyncOnly]
         public async Task EkmHelloWorldAsync()
         {
-            byte[] serverCaCertificate = ReadCaCertificate();
             string ekmHost = TestEnvironment.EkmHost
                 ?? throw new IgnoreException("AZURE_KEYVAULT_EKM_HOST is not defined.");
 
@@ -54,6 +53,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 ServerSubjectCommonName = "ekm.contoso.com",
             };
 #else
+            byte[] serverCaCertificate = ReadCaCertificate();
             KeyVaultEkmConnection connection = new KeyVaultEkmConnection(ekmHost, new[] { serverCaCertificate })
             {
                 PathPrefix = TestEnvironment.EkmPathPrefix,
@@ -109,7 +109,6 @@ namespace Azure.Security.KeyVault.Administration.Tests
         [SyncOnly]
         public void EkmHelloWorldSync()
         {
-            byte[] serverCaCertificate = ReadCaCertificate();
             string ekmHost = TestEnvironment.EkmHost
                 ?? throw new IgnoreException("AZURE_KEYVAULT_EKM_HOST is not defined.");
 
@@ -125,6 +124,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 ServerSubjectCommonName = "ekm.contoso.com",
             };
 #else
+            byte[] serverCaCertificate = ReadCaCertificate();
             KeyVaultEkmConnection connection = new KeyVaultEkmConnection(ekmHost, new[] { serverCaCertificate })
             {
                 PathPrefix = TestEnvironment.EkmPathPrefix,
