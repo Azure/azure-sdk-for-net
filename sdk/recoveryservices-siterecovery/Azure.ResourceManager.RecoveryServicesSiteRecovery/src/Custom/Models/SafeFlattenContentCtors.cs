@@ -16,13 +16,13 @@
 // where XxxProperties contains exactly one (or only optional) public property.
 // MPG's safe-flatten transform lifts that inner property up onto the parent
 // (e.g. `XxxContent.<InnerProp>`), demotes `Properties` to internal, and emits
-// only a parameterless `public XxxContent()` plus an internal
+// an internal `Properties` holder and an internal
 // `XxxContent(properties, bagOfUnknowns)` ctor.
 //
 // The legacy v1.x AutoRest SDK, by contrast, emitted a `public XxxContent(XxxProperties properties)`
 // ctor. ApiCompat against the v1.x baseline therefore reports MembersMustExist
-// for the missing ctor. Each shim below restores it by forwarding to the
-// generated internal ctor with a null property bag.
+// for the missing ctor. Each shim below restores it by assigning the generated
+// internal state directly, avoiding a dependency on the internal ctor signature.
 //
 // (Disabling safe-flatten via `@@clientOption(..., "disable-safe-flatten", true, "csharp")`
 // is NOT a valid alternative here: legacy v1.x ALSO shipped the lifted/flat
@@ -37,54 +37,90 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         /// <summary> Initializes a new instance of <see cref="ClusterTestFailoverCleanupContent"/>. </summary>
         /// <param name="properties"> Cluster test failover cleanup input properties. </param>
-        public ClusterTestFailoverCleanupContent(ClusterTestFailoverCleanupContentProperties properties) : this(properties, additionalBinaryDataProperties: null) { }
+        public ClusterTestFailoverCleanupContent(ClusterTestFailoverCleanupContentProperties properties)
+        {
+            Properties = properties;
+            _additionalBinaryDataProperties = null;
+        }
     }
     public partial class MigrationItemResyncContent
     {
         /// <summary> Initializes a new instance of <see cref="MigrationItemResyncContent"/>. </summary>
         /// <param name="properties"> Resync input properties. </param>
-        public MigrationItemResyncContent(MigrationItemResyncProperties properties) : this(properties, additionalBinaryDataProperties: null) { }
+        public MigrationItemResyncContent(MigrationItemResyncProperties properties)
+        {
+            Properties = properties;
+            _additionalBinaryDataProperties = null;
+        }
     }
     public partial class PauseReplicationContent
     {
         /// <summary> Initializes a new instance of <see cref="PauseReplicationContent"/>. </summary>
         /// <param name="properties"> Pause replication input properties. </param>
-        public PauseReplicationContent(PauseReplicationProperties properties) : this(properties, additionalBinaryDataProperties: null) { }
+        public PauseReplicationContent(PauseReplicationProperties properties)
+        {
+            Properties = properties;
+            _additionalBinaryDataProperties = null;
+        }
     }
     public partial class RecoveryPlanTestFailoverCleanupContent
     {
         /// <summary> Initializes a new instance of <see cref="RecoveryPlanTestFailoverCleanupContent"/>. </summary>
         /// <param name="properties"> Recovery plan test failover cleanup input properties. </param>
-        public RecoveryPlanTestFailoverCleanupContent(RecoveryPlanTestFailoverCleanupProperties properties) : this(properties, additionalBinaryDataProperties: null) { }
+        public RecoveryPlanTestFailoverCleanupContent(RecoveryPlanTestFailoverCleanupProperties properties)
+        {
+            Properties = properties;
+            _additionalBinaryDataProperties = null;
+        }
     }
     public partial class ResumeReplicationContent
     {
         /// <summary> Initializes a new instance of <see cref="ResumeReplicationContent"/>. </summary>
         /// <param name="properties"> Resume replication input properties. </param>
-        public ResumeReplicationContent(ResumeReplicationProperties properties) : this(properties, additionalBinaryDataProperties: null) { }
+        public ResumeReplicationContent(ResumeReplicationProperties properties)
+        {
+            Properties = properties;
+            _additionalBinaryDataProperties = null;
+        }
     }
     public partial class SiteRecoveryMigrateContent
     {
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrateContent"/>. </summary>
         /// <param name="properties"> Migrate input properties. </param>
-        public SiteRecoveryMigrateContent(SiteRecoveryMigrateProperties properties) : this(properties, additionalBinaryDataProperties: null) { }
+        public SiteRecoveryMigrateContent(SiteRecoveryMigrateProperties properties)
+        {
+            Properties = properties;
+            _additionalBinaryDataProperties = null;
+        }
     }
     public partial class TestFailoverCleanupContent
     {
         /// <summary> Initializes a new instance of <see cref="TestFailoverCleanupContent"/>. </summary>
         /// <param name="properties"> Test failover cleanup input properties. </param>
-        public TestFailoverCleanupContent(TestFailoverCleanupProperties properties) : this(properties, additionalBinaryDataProperties: null) { }
+        public TestFailoverCleanupContent(TestFailoverCleanupProperties properties)
+        {
+            Properties = properties;
+            _additionalBinaryDataProperties = null;
+        }
     }
     public partial class TestMigrateCleanupContent
     {
         /// <summary> Initializes a new instance of <see cref="TestMigrateCleanupContent"/>. </summary>
         /// <param name="properties"> Test migrate cleanup input properties. </param>
-        public TestMigrateCleanupContent(TestMigrateCleanupProperties properties) : this(properties, additionalBinaryDataProperties: null) { }
+        public TestMigrateCleanupContent(TestMigrateCleanupProperties properties)
+        {
+            Properties = properties;
+            _additionalBinaryDataProperties = null;
+        }
     }
     public partial class TestMigrateContent
     {
         /// <summary> Initializes a new instance of <see cref="TestMigrateContent"/>. </summary>
         /// <param name="properties"> Test migrate input properties. </param>
-        public TestMigrateContent(TestMigrateProperties properties) : this(properties, additionalBinaryDataProperties: null) { }
+        public TestMigrateContent(TestMigrateProperties properties)
+        {
+            Properties = properties;
+            _additionalBinaryDataProperties = null;
+        }
     }
 }
