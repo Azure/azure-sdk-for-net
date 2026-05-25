@@ -11,12 +11,12 @@ using Azure.ResourceManager.AlertsManagement.Models;
 namespace Azure.ResourceManager.AlertsManagement
 {
     // Backward compatibility additions for the tenant-scope ServiceAlertResource:
-    //  1. ChangeState(ServiceAlertState, string, ...) - the old AutoRest SDK accepted a plain
-    //     string for the comment; the new TypeSpec spec wraps it in a ServiceAlertComments model.
-    //     These overloads convert the string into ServiceAlertComments and delegate.
+    //  1. ChangeState(ServiceAlertState, string, ...) - the AutoRest-based v1.1.1 SDK accepted
+    //     a plain string for the comment; the new TypeSpec spec wraps it in a ServiceAlertComments
+    //     model. These overloads convert the string into ServiceAlertComments and delegate.
     //  2. GetEnrichments / GetEnrichmentsAsync - the new spec binds the getEnrichments operation
     //     to the extension-scope ScopedServiceAlertResource only (because it carries the @list
-    //     decorator). The old SDK exposed the same operation on the tenant-scope resource, so
+    //     decorator). The v1.1.1 SDK exposed the same operation on the tenant-scope resource, so
     //     we restore it here by forwarding to a ScopedServiceAlertResource constructed with the
     //     tenant alert Id (which yields the same wire path).
     public partial class ServiceAlertResource

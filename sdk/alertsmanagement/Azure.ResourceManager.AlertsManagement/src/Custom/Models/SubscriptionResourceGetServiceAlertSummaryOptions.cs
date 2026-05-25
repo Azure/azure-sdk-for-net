@@ -3,7 +3,8 @@
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Options for the Alerts_GetSummary operation on a subscription. Groups the required <c>groupby</c> parameter together with the optional filter parameters into a single object. Provided for backward compatibility with the AutoRest-based v1.1.1 SDK. </summary>
+    // Property bag feature is not supported in the new generator.
+    /// <summary> Options for the Alerts_GetSummary operation on a subscription. Groups the required <c>groupby</c> parameter together with the optional filter parameters into a single object. </summary>
     public partial class SubscriptionResourceGetServiceAlertSummaryOptions
     {
         /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetServiceAlertSummaryOptions"/>. </summary>

@@ -7,11 +7,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    // Backward compatibility: the old SDK (AutoRest-based, v1.1.1) named the unknown
-    // discriminator fallback class "UnknownAlertsMetaDataProperties". The new TypeSpec generator
-    // produces "UnknownServiceAlertMetadataProperties" (reflecting the @@clientName rename of
-    // AlertsMetaDataProperties to ServiceAlertMetadataProperties). This [CodeGenType] mapping
-    // preserves the old class name for binary compatibility.
+    // Preserve the legacy class name "UnknownAlertsMetaDataProperties" for binary compatibility
+    // with the AutoRest-based v1.1.1 SDK. The new TypeSpec generator emits this discriminator
+    // fallback as "UnknownServiceAlertMetadataProperties" (reflecting the @@clientName rename of
+    // AlertsMetaDataProperties to ServiceAlertMetadataProperties); the [CodeGenType] mapping
+    // restores the original name.
     [CodeGenType("UnknownServiceAlertMetadataProperties")]
     internal partial class UnknownAlertsMetaDataProperties
     { }

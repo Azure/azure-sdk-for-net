@@ -7,11 +7,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    // Backward compatibility: the old SDK (AutoRest-based, v1.1.1) exposed a convenience overload
-    // ServiceAlertCollection.GetAll(ServiceAlertCollectionGetAllOptions) that wraps the 17 individual
-    // query parameters of Alerts_GetAllTenant into a single options object. The new TypeSpec generator
-    // only emits the individual-parameter overload, so this custom partial reintroduces the options
-    // wrapper for source compatibility.
+    // Backward compatibility: the AutoRest-based v1.1.1 SDK exposed a convenience overload
+    // ServiceAlertCollection.GetAll(ServiceAlertCollectionGetAllOptions) wrapping the 17 query
+    // parameters of Alerts_GetAllTenant in a single options object. The new TypeSpec generator
+    // emits only the individual-parameter overload, so this partial reintroduces the wrapper.
     [CodeGenType("AlertCollection")]
     public partial class ServiceAlertCollection
     {

@@ -13,6 +13,9 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AlertsManagement.Mocking
 {
+    // Re-exposes v1.1.x positional GetServiceAlertSummary overloads (the new generator emits
+    // only the options-body overload) and keeps [Obsolete] shims for AlertProcessingRule /
+    // SmartGroup / GetServiceAlert-by-Guid APIs that have moved or been removed.
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableAlertsManagementSubscriptionResource : ArmResource
     {

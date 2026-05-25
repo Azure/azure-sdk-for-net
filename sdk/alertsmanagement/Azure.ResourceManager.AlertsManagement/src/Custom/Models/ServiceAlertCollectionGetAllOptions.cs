@@ -3,7 +3,8 @@
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Options that group the query parameters of the Alerts_ListAll operation into a single object. Provided for backward compatibility with the AutoRest-based v1.1.1 SDK. </summary>
+    // Property bag feature is not supported in the new generator.
+    /// <summary> Options that group the query parameters of the Alerts_ListAll operation into a single object. </summary>
     public partial class ServiceAlertCollectionGetAllOptions
     {
         /// <summary> Filter by target resource (which is full ARM ID). Default value is select all. </summary>
