@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         /// <summary> Initializes a new instance of <see cref="SuppressionAlertsScopeElement"/>. </summary>
         public SuppressionAlertsScopeElement()
+            : this(null, new ChangeTrackingDictionary<string, BinaryData>())
         {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
     }
 }

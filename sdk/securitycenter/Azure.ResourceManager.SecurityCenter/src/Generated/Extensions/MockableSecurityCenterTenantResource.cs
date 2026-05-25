@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -22,6 +23,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
     {
         private ClientDiagnostics _secureScoreControlDefinitionsClientDiagnostics;
         private SecureScoreControlDefinitions _secureScoreControlDefinitionsRestClient;
+        private ClientDiagnostics _sensitivitySettingsClientDiagnostics;
+        private SensitivitySettings _sensitivitySettingsRestClient;
 
         /// <summary> Initializes a new instance of MockableSecurityCenterTenantResource for mocking. </summary>
         protected MockableSecurityCenterTenantResource()
@@ -38,6 +41,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private ClientDiagnostics SecureScoreControlDefinitionsClientDiagnostics => _secureScoreControlDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private SecureScoreControlDefinitions SecureScoreControlDefinitionsRestClient => _secureScoreControlDefinitionsRestClient ??= new SecureScoreControlDefinitions(SecureScoreControlDefinitionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+
+        private ClientDiagnostics SensitivitySettingsClientDiagnostics => _sensitivitySettingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SensitivitySettings SensitivitySettingsRestClient => _sensitivitySettingsRestClient ??= new SensitivitySettings(SensitivitySettingsClientDiagnostics, Pipeline, Endpoint, "2023-02-15-preview");
 
         /// <summary> Gets a collection of AssessmentsMetadata in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of AssessmentsMetadata and their operations over a AssessmentsMetadatumResource. </returns>
@@ -177,6 +184,94 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
                 CancellationToken = cancellationToken
             };
             return new SecureScoreControlDefinitionsGetSecureScoreControlDefinitionsCollectionResultOfT(SecureScoreControlDefinitionsRestClient, context, "MockableSecurityCenterTenantResource.GetSecureScoreControlDefinitions");
+        }
+
+        /// <summary>
+        /// Gets a list with a single sensitivity settings resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Security/sensitivitySettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GetSensitivitySettingsResponses_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-02-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SensitivitySettingsListResult>> GetSensitivitySettingsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = SensitivitySettingsClientDiagnostics.CreateScope("MockableSecurityCenterTenantResource.GetSensitivitySettings");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SensitivitySettingsRestClient.CreateGetSensitivitySettingsRequest(context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SensitivitySettingsListResult> response = Response.FromValue(SensitivitySettingsListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a list with a single sensitivity settings resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Security/sensitivitySettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GetSensitivitySettingsResponses_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-02-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SensitivitySettingsListResult> GetSensitivitySettings(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = SensitivitySettingsClientDiagnostics.CreateScope("MockableSecurityCenterTenantResource.GetSensitivitySettings");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SensitivitySettingsRestClient.CreateGetSensitivitySettingsRequest(context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SensitivitySettingsListResult> response = Response.FromValue(SensitivitySettingsListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

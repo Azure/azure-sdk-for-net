@@ -2741,6 +2741,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IoTSecurityDeviceRecommendation(recommendationDisplayName, reportedSeverity, devicesCount, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> List of Security analytics of your IoT Security solution. </summary>
+        /// <param name="value"> The IoTSecuritySolutionAnalyticsModel items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.IoTSecuritySolutionAnalyticsModelList"/> instance for mocking. </returns>
+        public static IoTSecuritySolutionAnalyticsModelList IoTSecuritySolutionAnalyticsModelList(IEnumerable<IoTSecuritySolutionAnalyticsModelData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<IoTSecuritySolutionAnalyticsModelData>();
+
+            return new IoTSecuritySolutionAnalyticsModelList(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The type of IoT Security recommendation. </summary>
         /// <param name="recommendationType"> The type of IoT Security recommendation. </param>
         /// <param name="name"></param>
@@ -3121,6 +3132,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 provisioningState is null ? default : new ServerVulnerabilityAssessmentProperties(provisioningState, null));
         }
 
+        /// <summary> List of server vulnerability assessments. </summary>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="Models.ServerVulnerabilityAssessmentsList"/> instance for mocking. </returns>
+        public static ServerVulnerabilityAssessmentsList ServerVulnerabilityAssessmentsList(IEnumerable<ServerVulnerabilityAssessmentData> value = default)
+        {
+            value ??= new ChangeTrackingList<ServerVulnerabilityAssessmentData>();
+
+            return new ServerVulnerabilityAssessmentsList(value.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -3322,6 +3343,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             sensitiveInfoTypesIds ??= new ChangeTrackingList<Guid>();
 
             return new UpdateSensitivitySettingsRequest(sensitiveInfoTypesIds.ToList(), sensitivityThresholdLabelOrder, sensitivityThresholdLabelId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A list with a single sensitivity settings resource. </summary>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="Models.SensitivitySettingsListResult"/> instance for mocking. </returns>
+        public static SensitivitySettingsListResult SensitivitySettingsListResult(IEnumerable<GetSensitivitySettingsResponseData> value = default)
+        {
+            value ??= new ChangeTrackingList<GetSensitivitySettingsResponseData>();
+
+            return new SensitivitySettingsListResult(value.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> SQL Vulnerability Assessment settings resource. </summary>
