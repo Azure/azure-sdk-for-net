@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             string displayName = default;
             string description = default;
-            bool isEnabled = default;
             string ruleType = "unknown";
+            bool isEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("isEnabled"u8))
-                {
-                    isEnabled = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (prop.NameEquals("ruleType"u8))
                 {
                     ruleType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("isEnabled"u8))
+                {
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownCustomAlertRule(displayName, description, isEnabled, ruleType, additionalBinaryDataProperties);
+            return new UnknownCustomAlertRule(displayName, description, ruleType, isEnabled, additionalBinaryDataProperties);
         }
     }
 }

@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return GetSecurityAlertsSuppressionRules().Get(alertsSuppressionRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AssessmentsMetadata in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of AssessmentsMetadata and their operations over a AssessmentsMetadatumResource. </returns>
-        public virtual AssessmentsMetadatumCollection GetAssessmentsMetadata()
+        /// <summary> Gets a collection of SubscriptionAssessmentMetadata in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of SubscriptionAssessmentMetadata and their operations over a SubscriptionAssessmentMetadataResource. </returns>
+        public virtual SubscriptionAssessmentMetadataCollection GetAllSubscriptionAssessmentMetadata()
         {
-            return this.GetCachedClient(client => new AssessmentsMetadatumCollection(client, Id));
+            return GetCachedClient(client => new SubscriptionAssessmentMetadataCollection(client, Id));
         }
 
         /// <summary>
@@ -242,11 +242,11 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AssessmentsMetadatumResource>> GetAssessmentsMetadatumAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionAssessmentMetadataResource>> GetSubscriptionAssessmentMetadataAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
 
-            return await GetAssessmentsMetadata().GetAsync(assessmentMetadataName, cancellationToken).ConfigureAwait(false);
+            return await GetAllSubscriptionAssessmentMetadata().GetAsync(assessmentMetadataName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -271,11 +271,11 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AssessmentsMetadatumResource> GetAssessmentsMetadatum(string assessmentMetadataName, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionAssessmentMetadataResource> GetSubscriptionAssessmentMetadata(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
 
-            return GetAssessmentsMetadata().Get(assessmentMetadataName, cancellationToken);
+            return GetAllSubscriptionAssessmentMetadata().Get(assessmentMetadataName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SecurityContacts in the <see cref="SubscriptionResource"/>. </summary>

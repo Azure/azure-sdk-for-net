@@ -45,6 +45,24 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
         private SubAssessments SubAssessmentsRestClient => _subAssessmentsRestClient ??= new SubAssessments(SubAssessmentsClientDiagnostics, Pipeline, Endpoint, "2019-01-01-preview");
 
+        /// <summary> Gets an object representing a <see cref="SubscriptionSecurityAlertResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionSecurityAlertResource"/> object. </returns>
+        public virtual SubscriptionSecurityAlertResource GetSubscriptionSecurityAlertResource(ResourceIdentifier id)
+        {
+            SubscriptionSecurityAlertResource.ValidateResourceId(id);
+            return new SubscriptionSecurityAlertResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ResourceGroupSecurityAlertResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceGroupSecurityAlertResource"/> object. </returns>
+        public virtual ResourceGroupSecurityAlertResource GetResourceGroupSecurityAlertResource(ResourceIdentifier id)
+        {
+            ResourceGroupSecurityAlertResource.ValidateResourceId(id);
+            return new ResourceGroupSecurityAlertResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="SecurityAlertsSuppressionRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecurityAlertsSuppressionRuleResource"/> object. </returns>
@@ -97,6 +115,24 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
             return await GetSecurityConnectorApplications(scope).GetAsync(applicationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SubscriptionAssessmentMetadataResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionAssessmentMetadataResource"/> object. </returns>
+        public virtual SubscriptionAssessmentMetadataResource GetSubscriptionAssessmentMetadataResource(ResourceIdentifier id)
+        {
+            SubscriptionAssessmentMetadataResource.ValidateResourceId(id);
+            return new SubscriptionAssessmentMetadataResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="TenantAssessmentMetadataResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TenantAssessmentMetadataResource"/> object. </returns>
+        public virtual TenantAssessmentMetadataResource GetTenantAssessmentMetadataResource(ResourceIdentifier id)
+        {
+            TenantAssessmentMetadataResource.ValidateResourceId(id);
+            return new TenantAssessmentMetadataResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SecurityAutomationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -903,6 +939,24 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             AssignmentResource.ValidateResourceId(id);
             return new AssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ResourceGroupSecurityTaskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceGroupSecurityTaskResource"/> object. </returns>
+        public virtual ResourceGroupSecurityTaskResource GetResourceGroupSecurityTaskResource(ResourceIdentifier id)
+        {
+            ResourceGroupSecurityTaskResource.ValidateResourceId(id);
+            return new ResourceGroupSecurityTaskResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SubscriptionSecurityTaskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionSecurityTaskResource"/> object. </returns>
+        public virtual SubscriptionSecurityTaskResource GetSubscriptionSecurityTaskResource(ResourceIdentifier id)
+        {
+            SubscriptionSecurityTaskResource.ValidateResourceId(id);
+            return new SubscriptionSecurityTaskResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ApiCollectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -21,7 +21,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResourceDetails"/>. </summary>
+        /// <param name="source"> The status of the health report. </param>
+        /// <param name="id"> The azure id of the resource. </param>
+        /// <param name="connectorId"> The id of the connector. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceDetails(Source? source, string id, string connectorId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Source = source;
+            Id = id;
+            ConnectorId = connectorId;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
         /// <summary> The status of the health report. </summary>
         public Source? Source { get; }
+
+        /// <summary> The azure id of the resource. </summary>
+        public string Id { get; }
+
+        /// <summary> The id of the connector. </summary>
+        public string ConnectorId { get; }
     }
 }

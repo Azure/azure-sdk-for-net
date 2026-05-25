@@ -11,8 +11,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     [CodeGenType("PrivateLinkParameters")]
     public partial class SecurityPrivateLinkInfo
     {
-        internal string Name => PrivateLinkName;
-
         /// <summary> Converts the parameter model to the private link name. </summary>
         /// <param name="value"> The private link parameters. </param>
         public static implicit operator string(SecurityPrivateLinkInfo value) => value?.PrivateLinkName;

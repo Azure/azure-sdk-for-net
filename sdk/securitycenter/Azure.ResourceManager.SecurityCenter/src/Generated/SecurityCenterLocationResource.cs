@@ -565,11 +565,11 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Gets a collection of Alerts in the <see cref="SecurityCenterLocationResource"/>. </summary>
-        /// <returns> An object representing collection of Alerts and their operations over a AlertResource. </returns>
-        public virtual AlertCollection GetAlerts()
+        /// <summary> Gets a collection of SubscriptionSecurityAlerts in the <see cref="SecurityCenterLocationResource"/>. </summary>
+        /// <returns> An object representing collection of SubscriptionSecurityAlerts and their operations over a SubscriptionSecurityAlertResource. </returns>
+        public virtual SubscriptionSecurityAlertCollection GetSubscriptionSecurityAlerts()
         {
-            return GetCachedClient(client => new AlertCollection(client, Id));
+            return GetCachedClient(client => new SubscriptionSecurityAlertCollection(client, Id));
         }
 
         /// <summary> Get an alert that is associated with a subscription. </summary>
@@ -578,11 +578,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AlertResource>> GetAlertAsync(string alertName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionSecurityAlertResource>> GetSubscriptionSecurityAlertAsync(string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
-            return await GetAlerts().GetAsync(alertName, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionSecurityAlerts().GetAsync(alertName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get an alert that is associated with a subscription. </summary>
@@ -591,31 +591,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AlertResource> GetAlert(string alertName, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionSecurityAlertResource> GetSubscriptionSecurityAlert(string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
-            return GetAlerts().Get(alertName, cancellationToken);
+            return GetSubscriptionSecurityAlerts().Get(alertName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Tasks in the <see cref="SecurityCenterLocationResource"/>. </summary>
-        /// <returns> An object representing collection of Tasks and their operations over a TaskResource. </returns>
-        public virtual TaskCollection GetTasks()
+        /// <summary> Gets a collection of SubscriptionSecurityTasks in the <see cref="SecurityCenterLocationResource"/>. </summary>
+        /// <returns> An object representing collection of SubscriptionSecurityTasks and their operations over a SubscriptionSecurityTaskResource. </returns>
+        public virtual SubscriptionSecurityTaskCollection GetSubscriptionSecurityTasks()
         {
-            return GetCachedClient(client => new TaskCollection(client, Id));
-        }
-
-        /// <summary> Recommended tasks that will help improve the security of the subscription proactively. </summary>
-        /// <param name="taskName"> Name of the task object, will be a GUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<TaskResource>> GetTaskAsync(string taskName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
-
-            return await GetTasks().GetAsync(taskName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new SubscriptionSecurityTaskCollection(client, Id));
         }
 
         /// <summary> Recommended tasks that will help improve the security of the subscription proactively. </summary>
@@ -624,11 +611,24 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TaskResource> GetTask(string taskName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionSecurityTaskResource>> GetSubscriptionSecurityTaskAsync(string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            return GetTasks().Get(taskName, cancellationToken);
+            return await GetSubscriptionSecurityTasks().GetAsync(taskName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Recommended tasks that will help improve the security of the subscription proactively. </summary>
+        /// <param name="taskName"> Name of the task object, will be a GUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SubscriptionSecurityTaskResource> GetSubscriptionSecurityTask(string taskName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
+
+            return GetSubscriptionSecurityTasks().Get(taskName, cancellationToken);
         }
     }
 }

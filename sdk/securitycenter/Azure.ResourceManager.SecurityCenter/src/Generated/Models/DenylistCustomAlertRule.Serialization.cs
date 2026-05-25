@@ -121,8 +121,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             string displayName = default;
             string description = default;
-            bool isEnabled = default;
             string ruleType = "DenylistCustomAlertRule";
+            bool isEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             SecurityValueType? valueType = default;
             IList<string> denylistValues = default;
@@ -138,14 +138,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("isEnabled"u8))
-                {
-                    isEnabled = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (prop.NameEquals("ruleType"u8))
                 {
                     ruleType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("isEnabled"u8))
+                {
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("valueType"u8))
@@ -182,8 +182,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DenylistCustomAlertRule(
                 displayName,
                 description,
-                isEnabled,
                 ruleType,
+                isEnabled,
                 additionalBinaryDataProperties,
                 valueType,
                 denylistValues);

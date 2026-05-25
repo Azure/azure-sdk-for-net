@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
         private SensitivitySettings SensitivitySettingsRestClient => _sensitivitySettingsRestClient ??= new SensitivitySettings(SensitivitySettingsClientDiagnostics, Pipeline, Endpoint, "2023-02-15-preview");
 
-        /// <summary> Gets a collection of AssessmentsMetadata in the <see cref="TenantResource"/>. </summary>
-        /// <returns> An object representing collection of AssessmentsMetadata and their operations over a AssessmentsMetadatumResource. </returns>
-        public virtual AssessmentsMetadatumCollection GetAssessmentsMetadata()
+        /// <summary> Gets a collection of TenantAssessmentMetadata in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of TenantAssessmentMetadata and their operations over a TenantAssessmentMetadataResource. </returns>
+        public virtual TenantAssessmentMetadataCollection GetAllTenantAssessmentMetadata()
         {
-            return this.GetCachedClient(client => new AssessmentsMetadatumCollection(client, Id));
+            return GetCachedClient(client => new TenantAssessmentMetadataCollection(client, Id));
         }
 
         /// <summary>
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        internal virtual async Task<Response<AssessmentsMetadatumResource>> GetAssessmentsMetadatumAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<TenantAssessmentMetadataResource>> GetTenantAssessmentMetadataAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
-            return await GetAssessmentsMetadata().GetAsync(assessmentMetadataName, cancellationToken).ConfigureAwait(false);
+            return await GetAllTenantAssessmentMetadata().GetAsync(assessmentMetadataName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        internal virtual Response<AssessmentsMetadatumResource> GetAssessmentsMetadatum(string assessmentMetadataName, CancellationToken cancellationToken = default)
+        internal virtual Response<TenantAssessmentMetadataResource> GetTenantAssessmentMetadata(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
-            return GetAssessmentsMetadata().Get(assessmentMetadataName, cancellationToken);
+            return GetAllTenantAssessmentMetadata().Get(assessmentMetadataName, cancellationToken);
         }
 
         /// <summary>

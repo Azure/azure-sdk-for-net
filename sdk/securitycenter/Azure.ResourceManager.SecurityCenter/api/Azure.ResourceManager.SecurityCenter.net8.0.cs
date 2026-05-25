@@ -45,36 +45,6 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.AdvancedThreatProtectionSettingResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.AdvancedThreatProtectionSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.AdvancedThreatProtectionSettingResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.AdvancedThreatProtectionSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AlertCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.AlertResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.AlertResource>, System.Collections.IEnumerable
-    {
-        protected AlertCollection() { }
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.AlertResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.AlertResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.AlertResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.AlertResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.AlertResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.AlertResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AlertResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AlertResource() { }
-        public virtual Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ascLocation, string alertName) { throw null; }
-        Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response UpdateResourceGroupLevelStateToActivate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateResourceGroupLevelStateToActivateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response UpdateResourceGroupLevelStateToDismiss(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateResourceGroupLevelStateToDismissAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response UpdateResourceGroupLevelStateToInProgress(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateResourceGroupLevelStateToInProgressAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response UpdateResourceGroupLevelStateToResolve(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateResourceGroupLevelStateToResolveAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class AllowedConnectionsResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.AllowedConnectionsResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.AllowedConnectionsResourceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -210,28 +180,6 @@ namespace Azure.ResourceManager.SecurityCenter
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SecurityConnectorApplicationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.ApplicationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SecurityConnectorApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.ApplicationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SecurityConnectorApplicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class AssessmentsMetadatumCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.AssessmentsMetadatumResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.AssessmentsMetadatumResource>, System.Collections.IEnumerable
-    {
-        protected AssessmentsMetadatumCollection() { }
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.AssessmentsMetadatumResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.AssessmentsMetadatumResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.AssessmentsMetadatumResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.AssessmentsMetadatumResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.AssessmentsMetadatumResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.AssessmentsMetadatumResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AssessmentsMetadatumResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AssessmentsMetadatumResource() { }
-        public virtual Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string assessmentMetadataName) { throw null; }
-        Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AssignmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.AssignmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.AssignmentResource>, System.Collections.IEnumerable
     {
@@ -1773,6 +1721,15 @@ namespace Azure.ResourceManager.SecurityCenter
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.RegulatoryComplianceStandardData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.RegulatoryComplianceStandardData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ResourceGroupSecurityAlertCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertResource>, System.Collections.IEnumerable
+    {
+        protected ResourceGroupSecurityAlertCollection() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
     public partial class ResourceGroupSecurityAlertData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>
     {
         internal ResourceGroupSecurityAlertData() { }
@@ -1813,6 +1770,36 @@ namespace Azure.ResourceManager.SecurityCenter
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ResourceGroupSecurityAlertResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ResourceGroupSecurityAlertResource() { }
+        public virtual Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ascLocation, string alertName) { throw null; }
+        Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response UpdateResourceGroupLevelStateToActivate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateResourceGroupLevelStateToActivateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateResourceGroupLevelStateToDismiss(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateResourceGroupLevelStateToDismissAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateResourceGroupLevelStateToInProgress(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateResourceGroupLevelStateToInProgressAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateResourceGroupLevelStateToResolve(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateResourceGroupLevelStateToResolveAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ResourceGroupSecurityTaskCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskResource>, System.Collections.IEnumerable
+    {
+        protected ResourceGroupSecurityTaskCollection() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
     public partial class ResourceGroupSecurityTaskData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>
     {
         internal ResourceGroupSecurityTaskData() { }
@@ -1830,6 +1817,21 @@ namespace Azure.ResourceManager.SecurityCenter
         Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ResourceGroupSecurityTaskResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ResourceGroupSecurityTaskResource() { }
+        public virtual Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ascLocation, string taskName) { throw null; }
+        Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response UpdateResourceGroupLevelTaskState(Azure.ResourceManager.SecurityCenter.Models.TaskUpdateActionType taskUpdateActionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateResourceGroupLevelTaskStateAsync(Azure.ResourceManager.SecurityCenter.Models.TaskUpdateActionType taskUpdateActionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ScanResultCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.ScanResultResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.ScanResultResource>, System.Collections.IEnumerable
     {
@@ -2116,7 +2118,6 @@ namespace Azure.ResourceManager.SecurityCenter
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.AdvancedThreatProtectionSettingResource>> GetAdvancedThreatProtectionSettingAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.AdvancedThreatProtectionSettingCollection GetAdvancedThreatProtectionSettings(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.AlertCollection GetAlerts(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string ascLocation) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.SecuritySubAssessmentResource> GetAll(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SecureScoreControlDetails> GetAll(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.SecurityCenter.Models.ExpandControlsEnum? expand = default(Azure.ResourceManager.SecurityCenter.Models.ExpandControlsEnum?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData> GetAll(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2131,6 +2132,8 @@ namespace Azure.ResourceManager.SecurityCenter
         public static Azure.ResourceManager.SecurityCenter.AllowedConnectionsResourceCollection GetAllowedConnectionsResources(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.AllowedConnectionsResource> GetAllowedConnectionsResources(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ascLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.AllowedConnectionsResource> GetAllowedConnectionsResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ascLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataCollection GetAllSubscriptionAssessmentMetadata(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.TenantAssessmentMetadataCollection GetAllTenantAssessmentMetadata(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.ApiCollectionResource> GetApiCollection(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string apiId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.ApiCollectionResource>> GetApiCollectionAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string apiId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.ApiCollectionResource GetApiCollectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -2141,10 +2144,6 @@ namespace Azure.ResourceManager.SecurityCenter
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.ApplicationResource>> GetApplicationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string applicationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.ApplicationResource GetApplicationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.ApplicationCollection GetApplications(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.AssessmentsMetadatumCollection GetAssessmentsMetadata(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.AssessmentsMetadatumCollection GetAssessmentsMetadata(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.SecurityCenter.AssessmentsMetadatumResource> GetAssessmentsMetadatum(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.AssessmentsMetadatumResource>> GetAssessmentsMetadatumAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.AssignmentResource> GetAssignment(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string assignmentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.AssignmentResource>> GetAssignmentAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string assignmentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.AssignmentResource GetAssignmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -2237,6 +2236,10 @@ namespace Azure.ResourceManager.SecurityCenter
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.RegulatoryComplianceStandardResource>> GetRegulatoryComplianceStandardAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string regulatoryComplianceStandardName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.RegulatoryComplianceStandardResource GetRegulatoryComplianceStandardResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.RegulatoryComplianceStandardCollection GetRegulatoryComplianceStandards(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertResource GetResourceGroupSecurityAlertResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string ascLocation) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskResource GetResourceGroupSecurityTaskResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string ascLocation) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.ScanResultResource> GetScanResult(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string scanResultId, string databaseName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.ScanResultResource>> GetScanResultAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string scanResultId, string databaseName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.ScanResultResource GetScanResultResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -2348,7 +2351,12 @@ namespace Azure.ResourceManager.SecurityCenter
         public static Azure.ResourceManager.SecurityCenter.StandardCollection GetStandards(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.StandardResource> GetStandards(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.StandardResource> GetStandardsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.TaskCollection GetTasks(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string ascLocation) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> GetSubscriptionAssessmentMetadata(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>> GetSubscriptionAssessmentMetadataAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource GetSubscriptionAssessmentMetadataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource GetSubscriptionSecurityAlertResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource GetSubscriptionSecurityTaskResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.TenantAssessmentMetadataResource GetTenantAssessmentMetadataResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.TopologyResource GetTopologyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.TopologyResource> GetTopologyResource(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string ascLocation, string topologyResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.TopologyResource>> GetTopologyResourceAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string ascLocation, string topologyResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2393,9 +2401,6 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string ascLocation) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCenterLocationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.AlertResource> GetAlert(string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.AlertResource>> GetAlertAsync(string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.SecurityCenter.AlertCollection GetAlerts() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCenterLocationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.Models.SecuritySolutionsReferenceDataList> GetByHomeRegion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.Models.SecuritySolutionsReferenceDataList>> GetByHomeRegionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2403,9 +2408,12 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolution> GetExternalSecuritySolutionsByHomeRegionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetOperationResult(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationResultAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.TaskResource> GetTask(string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.TaskResource>> GetTaskAsync(string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.SecurityCenter.TaskCollection GetTasks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource> GetSubscriptionSecurityAlert(string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource>> GetSubscriptionSecurityAlertAsync(string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertCollection GetSubscriptionSecurityAlerts() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource> GetSubscriptionSecurityTask(string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource>> GetSubscriptionSecurityTaskAsync(string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskCollection GetSubscriptionSecurityTasks() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Simulate(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.Models.AlertSimulatorRequestBody alertSimulatorRequestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SimulateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.Models.AlertSimulatorRequestBody alertSimulatorRequestBody, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.SecurityCenter.SecurityCenterLocationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SecurityCenterLocationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3459,6 +3467,23 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.StandardResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.StandardData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.StandardResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.StandardData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class SubscriptionAssessmentMetadataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>, System.Collections.IEnumerable
+    {
+        protected SubscriptionAssessmentMetadataCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string assessmentMetadataName, Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string assessmentMetadataName, Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> Get(string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>> GetAsync(string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> GetIfExists(string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>> GetIfExistsAsync(string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
     public partial class SubscriptionAssessmentMetadataData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>
     {
         public SubscriptionAssessmentMetadataData() { }
@@ -3488,30 +3513,87 @@ namespace Azure.ResourceManager.SecurityCenter
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TaskCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.TaskResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.TaskResource>, System.Collections.IEnumerable
-    {
-        protected TaskCollection() { }
-        public virtual Azure.Response<bool> Exists(string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.TaskResource> Get(string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.TaskResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.TaskResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.TaskResource>> GetAsync(string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.SecurityCenter.TaskResource> GetIfExists(string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SecurityCenter.TaskResource>> GetIfExistsAsync(string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.TaskResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.TaskResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.TaskResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.TaskResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class TaskResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>
+    public partial class SubscriptionAssessmentMetadataResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected TaskResource() { }
+        protected SubscriptionAssessmentMetadataResource() { }
+        public virtual Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string assessmentMetadataName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SubscriptionSecurityAlertCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource>, System.Collections.IEnumerable
+    {
+        protected SubscriptionSecurityAlertCollection() { }
+        public virtual Azure.Response<bool> Exists(string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource> Get(string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource>> GetAsync(string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource> GetIfExists(string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource>> GetIfExistsAsync(string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SubscriptionSecurityAlertResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SubscriptionSecurityAlertResource() { }
+        public virtual Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string ascLocation, string alertName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response UpdateSubscriptionLevelStateToActivate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateSubscriptionLevelStateToActivateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateSubscriptionLevelStateToDismiss(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateSubscriptionLevelStateToDismissAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateSubscriptionLevelStateToInProgress(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateSubscriptionLevelStateToInProgressAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateSubscriptionLevelStateToResolve(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateSubscriptionLevelStateToResolveAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SubscriptionSecurityTaskCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource>, System.Collections.IEnumerable
+    {
+        protected SubscriptionSecurityTaskCollection() { }
+        public virtual Azure.Response<bool> Exists(string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource> Get(string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource>> GetAsync(string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource> GetIfExists(string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource>> GetIfExistsAsync(string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SubscriptionSecurityTaskResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SubscriptionSecurityTaskResource() { }
         public virtual Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string ascLocation, string taskName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.TaskResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.TaskResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3519,6 +3601,28 @@ namespace Azure.ResourceManager.SecurityCenter
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response UpdateSubscriptionLevelTaskState(Azure.ResourceManager.SecurityCenter.Models.TaskUpdateActionType taskUpdateActionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateSubscriptionLevelTaskStateAsync(Azure.ResourceManager.SecurityCenter.Models.TaskUpdateActionType taskUpdateActionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class TenantAssessmentMetadataCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.TenantAssessmentMetadataResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.TenantAssessmentMetadataResource>, System.Collections.IEnumerable
+    {
+        protected TenantAssessmentMetadataCollection() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.TenantAssessmentMetadataResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.TenantAssessmentMetadataResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SecurityCenter.TenantAssessmentMetadataResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityCenter.TenantAssessmentMetadataResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.TenantAssessmentMetadataResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.TenantAssessmentMetadataResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class TenantAssessmentMetadataResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected TenantAssessmentMetadataResource() { }
+        public virtual Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string assessmentMetadataName) { throw null; }
+        Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TopologyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.TopologyResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.TopologyResourceData>
     {
@@ -3633,6 +3737,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         public virtual Azure.ResourceManager.SecurityCenter.RegulatoryComplianceAssessmentResource GetRegulatoryComplianceAssessmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.RegulatoryComplianceControlResource GetRegulatoryComplianceControlResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.RegulatoryComplianceStandardResource GetRegulatoryComplianceStandardResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertResource GetResourceGroupSecurityAlertResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskResource GetResourceGroupSecurityTaskResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.ScanResultResource> GetScanResult(Azure.Core.ResourceIdentifier scope, string scanResultId, string databaseName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.ScanResultResource>> GetScanResultAsync(Azure.Core.ResourceIdentifier scope, string scanResultId, string databaseName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.ScanResultResource GetScanResultResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -3694,13 +3800,16 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         public virtual Azure.ResourceManager.SecurityCenter.StandardAssignmentResource GetStandardAssignmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.StandardAssignmentCollection GetStandardAssignments(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.StandardResource GetStandardResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource GetSubscriptionAssessmentMetadataResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityCenter.SubscriptionSecurityAlertResource GetSubscriptionSecurityAlertResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityCenter.SubscriptionSecurityTaskResource GetSubscriptionSecurityTaskResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityCenter.TenantAssessmentMetadataResource GetTenantAssessmentMetadataResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.TopologyResource GetTopologyResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableSecurityCenterResourceGroupResource : Azure.ResourceManager.ArmResource
     {
         protected MockableSecurityCenterResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolution> Get(string ascLocation, string externalSecuritySolutionsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.SecurityCenter.AlertCollection GetAlerts(string ascLocation) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.AllowedConnectionsResource> GetAllowedConnectionsResource(string ascLocation, Azure.ResourceManager.SecurityCenter.Models.ConnectionType connectionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.AllowedConnectionsResource>> GetAllowedConnectionsResourceAsync(string ascLocation, Azure.ResourceManager.SecurityCenter.Models.ConnectionType connectionType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.AllowedConnectionsResourceCollection GetAllowedConnectionsResources() { throw null; }
@@ -3724,6 +3833,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.PrivateLinkResource> GetPrivateLinkResource(Azure.ResourceManager.SecurityCenter.Models.SecurityPrivateLinkInfo privateLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.PrivateLinkResource>> GetPrivateLinkResourceAsync(Azure.ResourceManager.SecurityCenter.Models.SecurityPrivateLinkInfo privateLinkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.PrivateLinkResourceCollection GetPrivateLinkResources() { throw null; }
+        public virtual Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(string ascLocation) { throw null; }
+        public virtual Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(string ascLocation) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAutomationResource> GetSecurityAutomation(string automationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAutomationResource>> GetSecurityAutomationAsync(string automationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.SecurityAutomationCollection GetSecurityAutomations() { throw null; }
@@ -3736,7 +3847,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.StandardResource> GetStandard(string standardId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.StandardResource>> GetStandardAsync(string standardId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.StandardCollection GetStandards() { throw null; }
-        public virtual Azure.ResourceManager.SecurityCenter.TaskCollection GetTasks(string ascLocation) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.TopologyResource> GetTopologyResource(string ascLocation, string topologyResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.TopologyResource>> GetTopologyResourceAsync(string ascLocation, string topologyResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.TopologyResourceCollection GetTopologyResources() { throw null; }
@@ -3752,12 +3862,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.ResourceGroupSecurityAlertData> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.AllowedConnectionsResource> GetAllowedConnectionsResources(string ascLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.AllowedConnectionsResource> GetAllowedConnectionsResourcesAsync(string ascLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataCollection GetAllSubscriptionAssessmentMetadata() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.ApplicationResource> GetApplication(string applicationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.ApplicationResource>> GetApplicationAsync(string applicationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.ApplicationCollection GetApplications() { throw null; }
-        public virtual Azure.ResourceManager.SecurityCenter.AssessmentsMetadatumCollection GetAssessmentsMetadata() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.AssessmentsMetadatumResource> GetAssessmentsMetadatum(string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.AssessmentsMetadatumResource>> GetAssessmentsMetadatumAsync(string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.AssignmentResource> GetAssignments(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.AssignmentResource> GetAssignmentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.AutoProvisioningSettingResource> GetAutoProvisioningSetting(string settingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3811,13 +3919,15 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         public virtual Azure.ResourceManager.SecurityCenter.ServerVulnerabilityAssessmentsSettingCollection GetServerVulnerabilityAssessmentsSettings() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.StandardResource> GetStandards(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.StandardResource> GetStandardsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource> GetSubscriptionAssessmentMetadata(string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionAssessmentMetadataResource>> GetSubscriptionAssessmentMetadataAsync(string assessmentMetadataName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.TopologyResource> GetTopologyResources(string ascLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.TopologyResource> GetTopologyResourcesAsync(string ascLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MockableSecurityCenterTenantResource : Azure.ResourceManager.ArmResource
     {
         protected MockableSecurityCenterTenantResource() { }
-        public virtual Azure.ResourceManager.SecurityCenter.AssessmentsMetadatumCollection GetAssessmentsMetadata() { throw null; }
+        public virtual Azure.ResourceManager.SecurityCenter.TenantAssessmentMetadataCollection GetAllTenantAssessmentMetadata() { throw null; }
         public virtual Azure.ResourceManager.SecurityCenter.GetSensitivitySettingsResponseResource GetGetSensitivitySettingsResponse() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.SecureScoreControlDefinitionItem> GetSecureScoreControlDefinitionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4088,7 +4198,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public partial class AllowlistCustomAlertRule : Azure.ResourceManager.SecurityCenter.Models.ListCustomAlertRule, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.AllowlistCustomAlertRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.AllowlistCustomAlertRule>
     {
-        public AllowlistCustomAlertRule(bool isEnabled, System.Collections.Generic.IEnumerable<string> allowlistValues) : base (default(string), default(bool)) { }
+        public AllowlistCustomAlertRule(bool isEnabled, System.Collections.Generic.IEnumerable<string> allowlistValues) : base (default(bool)) { }
         public System.Collections.Generic.IList<string> AllowlistValues { get { throw null; } }
         protected override Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4229,7 +4339,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.ConnectableResourceInfo ConnectableResourceInfo(Azure.Core.ResourceIdentifier id = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.ConnectedResourceInfo> inboundConnectedResources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.ConnectedResourceInfo> outboundConnectedResources = null) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.ConnectedResourceInfo ConnectedResourceInfo(Azure.Core.ResourceIdentifier connectedResourceId = null, string tcpPorts = null, string udpPorts = null) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.ContainerRegistryVulnerabilityProperties ContainerRegistryVulnerabilityProperties(string type = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.SecurityCenter.Models.SecurityCvss> cvss = null, bool? patchable = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.SecurityCve> cve = null, System.DateTimeOffset? publishedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.VendorReference> vendorReferences = null, string repositoryName = null, string imageDigest = null) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule CustomAlertRule(string displayName = null, string description = null, bool isEnabled = false, string ruleType = null) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule CustomAlertRule(string displayName = null, string description = null, string ruleType = null, bool isEnabled = false) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.CustomRecommendationData CustomRecommendationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string query = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.Models.RecommendationSupportedClouds> cloudProviders = null, Azure.ResourceManager.SecurityCenter.Models.SeverityEnum? severity = default(Azure.ResourceManager.SecurityCenter.Models.SeverityEnum?), Azure.ResourceManager.SecurityCenter.Models.SecurityIssue? securityIssue = default(Azure.ResourceManager.SecurityCenter.Models.SecurityIssue?), string displayName = null, string description = null, string remediationDescription = null, string assessmentKey = null) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.DataExportSettings DataExportSettings(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? enabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.DefenderForStorageSettingData DefenderForStorageSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SecurityCenter.Models.DefenderForStorageSettingProperties properties = null) { throw null; }
@@ -5161,7 +5271,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public abstract partial class CustomAlertRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule>
     {
-        protected internal CustomAlertRule(string ruleType, bool isEnabled) { }
+        internal CustomAlertRule() { }
         public string Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public bool IsEnabled { get { throw null; } set { } }
@@ -5895,7 +6005,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public partial class DenylistCustomAlertRule : Azure.ResourceManager.SecurityCenter.Models.ListCustomAlertRule, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.DenylistCustomAlertRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.DenylistCustomAlertRule>
     {
-        public DenylistCustomAlertRule(bool isEnabled, System.Collections.Generic.IEnumerable<string> denylistValues) : base (default(string), default(bool)) { }
+        public DenylistCustomAlertRule(bool isEnabled, System.Collections.Generic.IEnumerable<string> denylistValues) : base (default(bool)) { }
         public System.Collections.Generic.IList<string> DenylistValues { get { throw null; } }
         protected override Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7296,8 +7406,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public partial class ListCustomAlertRule : Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.ListCustomAlertRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.ListCustomAlertRule>
     {
-        public ListCustomAlertRule(bool isEnabled) : base (default(string), default(bool)) { }
-        protected internal ListCustomAlertRule(string ruleType, bool isEnabled) : base (default(string), default(bool)) { }
+        public ListCustomAlertRule(bool isEnabled) { }
         public Azure.ResourceManager.SecurityCenter.Models.SecurityValueType? ValueType { get { throw null; } }
         protected override Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7859,7 +7968,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public partial class ResourceDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.ResourceDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.ResourceDetails>
     {
-        protected internal ResourceDetails(Azure.ResourceManager.SecurityCenter.Models.Source? source, string id, string connectorId, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalBinaryDataProperties) { }
+        internal ResourceDetails() { }
         public string ConnectorId { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.ResourceManager.SecurityCenter.Models.Source? Source { get { throw null; } }
@@ -9730,8 +9839,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public partial class ThresholdCustomAlertRule : Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.ThresholdCustomAlertRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.ThresholdCustomAlertRule>
     {
-        public ThresholdCustomAlertRule(bool isEnabled, int minThreshold, int maxThreshold) : base (default(string), default(bool)) { }
-        protected internal ThresholdCustomAlertRule(string ruleType, bool isEnabled, int minThreshold, int maxThreshold) : base (default(string), default(bool)) { }
+        public ThresholdCustomAlertRule(bool isEnabled, int minThreshold, int maxThreshold) { }
         public int MaxThreshold { get { throw null; } set { } }
         public int MinThreshold { get { throw null; } set { } }
         protected override Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -9746,7 +9854,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public partial class TimeWindowCustomAlertRule : Azure.ResourceManager.SecurityCenter.Models.ThresholdCustomAlertRule, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.TimeWindowCustomAlertRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.TimeWindowCustomAlertRule>
     {
-        public TimeWindowCustomAlertRule(bool isEnabled, int minThreshold, int maxThreshold, System.TimeSpan timeWindowSize) : base (default(string), default(bool), default(int), default(int)) { }
+        public TimeWindowCustomAlertRule(bool isEnabled, int minThreshold, int maxThreshold, System.TimeSpan timeWindowSize) : base (default(bool), default(int), default(int)) { }
         public System.TimeSpan TimeWindowSize { get { throw null; } set { } }
         protected override Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

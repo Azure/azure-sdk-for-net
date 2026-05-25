@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
         private APICollections APICollectionsRestClient => _apiCollectionsRestClient ??= new APICollections(APICollectionsClientDiagnostics, Pipeline, Endpoint, "2023-11-15");
 
-        /// <summary> Gets a collection of Alerts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary> Gets a collection of ResourceGroupSecurityAlerts in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="ascLocation"> The ascLocation for the resource. </param>
-        /// <returns> An object representing collection of Alerts and their operations over a AlertResource. </returns>
-        public virtual AlertCollection GetAlerts(string ascLocation)
+        /// <returns> An object representing collection of ResourceGroupSecurityAlerts and their operations over a ResourceGroupSecurityAlertResource. </returns>
+        public virtual ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(string ascLocation)
         {
-            return GetCachedClient(client => new AlertCollection(client, Id, ascLocation));
+            return GetCachedClient(client => new ResourceGroupSecurityAlertCollection(client, Id, ascLocation));
         }
 
         /// <summary>
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        internal virtual async Task<Response<AlertResource>> GetAlertAsync(string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ResourceGroupSecurityAlertResource>> GetResourceGroupSecurityAlertAsync(string ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            return await GetAlerts(ascLocation).GetAsync(alertName, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupSecurityAlerts(ascLocation).GetAsync(alertName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        internal virtual Response<AlertResource> GetAlert(string ascLocation, string alertName, CancellationToken cancellationToken = default)
+        internal virtual Response<ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(string ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
-            return GetAlerts(ascLocation).Get(alertName, cancellationToken);
+            return GetResourceGroupSecurityAlerts(ascLocation).Get(alertName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SecurityAutomations in the <see cref="ResourceGroupResource"/>. </summary>
@@ -584,12 +584,12 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return GetAssignments().Get(assignmentId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Tasks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary> Gets a collection of ResourceGroupSecurityTasks in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="ascLocation"> The ascLocation for the resource. </param>
-        /// <returns> An object representing collection of Tasks and their operations over a TaskResource. </returns>
-        public virtual TaskCollection GetTasks(string ascLocation)
+        /// <returns> An object representing collection of ResourceGroupSecurityTasks and their operations over a ResourceGroupSecurityTaskResource. </returns>
+        public virtual ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(string ascLocation)
         {
-            return GetCachedClient(client => new TaskCollection(client, Id, ascLocation));
+            return GetCachedClient(client => new ResourceGroupSecurityTaskCollection(client, Id, ascLocation));
         }
 
         /// <summary>
@@ -613,9 +613,9 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        internal virtual async Task<Response<TaskResource>> GetTaskAsync(string ascLocation, string taskName, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(string ascLocation, string taskName, CancellationToken cancellationToken = default)
         {
-            return await GetTasks(ascLocation).GetAsync(taskName, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupSecurityTasks(ascLocation).GetAsync(taskName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -639,9 +639,9 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        internal virtual Response<TaskResource> GetTask(string ascLocation, string taskName, CancellationToken cancellationToken = default)
+        internal virtual Response<ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(string ascLocation, string taskName, CancellationToken cancellationToken = default)
         {
-            return GetTasks(ascLocation).Get(taskName, cancellationToken);
+            return GetResourceGroupSecurityTasks(ascLocation).Get(taskName, cancellationToken);
         }
 
         /// <summary> Gets a collection of IotSecuritySolutions in the <see cref="ResourceGroupResource"/>. </summary>
