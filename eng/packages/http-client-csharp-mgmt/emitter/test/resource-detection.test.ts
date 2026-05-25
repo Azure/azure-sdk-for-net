@@ -2509,6 +2509,105 @@ interface ProfileRevisions {
     );
   });
 
+  it("tuple-resource intermediate collection path is assigned as list", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Virtual machine extension image resource */
+model VirtualMachineExtensionImage is TrackedResource<VirtualMachineExtensionImageProperties> {
+  ...ResourceNameParameter<
+    Resource = VirtualMachineExtensionImage,
+    KeyName = "type",
+    SegmentName = "types",
+    NamePattern = ""
+  >;
+}
+
+/** Virtual machine extension image properties */
+model VirtualMachineExtensionImageProperties {
+  /** Display name */
+  displayName?: string;
+}
+
+alias ImageTypePath = {
+  ...ApiVersionParameter;
+  ...SubscriptionIdParameter;
+  ...LocationResourceParameter;
+  /** Publisher name */
+  @path
+  @segment("publishers")
+  publisherName: string;
+};
+
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-interface-requires-decorator" "Testing static tuple resource paths"
+interface VirtualMachineExtensionImages {
+  @get
+  @route("/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}")
+  get(
+    ...ImageTypePath,
+    ...KeysOf<VirtualMachineExtensionImage>,
+    /** Version name */
+    @path
+    @segment("versions")
+    version: string
+  ): ArmResponse<VirtualMachineExtensionImage> | ErrorResponse;
+
+  @get
+  @route("/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types")
+  listTypes(...ImageTypePath): ArmResponse<VirtualMachineExtensionImage[]> | ErrorResponse;
+
+  @get
+  @route("/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions")
+  listVersions(
+    ...ImageTypePath,
+    ...KeysOf<VirtualMachineExtensionImage>
+  ): ArmResponse<VirtualMachineExtensionImage[]> | ErrorResponse;
+}
+`,
+      runner,
+      { providerNamespace: "Microsoft.Compute" }
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+
+    const imageModel = root.models.find(
+      (m) => m.name === "VirtualMachineExtensionImage"
+    );
+    ok(imageModel, "VirtualMachineExtensionImage model should exist");
+
+    const imageResource = armProviderSchema.resources.find(
+      (r) =>
+        r.resourceModelId === imageModel.crossLanguageDefinitionId &&
+        r.metadata.resourceIdPattern.path.endsWith(
+          "/types/{type}/versions/{version}"
+        )
+    );
+    ok(
+      imageResource,
+      "VirtualMachineExtensionImage resource should be detected"
+    );
+
+    const listPaths = imageResource.metadata.methods
+      .filter((m) => m.kind === "List")
+      .map((m) => m.operationPath.path)
+      .sort();
+
+    deepStrictEqual(listPaths, [
+      "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types",
+      "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions"
+    ]);
+    strictEqual(
+      armProviderSchema.nonResourceMethods.some((m) =>
+        m.operationPath.path.includes("/artifacttypes/vmextension/types")
+      ),
+      false,
+      "Tuple-resource list operations should not remain non-resource methods"
+    );
+  });
+
   it("custom Azure resource with @customAzureResource decorator (TrafficManager pattern)", async () => {
     const program = await typeSpecCompile(
       `
@@ -2658,8 +2757,8 @@ interface TrafficEndpoints {
     );
     strictEqual(
       trafficProfileResource.metadata.methods.length,
-      3,
-      "TrafficProfile should have 3 methods present in the code model (get, createOrUpdate, delete)"
+      4,
+      "TrafficProfile should have 4 methods present in the code model (get, createOrUpdate, delete, list)"
     );
 
     // Find the TrafficEndpoint resource
