@@ -40,9 +40,8 @@ namespace Azure.AI.Translation.Text
         /// back to a Small Language Model if an error occurs.
         /// Possible values are: true (default) or false.
         /// </param>
-        /// <param name="grade"> Defines complexity of LLM prompts to provide high accuracy translation. </param>
-        /// <param name="tone"> Desired tone of target translation. </param>
-        /// <param name="gender"> Desired gender of target translation. </param>
+        /// <param name="tone"> Desired tone of target translation. Accepted values are formal, informal, or neutral. </param>
+        /// <param name="gender"> Desired gender of target translation. Accepted values are female, male, or neutral. </param>
         /// <param name="adaptiveDatasetId"> Reference dataset ID having sentence pair to generate adaptive customized translation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/> is null. </exception>
         public TranslationTarget(string language,
@@ -51,9 +50,8 @@ namespace Azure.AI.Translation.Text
             ProfanityMarker? profanityMarker = null,
             string deploymentName = null,
             bool? allowFallback = null,
-            string grade = null,
-            string tone = null,
-            string gender = null,
+            TranslationTone? tone = null,
+            TranslationGender? gender = null,
             string adaptiveDatasetId = null)
             : this(language)
         {
@@ -62,7 +60,6 @@ namespace Azure.AI.Translation.Text
             ProfanityMarker = profanityMarker;
             DeploymentName = deploymentName;
             AllowFallback = allowFallback;
-            Grade = grade;
             Tone = tone;
             Gender = gender;
             AdaptiveDatasetId = adaptiveDatasetId;
