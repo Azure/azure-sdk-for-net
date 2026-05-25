@@ -10,7 +10,7 @@
 ### Bugs Fixed
 
 ### Other Changes
-- Updated Service Version to `20206-01-01-preview`
+- Updated Service Version to `2026-01-01-preview`
 
 ## 4.8.0 (2026-05-05)
 

@@ -19,7 +19,7 @@ KeyVaultEkmClient client = new KeyVaultEkmClient(new Uri(managedHsmUrl), new Def
 Configure the Managed HSM to talk to your External Key Manager proxy by creating a `KeyVaultEkmConnection`. The connection requires the host name of the EKM proxy and the proxy's server CA certificate. You can also set a `PathPrefix` and the expected `ServerSubjectCommonName`.
 
 ```C# Snippet:EkmCreateConnectionAsync
-// Read the EKM proxy's CA certificate bytes (DER- or PEM-encoded).
+// Read the EKM proxy's CA certificate bytes.
 byte[] serverCaCertificate = File.ReadAllBytes("ekm-proxy-ca.cer");
 
 // Build the EKM connection. Host is the FQDN of the EKM proxy.
@@ -82,7 +82,7 @@ Response<KeyVaultEkmConnection> updated = await Client.UpdateEkmConnectionAsync(
 Use `DeleteEkmConnectionAsync` to remove the EKM connection. This operation requires the `ekm/delete` permission.
 
 ```C# Snippet:EkmDeleteConnectionAsync
-// Remove the EKM connection. Requires the "ekm/delete" permission.
+// Remove the EKM connection.
 await Client.DeleteEkmConnectionAsync();
 ```
 

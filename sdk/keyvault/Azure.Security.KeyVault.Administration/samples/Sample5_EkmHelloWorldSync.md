@@ -26,6 +26,7 @@ KeyVaultEkmConnection connection = new KeyVaultEkmConnection("ekm.contoso.com", 
     ServerSubjectCommonName = "ekm.contoso.com",
 };
 
+// Create the EKM connection on the Managed HSM. Requires the "ekm/write" permission.
 Response<KeyVaultEkmConnection> created = Client.CreateEkmConnection(connection);
 ```
 
@@ -34,7 +35,7 @@ Response<KeyVaultEkmConnection> created = Client.CreateEkmConnection(connection)
 Use `GetEkmConnection` to inspect the EKM connection currently configured on the Managed HSM.
 
 ```C# Snippet:EkmGetConnectionSync
-// Retrieve the current EKM connection.
+// Retrieve the current EKM connection. Requires the "ekm/read" permission.
 Response<KeyVaultEkmConnection> current = Client.GetEkmConnection();
 
 Console.WriteLine($"EKM host: {current.Value.Host}");
@@ -48,6 +49,8 @@ Console.WriteLine($"Path prefix: {current.Value.PathPrefix}");
 ```C# Snippet:EkmCheckConnectionSync
 // Verify connectivity and authentication with the EKM proxy.
 Response<EkmProxyInfo> info = Client.CheckEkmConnection();
+
+Console.WriteLine($"EKM vendor: {info.Value.EkmVendor}, product: {info.Value.EkmProduct}");
 ```
 
 ## Deleting an EKM connection
