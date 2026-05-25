@@ -25,8 +25,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private Alerts _alertsRestClient;
         private ClientDiagnostics _externalSecuritySolutionsClientDiagnostics;
         private ExternalSecuritySolutions _externalSecuritySolutionsRestClient;
-        private ClientDiagnostics _jitNetworkAccessPoliciesClientDiagnostics;
-        private JitNetworkAccessPolicies _jitNetworkAccessPoliciesRestClient;
         private ClientDiagnostics _apiCollectionsClientDiagnostics;
         private APICollections _apiCollectionsRestClient;
 
@@ -49,10 +47,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private ClientDiagnostics ExternalSecuritySolutionsClientDiagnostics => _externalSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private ExternalSecuritySolutions ExternalSecuritySolutionsRestClient => _externalSecuritySolutionsRestClient ??= new ExternalSecuritySolutions(ExternalSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
-
-        private ClientDiagnostics JitNetworkAccessPoliciesClientDiagnostics => _jitNetworkAccessPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private JitNetworkAccessPolicies JitNetworkAccessPoliciesRestClient => _jitNetworkAccessPoliciesRestClient ??= new JitNetworkAccessPolicies(JitNetworkAccessPoliciesClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
 
         private ClientDiagnostics APICollectionsClientDiagnostics => _apiCollectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

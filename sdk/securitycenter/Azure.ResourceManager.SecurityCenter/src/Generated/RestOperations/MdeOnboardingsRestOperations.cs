@@ -59,24 +59,5 @@ namespace Azure.ResourceManager.SecurityCenter
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
-
-        internal HttpMessage CreateGetMdeOnboardingsRequest(Guid subscriptionId, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/providers/Microsoft.Security/mdeOnboardings", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
     }
 }

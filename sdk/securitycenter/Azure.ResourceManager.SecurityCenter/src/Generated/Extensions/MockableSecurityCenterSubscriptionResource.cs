@@ -43,12 +43,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private Topology _topologyRestClient;
         private ClientDiagnostics _alertsClientDiagnostics;
         private Alerts _alertsRestClient;
-        private ClientDiagnostics _mdeOnboardingsClientDiagnostics;
-        private MdeOnboardings _mdeOnboardingsRestClient;
-        private ClientDiagnostics _externalSecuritySolutionsClientDiagnostics;
-        private ExternalSecuritySolutions _externalSecuritySolutionsRestClient;
-        private ClientDiagnostics _securitySolutionsClientDiagnostics;
-        private SecuritySolutions _securitySolutionsRestClient;
         private ClientDiagnostics _tasksClientDiagnostics;
         private Tasks _tasksRestClient;
         private ClientDiagnostics _apiCollectionsClientDiagnostics;
@@ -115,18 +109,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Endpoint, "2022-01-01");
-
-        private ClientDiagnostics MdeOnboardingsClientDiagnostics => _mdeOnboardingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private MdeOnboardings MdeOnboardingsRestClient => _mdeOnboardingsRestClient ??= new MdeOnboardings(MdeOnboardingsClientDiagnostics, Pipeline, Endpoint, "2021-10-01-preview");
-
-        private ClientDiagnostics ExternalSecuritySolutionsClientDiagnostics => _externalSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ExternalSecuritySolutions ExternalSecuritySolutionsRestClient => _externalSecuritySolutionsRestClient ??= new ExternalSecuritySolutions(ExternalSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
-
-        private ClientDiagnostics SecuritySolutionsClientDiagnostics => _securitySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private SecuritySolutions SecuritySolutionsRestClient => _securitySolutionsRestClient ??= new SecuritySolutions(SecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
 
         private ClientDiagnostics TasksClientDiagnostics => _tasksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
