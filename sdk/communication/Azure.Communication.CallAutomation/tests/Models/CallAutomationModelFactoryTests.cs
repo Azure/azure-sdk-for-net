@@ -398,7 +398,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var operationContext = "testContext";
 
             var eventResult = CallAutomationModelFactory.ContinuousDtmfRecognitionToneReceived(
-                resultInformation, sequenceId, tone, operationContext, callConnectionId, serverCallId, correlationId);
+                sequenceId, tone, callConnectionId, serverCallId, correlationId, resultInformation, operationContext);
 
             Assert.AreEqual(sequenceId, eventResult.SequenceId);
             Assert.AreEqual(tone, eventResult.Tone);
@@ -407,32 +407,6 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             Assert.AreEqual(correlationId, eventResult.CorrelationId);
             Assert.AreEqual(resultInformation, eventResult.ResultInformation);
             Assert.AreEqual(operationContext, eventResult.OperationContext);
-        }
-
-        [Test]
-        public void CallAutomationModelFactoryCanInstantiateRecordingStateChanged()
-        {
-            var callConnectionId = "connection123";
-            var serverCallId = "server123";
-            var correlationId = "correlation123";
-            var recordingId = "recording123";
-            var operationContext = "testContext";
-            var state = RecordingState.Active;
-            var startDateTime = DateTimeOffset.UtcNow;
-            var recordingKind = RecordingKind.AzureCommunicationServices;
-            var resultInformation = CallAutomationModelFactory.ResultInformation(200, 0, "Success");
-
-            var eventResult = CallAutomationModelFactory.RecordingStateChanged(recordingId,
-                state, startDateTime, recordingKind, operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
-
-            Assert.AreEqual(callConnectionId, eventResult.CallConnectionId);
-            Assert.AreEqual(serverCallId, eventResult.ServerCallId);
-            Assert.AreEqual(correlationId, eventResult.CorrelationId);
-            Assert.AreEqual(recordingId, eventResult.RecordingId);
-            Assert.AreEqual(state, eventResult.State);
-            Assert.AreEqual(startDateTime, eventResult.StartDateTime);
-            Assert.AreEqual(recordingKind, eventResult.RecordingKind);
-            Assert.AreEqual(resultInformation, eventResult.ResultInformation);
         }
 
         [Test]

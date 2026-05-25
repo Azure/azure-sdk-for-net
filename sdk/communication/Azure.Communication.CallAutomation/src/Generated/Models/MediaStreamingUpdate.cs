@@ -16,17 +16,27 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="MediaStreamingUpdate"/>. </summary>
-        /// <param name="contentType"></param>
-        /// <param name="mediaStreamingStatus"></param>
-        /// <param name="mediaStreamingStatusDetails"></param>
-        internal MediaStreamingUpdate(string contentType, MediaStreamingStatus mediaStreamingStatus, MediaStreamingStatusDetails mediaStreamingStatusDetails)
+        /// <param name="mediaStreamingUpdateProperty"></param>
+        /// <param name="streamUrl"> Gets the URL of the media stream associated with this instance. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"></param>
+        internal MediaStreamingUpdate(MediaStreamingUpdate mediaStreamingUpdateProperty, string streamUrl, string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
         {
-            ContentType = contentType;
-            MediaStreamingStatus = mediaStreamingStatus;
-            MediaStreamingStatusDetails = mediaStreamingStatusDetails;
+            MediaStreamingUpdateProperty = mediaStreamingUpdateProperty;
+            StreamUrl = streamUrl;
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
+            OperationContext = operationContext;
+            ResultInformation = resultInformation;
         }
 
-        /// <summary> Gets the content type. </summary>
-        public string ContentType { get; }
+        /// <summary> Gets the media streaming update property. </summary>
+        public MediaStreamingUpdate MediaStreamingUpdateProperty { get; }
+        /// <summary> Gets the URL of the media stream associated with this instance. </summary>
+        public string StreamUrl { get; }
     }
 }

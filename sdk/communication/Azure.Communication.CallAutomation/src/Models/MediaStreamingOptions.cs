@@ -10,19 +10,19 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> Initializes a new instance of MediaStreamingOptions. </summary>
         public MediaStreamingOptions(Uri transportUri,
-            MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, MediaStreamingTransport transportType = default, bool? startMediaStreaming = null)
+            MediaStreamingContentTypeDto contentType, MediaStreamingAudioChannelTypeDto audioChannelType, MediaStreamingTransportTypeDto transportType = default, bool? startMediaStreaming = null)
         {
             TransportUri = transportUri;
-            MediaStreamingTransport = transportType == default ? MediaStreamingTransport.Websocket : transportType;
+            MediaStreamingTransport = transportType.Equals(default) ? MediaStreamingTransportTypeDto.Websocket : transportType;
             MediaStreamingContent = contentType;
             MediaStreamingAudioChannel = audioChannelType;
             StartMediaStreaming = startMediaStreaming;
         }
 
         /// <summary> Initializes a new instance of MediaStreamingOptions. </summary>
-        public MediaStreamingOptions(MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, MediaStreamingTransport transportType = default, bool? startMediaStreaming = null)
+        public MediaStreamingOptions(MediaStreamingContentTypeDto contentType, MediaStreamingAudioChannelTypeDto audioChannelType, MediaStreamingTransportTypeDto transportType = default, bool? startMediaStreaming = null)
         {
-            MediaStreamingTransport = transportType == default ? MediaStreamingTransport.Websocket : transportType;
+            MediaStreamingTransport = transportType.Equals(default) ? MediaStreamingTransportTypeDto.Websocket : transportType;
             MediaStreamingContent = contentType;
             MediaStreamingAudioChannel = audioChannelType;
             StartMediaStreaming = startMediaStreaming;
@@ -31,11 +31,11 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Transport URL for media streaming. </summary>
         public Uri TransportUri { get; set; }
         /// <summary> The type of tranport to be used for media streaming, eg. Websocket. </summary>
-        public MediaStreamingTransport MediaStreamingTransport { get; }
+        public MediaStreamingTransportTypeDto MediaStreamingTransport { get; }
         /// <summary> Content type to stream, eg. audio, audio/video. </summary>
-        public MediaStreamingContent MediaStreamingContent { get; }
+        public MediaStreamingContentTypeDto MediaStreamingContent { get; }
         /// <summary> Audio channel type to stream, eg. unmixed audio, mixed audio. </summary>
-        public MediaStreamingAudioChannel MediaStreamingAudioChannel { get; }
+        public MediaStreamingAudioChannelTypeDto MediaStreamingAudioChannel { get; }
         /// <summary> Determines if the media streaming should be started immediately after call is answered or not. </summary>
         public bool? StartMediaStreaming { get; set; }
         /// <summary> A value indicating whether bidirectional streaming is enabled. </summary>

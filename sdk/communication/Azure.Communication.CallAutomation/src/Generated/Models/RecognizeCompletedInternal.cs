@@ -16,35 +16,35 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="RecognizeCompletedInternal"/>. </summary>
-        /// <param name="operationContext"></param>
-        /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
-        /// <param name="recognitionType">
-        /// Determines the sub-type of the recognize operation.
-        /// In case of cancel operation the this field is not set and is returned empty
-        /// </param>
-        /// <param name="dtmfResult"> Defines the result for RecognitionType = Dtmf. </param>
-        /// <param name="speechResult"> Defines the result for RecognitionType = Speech and SpeechOrDtmf. </param>
-        /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal RecognizeCompletedInternal(string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, DtmfResult dtmfResult, SpeechResult speechResult, ChoiceResult choiceResult, string callConnectionId, string serverCallId, string correlationId)
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"></param>
+        /// <param name="recognitionType">
+        /// Recognition type determines the sub-type of the recognition operation
+        /// Possible values will be Dtmf, Speech, or Choices
+        /// </param>
+        /// <param name="dtmfResult"></param>
+        /// <param name="choiceResult"></param>
+        /// <param name="speechResult"> The speech status as a result. </param>
+        internal RecognizeCompletedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, DtmfResult dtmfResult, ChoiceResult choiceResult, SpeechResult speechResult)
         {
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
             OperationContext = operationContext;
             ResultInformation = resultInformation;
             RecognitionType = recognitionType;
             DtmfResult = dtmfResult;
-            SpeechResult = speechResult;
             ChoiceResult = choiceResult;
-            CallConnectionId = callConnectionId;
-            ServerCallId = serverCallId;
-            CorrelationId = correlationId;
+            SpeechResult = speechResult;
         }
-        /// <summary> Defines the result for RecognitionType = Dtmf. </summary>
+        /// <summary> Gets the dtmf result. </summary>
         public DtmfResult DtmfResult { get; }
-        /// <summary> Defines the result for RecognitionType = Speech and SpeechOrDtmf. </summary>
-        public SpeechResult SpeechResult { get; }
-        /// <summary> Defines the result for RecognitionType = Choices. </summary>
+        /// <summary> Gets the choice result. </summary>
         public ChoiceResult ChoiceResult { get; }
+        /// <summary> The speech status as a result. </summary>
+        public SpeechResult SpeechResult { get; }
     }
 }

@@ -16,21 +16,22 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionUpdate"/>. </summary>
-        /// <param name="transcriptionStatus"></param>
-        /// <param name="transcriptionStatusDetails"></param>
-        /// <param name="transcriptionMessage"> Optional message providing additional context about the transcription update. </param>
-        internal TranscriptionUpdate(TranscriptionStatus? transcriptionStatus, TranscriptionStatusDetails? transcriptionStatusDetails, string transcriptionMessage)
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
+        /// <param name="resultInformation"></param>
+        /// <param name="transcriptionUpdateResult"></param>
+        internal TranscriptionUpdate(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, TranscriptionUpdate transcriptionUpdateResult)
         {
-            TranscriptionStatus = transcriptionStatus;
-            TranscriptionStatusDetails = transcriptionStatusDetails;
-            TranscriptionMessage = transcriptionMessage;
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
+            OperationContext = operationContext;
+            ResultInformation = resultInformation;
+            TranscriptionUpdateResult = transcriptionUpdateResult;
         }
-
-        /// <summary> Gets the transcription status. </summary>
-        public TranscriptionStatus? TranscriptionStatus { get; }
-        /// <summary> Gets the transcription status details. </summary>
-        public TranscriptionStatusDetails? TranscriptionStatusDetails { get; }
-        /// <summary> Optional message providing additional context about the transcription update. </summary>
-        public string TranscriptionMessage { get; }
+        /// <summary> Gets the transcription update result. </summary>
+        public TranscriptionUpdate TranscriptionUpdateResult { get; }
     }
 }

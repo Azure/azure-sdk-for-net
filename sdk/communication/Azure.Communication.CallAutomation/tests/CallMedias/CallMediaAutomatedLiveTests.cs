@@ -247,9 +247,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     // create call and assert response
                     MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
                         new Uri(TestEnvironment.TransportUrl),
-                        MediaStreamingContent.Audio,
-                        MediaStreamingAudioChannel.Mixed,
-                        MediaStreamingTransport.Websocket,
+                        MediaStreamingContentTypeDto.Audio,
+                        MediaStreamingAudioChannelTypeDto.Mixed,
+                        MediaStreamingTransportTypeDto.Websocket,
                         false);
 
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
@@ -312,9 +312,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     // create call and assert response
                     MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
                         new Uri(TestEnvironment.TransportUrl),
-                        MediaStreamingContent.Audio,
-                        MediaStreamingAudioChannel.Mixed,
-                        MediaStreamingTransport.Websocket,
+                        MediaStreamingContentTypeDto.Audio,
+                        MediaStreamingAudioChannelTypeDto.Mixed,
+                        MediaStreamingTransportTypeDto.Websocket,
                         false);
 
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
@@ -377,9 +377,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     // create call and assert response
                     MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
                         new Uri(TestEnvironment.TransportUrl),
-                        MediaStreamingContent.Audio,
-                        MediaStreamingAudioChannel.Mixed,
-                        MediaStreamingTransport.Websocket,
+                        MediaStreamingContentTypeDto.Audio,
+                        MediaStreamingAudioChannelTypeDto.Mixed,
+                        MediaStreamingTransportTypeDto.Websocket,
                         false)
                     {
                         AudioFormat = AudioFormat.Pcm24KMono
@@ -445,9 +445,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     // create call and assert response
                     MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
                         new Uri(TestEnvironment.TransportUrl),
-                        MediaStreamingContent.Audio,
-                        MediaStreamingAudioChannel.Mixed,
-                        MediaStreamingTransport.Websocket,
+                        MediaStreamingContentTypeDto.Audio,
+                        MediaStreamingAudioChannelTypeDto.Mixed,
+                        MediaStreamingTransportTypeDto.Websocket,
                         false)
                     {
                         AudioFormat = AudioFormat.Pcm24KMono
@@ -513,9 +513,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     // create call and assert response
                     MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
                         new Uri(TestEnvironment.TransportUrl),
-                        MediaStreamingContent.Audio,
-                        MediaStreamingAudioChannel.Unmixed,
-                        MediaStreamingTransport.Websocket,
+                        MediaStreamingContentTypeDto.Audio,
+                        MediaStreamingAudioChannelTypeDto.Unmixed,
+                        MediaStreamingTransportTypeDto.Websocket,
                         false);
 
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
@@ -684,7 +684,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             var connectionProperties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
             Assert.IsNotNull(connectionProperties);
             Assert.IsNotNull(connectionProperties.Value.MediaStreamingSubscription);
-            Assert.AreEqual(connectionProperties.Value.MediaStreamingSubscription.State, MediaStreamingSubscriptionState.Active);
+            Assert.AreEqual(connectionProperties.Value.MediaStreamingSubscription.State, MediaStreamingSubscriptionStateDto.Active);
 
             //Stop media streaming
             StopMediaStreamingOptions stopMediaStreamingOptions = new StopMediaStreamingOptions();
@@ -700,7 +700,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             connectionProperties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
             Assert.IsNotNull(connectionProperties);
             Assert.IsNotNull(connectionProperties.Value.MediaStreamingSubscription);
-            Assert.AreEqual(connectionProperties.Value.MediaStreamingSubscription.State, MediaStreamingSubscriptionState.Inactive);
+            Assert.AreEqual(connectionProperties.Value.MediaStreamingSubscription.State, MediaStreamingSubscriptionStateDto.Inactive);
 
             // try hangup
             await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);

@@ -110,7 +110,8 @@ namespace Azure.Communication.CallAutomation
             StartDialogRequestInternal startDialogRequestInternal = new StartDialogRequestInternal(startDialog.Dialog)
             {
                 OperationCallbackUri = startDialog.OperationCallbackUri,
-                OperationContext = startDialog.OperationContext == default ? Guid.NewGuid().ToString() : startDialog.OperationContext
+                OperationContext = startDialog.OperationContext == default ? Guid.NewGuid().ToString() : startDialog.OperationContext,
+                DialogCnameOverride = startDialog.DialogCnameOverride
             };
             return startDialogRequestInternal;
         }
@@ -130,7 +131,6 @@ namespace Azure.Communication.CallAutomation
                 var response = await CallDialogRestClient.StopDialogAsync
                     (CallConnectionId,
                     dialogId,
-                    operationCallbackUri,
                     cancellationToken).ConfigureAwait(false);
 
                 var result = new DialogResult(dialogId);
@@ -149,9 +149,8 @@ namespace Azure.Communication.CallAutomation
         /// Stop Dialog.
         /// </summary>
         /// <param name="dialogId"></param>
-        /// <param name="operationCallbackUri"></param>
         /// <param name="cancellationToken"></param>
-        public virtual Response<DialogResult> StopDialog(string dialogId, string operationCallbackUri = null, CancellationToken cancellationToken = default)
+        public virtual Response<DialogResult> StopDialog(string dialogId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallDialog)}.{nameof(StopDialog)}");
             scope.Start();
@@ -160,7 +159,6 @@ namespace Azure.Communication.CallAutomation
                 var response = CallDialogRestClient.StopDialog
                     (CallConnectionId,
                     dialogId,
-                    operationCallbackUri,
                     cancellationToken);
 
                 var result = new DialogResult(dialogId);

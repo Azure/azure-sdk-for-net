@@ -14,13 +14,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
     {
         private readonly MediaStreamingOptions _mediaStreamingConfiguration = new MediaStreamingOptions(
             new Uri("https://websocket"),
-            MediaStreamingContent.Audio,
-            MediaStreamingAudioChannel.Mixed,
-            MediaStreamingTransport.Websocket);
+            MediaStreamingContentTypeDto.Audio,
+            MediaStreamingAudioChannelTypeDto.Mixed,
+            MediaStreamingTransportTypeDto.Websocket);
 
         private readonly TranscriptionOptions _transcriptionConfiguration = new TranscriptionOptions(
             new Uri("https://websocket"),
-            TranscriptionTransport.Websocket,
+            TranscriptionTransportTypeDto.Websocket,
             "en-CA",
             true);
 

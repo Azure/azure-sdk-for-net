@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     internal partial class ConnectRequestInternal
     {
         /// <summary> Initializes a new instance of <see cref="ConnectRequestInternal"/>. </summary>
-        /// <param name="callLocator"> The call locator. </param>
+        /// <param name="callLocator"> The locator used for joining or taking action on a call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> or <paramref name="callbackUri"/> is null. </exception>
         public ConnectRequestInternal(CallLocatorInternal callLocator, string callbackUri)
@@ -26,12 +26,12 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectRequestInternal"/>. </summary>
-        /// <param name="callLocator"> The call locator. </param>
+        /// <param name="callLocator"> The locator used for joining or taking action on a call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="operationContext"> Used by customers to correlate the request to the response event. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
-        /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
-        /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
+        /// <param name="mediaStreamingConfiguration"> Configuration of Media streaming. </param>
+        /// <param name="transcriptionConfiguration"> Configuration of live transcription. </param>
         /// <param name="enableLoopbackAudio"> Enables loopback audio functionality for the call. </param>
         internal ConnectRequestInternal(CallLocatorInternal callLocator, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, MediaStreamingOptionsInternal mediaStreamingConfiguration, TranscriptionOptionsInternal transcriptionConfiguration, bool? enableLoopbackAudio)
         {
@@ -44,7 +44,7 @@ namespace Azure.Communication.CallAutomation
             EnableLoopbackAudio = enableLoopbackAudio;
         }
 
-        /// <summary> The call locator. </summary>
+        /// <summary> The locator used for joining or taking action on a call. </summary>
         public CallLocatorInternal CallLocator { get; }
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; }
@@ -52,9 +52,9 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
-        /// <summary> Media Streaming Configuration. </summary>
+        /// <summary> Configuration of Media streaming. </summary>
         public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
-        /// <summary> Live Transcription Configuration. </summary>
+        /// <summary> Configuration of live transcription. </summary>
         public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
         /// <summary> Enables loopback audio functionality for the call. </summary>
         public bool? EnableLoopbackAudio { get; set; }
