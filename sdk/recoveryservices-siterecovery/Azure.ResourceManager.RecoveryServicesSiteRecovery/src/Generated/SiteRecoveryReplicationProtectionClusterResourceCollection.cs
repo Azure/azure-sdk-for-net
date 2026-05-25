@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// <summary>
     /// A class representing a collection of <see cref="SiteRecoveryReplicationProtectionClusterResource"/> and their operations.
     /// Each <see cref="SiteRecoveryReplicationProtectionClusterResource"/> in the collection will belong to the same instance of <see cref="SiteRecoveryProtectionContainerResource"/>.
-    /// To get a <see cref="SiteRecoveryReplicationProtectionClusterResourceCollection"/> instance call the GetSiteRecoveryReplicationProtectionClusters method from an instance of <see cref="SiteRecoveryProtectionContainerResource"/>.
+    /// To get a <see cref="SiteRecoveryReplicationProtectionClusterResourceCollection"/> instance call the GetSiteRecoveryReplicationProtectionClusterResources method from an instance of <see cref="SiteRecoveryProtectionContainerResource"/>.
     /// </summary>
     public partial class SiteRecoveryReplicationProtectionClusterResourceCollection : ArmCollection, IEnumerable<SiteRecoveryReplicationProtectionClusterResource>, IAsyncEnumerable<SiteRecoveryReplicationProtectionClusterResource>
     {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteRecoveryReplicationProtectionClusterResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SiteRecoveryReplicationProtectionClusterResource.ResourceType, out string siteRecoveryReplicationProtectionClusterApiVersion);
+            TryGetApiVersion(SiteRecoveryReplicationProtectionClusterResource.ResourceType, out string siteRecoveryReplicationProtectionClusterResourceApiVersion);
             _replicationProtectionClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryReplicationProtectionClusterResource.ResourceType.Namespace, Diagnostics);
-            _replicationProtectionClustersRestClient = new ReplicationProtectionClusters(_replicationProtectionClustersClientDiagnostics, Pipeline, Endpoint, siteRecoveryReplicationProtectionClusterApiVersion ?? "2026-02-01");
+            _replicationProtectionClustersRestClient = new ReplicationProtectionClusters(_replicationProtectionClustersClientDiagnostics, Pipeline, Endpoint, siteRecoveryReplicationProtectionClusterResourceApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectionClustersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, replicationProtectionClusterName, SiteRecoveryReplicationProtectionClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(
-                    new SiteRecoveryReplicationProtectionClusterOperationSource(Client),
+                    new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client),
                     _replicationProtectionClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectionClustersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, replicationProtectionClusterName, SiteRecoveryReplicationProtectionClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(
-                    new SiteRecoveryReplicationProtectionClusterOperationSource(Client),
+                    new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client),
                     _replicationProtectionClustersClientDiagnostics,
                     Pipeline,
                     message.Request,

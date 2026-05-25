@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary></summary>
-    internal partial class SiteRecoveryReplicationProtectionClusterOperationSource : IOperationSource<SiteRecoveryReplicationProtectionClusterResource>
+    internal partial class SiteRecoveryReplicationProtectionClusterResourceOperationSource : IOperationSource<SiteRecoveryReplicationProtectionClusterResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal SiteRecoveryReplicationProtectionClusterOperationSource(ArmClient client)
+        internal SiteRecoveryReplicationProtectionClusterResourceOperationSource(ArmClient client)
         {
             _client = client;
         }

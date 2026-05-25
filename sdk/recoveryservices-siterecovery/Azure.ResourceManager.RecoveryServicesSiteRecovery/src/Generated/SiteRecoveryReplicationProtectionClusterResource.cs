@@ -18,9 +18,9 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A class representing a SiteRecoveryReplicationProtectionCluster along with the instance operations that can be performed on it.
+    /// A class representing a SiteRecoveryReplicationProtectionClusterResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryReplicationProtectionClusterResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource"/> using the GetSiteRecoveryReplicationProtectionClusters method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource"/> using the GetSiteRecoveryReplicationProtectionClusterResources method.
     /// </summary>
     public partial class SiteRecoveryReplicationProtectionClusterResource : ArmResource
     {
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteRecoveryReplicationProtectionClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string siteRecoveryReplicationProtectionClusterApiVersion);
+            TryGetApiVersion(ResourceType, out string siteRecoveryReplicationProtectionClusterResourceApiVersion);
             _replicationProtectionClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            _replicationProtectionClustersRestClient = new ReplicationProtectionClusters(_replicationProtectionClustersClientDiagnostics, Pipeline, Endpoint, siteRecoveryReplicationProtectionClusterApiVersion ?? "2026-02-01");
+            _replicationProtectionClustersRestClient = new ReplicationProtectionClusters(_replicationProtectionClustersClientDiagnostics, Pipeline, Endpoint, siteRecoveryReplicationProtectionClusterResourceApiVersion ?? "2026-02-01");
             _clusterRecoveryPointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            _clusterRecoveryPointsRestClient = new ClusterRecoveryPoints(_clusterRecoveryPointsClientDiagnostics, Pipeline, Endpoint, siteRecoveryReplicationProtectionClusterApiVersion ?? "2026-02-01");
+            _clusterRecoveryPointsRestClient = new ClusterRecoveryPoints(_clusterRecoveryPointsClientDiagnostics, Pipeline, Endpoint, siteRecoveryReplicationProtectionClusterResourceApiVersion ?? "2026-02-01");
             _clusterRecoveryPointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            _clusterRecoveryPointRestClient = new ClusterRecoveryPoint(_clusterRecoveryPointClientDiagnostics, Pipeline, Endpoint, siteRecoveryReplicationProtectionClusterApiVersion ?? "2026-02-01");
+            _clusterRecoveryPointRestClient = new ClusterRecoveryPoint(_clusterRecoveryPointClientDiagnostics, Pipeline, Endpoint, siteRecoveryReplicationProtectionClusterResourceApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectionClustersRestClient.CreateApplyRecoveryPointRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ApplyClusterRecoveryPointContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(
-                    new SiteRecoveryReplicationProtectionClusterOperationSource(Client),
+                    new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client),
                     _replicationProtectionClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectionClustersRestClient.CreateApplyRecoveryPointRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ApplyClusterRecoveryPointContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(
-                    new SiteRecoveryReplicationProtectionClusterOperationSource(Client),
+                    new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client),
                     _replicationProtectionClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectionClustersRestClient.CreateFailoverCommitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(
-                    new SiteRecoveryReplicationProtectionClusterOperationSource(Client),
+                    new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client),
                     _replicationProtectionClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectionClustersRestClient.CreateFailoverCommitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(
-                    new SiteRecoveryReplicationProtectionClusterOperationSource(Client),
+                    new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client),
                     _replicationProtectionClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectionClustersRestClient.CreateRepairReplicationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(
-                    new SiteRecoveryReplicationProtectionClusterOperationSource(Client),
+                    new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client),
                     _replicationProtectionClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectionClustersRestClient.CreateRepairReplicationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(
-                    new SiteRecoveryReplicationProtectionClusterOperationSource(Client),
+                    new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client),
                     _replicationProtectionClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectionClustersRestClient.CreateTestFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ClusterTestFailoverContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(
-                    new SiteRecoveryReplicationProtectionClusterOperationSource(Client),
+                    new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client),
                     _replicationProtectionClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -921,7 +921,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectionClustersRestClient.CreateTestFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ClusterTestFailoverContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(
-                    new SiteRecoveryReplicationProtectionClusterOperationSource(Client),
+                    new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client),
                     _replicationProtectionClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -980,7 +980,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectionClustersRestClient.CreateTestFailoverCleanupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ClusterTestFailoverCleanupContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(
-                    new SiteRecoveryReplicationProtectionClusterOperationSource(Client),
+                    new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client),
                     _replicationProtectionClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1039,7 +1039,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectionClustersRestClient.CreateTestFailoverCleanupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ClusterTestFailoverCleanupContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(
-                    new SiteRecoveryReplicationProtectionClusterOperationSource(Client),
+                    new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client),
                     _replicationProtectionClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1098,7 +1098,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectionClustersRestClient.CreateUnplannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ClusterUnplannedFailoverContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(
-                    new SiteRecoveryReplicationProtectionClusterOperationSource(Client),
+                    new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client),
                     _replicationProtectionClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1157,7 +1157,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectionClustersRestClient.CreateUnplannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ClusterUnplannedFailoverContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(
-                    new SiteRecoveryReplicationProtectionClusterOperationSource(Client),
+                    new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client),
                     _replicationProtectionClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1177,7 +1177,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         }
 
         /// <summary>
-        /// Update a SiteRecoveryReplicationProtectionCluster.
+        /// Update a SiteRecoveryReplicationProtectionClusterResource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -1216,7 +1216,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectionClustersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SiteRecoveryReplicationProtectionClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(
-                    new SiteRecoveryReplicationProtectionClusterOperationSource(Client),
+                    new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client),
                     _replicationProtectionClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1236,7 +1236,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         }
 
         /// <summary>
-        /// Update a SiteRecoveryReplicationProtectionCluster.
+        /// Update a SiteRecoveryReplicationProtectionClusterResource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -1275,7 +1275,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationProtectionClustersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SiteRecoveryReplicationProtectionClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryReplicationProtectionClusterResource>(
-                    new SiteRecoveryReplicationProtectionClusterOperationSource(Client),
+                    new SiteRecoveryReplicationProtectionClusterResourceOperationSource(Client),
                     _replicationProtectionClustersClientDiagnostics,
                     Pipeline,
                     message.Request,

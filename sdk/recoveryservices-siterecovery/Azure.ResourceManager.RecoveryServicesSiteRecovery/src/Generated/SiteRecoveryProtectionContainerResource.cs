@@ -792,9 +792,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return GetReplicationProtectedItems().Get(replicatedProtectedItemName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteRecoveryReplicationProtectionClusters in the <see cref="SiteRecoveryProtectionContainerResource"/>. </summary>
-        /// <returns> An object representing collection of SiteRecoveryReplicationProtectionClusters and their operations over a SiteRecoveryReplicationProtectionClusterResource. </returns>
-        public virtual SiteRecoveryReplicationProtectionClusterResourceCollection GetSiteRecoveryReplicationProtectionClusters()
+        /// <summary> Gets a collection of SiteRecoveryReplicationProtectionClusterResources in the <see cref="SiteRecoveryProtectionContainerResource"/>. </summary>
+        /// <returns> An object representing collection of SiteRecoveryReplicationProtectionClusterResources and their operations over a SiteRecoveryReplicationProtectionClusterResource. </returns>
+        public virtual SiteRecoveryReplicationProtectionClusterResourceCollection GetSiteRecoveryReplicationProtectionClusterResources()
         {
             return GetCachedClient(client => new SiteRecoveryReplicationProtectionClusterResourceCollection(client, Id));
         }
@@ -805,11 +805,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="replicationProtectionClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicationProtectionClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SiteRecoveryReplicationProtectionClusterResource>> GetSiteRecoveryReplicationProtectionClusterAsync(string replicationProtectionClusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteRecoveryReplicationProtectionClusterResource>> GetSiteRecoveryReplicationProtectionClusterResourceAsync(string replicationProtectionClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicationProtectionClusterName, nameof(replicationProtectionClusterName));
 
-            return await GetSiteRecoveryReplicationProtectionClusters().GetAsync(replicationProtectionClusterName, cancellationToken).ConfigureAwait(false);
+            return await GetSiteRecoveryReplicationProtectionClusterResources().GetAsync(replicationProtectionClusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the details of an ASR replication protection cluster. </summary>
@@ -818,11 +818,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="replicationProtectionClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicationProtectionClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SiteRecoveryReplicationProtectionClusterResource> GetSiteRecoveryReplicationProtectionCluster(string replicationProtectionClusterName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteRecoveryReplicationProtectionClusterResource> GetSiteRecoveryReplicationProtectionClusterResource(string replicationProtectionClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicationProtectionClusterName, nameof(replicationProtectionClusterName));
 
-            return GetSiteRecoveryReplicationProtectionClusters().Get(replicationProtectionClusterName, cancellationToken);
+            return GetSiteRecoveryReplicationProtectionClusterResources().Get(replicationProtectionClusterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteRecoveryMigrationItems in the <see cref="SiteRecoveryProtectionContainerResource"/>. </summary>
