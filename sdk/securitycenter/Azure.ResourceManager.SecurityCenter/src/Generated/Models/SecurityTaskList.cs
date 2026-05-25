@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="SecurityTaskList"/>. </summary>
         internal SecurityTaskList()
         {
-            Value = new ChangeTrackingList<ResourceGroupSecurityTaskData>();
+            Value = new ChangeTrackingList<SecurityTaskData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityTaskList"/>. </summary>
         /// <param name="value"> The SecurityTask items on this page. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityTaskList(IReadOnlyList<ResourceGroupSecurityTaskData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityTaskList(IReadOnlyList<SecurityTaskData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The SecurityTask items on this page. </summary>
-        public IReadOnlyList<ResourceGroupSecurityTaskData> Value { get; }
+        public IReadOnlyList<SecurityTaskData> Value { get; }
 
         /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SubscriptionAssessmentMetadataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string assessmentMetadataName, SubscriptionAssessmentMetadataData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SubscriptionAssessmentMetadataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string assessmentMetadataName, SecurityAssessmentMetadataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
             Argument.AssertNotNull(data, nameof(data));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsMetadataRestClient.CreateCreateInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, SubscriptionAssessmentMetadataData.ToRequestContent(data), context);
+                HttpMessage message = _assessmentsMetadataRestClient.CreateCreateInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, SecurityAssessmentMetadataData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SubscriptionAssessmentMetadataData> response = Response.FromValue(SubscriptionAssessmentMetadataData.FromResponse(result), result);
+                Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 SecurityCenterArmOperation<SubscriptionAssessmentMetadataResource> operation = new SecurityCenterArmOperation<SubscriptionAssessmentMetadataResource>(Response.FromValue(new SubscriptionAssessmentMetadataResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SubscriptionAssessmentMetadataResource> CreateOrUpdate(WaitUntil waitUntil, string assessmentMetadataName, SubscriptionAssessmentMetadataData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SubscriptionAssessmentMetadataResource> CreateOrUpdate(WaitUntil waitUntil, string assessmentMetadataName, SecurityAssessmentMetadataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
             Argument.AssertNotNull(data, nameof(data));
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsMetadataRestClient.CreateCreateInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, SubscriptionAssessmentMetadataData.ToRequestContent(data), context);
+                HttpMessage message = _assessmentsMetadataRestClient.CreateCreateInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, SecurityAssessmentMetadataData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SubscriptionAssessmentMetadataData> response = Response.FromValue(SubscriptionAssessmentMetadataData.FromResponse(result), result);
+                Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 SecurityCenterArmOperation<SubscriptionAssessmentMetadataResource> operation = new SecurityCenterArmOperation<SubscriptionAssessmentMetadataResource>(Response.FromValue(new SubscriptionAssessmentMetadataResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SubscriptionAssessmentMetadataData> response = Response.FromValue(SubscriptionAssessmentMetadataData.FromResponse(result), result);
+                Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SubscriptionAssessmentMetadataData> response = Response.FromValue(SubscriptionAssessmentMetadataData.FromResponse(result), result);
+                Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SubscriptionAssessmentMetadataData, SubscriptionAssessmentMetadataResource>(new AssessmentsMetadataGetBySubscriptionAsyncCollectionResultOfT(_assessmentsMetadataRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionAssessmentMetadataCollection.GetAll"), data => new SubscriptionAssessmentMetadataResource(Client, data));
+            return new AsyncPageableWrapper<SecurityAssessmentMetadataData, SubscriptionAssessmentMetadataResource>(new AssessmentsMetadataGetBySubscriptionAsyncCollectionResultOfT(_assessmentsMetadataRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionAssessmentMetadataCollection.GetAll"), data => new SubscriptionAssessmentMetadataResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SubscriptionAssessmentMetadataData, SubscriptionAssessmentMetadataResource>(new AssessmentsMetadataGetBySubscriptionCollectionResultOfT(_assessmentsMetadataRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionAssessmentMetadataCollection.GetAll"), data => new SubscriptionAssessmentMetadataResource(Client, data));
+            return new PageableWrapper<SecurityAssessmentMetadataData, SubscriptionAssessmentMetadataResource>(new AssessmentsMetadataGetBySubscriptionCollectionResultOfT(_assessmentsMetadataRestClient, Guid.Parse(Id.SubscriptionId), context, "SubscriptionAssessmentMetadataCollection.GetAll"), data => new SubscriptionAssessmentMetadataResource(Client, data));
         }
 
         /// <summary>
@@ -355,14 +355,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<SubscriptionAssessmentMetadataData> response = default;
+                Response<SecurityAssessmentMetadataData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SubscriptionAssessmentMetadataData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SubscriptionAssessmentMetadataData)null, result);
+                        response = Response.FromValue((SecurityAssessmentMetadataData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -412,14 +412,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<SubscriptionAssessmentMetadataData> response = default;
+                Response<SecurityAssessmentMetadataData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SubscriptionAssessmentMetadataData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SubscriptionAssessmentMetadataData)null, result);
+                        response = Response.FromValue((SecurityAssessmentMetadataData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -469,14 +469,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<SubscriptionAssessmentMetadataData> response = default;
+                Response<SecurityAssessmentMetadataData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SubscriptionAssessmentMetadataData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SubscriptionAssessmentMetadataData)null, result);
+                        response = Response.FromValue((SecurityAssessmentMetadataData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -530,14 +530,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<SubscriptionAssessmentMetadataData> response = default;
+                Response<SecurityAssessmentMetadataData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SubscriptionAssessmentMetadataData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SubscriptionAssessmentMetadataData)null, result);
+                        response = Response.FromValue((SecurityAssessmentMetadataData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

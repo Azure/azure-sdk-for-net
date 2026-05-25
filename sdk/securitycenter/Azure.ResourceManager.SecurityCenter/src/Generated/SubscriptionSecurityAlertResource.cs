@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private readonly ClientDiagnostics _alertsClientDiagnostics;
         private readonly Alerts _alertsRestClient;
-        private readonly ResourceGroupSecurityAlertData _data;
+        private readonly SecurityAlertData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/locations/alerts";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="SubscriptionSecurityAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SubscriptionSecurityAlertResource(ArmClient client, ResourceGroupSecurityAlertData data) : this(client, data.Id)
+        internal SubscriptionSecurityAlertResource(ArmClient client, SecurityAlertData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ResourceGroupSecurityAlertData Data
+        public virtual SecurityAlertData Data
         {
             get
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceGroupSecurityAlertData> response = Response.FromValue(ResourceGroupSecurityAlertData.FromResponse(result), result);
+                Response<SecurityAlertData> response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceGroupSecurityAlertData> response = Response.FromValue(ResourceGroupSecurityAlertData.FromResponse(result), result);
+                Response<SecurityAlertData> response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -208,9 +208,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateSubscriptionLevelStateToActivateAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ActivateAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertResource.UpdateSubscriptionLevelStateToActivate");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertResource.Activate");
             scope.Start();
             try
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateUpdateSubscriptionLevelStateToActivateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _alertsRestClient.CreateActivateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -251,9 +251,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateSubscriptionLevelStateToActivate(CancellationToken cancellationToken = default)
+        public virtual Response Activate(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertResource.UpdateSubscriptionLevelStateToActivate");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertResource.Activate");
             scope.Start();
             try
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateUpdateSubscriptionLevelStateToActivateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _alertsRestClient.CreateActivateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateSubscriptionLevelStateToDismissAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DismissAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertResource.UpdateSubscriptionLevelStateToDismiss");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertResource.Dismiss");
             scope.Start();
             try
             {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateUpdateSubscriptionLevelStateToDismissRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _alertsRestClient.CreateDismissRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -337,9 +337,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateSubscriptionLevelStateToDismiss(CancellationToken cancellationToken = default)
+        public virtual Response Dismiss(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertResource.UpdateSubscriptionLevelStateToDismiss");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertResource.Dismiss");
             scope.Start();
             try
             {
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateUpdateSubscriptionLevelStateToDismissRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _alertsRestClient.CreateDismissRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -380,9 +380,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateSubscriptionLevelStateToInProgressAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateSatateToInProgressAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertResource.UpdateSubscriptionLevelStateToInProgress");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertResource.UpdateSatateToInProgress");
             scope.Start();
             try
             {
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateUpdateSubscriptionLevelStateToInProgressRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _alertsRestClient.CreateUpdateSatateToInProgressRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -423,9 +423,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateSubscriptionLevelStateToInProgress(CancellationToken cancellationToken = default)
+        public virtual Response UpdateSatateToInProgress(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertResource.UpdateSubscriptionLevelStateToInProgress");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertResource.UpdateSatateToInProgress");
             scope.Start();
             try
             {
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateUpdateSubscriptionLevelStateToInProgressRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _alertsRestClient.CreateUpdateSatateToInProgressRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -466,9 +466,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateSubscriptionLevelStateToResolveAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ResolveAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertResource.UpdateSubscriptionLevelStateToResolve");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertResource.Resolve");
             scope.Start();
             try
             {
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateUpdateSubscriptionLevelStateToResolveRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _alertsRestClient.CreateResolveRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -509,9 +509,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateSubscriptionLevelStateToResolve(CancellationToken cancellationToken = default)
+        public virtual Response Resolve(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertResource.UpdateSubscriptionLevelStateToResolve");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertResource.Resolve");
             scope.Start();
             try
             {
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateUpdateSubscriptionLevelStateToResolveRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _alertsRestClient.CreateResolveRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

@@ -74,8 +74,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<TenantAssessmentMetadataResource>> GetAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<TenantAssessmentMetadataResource>> GetAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
+
             using DiagnosticScope scope = _assessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataCollection.Get");
             scope.Start();
             try
@@ -86,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(assessmentMetadataName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SubscriptionAssessmentMetadataData> response = Response.FromValue(SubscriptionAssessmentMetadataData.FromResponse(result), result);
+                Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -119,8 +123,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<TenantAssessmentMetadataResource> Get(string assessmentMetadataName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<TenantAssessmentMetadataResource> Get(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
+
             using DiagnosticScope scope = _assessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataCollection.Get");
             scope.Start();
             try
@@ -131,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(assessmentMetadataName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SubscriptionAssessmentMetadataData> response = Response.FromValue(SubscriptionAssessmentMetadataData.FromResponse(result), result);
+                Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -170,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SubscriptionAssessmentMetadataData, TenantAssessmentMetadataResource>(new AssessmentsMetadataGetAllAsyncCollectionResultOfT(_assessmentsMetadataRestClient, context, "TenantAssessmentMetadataCollection.GetAll"), data => new TenantAssessmentMetadataResource(Client, data));
+            return new AsyncPageableWrapper<SecurityAssessmentMetadataData, TenantAssessmentMetadataResource>(new AssessmentsMetadataGetAllAsyncCollectionResultOfT(_assessmentsMetadataRestClient, context, "TenantAssessmentMetadataCollection.GetAll"), data => new TenantAssessmentMetadataResource(Client, data));
         }
 
         /// <summary>
@@ -198,7 +206,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SubscriptionAssessmentMetadataData, TenantAssessmentMetadataResource>(new AssessmentsMetadataGetAllCollectionResultOfT(_assessmentsMetadataRestClient, context, "TenantAssessmentMetadataCollection.GetAll"), data => new TenantAssessmentMetadataResource(Client, data));
+            return new PageableWrapper<SecurityAssessmentMetadataData, TenantAssessmentMetadataResource>(new AssessmentsMetadataGetAllCollectionResultOfT(_assessmentsMetadataRestClient, context, "TenantAssessmentMetadataCollection.GetAll"), data => new TenantAssessmentMetadataResource(Client, data));
         }
 
         /// <summary>
@@ -220,8 +228,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<bool>> ExistsAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
+
             using DiagnosticScope scope = _assessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataCollection.Exists");
             scope.Start();
             try
@@ -233,14 +245,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(assessmentMetadataName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<SubscriptionAssessmentMetadataData> response = default;
+                Response<SecurityAssessmentMetadataData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SubscriptionAssessmentMetadataData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SubscriptionAssessmentMetadataData)null, result);
+                        response = Response.FromValue((SecurityAssessmentMetadataData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -273,8 +285,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<bool> Exists(string assessmentMetadataName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
+
             using DiagnosticScope scope = _assessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataCollection.Exists");
             scope.Start();
             try
@@ -286,14 +302,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(assessmentMetadataName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<SubscriptionAssessmentMetadataData> response = default;
+                Response<SecurityAssessmentMetadataData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SubscriptionAssessmentMetadataData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SubscriptionAssessmentMetadataData)null, result);
+                        response = Response.FromValue((SecurityAssessmentMetadataData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -326,8 +342,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<NullableResponse<TenantAssessmentMetadataResource>> GetIfExistsAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<TenantAssessmentMetadataResource>> GetIfExistsAsync(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
+
             using DiagnosticScope scope = _assessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataCollection.GetIfExists");
             scope.Start();
             try
@@ -339,14 +359,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(assessmentMetadataName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<SubscriptionAssessmentMetadataData> response = default;
+                Response<SecurityAssessmentMetadataData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SubscriptionAssessmentMetadataData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SubscriptionAssessmentMetadataData)null, result);
+                        response = Response.FromValue((SecurityAssessmentMetadataData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -383,8 +403,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="assessmentMetadataName"> The Assessment Key - Unique key for the assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual NullableResponse<TenantAssessmentMetadataResource> GetIfExists(string assessmentMetadataName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="assessmentMetadataName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assessmentMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<TenantAssessmentMetadataResource> GetIfExists(string assessmentMetadataName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(assessmentMetadataName, nameof(assessmentMetadataName));
+
             using DiagnosticScope scope = _assessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataCollection.GetIfExists");
             scope.Start();
             try
@@ -396,14 +420,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(assessmentMetadataName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<SubscriptionAssessmentMetadataData> response = default;
+                Response<SecurityAssessmentMetadataData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SubscriptionAssessmentMetadataData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SubscriptionAssessmentMetadataData)null, result);
+                        response = Response.FromValue((SecurityAssessmentMetadataData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

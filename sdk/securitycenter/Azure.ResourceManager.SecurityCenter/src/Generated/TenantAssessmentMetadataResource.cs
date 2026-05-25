@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private readonly ClientDiagnostics _assessmentsMetadataClientDiagnostics;
         private readonly AssessmentsMetadata _assessmentsMetadataRestClient;
-        private readonly SubscriptionAssessmentMetadataData _data;
+        private readonly SecurityAssessmentMetadataData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/assessmentMetadata";
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="TenantAssessmentMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TenantAssessmentMetadataResource(ArmClient client, SubscriptionAssessmentMetadataData data) : this(client, data.Id)
+        internal TenantAssessmentMetadataResource(ArmClient client, SecurityAssessmentMetadataData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual SubscriptionAssessmentMetadataData Data
+        public virtual SecurityAssessmentMetadataData Data
         {
             get
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<TenantAssessmentMetadataResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantAssessmentMetadataResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _assessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataResource.Get");
             scope.Start();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SubscriptionAssessmentMetadataData> response = Response.FromValue(SubscriptionAssessmentMetadataData.FromResponse(result), result);
+                Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<TenantAssessmentMetadataResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<TenantAssessmentMetadataResource> Get(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _assessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataResource.Get");
             scope.Start();
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _assessmentsMetadataRestClient.CreateGetRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SubscriptionAssessmentMetadataData> response = Response.FromValue(SubscriptionAssessmentMetadataData.FromResponse(result), result);
+                Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

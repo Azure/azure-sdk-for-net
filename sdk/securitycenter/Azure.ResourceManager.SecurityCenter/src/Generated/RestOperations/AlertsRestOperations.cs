@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateUpdateSubscriptionLevelStateToDismissRequest(Guid subscriptionId, string ascLocation, string alertName, RequestContext context)
+        internal HttpMessage CreateDismissRequest(Guid subscriptionId, string ascLocation, string alertName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateUpdateSubscriptionLevelStateToResolveRequest(Guid subscriptionId, string ascLocation, string alertName, RequestContext context)
+        internal HttpMessage CreateResolveRequest(Guid subscriptionId, string ascLocation, string alertName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateUpdateSubscriptionLevelStateToActivateRequest(Guid subscriptionId, string ascLocation, string alertName, RequestContext context)
+        internal HttpMessage CreateActivateRequest(Guid subscriptionId, string ascLocation, string alertName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateUpdateSubscriptionLevelStateToInProgressRequest(Guid subscriptionId, string ascLocation, string alertName, RequestContext context)
+        internal HttpMessage CreateUpdateSatateToInProgressRequest(Guid subscriptionId, string ascLocation, string alertName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateUpdateResourceGroupLevelStateToResolveRequest(Guid subscriptionId, string resourceGroupName, string ascLocation, string alertName, RequestContext context)
+        internal HttpMessage CreateResolveRequest(Guid subscriptionId, string resourceGroupName, string ascLocation, string alertName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateUpdateResourceGroupLevelStateToDismissRequest(Guid subscriptionId, string resourceGroupName, string ascLocation, string alertName, RequestContext context)
+        internal HttpMessage CreateDismissRequest(Guid subscriptionId, string resourceGroupName, string ascLocation, string alertName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateUpdateResourceGroupLevelStateToActivateRequest(Guid subscriptionId, string resourceGroupName, string ascLocation, string alertName, RequestContext context)
+        internal HttpMessage CreateActivateRequest(Guid subscriptionId, string resourceGroupName, string ascLocation, string alertName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateUpdateResourceGroupLevelStateToInProgressRequest(Guid subscriptionId, string resourceGroupName, string ascLocation, string alertName, RequestContext context)
+        internal HttpMessage CreateUpdateSatateToInProgressRequest(Guid subscriptionId, string resourceGroupName, string ascLocation, string alertName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

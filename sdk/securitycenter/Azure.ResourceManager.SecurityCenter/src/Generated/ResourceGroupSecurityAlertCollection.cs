@@ -78,8 +78,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<ResourceGroupSecurityAlertResource>> GetAsync(string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ResourceGroupSecurityAlertResource>> GetAsync(string alertName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
+
             using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertCollection.Get");
             scope.Start();
             try
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, alertName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceGroupSecurityAlertData> response = Response.FromValue(ResourceGroupSecurityAlertData.FromResponse(result), result);
+                Response<SecurityAlertData> response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -123,8 +127,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<ResourceGroupSecurityAlertResource> Get(string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ResourceGroupSecurityAlertResource> Get(string alertName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
+
             using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertCollection.Get");
             scope.Start();
             try
@@ -135,7 +143,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, alertName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceGroupSecurityAlertData> response = Response.FromValue(ResourceGroupSecurityAlertData.FromResponse(result), result);
+                Response<SecurityAlertData> response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -174,7 +182,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceGroupSecurityAlertData, ResourceGroupSecurityAlertResource>(new AlertsGetResourceGroupLevelByRegionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityAlertData, ResourceGroupSecurityAlertResource>(new AlertsGetResourceGroupLevelByRegionAsyncCollectionResultOfT(
                 _alertsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -208,7 +216,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceGroupSecurityAlertData, ResourceGroupSecurityAlertResource>(new AlertsGetResourceGroupLevelByRegionCollectionResultOfT(
+            return new PageableWrapper<SecurityAlertData, ResourceGroupSecurityAlertResource>(new AlertsGetResourceGroupLevelByRegionCollectionResultOfT(
                 _alertsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -236,8 +244,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<bool>> ExistsAsync(string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string alertName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
+
             using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertCollection.Exists");
             scope.Start();
             try
@@ -249,14 +261,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, alertName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ResourceGroupSecurityAlertData> response = default;
+                Response<SecurityAlertData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResourceGroupSecurityAlertData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResourceGroupSecurityAlertData)null, result);
+                        response = Response.FromValue((SecurityAlertData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -289,8 +301,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<bool> Exists(string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string alertName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
+
             using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertCollection.Exists");
             scope.Start();
             try
@@ -302,14 +318,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, alertName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ResourceGroupSecurityAlertData> response = default;
+                Response<SecurityAlertData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResourceGroupSecurityAlertData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResourceGroupSecurityAlertData)null, result);
+                        response = Response.FromValue((SecurityAlertData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -342,8 +358,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<NullableResponse<ResourceGroupSecurityAlertResource>> GetIfExistsAsync(string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<ResourceGroupSecurityAlertResource>> GetIfExistsAsync(string alertName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
+
             using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertCollection.GetIfExists");
             scope.Start();
             try
@@ -355,14 +375,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, alertName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ResourceGroupSecurityAlertData> response = default;
+                Response<SecurityAlertData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResourceGroupSecurityAlertData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResourceGroupSecurityAlertData)null, result);
+                        response = Response.FromValue((SecurityAlertData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -399,8 +419,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual NullableResponse<ResourceGroupSecurityAlertResource> GetIfExists(string alertName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<ResourceGroupSecurityAlertResource> GetIfExists(string alertName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
+
             using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertCollection.GetIfExists");
             scope.Start();
             try
@@ -412,14 +436,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, alertName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ResourceGroupSecurityAlertData> response = default;
+                Response<SecurityAlertData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResourceGroupSecurityAlertData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResourceGroupSecurityAlertData)null, result);
+                        response = Response.FromValue((SecurityAlertData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary></summary>
-    public partial class ResourceGroupSecurityTaskResource : IJsonModel<ResourceGroupSecurityTaskData>
+    public partial class ResourceGroupSecurityTaskResource : IJsonModel<SecurityTaskData>
     {
-        private static IJsonModel<ResourceGroupSecurityTaskData> s_dataDeserializationInstance;
+        private static IJsonModel<SecurityTaskData> s_dataDeserializationInstance;
 
-        private static IJsonModel<ResourceGroupSecurityTaskData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ResourceGroupSecurityTaskData();
+        private static IJsonModel<SecurityTaskData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecurityTaskData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResourceGroupSecurityTaskData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceGroupSecurityTaskData>)Data).Write(writer, options);
+        void IJsonModel<SecurityTaskData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityTaskData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceGroupSecurityTaskData IJsonModel<ResourceGroupSecurityTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        SecurityTaskData IJsonModel<SecurityTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceGroupSecurityTaskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceGroupSecurityTaskData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<SecurityTaskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityTaskData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceGroupSecurityTaskData IPersistableModel<ResourceGroupSecurityTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceGroupSecurityTaskData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
+        SecurityTaskData IPersistableModel<SecurityTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityTaskData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceGroupSecurityTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<SecurityTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

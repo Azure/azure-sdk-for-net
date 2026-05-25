@@ -78,8 +78,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<ResourceGroupSecurityTaskResource>> GetAsync(string taskName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ResourceGroupSecurityTaskResource>> GetAsync(string taskName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
+
             using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskCollection.Get");
             scope.Start();
             try
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceGroupSecurityTaskData> response = Response.FromValue(ResourceGroupSecurityTaskData.FromResponse(result), result);
+                Response<SecurityTaskData> response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -123,8 +127,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<ResourceGroupSecurityTaskResource> Get(string taskName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ResourceGroupSecurityTaskResource> Get(string taskName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
+
             using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskCollection.Get");
             scope.Start();
             try
@@ -135,7 +143,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceGroupSecurityTaskData> response = Response.FromValue(ResourceGroupSecurityTaskData.FromResponse(result), result);
+                Response<SecurityTaskData> response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -175,7 +183,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceGroupSecurityTaskData, ResourceGroupSecurityTaskResource>(new TasksGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityTaskData, ResourceGroupSecurityTaskResource>(new TasksGetByResourceGroupAsyncCollectionResultOfT(
                 _tasksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +219,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceGroupSecurityTaskData, ResourceGroupSecurityTaskResource>(new TasksGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<SecurityTaskData, ResourceGroupSecurityTaskResource>(new TasksGetByResourceGroupCollectionResultOfT(
                 _tasksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -240,8 +248,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<bool>> ExistsAsync(string taskName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string taskName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
+
             using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskCollection.Exists");
             scope.Start();
             try
@@ -253,14 +265,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ResourceGroupSecurityTaskData> response = default;
+                Response<SecurityTaskData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResourceGroupSecurityTaskData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResourceGroupSecurityTaskData)null, result);
+                        response = Response.FromValue((SecurityTaskData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -293,8 +305,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<bool> Exists(string taskName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string taskName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
+
             using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskCollection.Exists");
             scope.Start();
             try
@@ -306,14 +322,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ResourceGroupSecurityTaskData> response = default;
+                Response<SecurityTaskData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResourceGroupSecurityTaskData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResourceGroupSecurityTaskData)null, result);
+                        response = Response.FromValue((SecurityTaskData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -346,8 +362,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<NullableResponse<ResourceGroupSecurityTaskResource>> GetIfExistsAsync(string taskName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<ResourceGroupSecurityTaskResource>> GetIfExistsAsync(string taskName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
+
             using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskCollection.GetIfExists");
             scope.Start();
             try
@@ -359,14 +379,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ResourceGroupSecurityTaskData> response = default;
+                Response<SecurityTaskData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResourceGroupSecurityTaskData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResourceGroupSecurityTaskData)null, result);
+                        response = Response.FromValue((SecurityTaskData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -403,8 +423,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual NullableResponse<ResourceGroupSecurityTaskResource> GetIfExists(string taskName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<ResourceGroupSecurityTaskResource> GetIfExists(string taskName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
+
             using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskCollection.GetIfExists");
             scope.Start();
             try
@@ -416,14 +440,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, taskName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ResourceGroupSecurityTaskData> response = default;
+                Response<SecurityTaskData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResourceGroupSecurityTaskData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResourceGroupSecurityTaskData)null, result);
+                        response = Response.FromValue((SecurityTaskData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

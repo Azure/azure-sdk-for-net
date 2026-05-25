@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private readonly ClientDiagnostics _alertsClientDiagnostics;
         private readonly Alerts _alertsRestClient;
-        private readonly ResourceGroupSecurityAlertData _data;
+        private readonly SecurityAlertData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/locations/alerts";
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="ResourceGroupSecurityAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ResourceGroupSecurityAlertResource(ArmClient client, ResourceGroupSecurityAlertData data) : this(client, data.Id)
+        internal ResourceGroupSecurityAlertResource(ArmClient client, SecurityAlertData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ResourceGroupSecurityAlertData Data
+        public virtual SecurityAlertData Data
         {
             get
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<ResourceGroupSecurityAlertResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroupSecurityAlertResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.Get");
             scope.Start();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceGroupSecurityAlertData> response = Response.FromValue(ResourceGroupSecurityAlertData.FromResponse(result), result);
+                Response<SecurityAlertData> response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<ResourceGroupSecurityAlertResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroupSecurityAlertResource> Get(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.Get");
             scope.Start();
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _alertsRestClient.CreateGetResourceGroupLevelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceGroupSecurityAlertData> response = Response.FromValue(ResourceGroupSecurityAlertData.FromResponse(result), result);
+                Response<SecurityAlertData> response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -210,9 +210,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateResourceGroupLevelStateToActivateAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ActivateAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.UpdateResourceGroupLevelStateToActivate");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.Activate");
             scope.Start();
             try
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateUpdateResourceGroupLevelStateToActivateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _alertsRestClient.CreateActivateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -253,9 +253,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateResourceGroupLevelStateToActivate(CancellationToken cancellationToken = default)
+        public virtual Response Activate(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.UpdateResourceGroupLevelStateToActivate");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.Activate");
             scope.Start();
             try
             {
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateUpdateResourceGroupLevelStateToActivateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _alertsRestClient.CreateActivateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -296,9 +296,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateResourceGroupLevelStateToDismissAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DismissAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.UpdateResourceGroupLevelStateToDismiss");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.Dismiss");
             scope.Start();
             try
             {
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateUpdateResourceGroupLevelStateToDismissRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _alertsRestClient.CreateDismissRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -339,9 +339,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateResourceGroupLevelStateToDismiss(CancellationToken cancellationToken = default)
+        public virtual Response Dismiss(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.UpdateResourceGroupLevelStateToDismiss");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.Dismiss");
             scope.Start();
             try
             {
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateUpdateResourceGroupLevelStateToDismissRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _alertsRestClient.CreateDismissRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -382,9 +382,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateResourceGroupLevelStateToInProgressAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateSatateToInProgressAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.UpdateResourceGroupLevelStateToInProgress");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.UpdateSatateToInProgress");
             scope.Start();
             try
             {
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateUpdateResourceGroupLevelStateToInProgressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _alertsRestClient.CreateUpdateSatateToInProgressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -425,9 +425,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateResourceGroupLevelStateToInProgress(CancellationToken cancellationToken = default)
+        public virtual Response UpdateSatateToInProgress(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.UpdateResourceGroupLevelStateToInProgress");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.UpdateSatateToInProgress");
             scope.Start();
             try
             {
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateUpdateResourceGroupLevelStateToInProgressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _alertsRestClient.CreateUpdateSatateToInProgressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -468,9 +468,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> UpdateResourceGroupLevelStateToResolveAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ResolveAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.UpdateResourceGroupLevelStateToResolve");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.Resolve");
             scope.Start();
             try
             {
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateUpdateResourceGroupLevelStateToResolveRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _alertsRestClient.CreateResolveRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -511,9 +511,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response UpdateResourceGroupLevelStateToResolve(CancellationToken cancellationToken = default)
+        public virtual Response Resolve(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.UpdateResourceGroupLevelStateToResolve");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ResourceGroupSecurityAlertResource.Resolve");
             scope.Start();
             try
             {
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateUpdateResourceGroupLevelStateToResolveRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _alertsRestClient.CreateResolveRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

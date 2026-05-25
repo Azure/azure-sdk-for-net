@@ -1554,8 +1554,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGroupSecurityAlertData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceGroupSecurityAlertData> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityAlertData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityAlertData> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1582,8 +1582,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGroupSecurityAlertData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceGroupSecurityAlertData> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityAlertData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityAlertData> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1611,8 +1611,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGroupSecurityTaskData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceGroupSecurityTaskData> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityTaskData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityTaskData> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1640,8 +1640,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGroupSecurityTaskData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceGroupSecurityTaskData> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityTaskData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityTaskData> GetAll(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

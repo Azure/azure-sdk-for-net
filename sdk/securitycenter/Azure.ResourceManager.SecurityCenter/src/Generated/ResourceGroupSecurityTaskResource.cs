@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private readonly ClientDiagnostics _tasksClientDiagnostics;
         private readonly Tasks _tasksRestClient;
-        private readonly ResourceGroupSecurityTaskData _data;
+        private readonly SecurityTaskData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/locations/tasks";
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="ResourceGroupSecurityTaskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ResourceGroupSecurityTaskResource(ArmClient client, ResourceGroupSecurityTaskData data) : this(client, data.Id)
+        internal ResourceGroupSecurityTaskResource(ArmClient client, SecurityTaskData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ResourceGroupSecurityTaskData Data
+        public virtual SecurityTaskData Data
         {
             get
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<ResourceGroupSecurityTaskResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroupSecurityTaskResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskResource.Get");
             scope.Start();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceGroupSecurityTaskData> response = Response.FromValue(ResourceGroupSecurityTaskData.FromResponse(result), result);
+                Response<SecurityTaskData> response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<ResourceGroupSecurityTaskResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroupSecurityTaskResource> Get(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskResource.Get");
             scope.Start();
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _tasksRestClient.CreateGetResourceGroupLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceGroupSecurityTaskData> response = Response.FromValue(ResourceGroupSecurityTaskData.FromResponse(result), result);
+                Response<SecurityTaskData> response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

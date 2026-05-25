@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 {
     internal class TenantAssessmentMetadataTests : SecurityCenterManagementTestBase
     {
-        private AssessmentsMetadatumCollection _tenantAssessmentMetadataCollection;
+        private TenantAssessmentMetadataCollection _tenantAssessmentMetadataCollection;
         private const string _existAssessmentMetadataName = "4fb67663-9ab9-475d-b026-8c544cced439";
 
         public TenantAssessmentMetadataTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             var tenants = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
             var tenant = tenants.FirstOrDefault();
-            _tenantAssessmentMetadataCollection = tenant.GetAssessmentsMetadata();
+            _tenantAssessmentMetadataCollection = tenant.GetAllTenantAssessmentMetadata();
         }
 
         [RecordedTest]
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             ValidateTenantAssessmentMetadata(list.First(item => item.Data.Name == _existAssessmentMetadataName));
         }
 
-        private void ValidateTenantAssessmentMetadata(AssessmentsMetadatumResource tenantAssessmentMetadataResource, string assessmentMetadataName = _existAssessmentMetadataName)
+        private void ValidateTenantAssessmentMetadata(TenantAssessmentMetadataResource tenantAssessmentMetadataResource, string assessmentMetadataName = _existAssessmentMetadataName)
         {
             Assert.IsNotNull(tenantAssessmentMetadataResource);
             Assert.IsNotNull(tenantAssessmentMetadataResource.Data.Id);

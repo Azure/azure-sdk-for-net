@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ResourceGroupSecurityAlertData item in Value)
+                foreach (SecurityAlertData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            IList<ResourceGroupSecurityAlertData> value = default;
+            IList<SecurityAlertData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<ResourceGroupSecurityAlertData> array = new List<ResourceGroupSecurityAlertData>();
+                    List<SecurityAlertData> array = new List<SecurityAlertData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceGroupSecurityAlertData.DeserializeResourceGroupSecurityAlertData(item, options));
+                        array.Add(SecurityAlertData.DeserializeSecurityAlertData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AlertList(value ?? new ChangeTrackingList<ResourceGroupSecurityAlertData>(), nextLink, additionalBinaryDataProperties);
+            return new AlertList(value ?? new ChangeTrackingList<SecurityAlertData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

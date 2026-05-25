@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary></summary>
-    public partial class SubscriptionAssessmentMetadataResource : IJsonModel<SubscriptionAssessmentMetadataData>
+    public partial class SubscriptionAssessmentMetadataResource : IJsonModel<SecurityAssessmentMetadataData>
     {
-        private static IJsonModel<SubscriptionAssessmentMetadataData> s_dataDeserializationInstance;
+        private static IJsonModel<SecurityAssessmentMetadataData> s_dataDeserializationInstance;
 
-        private static IJsonModel<SubscriptionAssessmentMetadataData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SubscriptionAssessmentMetadataData();
+        private static IJsonModel<SecurityAssessmentMetadataData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecurityAssessmentMetadataData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SubscriptionAssessmentMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionAssessmentMetadataData>)Data).Write(writer, options);
+        void IJsonModel<SecurityAssessmentMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityAssessmentMetadataData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SubscriptionAssessmentMetadataData IJsonModel<SubscriptionAssessmentMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        SecurityAssessmentMetadataData IJsonModel<SecurityAssessmentMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SubscriptionAssessmentMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SubscriptionAssessmentMetadataData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<SecurityAssessmentMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityAssessmentMetadataData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SubscriptionAssessmentMetadataData IPersistableModel<SubscriptionAssessmentMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SubscriptionAssessmentMetadataData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
+        SecurityAssessmentMetadataData IPersistableModel<SecurityAssessmentMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityAssessmentMetadataData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SubscriptionAssessmentMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<SecurityAssessmentMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

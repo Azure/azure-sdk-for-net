@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ResourceGroupSecurityTaskData item in Value)
+                foreach (SecurityTaskData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            IReadOnlyList<ResourceGroupSecurityTaskData> value = default;
+            IReadOnlyList<SecurityTaskData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<ResourceGroupSecurityTaskData> array = new List<ResourceGroupSecurityTaskData>();
+                    List<SecurityTaskData> array = new List<SecurityTaskData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceGroupSecurityTaskData.DeserializeResourceGroupSecurityTaskData(item, options));
+                        array.Add(SecurityTaskData.DeserializeSecurityTaskData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SecurityTaskList(value ?? new ChangeTrackingList<ResourceGroupSecurityTaskData>(), nextLink, additionalBinaryDataProperties);
+            return new SecurityTaskList(value ?? new ChangeTrackingList<SecurityTaskData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

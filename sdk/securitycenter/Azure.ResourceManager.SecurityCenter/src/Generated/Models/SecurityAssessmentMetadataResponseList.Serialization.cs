@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (SubscriptionAssessmentMetadataData item in Value)
+                foreach (SecurityAssessmentMetadataData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            IReadOnlyList<SubscriptionAssessmentMetadataData> value = default;
+            IReadOnlyList<SecurityAssessmentMetadataData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<SubscriptionAssessmentMetadataData> array = new List<SubscriptionAssessmentMetadataData>();
+                    List<SecurityAssessmentMetadataData> array = new List<SecurityAssessmentMetadataData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubscriptionAssessmentMetadataData.DeserializeSubscriptionAssessmentMetadataData(item, options));
+                        array.Add(SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SecurityAssessmentMetadataResponseList(value ?? new ChangeTrackingList<SubscriptionAssessmentMetadataData>(), nextLink, additionalBinaryDataProperties);
+            return new SecurityAssessmentMetadataResponseList(value ?? new ChangeTrackingList<SecurityAssessmentMetadataData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

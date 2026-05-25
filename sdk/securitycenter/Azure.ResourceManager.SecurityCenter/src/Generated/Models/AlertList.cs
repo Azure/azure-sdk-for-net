@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="AlertList"/>. </summary>
         internal AlertList()
         {
-            Value = new ChangeTrackingList<ResourceGroupSecurityAlertData>();
+            Value = new ChangeTrackingList<SecurityAlertData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AlertList"/>. </summary>
         /// <param name="value"> The Alert items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertList(IList<ResourceGroupSecurityAlertData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertList(IList<SecurityAlertData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The Alert items on this page. </summary>
-        public IList<ResourceGroupSecurityAlertData> Value { get; }
+        public IList<SecurityAlertData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public string NextLink { get; }

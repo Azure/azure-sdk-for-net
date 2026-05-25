@@ -1292,6 +1292,15 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return new SqlVulnerabilityAssessmentSettingsResource(Client, scope.AppendProviderResource("Microsoft.Security", "sqlVulnerabilityAssessments", "default"));
         }
 
+        /// <summary> Gets an object representing a <see cref="SqlVulnerabilityAssessmentScanResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentScanResource"/> object. </returns>
+        public virtual SqlVulnerabilityAssessmentScanResource GetSqlVulnerabilityAssessmentScanResource(ResourceIdentifier id)
+        {
+            SqlVulnerabilityAssessmentScanResource.ValidateResourceId(id);
+            return new SqlVulnerabilityAssessmentScanResource(Client, id);
+        }
+
         /// <summary> Gets a collection of <see cref="SqlVulnerabilityAssessmentScanCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="SqlVulnerabilityAssessmentScanResource"/> objects. </returns>

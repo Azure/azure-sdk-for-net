@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _tasksRestClient.CreateGetSubscriptionLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.Name, taskName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceGroupSecurityTaskData> response = Response.FromValue(ResourceGroupSecurityTaskData.FromResponse(result), result);
+                Response<SecurityTaskData> response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _tasksRestClient.CreateGetSubscriptionLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.Name, taskName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceGroupSecurityTaskData> response = Response.FromValue(ResourceGroupSecurityTaskData.FromResponse(result), result);
+                Response<SecurityTaskData> response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceGroupSecurityTaskData, SubscriptionSecurityTaskResource>(new TasksGetByHomeRegionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityTaskData, SubscriptionSecurityTaskResource>(new TasksGetByHomeRegionAsyncCollectionResultOfT(
                 _tasksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceGroupSecurityTaskData, SubscriptionSecurityTaskResource>(new TasksGetByHomeRegionCollectionResultOfT(
+            return new PageableWrapper<SecurityTaskData, SubscriptionSecurityTaskResource>(new TasksGetByHomeRegionCollectionResultOfT(
                 _tasksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,
@@ -258,14 +258,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _tasksRestClient.CreateGetSubscriptionLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.Name, taskName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ResourceGroupSecurityTaskData> response = default;
+                Response<SecurityTaskData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResourceGroupSecurityTaskData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResourceGroupSecurityTaskData)null, result);
+                        response = Response.FromValue((SecurityTaskData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -315,14 +315,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _tasksRestClient.CreateGetSubscriptionLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.Name, taskName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ResourceGroupSecurityTaskData> response = default;
+                Response<SecurityTaskData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResourceGroupSecurityTaskData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResourceGroupSecurityTaskData)null, result);
+                        response = Response.FromValue((SecurityTaskData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -372,14 +372,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _tasksRestClient.CreateGetSubscriptionLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.Name, taskName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ResourceGroupSecurityTaskData> response = default;
+                Response<SecurityTaskData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResourceGroupSecurityTaskData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResourceGroupSecurityTaskData)null, result);
+                        response = Response.FromValue((SecurityTaskData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -433,14 +433,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _tasksRestClient.CreateGetSubscriptionLevelTaskRequest(Guid.Parse(Id.SubscriptionId), Id.Name, taskName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ResourceGroupSecurityTaskData> response = default;
+                Response<SecurityTaskData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResourceGroupSecurityTaskData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityTaskData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResourceGroupSecurityTaskData)null, result);
+                        response = Response.FromValue((SecurityTaskData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

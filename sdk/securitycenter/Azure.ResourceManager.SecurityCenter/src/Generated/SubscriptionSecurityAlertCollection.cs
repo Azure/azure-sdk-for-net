@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Name, alertName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceGroupSecurityAlertData> response = Response.FromValue(ResourceGroupSecurityAlertData.FromResponse(result), result);
+                Response<SecurityAlertData> response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Name, alertName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceGroupSecurityAlertData> response = Response.FromValue(ResourceGroupSecurityAlertData.FromResponse(result), result);
+                Response<SecurityAlertData> response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceGroupSecurityAlertData, SubscriptionSecurityAlertResource>(new AlertsGetSubscriptionLevelByRegionAsyncCollectionResultOfT(_alertsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SubscriptionSecurityAlertCollection.GetAll"), data => new SubscriptionSecurityAlertResource(Client, data));
+            return new AsyncPageableWrapper<SecurityAlertData, SubscriptionSecurityAlertResource>(new AlertsGetSubscriptionLevelByRegionAsyncCollectionResultOfT(_alertsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SubscriptionSecurityAlertCollection.GetAll"), data => new SubscriptionSecurityAlertResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceGroupSecurityAlertData, SubscriptionSecurityAlertResource>(new AlertsGetSubscriptionLevelByRegionCollectionResultOfT(_alertsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SubscriptionSecurityAlertCollection.GetAll"), data => new SubscriptionSecurityAlertResource(Client, data));
+            return new PageableWrapper<SecurityAlertData, SubscriptionSecurityAlertResource>(new AlertsGetSubscriptionLevelByRegionCollectionResultOfT(_alertsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SubscriptionSecurityAlertCollection.GetAll"), data => new SubscriptionSecurityAlertResource(Client, data));
         }
 
         /// <summary>
@@ -244,14 +244,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Name, alertName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ResourceGroupSecurityAlertData> response = default;
+                Response<SecurityAlertData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResourceGroupSecurityAlertData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResourceGroupSecurityAlertData)null, result);
+                        response = Response.FromValue((SecurityAlertData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -301,14 +301,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Name, alertName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ResourceGroupSecurityAlertData> response = default;
+                Response<SecurityAlertData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResourceGroupSecurityAlertData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResourceGroupSecurityAlertData)null, result);
+                        response = Response.FromValue((SecurityAlertData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -358,14 +358,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Name, alertName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ResourceGroupSecurityAlertData> response = default;
+                Response<SecurityAlertData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResourceGroupSecurityAlertData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResourceGroupSecurityAlertData)null, result);
+                        response = Response.FromValue((SecurityAlertData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -419,14 +419,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _alertsRestClient.CreateGetSubscriptionLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Name, alertName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ResourceGroupSecurityAlertData> response = default;
+                Response<SecurityAlertData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ResourceGroupSecurityAlertData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityAlertData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ResourceGroupSecurityAlertData)null, result);
+                        response = Response.FromValue((SecurityAlertData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

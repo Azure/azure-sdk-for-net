@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataResponseList"/>. </summary>
         internal SecurityAssessmentMetadataResponseList()
         {
-            Value = new ChangeTrackingList<SubscriptionAssessmentMetadataData>();
+            Value = new ChangeTrackingList<SecurityAssessmentMetadataData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataResponseList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAssessmentMetadataResponseList(IReadOnlyList<SubscriptionAssessmentMetadataData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityAssessmentMetadataResponseList(IReadOnlyList<SecurityAssessmentMetadataData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Gets the Value. </summary>
-        public IReadOnlyList<SubscriptionAssessmentMetadataData> Value { get; }
+        public IReadOnlyList<SecurityAssessmentMetadataData> Value { get; }
 
         /// <summary> The URI to fetch the next page. </summary>
         public Uri NextLink { get; }

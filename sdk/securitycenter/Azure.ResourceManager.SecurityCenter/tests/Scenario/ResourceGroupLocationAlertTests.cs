@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
     internal class ResourceGroupLocationAlertTests : SecurityCenterManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        private AlertCollection _resourceGroupSecurityAlertCollection;
+        private ResourceGroupSecurityAlertCollection _resourceGroupSecurityAlertCollection;
         public ResourceGroupLocationAlertTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             DefaultLocation = AzureLocation.CentralUS;
             _resourceGroup = await CreateResourceGroup();
-            _resourceGroupSecurityAlertCollection = _resourceGroup.GetAlerts(DefaultLocation.ToString());
+            _resourceGroupSecurityAlertCollection = _resourceGroup.GetResourceGroupSecurityAlerts(DefaultLocation.ToString());
         }
 
         [RecordedTest]
