@@ -57,6 +57,10 @@ internal class SerializationVisitor : ScmLibraryVisitor
 
     private static bool TryUpdateExplicitCreateMethod(MethodProvider method)
     {
+        // TODO: Move this to Microsoft.TypeSpec.Generator.ClientModel, which owns MRW serialization method emission.
+        // MPG can have ResourceData unknown discriminator models where the concrete unknown type implements
+        // IJsonModel<BaseResourceData>. CreateCore dispatch may return any derived base type, so cast to the interface
+        // return type instead of the concrete unknown type.
         if (method.EnclosingType is not MrwSerializationTypeDefinition
             || method.Signature.Name != nameof(IJsonModel<object>.Create)
             || method.Signature.ExplicitInterface is null
