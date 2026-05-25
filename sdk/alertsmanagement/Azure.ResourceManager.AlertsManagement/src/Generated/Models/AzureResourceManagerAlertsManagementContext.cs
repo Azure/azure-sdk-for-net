@@ -16,8 +16,6 @@ namespace Azure.ResourceManager.AlertsManagement
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ActionSuppressedDetails))]
-    [ModelReaderWriterBuildable(typeof(ActionTriggeredDetails))]
     [ModelReaderWriterBuildable(typeof(AlertEnrichmentItem))]
     [ModelReaderWriterBuildable(typeof(AlertEnrichmentProperties))]
     [ModelReaderWriterBuildable(typeof(AlertEnrichmentResult))]
@@ -31,11 +29,12 @@ namespace Azure.ResourceManager.AlertsManagement
     [ModelReaderWriterBuildable(typeof(PrometheusEnrichmentItem))]
     [ModelReaderWriterBuildable(typeof(PrometheusInstantQuery))]
     [ModelReaderWriterBuildable(typeof(PrometheusRangeQuery))]
-    [ModelReaderWriterBuildable(typeof(PropertyChangeDetails))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScopedServiceAlertResource))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertActionStatus))]
-    [ModelReaderWriterBuildable(typeof(ServiceAlertComments))]
+    [ModelReaderWriterBuildable(typeof(ServiceAlertActionSuppressedDetails))]
+    [ModelReaderWriterBuildable(typeof(ServiceAlertActionTriggeredDetails))]
+    [ModelReaderWriterBuildable(typeof(ServiceAlertChangeStateContent))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertData))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertEssentials))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertMetadata))]
@@ -44,6 +43,7 @@ namespace Azure.ResourceManager.AlertsManagement
     [ModelReaderWriterBuildable(typeof(ServiceAlertModificationItemInfo))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertModificationProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertProperties))]
+    [ModelReaderWriterBuildable(typeof(ServiceAlertPropertyChangeDetails))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertResource))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertSummary))]
     [ModelReaderWriterBuildable(typeof(ServiceAlertSummaryGroup))]

@@ -125,16 +125,16 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new ServiceAlertModificationProperties(alertId, modifications.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The ActionSuppressedDetails. </summary>
+        /// <summary> The ServiceAlertActionSuppressedDetails. </summary>
         /// <param name="suppressionActionRules"> List of suppression action rules. </param>
         /// <param name="suppressedActionGroups"> List of suppressed action groups. </param>
-        /// <returns> A new <see cref="Models.ActionSuppressedDetails"/> instance for mocking. </returns>
-        public static ActionSuppressedDetails ActionSuppressedDetails(IEnumerable<string> suppressionActionRules = default, IEnumerable<AlertsManagementTriggeredRule> suppressedActionGroups = default)
+        /// <returns> A new <see cref="Models.ServiceAlertActionSuppressedDetails"/> instance for mocking. </returns>
+        public static ServiceAlertActionSuppressedDetails ServiceAlertActionSuppressedDetails(IEnumerable<string> suppressionActionRules = default, IEnumerable<AlertsManagementTriggeredRule> suppressedActionGroups = default)
         {
             suppressionActionRules ??= new ChangeTrackingList<string>();
             suppressedActionGroups ??= new ChangeTrackingList<AlertsManagementTriggeredRule>();
 
-            return new ActionSuppressedDetails(AlertModificationType.ActionsSuppressed, additionalBinaryDataProperties: null, suppressionActionRules.ToList(), suppressedActionGroups.ToList());
+            return new ServiceAlertActionSuppressedDetails(AlertModificationType.ActionsSuppressed, additionalBinaryDataProperties: null, suppressionActionRules.ToList(), suppressedActionGroups.ToList());
         }
 
         /// <summary> The alert's enrichments. </summary>

@@ -13,52 +13,52 @@ using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The PropertyChangeDetails. </summary>
-    public partial class PropertyChangeDetails : AlertsManagementBaseDetails, IJsonModel<PropertyChangeDetails>
+    /// <summary> The ServiceAlertPropertyChangeDetails. </summary>
+    public partial class ServiceAlertPropertyChangeDetails : AlertsManagementBaseDetails, IJsonModel<ServiceAlertPropertyChangeDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AlertsManagementBaseDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropertyChangeDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertPropertyChangeDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePropertyChangeDetails(document.RootElement, options);
+                        return DeserializeServiceAlertPropertyChangeDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PropertyChangeDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertPropertyChangeDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropertyChangeDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertPropertyChangeDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAlertsManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PropertyChangeDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertPropertyChangeDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PropertyChangeDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServiceAlertPropertyChangeDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PropertyChangeDetails IPersistableModel<PropertyChangeDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (PropertyChangeDetails)PersistableModelCreateCore(data, options);
+        ServiceAlertPropertyChangeDetails IPersistableModel<ServiceAlertPropertyChangeDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceAlertPropertyChangeDetails)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PropertyChangeDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceAlertPropertyChangeDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PropertyChangeDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceAlertPropertyChangeDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropertyChangeDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertPropertyChangeDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PropertyChangeDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertPropertyChangeDetails)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(OldValue))
@@ -94,24 +94,24 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PropertyChangeDetails IJsonModel<PropertyChangeDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PropertyChangeDetails)JsonModelCreateCore(ref reader, options);
+        ServiceAlertPropertyChangeDetails IJsonModel<ServiceAlertPropertyChangeDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServiceAlertPropertyChangeDetails)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AlertsManagementBaseDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropertyChangeDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertPropertyChangeDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PropertyChangeDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertPropertyChangeDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePropertyChangeDetails(document.RootElement, options);
+            return DeserializeServiceAlertPropertyChangeDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PropertyChangeDetails DeserializePropertyChangeDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServiceAlertPropertyChangeDetails DeserializeServiceAlertPropertyChangeDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PropertyChangeDetails(@type, additionalBinaryDataProperties, oldValue, newValue, comment);
+            return new ServiceAlertPropertyChangeDetails(@type, additionalBinaryDataProperties, oldValue, newValue, comment);
         }
     }
 }

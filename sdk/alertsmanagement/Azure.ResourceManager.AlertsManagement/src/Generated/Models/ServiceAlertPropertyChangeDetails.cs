@@ -10,21 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The PropertyChangeDetails. </summary>
-    public partial class PropertyChangeDetails : AlertsManagementBaseDetails
+    /// <summary> The ServiceAlertPropertyChangeDetails. </summary>
+    public partial class ServiceAlertPropertyChangeDetails : AlertsManagementBaseDetails
     {
-        /// <summary> Initializes a new instance of <see cref="PropertyChangeDetails"/>. </summary>
-        public PropertyChangeDetails() : base(AlertModificationType.PropertyChange)
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertPropertyChangeDetails"/>. </summary>
+        public ServiceAlertPropertyChangeDetails() : base(AlertModificationType.PropertyChange)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PropertyChangeDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertPropertyChangeDetails"/>. </summary>
         /// <param name="type"> Type of modification details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="oldValue"> The value before the change. </param>
         /// <param name="newValue"> The value after the change. </param>
         /// <param name="comment"> The comment. </param>
-        internal PropertyChangeDetails(AlertModificationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string oldValue, string newValue, string comment) : base(@type, additionalBinaryDataProperties)
+        internal ServiceAlertPropertyChangeDetails(AlertModificationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string oldValue, string newValue, string comment) : base(@type, additionalBinaryDataProperties)
         {
             OldValue = oldValue;
             NewValue = newValue;

@@ -208,9 +208,9 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </list>
         /// </summary>
         /// <param name="newState"> New state of the alert. </param>
-        /// <param name="comment"> reason of change alert state. </param>
+        /// <param name="content"> reason of change alert state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceAlertResource>> ChangeStateAsync(ServiceAlertState newState, ServiceAlertComments comment = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceAlertResource>> ChangeStateAsync(ServiceAlertState newState, ServiceAlertChangeStateContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _serviceAlertClientDiagnostics.CreateScope("ServiceAlertResource.ChangeState");
             scope.Start();
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceAlertRestClient.CreateChangeStateRequest(Guid.Parse(Id.Name), newState.ToString(), ServiceAlertComments.ToRequestContent(comment), context);
+                HttpMessage message = _serviceAlertRestClient.CreateChangeStateRequest(Guid.Parse(Id.Name), newState.ToString(), ServiceAlertChangeStateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -258,9 +258,9 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </list>
         /// </summary>
         /// <param name="newState"> New state of the alert. </param>
-        /// <param name="comment"> reason of change alert state. </param>
+        /// <param name="content"> reason of change alert state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceAlertResource> ChangeState(ServiceAlertState newState, ServiceAlertComments comment = default, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceAlertResource> ChangeState(ServiceAlertState newState, ServiceAlertChangeStateContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _serviceAlertClientDiagnostics.CreateScope("ServiceAlertResource.ChangeState");
             scope.Start();
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceAlertRestClient.CreateChangeStateRequest(Guid.Parse(Id.Name), newState.ToString(), ServiceAlertComments.ToRequestContent(comment), context);
+                HttpMessage message = _serviceAlertRestClient.CreateChangeStateRequest(Guid.Parse(Id.Name), newState.ToString(), ServiceAlertChangeStateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)

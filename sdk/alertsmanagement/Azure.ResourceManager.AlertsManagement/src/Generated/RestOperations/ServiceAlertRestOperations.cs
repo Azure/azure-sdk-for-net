@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.AlertsManagement
             return message;
         }
 
-        internal HttpMessage CreateGetSummaryRequest(string scope, string groupby, bool? includeSmartGroupsCount, string targetResource, string targetResourceType, string targetResourceGroup, string monitorService, string monitorCondition, string severity, string alertState, string alertRule, string timeRange, string customTimeRange, RequestContext context)
+        internal HttpMessage CreateGetServiceAlertSummaryRequest(string scope, string groupby, bool? includeSmartGroupsCount, string targetResource, string targetResourceType, string targetResourceGroup, string monitorService, string monitorCondition, string severity, string alertState, string alertRule, string timeRange, string customTimeRange, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

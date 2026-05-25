@@ -13,52 +13,52 @@ using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The ActionSuppressedDetails. </summary>
-    public partial class ActionSuppressedDetails : AlertsManagementBaseDetails, IJsonModel<ActionSuppressedDetails>
+    /// <summary> The ServiceAlertActionSuppressedDetails. </summary>
+    public partial class ServiceAlertActionSuppressedDetails : AlertsManagementBaseDetails, IJsonModel<ServiceAlertActionSuppressedDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AlertsManagementBaseDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionSuppressedDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertActionSuppressedDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeActionSuppressedDetails(document.RootElement, options);
+                        return DeserializeServiceAlertActionSuppressedDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActionSuppressedDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertActionSuppressedDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionSuppressedDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertActionSuppressedDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAlertsManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ActionSuppressedDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertActionSuppressedDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ActionSuppressedDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServiceAlertActionSuppressedDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActionSuppressedDetails IPersistableModel<ActionSuppressedDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (ActionSuppressedDetails)PersistableModelCreateCore(data, options);
+        ServiceAlertActionSuppressedDetails IPersistableModel<ServiceAlertActionSuppressedDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceAlertActionSuppressedDetails)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ActionSuppressedDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceAlertActionSuppressedDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ActionSuppressedDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceAlertActionSuppressedDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionSuppressedDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertActionSuppressedDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionSuppressedDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertActionSuppressedDetails)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(SuppressionActionRules))
@@ -104,24 +104,24 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActionSuppressedDetails IJsonModel<ActionSuppressedDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ActionSuppressedDetails)JsonModelCreateCore(ref reader, options);
+        ServiceAlertActionSuppressedDetails IJsonModel<ServiceAlertActionSuppressedDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServiceAlertActionSuppressedDetails)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AlertsManagementBaseDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionSuppressedDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertActionSuppressedDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionSuppressedDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertActionSuppressedDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeActionSuppressedDetails(document.RootElement, options);
+            return DeserializeServiceAlertActionSuppressedDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ActionSuppressedDetails DeserializeActionSuppressedDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServiceAlertActionSuppressedDetails DeserializeServiceAlertActionSuppressedDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ActionSuppressedDetails(@type, additionalBinaryDataProperties, suppressionActionRules ?? new ChangeTrackingList<string>(), suppressedActionGroups ?? new ChangeTrackingList<AlertsManagementTriggeredRule>());
+            return new ServiceAlertActionSuppressedDetails(@type, additionalBinaryDataProperties, suppressionActionRules ?? new ChangeTrackingList<string>(), suppressedActionGroups ?? new ChangeTrackingList<AlertsManagementTriggeredRule>());
         }
     }
 }

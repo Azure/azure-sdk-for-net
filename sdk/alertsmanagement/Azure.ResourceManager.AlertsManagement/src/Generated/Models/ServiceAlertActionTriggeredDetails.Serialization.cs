@@ -13,52 +13,52 @@ using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The ActionTriggeredDetails. </summary>
-    public partial class ActionTriggeredDetails : AlertsManagementBaseDetails, IJsonModel<ActionTriggeredDetails>
+    /// <summary> The ServiceAlertActionTriggeredDetails. </summary>
+    public partial class ServiceAlertActionTriggeredDetails : AlertsManagementBaseDetails, IJsonModel<ServiceAlertActionTriggeredDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AlertsManagementBaseDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionTriggeredDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertActionTriggeredDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeActionTriggeredDetails(document.RootElement, options);
+                        return DeserializeServiceAlertActionTriggeredDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActionTriggeredDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertActionTriggeredDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionTriggeredDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertActionTriggeredDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAlertsManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ActionTriggeredDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertActionTriggeredDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ActionTriggeredDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServiceAlertActionTriggeredDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActionTriggeredDetails IPersistableModel<ActionTriggeredDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (ActionTriggeredDetails)PersistableModelCreateCore(data, options);
+        ServiceAlertActionTriggeredDetails IPersistableModel<ServiceAlertActionTriggeredDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceAlertActionTriggeredDetails)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ActionTriggeredDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceAlertActionTriggeredDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ActionTriggeredDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceAlertActionTriggeredDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionTriggeredDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertActionTriggeredDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionTriggeredDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertActionTriggeredDetails)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ActionGroup))
@@ -89,24 +89,24 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActionTriggeredDetails IJsonModel<ActionTriggeredDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ActionTriggeredDetails)JsonModelCreateCore(ref reader, options);
+        ServiceAlertActionTriggeredDetails IJsonModel<ServiceAlertActionTriggeredDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServiceAlertActionTriggeredDetails)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AlertsManagementBaseDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionTriggeredDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertActionTriggeredDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionTriggeredDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertActionTriggeredDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeActionTriggeredDetails(document.RootElement, options);
+            return DeserializeServiceAlertActionTriggeredDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ActionTriggeredDetails DeserializeActionTriggeredDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServiceAlertActionTriggeredDetails DeserializeServiceAlertActionTriggeredDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ActionTriggeredDetails(@type, additionalBinaryDataProperties, actionGroup, notificationResult);
+            return new ServiceAlertActionTriggeredDetails(@type, additionalBinaryDataProperties, actionGroup, notificationResult);
         }
     }
 }

@@ -12,8 +12,9 @@ namespace Azure.ResourceManager.AlertsManagement
 {
     // Backward compatibility additions for the tenant-scope ServiceAlertResource:
     //  1. ChangeState(ServiceAlertState, string, ...) - the AutoRest-based v1.1.1 SDK accepted
-    //     a plain string for the comment; the new TypeSpec spec wraps it in a ServiceAlertComments
-    //     model. These overloads convert the string into ServiceAlertComments and delegate.
+    //     a plain string for the comment; the new TypeSpec spec wraps it in a
+    //     ServiceAlertChangeStateContent model. These overloads convert the string into
+    //     ServiceAlertChangeStateContent and delegate.
     //  2. GetEnrichments / GetEnrichmentsAsync - the new spec binds the getEnrichments operation
     //     to the extension-scope ScopedServiceAlertResource only (because it carries the @list
     //     decorator). The v1.1.1 SDK exposed the same operation on the tenant-scope resource, so
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.AlertsManagement
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ServiceAlertResource>> ChangeStateAsync(ServiceAlertState newState, string comment, CancellationToken cancellationToken = default)
         {
-            var comments = comment != null ? new ServiceAlertComments { Comments = comment } : default(ServiceAlertComments);
+            var comments = comment != null ? new ServiceAlertChangeStateContent { Comments = comment } : default(ServiceAlertChangeStateContent);
             return await ChangeStateAsync(newState, comments, cancellationToken).ConfigureAwait(false);
         }
 
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.AlertsManagement
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ServiceAlertResource> ChangeState(ServiceAlertState newState, string comment, CancellationToken cancellationToken = default)
         {
-            var comments = comment != null ? new ServiceAlertComments { Comments = comment } : default(ServiceAlertComments);
+            var comments = comment != null ? new ServiceAlertChangeStateContent { Comments = comment } : default(ServiceAlertChangeStateContent);
             return ChangeState(newState, comments, cancellationToken);
         }
 

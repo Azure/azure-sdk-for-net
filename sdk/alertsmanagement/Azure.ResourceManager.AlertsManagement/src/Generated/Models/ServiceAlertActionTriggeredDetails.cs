@@ -10,20 +10,20 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The ActionTriggeredDetails. </summary>
-    public partial class ActionTriggeredDetails : AlertsManagementBaseDetails
+    /// <summary> The ServiceAlertActionTriggeredDetails. </summary>
+    public partial class ServiceAlertActionTriggeredDetails : AlertsManagementBaseDetails
     {
-        /// <summary> Initializes a new instance of <see cref="ActionTriggeredDetails"/>. </summary>
-        public ActionTriggeredDetails() : base(AlertModificationType.ActionsTriggered)
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertActionTriggeredDetails"/>. </summary>
+        public ServiceAlertActionTriggeredDetails() : base(AlertModificationType.ActionsTriggered)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionTriggeredDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertActionTriggeredDetails"/>. </summary>
         /// <param name="type"> Type of modification details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="actionGroup"> The action group that was triggered. </param>
         /// <param name="notificationResult"> The result of the notification delivery. </param>
-        internal ActionTriggeredDetails(AlertModificationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertsManagementTriggeredRule actionGroup, AlertsManagementNotificationResult notificationResult) : base(@type, additionalBinaryDataProperties)
+        internal ServiceAlertActionTriggeredDetails(AlertModificationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertsManagementTriggeredRule actionGroup, AlertsManagementNotificationResult notificationResult) : base(@type, additionalBinaryDataProperties)
         {
             ActionGroup = actionGroup;
             NotificationResult = notificationResult;

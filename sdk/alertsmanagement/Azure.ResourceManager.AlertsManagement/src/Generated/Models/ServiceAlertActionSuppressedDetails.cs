@@ -11,22 +11,22 @@ using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The ActionSuppressedDetails. </summary>
-    public partial class ActionSuppressedDetails : AlertsManagementBaseDetails
+    /// <summary> The ServiceAlertActionSuppressedDetails. </summary>
+    public partial class ServiceAlertActionSuppressedDetails : AlertsManagementBaseDetails
     {
-        /// <summary> Initializes a new instance of <see cref="ActionSuppressedDetails"/>. </summary>
-        public ActionSuppressedDetails() : base(AlertModificationType.ActionsSuppressed)
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertActionSuppressedDetails"/>. </summary>
+        public ServiceAlertActionSuppressedDetails() : base(AlertModificationType.ActionsSuppressed)
         {
             SuppressionActionRules = new ChangeTrackingList<string>();
             SuppressedActionGroups = new ChangeTrackingList<AlertsManagementTriggeredRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionSuppressedDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertActionSuppressedDetails"/>. </summary>
         /// <param name="type"> Type of modification details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="suppressionActionRules"> List of suppression action rules. </param>
         /// <param name="suppressedActionGroups"> List of suppressed action groups. </param>
-        internal ActionSuppressedDetails(AlertModificationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> suppressionActionRules, IList<AlertsManagementTriggeredRule> suppressedActionGroups) : base(@type, additionalBinaryDataProperties)
+        internal ServiceAlertActionSuppressedDetails(AlertModificationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> suppressionActionRules, IList<AlertsManagementTriggeredRule> suppressedActionGroups) : base(@type, additionalBinaryDataProperties)
         {
             SuppressionActionRules = suppressionActionRules;
             SuppressedActionGroups = suppressedActionGroups;
