@@ -98,6 +98,6 @@ namespace Azure.Messaging.ServiceBus.Core
             ];
         }
 
-        const string UserAgentPropertyName = "user-agent";
+        private const string UserAgentPropertyName = "user-agent";
     }
 }
