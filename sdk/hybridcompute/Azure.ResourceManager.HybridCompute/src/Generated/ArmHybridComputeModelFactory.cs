@@ -778,12 +778,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="allowedFeatures"> Specifies the list of features that are enabled for this Gateway. </param>
-        /// <returns> A new <see cref="Models.ArcGatewayPatch"/> instance for mocking. </returns>
-        public static ArcGatewayPatch ArcGatewayPatch(IDictionary<string, string> tags = default, IEnumerable<string> allowedFeatures = default)
+        /// <returns> A new <see cref="Models.ArcGatewayUpdate"/> instance for mocking. </returns>
+        public static ArcGatewayUpdate ArcGatewayUpdate(IDictionary<string, string> tags = default, IEnumerable<string> allowedFeatures = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ArcGatewayPatch(tags, additionalBinaryDataProperties: null, allowedFeatures is null ? default : new GatewayUpdateProperties((allowedFeatures ?? new ChangeTrackingList<string>()).ToList(), null));
+            return new ArcGatewayUpdate(tags, additionalBinaryDataProperties: null, allowedFeatures is null ? default : new GatewayUpdateProperties((allowedFeatures ?? new ChangeTrackingList<string>()).ToList(), null));
         }
 
         /// <summary> A private link resource. </summary>
@@ -1001,6 +1001,24 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 properties);
         }
 
+        /// <summary> The Data Model for a Private Endpoint Connection associated with a Private Link Scope. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The Private Endpoint Connection properties. </param>
+        /// <returns> A new <see cref="Models.PrivateEndpointConnectionDataModel"/> instance for mocking. </returns>
+        public static PrivateEndpointConnectionDataModel PrivateEndpointConnectionDataModel(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HybridComputePrivateEndpointConnectionProperties properties = default)
+        {
+            return new PrivateEndpointConnectionDataModel(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
         /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a PrivateLinkScope instance. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.HybridComputePrivateLinkScopePatch"/> instance for mocking. </returns>
@@ -1172,24 +1190,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 tags,
                 location,
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointConnectionDataModel"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The Private Endpoint Connection properties. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointConnectionDataModel"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionDataModel PrivateEndpointConnectionDataModel(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HybridComputePrivateEndpointConnectionProperties properties = default)
-        {
-            return new PrivateEndpointConnectionDataModel(
-                id,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                name,
-                properties);
         }
     }
 }
