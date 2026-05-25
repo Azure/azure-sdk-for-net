@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Linq;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests

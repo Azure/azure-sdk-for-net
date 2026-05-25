@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             // --- Create ---
             Response<KeyVaultEkmConnection> created = await Client.CreateEkmConnectionAsync(input);
-            Assert.That(created.GetRawResponse().Status, Is.EqualTo(200).Or.EqualTo(201));
+            Assert.That(created.GetRawResponse().Status, Is.EqualTo(200));
             Assert.That(created.Value.Host, Is.EqualTo(input.Host));
 
             // --- Get ---
@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             // --- Delete ---
             Response<KeyVaultEkmConnection> deleted = await Client.DeleteEkmConnectionAsync();
-            Assert.That(deleted.GetRawResponse().Status, Is.EqualTo(200).Or.EqualTo(204));
+            Assert.That(deleted.GetRawResponse().Status, Is.EqualTo(200));
         }
 
         [TearDown]

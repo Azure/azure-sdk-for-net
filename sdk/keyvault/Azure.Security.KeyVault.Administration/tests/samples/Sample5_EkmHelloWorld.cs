@@ -101,7 +101,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             #endregion
 
             Assert.That(updated.Value, Is.Not.Null);
-            Assert.That(subject, Is.Not.Null.Or.Null);
+            Assert.That(subject, Is.Not.Null);
             Assert.That(info.Value, Is.Not.Null);
         }
 
