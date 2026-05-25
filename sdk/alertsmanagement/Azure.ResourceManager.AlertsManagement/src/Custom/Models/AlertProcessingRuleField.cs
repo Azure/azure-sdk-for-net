@@ -8,21 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    // Back-compat ApiCompat shim — kept solely to preserve the binary contract of the previously
-    // published GA package (Azure.ResourceManager.AlertsManagement v1.1.x).
-    //
-    // Why it lives here instead of being regenerated:
-    //   The TypeSpec spec for this package (specification/alertsmanagement/.../Microsoft.AlertsManagement/
-    //   AlertsManagement) intentionally covers only the Alerts + AlertsSummary operation groups. The
-    //   AlertProcessingRule (formerly "actionRules") RP surface was extracted into its own RP namespace
-    //   and now ships from the sibling package 'Azure.ResourceManager.AlertProcessingRules', so the
-    //   MPG generator does not (and must not) emit these types here.
-    //
-    // What this stub provides:
-    //   The type is declared with the original v1.1.x signature so that consumer assemblies compiled
-    //   against the old GA still load, but every member throws NotSupportedException at runtime. The
-    //   type is also marked [Obsolete(..., error: true)] + [EditorBrowsable(Never)] so the C# compiler
-    //   redirects new callers to the AlertProcessingRules package.
     /// <summary> Field for a given condition. </summary>
     [Obsolete("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -34,40 +19,28 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="value"> The value. </param>
         public AlertProcessingRuleField(string value) { _value = value ?? throw new ArgumentNullException(nameof(value)); }
 
-        private const string SeverityValue = "Severity";
-        private const string MonitorServiceValue = "MonitorService";
-        private const string MonitorConditionValue = "MonitorCondition";
-        private const string SignalTypeValue = "SignalType";
-        private const string TargetResourceTypeValue = "TargetResourceType";
-        private const string TargetResourceValue = "TargetResource";
-        private const string TargetResourceGroupValue = "TargetResourceGroup";
-        private const string AlertRuleIdValue = "AlertRuleId";
-        private const string AlertRuleNameValue = "AlertRuleName";
-        private const string DescriptionValue = "Description";
-        private const string AlertContextValue = "AlertContext";
-
         /// <summary> Severity. </summary>
-        public static AlertProcessingRuleField Severity { get; } = new AlertProcessingRuleField(SeverityValue);
+        public static AlertProcessingRuleField Severity => throw new NotSupportedException();
         /// <summary> MonitorService. </summary>
-        public static AlertProcessingRuleField MonitorService { get; } = new AlertProcessingRuleField(MonitorServiceValue);
+        public static AlertProcessingRuleField MonitorService => throw new NotSupportedException();
         /// <summary> MonitorCondition. </summary>
-        public static AlertProcessingRuleField MonitorCondition { get; } = new AlertProcessingRuleField(MonitorConditionValue);
+        public static AlertProcessingRuleField MonitorCondition => throw new NotSupportedException();
         /// <summary> SignalType. </summary>
-        public static AlertProcessingRuleField SignalType { get; } = new AlertProcessingRuleField(SignalTypeValue);
+        public static AlertProcessingRuleField SignalType => throw new NotSupportedException();
         /// <summary> TargetResourceType. </summary>
-        public static AlertProcessingRuleField TargetResourceType { get; } = new AlertProcessingRuleField(TargetResourceTypeValue);
+        public static AlertProcessingRuleField TargetResourceType => throw new NotSupportedException();
         /// <summary> TargetResource. </summary>
-        public static AlertProcessingRuleField TargetResource { get; } = new AlertProcessingRuleField(TargetResourceValue);
+        public static AlertProcessingRuleField TargetResource => throw new NotSupportedException();
         /// <summary> TargetResourceGroup. </summary>
-        public static AlertProcessingRuleField TargetResourceGroup { get; } = new AlertProcessingRuleField(TargetResourceGroupValue);
+        public static AlertProcessingRuleField TargetResourceGroup => throw new NotSupportedException();
         /// <summary> AlertRuleId. </summary>
-        public static AlertProcessingRuleField AlertRuleId { get; } = new AlertProcessingRuleField(AlertRuleIdValue);
+        public static AlertProcessingRuleField AlertRuleId => throw new NotSupportedException();
         /// <summary> AlertRuleName. </summary>
-        public static AlertProcessingRuleField AlertRuleName { get; } = new AlertProcessingRuleField(AlertRuleNameValue);
+        public static AlertProcessingRuleField AlertRuleName => throw new NotSupportedException();
         /// <summary> Description. </summary>
-        public static AlertProcessingRuleField Description { get; } = new AlertProcessingRuleField(DescriptionValue);
+        public static AlertProcessingRuleField Description => throw new NotSupportedException();
         /// <summary> AlertContext. </summary>
-        public static AlertProcessingRuleField AlertContext { get; } = new AlertProcessingRuleField(AlertContextValue);
+        public static AlertProcessingRuleField AlertContext => throw new NotSupportedException();
 
         /// <summary> Converts a string to AlertProcessingRuleField. </summary>
         public static implicit operator AlertProcessingRuleField(string value) => new AlertProcessingRuleField(value);

@@ -8,21 +8,6 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    // Back-compat ApiCompat shim — kept solely to preserve the binary contract of the previously
-    // published GA package (Azure.ResourceManager.AlertsManagement v1.1.x).
-    //
-    // Why it lives here instead of being regenerated:
-    //   The TypeSpec spec for this package (specification/alertsmanagement/.../Microsoft.AlertsManagement/
-    //   AlertsManagement) intentionally covers only the Alerts + AlertsSummary operation groups. The
-    //   AlertProcessingRule (formerly "actionRules") RP surface was extracted into its own RP namespace
-    //   and now ships from the sibling package 'Azure.ResourceManager.AlertProcessingRules', so the
-    //   MPG generator does not (and must not) emit these types here.
-    //
-    // What this stub provides:
-    //   The type is declared with the original v1.1.x signature so that consumer assemblies compiled
-    //   against the old GA still load, but every member throws NotSupportedException at runtime. The
-    //   type is also marked [Obsolete(..., error: true)] + [EditorBrowsable(Never)] so the C# compiler
-    //   redirects new callers to the AlertProcessingRules package.
     /// <summary> Days of week. </summary>
     [Obsolete("The AlertProcessingRule types have been moved to the 'Azure.ResourceManager.AlertProcessingRules' package. Reference that package and use the same-named type (e.g., Azure.ResourceManager.AlertProcessingRules.AlertProcessingRuleResource) instead.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -34,28 +19,20 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="value"> The value. </param>
         public AlertsManagementDayOfWeek(string value) { _value = value ?? throw new ArgumentNullException(nameof(value)); }
 
-        private const string SundayValue = "Sunday";
-        private const string MondayValue = "Monday";
-        private const string TuesdayValue = "Tuesday";
-        private const string WednesdayValue = "Wednesday";
-        private const string ThursdayValue = "Thursday";
-        private const string FridayValue = "Friday";
-        private const string SaturdayValue = "Saturday";
-
         /// <summary> Sunday. </summary>
-        public static AlertsManagementDayOfWeek Sunday { get; } = new AlertsManagementDayOfWeek(SundayValue);
+        public static AlertsManagementDayOfWeek Sunday => throw new NotSupportedException();
         /// <summary> Monday. </summary>
-        public static AlertsManagementDayOfWeek Monday { get; } = new AlertsManagementDayOfWeek(MondayValue);
+        public static AlertsManagementDayOfWeek Monday => throw new NotSupportedException();
         /// <summary> Tuesday. </summary>
-        public static AlertsManagementDayOfWeek Tuesday { get; } = new AlertsManagementDayOfWeek(TuesdayValue);
+        public static AlertsManagementDayOfWeek Tuesday => throw new NotSupportedException();
         /// <summary> Wednesday. </summary>
-        public static AlertsManagementDayOfWeek Wednesday { get; } = new AlertsManagementDayOfWeek(WednesdayValue);
+        public static AlertsManagementDayOfWeek Wednesday => throw new NotSupportedException();
         /// <summary> Thursday. </summary>
-        public static AlertsManagementDayOfWeek Thursday { get; } = new AlertsManagementDayOfWeek(ThursdayValue);
+        public static AlertsManagementDayOfWeek Thursday => throw new NotSupportedException();
         /// <summary> Friday. </summary>
-        public static AlertsManagementDayOfWeek Friday { get; } = new AlertsManagementDayOfWeek(FridayValue);
+        public static AlertsManagementDayOfWeek Friday => throw new NotSupportedException();
         /// <summary> Saturday. </summary>
-        public static AlertsManagementDayOfWeek Saturday { get; } = new AlertsManagementDayOfWeek(SaturdayValue);
+        public static AlertsManagementDayOfWeek Saturday => throw new NotSupportedException();
 
         /// <summary> Converts a string. </summary>
         public static implicit operator AlertsManagementDayOfWeek(string value) => new AlertsManagementDayOfWeek(value);

@@ -1,12 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Backward compatibility stubs for model-factory helpers that built types removed in this migration.
-//  - AlertProcessingRuleData: moved to the 'Azure.ResourceManager.AlertProcessingRules' package.
-//  - SmartGroupData/SmartGroupModification/SmartGroupModificationProperties: moved to Legacy in the
-//    spec repo; the APIs still exist in Azure and will be shipped from a separate package in a future
-//    release.
-
 #nullable disable
 
 using System;

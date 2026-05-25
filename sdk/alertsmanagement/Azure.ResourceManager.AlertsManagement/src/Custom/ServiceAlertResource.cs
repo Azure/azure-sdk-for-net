@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="alertId"> The alert id. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Guid alertId)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}";

@@ -3,15 +3,6 @@
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    // NOTE: getAll @@override cannot work via client.tsp alone because AlertOperationGroupOps
-    // uses an anonymous model with providerNamespace: "Microsoft.AlertsManagement" (literal type).
-    // The @@override validator uses reference equality on types, and any new literal defined in
-    // client.tsp creates a different type object. The getAll Options will be handled via SDK
-    // custom code (ServiceAlertCollectionGetAllOptions) instead.
-    // Backward compatibility: the old SDK (AutoRest-based, v1.1.1) provided this options class
-    // to group the 17 query parameters of the Alerts_ListAll operation (targetResource,
-    // targetResourceType, monitorService, severity, alertState, timeRange, etc.) into a single
-    // object. The new TypeSpec generator does not produce this wrapper class.
     /// <summary> Options that group the query parameters of the Alerts_ListAll operation into a single object. Provided for backward compatibility with the AutoRest-based v1.1.1 SDK. </summary>
     public partial class ServiceAlertCollectionGetAllOptions
     {
