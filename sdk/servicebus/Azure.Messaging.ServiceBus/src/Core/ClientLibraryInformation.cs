@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///  user agents when interacting with Azure services.
         /// </summary>
         ///
-        [Description("user-agent")]
+        [Description(UserAgentPropertyName)]
         public string UserAgent => $"azsdk-net-{Product}/{Version} ({Framework}; {Platform})";
 
         /// <summary>
@@ -86,14 +86,18 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>An enumerable set of the properties, with name and value.</returns>
         ///
-        private KeyValuePair<string, string>[] SerializeProperties() =>
-            new[]
-            {
+        private KeyValuePair<string, string>[] SerializeProperties()
+        {
+            return
+            [
                 new KeyValuePair<string, string>("product", Product),
                 new KeyValuePair<string, string>("version", Version),
                 new KeyValuePair<string, string>("framework", Framework),
                 new KeyValuePair<string, string>("platform", Platform),
-                new KeyValuePair<string, string>("user-agent", UserAgent)
-            };
+                new KeyValuePair<string, string>(UserAgentPropertyName, UserAgent)
+            ];
+        }
+
+        const string UserAgentPropertyName = "user-agent";
     }
 }
