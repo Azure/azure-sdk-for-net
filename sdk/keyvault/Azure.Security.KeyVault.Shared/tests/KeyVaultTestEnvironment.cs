@@ -82,7 +82,7 @@ namespace Azure.Security.KeyVault.Tests
         /// <summary>
         /// EKM proxy FQDN. Recorded so playback works without the real proxy.
         /// </summary>
-        public string EkmHost => GetRecordedOptionalVariable("AZURE_KEYVAULT_EKM_HOST");
+        public string EkmHost => GetRecordedOptionalVariable("AZURE_KEYVAULT_EKM_HOST", options => options.IsSecret("ekm.contoso.com"));
 
         /// <summary>
         /// Optional EKM proxy path prefix.
