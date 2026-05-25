@@ -255,7 +255,7 @@ When tracing is enabled, you will see spans for each operation, e.g.:
 
 For advanced tracing scenarios, see the [Azure SDK .NET Telemetry documentation](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable?tabs=dotnet).
 
-For a runnable end-to-end telemetry walkthrough, see the [Telemetry Tracing Sample](../telemetry-tracing/README.md).
+For a runnable end-to-end telemetry walkthrough, see the [Telemetry Tracing Sample]<!--(https://github.com/Azure/azure-sdk-for-net/tree/main/samples/voicelive/telemetry-tracing)-->.
 
 ---
 
