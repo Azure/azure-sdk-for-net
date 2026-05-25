@@ -2,15 +2,9 @@
 
 ## 1.0.0-beta.25 (2026-05-25)
 
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Corrected `FoundryEnrichmentProcessor` to emit the Agent365 blueprint telemetry key as `microsoft.a365.agent.blueprint.id` (previously emitted as `gen_ai.agent.blueprint.id` in this code path).
-
-### Other Changes
 
 ## 1.0.0-beta.24 (2026-05-21)
 
