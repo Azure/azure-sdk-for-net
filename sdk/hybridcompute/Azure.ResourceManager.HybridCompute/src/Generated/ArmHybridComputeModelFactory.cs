@@ -778,12 +778,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="allowedFeatures"> Specifies the list of features that are enabled for this Gateway. </param>
-        /// <returns> A new <see cref="Models.ArcGatewayUpdate"/> instance for mocking. </returns>
-        public static ArcGatewayUpdate ArcGatewayUpdate(IDictionary<string, string> tags = default, IEnumerable<string> allowedFeatures = default)
+        /// <returns> A new <see cref="Models.ArcGatewayPatch"/> instance for mocking. </returns>
+        public static ArcGatewayPatch ArcGatewayPatch(IDictionary<string, string> tags = default, IEnumerable<string> allowedFeatures = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ArcGatewayUpdate(tags, additionalBinaryDataProperties: null, allowedFeatures is null ? default : new GatewayUpdateProperties((allowedFeatures ?? new ChangeTrackingList<string>()).ToList(), null));
+            return new ArcGatewayPatch(tags, additionalBinaryDataProperties: null, allowedFeatures is null ? default : new GatewayUpdateProperties((allowedFeatures ?? new ChangeTrackingList<string>()).ToList(), null));
         }
 
         /// <summary> A private link resource. </summary>
