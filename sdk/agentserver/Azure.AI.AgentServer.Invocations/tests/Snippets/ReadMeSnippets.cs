@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Net.WebSockets;
 using Azure.AI.AgentServer.Invocations;
 using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
@@ -44,13 +43,6 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             Assert.That(handler, Is.Not.Null);
         }
 
-        [Test]
-        public void Implement_WebSocketEchoHandler()
-        {
-            var handler = new WebSocketEchoHandler();
-            Assert.That(handler, Is.Not.Null);
-        }
-
         #region Snippet:Invocations_ReadMe_EchoHandler
 
         public class EchoHandler : InvocationHandler
@@ -61,32 +53,6 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             {
                 var input = await new StreamReader(request.Body).ReadToEndAsync(cancellationToken);
                 await response.WriteAsync($"You said: {input}", cancellationToken);
-            }
-        }
-
-        #endregion
-
-        #region Snippet:Invocations_ReadMe_WebSocketHandler
-
-        public class WebSocketEchoHandler : InvocationWebSocketHandler
-        {
-            public override async Task HandleWebSocketAsync(
-                WebSocket webSocket, InvocationContext context, CancellationToken cancellationToken)
-            {
-                var buffer = new byte[4096];
-                while (webSocket.State == WebSocketState.Open && !cancellationToken.IsCancellationRequested)
-                {
-                    var received = await webSocket.ReceiveAsync(buffer, cancellationToken);
-                    if (received.MessageType == WebSocketMessageType.Close)
-                    {
-                        break;
-                    }
-                    await webSocket.SendAsync(
-                        new ArraySegment<byte>(buffer, 0, received.Count),
-                        received.MessageType,
-                        received.EndOfMessage,
-                        cancellationToken);
-                }
             }
         }
 

@@ -1,18 +1,6 @@
 # Release History
 
-## 2.1.0-beta.3 (Unreleased)
-
-### Features Added
-- Added `AIProjectModels` client for model weights management, accessible via `AIProjectClient`.
-- Added memory store item CRUD operations for management of memories inside the `MemoryStore`.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 2.1.0-beta.2 (2026-05-14)
+## 2.1.0-beta.2 (Unreleased)
 
 ### Features Added
 - Added `DataGenerationJobs` client for synthetic data generation, accessible via `AIProjectClient`.
@@ -21,8 +9,12 @@
 - Added data generation source types: `AgentDataGenerationJobSource`, `DatasetDataGenerationJobSource`, `FileDataGenerationJobSource`, `PromptDataGenerationJobSource`, `TracesDataGenerationJobSource`.
 - Added data generation output types: `DatasetDataGenerationJobOutput`, `FileDataGenerationJobOutput`.
 
+### Breaking Changes
+
 ### Bugs Fixed
 - Fixed missing header required by `ProjectInsights`.
+
+### Other Changes
 
 ### Sample Updates
 - Added evaluation cluster insight sample and documentation.
@@ -31,18 +23,17 @@
 - Added built-in evaluators with inline data sample demonstrating violence, F1 score, and coherence evaluations.
 - Added built-in evaluators with inline data using OpenAI client sample and documentation.
 - Added sample for grading images.
-- Added sample for Toolbox search.
+
+## 2.1.0-beta.1 (2026-04-21)
+
+### Features Added
+- Added Toolboxes sample.
 
 ## 2.0.1 (2026-04-22)
 
 ### Other Changes
 
 - Adopted `Azure.Core` 1.53.0, which type-forwards the `Azure.Identity` namespace. The explicit `Azure.Identity` package dependency has been removed; the `Azure.Identity` types remain available transitively through `Azure.Core`.
-
-## 2.1.0-beta.1 (2026-04-21)
-
-### Features Added
-- Added Toolboxes sample.
 
 ## 2.0.0 (2026-04-01)
 

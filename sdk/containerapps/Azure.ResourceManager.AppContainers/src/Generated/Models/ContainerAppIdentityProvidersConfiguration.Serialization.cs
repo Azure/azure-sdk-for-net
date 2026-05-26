@@ -8,56 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.AppContainers;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The configuration settings of each of the identity providers used to configure ContainerApp Service Authentication/Authorization. </summary>
-    public partial class ContainerAppIdentityProvidersConfiguration : IJsonModel<ContainerAppIdentityProvidersConfiguration>
+    public partial class ContainerAppIdentityProvidersConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppIdentityProvidersConfiguration>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContainerAppIdentityProvidersConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppIdentityProvidersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeContainerAppIdentityProvidersConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContainerAppIdentityProvidersConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppIdentityProvidersConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppIdentityProvidersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ContainerAppIdentityProvidersConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerAppIdentityProvidersConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerAppIdentityProvidersConfiguration IPersistableModel<ContainerAppIdentityProvidersConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerAppIdentityProvidersConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerAppIdentityProvidersConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +30,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppIdentityProvidersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIdentityProvidersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppIdentityProvidersConfiguration)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
@@ -120,15 +82,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -137,27 +99,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerAppIdentityProvidersConfiguration IJsonModel<ContainerAppIdentityProvidersConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContainerAppIdentityProvidersConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerAppIdentityProvidersConfiguration IJsonModel<ContainerAppIdentityProvidersConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppIdentityProvidersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIdentityProvidersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppIdentityProvidersConfiguration)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeContainerAppIdentityProvidersConfiguration(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ContainerAppIdentityProvidersConfiguration DeserializeContainerAppIdentityProvidersConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerAppIdentityProvidersConfiguration DeserializeContainerAppIdentityProvidersConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -170,91 +127,93 @@ namespace Azure.ResourceManager.AppContainers.Models
             ContainerAppAppleConfiguration apple = default;
             ContainerAppAzureStaticWebAppsConfiguration azureStaticWebApps = default;
             IDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration> customOpenIdConnectProviders = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("azureActiveDirectory"u8))
+                if (property.NameEquals("azureActiveDirectory"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    azureActiveDirectory = ContainerAppAzureActiveDirectoryConfiguration.DeserializeContainerAppAzureActiveDirectoryConfiguration(prop.Value, options);
+                    azureActiveDirectory = ContainerAppAzureActiveDirectoryConfiguration.DeserializeContainerAppAzureActiveDirectoryConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("facebook"u8))
+                if (property.NameEquals("facebook"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    facebook = ContainerAppFacebookConfiguration.DeserializeContainerAppFacebookConfiguration(prop.Value, options);
+                    facebook = ContainerAppFacebookConfiguration.DeserializeContainerAppFacebookConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("gitHub"u8))
+                if (property.NameEquals("gitHub"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    gitHub = ContainerAppGitHubConfiguration.DeserializeContainerAppGitHubConfiguration(prop.Value, options);
+                    gitHub = ContainerAppGitHubConfiguration.DeserializeContainerAppGitHubConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("google"u8))
+                if (property.NameEquals("google"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    google = ContainerAppGoogleConfiguration.DeserializeContainerAppGoogleConfiguration(prop.Value, options);
+                    google = ContainerAppGoogleConfiguration.DeserializeContainerAppGoogleConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("twitter"u8))
+                if (property.NameEquals("twitter"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    twitter = ContainerAppTwitterConfiguration.DeserializeContainerAppTwitterConfiguration(prop.Value, options);
+                    twitter = ContainerAppTwitterConfiguration.DeserializeContainerAppTwitterConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("apple"u8))
+                if (property.NameEquals("apple"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    apple = ContainerAppAppleConfiguration.DeserializeContainerAppAppleConfiguration(prop.Value, options);
+                    apple = ContainerAppAppleConfiguration.DeserializeContainerAppAppleConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("azureStaticWebApps"u8))
+                if (property.NameEquals("azureStaticWebApps"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    azureStaticWebApps = ContainerAppAzureStaticWebAppsConfiguration.DeserializeContainerAppAzureStaticWebAppsConfiguration(prop.Value, options);
+                    azureStaticWebApps = ContainerAppAzureStaticWebAppsConfiguration.DeserializeContainerAppAzureStaticWebAppsConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("customOpenIdConnectProviders"u8))
+                if (property.NameEquals("customOpenIdConnectProviders"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration> dictionary = new Dictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ContainerAppCustomOpenIdConnectProviderConfiguration.DeserializeContainerAppCustomOpenIdConnectProviderConfiguration(prop0.Value, options));
+                        dictionary.Add(property0.Name, ContainerAppCustomOpenIdConnectProviderConfiguration.DeserializeContainerAppCustomOpenIdConnectProviderConfiguration(property0.Value, options));
                     }
                     customOpenIdConnectProviders = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppIdentityProvidersConfiguration(
                 azureActiveDirectory,
                 facebook,
@@ -264,7 +223,184 @@ namespace Azure.ResourceManager.AppContainers.Models
                 apple,
                 azureStaticWebApps,
                 customOpenIdConnectProviders ?? new ChangeTrackingDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>(),
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureActiveDirectory), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureActiveDirectory: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureActiveDirectory))
+                {
+                    builder.Append("  azureActiveDirectory: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AzureActiveDirectory, options, 2, false, "  azureActiveDirectory: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Facebook), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  facebook: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Facebook))
+                {
+                    builder.Append("  facebook: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Facebook, options, 2, false, "  facebook: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHub), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  gitHub: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GitHub))
+                {
+                    builder.Append("  gitHub: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, GitHub, options, 2, false, "  gitHub: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Google), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  google: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Google))
+                {
+                    builder.Append("  google: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Google, options, 2, false, "  google: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Twitter), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  twitter: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Twitter))
+                {
+                    builder.Append("  twitter: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Twitter, options, 2, false, "  twitter: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Apple), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  apple: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Apple))
+                {
+                    builder.Append("  apple: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Apple, options, 2, false, "  apple: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureStaticWebApps), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureStaticWebApps: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureStaticWebApps))
+                {
+                    builder.Append("  azureStaticWebApps: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AzureStaticWebApps, options, 2, false, "  azureStaticWebApps: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomOpenIdConnectProviders), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customOpenIdConnectProviders: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
+                {
+                    if (CustomOpenIdConnectProviders.Any())
+                    {
+                        builder.Append("  customOpenIdConnectProviders: ");
+                        builder.AppendLine("{");
+                        foreach (var item in CustomOpenIdConnectProviders)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  customOpenIdConnectProviders: ");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ContainerAppIdentityProvidersConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIdentityProvidersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppIdentityProvidersConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerAppIdentityProvidersConfiguration IPersistableModel<ContainerAppIdentityProvidersConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIdentityProvidersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeContainerAppIdentityProvidersConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppIdentityProvidersConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerAppIdentityProvidersConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

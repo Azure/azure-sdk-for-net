@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationsMaintenanceConfigurationsListAsyncCollectionResultOfT(MaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetMaintenanceConfigurations"), data => new MaintenanceConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationsGetAllAsyncCollectionResultOfT(MaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetMaintenanceConfigurations"), data => new MaintenanceConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationsMaintenanceConfigurationsListCollectionResultOfT(MaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetMaintenanceConfigurations"), data => new MaintenanceConfigurationResource(Client, data));
+            return new PageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationsGetAllCollectionResultOfT(MaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetMaintenanceConfigurations"), data => new MaintenanceConfigurationResource(Client, data));
         }
 
         /// <summary>

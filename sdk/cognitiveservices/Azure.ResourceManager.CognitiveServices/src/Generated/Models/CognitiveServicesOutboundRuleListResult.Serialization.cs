@@ -15,7 +15,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> List of outbound rules for the managed network of a cognitive services account. </summary>
-    internal partial class CognitiveServicesOutboundRuleListResult : IJsonModel<CognitiveServicesOutboundRuleListResult>
+    public partial class CognitiveServicesOutboundRuleListResult : IJsonModel<CognitiveServicesOutboundRuleListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

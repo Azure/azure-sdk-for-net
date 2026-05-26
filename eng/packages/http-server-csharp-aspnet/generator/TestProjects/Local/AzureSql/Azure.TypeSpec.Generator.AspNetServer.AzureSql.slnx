@@ -1,4 +1,3 @@
 <Solution>
   <Project Path="src/Azure.TypeSpec.Generator.AspNetServer.AzureSql.csproj" />
-  <Project Path="tests/Azure.TypeSpec.Generator.AspNetServer.AzureSql.Tests.csproj" />
 </Solution>

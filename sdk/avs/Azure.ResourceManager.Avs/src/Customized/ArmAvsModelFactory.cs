@@ -8,50 +8,12 @@ using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> Model factory for models. </summary>
-    // The generated overloads cannot be used while CommonClusterProperties keeps virtual properties for ApiCompat.
-    // TODO: Remove this model factory workaround once https://github.com/Azure/azure-sdk-for-net/issues/59326 is fixed.
-    [CodeGenSuppress("AvsManagementCluster", typeof(int?), typeof(AvsPrivateCloudClusterProvisioningState?), typeof(int?), typeof(IEnumerable<string>), typeof(string))]
-    [CodeGenSuppress("AvsManagementCluster", typeof(int?), typeof(AvsPrivateCloudClusterProvisioningState?), typeof(int?), typeof(IEnumerable<string>))]
-    [CodeGenSuppress("CommonClusterProperties", typeof(int?), typeof(AvsPrivateCloudClusterProvisioningState?), typeof(int?), typeof(IEnumerable<string>))]
     public static partial class ArmAvsModelFactory
     {
-        /// <summary> The properties of a management cluster. </summary>
-        /// <param name="clusterSize"> The cluster size. </param>
-        /// <param name="provisioningState"> The state of the cluster provisioning. </param>
-        /// <param name="clusterId"> The identity. </param>
-        /// <param name="hosts"> The hosts. </param>
-        /// <param name="vsanDatastoreName"> Name of the vsan datastore associated with the cluster. </param>
-        /// <returns> A new <see cref="Models.AvsManagementCluster"/> instance for mocking. </returns>
-        // Preserve the prior public overload including VsanDatastoreName; generated output is suppressed above.
-        public static AvsManagementCluster AvsManagementCluster(int? clusterSize = default, AvsPrivateCloudClusterProvisioningState? provisioningState = default, int? clusterId = default, IEnumerable<string> hosts = default, string vsanDatastoreName = default)
-        {
-            hosts ??= new ChangeTrackingList<string>();
-
-            return new AvsManagementCluster(clusterSize, provisioningState, clusterId, hosts.ToList(), additionalBinaryDataProperties: null)
-            {
-                VsanDatastoreName = vsanDatastoreName
-            };
-        }
-
-        /// <summary> The common properties of a cluster. </summary>
-        /// <param name="clusterSize"> The cluster size. </param>
-        /// <param name="provisioningState"> The state of the cluster provisioning. </param>
-        /// <param name="clusterId"> The identity. </param>
-        /// <param name="hosts"> The hosts. </param>
-        /// <returns> A new <see cref="Models.CommonClusterProperties"/> instance for mocking. </returns>
-        // Preserve the prior public overload for the customized virtual property shape.
-        public static CommonClusterProperties CommonClusterProperties(int? clusterSize = default, AvsPrivateCloudClusterProvisioningState? provisioningState = default, int? clusterId = default, IEnumerable<string> hosts = default)
-        {
-            hosts ??= new ChangeTrackingList<string>();
-
-            return new CommonClusterProperties(clusterSize, provisioningState, clusterId, hosts.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -146,17 +108,6 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudClusterData AvsPrivateCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string sku, int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IEnumerable<string> hosts)
             => AvsPrivateCloudClusterData(id, name, resourceType, systemData, new AvsSku(sku), clusterSize, provisioningState, clusterId, hosts, null);
-
-        /// <summary> Initializes a new instance of <see cref="Models.AvsManagementCluster"/>. </summary>
-        /// <param name="clusterSize"> The cluster size. </param>
-        /// <param name="provisioningState"> The state of the cluster provisioning. </param>
-        /// <param name="clusterId"> The identity. </param>
-        /// <param name="hosts"> The hosts. </param>
-        /// <returns> A new <see cref="Models.AvsManagementCluster"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        // Hidden compatibility overload from the previous generated API; delegate to the new overload.
-        public static AvsManagementCluster AvsManagementCluster(int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IEnumerable<string> hosts)
-            => AvsManagementCluster(clusterSize: clusterSize, provisioningState: provisioningState, clusterId: clusterId, hosts: hosts, vsanDatastoreName: default);
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudClusterData"/>. </summary>
         /// <param name="id"> The id. </param>

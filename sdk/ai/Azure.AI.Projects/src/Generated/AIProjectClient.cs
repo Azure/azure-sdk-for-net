@@ -28,7 +28,6 @@ namespace Azure.AI.Projects
         private AIProjectConnectionsOperations _cachedAIProjectConnectionsOperations;
         private AIProjectDatasetsOperations _cachedAIProjectDatasetsOperations;
         private AIProjectIndexesOperations _cachedAIProjectIndexesOperations;
-        private AIProjectModels _cachedAIProjectModels;
         private AIProjectDeploymentsOperations _cachedAIProjectDeploymentsOperations;
         private RedTeams _cachedRedTeams;
         private EvaluationRules _cachedEvaluationRules;
@@ -38,7 +37,6 @@ namespace Azure.AI.Projects
         private ProjectInsights _cachedProjectInsights;
         private ProjectSchedules _cachedProjectSchedules;
         private AIProjectMemoryStores _cachedAIProjectMemoryStores;
-        private AIProjectRoutines _cachedAIProjectRoutines;
         private DataGenerationJobs _cachedDataGenerationJobs;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -48,12 +46,6 @@ namespace Azure.AI.Projects
         public virtual AIProjectMemoryStores GetAIProjectMemoryStoresClient()
         {
             return Volatile.Read(ref _cachedAIProjectMemoryStores) ?? Interlocked.CompareExchange(ref _cachedAIProjectMemoryStores, new AIProjectMemoryStores(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStores;
-        }
-
-        /// <summary> Initializes a new instance of AIProjectRoutines. </summary>
-        public virtual AIProjectRoutines GetAIProjectRoutinesClient()
-        {
-            return Volatile.Read(ref _cachedAIProjectRoutines) ?? Interlocked.CompareExchange(ref _cachedAIProjectRoutines, new AIProjectRoutines(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectRoutines;
         }
     }
 }

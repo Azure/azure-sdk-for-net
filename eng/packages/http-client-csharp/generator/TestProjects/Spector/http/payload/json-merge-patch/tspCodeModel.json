@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "CreateResourceContentType",
+      "name": "createResourceContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -22,7 +22,7 @@
     {
       "$id": "3",
       "kind": "constant",
-      "name": "CreateResourceContentType1",
+      "name": "createResourceContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -70,7 +70,7 @@
     {
       "$id": "9",
       "kind": "constant",
-      "name": "CreateResourceContentType2",
+      "name": "updateResourceContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -118,7 +118,7 @@
     {
       "$id": "15",
       "kind": "constant",
-      "name": "CreateResourceContentType3",
+      "name": "updateOptionalResourceContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {

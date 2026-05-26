@@ -116,7 +116,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/MgmtTypeSpec/trafficProfiles", false);
+            uri.AppendPath("/providers/MgmtTypeSpec", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

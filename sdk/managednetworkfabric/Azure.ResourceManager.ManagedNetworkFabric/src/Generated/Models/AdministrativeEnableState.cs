@@ -24,14 +24,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         private const string EnableValue = "Enable";
         private const string DisableValue = "Disable";
-        private const string UnderMaintenanceValue = "UnderMaintenance";
 
-        /// <summary> AdministrativeState Enable. </summary>
+        /// <summary> Enable. </summary>
         public static AdministrativeEnableState Enable { get; } = new AdministrativeEnableState(EnableValue);
-        /// <summary> AdministrativeState Disable. </summary>
+        /// <summary> Disable. </summary>
         public static AdministrativeEnableState Disable { get; } = new AdministrativeEnableState(DisableValue);
-        /// <summary> AdministrativeState UnderMaintenance. </summary>
-        public static AdministrativeEnableState UnderMaintenance { get; } = new AdministrativeEnableState(UnderMaintenanceValue);
         /// <summary> Determines if two <see cref="AdministrativeEnableState"/> values are the same. </summary>
         public static bool operator ==(AdministrativeEnableState left, AdministrativeEnableState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AdministrativeEnableState"/> values are not the same. </summary>

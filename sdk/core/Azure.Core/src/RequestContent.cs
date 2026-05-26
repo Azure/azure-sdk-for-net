@@ -84,13 +84,6 @@ namespace Azure.Core
         public static RequestContent Create(DynamicData content) => new DynamicDataContent(content);
 
         /// <summary>
-        /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="BinaryContent"/>.
-        /// </summary>
-        /// <param name="content">The <see cref="BinaryContent"/> to use.</param>
-        /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="BinaryContent"/>.</returns>
-        public static RequestContent Create(BinaryContent content) => new BinaryContentAdapter(content);
-
-        /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
         /// </summary>
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
@@ -516,35 +509,6 @@ namespace Azure.Core
             {
                 return _binaryContent.TryComputeLength(out length);
             }
-        }
-
-        private sealed class BinaryContentAdapter : RequestContent
-        {
-            private readonly BinaryContent _binaryContent;
-            private bool _disposed;
-
-            public BinaryContentAdapter(BinaryContent content)
-            {
-                _binaryContent = content;
-            }
-
-            public override void Dispose()
-            {
-                if (!_disposed)
-                {
-                    _binaryContent.Dispose();
-                    _disposed = true;
-                }
-            }
-
-            public override void WriteTo(Stream stream, CancellationToken cancellationToken)
-                => _binaryContent.WriteTo(stream, cancellationToken);
-
-            public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
-                => await _binaryContent.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
-
-            public override bool TryComputeLength(out long length)
-                => _binaryContent.TryComputeLength(out length);
         }
     }
 }

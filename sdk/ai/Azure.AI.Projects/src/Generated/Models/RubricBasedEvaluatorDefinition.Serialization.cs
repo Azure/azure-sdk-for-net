@@ -10,7 +10,7 @@ using Azure.AI.Projects.Evaluation;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Rubric-based evaluator definition — stores dimensions produced by the generate API. Used for both quality and safety evaluators. </summary>
+    /// <summary> Rubric-based evaluator definition — stores rubric criteria produced by the generate API. Used for both quality and safety evaluators. </summary>
     public partial class RubricBasedEvaluatorDefinition : EvaluatorDefinition, IJsonModel<RubricBasedEvaluatorDefinition>
     {
         /// <summary> Initializes a new instance of <see cref="RubricBasedEvaluatorDefinition"/> for deserialization. </summary>
@@ -77,18 +77,13 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(RubricBasedEvaluatorDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("dimensions"u8);
+            writer.WritePropertyName("rubric_criteria"u8);
             writer.WriteStartArray();
-            foreach (EvaluationsDimension item in Dimensions)
+            foreach (RubricCriterion item in RubricCriteria)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(PassThreshold))
-            {
-                writer.WritePropertyName("pass_threshold"u8);
-                writer.WriteNumberValue(PassThreshold.Value);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -121,8 +116,7 @@ namespace Azure.AI.Projects
             BinaryData dataSchema = default;
             IDictionary<string, EvaluatorMetric> metrics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<EvaluationsDimension> dimensions = default;
-            float? passThreshold = default;
+            IList<RubricCriterion> rubricCriteria = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -162,23 +156,14 @@ namespace Azure.AI.Projects
                     metrics = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("dimensions"u8))
+                if (prop.NameEquals("rubric_criteria"u8))
                 {
-                    List<EvaluationsDimension> array = new List<EvaluationsDimension>();
+                    List<RubricCriterion> array = new List<RubricCriterion>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EvaluationsDimension.DeserializeEvaluationsDimension(item, options));
+                        array.Add(RubricCriterion.DeserializeRubricCriterion(item, options));
                     }
-                    dimensions = array;
-                    continue;
-                }
-                if (prop.NameEquals("pass_threshold"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    passThreshold = prop.Value.GetSingle();
+                    rubricCriteria = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -192,8 +177,7 @@ namespace Azure.AI.Projects
                 dataSchema,
                 metrics ?? new ChangeTrackingDictionary<string, EvaluatorMetric>(),
                 additionalBinaryDataProperties,
-                dimensions,
-                passThreshold);
+                rubricCriteria);
         }
     }
 }

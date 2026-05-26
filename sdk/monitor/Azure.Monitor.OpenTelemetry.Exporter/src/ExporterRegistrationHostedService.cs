@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI;
 using Azure.Monitor.OpenTelemetry.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Microsoft.Extensions.DependencyInjection;
@@ -67,7 +66,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
 
                 // TODO: Add Ai Sampler.
-                tracerProvider.AddProcessor(new MainAgentAttributionSpanProcessor());
                 tracerProvider.AddProcessor(new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
                 {
                     new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions), exporterOptions),
@@ -88,8 +86,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 BaseProcessor<LogRecord> baseProcessor = exporterOptions.EnableTraceBasedLogsSampler
                                                             ? new LogFilteringProcessor(exporter)
                                                             : new BatchLogRecordExportProcessor(exporter);
-
-                loggerProvider.AddProcessor(new MainAgentAttributionLogProcessor());
 
                 if (exporterOptions.EnableLiveMetrics)
                 {

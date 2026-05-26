@@ -34,22 +34,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(NetworkDeviceInterfacePatch)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
-            }
-            if (Optional.IsDefined(AdditionalDescription))
-            {
-                writer.WritePropertyName("additionalDescription"u8);
-                writer.WriteStringValue(AdditionalDescription);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -89,22 +79,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            NetworkFabricManagedServiceIdentityPatch identity = default;
             string annotation = default;
-            string additionalDescription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -119,11 +98,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             annotation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("additionalDescription"u8))
-                        {
-                            additionalDescription = property0.Value.GetString();
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -133,7 +107,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkDeviceInterfacePatch(identity, annotation, additionalDescription, serializedAdditionalRawData);
+            return new NetworkDeviceInterfacePatch(annotation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkDeviceInterfacePatch>.Write(ModelReaderWriterOptions options)

@@ -144,7 +144,7 @@ namespace Azure.AI.Speech.Transcription
             }
             int durationMilliseconds = default;
             IList<ChannelCombinedPhrases> combinedPhrases = default;
-            IList<TranscribedPhrase> phrases = default;
+            IReadOnlyList<TranscribedPhrase> phrases = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

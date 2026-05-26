@@ -48,21 +48,6 @@ $result = @{
     Error = ""
 }
 
-function Format-FullError {
-    param([System.Management.Automation.ErrorRecord]$ErrorRecord)
-
-    $parts = @($ErrorRecord.ToString())
-    if ($ErrorRecord.ScriptStackTrace) {
-        $parts += "PowerShell stack trace:"
-        $parts += $ErrorRecord.ScriptStackTrace
-    }
-    if ($ErrorRecord.Exception.StackTrace) {
-        $parts += ".NET exception stack trace:"
-        $parts += $ErrorRecord.Exception.StackTrace
-    }
-    return $parts -join [Environment]::NewLine
-}
-
 try {
     # Load tsp-location.yaml
     . (Join-Path $PSScriptRoot ".." ".." ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
@@ -205,7 +190,8 @@ try {
         Pop-Location
         
         if ($tspExitCode -ne 0) {
-            throw "tsp compile failed with exit code $tspExitCode. Full output:$([Environment]::NewLine)$($tspOutput -join [Environment]::NewLine)"
+            $errorLines = $tspOutput | Where-Object { $_ -match 'error|Error' } | Select-Object -First 5
+            throw "tsp compile failed: $($errorLines -join '; ')"
         }
     }
     finally {
@@ -225,8 +211,8 @@ try {
     $result.Success = $true
 }
 catch {
-    $result.Error = Format-FullError $_
+    $result.Error = $_.ToString()
 }
 
 # Output result as JSON for parsing
-$result | ConvertTo-Json -Compress -Depth 10
+$result | ConvertTo-Json -Compress

@@ -27,7 +27,6 @@ $testProjects = @(
         Folder     = "AzureSql"
         EntryTsp   = "main.tsp"
         Csproj     = "Azure.TypeSpec.Generator.AspNetServer.AzureSql.csproj"
-        TestCsproj = "Azure.TypeSpec.Generator.AspNetServer.AzureSql.Tests.csproj"
     }
 )
 
@@ -39,10 +38,8 @@ foreach ($project in $testProjects) {
     $projectDir = Join-Path $testProjectsLocalDir $project.Folder
     $entryTsp = Join-Path $projectDir $project.EntryTsp
     $configFile = Join-Path $projectDir 'tspconfig.yaml'
-    $generatedDir = Join-Path $projectDir 'src' 'Generated'
 
     Write-Host "Generating $($project.FilterName)..." -ForegroundColor Cyan
-    Remove-Item -Recurse -Force $generatedDir -ErrorAction SilentlyContinue
 
     $command = "npx tsp compile `"$entryTsp`""
     $command += " --emit `"$emitterPackageDir`""
@@ -69,15 +66,6 @@ foreach ($project in $testProjects) {
         & dotnet build $csproj
         if ($LASTEXITCODE -ne 0) {
             throw "dotnet build failed for $($project.FilterName) (exit $LASTEXITCODE)."
-        }
-    }
-
-    $testCsproj = Join-Path $projectDir 'tests' $project.TestCsproj
-    if (Test-Path $testCsproj) {
-        Write-Host "Testing $testCsproj..." -ForegroundColor Cyan
-        & dotnet test $testCsproj
-        if ($LASTEXITCODE -ne 0) {
-            throw "dotnet test failed for $($project.FilterName) (exit $LASTEXITCODE)."
         }
     }
 }

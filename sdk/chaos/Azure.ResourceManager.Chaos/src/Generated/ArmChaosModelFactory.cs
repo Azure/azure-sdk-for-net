@@ -247,35 +247,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 status is null && startedOn is null && stoppedOn is null ? default : new ExperimentExecutionProperties(status, startedOn, stoppedOn, null));
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="status"> The status of the execution. </param>
-        /// <param name="startedOn"> String that represents the start date time. </param>
-        /// <param name="stoppedOn"> String that represents the stop date time. </param>
-        /// <param name="failureReason"> The reason why the execution failed. </param>
-        /// <param name="lastActionOn"> String that represents the last action date time. </param>
-        /// <param name="runInformationSteps"> The steps of the experiment run. </param>
-        /// <returns> A new <see cref="Models.ExperimentExecutionDetails"/> instance for mocking. </returns>
-        public static ExperimentExecutionDetails ExperimentExecutionDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string status = default, DateTimeOffset? startedOn = default, DateTimeOffset? stoppedOn = default, string failureReason = default, DateTimeOffset? lastActionOn = default, IEnumerable<ChaosExperimentRunStepStatus> runInformationSteps = default)
-        {
-            return new ExperimentExecutionDetails(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                status is null && startedOn is null && stoppedOn is null && failureReason is null && lastActionOn is null && runInformationSteps is null ? default : new ExperimentExecutionDetailsProperties(
-                    status,
-                    startedOn,
-                    stoppedOn,
-                    failureReason,
-                    lastActionOn,
-                    new ExperimentExecutionDetailsPropertiesRunInformation((runInformationSteps ?? new ChangeTrackingList<ChaosExperimentRunStepStatus>()).ToList(), null),
-                    null));
-        }
-
         /// <summary> Model that represents the a list of branches and branch statuses. </summary>
         /// <param name="stepName"> The name of the step. </param>
         /// <param name="stepId"> The id of the step. </param>
@@ -369,6 +340,31 @@ namespace Azure.ResourceManager.Chaos.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 new TargetTypeProperties(displayName, description, propertiesSchema, (resourceTypes ?? new ChangeTrackingList<string>()).ToList(), null));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExperimentExecutionDetails"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="status"> The status of the execution. </param>
+        /// <param name="startedOn"> String that represents the start date time. </param>
+        /// <param name="stoppedOn"> String that represents the stop date time. </param>
+        /// <param name="failureReason"> The reason why the execution failed. </param>
+        /// <param name="lastActionOn"> String that represents the last action date time. </param>
+        /// <param name="runInformationSteps"> The information of the experiment run. </param>
+        /// <returns> A new <see cref="Models.ExperimentExecutionDetails"/> instance for mocking. </returns>
+        public static ExperimentExecutionDetails ExperimentExecutionDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string status = default, DateTimeOffset? startedOn = default, DateTimeOffset? stoppedOn = default, string failureReason = default, DateTimeOffset? lastActionOn = default, IEnumerable<ChaosExperimentRunStepStatus> runInformationSteps = default)
+        {
+            runInformationSteps ??= new ChangeTrackingList<ChaosExperimentRunStepStatus>();
+
+            return new ExperimentExecutionDetails(
+                id,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                name,
+                default);
         }
     }
 }

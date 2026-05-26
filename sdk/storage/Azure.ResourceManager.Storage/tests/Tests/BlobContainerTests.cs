@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Tests
         private StorageAccountResource _storageAccount;
         private BlobServiceResource _blobService;
         private BlobContainerCollection _blobContainerCollection;
-        public BlobContainerTests(bool async) : base(async) //, RecordedTestMode.Record)
+        public BlobContainerTests(bool async) : base(async)//, RecordedTestMode.Record)
         {
         }
 
@@ -476,7 +476,6 @@ namespace Azure.ResourceManager.Storage.Tests
             //update 2 accounts properties
             var updateparameter = new StorageAccountPatch
             {
-                AllowBlobPublicAccess = false,
                 AllowCrossTenantReplication = true,
                 EnableHttpsTrafficOnly = true
             };
@@ -510,8 +509,8 @@ namespace Azure.ResourceManager.Storage.Tests
             string minCreationTime = "2021-03-19T16:06:00Z";
             ObjectReplicationPolicyData parameter = new ObjectReplicationPolicyData()
             {
-                SourceAccount = sourceAccount.Id.ToString(),
-                DestinationAccount = destAccount.Id.ToString(),
+                SourceAccount = sourceAccount.Id.Name,
+                DestinationAccount = destAccount.Id.Name,
                 IsMetricsEnabled = true,
                 // TypeSpec migration: use public flattened property (internal PriorityReplication wrapper removed)
                 IsPriorityReplicationEnabled = true,
@@ -529,8 +528,8 @@ namespace Azure.ResourceManager.Storage.Tests
             ObjectReplicationPolicyCollection objectReplicationPolicyCollection = destAccount.GetObjectReplicationPolicies();
             ObjectReplicationPolicyResource objectReplicationPolicy = (await objectReplicationPolicyCollection.CreateOrUpdateAsync(WaitUntil.Completed, "default", parameter)).Value;
             Assert.NotNull(objectReplicationPolicy);
-            Assert.AreEqual(objectReplicationPolicy.Data.DestinationAccount, destAccount.Id.ToString());
-            Assert.AreEqual(objectReplicationPolicy.Data.SourceAccount, sourceAccount.Id.ToString());
+            Assert.AreEqual(objectReplicationPolicy.Data.DestinationAccount, destAccount.Id.Name);
+            Assert.AreEqual(objectReplicationPolicy.Data.SourceAccount, sourceAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.IsMetricsEnabled, true);
             Assert.AreEqual(objectReplicationPolicy.Data.IsPriorityReplicationEnabled, true);
 
@@ -538,8 +537,8 @@ namespace Azure.ResourceManager.Storage.Tests
             List<ObjectReplicationPolicyResource> policies = await objectReplicationPolicyCollection.GetAllAsync().ToEnumerableAsync();
             objectReplicationPolicy = policies[0];
             Assert.NotNull(objectReplicationPolicy);
-            Assert.AreEqual(objectReplicationPolicy.Data.DestinationAccount, destAccount.Id.ToString());
-            Assert.AreEqual(objectReplicationPolicy.Data.SourceAccount, sourceAccount.Id.ToString());
+            Assert.AreEqual(objectReplicationPolicy.Data.DestinationAccount, destAccount.Id.Name);
+            Assert.AreEqual(objectReplicationPolicy.Data.SourceAccount, sourceAccount.Id.Name);
             Assert.AreEqual(objectReplicationPolicy.Data.IsMetricsEnabled, true);
             Assert.AreEqual(objectReplicationPolicy.Data.IsPriorityReplicationEnabled, true);
 
@@ -775,140 +774,6 @@ namespace Azure.ResourceManager.Storage.Tests
             BlobContainerResource blobContainer2 = (await _blobContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData() { DefaultEncryptionScope = scopeName2, PreventEncryptionScopeOverride = true })).Value;
             Assert.AreEqual(scopeName2, blobContainer2.Data.DefaultEncryptionScope);
             Assert.True(blobContainer2.Data.PreventEncryptionScopeOverride.Value);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task ObjectReplicationPolicyTagsReplication()
-        {
-            //create source and destination storage accounts
-            string srcAccountName = await CreateValidAccountNameAsync("teststoragemgmt");
-            string dstAccountName = await CreateValidAccountNameAsync("teststoragemgmt");
-
-            var parameters = new StorageAccountCreateOrUpdateContent(
-                new StorageSku(StorageSkuName.StandardLrs),
-                StorageKind.StorageV2,
-                DefaultLocation);
-
-            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            StorageAccountResource srcAccount = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, srcAccountName, parameters)).Value;
-            StorageAccountResource dstAccount = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, dstAccountName, parameters)).Value;
-
-            //enable blob versioning and change feed on both accounts (required for object replication)
-            BlobServiceResource srcBlobService = srcAccount.GetBlobService();
-            srcBlobService = await srcBlobService.GetAsync();
-            BlobServiceData srcBlobData = srcBlobService.Data;
-            srcBlobData.IsVersioningEnabled = true;
-            srcBlobData.ChangeFeed = new BlobServiceChangeFeed() { IsEnabled = true };
-            await srcAccount.GetBlobService().CreateOrUpdateAsync(WaitUntil.Completed, srcBlobData);
-
-            BlobServiceResource dstBlobService = dstAccount.GetBlobService();
-            dstBlobService = await dstBlobService.GetAsync();
-            BlobServiceData dstBlobData = dstBlobService.Data;
-            dstBlobData.IsVersioningEnabled = true;
-            dstBlobData.ChangeFeed = new BlobServiceChangeFeed() { IsEnabled = true };
-            await dstAccount.GetBlobService().CreateOrUpdateAsync(WaitUntil.Completed, dstBlobData);
-
-            //create containers for replication
-            string containerName = Recording.GenerateAssetName("src");
-            BlobContainerCollection srcContainers = srcAccount.GetBlobService().GetBlobContainers();
-            await srcContainers.CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData());
-
-            string dstContainerName = Recording.GenerateAssetName("dst");
-            BlobContainerCollection dstContainers = dstAccount.GetBlobService().GetBlobContainers();
-            await dstContainers.CreateOrUpdateAsync(WaitUntil.Completed, dstContainerName, new BlobContainerData());
-
-            //create object replication policy with tags replication enabled on destination
-            ObjectReplicationPolicyData policyData = new ObjectReplicationPolicyData()
-            {
-                SourceAccount = srcAccount.Id.ToString(),
-                DestinationAccount = dstAccount.Id.ToString(),
-                IsTagsReplicationEnabled = true,
-            };
-            policyData.Rules.Add(new ObjectReplicationPolicyRule(containerName, dstContainerName));
-
-            ObjectReplicationPolicyCollection dstPolicies = dstAccount.GetObjectReplicationPolicies();
-            ObjectReplicationPolicyResource dstPolicy = (await dstPolicies.CreateOrUpdateAsync(WaitUntil.Completed, "default", policyData)).Value;
-
-            //validate policy shape
-            Assert.IsNotNull(dstPolicy.Data);
-            Assert.AreEqual(dstPolicy.Data.SourceAccount, srcAccount.Id.ToString());
-            Assert.AreEqual(dstPolicy.Data.DestinationAccount, dstAccount.Id.ToString());
-            Assert.AreEqual(1, dstPolicy.Data.Rules.Count);
-            Assert.AreEqual(containerName, dstPolicy.Data.Rules[0].SourceContainer);
-            Assert.AreEqual(dstContainerName, dstPolicy.Data.Rules[0].DestinationContainer);
-            Assert.IsTrue(dstPolicy.Data.IsTagsReplicationEnabled);
-
-            //create the mirrored policy on the source account (required for live runs)
-            ObjectReplicationPolicyData srcPolicyData = new ObjectReplicationPolicyData()
-            {
-                SourceAccount = srcAccount.Id.ToString(),
-                DestinationAccount = dstAccount.Id.ToString(),
-                IsTagsReplicationEnabled = true,
-            };
-            srcPolicyData.Rules.Add(new ObjectReplicationPolicyRule(containerName, dstContainerName)
-            {
-                RuleId = dstPolicy.Data.Rules[0].RuleId
-            });
-            ObjectReplicationPolicyCollection srcPolicies = srcAccount.GetObjectReplicationPolicies();
-            await srcPolicies.CreateOrUpdateAsync(WaitUntil.Completed, dstPolicy.Data.PolicyId, srcPolicyData);
-
-            //validate round-trip via GetAsync
-            dstPolicy = await dstPolicy.GetAsync();
-            Assert.AreEqual(dstPolicy.Data.SourceAccount, srcAccount.Id.ToString());
-            Assert.AreEqual(dstPolicy.Data.DestinationAccount, dstAccount.Id.ToString());
-            Assert.IsTrue(dstPolicy.Data.IsTagsReplicationEnabled);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task BlobServiceStaticWebsiteWithDefaultIndexDocumentPath()
-        {
-            //create storage account with StorageV2 (required for static website)
-            _resourceGroup = await CreateResourceGroupAsync();
-            string accountName = Recording.GenerateAssetName("teststoragemgmt");
-            var parameters = new StorageAccountCreateOrUpdateContent(
-                new StorageSku(StorageSkuName.StandardLrs),
-                StorageKind.StorageV2,
-                DefaultLocation);
-
-            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
-            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, parameters)).Value;
-
-            //enable static website with standard properties via round-trip
-            BlobServiceResource blobService = account.GetBlobService();
-            blobService = await blobService.GetAsync();
-            BlobServiceData blobServiceData = blobService.Data;
-            blobServiceData.StaticWebsite = new BlobServiceStaticWebsite(true)
-            {
-                IndexDocument = "index.html",
-                ErrorDocument404Path = "errors/404.html"
-            };
-            blobService = (await account.GetBlobService().CreateOrUpdateAsync(WaitUntil.Completed, blobServiceData)).Value;
-
-            //verify round-trip via GetAsync
-            blobService = await blobService.GetAsync();
-            Assert.IsNotNull(blobService.Data.StaticWebsite);
-            Assert.IsTrue(blobService.Data.StaticWebsite.IsEnabled);
-            Assert.AreEqual("index.html", blobService.Data.StaticWebsite.IndexDocument);
-            Assert.AreEqual("errors/404.html", blobService.Data.StaticWebsite.ErrorDocument404Path);
-
-            //update static website with DefaultIndexDocumentPath
-            blobServiceData = blobService.Data;
-            blobServiceData.StaticWebsite = new BlobServiceStaticWebsite(true)
-            {
-                DefaultIndexDocumentPath = "site/home.html"
-            };
-            blobService = (await account.GetBlobService().CreateOrUpdateAsync(WaitUntil.Completed, blobServiceData)).Value;
-
-            //verify DefaultIndexDocumentPath round-trip via GetAsync
-            blobService = await blobService.GetAsync();
-            Assert.IsNotNull(blobService.Data.StaticWebsite);
-            Assert.IsTrue(blobService.Data.StaticWebsite.IsEnabled);
-            Assert.AreEqual("site/home.html", blobService.Data.StaticWebsite.DefaultIndexDocumentPath);
-            //confirm legacy properties are cleared when only DefaultIndexDocumentPath is set
-            Assert.IsNull(blobService.Data.StaticWebsite.IndexDocument);
-            Assert.IsNull(blobService.Data.StaticWebsite.ErrorDocument404Path);
         }
     }
 }

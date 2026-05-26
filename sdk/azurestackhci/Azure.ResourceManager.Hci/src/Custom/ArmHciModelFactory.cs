@@ -11,9 +11,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    // The HciReportedProperties suppress is needed because the generated signature references
-    // internal type ExtensionProfile (CS0051).
+    // Backward compat: suppress the generated PerNodeExtensionState factory method because
+    // the custom code provides one with a different parameter type (ArcExtensionInstanceView
+    // instead of HciExtensionInstanceView). The HciReportedProperties suppress is needed
+    // because the generated signature references internal type ExtensionProfile (CS0051).
     // TODO: remove when https://github.com/Azure/azure-sdk-for-net/issues/57755 is resolved
+    [CodeGenSuppress("PerNodeExtensionState", typeof(string), typeof(string), typeof(string), typeof(NodeExtensionState?), typeof(ArcExtensionInstanceView))]
     [CodeGenSuppress("HciReportedProperties", typeof(HciEdgeDeviceState?), typeof(ExtensionProfile), typeof(DateTimeOffset?), typeof(ConfidentialVmProfile), typeof(HciNetworkProfile), typeof(HciOSProfile), typeof(SbeDeploymentPackageInfo), typeof(HciStorageProfile), typeof(string))]
     public static partial class ArmHciModelFactory
     {

@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.ContainerService
         ManagedClusterRunCommandResult IOperationSource<ManagedClusterRunCommandResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return ManagedClusterRunCommandResult.DeserializeManagedClusterRunCommandResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ManagedClusterRunCommandResult result = ManagedClusterRunCommandResult.DeserializeManagedClusterRunCommandResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.ContainerService
         async ValueTask<ManagedClusterRunCommandResult> IOperationSource<ManagedClusterRunCommandResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ManagedClusterRunCommandResult.DeserializeManagedClusterRunCommandResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ManagedClusterRunCommandResult result = ManagedClusterRunCommandResult.DeserializeManagedClusterRunCommandResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

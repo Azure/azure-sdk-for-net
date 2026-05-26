@@ -470,7 +470,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "image/png, image/jpeg, image/jpg, image/webp, image/jp2, image/tiff; application=geotiff, application/x-binary");
+            request.Headers.SetValue("Accept", "application/x-binary, image/jp2, image/jpeg, image/jpg, image/png, image/tiff; application=geotiff, image/webp");
             return message;
         }
 

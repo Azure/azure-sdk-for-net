@@ -67,9 +67,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IList<string> ipv6ListenRangePrefixes = default;
             IList<NeighborAddress> ipv4NeighborAddress = default;
             IList<NeighborAddress> ipv6NeighborAddress = default;
-            InternalNetworkBmpProperties bmpConfiguration = default;
-            NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default;
-            NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default;
             string annotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -124,7 +121,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        peerAsn = null;
                         continue;
                     }
                     peerAsn = property.Value.GetInt64();
@@ -186,33 +182,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     ipv6NeighborAddress = array;
                     continue;
                 }
-                if (property.NameEquals("bmpConfiguration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    bmpConfiguration = InternalNetworkBmpProperties.DeserializeInternalNetworkBmpProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("v4OverV6BgpSession"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    v4OverV6BgpSession = new NetworkFabricV4OverV6BgpSessionState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("v6OverV4BgpSession"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    v6OverV4BgpSession = new NetworkFabricV6OverV4BgpSessionState(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("annotation"u8))
                 {
                     annotation = property.Value.GetString();
@@ -236,10 +205,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 ipv4ListenRangePrefixes ?? new ChangeTrackingList<string>(),
                 ipv6ListenRangePrefixes ?? new ChangeTrackingList<string>(),
                 ipv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>(),
-                ipv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>(),
-                bmpConfiguration,
-                v4OverV6BgpSession,
-                v6OverV4BgpSession);
+                ipv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>());
         }
 
         BinaryData IPersistableModel<InternalNetworkBgpConfiguration>.Write(ModelReaderWriterOptions options)

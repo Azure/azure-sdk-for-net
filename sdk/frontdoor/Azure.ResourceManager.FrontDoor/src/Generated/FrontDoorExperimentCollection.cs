@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.FrontDoor
     {
         private readonly ClientDiagnostics _experimentsClientDiagnostics;
         private readonly Experiments _experimentsRestClient;
+        private readonly ClientDiagnostics _reportsClientDiagnostics;
+        private readonly Reports _reportsRestClient;
 
         /// <summary> Initializes a new instance of FrontDoorExperimentCollection for mocking. </summary>
         protected FrontDoorExperimentCollection()
@@ -41,6 +43,8 @@ namespace Azure.ResourceManager.FrontDoor
             TryGetApiVersion(FrontDoorExperimentResource.ResourceType, out string frontDoorExperimentApiVersion);
             _experimentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorExperimentResource.ResourceType.Namespace, Diagnostics);
             _experimentsRestClient = new Experiments(_experimentsClientDiagnostics, Pipeline, Endpoint, frontDoorExperimentApiVersion ?? "2025-11-01");
+            _reportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorExperimentResource.ResourceType.Namespace, Diagnostics);
+            _reportsRestClient = new Reports(_reportsClientDiagnostics, Pipeline, Endpoint, frontDoorExperimentApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 

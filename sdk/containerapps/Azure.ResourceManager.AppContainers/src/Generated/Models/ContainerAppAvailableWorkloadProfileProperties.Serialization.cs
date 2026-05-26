@@ -8,56 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.AppContainers;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Revision resource specific properties. </summary>
-    public partial class ContainerAppAvailableWorkloadProfileProperties : IJsonModel<ContainerAppAvailableWorkloadProfileProperties>
+    public partial class ContainerAppAvailableWorkloadProfileProperties : IUtf8JsonSerializable, IJsonModel<ContainerAppAvailableWorkloadProfileProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContainerAppAvailableWorkloadProfileProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeContainerAppAvailableWorkloadProfileProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfileProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppAvailableWorkloadProfileProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfileProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerAppAvailableWorkloadProfileProperties IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerAppAvailableWorkloadProfileProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +29,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfileProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
@@ -104,15 +65,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,27 +82,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerAppAvailableWorkloadProfileProperties IJsonModel<ContainerAppAvailableWorkloadProfileProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContainerAppAvailableWorkloadProfileProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerAppAvailableWorkloadProfileProperties IJsonModel<ContainerAppAvailableWorkloadProfileProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfileProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeContainerAppAvailableWorkloadProfileProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ContainerAppAvailableWorkloadProfileProperties DeserializeContainerAppAvailableWorkloadProfileProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerAppAvailableWorkloadProfileProperties DeserializeContainerAppAvailableWorkloadProfileProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -149,71 +105,227 @@ namespace Azure.ResourceManager.AppContainers.Models
             string category = default;
             ContainerAppAvailableWorkloadProfileApplicability? applicability = default;
             int? cores = default;
-            int? memoryInGiB = default;
+            int? memoryGiB = default;
             int? gpus = default;
             string displayName = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("category"u8))
+                if (property.NameEquals("category"u8))
                 {
-                    category = prop.Value.GetString();
+                    category = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("applicability"u8))
+                if (property.NameEquals("applicability"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    applicability = new ContainerAppAvailableWorkloadProfileApplicability(prop.Value.GetString());
+                    applicability = new ContainerAppAvailableWorkloadProfileApplicability(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("cores"u8))
+                if (property.NameEquals("cores"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cores = prop.Value.GetInt32();
+                    cores = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("memoryGiB"u8))
+                if (property.NameEquals("memoryGiB"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    memoryInGiB = prop.Value.GetInt32();
+                    memoryGiB = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("gpus"u8))
+                if (property.NameEquals("gpus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    gpus = prop.Value.GetInt32();
+                    gpus = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("displayName"u8))
+                if (property.NameEquals("displayName"u8))
                 {
-                    displayName = prop.Value.GetString();
+                    displayName = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppAvailableWorkloadProfileProperties(
                 category,
                 applicability,
                 cores,
-                memoryInGiB,
+                memoryGiB,
                 gpus,
                 displayName,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Category), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  category: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Category))
+                {
+                    builder.Append("  category: ");
+                    if (Category.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Category}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Category}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Applicability), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  applicability: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Applicability))
+                {
+                    builder.Append("  applicability: ");
+                    builder.AppendLine($"'{Applicability.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cores), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cores: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Cores))
+                {
+                    builder.Append("  cores: ");
+                    builder.AppendLine($"{Cores.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryInGiB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  memoryGiB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MemoryInGiB))
+                {
+                    builder.Append("  memoryGiB: ");
+                    builder.AppendLine($"{MemoryInGiB.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Gpus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  gpus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Gpus))
+                {
+                    builder.Append("  gpus: ");
+                    builder.AppendLine($"{Gpus.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  displayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    builder.Append("  displayName: ");
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfileProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerAppAvailableWorkloadProfileProperties IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeContainerAppAvailableWorkloadProfileProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfileProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

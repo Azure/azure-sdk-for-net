@@ -186,7 +186,6 @@ namespace Azure.Identity
             {
                 builder.WithClaims(claims);
             }
-            ApplyTokenRequestCallback(builder);
             return await builder
                 .ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
@@ -228,7 +227,6 @@ namespace Azure.Identity
             {
                 builder.WithClaims(claims);
             }
-            ApplyTokenRequestCallback(builder);
             return await builder
                 .ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
@@ -271,7 +269,6 @@ namespace Azure.Identity
             {
                 builder.WithClaims(claims);
             }
-            ApplyTokenRequestCallback(builder);
             return await builder
                 .ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
@@ -314,7 +311,6 @@ namespace Azure.Identity
             {
                 builder.WithClaims(claims);
             }
-            ApplyTokenRequestCallback(builder);
             return await builder
                 .ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);

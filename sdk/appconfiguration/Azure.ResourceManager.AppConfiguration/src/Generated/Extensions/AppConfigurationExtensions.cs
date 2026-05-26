@@ -315,42 +315,6 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary>
-        /// Gets information about the deleted configuration stores in a subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppConfigurationSubscriptionResource.GetDeletedAppConfigurationStoresAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DeletedAppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DeletedAppConfigurationStoreResource> GetDeletedAppConfigurationStoresAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetDeletedAppConfigurationStoresAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets information about the deleted configuration stores in a subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppConfigurationSubscriptionResource.GetDeletedAppConfigurationStores(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DeletedAppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DeletedAppConfigurationStoreResource> GetDeletedAppConfigurationStores(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetDeletedAppConfigurationStores(cancellationToken);
-        }
-
-        /// <summary>
         /// Checks whether the configuration store name is available for use.
         /// <item>
         /// <term> Mocking. </term>

@@ -39,8 +39,6 @@ namespace Azure.AI.Extensions.OpenAI
         private const string StructuredOutputsValue = "structured_outputs";
         private const string OauthConsentRequestValue = "oauth_consent_request";
         private const string MemorySearchCallValue = "memory_search_call";
-        private const string MemoryCommandPreviewCallValue = "memory_command_preview_call";
-        private const string MemoryCommandPreviewCallOutputValue = "memory_command_preview_call_output";
         private const string WorkflowActionValue = "workflow_action";
         private const string A2APreviewCallValue = "a2a_preview_call";
         private const string A2APreviewCallOutputValue = "a2a_preview_call_output";
@@ -154,12 +152,6 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Gets the MemorySearchCall. </summary>
         public static AgentResponseItemKind MemorySearchCall { get; } = new AgentResponseItemKind(MemorySearchCallValue);
-
-        /// <summary> Gets the MemoryCommandPreviewCall. </summary>
-        public static AgentResponseItemKind MemoryCommandPreviewCall { get; } = new AgentResponseItemKind(MemoryCommandPreviewCallValue);
-
-        /// <summary> Gets the MemoryCommandPreviewCallOutput. </summary>
-        public static AgentResponseItemKind MemoryCommandPreviewCallOutput { get; } = new AgentResponseItemKind(MemoryCommandPreviewCallOutputValue);
 
         /// <summary> Gets the WorkflowAction. </summary>
         public static AgentResponseItemKind WorkflowAction { get; } = new AgentResponseItemKind(WorkflowActionValue);

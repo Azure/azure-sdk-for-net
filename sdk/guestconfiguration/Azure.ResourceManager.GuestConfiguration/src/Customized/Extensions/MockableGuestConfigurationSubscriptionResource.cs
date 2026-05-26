@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using Azure.Core;
 
@@ -16,7 +17,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentData(CancellationToken cancellationToken = default)
         {
-            return SubscriptionList(cancellationToken);
+            return new PageableWrapper<GuestConfigurationVmAssignmentResource, GuestConfigurationAssignmentData>(
+                GetGuestConfigurationVmAssignments(cancellationToken),
+                resource => resource.Data);
         }
 
         /// <summary> List all guest configuration assignments for a subscription. </summary>
@@ -24,27 +27,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentDataAsync(CancellationToken cancellationToken = default)
         {
-            return SubscriptionListAsync(cancellationToken);
-        }
-
-        /// <summary> List all guest configuration assignments for a subscription. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<GuestConfigurationVmAssignmentResource> GetGuestConfigurationVmAssignments(CancellationToken cancellationToken = default)
-        {
-            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmAssignmentResource>(
-                SubscriptionList(cancellationToken),
-                data => new GuestConfigurationVmAssignmentResource(Client, data));
-        }
-
-        /// <summary> List all guest configuration assignments for a subscription. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<GuestConfigurationVmAssignmentResource> GetGuestConfigurationVmAssignmentsAsync(CancellationToken cancellationToken = default)
-        {
-            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmAssignmentResource>(
-                SubscriptionListAsync(cancellationToken),
-                data => new GuestConfigurationVmAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<GuestConfigurationVmAssignmentResource, GuestConfigurationAssignmentData>(
+                GetGuestConfigurationVmAssignmentsAsync(cancellationToken),
+                resource => resource.Data);
         }
     }
 }

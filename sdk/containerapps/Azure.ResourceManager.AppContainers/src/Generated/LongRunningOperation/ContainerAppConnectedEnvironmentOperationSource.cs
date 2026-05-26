@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary></summary>
-    internal partial class ContainerAppConnectedEnvironmentOperationSource : IOperationSource<ContainerAppConnectedEnvironmentResource>
+    internal class ContainerAppConnectedEnvironmentOperationSource : IOperationSource<ContainerAppConnectedEnvironmentResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal ContainerAppConnectedEnvironmentOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         ContainerAppConnectedEnvironmentResource IOperationSource<ContainerAppConnectedEnvironmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ContainerAppConnectedEnvironmentData data = ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<ContainerAppConnectedEnvironmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
             return new ContainerAppConnectedEnvironmentResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<ContainerAppConnectedEnvironmentResource> IOperationSource<ContainerAppConnectedEnvironmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ContainerAppConnectedEnvironmentData data = ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ContainerAppConnectedEnvironmentResource(_client, data);
+            var data = ModelReaderWriter.Read<ContainerAppConnectedEnvironmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
+            return await Task.FromResult(new ContainerAppConnectedEnvironmentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

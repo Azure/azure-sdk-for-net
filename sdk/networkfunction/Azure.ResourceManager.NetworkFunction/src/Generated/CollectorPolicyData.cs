@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the Collector Policy. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, CollectorPolicyPropertiesFormat properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        internal CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, CollectorPolicyPropertiesFormat properties, IDictionary<string, string> tags, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

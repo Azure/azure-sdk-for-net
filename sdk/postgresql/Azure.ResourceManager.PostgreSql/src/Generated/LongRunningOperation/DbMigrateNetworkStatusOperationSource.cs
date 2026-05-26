@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         DbMigrateNetworkStatus IOperationSource<DbMigrateNetworkStatus>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return DbMigrateNetworkStatus.DeserializeDbMigrateNetworkStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            DbMigrateNetworkStatus result = DbMigrateNetworkStatus.DeserializeDbMigrateNetworkStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         async ValueTask<DbMigrateNetworkStatus> IOperationSource<DbMigrateNetworkStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return DbMigrateNetworkStatus.DeserializeDbMigrateNetworkStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            DbMigrateNetworkStatus result = DbMigrateNetworkStatus.DeserializeDbMigrateNetworkStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

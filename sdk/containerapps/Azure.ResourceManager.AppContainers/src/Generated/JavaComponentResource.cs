@@ -6,35 +6,46 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing a JavaComponent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="JavaComponentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppManagedEnvironmentResource"/> using the GetJavaComponents method.
+    /// A Class representing a JavaComponent along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="JavaComponentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetJavaComponentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppManagedEnvironmentResource"/> using the GetJavaComponent method.
     /// </summary>
     public partial class JavaComponentResource : ArmResource
     {
-        private readonly ClientDiagnostics _javaComponentsClientDiagnostics;
-        private readonly JavaComponents _javaComponentsRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="JavaComponentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="environmentName"> The environmentName. </param>
+        /// <param name="name"> The name. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string environmentName, string name)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _javaComponentClientDiagnostics;
+        private readonly JavaComponentsRestOperations _javaComponentRestClient;
         private readonly JavaComponentData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/javaComponents";
 
-        /// <summary> Initializes a new instance of JavaComponentResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JavaComponentResource"/> class for mocking. </summary>
         protected JavaComponentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="JavaComponentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JavaComponentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal JavaComponentResource(ArmClient client, JavaComponentData data) : this(client, data.Id)
@@ -43,93 +54,71 @@ namespace Azure.ResourceManager.AppContainers
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="JavaComponentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JavaComponentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal JavaComponentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _javaComponentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string javaComponentApiVersion);
-            _javaComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _javaComponentsRestClient = new JavaComponents(_javaComponentsClientDiagnostics, Pipeline, Endpoint, javaComponentApiVersion ?? "2025-10-02-preview");
-            ValidateResourceId(id);
+            _javaComponentRestClient = new JavaComponentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, javaComponentApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual JavaComponentData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="environmentName"> The environmentName. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string environmentName, string name)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get a Java Component.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JavaComponents_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>JavaComponents_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="JavaComponentResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="JavaComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<JavaComponentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _javaComponentsClientDiagnostics.CreateScope("JavaComponentResource.Get");
+            using var scope = _javaComponentClientDiagnostics.CreateScope("JavaComponentResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _javaComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<JavaComponentData> response = Response.FromValue(JavaComponentData.FromResponse(result), result);
+                var response = await _javaComponentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new JavaComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,42 +132,118 @@ namespace Azure.ResourceManager.AppContainers
         /// Get a Java Component.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JavaComponents_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>JavaComponents_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="JavaComponentResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="JavaComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<JavaComponentResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _javaComponentsClientDiagnostics.CreateScope("JavaComponentResource.Get");
+            using var scope = _javaComponentClientDiagnostics.CreateScope("JavaComponentResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _javaComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<JavaComponentData> response = Response.FromValue(JavaComponentData.FromResponse(result), result);
+                var response = _javaComponentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new JavaComponentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Java Component.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JavaComponents_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JavaComponentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _javaComponentClientDiagnostics.CreateScope("JavaComponentResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = await _javaComponentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation(_javaComponentClientDiagnostics, Pipeline, _javaComponentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Java Component.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JavaComponents_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JavaComponentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _javaComponentClientDiagnostics.CreateScope("JavaComponentResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = _javaComponentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new AppContainersArmOperation(_javaComponentClientDiagnostics, Pipeline, _javaComponentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -191,20 +256,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Patches a Java Component using JSON Merge Patch
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JavaComponents_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>JavaComponents_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="JavaComponentResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="JavaComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,27 +281,14 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _javaComponentsClientDiagnostics.CreateScope("JavaComponentResource.Update");
+            using var scope = _javaComponentClientDiagnostics.CreateScope("JavaComponentResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _javaComponentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, JavaComponentData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AppContainersArmOperation<JavaComponentResource> operation = new AppContainersArmOperation<JavaComponentResource>(
-                    new JavaComponentOperationSource(Client),
-                    _javaComponentsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _javaComponentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation<JavaComponentResource>(new JavaComponentOperationSource(Client), _javaComponentClientDiagnostics, Pipeline, _javaComponentRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -250,20 +302,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Patches a Java Component using JSON Merge Patch
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JavaComponents_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>JavaComponents_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="JavaComponentResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="JavaComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,125 +327,14 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _javaComponentsClientDiagnostics.CreateScope("JavaComponentResource.Update");
+            using var scope = _javaComponentClientDiagnostics.CreateScope("JavaComponentResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _javaComponentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, JavaComponentData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                AppContainersArmOperation<JavaComponentResource> operation = new AppContainersArmOperation<JavaComponentResource>(
-                    new JavaComponentOperationSource(Client),
-                    _javaComponentsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _javaComponentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new AppContainersArmOperation<JavaComponentResource>(new JavaComponentOperationSource(Client), _javaComponentClientDiagnostics, Pipeline, _javaComponentRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a Java Component.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JavaComponents_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="JavaComponentResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _javaComponentsClientDiagnostics.CreateScope("JavaComponentResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _javaComponentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AppContainersArmOperation operation = new AppContainersArmOperation(_javaComponentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a Java Component.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/javaComponents/{name}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JavaComponents_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="JavaComponentResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _javaComponentsClientDiagnostics.CreateScope("JavaComponentResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _javaComponentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                AppContainersArmOperation operation = new AppContainersArmOperation(_javaComponentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)

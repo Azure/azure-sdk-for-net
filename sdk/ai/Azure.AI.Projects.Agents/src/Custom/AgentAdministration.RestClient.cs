@@ -542,30 +542,9 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ClientResult DeleteAgent(string agentName, RequestOptions options)
     {
-        return DeleteAgent(agentName: agentName, force: null, options: options);
-    }
-
-    /// <summary>
-    /// [Protocol Method] Deletes an agent.
-    /// <list type="bullet">
-    /// <item>
-    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-    /// </item>
-    /// </list>
-    /// </summary>
-    /// <param name="agentName"> The name of the agent to delete. </param>
-    /// <param name="force"> For Hosted Agents, if true, force-deletes the agent even if its versions have active sessions, cascading deletion to all associated sessions. This value is not relevant for other Agent types. Defaults to false. </param>
-    /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    /// <returns> The response returned from the service. </returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public virtual ClientResult DeleteAgent(string agentName, bool? force, RequestOptions options)
-    {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-        using PipelineMessage message = CreateDeleteAgentRequest(agentName, force, options);
+        using PipelineMessage message = CreateDeleteAgentRequest(agentName, options);
         return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
     }
 
@@ -586,30 +565,9 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual async Task<ClientResult> DeleteAgentAsync(string agentName, RequestOptions options)
     {
-        return await DeleteAgentAsync(agentName:agentName, force: null, options: options).ConfigureAwait(false);
-    }
-
-    /// <summary>
-    /// [Protocol Method] Deletes an agent.
-    /// <list type="bullet">
-    /// <item>
-    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-    /// </item>
-    /// </list>
-    /// </summary>
-    /// <param name="agentName"> The name of the agent to delete. </param>
-    /// <param name="force"> For Hosted Agents, if true, force-deletes the agent even if its versions have active sessions, cascading deletion to all associated sessions. This value is not relevant for other Agent types. Defaults to false. </param>
-    /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    /// <returns> The response returned from the service. </returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public virtual async Task<ClientResult> DeleteAgentAsync(string agentName, bool? force, RequestOptions options)
-    {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-        using PipelineMessage message = CreateDeleteAgentRequest(agentName, force, options);
+        using PipelineMessage message = CreateDeleteAgentRequest(agentName, options);
         return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
     }
 
@@ -681,37 +639,10 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual ClientResult DeleteAgentVersion(string agentName, string agentVersion, RequestOptions options)
     {
-        return DeleteAgentVersion(
-            agentName: agentName,
-            agentVersion: agentVersion,
-            force: null,
-            options
-        );
-    }
-
-    /// <summary>
-    /// [Protocol Method] Deletes a specific version of an agent.
-    /// <list type="bullet">
-    /// <item>
-    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-    /// </item>
-    /// </list>
-    /// </summary>
-    /// <param name="agentName"> The name of the agent to delete. </param>
-    /// <param name="agentVersion"> The version of the agent to delete. </param>
-    /// <param name="force"> For Hosted Agents, if true, force-deletes the version even if it has active sessions, cascading deletion to all associated sessions. This value is not relevant for other Agent types. Defaults to false. </param>
-    /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    /// <returns> The response returned from the service. </returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public virtual ClientResult DeleteAgentVersion(string agentName, string agentVersion, bool? force, RequestOptions options)
-    {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
-        using PipelineMessage message = CreateDeleteAgentVersionRequest(agentName, agentVersion, force, options);
+        using PipelineMessage message = CreateDeleteAgentVersionRequest(agentName, agentVersion, options);
         return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
     }
 
@@ -733,37 +664,10 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual async Task<ClientResult> DeleteAgentVersionAsync(string agentName, string agentVersion, RequestOptions options)
     {
-        return await DeleteAgentVersionAsync(
-            agentName: agentName,
-            agentVersion: agentVersion,
-            force: null,
-            options: options
-        ).ConfigureAwait(false);
-    }
-
-    /// <summary>
-    /// [Protocol Method] Deletes a specific version of an agent.
-    /// <list type="bullet">
-    /// <item>
-    /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-    /// </item>
-    /// </list>
-    /// </summary>
-    /// <param name="agentName"> The name of the agent to delete. </param>
-    /// <param name="agentVersion"> The version of the agent to delete. </param>
-    /// <param name="force"> For Hosted Agents, if true, force-deletes the version even if it has active sessions, cascading deletion to all associated sessions. This value is not relevant for other Agent types. Defaults to false. </param>
-    /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="agentVersion"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    /// <returns> The response returned from the service. </returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public virtual async Task<ClientResult> DeleteAgentVersionAsync(string agentName, string agentVersion, bool? force, RequestOptions options)
-    {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(agentVersion, nameof(agentVersion));
 
-        using PipelineMessage message = CreateDeleteAgentVersionRequest(agentName, agentVersion, force, options);
+        using PipelineMessage message = CreateDeleteAgentVersionRequest(agentName, agentVersion, options);
         return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
     }
 }

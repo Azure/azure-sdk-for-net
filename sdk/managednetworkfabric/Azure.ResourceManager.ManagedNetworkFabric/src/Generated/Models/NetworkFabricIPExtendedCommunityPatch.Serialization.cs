@@ -37,11 +37,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
-            {
-                writer.WritePropertyName("annotation"u8);
-                writer.WriteStringValue(Annotation);
-            }
             if (Optional.IsCollectionDefined(IPExtendedCommunityRules))
             {
                 writer.WritePropertyName("ipExtendedCommunityRules"u8);
@@ -51,6 +46,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Annotation))
+            {
+                writer.WritePropertyName("annotation"u8);
+                writer.WriteStringValue(Annotation);
             }
             writer.WriteEndObject();
         }
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            string annotation = default;
             IList<IPExtendedCommunityRule> ipExtendedCommunityRules = default;
+            string annotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,11 +105,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("annotation"u8))
-                        {
-                            annotation = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("ipExtendedCommunityRules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -124,6 +119,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             ipExtendedCommunityRules = array;
                             continue;
                         }
+                        if (property0.NameEquals("annotation"u8))
+                        {
+                            annotation = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkFabricIPExtendedCommunityPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, annotation, ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>());
+            return new NetworkFabricIPExtendedCommunityPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>(), annotation);
         }
 
         BinaryData IPersistableModel<NetworkFabricIPExtendedCommunityPatch>.Write(ModelReaderWriterOptions options)

@@ -24,8 +24,10 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="clusterId"> The identity. </param>
         /// <param name="hosts"> The hosts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvsManagementCluster(int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IList<string> hosts, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(clusterSize, provisioningState, clusterId, hosts, additionalBinaryDataProperties)
+        /// <param name="vsanDatastoreName"> Name of the vsan datastore associated with the cluster. </param>
+        internal AvsManagementCluster(int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IList<string> hosts, IDictionary<string, BinaryData> additionalBinaryDataProperties, string vsanDatastoreName) : base(clusterSize, provisioningState, clusterId, hosts, additionalBinaryDataProperties)
         {
+            VsanDatastoreName = vsanDatastoreName;
         }
     }
 }

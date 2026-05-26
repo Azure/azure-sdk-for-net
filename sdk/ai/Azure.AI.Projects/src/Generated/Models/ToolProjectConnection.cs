@@ -33,6 +33,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> A project connection in a ToolProjectConnectionList attached to this tool. </summary>
-        public string ProjectConnectionId { get; set; }
+        public string ProjectConnectionId { get; }
     }
 }

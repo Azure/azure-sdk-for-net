@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         ContainerRegistryGenerateCredentialsResult IOperationSource<ContainerRegistryGenerateCredentialsResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return ContainerRegistryGenerateCredentialsResult.DeserializeContainerRegistryGenerateCredentialsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ContainerRegistryGenerateCredentialsResult result = ContainerRegistryGenerateCredentialsResult.DeserializeContainerRegistryGenerateCredentialsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         async ValueTask<ContainerRegistryGenerateCredentialsResult> IOperationSource<ContainerRegistryGenerateCredentialsResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ContainerRegistryGenerateCredentialsResult.DeserializeContainerRegistryGenerateCredentialsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ContainerRegistryGenerateCredentialsResult result = ContainerRegistryGenerateCredentialsResult.DeserializeContainerRegistryGenerateCredentialsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

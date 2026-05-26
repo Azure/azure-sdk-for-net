@@ -262,14 +262,8 @@ if ($relatedTypeSpecProjectFolder) {
         }
         $serviceType = "data-plane"
         $packageName = Split-Path $sdkProjectFolder -Leaf
-        $isNewMgmtPackage = $false
         if ($packageName.StartsWith("Azure.ResourceManager.")) {
             $serviceType = "resource-manager"
-            # Detect whether this is a brand new package (folder doesn't exist yet)
-            if (!(Test-Path -Path $sdkProjectFolder)) {
-                $isNewMgmtPackage = $true
-                Write-Host "Detected new management SDK package: $packageName"
-            }
         }
         $repo = $repoHttpsUrl -replace "https://github.com/", ""
         Write-Host "Start to call tsp-client to generate package: $packageName, serviceType: $serviceType, sdkProjectFolder: $sdkProjectFolder"
@@ -309,15 +303,6 @@ if ($relatedTypeSpecProjectFolder) {
           })
           $exitCode = $LASTEXITCODE
         } else {
-            # For new management SDK packages, create scaffolding files
-            # that the emitter doesn't generate (README, CHANGELOG, ci.mgmt.yml, etc.)
-            if ($isNewMgmtPackage) {
-                New-MgmtPackageScaffolding `
-                    -sdkProjectFolder $sdkProjectFolder `
-                    -packageName $packageName `
-                    -sdkRootPath $sdkPath
-            }
-
             # Update package version suffix based on sdkReleaseType
             if ($sdkReleaseType) {
                 $csprojPath = Join-Path $sdkProjectFolder "src" "$packageName.csproj"

@@ -15,7 +15,6 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
     {
         private BicepValue<string> _value;
         private BicepValue<string> _contentType;
-        private BicepValue<string> _nullableValue;
         private ItemAttributes _attributes;
 
         /// <summary> Creates a new ItemProperties. </summary>
@@ -53,21 +52,6 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Gets or sets the NullableValue. </summary>
-        public BicepValue<string> NullableValue
-        {
-            get
-            {
-                Initialize();
-                return _nullableValue;
-            }
-            set
-            {
-                Initialize();
-                _nullableValue.Assign(value);
-            }
-        }
-
         /// <summary> Gets or sets the Attributes. </summary>
         public ItemAttributes Attributes
         {
@@ -89,7 +73,6 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             base.DefineProvisionableProperties();
             _value = DefineProperty<string>(nameof(Value), new string[] { "value" });
             _contentType = DefineProperty<string>(nameof(ContentType), new string[] { "contentType" });
-            _nullableValue = DefineProperty<string>(nameof(NullableValue), new string[] { "nullableValue" });
             _attributes = DefineModelProperty<ItemAttributes>(nameof(Attributes), new string[] { "attributes" });
         }
     }

@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Storage
     {
         private readonly ClientDiagnostics _blobContainersClientDiagnostics;
         private readonly BlobContainers _blobContainersRestClient;
+        private readonly ClientDiagnostics _blobServicesClientDiagnostics;
+        private readonly BlobServices _blobServicesRestClient;
         private readonly BlobContainerData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/blobServices/containers";
@@ -51,7 +53,9 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(ResourceType, out string blobContainerApiVersion);
             _blobContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _blobContainersRestClient = new BlobContainers(_blobContainersClientDiagnostics, Pipeline, Endpoint, blobContainerApiVersion ?? "2025-08-01");
+            _blobContainersRestClient = new BlobContainers(_blobContainersClientDiagnostics, Pipeline, Endpoint, blobContainerApiVersion ?? "2025-06-01");
+            _blobServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
+            _blobServicesRestClient = new BlobServices(_blobServicesClientDiagnostics, Pipeline, Endpoint, blobContainerApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -105,7 +109,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +157,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +205,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -253,7 +257,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -305,7 +309,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -356,7 +360,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -407,7 +411,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -459,7 +463,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -511,7 +515,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -560,7 +564,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -609,7 +613,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -658,7 +662,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -707,7 +711,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -759,7 +763,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

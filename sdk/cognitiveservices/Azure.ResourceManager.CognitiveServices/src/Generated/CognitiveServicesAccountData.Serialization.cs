@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.CognitiveServices
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             CognitiveServicesAccountProperties properties = default;
+            IDictionary<string, string> tags = default;
             ETag? eTag = default;
             string kind = default;
             CognitiveServicesSku sku = default;
@@ -199,6 +199,20 @@ namespace Azure.ResourceManager.CognitiveServices
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCognitiveServicesContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = CognitiveServicesAccountProperties.DeserializeCognitiveServicesAccountProperties(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -218,20 +232,6 @@ namespace Azure.ResourceManager.CognitiveServices
                         }
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = CognitiveServicesAccountProperties.DeserializeCognitiveServicesAccountProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
@@ -277,9 +277,9 @@ namespace Azure.ResourceManager.CognitiveServices
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 eTag,
                 kind,
                 sku,

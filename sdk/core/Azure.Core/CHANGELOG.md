@@ -1,6 +1,6 @@
 # Release History
 
-## 1.58.0-beta.1 (Unreleased)
+## 1.56.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,31 +8,7 @@
 
 ### Bugs Fixed
 
-- Fixed `DiagnosticScope` to mark the parent `ActivityContext` as remote (`IsRemote = true`) when a traceparent is provided via `SetTraceContext` or `AddLink`. The traceparent in these paths is always extracted from an external source (e.g. a messaging broker's application properties), so samplers that distinguish local vs. remote parents — such as the `RateLimitedSampler` used by the Azure Monitor OpenTelemetry exporter — can now make correct decisions for activities started from incoming messages.
-
 ### Other Changes
-
-## 1.57.0 (2026-05-21)
-
-### Features Added
-
-- Added `RequestContent.Create(BinaryContent)` overload that adapts a `System.ClientModel.BinaryContent` instance into a `Azure.Core.RequestContent` instance.
-- Added experimental (`SCME0002`) `AzureCredentialResolver` that resolves Azure token credential sections (e.g. `AzureCliCredential`, `ManagedIdentityCredential`, `ChainedTokenCredential`) into `TokenCredential` instances. `ApiKeyCredential` sections are not claimed — clients dispatch on `Credential.CredentialSource` themselves.
-- Added experimental (`SCME0002`) extensions on `Azure.Identity.ConfigurationExtensions`:
-  - `AddAzureCredentialResolver()` on `IServiceCollection` and `IHostApplicationBuilder` — idempotent DI registration.
-  - `IConfiguration.GetAzureCredentialSettings(sectionName, ...)` — returns `CredentialSettings?` with `TokenProvider` populated for token sources and `Key` populated for inline ApiKey sources, so a single call site can dispatch on either shape without binding a `ClientSettings`.
-  - `IConfiguration.GetAzureClientSettings<T>(sectionName, params CredentialResolver[] resolvers)` — resolver-aware overload.
-- The Azure OpenAI default-scope quirk now writes `Credential:Scope` at the credential-section root (the canonical SCM 1.12.0+ location) instead of `Credential:AdditionalProperties:Scope`. SCM 1.12.0 reads both locations so existing configs continue to work.
-
-### Breaking Changes
-
-- Removed experimental (`SCME0002`) `WithAzureCredential` extension methods on `ClientSettings` and `IClientBuilder`. For DI, use `AddAzureClient<TClient, TSettings>` / `AddKeyedAzureClient<TClient, TSettings>` (which register `AzureCredentialResolver` automatically), or call `AddAzureCredentialResolver()` followed by `AddClient<TClient, TSettings>` / `AddKeyedClient<TClient, TSettings>`. For standalone scenarios, use `IConfiguration.GetAzureClientSettings<T>(...)` or `IConfiguration.GetAzureCredentialSettings(...)`.
-
-## 1.56.0 (2026-05-14)
-
-### Features Added
-
-- Added experimental `TokenRequestCallback` property and `TokenRequestCallbackContext` type to MSAL-backed credential options to allow customizing token request body parameters before they are sent to the identity provider.
 
 ## 1.55.0 (2026-05-05)
 

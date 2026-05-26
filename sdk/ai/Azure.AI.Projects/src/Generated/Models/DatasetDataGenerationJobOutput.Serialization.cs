@@ -76,7 +76,7 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -86,12 +86,12 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -140,7 +140,7 @@ namespace Azure.AI.Projects
             string name = default;
             string version = default;
             string description = default;
-            IReadOnlyDictionary<string, string> tags = default;
+            IDictionary<string, string> tags = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))

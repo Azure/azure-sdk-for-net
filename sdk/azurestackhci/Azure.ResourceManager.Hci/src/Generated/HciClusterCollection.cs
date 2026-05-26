@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.Hci
     {
         private readonly ClientDiagnostics _clustersClientDiagnostics;
         private readonly Clusters _clustersRestClient;
+        private readonly ClientDiagnostics _offersClientDiagnostics;
+        private readonly Offers _offersRestClient;
 
         /// <summary> Initializes a new instance of HciClusterCollection for mocking. </summary>
         protected HciClusterCollection()
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.Hci
             TryGetApiVersion(HciClusterResource.ResourceType, out string hciClusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciClusterResource.ResourceType.Namespace, Diagnostics);
             _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Endpoint, hciClusterApiVersion ?? "2026-04-01-preview");
+            _offersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciClusterResource.ResourceType.Namespace, Diagnostics);
+            _offersRestClient = new Offers(_offersClientDiagnostics, Pipeline, Endpoint, hciClusterApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

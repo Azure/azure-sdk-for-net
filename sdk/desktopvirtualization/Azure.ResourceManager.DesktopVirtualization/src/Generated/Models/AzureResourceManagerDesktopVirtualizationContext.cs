@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ActiveDirectoryInfoPatchProperties))]
     [ModelReaderWriterBuildable(typeof(ActiveSessionHostConfigurationData))]
+    [ModelReaderWriterBuildable(typeof(ActiveSessionHostConfigurationList))]
     [ModelReaderWriterBuildable(typeof(ActiveSessionHostConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(ActiveSessionHostConfigurationResource))]
     [ModelReaderWriterBuildable(typeof(AppAttachPackageData))]

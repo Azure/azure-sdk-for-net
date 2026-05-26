@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
     {
         private readonly ClientDiagnostics _applicationGroupsClientDiagnostics;
         private readonly ApplicationGroups _applicationGroupsRestClient;
+        private readonly ClientDiagnostics _startMenuItemsClientDiagnostics;
+        private readonly StartMenuItems _startMenuItemsRestClient;
 
         /// <summary> Initializes a new instance of VirtualApplicationGroupCollection for mocking. </summary>
         protected VirtualApplicationGroupCollection()
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             TryGetApiVersion(VirtualApplicationGroupResource.ResourceType, out string virtualApplicationGroupApiVersion);
             _applicationGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualApplicationGroupResource.ResourceType.Namespace, Diagnostics);
             _applicationGroupsRestClient = new ApplicationGroups(_applicationGroupsClientDiagnostics, Pipeline, Endpoint, virtualApplicationGroupApiVersion ?? "2026-01-01-preview");
+            _startMenuItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualApplicationGroupResource.ResourceType.Namespace, Diagnostics);
+            _startMenuItemsRestClient = new StartMenuItems(_startMenuItemsClientDiagnostics, Pipeline, Endpoint, virtualApplicationGroupApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

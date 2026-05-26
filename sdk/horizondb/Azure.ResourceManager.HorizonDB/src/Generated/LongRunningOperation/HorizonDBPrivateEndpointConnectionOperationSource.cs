@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.HorizonDB
         HorizonDBPrivateEndpointConnection IOperationSource<HorizonDBPrivateEndpointConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return HorizonDBPrivateEndpointConnection.DeserializeHorizonDBPrivateEndpointConnection(document.RootElement, ModelSerializationExtensions.WireOptions);
+            HorizonDBPrivateEndpointConnection result = HorizonDBPrivateEndpointConnection.DeserializeHorizonDBPrivateEndpointConnection(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.HorizonDB
         async ValueTask<HorizonDBPrivateEndpointConnection> IOperationSource<HorizonDBPrivateEndpointConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return HorizonDBPrivateEndpointConnection.DeserializeHorizonDBPrivateEndpointConnection(document.RootElement, ModelSerializationExtensions.WireOptions);
+            HorizonDBPrivateEndpointConnection result = HorizonDBPrivateEndpointConnection.DeserializeHorizonDBPrivateEndpointConnection(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.DependencyMap
         ExportDependenciesOperationResult IOperationSource<ExportDependenciesOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return ExportDependenciesOperationResult.DeserializeExportDependenciesOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ExportDependenciesOperationResult result = ExportDependenciesOperationResult.DeserializeExportDependenciesOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.DependencyMap
         async ValueTask<ExportDependenciesOperationResult> IOperationSource<ExportDependenciesOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ExportDependenciesOperationResult.DeserializeExportDependenciesOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ExportDependenciesOperationResult result = ExportDependenciesOperationResult.DeserializeExportDependenciesOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

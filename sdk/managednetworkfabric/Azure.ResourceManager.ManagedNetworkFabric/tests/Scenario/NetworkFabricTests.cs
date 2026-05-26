@@ -44,9 +44,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 7,
                 "10.18.0.0/19",
                 29249,
-                new TerminalServerConfiguration("10.0.0.12/30", "20.0.0.13/30")
+                new TerminalServerConfiguration()
                 {
+                    PrimaryIPv4Prefix = "10.0.0.12/30",
                     PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
+                    SecondaryIPv4Prefix = "20.0.0.13/30",
                     SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                     Username = "username",
                     Password = "xxxx",
@@ -181,13 +183,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // provision
             TestContext.Out.WriteLine($"POST - Provision started.....");
-            ArmOperation<NetworkFabricOperationStatusResult> triggerProvision = await networkFabric2.ActivateAsync(WaitUntil.Completed);
-            NetworkFabricOperationStatusResult triggerProvisionResult = triggerProvision.Value;
+            ArmOperation<DeviceUpdateCommonPostActionResult> triggerProvision = await networkFabric2.ProvisionAsync(WaitUntil.Completed);
+            DeviceUpdateCommonPostActionResult triggerProvisionResult = triggerProvision.Value;
             TestContext.Out.WriteLine(triggerProvisionResult);
 
             // Deprovision
             TestContext.Out.WriteLine($"POST - Deprovision started.....");
-            ArmOperation<NetworkFabricOperationStatusResult> deProvisionResponse = await networkFabric2.DeactivateAsync(WaitUntil.Completed);
+            ArmOperation<DeviceUpdateCommonPostActionResult> deProvisionResponse = await networkFabric2.DeprovisionAsync(WaitUntil.Completed);
             TestContext.Out.WriteLine(deProvisionResponse);
 
             // Delete

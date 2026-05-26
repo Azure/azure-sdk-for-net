@@ -380,6 +380,17 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     null));
         }
 
+        /// <summary> The response of a PolicyDefinitionVersion list operation. </summary>
+        /// <param name="value"> The PolicyDefinitionVersion items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.PolicyDefinitionVersionListResult"/> instance for mocking. </returns>
+        public static PolicyDefinitionVersionListResult PolicyDefinitionVersionListResult(IEnumerable<PolicyDefinitionVersionData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<PolicyDefinitionVersionData>();
+
+            return new PolicyDefinitionVersionListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -506,6 +517,17 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     (policyDefinitionGroups ?? new ChangeTrackingList<PolicyDefinitionGroup>()).ToList(),
                     version,
                     null));
+        }
+
+        /// <summary> The response of a PolicySetDefinitionVersion list operation. </summary>
+        /// <param name="value"> The PolicySetDefinitionVersion items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.PolicySetDefinitionVersionListResult"/> instance for mocking. </returns>
+        public static PolicySetDefinitionVersionListResult PolicySetDefinitionVersionListResult(IEnumerable<PolicySetDefinitionVersionData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<PolicySetDefinitionVersionData>();
+
+            return new PolicySetDefinitionVersionListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

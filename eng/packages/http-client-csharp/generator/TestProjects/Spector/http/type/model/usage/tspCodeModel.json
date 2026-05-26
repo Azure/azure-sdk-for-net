@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "InputContentType",
+      "name": "inputContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -22,7 +22,7 @@
     {
       "$id": "3",
       "kind": "constant",
-      "name": "InputContentType1",
+      "name": "outputContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -38,7 +38,7 @@
     {
       "$id": "5",
       "kind": "constant",
-      "name": "InputContentType2",
+      "name": "inputAndOutputContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -54,7 +54,7 @@
     {
       "$id": "7",
       "kind": "constant",
-      "name": "InputContentType3",
+      "name": "inputAndOutputContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {

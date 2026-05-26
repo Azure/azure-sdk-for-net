@@ -10,10 +10,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Consumption
 {
@@ -24,38 +23,42 @@ namespace Azure.ResourceManager.Consumption
     /// </summary>
     public partial class ConsumptionBudgetCollection : ArmCollection, IEnumerable<ConsumptionBudgetResource>, IAsyncEnumerable<ConsumptionBudgetResource>
     {
-        private readonly ClientDiagnostics _budgetsClientDiagnostics;
-        private readonly Budgets _budgetsRestClient;
+        private readonly ClientDiagnostics _consumptionBudgetBudgetsClientDiagnostics;
+        private readonly BudgetsRestOperations _consumptionBudgetBudgetsRestClient;
 
-        /// <summary> Initializes a new instance of ConsumptionBudgetCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConsumptionBudgetCollection"/> class for mocking. </summary>
         protected ConsumptionBudgetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConsumptionBudgetCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConsumptionBudgetCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ConsumptionBudgetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ConsumptionBudgetResource.ResourceType, out string consumptionBudgetApiVersion);
-            _budgetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ConsumptionBudgetResource.ResourceType.Namespace, Diagnostics);
-            _budgetsRestClient = new Budgets(_budgetsClientDiagnostics, Pipeline, Endpoint, consumptionBudgetApiVersion ?? "2024-08-01");
+            _consumptionBudgetBudgetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ConsumptionBudgetResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ConsumptionBudgetResource.ResourceType, out string consumptionBudgetBudgetsApiVersion);
+            _consumptionBudgetBudgetsRestClient = new BudgetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, consumptionBudgetBudgetsApiVersion);
         }
 
         /// <summary>
         /// The operation to create or update a budget. You can optionally provide an eTag if desired as a form of concurrency control. To obtain the latest eTag for a given budget, perform a get operation prior to your put operation.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Consumption/budgets/{budgetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Budgets_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Budgets_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConsumptionBudgetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -63,31 +66,23 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="budgetName"> Budget Name. </param>
         /// <param name="data"> Parameters supplied to the Create Budget operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ConsumptionBudgetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string budgetName, ConsumptionBudgetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _budgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.CreateOrUpdate");
+            using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _budgetsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), budgetName, ConsumptionBudgetData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ConsumptionBudgetData> response = Response.FromValue(ConsumptionBudgetData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ConsumptionArmOperation<ConsumptionBudgetResource> operation = new ConsumptionArmOperation<ConsumptionBudgetResource>(Response.FromValue(new ConsumptionBudgetResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _consumptionBudgetBudgetsRestClient.CreateOrUpdateAsync(Id, budgetName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _consumptionBudgetBudgetsRestClient.CreateCreateOrUpdateRequestUri(Id, budgetName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ConsumptionArmOperation<ConsumptionBudgetResource>(Response.FromValue(new ConsumptionBudgetResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -101,16 +96,20 @@ namespace Azure.ResourceManager.Consumption
         /// The operation to create or update a budget. You can optionally provide an eTag if desired as a form of concurrency control. To obtain the latest eTag for a given budget, perform a get operation prior to your put operation.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Consumption/budgets/{budgetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Budgets_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Budgets_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConsumptionBudgetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -118,31 +117,23 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="budgetName"> Budget Name. </param>
         /// <param name="data"> Parameters supplied to the Create Budget operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ConsumptionBudgetResource> CreateOrUpdate(WaitUntil waitUntil, string budgetName, ConsumptionBudgetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _budgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.CreateOrUpdate");
+            using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _budgetsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), budgetName, ConsumptionBudgetData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ConsumptionBudgetData> response = Response.FromValue(ConsumptionBudgetData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ConsumptionArmOperation<ConsumptionBudgetResource> operation = new ConsumptionArmOperation<ConsumptionBudgetResource>(Response.FromValue(new ConsumptionBudgetResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _consumptionBudgetBudgetsRestClient.CreateOrUpdate(Id, budgetName, data, cancellationToken);
+                var uri = _consumptionBudgetBudgetsRestClient.CreateCreateOrUpdateRequestUri(Id, budgetName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ConsumptionArmOperation<ConsumptionBudgetResource>(Response.FromValue(new ConsumptionBudgetResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -156,42 +147,38 @@ namespace Azure.ResourceManager.Consumption
         /// Gets the budget for the scope by budget name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Consumption/budgets/{budgetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Budgets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Budgets_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConsumptionBudgetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="budgetName"> Budget Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         public virtual async Task<Response<ConsumptionBudgetResource>> GetAsync(string budgetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
 
-            using DiagnosticScope scope = _budgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.Get");
+            using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _budgetsRestClient.CreateGetRequest(Id.ToString(), budgetName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ConsumptionBudgetData> response = Response.FromValue(ConsumptionBudgetData.FromResponse(result), result);
+                var response = await _consumptionBudgetBudgetsRestClient.GetAsync(Id, budgetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ConsumptionBudgetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,42 +192,38 @@ namespace Azure.ResourceManager.Consumption
         /// Gets the budget for the scope by budget name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Consumption/budgets/{budgetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Budgets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Budgets_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConsumptionBudgetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="budgetName"> Budget Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         public virtual Response<ConsumptionBudgetResource> Get(string budgetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
 
-            using DiagnosticScope scope = _budgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.Get");
+            using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _budgetsRestClient.CreateGetRequest(Id.ToString(), budgetName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ConsumptionBudgetData> response = Response.FromValue(ConsumptionBudgetData.FromResponse(result), result);
+                var response = _consumptionBudgetBudgetsRestClient.Get(Id, budgetName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ConsumptionBudgetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -254,44 +237,50 @@ namespace Azure.ResourceManager.Consumption
         /// Lists all budgets for the defined scope.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Consumption/budgets. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Consumption/budgets</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Budgets_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>Budgets_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConsumptionBudgetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConsumptionBudgetResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConsumptionBudgetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionBudgetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ConsumptionBudgetData, ConsumptionBudgetResource>(new BudgetsGetAllAsyncCollectionResultOfT(_budgetsRestClient, Id.ToString(), context, "ConsumptionBudgetCollection.GetAll"), data => new ConsumptionBudgetResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _consumptionBudgetBudgetsRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consumptionBudgetBudgetsRestClient.CreateListNextPageRequest(nextLink, Id);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConsumptionBudgetResource(Client, ConsumptionBudgetData.DeserializeConsumptionBudgetData(e)), _consumptionBudgetBudgetsClientDiagnostics, Pipeline, "ConsumptionBudgetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all budgets for the defined scope.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Consumption/budgets. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Consumption/budgets</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Budgets_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>Budgets_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConsumptionBudgetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,61 +288,45 @@ namespace Azure.ResourceManager.Consumption
         /// <returns> A collection of <see cref="ConsumptionBudgetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionBudgetResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ConsumptionBudgetData, ConsumptionBudgetResource>(new BudgetsGetAllCollectionResultOfT(_budgetsRestClient, Id.ToString(), context, "ConsumptionBudgetCollection.GetAll"), data => new ConsumptionBudgetResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _consumptionBudgetBudgetsRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consumptionBudgetBudgetsRestClient.CreateListNextPageRequest(nextLink, Id);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConsumptionBudgetResource(Client, ConsumptionBudgetData.DeserializeConsumptionBudgetData(e)), _consumptionBudgetBudgetsClientDiagnostics, Pipeline, "ConsumptionBudgetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Consumption/budgets/{budgetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Budgets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Budgets_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConsumptionBudgetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="budgetName"> Budget Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string budgetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
 
-            using DiagnosticScope scope = _budgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.Exists");
+            using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _budgetsRestClient.CreateGetRequest(Id.ToString(), budgetName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ConsumptionBudgetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ConsumptionBudgetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ConsumptionBudgetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _consumptionBudgetBudgetsRestClient.GetAsync(Id, budgetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -367,50 +340,36 @@ namespace Azure.ResourceManager.Consumption
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Consumption/budgets/{budgetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Budgets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Budgets_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConsumptionBudgetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="budgetName"> Budget Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         public virtual Response<bool> Exists(string budgetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
 
-            using DiagnosticScope scope = _budgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.Exists");
+            using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _budgetsRestClient.CreateGetRequest(Id.ToString(), budgetName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ConsumptionBudgetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ConsumptionBudgetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ConsumptionBudgetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _consumptionBudgetBudgetsRestClient.Get(Id, budgetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -424,54 +383,38 @@ namespace Azure.ResourceManager.Consumption
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Consumption/budgets/{budgetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Budgets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Budgets_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConsumptionBudgetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="budgetName"> Budget Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         public virtual async Task<NullableResponse<ConsumptionBudgetResource>> GetIfExistsAsync(string budgetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
 
-            using DiagnosticScope scope = _budgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.GetIfExists");
+            using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _budgetsRestClient.CreateGetRequest(Id.ToString(), budgetName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ConsumptionBudgetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ConsumptionBudgetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ConsumptionBudgetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _consumptionBudgetBudgetsRestClient.GetAsync(Id, budgetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ConsumptionBudgetResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ConsumptionBudgetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,54 +428,38 @@ namespace Azure.ResourceManager.Consumption
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Consumption/budgets/{budgetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Consumption/budgets/{budgetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Budgets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Budgets_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConsumptionBudgetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="budgetName"> Budget Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         public virtual NullableResponse<ConsumptionBudgetResource> GetIfExists(string budgetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
 
-            using DiagnosticScope scope = _budgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.GetIfExists");
+            using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _budgetsRestClient.CreateGetRequest(Id.ToString(), budgetName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ConsumptionBudgetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ConsumptionBudgetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ConsumptionBudgetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _consumptionBudgetBudgetsRestClient.Get(Id, budgetName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ConsumptionBudgetResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ConsumptionBudgetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -552,7 +479,6 @@ namespace Azure.ResourceManager.Consumption
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ConsumptionBudgetResource> IAsyncEnumerable<ConsumptionBudgetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

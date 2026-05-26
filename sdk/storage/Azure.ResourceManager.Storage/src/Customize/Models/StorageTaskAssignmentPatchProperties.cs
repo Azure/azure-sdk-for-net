@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             get
             {
-                if (ProvisioningState == null)
-                    return null;
+                if (ProvisioningState == null) return null;
                 return new StorageTaskAssignmentProvisioningState(ProvisioningState.Value.ToString());
             }
         }

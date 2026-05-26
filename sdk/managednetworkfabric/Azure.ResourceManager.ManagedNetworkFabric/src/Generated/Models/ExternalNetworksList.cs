@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Paged collection of ExternalNetwork items. </summary>
+    /// <summary> List of External Networks. </summary>
     internal partial class ExternalNetworksList
     {
         /// <summary>
@@ -47,34 +46,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ExternalNetworksList"/>. </summary>
-        /// <param name="value"> The ExternalNetwork items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ExternalNetworksList(IEnumerable<NetworkFabricExternalNetworkData> value)
+        internal ExternalNetworksList()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<NetworkFabricExternalNetworkData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExternalNetworksList"/>. </summary>
-        /// <param name="value"> The ExternalNetwork items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value"> List of External Network resources. </param>
+        /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExternalNetworksList(IReadOnlyList<NetworkFabricExternalNetworkData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExternalNetworksList(IReadOnlyList<NetworkFabricExternalNetworkData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExternalNetworksList"/> for deserialization. </summary>
-        internal ExternalNetworksList()
-        {
-        }
-
-        /// <summary> The ExternalNetwork items on this page. </summary>
+        /// <summary> List of External Network resources. </summary>
         public IReadOnlyList<NetworkFabricExternalNetworkData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Url to follow for getting next page of resources. </summary>
+        public string NextLink { get; }
     }
 }

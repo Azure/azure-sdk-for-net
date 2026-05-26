@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 
 using Azure.AI.Extensions.OpenAI;
@@ -25,10 +24,6 @@ public static partial class ClientConnectionProviderExtensions
                 };
                 // If the option without endpoint were provided, make sure, we still set it.
                 options.Endpoint = new Uri(pipelineConnection.Locator);
-                // Also set the credential so that we can use it for hosted agents.
-                pipelineConnection = connectionProvider.GetConnection(connectionId: "Internal.EndpointPipelineData");
-                AuthenticationTokenProvider provider = pipelineConnection.Credential as AuthenticationTokenProvider;
-                options.TokenProvider = provider;
                 return new ProjectOpenAIClient(smuggledPipeline, options);
             }
             return null;

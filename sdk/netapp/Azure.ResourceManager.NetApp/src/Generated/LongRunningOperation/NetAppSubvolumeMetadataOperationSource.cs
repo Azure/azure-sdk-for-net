@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.NetApp
         NetAppSubvolumeMetadata IOperationSource<NetAppSubvolumeMetadata>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return NetAppSubvolumeMetadata.DeserializeNetAppSubvolumeMetadata(document.RootElement, ModelSerializationExtensions.WireOptions);
+            NetAppSubvolumeMetadata result = NetAppSubvolumeMetadata.DeserializeNetAppSubvolumeMetadata(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.NetApp
         async ValueTask<NetAppSubvolumeMetadata> IOperationSource<NetAppSubvolumeMetadata>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return NetAppSubvolumeMetadata.DeserializeNetAppSubvolumeMetadata(document.RootElement, ModelSerializationExtensions.WireOptions);
+            NetAppSubvolumeMetadata result = NetAppSubvolumeMetadata.DeserializeNetAppSubvolumeMetadata(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

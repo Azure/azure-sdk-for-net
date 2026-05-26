@@ -32,7 +32,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The ID of the referenced skill. </summary>
-        public string SkillId { get; set; }
+        public string SkillId { get; }
 
         /// <summary> Optional skill version. Use a positive integer or 'latest'. Omit for default. </summary>
         public string Version { get; set; }

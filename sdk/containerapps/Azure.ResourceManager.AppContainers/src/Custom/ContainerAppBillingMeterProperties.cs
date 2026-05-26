@@ -13,10 +13,6 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         /// <summary> billing category for container app. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ContainerAppBillingMeterCategory? Category
-        {
-            get => WorkloadProfileCategory;
-            set => WorkloadProfileCategory = value?.ToString();
-        }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterCategory? Category { get => WorkloadProfileCategory; set => WorkloadProfileCategory = value?.ToString(); }
     }
 }

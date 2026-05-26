@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.ApiCenter
         MetadataSchemaExportResult IOperationSource<MetadataSchemaExportResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return MetadataSchemaExportResult.DeserializeMetadataSchemaExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            MetadataSchemaExportResult result = MetadataSchemaExportResult.DeserializeMetadataSchemaExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.ApiCenter
         async ValueTask<MetadataSchemaExportResult> IOperationSource<MetadataSchemaExportResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return MetadataSchemaExportResult.DeserializeMetadataSchemaExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            MetadataSchemaExportResult result = MetadataSchemaExportResult.DeserializeMetadataSchemaExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

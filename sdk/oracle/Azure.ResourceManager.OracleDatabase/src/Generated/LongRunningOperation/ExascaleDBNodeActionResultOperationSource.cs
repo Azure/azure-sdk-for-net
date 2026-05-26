@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.OracleDatabase
         ExascaleDBNodeActionResult IOperationSource<ExascaleDBNodeActionResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return ExascaleDBNodeActionResult.DeserializeExascaleDBNodeActionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ExascaleDBNodeActionResult result = ExascaleDBNodeActionResult.DeserializeExascaleDBNodeActionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.OracleDatabase
         async ValueTask<ExascaleDBNodeActionResult> IOperationSource<ExascaleDBNodeActionResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ExascaleDBNodeActionResult.DeserializeExascaleDBNodeActionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ExascaleDBNodeActionResult result = ExascaleDBNodeActionResult.DeserializeExascaleDBNodeActionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

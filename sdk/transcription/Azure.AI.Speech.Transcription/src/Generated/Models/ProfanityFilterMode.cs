@@ -15,7 +15,7 @@ namespace Azure.AI.Speech.Transcription
         private const string NoneValue = "None";
         /// <summary> Remove profanity. </summary>
         private const string RemovedValue = "Removed";
-        /// <summary> Add "profanity" XML tags &lt;Profanity&gt;&lt;/Profanity&gt;. </summary>
+        /// <summary> Add "profanity" XML tags&lt;/Profanity&gt;. </summary>
         private const string TagsValue = "Tags";
         /// <summary> Mask the profanity with * except of the first letter, e.g., f***. </summary>
         private const string MaskedValue = "Masked";
@@ -36,7 +36,7 @@ namespace Azure.AI.Speech.Transcription
         /// <summary> Remove profanity. </summary>
         public static ProfanityFilterMode Removed { get; } = new ProfanityFilterMode(RemovedValue);
 
-        /// <summary> Add "profanity" XML tags &lt;Profanity&gt;&lt;/Profanity&gt;. </summary>
+        /// <summary> Add "profanity" XML tags&lt;/Profanity&gt;. </summary>
         public static ProfanityFilterMode Tags { get; } = new ProfanityFilterMode(TagsValue);
 
         /// <summary> Mask the profanity with * except of the first letter, e.g., f***. </summary>

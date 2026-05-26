@@ -125,7 +125,7 @@
     {
       "$id": "11",
       "kind": "constant",
-      "name": "CommaDelimitedContentType",
+      "name": "commaDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -141,7 +141,7 @@
     {
       "$id": "13",
       "kind": "constant",
-      "name": "CommaDelimitedContentType1",
+      "name": "commaDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -157,7 +157,7 @@
     {
       "$id": "15",
       "kind": "constant",
-      "name": "CommaDelimitedContentType2",
+      "name": "spaceDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -173,7 +173,7 @@
     {
       "$id": "17",
       "kind": "constant",
-      "name": "CommaDelimitedContentType3",
+      "name": "spaceDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -189,7 +189,7 @@
     {
       "$id": "19",
       "kind": "constant",
-      "name": "CommaDelimitedContentType4",
+      "name": "pipeDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -205,7 +205,7 @@
     {
       "$id": "21",
       "kind": "constant",
-      "name": "CommaDelimitedContentType5",
+      "name": "pipeDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -221,7 +221,7 @@
     {
       "$id": "23",
       "kind": "constant",
-      "name": "CommaDelimitedContentType6",
+      "name": "newlineDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -237,7 +237,7 @@
     {
       "$id": "25",
       "kind": "constant",
-      "name": "CommaDelimitedContentType7",
+      "name": "newlineDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -253,7 +253,7 @@
     {
       "$id": "27",
       "kind": "constant",
-      "name": "CommaDelimitedContentType8",
+      "name": "enumCommaDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -269,7 +269,7 @@
     {
       "$id": "29",
       "kind": "constant",
-      "name": "CommaDelimitedContentType9",
+      "name": "enumCommaDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -285,7 +285,7 @@
     {
       "$id": "31",
       "kind": "constant",
-      "name": "CommaDelimitedContentType10",
+      "name": "enumSpaceDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -301,7 +301,7 @@
     {
       "$id": "33",
       "kind": "constant",
-      "name": "CommaDelimitedContentType11",
+      "name": "enumSpaceDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -317,7 +317,7 @@
     {
       "$id": "35",
       "kind": "constant",
-      "name": "CommaDelimitedContentType12",
+      "name": "enumPipeDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -333,7 +333,7 @@
     {
       "$id": "37",
       "kind": "constant",
-      "name": "CommaDelimitedContentType13",
+      "name": "enumPipeDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -349,7 +349,7 @@
     {
       "$id": "39",
       "kind": "constant",
-      "name": "CommaDelimitedContentType14",
+      "name": "enumNewlineDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -365,7 +365,7 @@
     {
       "$id": "41",
       "kind": "constant",
-      "name": "CommaDelimitedContentType15",
+      "name": "enumNewlineDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -381,7 +381,7 @@
     {
       "$id": "43",
       "kind": "constant",
-      "name": "CommaDelimitedContentType16",
+      "name": "extensibleEnumCommaDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -397,7 +397,7 @@
     {
       "$id": "45",
       "kind": "constant",
-      "name": "CommaDelimitedContentType17",
+      "name": "extensibleEnumCommaDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -413,7 +413,7 @@
     {
       "$id": "47",
       "kind": "constant",
-      "name": "CommaDelimitedContentType18",
+      "name": "extensibleEnumSpaceDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -429,7 +429,7 @@
     {
       "$id": "49",
       "kind": "constant",
-      "name": "CommaDelimitedContentType19",
+      "name": "extensibleEnumSpaceDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -445,7 +445,7 @@
     {
       "$id": "51",
       "kind": "constant",
-      "name": "CommaDelimitedContentType20",
+      "name": "extensibleEnumPipeDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -461,7 +461,7 @@
     {
       "$id": "53",
       "kind": "constant",
-      "name": "CommaDelimitedContentType21",
+      "name": "extensibleEnumPipeDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -477,7 +477,7 @@
     {
       "$id": "55",
       "kind": "constant",
-      "name": "CommaDelimitedContentType22",
+      "name": "extensibleEnumNewlineDelimitedContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -493,7 +493,7 @@
     {
       "$id": "57",
       "kind": "constant",
-      "name": "CommaDelimitedContentType23",
+      "name": "extensibleEnumNewlineDelimitedContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {

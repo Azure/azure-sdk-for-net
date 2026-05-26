@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Marketplace
     {
         private readonly ClientDiagnostics _privateStoreCollectionInfoClientDiagnostics;
         private readonly PrivateStoreCollectionInfo _privateStoreCollectionInfoRestClient;
+        private readonly ClientDiagnostics _privateStoreCollectionOfferClientDiagnostics;
+        private readonly PrivateStoreCollectionOffer _privateStoreCollectionOfferRestClient;
+        private readonly ClientDiagnostics _marketplaceClientClientDiagnostics;
+        private readonly MarketplaceClient _marketplaceClientRestClient;
 
         /// <summary> Initializes a new instance of PrivateStoreCollectionInfoCollection for mocking. </summary>
         protected PrivateStoreCollectionInfoCollection()
@@ -41,6 +45,10 @@ namespace Azure.ResourceManager.Marketplace
             TryGetApiVersion(PrivateStoreCollectionInfoResource.ResourceType, out string privateStoreCollectionInfoApiVersion);
             _privateStoreCollectionInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", PrivateStoreCollectionInfoResource.ResourceType.Namespace, Diagnostics);
             _privateStoreCollectionInfoRestClient = new PrivateStoreCollectionInfo(_privateStoreCollectionInfoClientDiagnostics, Pipeline, Endpoint, privateStoreCollectionInfoApiVersion ?? "2025-01-01");
+            _privateStoreCollectionOfferClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", PrivateStoreCollectionInfoResource.ResourceType.Namespace, Diagnostics);
+            _privateStoreCollectionOfferRestClient = new PrivateStoreCollectionOffer(_privateStoreCollectionOfferClientDiagnostics, Pipeline, Endpoint, privateStoreCollectionInfoApiVersion ?? "2025-01-01");
+            _marketplaceClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", PrivateStoreCollectionInfoResource.ResourceType.Namespace, Diagnostics);
+            _marketplaceClientRestClient = new MarketplaceClient(_marketplaceClientClientDiagnostics, Pipeline, Endpoint, privateStoreCollectionInfoApiVersion ?? "2025-01-01");
             ValidateResourceId(id);
         }
 

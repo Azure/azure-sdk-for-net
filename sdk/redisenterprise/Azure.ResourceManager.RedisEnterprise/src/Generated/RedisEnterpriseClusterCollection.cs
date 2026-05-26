@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.RedisEnterprise
     {
         private readonly ClientDiagnostics _redisEnterpriseClusterClientDiagnostics;
         private readonly RedisEnterpriseCluster _redisEnterpriseClusterRestClient;
+        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
 
         /// <summary> Initializes a new instance of RedisEnterpriseClusterCollection for mocking. </summary>
         protected RedisEnterpriseClusterCollection()
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.RedisEnterprise
             TryGetApiVersion(RedisEnterpriseClusterResource.ResourceType, out string redisEnterpriseClusterApiVersion);
             _redisEnterpriseClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", RedisEnterpriseClusterResource.ResourceType.Namespace, Diagnostics);
             _redisEnterpriseClusterRestClient = new RedisEnterpriseCluster(_redisEnterpriseClusterClientDiagnostics, Pipeline, Endpoint, redisEnterpriseClusterApiVersion ?? "2025-08-01-preview");
+            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", RedisEnterpriseClusterResource.ResourceType.Namespace, Diagnostics);
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, redisEnterpriseClusterApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

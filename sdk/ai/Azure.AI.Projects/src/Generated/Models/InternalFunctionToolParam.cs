@@ -38,8 +38,8 @@ namespace Azure.AI.Projects
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Name. </summary>
-        public string Name { get; set; }
+        /// <summary> Gets the Name. </summary>
+        public string Name { get; }
 
         /// <summary> Gets or sets the Description. </summary>
         public string Description { get; set; }
@@ -51,7 +51,7 @@ namespace Azure.AI.Projects
         public bool? Strict { get; set; }
 
         /// <summary> Gets the Type. </summary>
-        public string Type { get; } = "function";
+        internal string Type { get; } = "function";
 
         /// <summary> Whether this function should be deferred and discovered via tool search. </summary>
         public bool? DeferLoading { get; set; }

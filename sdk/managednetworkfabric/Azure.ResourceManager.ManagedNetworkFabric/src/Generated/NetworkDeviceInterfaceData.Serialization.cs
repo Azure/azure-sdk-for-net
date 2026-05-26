@@ -39,11 +39,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Annotation))
@@ -76,26 +71,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStringValue(IPv6Address);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(AdditionalDescription))
-            {
-                writer.WritePropertyName("additionalDescription"u8);
-                writer.WriteStringValue(AdditionalDescription);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastOperation))
-            {
-                writer.WritePropertyName("lastOperation"u8);
-                writer.WriteObjectValue(LastOperation, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(NetworkFabricId))
-            {
-                writer.WritePropertyName("networkFabricId"u8);
-                writer.WriteStringValue(NetworkFabricId);
-            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -105,11 +80,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
-            {
-                writer.WritePropertyName("configurationState"u8);
-                writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -134,7 +104,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -145,26 +114,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             NetworkDeviceInterfaceType? interfaceType = default;
             IPAddress ipv4Address = default;
             string ipv6Address = default;
-            string description = default;
-            string additionalDescription = default;
-            LastOperationProperties lastOperation = default;
-            ResourceIdentifier networkFabricId = default;
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
-            NetworkFabricConfigurationState? configurationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -236,34 +191,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             ipv6Address = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("additionalDescription"u8))
-                        {
-                            additionalDescription = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lastOperation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("networkFabricId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            networkFabricId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -282,15 +209,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             administrativeState = new NetworkFabricAdministrativeState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("configurationState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -305,20 +223,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 name,
                 type,
                 systemData,
-                identity,
                 annotation,
                 physicalIdentifier,
                 connectedTo,
                 interfaceType,
                 ipv4Address,
                 ipv6Address,
-                description,
-                additionalDescription,
-                lastOperation,
-                networkFabricId,
                 provisioningState,
                 administrativeState,
-                configurationState,
                 serializedAdditionalRawData);
         }
 

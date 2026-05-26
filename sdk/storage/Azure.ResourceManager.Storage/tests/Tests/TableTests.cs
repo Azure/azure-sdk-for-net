@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Storage.Tests
                             maxAgeInSeconds: 100));
             parameter.CorsRules.Add(new StorageCorsRule(
                             allowedOrigins: new string[] { "*" },
-                            allowedMethods: new CorsRuleAllowedMethod[] { "GET" },
+                            allowedMethods: new CorsRuleAllowedMethod[] {"GET" },
                             maxAgeInSeconds: 2,
                             exposedHeaders: new string[] { "*" },
                             allowedHeaders: new string[] { "*" }

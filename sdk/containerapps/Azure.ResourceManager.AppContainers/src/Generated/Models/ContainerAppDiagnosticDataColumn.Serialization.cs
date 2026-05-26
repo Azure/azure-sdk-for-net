@@ -8,56 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.AppContainers;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Diagnostics data column. </summary>
-    public partial class ContainerAppDiagnosticDataColumn : IJsonModel<ContainerAppDiagnosticDataColumn>
+    public partial class ContainerAppDiagnosticDataColumn : IUtf8JsonSerializable, IJsonModel<ContainerAppDiagnosticDataColumn>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContainerAppDiagnosticDataColumn PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticDataColumn>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeContainerAppDiagnosticDataColumn(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContainerAppDiagnosticDataColumn)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppDiagnosticDataColumn>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticDataColumn>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ContainerAppDiagnosticDataColumn)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerAppDiagnosticDataColumn>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerAppDiagnosticDataColumn IPersistableModel<ContainerAppDiagnosticDataColumn>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerAppDiagnosticDataColumn>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerAppDiagnosticDataColumn>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +29,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticDataColumn>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticDataColumn>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppDiagnosticDataColumn)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ColumnName))
             {
                 writer.WritePropertyName("columnName"u8);
@@ -89,15 +50,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("columnType"u8);
                 writer.WriteStringValue(ColumnType);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,27 +67,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerAppDiagnosticDataColumn IJsonModel<ContainerAppDiagnosticDataColumn>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContainerAppDiagnosticDataColumn JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerAppDiagnosticDataColumn IJsonModel<ContainerAppDiagnosticDataColumn>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticDataColumn>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticDataColumn>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppDiagnosticDataColumn)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeContainerAppDiagnosticDataColumn(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ContainerAppDiagnosticDataColumn DeserializeContainerAppDiagnosticDataColumn(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerAppDiagnosticDataColumn DeserializeContainerAppDiagnosticDataColumn(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -134,30 +90,149 @@ namespace Azure.ResourceManager.AppContainers.Models
             string columnName = default;
             string dataType = default;
             string columnType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("columnName"u8))
+                if (property.NameEquals("columnName"u8))
                 {
-                    columnName = prop.Value.GetString();
+                    columnName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("dataType"u8))
+                if (property.NameEquals("dataType"u8))
                 {
-                    dataType = prop.Value.GetString();
+                    dataType = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("columnType"u8))
+                if (property.NameEquals("columnType"u8))
                 {
-                    columnType = prop.Value.GetString();
+                    columnType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ContainerAppDiagnosticDataColumn(columnName, dataType, columnType, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerAppDiagnosticDataColumn(columnName, dataType, columnType, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ColumnName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  columnName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ColumnName))
+                {
+                    builder.Append("  columnName: ");
+                    if (ColumnName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ColumnName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ColumnName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dataType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataType))
+                {
+                    builder.Append("  dataType: ");
+                    if (DataType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DataType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DataType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ColumnType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  columnType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ColumnType))
+                {
+                    builder.Append("  columnType: ");
+                    if (ColumnType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ColumnType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ColumnType}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ContainerAppDiagnosticDataColumn>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticDataColumn>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppDiagnosticDataColumn)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerAppDiagnosticDataColumn IPersistableModel<ContainerAppDiagnosticDataColumn>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticDataColumn>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeContainerAppDiagnosticDataColumn(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppDiagnosticDataColumn)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerAppDiagnosticDataColumn>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

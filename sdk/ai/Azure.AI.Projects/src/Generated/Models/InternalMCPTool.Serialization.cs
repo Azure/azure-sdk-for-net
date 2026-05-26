@@ -148,17 +148,6 @@ namespace OpenAI
                 writer.WritePropertyName("project_connection_id"u8);
                 writer.WriteStringValue(ProjectConnectionId);
             }
-            if (Optional.IsCollectionDefined(ToolConfigs))
-            {
-                writer.WritePropertyName("tool_configs"u8);
-                writer.WriteStartObject();
-                foreach (var item in ToolConfigs)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -198,7 +187,6 @@ namespace OpenAI
             BinaryData requireApproval = default;
             bool? deferLoading = default;
             string projectConnectionId = default;
-            IDictionary<string, ToolConfig> toolConfigs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -294,20 +282,6 @@ namespace OpenAI
                     projectConnectionId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("tool_configs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
-                    }
-                    toolConfigs = dictionary;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -325,8 +299,7 @@ namespace OpenAI
                 allowedTools,
                 requireApproval,
                 deferLoading,
-                projectConnectionId,
-                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>());
+                projectConnectionId);
         }
     }
 }

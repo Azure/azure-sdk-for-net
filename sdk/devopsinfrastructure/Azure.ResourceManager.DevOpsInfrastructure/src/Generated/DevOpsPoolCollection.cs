@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     {
         private readonly ClientDiagnostics _poolsClientDiagnostics;
         private readonly Pools _poolsRestClient;
+        private readonly ClientDiagnostics _resourceDetailsClientDiagnostics;
+        private readonly ResourceDetails _resourceDetailsRestClient;
 
         /// <summary> Initializes a new instance of DevOpsPoolCollection for mocking. </summary>
         protected DevOpsPoolCollection()
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             TryGetApiVersion(DevOpsPoolResource.ResourceType, out string devOpsPoolApiVersion);
             _poolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure", DevOpsPoolResource.ResourceType.Namespace, Diagnostics);
             _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Endpoint, devOpsPoolApiVersion ?? "2025-09-20");
+            _resourceDetailsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure", DevOpsPoolResource.ResourceType.Namespace, Diagnostics);
+            _resourceDetailsRestClient = new ResourceDetails(_resourceDetailsClientDiagnostics, Pipeline, Endpoint, devOpsPoolApiVersion ?? "2025-09-20");
             ValidateResourceId(id);
         }
 

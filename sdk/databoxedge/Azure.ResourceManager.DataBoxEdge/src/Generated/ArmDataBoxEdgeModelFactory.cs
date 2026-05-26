@@ -248,53 +248,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new GenerateCertResult(publicKey, privateKey, expireOn, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="encryptionKeyThumbprint"> The digital signature of encrypted certificate. </param>
-        /// <param name="encryptionKey"> The public part of the encryption certificate. Client uses this to encrypt any secret. </param>
-        /// <param name="resourceKey"> The Resource ID of the Resource. </param>
-        /// <param name="clientSecretStoreId"> The Key Vault ARM Id for client secrets. </param>
-        /// <param name="clientSecretStoreUri"> The url to access the Client Key Vault. </param>
-        /// <param name="channelIntegrityKeyName"> The name of Channel Integrity Key stored in the Client Key Vault. </param>
-        /// <param name="channelIntegrityKeyVersion"> The version of Channel Integrity Key stored in the Client Key Vault. </param>
-        /// <param name="keyVaultSyncStatus"> Key vault sync status. </param>
-        /// <param name="deviceSecrets"> Device secrets, will be returned only with ODataFilter $expand=deviceSecrets. </param>
-        /// <param name="clusterWitnessType"> Cluster Witness Type. </param>
-        /// <param name="fileShareWitnessLocation"> The witness location of file share. </param>
-        /// <param name="fileShareWitnessUsername"> The username of file share. </param>
-        /// <param name="cloudWitnessStorageAccountName"> The Cloud Witness Storage account name. </param>
-        /// <param name="cloudWitnessContainerName"> The Container for cloud witness in the storage account. </param>
-        /// <param name="cloudWitnessStorageEndpoint"> The Azure service endpoint of the cloud witness storage account. </param>
-        /// <returns> A new <see cref="Models.DataBoxEdgeDeviceExtendedInfo"/> instance for mocking. </returns>
-        public static DataBoxEdgeDeviceExtendedInfo DataBoxEdgeDeviceExtendedInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string encryptionKeyThumbprint = default, string encryptionKey = default, string resourceKey = default, ResourceIdentifier clientSecretStoreId = default, Uri clientSecretStoreUri = default, string channelIntegrityKeyName = default, string channelIntegrityKeyVersion = default, EdgeKeyVaultSyncStatus? keyVaultSyncStatus = default, IReadOnlyDictionary<string, DataBoxEdgeDeviceSecret> deviceSecrets = default, EdgeClusterWitnessType? clusterWitnessType = default, string fileShareWitnessLocation = default, string fileShareWitnessUsername = default, string cloudWitnessStorageAccountName = default, string cloudWitnessContainerName = default, string cloudWitnessStorageEndpoint = default)
-        {
-            return new DataBoxEdgeDeviceExtendedInfo(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                encryptionKeyThumbprint is null && encryptionKey is null && resourceKey is null && clientSecretStoreId is null && clientSecretStoreUri is null && channelIntegrityKeyName is null && channelIntegrityKeyVersion is null && keyVaultSyncStatus is null && deviceSecrets is null && clusterWitnessType is null && fileShareWitnessLocation is null && fileShareWitnessUsername is null && cloudWitnessStorageAccountName is null && cloudWitnessContainerName is null && cloudWitnessStorageEndpoint is null ? default : new DataBoxEdgeDeviceExtendedInfoProperties(
-                    encryptionKeyThumbprint,
-                    encryptionKey,
-                    resourceKey,
-                    clientSecretStoreId,
-                    clientSecretStoreUri,
-                    channelIntegrityKeyName,
-                    channelIntegrityKeyVersion,
-                    keyVaultSyncStatus,
-                    deviceSecrets,
-                    clusterWitnessType,
-                    fileShareWitnessLocation,
-                    fileShareWitnessUsername,
-                    cloudWitnessStorageAccountName,
-                    cloudWitnessContainerName,
-                    cloudWitnessStorageEndpoint,
-                    null));
-        }
-
         /// <summary> Holds device secret either as a KeyVault reference or as an encrypted value. </summary>
         /// <param name="encryptedSecret"> Encrypted (using device public key) secret value. </param>
         /// <param name="keyVaultId"> Id of the Key-Vault where secret is stored (ex: secrets/AuthClientSecret/82ef4346187a4033a10d629cde07d740). </param>
@@ -1258,6 +1211,40 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 etag,
                 identity,
                 kind);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxEdgeDeviceExtendedInfo"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="encryptionKeyThumbprint"> The digital signature of encrypted certificate. </param>
+        /// <param name="encryptionKey"> The public part of the encryption certificate. Client uses this to encrypt any secret. </param>
+        /// <param name="resourceKey"> The Resource ID of the Resource. </param>
+        /// <param name="clientSecretStoreId"> The Key Vault ARM Id for client secrets. </param>
+        /// <param name="clientSecretStoreUri"> The url to access the Client Key Vault. </param>
+        /// <param name="channelIntegrityKeyName"> The name of Channel Integrity Key stored in the Client Key Vault. </param>
+        /// <param name="channelIntegrityKeyVersion"> The version of Channel Integrity Key stored in the Client Key Vault. </param>
+        /// <param name="keyVaultSyncStatus"> Key vault sync status. </param>
+        /// <param name="deviceSecrets"> Device secrets, will be returned only with ODataFilter $expand=deviceSecrets. </param>
+        /// <param name="clusterWitnessType"> Cluster Witness Type. </param>
+        /// <param name="fileShareWitnessLocation"> The witness location of file share. </param>
+        /// <param name="fileShareWitnessUsername"> The username of file share. </param>
+        /// <param name="cloudWitnessStorageAccountName"> The Cloud Witness Storage account name. </param>
+        /// <param name="cloudWitnessContainerName"> The Container for cloud witness in the storage account. </param>
+        /// <param name="cloudWitnessStorageEndpoint"> The Azure service endpoint of the cloud witness storage account. </param>
+        /// <returns> A new <see cref="Models.DataBoxEdgeDeviceExtendedInfo"/> instance for mocking. </returns>
+        public static DataBoxEdgeDeviceExtendedInfo DataBoxEdgeDeviceExtendedInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string encryptionKeyThumbprint = default, string encryptionKey = default, string resourceKey = default, ResourceIdentifier clientSecretStoreId = default, Uri clientSecretStoreUri = default, string channelIntegrityKeyName = default, string channelIntegrityKeyVersion = default, EdgeKeyVaultSyncStatus? keyVaultSyncStatus = default, IReadOnlyDictionary<string, DataBoxEdgeDeviceSecret> deviceSecrets = default, EdgeClusterWitnessType? clusterWitnessType = default, string fileShareWitnessLocation = default, string fileShareWitnessUsername = default, string cloudWitnessStorageAccountName = default, string cloudWitnessContainerName = default, string cloudWitnessStorageEndpoint = default)
+        {
+            deviceSecrets ??= new ChangeTrackingDictionary<string, DataBoxEdgeDeviceSecret>();
+
+            return new DataBoxEdgeDeviceExtendedInfo(
+                id,
+                name,
+                resourceType,
+                additionalBinaryDataProperties: null,
+                default,
+                systemData);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdge.DataBoxEdgeJobData"/>. </summary>

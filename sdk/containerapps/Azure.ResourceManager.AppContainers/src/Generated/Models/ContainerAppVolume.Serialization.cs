@@ -8,56 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.AppContainers;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Volume definitions for the Container App. </summary>
-    public partial class ContainerAppVolume : IJsonModel<ContainerAppVolume>
+    public partial class ContainerAppVolume : IUtf8JsonSerializable, IJsonModel<ContainerAppVolume>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContainerAppVolume PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolume>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeContainerAppVolume(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppVolume>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolume>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerAppVolume>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerAppVolume IPersistableModel<ContainerAppVolume>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerAppVolume>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerAppVolume>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +30,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolume>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -93,7 +55,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
-                foreach (SecretVolumeItem item in Secrets)
+                foreach (var item in Secrets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -104,15 +66,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStringValue(MountOptions);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,27 +83,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerAppVolume IJsonModel<ContainerAppVolume>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContainerAppVolume JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerAppVolume IJsonModel<ContainerAppVolume>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolume>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeContainerAppVolume(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ContainerAppVolume DeserializeContainerAppVolume(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerAppVolume DeserializeContainerAppVolume(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -151,59 +108,216 @@ namespace Azure.ResourceManager.AppContainers.Models
             string storageName = default;
             IList<SecretVolumeItem> secrets = default;
             string mountOptions = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("storageType"u8))
+                if (property.NameEquals("storageType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageType = new ContainerAppStorageType(prop.Value.GetString());
+                    storageType = new ContainerAppStorageType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("storageName"u8))
+                if (property.NameEquals("storageName"u8))
                 {
-                    storageName = prop.Value.GetString();
+                    storageName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("secrets"u8))
+                if (property.NameEquals("secrets"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SecretVolumeItem> array = new List<SecretVolumeItem>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(SecretVolumeItem.DeserializeSecretVolumeItem(item, options));
                     }
                     secrets = array;
                     continue;
                 }
-                if (prop.NameEquals("mountOptions"u8))
+                if (property.NameEquals("mountOptions"u8))
                 {
-                    mountOptions = prop.Value.GetString();
+                    mountOptions = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppVolume(
                 name,
                 storageType,
                 storageName,
                 secrets ?? new ChangeTrackingList<SecretVolumeItem>(),
                 mountOptions,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storageType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageType))
+                {
+                    builder.Append("  storageType: ");
+                    builder.AppendLine($"'{StorageType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storageName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageName))
+                {
+                    builder.Append("  storageName: ");
+                    if (StorageName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StorageName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StorageName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Secrets), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  secrets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Secrets))
+                {
+                    if (Secrets.Any())
+                    {
+                        builder.Append("  secrets: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Secrets)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  secrets: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MountOptions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  mountOptions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MountOptions))
+                {
+                    builder.Append("  mountOptions: ");
+                    if (MountOptions.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MountOptions}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MountOptions}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ContainerAppVolume>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolume>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerAppVolume IPersistableModel<ContainerAppVolume>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolume>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeContainerAppVolume(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerAppVolume>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

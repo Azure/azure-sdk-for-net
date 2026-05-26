@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.CognitiveServices
     {
         private readonly ClientDiagnostics _accountsClientDiagnostics;
         private readonly Accounts _accountsRestClient;
+        private readonly ClientDiagnostics _deletedAccountsClientDiagnostics;
+        private readonly DeletedAccounts _deletedAccountsRestClient;
         private readonly CognitiveServicesAccountData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts";
@@ -54,6 +56,8 @@ namespace Azure.ResourceManager.CognitiveServices
             TryGetApiVersion(ResourceType, out string cognitiveServicesAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
             _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesAccountApiVersion ?? "2026-01-15-preview");
+            _deletedAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
+            _deletedAccountsRestClient = new DeletedAccounts(_deletedAccountsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesAccountApiVersion ?? "2026-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -1460,6 +1464,39 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNullOrEmpty(raiPolicyName, nameof(raiPolicyName));
 
             return GetRaiPolicies().Get(raiPolicyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SubscriptionRaiPolicies in the <see cref="CognitiveServicesAccountResource"/>. </summary>
+        /// <returns> An object representing collection of SubscriptionRaiPolicies and their operations over a SubscriptionRaiPolicyResource. </returns>
+        public virtual SubscriptionRaiPolicyCollection GetSubscriptionRaiPolicies()
+        {
+            return GetCachedClient(client => new SubscriptionRaiPolicyCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified Content Filters associated with the Subscription. </summary>
+        /// <param name="raiPolicyName"> The name of the RaiPolicy associated with the Cognitive Services Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="raiPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="raiPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SubscriptionRaiPolicyResource>> GetSubscriptionRaiPolicyAsync(string raiPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(raiPolicyName, nameof(raiPolicyName));
+
+            return await GetSubscriptionRaiPolicies().GetAsync(raiPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified Content Filters associated with the Subscription. </summary>
+        /// <param name="raiPolicyName"> The name of the RaiPolicy associated with the Cognitive Services Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="raiPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="raiPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SubscriptionRaiPolicyResource> GetSubscriptionRaiPolicy(string raiPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(raiPolicyName, nameof(raiPolicyName));
+
+            return GetSubscriptionRaiPolicies().Get(raiPolicyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RaiBlocklists in the <see cref="CognitiveServicesAccountResource"/>. </summary>

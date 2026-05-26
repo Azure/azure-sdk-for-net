@@ -670,11 +670,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Gets a collection of EventGridTopicPrivateEndpointConnections in the <see cref="EventGridTopicResource"/>. </summary>
-        /// <returns> An object representing collection of EventGridTopicPrivateEndpointConnections and their operations over a EventGridTopicPrivateEndpointConnectionResource. </returns>
-        public virtual EventGridTopicPrivateEndpointConnectionCollection GetEventGridTopicPrivateEndpointConnections()
+        /// <summary> Gets a collection of EventGridTopicEventGridPrivateEndpointConnections in the <see cref="EventGridTopicResource"/>. </summary>
+        /// <returns> An object representing collection of EventGridTopicEventGridPrivateEndpointConnections and their operations over a EventGridTopicEventGridPrivateEndpointConnectionResource. </returns>
+        public virtual EventGridTopicEventGridPrivateEndpointConnectionCollection GetEventGridTopicEventGridPrivateEndpointConnections()
         {
-            return GetCachedClient(client => new EventGridTopicPrivateEndpointConnectionCollection(client, Id));
+            return GetCachedClient(client => new EventGridTopicEventGridPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary> Get. </summary>
@@ -683,11 +683,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <exception cref="ArgumentNullException"> <paramref name="eventGridPrivateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventGridPrivateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EventGridTopicPrivateEndpointConnectionResource>> GetEventGridTopicPrivateEndpointConnectionAsync(string eventGridPrivateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventGridTopicEventGridPrivateEndpointConnectionResource>> GetEventGridTopicEventGridPrivateEndpointConnectionAsync(string eventGridPrivateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventGridPrivateEndpointConnectionName, nameof(eventGridPrivateEndpointConnectionName));
 
-            return await GetEventGridTopicPrivateEndpointConnections().GetAsync(eventGridPrivateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetEventGridTopicEventGridPrivateEndpointConnections().GetAsync(eventGridPrivateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get. </summary>
@@ -696,11 +696,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <exception cref="ArgumentNullException"> <paramref name="eventGridPrivateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventGridPrivateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EventGridTopicPrivateEndpointConnectionResource> GetEventGridTopicPrivateEndpointConnection(string eventGridPrivateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<EventGridTopicEventGridPrivateEndpointConnectionResource> GetEventGridTopicEventGridPrivateEndpointConnection(string eventGridPrivateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventGridPrivateEndpointConnectionName, nameof(eventGridPrivateEndpointConnectionName));
 
-            return GetEventGridTopicPrivateEndpointConnections().Get(eventGridPrivateEndpointConnectionName, cancellationToken);
+            return GetEventGridTopicEventGridPrivateEndpointConnections().Get(eventGridPrivateEndpointConnectionName, cancellationToken);
         }
     }
 }

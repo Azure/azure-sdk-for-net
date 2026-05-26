@@ -35,11 +35,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(InfrastructureExpressRouteConnections))
@@ -85,7 +80,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            NetworkFabricManagedServiceIdentityPatch identity = default;
             IDictionary<string, string> tags = default;
             IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections = default;
             IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections = default;
@@ -93,15 +87,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -162,7 +147,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkFabricControllerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, identity, infrastructureExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(), workloadExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>());
+            return new NetworkFabricControllerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, infrastructureExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(), workloadExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>());
         }
 
         BinaryData IPersistableModel<NetworkFabricControllerPatch>.Write(ModelReaderWriterOptions options)

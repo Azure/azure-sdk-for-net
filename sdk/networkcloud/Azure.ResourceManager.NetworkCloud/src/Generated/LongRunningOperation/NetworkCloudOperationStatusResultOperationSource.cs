@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.NetworkCloud
         NetworkCloudOperationStatusResult IOperationSource<NetworkCloudOperationStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return NetworkCloudOperationStatusResult.DeserializeNetworkCloudOperationStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            NetworkCloudOperationStatusResult result = NetworkCloudOperationStatusResult.DeserializeNetworkCloudOperationStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.NetworkCloud
         async ValueTask<NetworkCloudOperationStatusResult> IOperationSource<NetworkCloudOperationStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return NetworkCloudOperationStatusResult.DeserializeNetworkCloudOperationStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            NetworkCloudOperationStatusResult result = NetworkCloudOperationStatusResult.DeserializeNetworkCloudOperationStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

@@ -35,11 +35,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
-            }
         }
 
         NetworkPacketBrokerPatch IJsonModel<NetworkPacketBrokerPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -62,21 +57,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            NetworkFabricManagedServiceIdentityPatch identity = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -97,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkPacketBrokerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, identity);
+            return new NetworkPacketBrokerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkPacketBrokerPatch>.Write(ModelReaderWriterOptions options)

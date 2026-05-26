@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "ListItemsAccept",
+      "name": "listItemsContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {

@@ -76,7 +76,7 @@
     {
       "$id": "8",
       "kind": "constant",
-      "name": "CreateOrUpdateAccept",
+      "name": "createOrUpdateContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -92,7 +92,7 @@
     {
       "$id": "10",
       "kind": "constant",
-      "name": "CreateOrUpdateAccept1",
+      "name": "createOrReplaceContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -108,7 +108,7 @@
     {
       "$id": "12",
       "kind": "constant",
-      "name": "CreateOrUpdateAccept2",
+      "name": "createOrReplaceContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -124,7 +124,7 @@
     {
       "$id": "14",
       "kind": "constant",
-      "name": "CreateOrUpdateAccept3",
+      "name": "getContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -140,7 +140,7 @@
     {
       "$id": "16",
       "kind": "constant",
-      "name": "CreateOrUpdateAccept4",
+      "name": "listContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -156,7 +156,7 @@
     {
       "$id": "18",
       "kind": "constant",
-      "name": "CreateOrUpdateAccept5",
+      "name": "exportContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -172,7 +172,7 @@
     {
       "$id": "20",
       "kind": "constant",
-      "name": "CreateOrUpdateAccept6",
+      "name": "exportAllUsersContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {

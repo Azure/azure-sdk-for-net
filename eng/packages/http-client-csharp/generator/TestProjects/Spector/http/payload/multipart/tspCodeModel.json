@@ -1499,7 +1499,6 @@
                 },
                 "name": "filename",
                 "isGeneratedName": false,
-                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -1533,7 +1532,6 @@
                 },
                 "name": "contentType",
                 "isGeneratedName": false,
-                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -1762,7 +1760,6 @@
                 },
                 "name": "filename",
                 "isGeneratedName": false,
-                "isExactName": false,
                 "optional": true,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -1797,12 +1794,10 @@
                     "$ref": "4"
                   },
                   "name": "FileContentType",
-                  "isGeneratedName": true,
-                  "isExactName": false
+                  "isGeneratedName": true
                 },
                 "name": "contentType",
                 "isGeneratedName": false,
-                "isExactName": false,
                 "optional": true,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -1910,7 +1905,6 @@
                 },
                 "name": "filename",
                 "isGeneratedName": false,
-                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -2089,7 +2083,6 @@
                 },
                 "name": "filename",
                 "isGeneratedName": false,
-                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -2127,12 +2120,10 @@
                     "crossLanguageDefinitionId": "TypeSpec.string"
                   },
                   "name": "FileSpecificContentTypeContentType",
-                  "isGeneratedName": true,
-                  "isExactName": false
+                  "isGeneratedName": true
                 },
                 "name": "contentType",
                 "isGeneratedName": false,
-                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -2285,7 +2276,6 @@
                 },
                 "name": "filename",
                 "isGeneratedName": false,
-                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -2321,7 +2311,6 @@
                 },
                 "name": "contentType",
                 "isGeneratedName": false,
-                "isExactName": false,
                 "optional": true,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -2405,12 +2394,10 @@
                     "crossLanguageDefinitionId": "TypeSpec.string"
                   },
                   "name": "FloatRequest1",
-                  "isGeneratedName": true,
-                  "isExactName": false
+                  "isGeneratedName": true
                 },
                 "name": "contentType",
                 "isGeneratedName": false,
-                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,

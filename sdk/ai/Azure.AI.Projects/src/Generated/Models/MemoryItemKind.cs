@@ -4,28 +4,21 @@
 
 using System;
 using System.ComponentModel;
-using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Memory
 {
-    /// <summary> Memory item kind. </summary>
-    public readonly partial struct MemoryItemKind : IEquatable<MemoryItemKind>
+    internal readonly partial struct MemoryItemKind : IEquatable<MemoryItemKind>
     {
         private readonly string _value;
         /// <summary> User profile information extracted from conversations. </summary>
         private const string UserProfileValue = "user_profile";
         /// <summary> Summary of chat conversations. </summary>
         private const string ChatSummaryValue = "chat_summary";
-        /// <summary> Routine procedures extracted from conversations. </summary>
-        private const string ProceduralValue = "procedural";
 
         /// <summary> Initializes a new instance of <see cref="MemoryItemKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MemoryItemKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             _value = value;
         }
 
@@ -34,9 +27,6 @@ namespace Azure.AI.Projects.Memory
 
         /// <summary> Summary of chat conversations. </summary>
         public static MemoryItemKind ChatSummary { get; } = new MemoryItemKind(ChatSummaryValue);
-
-        /// <summary> Routine procedures extracted from conversations. </summary>
-        public static MemoryItemKind Procedural { get; } = new MemoryItemKind(ProceduralValue);
 
         /// <summary> Determines if two <see cref="MemoryItemKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

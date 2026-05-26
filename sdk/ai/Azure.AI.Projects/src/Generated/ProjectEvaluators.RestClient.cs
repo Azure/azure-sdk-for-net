@@ -193,57 +193,5 @@ namespace Azure.AI.Projects.Evaluation
             message.Apply(options);
             return message;
         }
-
-        internal PipelineMessage CreateStartPendingUploadRequest(string name, string version, BinaryContent content, string foundryFeatures, RequestOptions options)
-        {
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/evaluators/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/versions/", false);
-            uri.AppendPath(version, true);
-            uri.AppendPath("/startPendingUpload", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
-            request.Headers.Set("Content-Type", "application/json");
-            request.Headers.Set("Accept", "application/json");
-            request.Content = content;
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateGetCredentialsRequest(string name, string version, BinaryContent content, string foundryFeatures, RequestOptions options)
-        {
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/evaluators/", false);
-            uri.AppendPath(name, true);
-            uri.AppendPath("/versions/", false);
-            uri.AppendPath(version, true);
-            uri.AppendPath("/credentials", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
-            request.Headers.Set("Content-Type", "application/json");
-            request.Headers.Set("Accept", "application/json");
-            request.Content = content;
-            message.Apply(options);
-            return message;
-        }
     }
 }

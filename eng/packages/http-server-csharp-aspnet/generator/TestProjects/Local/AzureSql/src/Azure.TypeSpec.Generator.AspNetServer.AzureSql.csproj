@@ -6,5 +6,7 @@
     <PackageTags>Azure.TypeSpec.Generator.AspNetServer.AzureSql</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
 </Project>
+

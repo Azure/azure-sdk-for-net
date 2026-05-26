@@ -1,19 +1,16 @@
 # Release History
 
-## 2.0.0 (2026-06-06)
+## 2.0.0-beta.2 (Unreleased)
 
 ### Features Added
 
-- GA release of the Azure AI Translator Text Translation SDK targeting the 2026-06-06 API version.
 - Added `TextTranslationClientSettings` to support creating a `TextTranslationClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
-- `TranslationTarget.Tone` property is now strongly typed as `TranslationTone?` instead of `string`.
-- `TranslationTarget.Gender` property is now strongly typed as `TranslationGender?` instead of `string`.
 
 ### Breaking Changes
 
-- Removed `TranslationTarget.Grade` property.
-- Changed `TranslationTarget.Tone` type from `string` to `TranslationTone?`.
-- Changed `TranslationTarget.Gender` type from `string` to `TranslationGender?`.
+### Bugs Fixed
+
+### Other Changes
 
 ## 2.0.0-beta.1 (2026-01-08)
 
@@ -61,3 +58,4 @@ Initial version of Text Translation client library for .NET
 - Added support for Getting the Supported Languages - [GetLanguages API](https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-languages)
 - Added support for Looking up the Dictionary Entries - [LookupDictionaryEntries API](https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-dictionary-lookup)
 - Added support for Looking up the Dictionary Examples - [LookupDictionaryExamples API](https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-dictionary-examples)
+

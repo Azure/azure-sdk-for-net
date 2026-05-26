@@ -52,7 +52,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The name of the function to be called. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> A description of what the function does, used by the model to choose when and how to call the function. </summary>
         public string Description { get; set; }
@@ -86,7 +86,7 @@ namespace Azure.AI.Projects
         public IDictionary<string, BinaryData> Spec { get; }
 
         /// <summary> Open API authentication details. </summary>
-        public OpenApiAuthDetails Auth { get; set; }
+        public OpenApiAuthDetails Auth { get; }
 
         /// <summary> List of OpenAPI spec parameters that will use user-provided defaults. </summary>
         public IList<string> DefaultParams { get; }

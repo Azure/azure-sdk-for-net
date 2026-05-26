@@ -13,9 +13,6 @@ namespace Azure.AI.AgentServer.Invocations.Tests;
 [NonParallelizable]
 public class InvocationsActivitySourceAdvancedTests
 {
-    private const string TestSourceName = "test.invocations.advanced";
-    private static readonly ActivitySource s_testSource = new(TestSourceName);
-
     [TearDown]
     public void TearDown()
     {
@@ -23,51 +20,62 @@ public class InvocationsActivitySourceAdvancedTests
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", null);
         Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID", null);
         FoundryEnvironment.Reload();
-        Activity.Current = null;
     }
 
     [Test]
-    public void PropagateInvocationBaggage_TruncatesXRequestId_At256Characters()
+    public void StartInvocationActivity_TruncatesXRequestId_At256Characters()
     {
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "agent");
+        FoundryEnvironment.Reload();
+
+        // Use a unique activity source name to avoid cross-fixture interference
+        const string sourceName = "test.truncation.256";
         using var listener = new ActivityListener
         {
-            ShouldListenTo = source => source.Name == TestSourceName,
+            ShouldListenTo = source => source.Name == sourceName,
             Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
         };
         ActivitySource.AddActivityListener(listener);
 
-        using var parent = s_testSource.StartActivity("parent-request");
-
-        var source = new InvocationsActivitySource();
+        var source = new TestableActivitySource(sourceName);
         var context = new InvocationContext(
             "inv-1", "sess-1",
             new Dictionary<string, string>(),
             new Dictionary<string, StringValues>(),
             IsolationContext.Empty);
 
+        // Create x-request-id longer than 256 characters
         var longRequestId = new string('x', 300);
         var headers = new HeaderDictionary { ["x-request-id"] = longRequestId };
 
-        source.PropagateInvocationBaggage(context, headers);
+        using var activity = source.StartInvocationActivity(context, headers);
 
-        var baggageValue = Activity.Current!.GetBaggageItem("x-request-id");
+        Assert.That(activity, Is.Not.Null);
+
+        var tagValue = activity!.GetTagItem("azure.ai.agentserver.x-request-id") as string;
+        Assert.That(tagValue, Is.Not.Null);
+        Assert.That(tagValue!.Length, Is.EqualTo(256));
+
+        var baggageValue = activity.GetBaggageItem("x-request-id");
         Assert.That(baggageValue, Is.Not.Null);
         Assert.That(baggageValue!.Length, Is.EqualTo(256));
     }
 
     [Test]
-    public void PropagateInvocationBaggage_DoesNotTruncateXRequestId_WhenExactly256()
+    public void StartInvocationActivity_DoesNotTruncateXRequestId_WhenExactly256()
     {
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "agent");
+        FoundryEnvironment.Reload();
+
+        const string sourceName = "test.truncation.exact";
         using var listener = new ActivityListener
         {
-            ShouldListenTo = source => source.Name == TestSourceName,
+            ShouldListenTo = source => source.Name == sourceName,
             Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
         };
         ActivitySource.AddActivityListener(listener);
 
-        using var parent = s_testSource.StartActivity("parent-request");
-
-        var source = new InvocationsActivitySource();
+        var source = new TestableActivitySource(sourceName);
         var context = new InvocationContext(
             "inv-1", "sess-1",
             new Dictionary<string, string>(),
@@ -77,26 +85,66 @@ public class InvocationsActivitySourceAdvancedTests
         var exactRequestId = new string('y', 256);
         var headers = new HeaderDictionary { ["x-request-id"] = exactRequestId };
 
-        source.PropagateInvocationBaggage(context, headers);
+        using var activity = source.StartInvocationActivity(context, headers);
 
-        var baggageValue = Activity.Current!.GetBaggageItem("x-request-id");
-        Assert.That(baggageValue, Is.EqualTo(exactRequestId));
+        Assert.That(activity, Is.Not.Null);
+
+        var tagValue = activity!.GetTagItem("azure.ai.agentserver.x-request-id") as string;
+        Assert.That(tagValue, Is.EqualTo(exactRequestId));
     }
 
     [Test]
-    public void ProtectedConstructor_CanBeSubclassed()
+    public void ProtectedConstructor_WithCustomName_CreatesCustomActivitySource()
     {
-        // Verify subclass construction works (testability hook)
-        var source = new TestableActivitySource("custom.name");
-        Assert.That(source, Is.Not.Null);
+        const string sourceName = "custom.invocations.test";
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = source => source.Name == sourceName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
+        };
+        ActivitySource.AddActivityListener(listener);
+
+        var source = new TestableActivitySource(sourceName);
+        var context = new InvocationContext(
+            "inv-1", "sess-1",
+            new Dictionary<string, string>(),
+            new Dictionary<string, StringValues>(),
+            IsolationContext.Empty);
+
+        using var activity = source.StartInvocationActivity(context, new HeaderDictionary());
+
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity!.Source.Name, Is.EqualTo(sourceName));
     }
 
     [Test]
-    public void ProtectedConstructor_WithNull_DoesNotThrow()
+    public void ProtectedConstructor_WithNull_FallsBackToDefaultName()
     {
-        // Null name should not throw
-        var source = new TestableActivitySource(null);
-        Assert.That(source, Is.Not.Null);
+        // Verify the null fallback by checking the actual source name resolved.
+        // Register a listener for DefaultName to confirm the source uses it.
+        const string sourceName = "test.null-fallback.sentinel";
+        var capturedDefaultSourceName = (string?)null;
+
+        using var sentinel = new ActivityListener
+        {
+            ShouldListenTo = source =>
+            {
+                if (source.Name == InvocationsActivitySource.DefaultName)
+                {
+                    capturedDefaultSourceName = source.Name;
+                }
+                // Only listen to our sentinel name (never matches) to avoid side effects
+                return source.Name == sourceName;
+            },
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.None,
+        };
+        ActivitySource.AddActivityListener(sentinel);
+
+        // Creating the source with null should fall back to DefaultName,
+        // which triggers the ShouldListenTo callback above
+        _ = new TestableActivitySource(null);
+
+        Assert.That(capturedDefaultSourceName, Is.EqualTo(InvocationsActivitySource.DefaultName));
     }
 
     /// <summary>

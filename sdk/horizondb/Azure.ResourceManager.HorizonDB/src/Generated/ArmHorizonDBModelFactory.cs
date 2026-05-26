@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> HorizonDb cluster for update operations. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The properties that can be updated for a HorizonDb cluster. </param>
-        /// <returns> A new <see cref="Models.HorizonDBClusterForPatchUpdate"/> instance for mocking. </returns>
-        public static HorizonDBClusterForPatchUpdate HorizonDBClusterForPatchUpdate(IDictionary<string, string> tags = default, HorizonDBClusterPatchProperties properties = default)
+        /// <returns> A new <see cref="Models.HorizonDBClusterPatch"/> instance for mocking. </returns>
+        public static HorizonDBClusterPatch HorizonDBClusterPatch(IDictionary<string, string> tags = default, HorizonDBClusterPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HorizonDBClusterForPatchUpdate(tags, properties, additionalBinaryDataProperties: null);
+            return new HorizonDBClusterPatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the HorizonDb pool. </summary>
@@ -366,12 +366,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> HorizonDb parameter group for update operations. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The properties that can be updated for a HorizonDb parameter group. </param>
-        /// <returns> A new <see cref="Models.HorizonDBParameterGroupForPatchUpdate"/> instance for mocking. </returns>
-        public static HorizonDBParameterGroupForPatchUpdate HorizonDBParameterGroupForPatchUpdate(IDictionary<string, string> tags = default, HorizonDBParameterGroupPatchProperties properties = default)
+        /// <returns> A new <see cref="Models.HorizonDBParameterGroupPatch"/> instance for mocking. </returns>
+        public static HorizonDBParameterGroupPatch HorizonDBParameterGroupPatch(IDictionary<string, string> tags = default, HorizonDBParameterGroupPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HorizonDBParameterGroupForPatchUpdate(tags, properties, additionalBinaryDataProperties: null);
+            return new HorizonDBParameterGroupPatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Properties of a HorizonDb parameter group for update operations. </summary>

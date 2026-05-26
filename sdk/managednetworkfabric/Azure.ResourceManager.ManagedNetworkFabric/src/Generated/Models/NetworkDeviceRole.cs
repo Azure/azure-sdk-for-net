@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string TSValue = "TS";
         private const string ManagementValue = "Management";
 
-        /// <summary> NetworkDeviceRole-CE(Customer Edge). </summary>
+        /// <summary> CE. </summary>
         public static NetworkDeviceRole CE { get; } = new NetworkDeviceRole(CEValue);
-        /// <summary> NetworkDeviceRole-ToR(top of rack). </summary>
+        /// <summary> ToR. </summary>
         public static NetworkDeviceRole ToR { get; } = new NetworkDeviceRole(ToRValue);
-        /// <summary> NetworkDeviceRole-NPB(Network Packet Broker). </summary>
+        /// <summary> NPB. </summary>
         public static NetworkDeviceRole Npb { get; } = new NetworkDeviceRole(NpbValue);
-        /// <summary> NetworkDeviceRole-TS(Terminal Server). </summary>
+        /// <summary> TS. </summary>
         public static NetworkDeviceRole TS { get; } = new NetworkDeviceRole(TSValue);
-        /// <summary> NetworkDeviceRole-Management. </summary>
+        /// <summary> Management. </summary>
         public static NetworkDeviceRole Management { get; } = new NetworkDeviceRole(ManagementValue);
         /// <summary> Determines if two <see cref="NetworkDeviceRole"/> values are the same. </summary>
         public static bool operator ==(NetworkDeviceRole left, NetworkDeviceRole right) => left.Equals(right);

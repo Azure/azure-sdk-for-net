@@ -21,32 +21,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public static partial class ArmRecoveryServicesBackupModelFactory
     {
 
-        /// <summary> The resource storage details. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> BackupResourceConfigResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupResourceConfigData"/> instance for mocking. </returns>
-        public static BackupResourceConfigData BackupResourceConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupResourceConfigProperties properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupResourceConfigData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                eTag);
-        }
-
         /// <summary> Prepare DataMove Request. </summary>
         /// <param name="targetResourceId"> ARM Id of target vault. </param>
         /// <param name="targetRegion"> Target Region. </param>
@@ -92,58 +66,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Base class for backup ProtectionIntent. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> ProtectionIntentResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionIntentData"/> instance for mocking. </returns>
-        public static BackupProtectionIntentData BackupProtectionIntentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericProtectionIntent properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupProtectionIntentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                eTag);
-        }
-
-        /// <summary> Backup resource vault config details. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> BackupResourceVaultConfigResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupResourceVaultConfigData"/> instance for mocking. </returns>
-        public static BackupResourceVaultConfigData BackupResourceVaultConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupResourceVaultConfigProperties properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupResourceVaultConfigData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                eTag);
-        }
-
         /// <summary> Backup resource vault config details. </summary>
         /// <param name="storageModelType"> Storage type. </param>
         /// <param name="storageType"> Storage type. </param>
@@ -170,84 +92,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The BackupResourceEncryptionConfigExtendedData. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The properties of the backup resource encryption config extended resource. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupResourceEncryptionConfigExtendedData"/> instance for mocking. </returns>
-        public static BackupResourceEncryptionConfigExtendedData BackupResourceEncryptionConfigExtendedData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupResourceEncryptionConfigExtendedProperties properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupResourceEncryptionConfigExtendedData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                eTag);
-        }
-
-        /// <summary> The BackupResourceEncryptionConfigExtendedCreateOrUpdateContent. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The properties of the backup resource encryption config. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="Models.BackupResourceEncryptionConfigExtendedCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static BackupResourceEncryptionConfigExtendedCreateOrUpdateContent BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupResourceEncryptionConfig properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                eTag);
-        }
-
-        /// <summary> Private Endpoint Connection Response Properties. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> PrivateEndpointConnectionResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static BackupPrivateEndpointConnectionData BackupPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupPrivateEndpointConnectionProperties properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                eTag);
-        }
-
         /// <param name="provisioningState"> Gets or sets provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpointId"> Gets or sets id. </param>
         /// <param name="groupIds"> Group Ids for the Private Endpoint. </param>
@@ -258,32 +102,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             groupIds ??= new ChangeTrackingList<VaultSubResourceType>();
 
             return new BackupPrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, null), groupIds.ToList(), privateLinkServiceConnectionState, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Base class for backup items. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> ProtectedItemResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectedItemData"/> instance for mocking. </returns>
-        public static BackupProtectedItemData BackupProtectedItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericProtectedItem properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupProtectedItemData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                eTag);
         }
 
         /// <summary>
@@ -1481,32 +1299,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new RecoveryPointsRecommendedForMoveContent(objectType, excludedRPList.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Base class for backup copies. Workload-specific backup copies are derived from this class. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> RecoveryPointResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupRecoveryPointData"/> instance for mocking. </returns>
-        public static BackupRecoveryPointData BackupRecoveryPointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericRecoveryPoint properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupRecoveryPointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                eTag);
-        }
-
         /// <summary>
         /// Base class for backup copies. Workload-specific backup copies are derived from this class.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FileShareRecoveryPoint"/>, <see cref="Models.WorkloadPointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadRecoveryPoint"/>, <see cref="Models.WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadSapHanaRecoveryPoint"/>, <see cref="Models.WorkloadSapAsePointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadSapAseRecoveryPoint"/>, <see cref="Models.WorkloadSqlPointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadSqlRecoveryPoint"/>, <see cref="Models.GenericRecoveryPoint"/>, and <see cref="Models.IaasVmRecoveryPoint"/>.
@@ -1948,32 +1740,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             excludedDiskList ??= new ChangeTrackingList<DiskInformation>();
 
             return new RecoveryPointDiskConfiguration(numberOfDisksIncludedInBackup, numberOfDisksAttachedToVm, includedDiskList.ToList(), excludedDiskList.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Base class for container with backup items. Containers with specific workloads are derived from this class. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> ProtectionContainerResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionContainerData"/> instance for mocking. </returns>
-        public static BackupProtectionContainerData BackupProtectionContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericProtectionContainer properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupProtectionContainerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                eTag);
         }
 
         /// <param name="friendlyName"> Friendly name of the container. </param>
@@ -2946,32 +2712,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 recoveryPointRehydrationInfo);
         }
 
-        /// <summary> Base class for backup policy. Workload-specific backup policies are derived from this class. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> ProtectionPolicyResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionPolicyData"/> instance for mocking. </returns>
-        public static BackupProtectionPolicyData BackupProtectionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericProtectionPolicy properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupProtectionPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                eTag);
-        }
-
         /// <summary>
         /// Base class for backup policy. Workload-specific backup policies are derived from this class.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VmWorkloadProtectionPolicy"/>, <see cref="Models.FileShareProtectionPolicy"/>, <see cref="Models.IaasVmProtectionPolicy"/>, <see cref="Models.SqlProtectionPolicy"/>, <see cref="Models.GenericProtectionPolicy"/>, and <see cref="Models.MabProtectionPolicy"/>.
@@ -3260,32 +3000,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 additionalBinaryDataProperties: null,
                 schedulePolicy,
                 retentionPolicy);
-        }
-
-        /// <summary> Defines workload agnostic properties for a job. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> JobResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupJobData"/> instance for mocking. </returns>
-        public static BackupJobData BackupJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericJob properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                eTag);
         }
 
         /// <summary> Azure IaaS VM workload-specific job object. </summary>
@@ -3710,58 +3424,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             recommendations ??= new ChangeTrackingList<string>();
 
             return new VaultBackupJobErrorInfo(errorCode, errorString, recommendations.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The base backup engine class. All workload specific backup engines derive from this class. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> BackupEngineBaseResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupEngineData"/> instance for mocking. </returns>
-        public static BackupEngineData BackupEngineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericEngine properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupEngineData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                eTag);
-        }
-
-        /// <summary> The ResourceGuardProxyData. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> ResourceGuardProxyBaseResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.ResourceGuardProxyData"/> instance for mocking. </returns>
-        public static ResourceGuardProxyData ResourceGuardProxyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceGuardProxyProperties properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ResourceGuardProxyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                eTag);
         }
 
         /// <summary> The ResourceGuardProxyProperties. </summary>
@@ -4634,6 +4296,226 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return VmWorkloadSqlDatabaseProtectedItem(backupManagementType: backupManagementType, workloadType: workloadType, containerName: containerName, sourceResourceId: sourceResourceId, policyId: policyId, lastRecoverOn: lastRecoverOn, backupSetName: backupSetName, createMode: createMode, deferredDeletedOn: deferredDeletedOn, isScheduledForDeferredDelete: isScheduledForDeferredDelete, deferredDeleteTimeRemaining: deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming: isDeferredDeleteScheduleUpcoming, isRehydrate: isRehydrate, resourceGuardOperationRequests: resourceGuardOperationRequests, isArchiveEnabled: isArchiveEnabled, policyName: policyName, softDeleteRetentionPeriodInDays: softDeleteRetentionPeriodInDays, vaultId: default, sourceSideScanInfo: default, friendlyName: friendlyName, serverName: serverName, parentName: parentName, parentType: parentType, protectionStatus: protectionStatus, protectionState: protectionState, lastBackupStatus: lastBackupStatus, lastBackupOn: lastBackupOn, lastBackupErrorDetail: lastBackupErrorDetail, protectedItemDataSourceId: protectedItemDataSourceId, protectedItemHealthStatus: protectedItemHealthStatus, extendedInfo: extendedInfo, kpisHealths: kpisHealths, nodesList: nodesList, parentProtectedItem: default, protectionLevel: default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupResourceConfigData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> BackupResourceConfigResource properties. </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupResourceConfigData"/> instance for mocking. </returns>
+        public static BackupResourceConfigData BackupResourceConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupResourceConfigProperties properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupResourceConfigData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                properties,
+                tags,
+                eTag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectionIntentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties">
+        /// ProtectionIntentResource properties
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , , ,  and .
+        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionIntentData"/> instance for mocking. </returns>
+        public static BackupProtectionIntentData BackupProtectionIntentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericProtectionIntent properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupProtectionIntentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                properties,
+                tags,
+                eTag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupResourceVaultConfigData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> BackupResourceVaultConfigResource properties. </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupResourceVaultConfigData"/> instance for mocking. </returns>
+        public static BackupResourceVaultConfigData BackupResourceVaultConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupResourceVaultConfigProperties properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupResourceVaultConfigData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                properties,
+                tags,
+                eTag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupResourceEncryptionConfigExtendedData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> BackupResourceEncryptionConfigExtendedResource properties. </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupResourceEncryptionConfigExtendedData"/> instance for mocking. </returns>
+        public static BackupResourceEncryptionConfigExtendedData BackupResourceEncryptionConfigExtendedData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupResourceEncryptionConfigExtendedProperties properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupResourceEncryptionConfigExtendedData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                properties,
+                tags,
+                eTag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BackupResourceEncryptionConfigExtendedCreateOrUpdateContent"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> BackupResourceEncryptionConfigResource properties. </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="Models.BackupResourceEncryptionConfigExtendedCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static BackupResourceEncryptionConfigExtendedCreateOrUpdateContent BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupResourceEncryptionConfig properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                properties,
+                tags,
+                eTag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupPrivateEndpointConnectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> PrivateEndpointConnectionResource properties. </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static BackupPrivateEndpointConnectionData BackupPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupPrivateEndpointConnectionProperties properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                properties,
+                tags,
+                eTag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectedItemData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties">
+        /// ProtectedItemResource properties
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , , , , , , , , , , ,  and .
+        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectedItemData"/> instance for mocking. </returns>
+        public static BackupProtectedItemData BackupProtectedItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericProtectedItem properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupProtectedItemData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                properties,
+                tags,
+                eTag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupRecoveryPointData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties">
+        /// RecoveryPointResource properties
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , , , , , , , , ,  and .
+        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupRecoveryPointData"/> instance for mocking. </returns>
+        public static BackupRecoveryPointData BackupRecoveryPointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericRecoveryPoint properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupRecoveryPointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                properties,
+                tags,
+                eTag);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.TriggerRestoreContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -4658,10 +4540,100 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
+                tags,
                 eTag,
                 properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectionPolicyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties">
+        /// ProtectionPolicyResource properties
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , , , ,  and .
+        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionPolicyData"/> instance for mocking. </returns>
+        public static BackupProtectionPolicyData BackupProtectionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericProtectionPolicy properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupProtectionPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                properties,
+                tags,
+                eTag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupJobData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties">
+        /// JobResource properties
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , , , , ,  and .
+        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupJobData"/> instance for mocking. </returns>
+        public static BackupJobData BackupJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericJob properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                properties,
+                tags,
+                eTag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupEngineData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties">
+        /// BackupEngineBaseResource properties
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include  and .
+        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupEngineData"/> instance for mocking. </returns>
+        public static BackupEngineData BackupEngineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericEngine properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupEngineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                properties,
+                tags,
+                eTag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProtectableContainerResource"/>. </summary>
@@ -4688,10 +4660,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
+                tags,
                 eTag,
                 properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectionContainerData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties">
+        /// ProtectionContainerResource properties
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include , , , , , , , , , ,  and .
+        /// </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionContainerData"/> instance for mocking. </returns>
+        public static BackupProtectionContainerData BackupProtectionContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericProtectionContainer properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupProtectionContainerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                properties,
+                tags,
+                eTag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WorkloadItemResource"/>. </summary>
@@ -4718,8 +4720,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
+                tags,
                 eTag,
                 properties);
         }
@@ -4748,8 +4750,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
+                tags,
                 eTag,
                 properties);
         }
@@ -4778,8 +4780,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
+                tags,
                 eTag,
                 properties);
         }
@@ -4808,10 +4810,36 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
+                tags,
                 eTag,
                 properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.ResourceGuardProxyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> ResourceGuardProxyBaseResource properties. </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.ResourceGuardProxyData"/> instance for mocking. </returns>
+        public static ResourceGuardProxyData ResourceGuardProxyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceGuardProxyProperties properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ResourceGuardProxyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                properties,
+                tags,
+                eTag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FileshareProtectedItem"/>. </summary>

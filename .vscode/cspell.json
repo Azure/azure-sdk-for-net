@@ -959,7 +959,15 @@
         "reimaging"
       ]
     },
-
+    {
+      "filename": "**/sdk/managednetworkfabric/**/*.cs",
+      "words": [
+        "dscp",
+        "evpn",
+        "gshut",
+        "mbps"
+      ]
+    },
     {
       "filename": "**/sdk/maps/Azure.Maps.TimeZones/**/*.cs",
       "words": [

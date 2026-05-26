@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -15,82 +14,53 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct JobExecutionRunningState : IEquatable<JobExecutionRunningState>
     {
         private readonly string _value;
-        /// <summary> Running. </summary>
-        private const string RunningValue = "Running";
-        /// <summary> Processing. </summary>
-        private const string ProcessingValue = "Processing";
-        /// <summary> Stopped. </summary>
-        private const string StoppedValue = "Stopped";
-        /// <summary> Degraded. </summary>
-        private const string DegradedValue = "Degraded";
-        /// <summary> Failed. </summary>
-        private const string FailedValue = "Failed";
-        /// <summary> Unknown. </summary>
-        private const string UnknownValue = "Unknown";
-        /// <summary> Succeeded. </summary>
-        private const string SucceededValue = "Succeeded";
 
         /// <summary> Initializes a new instance of <see cref="JobExecutionRunningState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobExecutionRunningState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string RunningValue = "Running";
+        private const string ProcessingValue = "Processing";
+        private const string StoppedValue = "Stopped";
+        private const string DegradedValue = "Degraded";
+        private const string FailedValue = "Failed";
+        private const string UnknownValue = "Unknown";
+        private const string SucceededValue = "Succeeded";
 
         /// <summary> Running. </summary>
         public static JobExecutionRunningState Running { get; } = new JobExecutionRunningState(RunningValue);
-
         /// <summary> Processing. </summary>
         public static JobExecutionRunningState Processing { get; } = new JobExecutionRunningState(ProcessingValue);
-
         /// <summary> Stopped. </summary>
         public static JobExecutionRunningState Stopped { get; } = new JobExecutionRunningState(StoppedValue);
-
         /// <summary> Degraded. </summary>
         public static JobExecutionRunningState Degraded { get; } = new JobExecutionRunningState(DegradedValue);
-
         /// <summary> Failed. </summary>
         public static JobExecutionRunningState Failed { get; } = new JobExecutionRunningState(FailedValue);
-
         /// <summary> Unknown. </summary>
         public static JobExecutionRunningState Unknown { get; } = new JobExecutionRunningState(UnknownValue);
-
         /// <summary> Succeeded. </summary>
         public static JobExecutionRunningState Succeeded { get; } = new JobExecutionRunningState(SucceededValue);
-
         /// <summary> Determines if two <see cref="JobExecutionRunningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JobExecutionRunningState left, JobExecutionRunningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="JobExecutionRunningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JobExecutionRunningState left, JobExecutionRunningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="JobExecutionRunningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JobExecutionRunningState"/>. </summary>
         public static implicit operator JobExecutionRunningState(string value) => new JobExecutionRunningState(value);
 
-        /// <summary> Converts a string to a <see cref="JobExecutionRunningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator JobExecutionRunningState?(string value) => value == null ? null : new JobExecutionRunningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is JobExecutionRunningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(JobExecutionRunningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

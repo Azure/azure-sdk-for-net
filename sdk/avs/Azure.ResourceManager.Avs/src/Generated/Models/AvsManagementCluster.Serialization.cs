@@ -75,6 +75,11 @@ namespace Azure.ResourceManager.Avs.Models
                 throw new FormatException($"The model {nameof(AvsManagementCluster)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(VsanDatastoreName))
+            {
+                writer.WritePropertyName("vsanDatastoreName"u8);
+                writer.WriteStringValue(VsanDatastoreName);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -107,6 +112,7 @@ namespace Azure.ResourceManager.Avs.Models
             int? clusterId = default;
             IList<string> hosts = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string vsanDatastoreName = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("clusterSize"u8))
@@ -157,12 +163,23 @@ namespace Azure.ResourceManager.Avs.Models
                     hosts = array;
                     continue;
                 }
+                if (prop.NameEquals("vsanDatastoreName"u8))
+                {
+                    vsanDatastoreName = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AvsManagementCluster(clusterSize, provisioningState, clusterId, hosts ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new AvsManagementCluster(
+                clusterSize,
+                provisioningState,
+                clusterId,
+                hosts ?? new ChangeTrackingList<string>(),
+                additionalBinaryDataProperties,
+                vsanDatastoreName);
         }
     }
 }

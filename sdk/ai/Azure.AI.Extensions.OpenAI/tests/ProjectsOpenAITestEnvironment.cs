@@ -33,7 +33,6 @@ namespace Azure.AI.Extensions.OpenAI.Tests
         public string PLAYWRIGHT_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(PLAYWRIGHT_CONNECTION_NAME));
         public string SHAREPOINT_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(SHAREPOINT_CONNECTION_NAME));
         public string FABRIC_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(FABRIC_CONNECTION_NAME));
-        public string FABRIC_IQ_PROJECT_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(FABRIC_IQ_PROJECT_CONNECTION_NAME));
         public string A2A_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(A2A_CONNECTION_NAME));
         public string A2A_BASE_URI => GetRecordedOptionalVariable(nameof(A2A_BASE_URI));
         public string PUBLISHED_ENDPOINT => GetRecordedOptionalVariable(nameof(PUBLISHED_ENDPOINT));

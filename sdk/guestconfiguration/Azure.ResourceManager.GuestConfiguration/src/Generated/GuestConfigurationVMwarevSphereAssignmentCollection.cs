@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.GuestConfiguration
     {
         private readonly ClientDiagnostics _guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics;
         private readonly GuestConfigurationConnectedVMwarevSphereAssignments _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient;
+        private readonly ClientDiagnostics _guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics;
+        private readonly GuestConfigurationConnectedVMwarevSphereAssignmentsReports _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient;
 
         /// <summary> Initializes a new instance of GuestConfigurationVMwarevSphereAssignmentCollection for mocking. </summary>
         protected GuestConfigurationVMwarevSphereAssignmentCollection()
@@ -41,6 +43,8 @@ namespace Azure.ResourceManager.GuestConfiguration
             TryGetApiVersion(GuestConfigurationVMwarevSphereAssignmentResource.ResourceType, out string guestConfigurationVMwarevSphereAssignmentApiVersion);
             _guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVMwarevSphereAssignmentResource.ResourceType.Namespace, Diagnostics);
             _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignments(_guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVMwarevSphereAssignmentResource.ResourceType.Namespace, Diagnostics);
+            _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignmentsReports(_guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
             ValidateResourceId(id);
         }
 

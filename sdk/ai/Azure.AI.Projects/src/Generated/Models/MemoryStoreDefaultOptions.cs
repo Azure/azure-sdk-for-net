@@ -26,16 +26,12 @@ namespace Azure.AI.Projects.Memory
         /// <param name="isUserProfileEnabled"> Whether to enable user profile extraction and storage. Default is true. </param>
         /// <param name="userProfileDetails"> Specific categories or types of user profile information to extract and store. </param>
         /// <param name="isChatSummaryEnabled"> Whether to enable chat summary extraction and storage. Default is true. </param>
-        /// <param name="proceduralMemoryEnabled"> Whether to enable procedural memory extraction and storage. Default is true. </param>
-        /// <param name="defaultTtlSeconds"> The default time-to-live for memories in seconds.  A value of 0 indicates that memories do not expire. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryStoreDefaultOptions(bool isUserProfileEnabled, string userProfileDetails, bool isChatSummaryEnabled, bool? proceduralMemoryEnabled, TimeSpan? defaultTtlSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryStoreDefaultOptions(bool isUserProfileEnabled, string userProfileDetails, bool isChatSummaryEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsUserProfileEnabled = isUserProfileEnabled;
             UserProfileDetails = userProfileDetails;
             IsChatSummaryEnabled = isChatSummaryEnabled;
-            ProceduralMemoryEnabled = proceduralMemoryEnabled;
-            DefaultTtlSeconds = defaultTtlSeconds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,11 +43,5 @@ namespace Azure.AI.Projects.Memory
 
         /// <summary> Whether to enable chat summary extraction and storage. Default is true. </summary>
         public bool IsChatSummaryEnabled { get; set; }
-
-        /// <summary> Whether to enable procedural memory extraction and storage. Default is true. </summary>
-        public bool? ProceduralMemoryEnabled { get; set; }
-
-        /// <summary> The default time-to-live for memories in seconds.  A value of 0 indicates that memories do not expire. </summary>
-        public TimeSpan? DefaultTtlSeconds { get; set; }
     }
 }

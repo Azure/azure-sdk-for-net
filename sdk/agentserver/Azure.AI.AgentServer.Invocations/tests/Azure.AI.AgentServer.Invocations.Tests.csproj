@@ -21,7 +21,6 @@
   </ItemGroup>
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
-    <PackageReference Include="Microsoft.OpenTelemetry" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />

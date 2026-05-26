@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.CostManagement
         BenefitUtilizationSummariesOperationStatus IOperationSource<BenefitUtilizationSummariesOperationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return BenefitUtilizationSummariesOperationStatus.DeserializeBenefitUtilizationSummariesOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            BenefitUtilizationSummariesOperationStatus result = BenefitUtilizationSummariesOperationStatus.DeserializeBenefitUtilizationSummariesOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.CostManagement
         async ValueTask<BenefitUtilizationSummariesOperationStatus> IOperationSource<BenefitUtilizationSummariesOperationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return BenefitUtilizationSummariesOperationStatus.DeserializeBenefitUtilizationSummariesOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            BenefitUtilizationSummariesOperationStatus result = BenefitUtilizationSummariesOperationStatus.DeserializeBenefitUtilizationSummariesOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

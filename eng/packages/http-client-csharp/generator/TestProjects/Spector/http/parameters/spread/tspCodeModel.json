@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "SpreadAsRequestBodyContentType",
+      "name": "spreadAsRequestBodyContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -22,7 +22,7 @@
     {
       "$id": "3",
       "kind": "constant",
-      "name": "SpreadAsRequestBodyContentType1",
+      "name": "spreadCompositeRequestOnlyWithBodyContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -38,7 +38,7 @@
     {
       "$id": "5",
       "kind": "constant",
-      "name": "SpreadAsRequestBodyContentType2",
+      "name": "spreadCompositeRequestContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -54,7 +54,7 @@
     {
       "$id": "7",
       "kind": "constant",
-      "name": "SpreadAsRequestBodyContentType3",
+      "name": "spreadCompositeRequestMixContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -70,7 +70,7 @@
     {
       "$id": "9",
       "kind": "constant",
-      "name": "SpreadAsRequestBodyContentType4",
+      "name": "spreadAsRequestBodyContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -86,7 +86,7 @@
     {
       "$id": "11",
       "kind": "constant",
-      "name": "SpreadAsRequestBodyContentType5",
+      "name": "spreadParameterWithInnerModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -102,7 +102,7 @@
     {
       "$id": "13",
       "kind": "constant",
-      "name": "SpreadAsRequestBodyContentType6",
+      "name": "spreadAsRequestParameterContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -118,7 +118,7 @@
     {
       "$id": "15",
       "kind": "constant",
-      "name": "SpreadAsRequestBodyContentType7",
+      "name": "spreadWithMultipleParametersContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -134,7 +134,7 @@
     {
       "$id": "17",
       "kind": "constant",
-      "name": "SpreadAsRequestBodyContentType8",
+      "name": "spreadParameterWithInnerAliasContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {

@@ -19,71 +19,6 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
     public static partial class ArmCertificateRegistrationModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="certificates"> State of the Key Vault secret. </param>
-        /// <param name="distinguishedName"> Certificate distinguished name. </param>
-        /// <param name="domainVerificationToken"> Domain verification token. </param>
-        /// <param name="validityInYears"> Duration in years (must be 1). </param>
-        /// <param name="keySize"> Certificate key size. </param>
-        /// <param name="certificateProductType"> Certificate product type. </param>
-        /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the certificate should be automatically renewed when it expires; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="provisioningState"> Status of certificate order. </param>
-        /// <param name="status"> Current order status. </param>
-        /// <param name="signedCertificate"> Signed certificate. </param>
-        /// <param name="csr"> Last CSR that was created for this order. </param>
-        /// <param name="intermediate"> Intermediate certificate. </param>
-        /// <param name="root"> Root certificate. </param>
-        /// <param name="serialNumber"> Current serial number of the certificate. </param>
-        /// <param name="lastCertificateIssuedOn"> Certificate last issuance time. </param>
-        /// <param name="expireOn"> Certificate expiration time. </param>
-        /// <param name="isPrivateKeyExternal"> &lt;code&gt;true&lt;/code&gt; if private key is external; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="appServiceCertificateNotRenewableReasons"> Reasons why App Service Certificate is not renewable at the current moment. </param>
-        /// <param name="nextAutoRenewOn"> Time stamp when the certificate would be auto renewed next. </param>
-        /// <param name="contact"> Contact info. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="CertificateRegistration.AppServiceCertificateOrderData"/> instance for mocking. </returns>
-        public static AppServiceCertificateOrderData AppServiceCertificateOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IDictionary<string, AppServiceCertificateProperties> certificates = default, string distinguishedName = default, string domainVerificationToken = default, int? validityInYears = default, int? keySize = default, CertificateProductType? certificateProductType = default, bool? isAutoRenew = default, CertificateRegistrationProvisioningState? provisioningState = default, CertificateOrderStatus? status = default, AppServiceCertificateDetails signedCertificate = default, string csr = default, AppServiceCertificateDetails intermediate = default, AppServiceCertificateDetails root = default, string serialNumber = default, DateTimeOffset? lastCertificateIssuedOn = default, DateTimeOffset? expireOn = default, bool? isPrivateKeyExternal = default, IEnumerable<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default, DateTimeOffset? nextAutoRenewOn = default, CertificateOrderContact contact = default, string kind = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AppServiceCertificateOrderData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                certificates is null && distinguishedName is null && domainVerificationToken is null && validityInYears is null && keySize is null && certificateProductType is null && isAutoRenew is null && provisioningState is null && status is null && signedCertificate is null && csr is null && intermediate is null && root is null && serialNumber is null && lastCertificateIssuedOn is null && expireOn is null && isPrivateKeyExternal is null && appServiceCertificateNotRenewableReasons is null && nextAutoRenewOn is null && contact is null ? default : new AppServiceCertificateOrderProperties(
-                    certificates,
-                    distinguishedName,
-                    domainVerificationToken,
-                    validityInYears,
-                    keySize,
-                    certificateProductType.GetValueOrDefault(),
-                    isAutoRenew,
-                    provisioningState,
-                    status,
-                    signedCertificate,
-                    csr,
-                    intermediate,
-                    root,
-                    serialNumber,
-                    lastCertificateIssuedOn,
-                    expireOn,
-                    isPrivateKeyExternal,
-                    (appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>()).ToList(),
-                    nextAutoRenewOn,
-                    contact,
-                    null),
-                kind);
-        }
-
         /// <summary> Key Vault container for a certificate that is purchased through Azure. </summary>
         /// <param name="keyVaultId"> Key Vault resource Id. </param>
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
@@ -135,72 +70,12 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="certificates"> State of the Key Vault secret. </param>
-        /// <param name="distinguishedName"> Certificate distinguished name. </param>
-        /// <param name="domainVerificationToken"> Domain verification token. </param>
-        /// <param name="validityInYears"> Duration in years (must be 1). </param>
-        /// <param name="keySize"> Certificate key size. </param>
-        /// <param name="certificateProductType"> Certificate product type. </param>
-        /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the certificate should be automatically renewed when it expires; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="provisioningState"> Status of certificate order. </param>
-        /// <param name="status"> Current order status. </param>
-        /// <param name="signedCertificate"> Signed certificate. </param>
-        /// <param name="csr"> Last CSR that was created for this order. </param>
-        /// <param name="intermediate"> Intermediate certificate. </param>
-        /// <param name="root"> Root certificate. </param>
-        /// <param name="serialNumber"> Current serial number of the certificate. </param>
-        /// <param name="lastCertificateIssuedOn"> Certificate last issuance time. </param>
-        /// <param name="expireOn"> Certificate expiration time. </param>
-        /// <param name="isPrivateKeyExternal"> &lt;code&gt;true&lt;/code&gt; if private key is external; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="appServiceCertificateNotRenewableReasons"> Reasons why App Service Certificate is not renewable at the current moment. </param>
-        /// <param name="nextAutoRenewOn"> Time stamp when the certificate would be auto renewed next. </param>
-        /// <param name="contact"> Contact info. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="Models.AppServiceCertificateOrderPatch"/> instance for mocking. </returns>
-        public static AppServiceCertificateOrderPatch AppServiceCertificateOrderPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, AppServiceCertificateProperties> certificates = default, string distinguishedName = default, string domainVerificationToken = default, int? validityInYears = default, int? keySize = default, CertificateProductType? certificateProductType = default, bool? isAutoRenew = default, CertificateRegistrationProvisioningState? provisioningState = default, CertificateOrderStatus? status = default, AppServiceCertificateDetails signedCertificate = default, string csr = default, AppServiceCertificateDetails intermediate = default, AppServiceCertificateDetails root = default, string serialNumber = default, DateTimeOffset? lastCertificateIssuedOn = default, DateTimeOffset? expireOn = default, bool? isPrivateKeyExternal = default, IEnumerable<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default, DateTimeOffset? nextAutoRenewOn = default, CertificateOrderContact contact = default, string kind = default)
-        {
-            return new AppServiceCertificateOrderPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                certificates is null && distinguishedName is null && domainVerificationToken is null && validityInYears is null && keySize is null && certificateProductType is null && isAutoRenew is null && provisioningState is null && status is null && signedCertificate is null && csr is null && intermediate is null && root is null && serialNumber is null && lastCertificateIssuedOn is null && expireOn is null && isPrivateKeyExternal is null && appServiceCertificateNotRenewableReasons is null && nextAutoRenewOn is null && contact is null ? default : new AppServiceCertificateOrderPatchResourceProperties(
-                    certificates,
-                    distinguishedName,
-                    domainVerificationToken,
-                    validityInYears,
-                    keySize,
-                    certificateProductType.GetValueOrDefault(),
-                    isAutoRenew,
-                    provisioningState,
-                    status,
-                    signedCertificate,
-                    csr,
-                    intermediate,
-                    root,
-                    serialNumber,
-                    lastCertificateIssuedOn,
-                    expireOn,
-                    isPrivateKeyExternal,
-                    (appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>()).ToList(),
-                    nextAutoRenewOn,
-                    contact,
-                    null),
-                kind);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="keySize"> Certificate Key Size. </param>
         /// <param name="delayExistingRevokeInHours"> Delay in hours to revoke existing certificate after the new certificate is issued. </param>
         /// <param name="csr"> Csr to be used for re-key operation. </param>
         /// <param name="isPrivateKeyExternal"> Should we change the ASC type (from managed private key to external private key and vice versa). </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.ReissueCertificateOrderContent"/> instance for mocking. </returns>
-        public static ReissueCertificateOrderContent ReissueCertificateOrderContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? keySize = default, int? delayExistingRevokeInHours = default, string csr = default, bool? isPrivateKeyExternal = default, string kind = default)
+        public static ReissueCertificateOrderContent ReissueCertificateOrderContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? keySize = default, int? delayExistingRevokeInHours = default, string csr = default, bool? isPrivateKeyExternal = default)
         {
             return new ReissueCertificateOrderContent(
                 id,
@@ -208,8 +83,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                keySize is null && delayExistingRevokeInHours is null && csr is null && isPrivateKeyExternal is null ? default : new ReissueCertificateOrderRequestProperties(keySize, delayExistingRevokeInHours, csr, isPrivateKeyExternal, null),
-                kind);
+                keySize is null && delayExistingRevokeInHours is null && csr is null && isPrivateKeyExternal is null ? default : new ReissueCertificateOrderRequestProperties(keySize, delayExistingRevokeInHours, csr, isPrivateKeyExternal, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -219,9 +93,8 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <param name="keySize"> Certificate Key Size. </param>
         /// <param name="csr"> Csr to be used for re-key operation. </param>
         /// <param name="isPrivateKeyExternal"> Should we change the ASC type (from managed private key to external private key and vice versa). </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.RenewCertificateOrderContent"/> instance for mocking. </returns>
-        public static RenewCertificateOrderContent RenewCertificateOrderContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? keySize = default, string csr = default, bool? isPrivateKeyExternal = default, string kind = default)
+        public static RenewCertificateOrderContent RenewCertificateOrderContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? keySize = default, string csr = default, bool? isPrivateKeyExternal = default)
         {
             return new RenewCertificateOrderContent(
                 id,
@@ -229,8 +102,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                keySize is null && csr is null && isPrivateKeyExternal is null ? default : new RenewCertificateOrderRequestProperties(keySize, csr, isPrivateKeyExternal, null),
-                kind);
+                keySize is null && csr is null && isPrivateKeyExternal is null ? default : new RenewCertificateOrderRequestProperties(keySize, csr, isPrivateKeyExternal, null));
         }
 
         /// <summary> Site seal. </summary>
@@ -293,9 +165,8 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <param name="keyVaultId"> Key Vault resource Id. </param>
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceCertificatePatch"/> instance for mocking. </returns>
-        public static AppServiceCertificatePatch AppServiceCertificatePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier keyVaultId = default, string keyVaultSecretName = default, AppServiceVaultSecretStatus? provisioningState = default, string kind = default)
+        public static AppServiceCertificatePatch AppServiceCertificatePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier keyVaultId = default, string keyVaultSecretName = default, AppServiceVaultSecretStatus? provisioningState = default)
         {
             return new AppServiceCertificatePatch(
                 id,
@@ -303,8 +174,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                keyVaultId is null && keyVaultSecretName is null && provisioningState is null ? default : new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, null),
-                kind);
+                keyVaultId is null && keyVaultSecretName is null && provisioningState is null ? default : new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

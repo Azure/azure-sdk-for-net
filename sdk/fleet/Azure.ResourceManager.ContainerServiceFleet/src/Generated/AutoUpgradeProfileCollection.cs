@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     {
         private readonly ClientDiagnostics _autoUpgradeProfilesClientDiagnostics;
         private readonly AutoUpgradeProfiles _autoUpgradeProfilesRestClient;
+        private readonly ClientDiagnostics _autoUpgradeProfileOperationsClientDiagnostics;
+        private readonly AutoUpgradeProfileOperations _autoUpgradeProfileOperationsRestClient;
 
         /// <summary> Initializes a new instance of AutoUpgradeProfileCollection for mocking. </summary>
         protected AutoUpgradeProfileCollection()
@@ -41,6 +43,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             TryGetApiVersion(AutoUpgradeProfileResource.ResourceType, out string autoUpgradeProfileApiVersion);
             _autoUpgradeProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", AutoUpgradeProfileResource.ResourceType.Namespace, Diagnostics);
             _autoUpgradeProfilesRestClient = new AutoUpgradeProfiles(_autoUpgradeProfilesClientDiagnostics, Pipeline, Endpoint, autoUpgradeProfileApiVersion ?? "2026-02-01-preview");
+            _autoUpgradeProfileOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", AutoUpgradeProfileResource.ResourceType.Namespace, Diagnostics);
+            _autoUpgradeProfileOperationsRestClient = new AutoUpgradeProfileOperations(_autoUpgradeProfileOperationsClientDiagnostics, Pipeline, Endpoint, autoUpgradeProfileApiVersion ?? "2026-02-01-preview");
             ValidateResourceId(id);
         }
 

@@ -6,244 +6,830 @@
 #nullable disable
 
 using System;
-using Azure;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.AppContainers.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    internal partial class ConnectedEnvironments
+    internal partial class ConnectedEnvironmentsRestOperations
     {
+        private readonly TelemetryDetails _userAgent;
+        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ConnectedEnvironments for mocking. </summary>
-        protected ConnectedEnvironments()
-        {
-        }
-
-        /// <summary> Initializes a new instance of ConnectedEnvironments. </summary>
-        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <summary> Initializes a new instance of ConnectedEnvironmentsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal ConnectedEnvironments(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="applicationId"> The application id to use for user agent. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public ConnectedEnvironmentsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            ClientDiagnostics = clientDiagnostics;
-            _endpoint = endpoint;
-            Pipeline = pipeline;
-            _apiVersion = apiVersion;
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2025-07-01";
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string connectedEnvironmentName, RequestContext context)
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
         {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.App/connectedEnvironments/", false);
-            uri.AppendPath(connectedEnvironmentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.App/connectedEnvironments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.App/connectedEnvironments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string connectedEnvironmentName, RequestContent content, RequestContext context)
+        /// <summary> Get all connectedEnvironments for a subscription. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ConnectedEnvironmentCollection>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListBySubscriptionRequest(subscriptionId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ConnectedEnvironmentCollection value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ConnectedEnvironmentCollection.DeserializeConnectedEnvironmentCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get all connectedEnvironments for a subscription. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ConnectedEnvironmentCollection> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListBySubscriptionRequest(subscriptionId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ConnectedEnvironmentCollection value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ConnectedEnvironmentCollection.DeserializeConnectedEnvironmentCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/connectedEnvironments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/connectedEnvironments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get all connectedEnvironments in a resource group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ConnectedEnvironmentCollection>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ConnectedEnvironmentCollection value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ConnectedEnvironmentCollection.DeserializeConnectedEnvironmentCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get all connectedEnvironments in a resource group. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ConnectedEnvironmentCollection> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ConnectedEnvironmentCollection value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ConnectedEnvironmentCollection.DeserializeConnectedEnvironmentCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string connectedEnvironmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.App/connectedEnvironments/", false);
             uri.AppendPath(connectedEnvironmentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string connectedEnvironmentName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/connectedEnvironments/", false);
+            uri.AppendPath(connectedEnvironmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get the properties of an connectedEnvironment. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="connectedEnvironmentName"> Name of the connectedEnvironment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ContainerAppConnectedEnvironmentData>> GetAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, connectedEnvironmentName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ContainerAppConnectedEnvironmentData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ContainerAppConnectedEnvironmentData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get the properties of an connectedEnvironment. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="connectedEnvironmentName"> Name of the connectedEnvironment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ContainerAppConnectedEnvironmentData> Get(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, connectedEnvironmentName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ContainerAppConnectedEnvironmentData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((ContainerAppConnectedEnvironmentData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, ContainerAppConnectedEnvironmentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/connectedEnvironments/", false);
+            uri.AppendPath(connectedEnvironmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, ContainerAppConnectedEnvironmentData data)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string connectedEnvironmentName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.App/connectedEnvironments/", false);
             uri.AppendPath(connectedEnvironmentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Method = RequestMethod.Patch;
-            if (content != null)
-            {
-                request.Headers.SetValue("Content-Type", "application/json");
-            }
-            request.Headers.SetValue("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
+            _userAgent.Apply(message);
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string connectedEnvironmentName, RequestContext context)
+        /// <summary> Creates or updates an connectedEnvironment. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="connectedEnvironmentName"> Name of the connectedEnvironment. </param>
+        /// <param name="data"> Configuration details of the connectedEnvironment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, ContainerAppConnectedEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, connectedEnvironmentName, data);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Creates or updates an connectedEnvironment. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="connectedEnvironmentName"> Name of the connectedEnvironment. </param>
+        /// <param name="data"> Configuration details of the connectedEnvironment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, ContainerAppConnectedEnvironmentData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, connectedEnvironmentName, data);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string connectedEnvironmentName)
+        {
+            var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.App/connectedEnvironments/", false);
             uri.AppendPath(connectedEnvironmentName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string connectedEnvironmentName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Delete;
-            return message;
-        }
-
-        internal HttpMessage CreateGetByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.App/connectedEnvironments", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
+            uri.AppendPath("/providers/Microsoft.App/connectedEnvironments/", false);
+            uri.AppendPath(connectedEnvironmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
             return message;
         }
 
-        internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
+        /// <summary> Delete an connectedEnvironment. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="connectedEnvironmentName"> Name of the connectedEnvironment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, connectedEnvironmentName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
             {
-                uri.Reset(nextPage);
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
             }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
         }
 
-        internal HttpMessage CreateGetBySubscriptionRequest(Guid subscriptionId, RequestContext context)
+        /// <summary> Delete an connectedEnvironment. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="connectedEnvironmentName"> Name of the connectedEnvironment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, connectedEnvironmentName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, ContainerAppConnectedEnvironmentPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/providers/Microsoft.App/connectedEnvironments", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/connectedEnvironments/", false);
+            uri.AppendPath(connectedEnvironmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
-        internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, ContainerAppConnectedEnvironmentPatch patch)
         {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCheckNameAvailabilityRequest(Guid subscriptionId, string resourceGroupName, string connectedEnvironmentName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/connectedEnvironments/", false);
+            uri.AppendPath(connectedEnvironmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Patches a Managed Environment. Only patching of tags is supported currently. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="connectedEnvironmentName"> Name of the connectedEnvironment. </param>
+        /// <param name="patch"> Configuration details of the connectedEnvironment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ContainerAppConnectedEnvironmentData>> UpdateAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, ContainerAppConnectedEnvironmentPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, connectedEnvironmentName, patch);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ContainerAppConnectedEnvironmentData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Patches a Managed Environment. Only patching of tags is supported currently. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="connectedEnvironmentName"> Name of the connectedEnvironment. </param>
+        /// <param name="patch"> Configuration details of the connectedEnvironment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ContainerAppConnectedEnvironmentData> Update(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, ContainerAppConnectedEnvironmentPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, connectedEnvironmentName, patch);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ContainerAppConnectedEnvironmentData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, ContainerAppNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.App/connectedEnvironments/", false);
             uri.AppendPath(connectedEnvironmentName, true);
             uri.AppendPath("/checkNameAvailability", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, ContainerAppNameAvailabilityContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/connectedEnvironments/", false);
+            uri.AppendPath(connectedEnvironmentName, true);
+            uri.AppendPath("/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
             return message;
+        }
+
+        /// <summary> Checks if resource connectedEnvironmentName is available. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="connectedEnvironmentName"> Name of the Managed Environment. </param>
+        /// <param name="content"> The check connectedEnvironmentName availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ContainerAppNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, ContainerAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, connectedEnvironmentName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ContainerAppNameAvailabilityResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ContainerAppNameAvailabilityResult.DeserializeContainerAppNameAvailabilityResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Checks if resource connectedEnvironmentName is available. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="connectedEnvironmentName"> Name of the Managed Environment. </param>
+        /// <param name="content"> The check connectedEnvironmentName availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="connectedEnvironmentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="connectedEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ContainerAppNameAvailabilityResult> CheckNameAvailability(string subscriptionId, string resourceGroupName, string connectedEnvironmentName, ContainerAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(connectedEnvironmentName, nameof(connectedEnvironmentName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, connectedEnvironmentName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ContainerAppNameAvailabilityResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ContainerAppNameAvailabilityResult.DeserializeContainerAppNameAvailabilityResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get all connectedEnvironments for a subscription. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ConnectedEnvironmentCollection>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ConnectedEnvironmentCollection value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ConnectedEnvironmentCollection.DeserializeConnectedEnvironmentCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get all connectedEnvironments for a subscription. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ConnectedEnvironmentCollection> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ConnectedEnvironmentCollection value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ConnectedEnvironmentCollection.DeserializeConnectedEnvironmentCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get all connectedEnvironments in a resource group. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ConnectedEnvironmentCollection>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ConnectedEnvironmentCollection value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ConnectedEnvironmentCollection.DeserializeConnectedEnvironmentCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get all connectedEnvironments in a resource group. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ConnectedEnvironmentCollection> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ConnectedEnvironmentCollection value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ConnectedEnvironmentCollection.DeserializeConnectedEnvironmentCollection(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
     }
 }

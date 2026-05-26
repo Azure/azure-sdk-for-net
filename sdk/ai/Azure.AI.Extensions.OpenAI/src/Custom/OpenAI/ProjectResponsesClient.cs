@@ -53,9 +53,9 @@ public partial class ProjectResponsesClient : ResponsesClient
               pipeline: ProjectOpenAIClient.CreatePipeline(
                   ProjectOpenAIClient.CreateAuthenticationPolicy(
                       tokenProvider,
-                      ProjectOpenAIClient.GetMergedOptions(projectEndpoint, tokenProvider, options)),
-                  ProjectOpenAIClient.GetMergedOptions(projectEndpoint, tokenProvider, options)),
-              options: ProjectOpenAIClient.GetMergedOptions(projectEndpoint, tokenProvider, options),
+                      ProjectOpenAIClient.GetMergedOptions(projectEndpoint, options)),
+                  ProjectOpenAIClient.GetMergedOptions(projectEndpoint, options)),
+              options: ProjectOpenAIClient.GetMergedOptions(projectEndpoint, options),
               defaultAgent: defaultAgent,
               defaultConversationId: defaultConversationId)
     { }

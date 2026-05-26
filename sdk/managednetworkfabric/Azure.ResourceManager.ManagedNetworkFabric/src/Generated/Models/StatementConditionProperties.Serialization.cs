@@ -35,6 +35,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(RoutePolicyConditionType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(RoutePolicyConditionType.Value.ToString());
+            }
+            if (Optional.IsDefined(IPPrefixId))
+            {
+                writer.WritePropertyName("ipPrefixId"u8);
+                writer.WriteStringValue(IPPrefixId);
+            }
             if (Optional.IsCollectionDefined(IPExtendedCommunityIds))
             {
                 writer.WritePropertyName("ipExtendedCommunityIds"u8);
@@ -49,16 +59,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(RoutePolicyConditionType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(RoutePolicyConditionType.Value.ToString());
-            }
-            if (Optional.IsDefined(IPPrefixId))
-            {
-                writer.WritePropertyName("ipPrefixId"u8);
-                writer.WriteStringValue(IPPrefixId);
             }
         }
 
@@ -82,14 +82,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IList<ResourceIdentifier> ipExtendedCommunityIds = default;
             RoutePolicyConditionType? type = default;
             ResourceIdentifier ipPrefixId = default;
+            IList<ResourceIdentifier> ipExtendedCommunityIds = default;
             IList<ResourceIdentifier> ipCommunityIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("type"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new RoutePolicyConditionType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("ipPrefixId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipPrefixId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("ipExtendedCommunityIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -109,24 +127,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         }
                     }
                     ipExtendedCommunityIds = array;
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new RoutePolicyConditionType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("ipPrefixId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ipPrefixId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipCommunityIds"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StatementConditionProperties(ipCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData, ipExtendedCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>(), type, ipPrefixId);
+            return new StatementConditionProperties(ipCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData, type, ipPrefixId, ipExtendedCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>());
         }
 
         BinaryData IPersistableModel<StatementConditionProperties>.Write(ModelReaderWriterOptions options)

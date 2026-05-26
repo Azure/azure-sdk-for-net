@@ -187,7 +187,7 @@ namespace Azure.AI.Projects
             var pendingUploadConfiguration = new PendingUploadConfiguration(
                 pendingUploadId: null,
                 connectionName: connectionName,
-                pendingUploadType: PendingUploadType.TemporaryBlobReference,
+                pendingUploadType: PendingUploadType.BlobReference,
                 additionalBinaryDataProperties: null);
 
             PendingUploadResult pendingUploadResult = PendingUpload(
@@ -253,7 +253,7 @@ namespace Azure.AI.Projects
             PendingUploadConfiguration pendingUploadRequest = new(
                 pendingUploadId: null,
                 connectionName: connectionName,
-                pendingUploadType: PendingUploadType.TemporaryBlobReference,
+                pendingUploadType: PendingUploadType.BlobReference,
                 additionalBinaryDataProperties: null);
 
             PendingUploadResult pendingUploadResult = await PendingUploadAsync(

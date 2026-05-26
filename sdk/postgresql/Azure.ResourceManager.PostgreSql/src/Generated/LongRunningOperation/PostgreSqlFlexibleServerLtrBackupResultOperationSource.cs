@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         PostgreSqlFlexibleServerLtrBackupResult IOperationSource<PostgreSqlFlexibleServerLtrBackupResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return PostgreSqlFlexibleServerLtrBackupResult.DeserializePostgreSqlFlexibleServerLtrBackupResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            PostgreSqlFlexibleServerLtrBackupResult result = PostgreSqlFlexibleServerLtrBackupResult.DeserializePostgreSqlFlexibleServerLtrBackupResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         async ValueTask<PostgreSqlFlexibleServerLtrBackupResult> IOperationSource<PostgreSqlFlexibleServerLtrBackupResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return PostgreSqlFlexibleServerLtrBackupResult.DeserializePostgreSqlFlexibleServerLtrBackupResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            PostgreSqlFlexibleServerLtrBackupResult result = PostgreSqlFlexibleServerLtrBackupResult.DeserializePostgreSqlFlexibleServerLtrBackupResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

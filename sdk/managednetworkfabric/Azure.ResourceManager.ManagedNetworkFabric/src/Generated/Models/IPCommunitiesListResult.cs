@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Paged collection of IpCommunity items. </summary>
+    /// <summary> List of IP Communities. </summary>
     internal partial class IPCommunitiesListResult
     {
         /// <summary>
@@ -47,34 +46,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IPCommunitiesListResult"/>. </summary>
-        /// <param name="value"> The IpCommunity items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal IPCommunitiesListResult(IEnumerable<NetworkFabricIPCommunityData> value)
+        internal IPCommunitiesListResult()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<NetworkFabricIPCommunityData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IPCommunitiesListResult"/>. </summary>
-        /// <param name="value"> The IpCommunity items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value"> List of IP Community resources. </param>
+        /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPCommunitiesListResult(IReadOnlyList<NetworkFabricIPCommunityData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IPCommunitiesListResult(IReadOnlyList<NetworkFabricIPCommunityData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPCommunitiesListResult"/> for deserialization. </summary>
-        internal IPCommunitiesListResult()
-        {
-        }
-
-        /// <summary> The IpCommunity items on this page. </summary>
+        /// <summary> List of IP Community resources. </summary>
         public IReadOnlyList<NetworkFabricIPCommunityData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Url to follow for getting next page of resources. </summary>
+        public string NextLink { get; }
     }
 }

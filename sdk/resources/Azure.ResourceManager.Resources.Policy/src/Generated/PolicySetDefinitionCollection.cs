@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.Resources.Policy
     {
         private readonly ClientDiagnostics _policySetDefinitionsClientDiagnostics;
         private readonly PolicySetDefinitions _policySetDefinitionsRestClient;
+        private readonly ClientDiagnostics _policySetDefinitionVersionsClientDiagnostics;
+        private readonly PolicySetDefinitionVersions _policySetDefinitionVersionsRestClient;
 
         /// <summary> Initializes a new instance of PolicySetDefinitionCollection for mocking. </summary>
         protected PolicySetDefinitionCollection()
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.Resources.Policy
             TryGetApiVersion(PolicySetDefinitionResource.ResourceType, out string policySetDefinitionApiVersion);
             _policySetDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Policy", PolicySetDefinitionResource.ResourceType.Namespace, Diagnostics);
             _policySetDefinitionsRestClient = new PolicySetDefinitions(_policySetDefinitionsClientDiagnostics, Pipeline, Endpoint, policySetDefinitionApiVersion ?? "2025-12-01-preview");
+            _policySetDefinitionVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Policy", PolicySetDefinitionResource.ResourceType.Namespace, Diagnostics);
+            _policySetDefinitionVersionsRestClient = new PolicySetDefinitionVersions(_policySetDefinitionVersionsClientDiagnostics, Pipeline, Endpoint, policySetDefinitionApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 

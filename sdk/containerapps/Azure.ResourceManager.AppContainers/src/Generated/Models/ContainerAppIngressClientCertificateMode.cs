@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct ContainerAppIngressClientCertificateMode : IEquatable<ContainerAppIngressClientCertificateMode>
     {
         private readonly string _value;
-        /// <summary> ignore. </summary>
-        private const string IgnoreValue = "ignore";
-        /// <summary> accept. </summary>
-        private const string AcceptValue = "accept";
-        /// <summary> require. </summary>
-        private const string RequireValue = "require";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppIngressClientCertificateMode"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppIngressClientCertificateMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string IgnoreValue = "ignore";
+        private const string AcceptValue = "accept";
+        private const string RequireValue = "require";
 
         /// <summary> ignore. </summary>
         public static ContainerAppIngressClientCertificateMode Ignore { get; } = new ContainerAppIngressClientCertificateMode(IgnoreValue);
-
         /// <summary> accept. </summary>
         public static ContainerAppIngressClientCertificateMode Accept { get; } = new ContainerAppIngressClientCertificateMode(AcceptValue);
-
         /// <summary> require. </summary>
         public static ContainerAppIngressClientCertificateMode Require { get; } = new ContainerAppIngressClientCertificateMode(RequireValue);
-
         /// <summary> Determines if two <see cref="ContainerAppIngressClientCertificateMode"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppIngressClientCertificateMode left, ContainerAppIngressClientCertificateMode right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ContainerAppIngressClientCertificateMode"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppIngressClientCertificateMode left, ContainerAppIngressClientCertificateMode right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ContainerAppIngressClientCertificateMode"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppIngressClientCertificateMode"/>. </summary>
         public static implicit operator ContainerAppIngressClientCertificateMode(string value) => new ContainerAppIngressClientCertificateMode(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerAppIngressClientCertificateMode"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppIngressClientCertificateMode?(string value) => value == null ? null : new ContainerAppIngressClientCertificateMode(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppIngressClientCertificateMode other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ContainerAppIngressClientCertificateMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

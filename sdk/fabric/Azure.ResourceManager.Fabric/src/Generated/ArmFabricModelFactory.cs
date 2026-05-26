@@ -63,15 +63,16 @@ namespace Azure.ResourceManager.Fabric.Models
             return new FabricCapacityAdministration(members.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The type used for update operations of the FabricCapacity. </summary>
         /// <param name="sku"> The SKU details. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="fabricCapacityUpdateAdministrationMembers"> Gets or sets the AdministrationMembers. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.FabricCapacityPatch"/> instance for mocking. </returns>
-        public static FabricCapacityPatch FabricCapacityPatch(FabricSku sku = default, IDictionary<string, string> tags = default, IEnumerable<string> fabricCapacityUpdateAdministrationMembers = default)
+        public static FabricCapacityPatch FabricCapacityPatch(FabricSku sku = default, IDictionary<string, string> tags = default, FabricCapacityUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new FabricCapacityPatch(sku, tags, fabricCapacityUpdateAdministrationMembers is null ? default : new FabricCapacityUpdateProperties(default, null), additionalBinaryDataProperties: null);
+            return new FabricCapacityPatch(sku, tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The check availability result. </summary>

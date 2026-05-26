@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(ResourceType, out string queueServiceApiVersion);
             _queueServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _queueServicesRestClient = new QueueServices(_queueServicesClientDiagnostics, Pipeline, Endpoint, queueServiceApiVersion ?? "2025-08-01");
+            _queueServicesRestClient = new QueueServices(_queueServicesClientDiagnostics, Pipeline, Endpoint, queueServiceApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <description> 2025-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

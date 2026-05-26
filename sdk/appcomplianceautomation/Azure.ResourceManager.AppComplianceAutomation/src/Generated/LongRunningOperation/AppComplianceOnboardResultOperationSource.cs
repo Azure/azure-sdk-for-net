@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         AppComplianceOnboardResult IOperationSource<AppComplianceOnboardResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return AppComplianceOnboardResult.DeserializeAppComplianceOnboardResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            AppComplianceOnboardResult result = AppComplianceOnboardResult.DeserializeAppComplianceOnboardResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         async ValueTask<AppComplianceOnboardResult> IOperationSource<AppComplianceOnboardResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return AppComplianceOnboardResult.DeserializeAppComplianceOnboardResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            AppComplianceOnboardResult result = AppComplianceOnboardResult.DeserializeAppComplianceOnboardResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

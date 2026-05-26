@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "DurationConstantContentType",
+      "name": "durationConstantContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {

@@ -34,20 +34,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(OptionAProperties)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(PeerAsn))
+            if (Optional.IsDefined(Mtu))
             {
-                writer.WritePropertyName("peerASN"u8);
-                writer.WriteNumberValue(PeerAsn.Value);
+                writer.WritePropertyName("mtu"u8);
+                writer.WriteNumberValue(Mtu.Value);
             }
             if (Optional.IsDefined(VlanId))
             {
                 writer.WritePropertyName("vlanId"u8);
                 writer.WriteNumberValue(VlanId.Value);
             }
-            if (Optional.IsDefined(Mtu))
+            if (Optional.IsDefined(PeerAsn))
             {
-                writer.WritePropertyName("mtu"u8);
-                writer.WriteNumberValue(Mtu.Value);
+                writer.WritePropertyName("peerASN"u8);
+                writer.WriteNumberValue(PeerAsn.Value);
             }
             if (Optional.IsDefined(BfdConfiguration))
             {
@@ -91,21 +91,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            long? peerAsn = default;
-            int? vlanId = default;
             int? mtu = default;
+            int? vlanId = default;
+            long? peerAsn = default;
             BfdConfiguration bfdConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("peerASN"u8))
+                if (property.NameEquals("mtu"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    peerAsn = property.Value.GetInt64();
+                    mtu = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("vlanId"u8))
@@ -117,13 +117,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     vlanId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("mtu"u8))
+                if (property.NameEquals("peerASN"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mtu = property.Value.GetInt32();
+                    peerAsn = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("bfdConfiguration"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OptionAProperties(peerAsn, vlanId, mtu, bfdConfiguration, serializedAdditionalRawData);
+            return new OptionAProperties(mtu, vlanId, peerAsn, bfdConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OptionAProperties>.Write(ModelReaderWriterOptions options)

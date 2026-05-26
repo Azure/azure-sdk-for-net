@@ -13,9 +13,9 @@ namespace Azure.AI.Projects.Agents
         {
             AgentDefinitionOptInKeys.HostedAgentsV1Preview => "HostedAgents=V1Preview",
             AgentDefinitionOptInKeys.WorkflowAgentsV1Preview => "WorkflowAgents=V1Preview",
+            AgentDefinitionOptInKeys.ContainerAgentsV1Preview => "ContainerAgents=V1Preview",
             AgentDefinitionOptInKeys.AgentEndpointV1Preview => "AgentEndpoints=V1Preview",
             AgentDefinitionOptInKeys.CodeAgentsV1Preview => "CodeAgents=V1Preview",
-            AgentDefinitionOptInKeys.ExternalAgentsV1Preview => "ExternalAgents=V1Preview",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AgentDefinitionOptInKeys value.")
         };
 
@@ -30,6 +30,10 @@ namespace Azure.AI.Projects.Agents
             {
                 return AgentDefinitionOptInKeys.WorkflowAgentsV1Preview;
             }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ContainerAgents=V1Preview"))
+            {
+                return AgentDefinitionOptInKeys.ContainerAgentsV1Preview;
+            }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "AgentEndpoints=V1Preview"))
             {
                 return AgentDefinitionOptInKeys.AgentEndpointV1Preview;
@@ -37,10 +41,6 @@ namespace Azure.AI.Projects.Agents
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "CodeAgents=V1Preview"))
             {
                 return AgentDefinitionOptInKeys.CodeAgentsV1Preview;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ExternalAgents=V1Preview"))
-            {
-                return AgentDefinitionOptInKeys.ExternalAgentsV1Preview;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AgentDefinitionOptInKeys value.");
         }

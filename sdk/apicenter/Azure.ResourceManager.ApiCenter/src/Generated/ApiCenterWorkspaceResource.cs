@@ -25,6 +25,12 @@ namespace Azure.ResourceManager.ApiCenter
     {
         private readonly ClientDiagnostics _workspacesClientDiagnostics;
         private readonly Workspaces _workspacesRestClient;
+        private readonly ClientDiagnostics _apisClientDiagnostics;
+        private readonly Apis _apisRestClient;
+        private readonly ClientDiagnostics _apiCenterApiSourceClientDiagnostics;
+        private readonly ApiCenterApiSource _apiCenterApiSourceRestClient;
+        private readonly ClientDiagnostics _environmentsClientDiagnostics;
+        private readonly Environments _environmentsRestClient;
         private readonly ApiCenterWorkspaceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiCenter/services/workspaces";
@@ -51,6 +57,12 @@ namespace Azure.ResourceManager.ApiCenter
             TryGetApiVersion(ResourceType, out string apiCenterWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
             _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Endpoint, apiCenterWorkspaceApiVersion ?? "2024-06-01-preview");
+            _apisClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
+            _apisRestClient = new Apis(_apisClientDiagnostics, Pipeline, Endpoint, apiCenterWorkspaceApiVersion ?? "2024-06-01-preview");
+            _apiCenterApiSourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
+            _apiCenterApiSourceRestClient = new ApiCenterApiSource(_apiCenterApiSourceClientDiagnostics, Pipeline, Endpoint, apiCenterWorkspaceApiVersion ?? "2024-06-01-preview");
+            _environmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
+            _environmentsRestClient = new Environments(_environmentsClientDiagnostics, Pipeline, Endpoint, apiCenterWorkspaceApiVersion ?? "2024-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -281,6 +293,294 @@ namespace Azure.ResourceManager.ApiCenter
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if specified API exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Apis_Head. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiCenterWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="apiName"> The name of the API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> HeadApiAsync(string apiName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
+
+            using DiagnosticScope scope = _apisClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.HeadApi");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apisRestClient.CreateHeadApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if specified API exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Apis_Head. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiCenterWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="apiName"> The name of the API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response HeadApi(string apiName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
+
+            using DiagnosticScope scope = _apisClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.HeadApi");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apisRestClient.CreateHeadApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if specified API source exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apiSources/{apiSourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiSources_Head. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiCenterWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="apiSourceName"> The name of the API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiSourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> HeadApiSourceAsync(string apiSourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiSourceName, nameof(apiSourceName));
+
+            using DiagnosticScope scope = _apiCenterApiSourceClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.HeadApiSource");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apiCenterApiSourceRestClient.CreateHeadApiSourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if specified API source exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apiSources/{apiSourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiSources_Head. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiCenterWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="apiSourceName"> The name of the API. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiSourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiSourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response HeadApiSource(string apiSourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(apiSourceName, nameof(apiSourceName));
+
+            using DiagnosticScope scope = _apiCenterApiSourceClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.HeadApiSource");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _apiCenterApiSourceRestClient.CreateHeadApiSourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if specified environment exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/environments/{environmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Environments_Head. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiCenterWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentName"> The name of the environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> HeadEnvironmentAsync(string environmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+
+            using DiagnosticScope scope = _environmentsClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.HeadEnvironment");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _environmentsRestClient.CreateHeadEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks if specified environment exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/environments/{environmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Environments_Head. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiCenterWorkspaceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentName"> The name of the environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response HeadEnvironment(string environmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+
+            using DiagnosticScope scope = _environmentsClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.HeadEnvironment");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _environmentsRestClient.CreateHeadEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
             }
             catch (Exception e)
             {

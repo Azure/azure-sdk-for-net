@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string IsolationDomainValue = "IsolationDomain";
         private const string DirectValue = "Direct";
 
-        /// <summary> DestinationType-IsolationDomain. </summary>
+        /// <summary> IsolationDomain. </summary>
         public static NetworkTapDestinationType IsolationDomain { get; } = new NetworkTapDestinationType(IsolationDomainValue);
-        /// <summary> DestinationType-Direct. </summary>
+        /// <summary> Direct. </summary>
         public static NetworkTapDestinationType Direct { get; } = new NetworkTapDestinationType(DirectValue);
         /// <summary> Determines if two <see cref="NetworkTapDestinationType"/> values are the same. </summary>
         public static bool operator ==(NetworkTapDestinationType left, NetworkTapDestinationType right) => left.Equals(right);

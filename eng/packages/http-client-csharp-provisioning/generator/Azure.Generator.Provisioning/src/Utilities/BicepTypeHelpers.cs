@@ -26,21 +26,10 @@ namespace Azure.Generator.Provisioning.Utilities
         {
             if (IsBicepValueType(type) || IsBicepListType(type) || IsBicepDictionaryType(type))
                 return false;
-            if (type.IsEnum)
-                return false;
             if (!type.IsFrameworkType)
                 return true;
             return typeof(ProvisionableConstruct).IsAssignableFrom(type.FrameworkType);
         }
-
-        /// <summary>
-        /// Returns true if the type is already represented as a provisioning type.
-        /// </summary>
-        public static bool IsProvisioningType(CSharpType type)
-            => IsBicepValueType(type)
-               || IsBicepListType(type)
-               || IsBicepDictionaryType(type)
-               || IsModelType(type);
 
         /// <summary>
         /// Returns true if the type is <see cref="BicepValue{T}"/>.

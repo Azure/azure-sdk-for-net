@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The CognitiveServicesManagedNetworkSettingsContent. </summary>
-    internal partial class CognitiveServicesManagedNetworkSettingsContent : ResourceData, IJsonModel<CognitiveServicesManagedNetworkSettingsContent>
+    public partial class CognitiveServicesManagedNetworkSettingsContent : ResourceData, IJsonModel<CognitiveServicesManagedNetworkSettingsContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

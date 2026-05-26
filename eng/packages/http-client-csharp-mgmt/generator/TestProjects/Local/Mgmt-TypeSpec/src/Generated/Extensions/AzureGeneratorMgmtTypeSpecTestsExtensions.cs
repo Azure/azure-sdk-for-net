@@ -106,21 +106,39 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FooConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetFooConfigurationResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetFooSettingsResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="FooConfigurationResource"/> object. </returns>
-        public static FooConfigurationResource GetFooConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
+        public static FooSettingsResource GetFooSettingsResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetFooConfigurationResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetFooSettingsResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetBarResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BarResource"/> object. </returns>
+        public static BarResource GetBarResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetBarResource(id);
         }
 
         /// <summary>
@@ -659,6 +677,42 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetWorkloadNetworksResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkloadNetworkVmGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetWorkloadNetworkVmGroupResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="WorkloadNetworkVmGroupResource"/> object. </returns>
+        public static WorkloadNetworkVmGroupResource GetWorkloadNetworkVmGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetWorkloadNetworkVmGroupResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkloadNetworkSegmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetWorkloadNetworkSegmentResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="WorkloadNetworkSegmentResource"/> object. </returns>
+        public static WorkloadNetworkSegmentResource GetWorkloadNetworkSegmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetWorkloadNetworkSegmentResource(id);
         }
 
         /// <summary>
@@ -1392,93 +1446,39 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="EventGridTopicEventGridPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetBarResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetEventGridTopicEventGridPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BarResource"/> object. </returns>
-        public static BarResource GetBarResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventGridTopicEventGridPrivateEndpointConnectionResource"/> object. </returns>
+        public static EventGridTopicEventGridPrivateEndpointConnectionResource GetEventGridTopicEventGridPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetBarResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEventGridTopicEventGridPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkloadNetworkVmGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="EventGridDomainEventGridPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetWorkloadNetworkVmGroupResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetEventGridDomainEventGridPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WorkloadNetworkVmGroupResource"/> object. </returns>
-        public static WorkloadNetworkVmGroupResource GetWorkloadNetworkVmGroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventGridDomainEventGridPrivateEndpointConnectionResource"/> object. </returns>
+        public static EventGridDomainEventGridPrivateEndpointConnectionResource GetEventGridDomainEventGridPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetWorkloadNetworkVmGroupResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="WorkloadNetworkSegmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetWorkloadNetworkSegmentResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WorkloadNetworkSegmentResource"/> object. </returns>
-        public static WorkloadNetworkSegmentResource GetWorkloadNetworkSegmentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetWorkloadNetworkSegmentResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="EventGridTopicPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetEventGridTopicPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventGridTopicPrivateEndpointConnectionResource"/> object. </returns>
-        public static EventGridTopicPrivateEndpointConnectionResource GetEventGridTopicPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEventGridTopicPrivateEndpointConnectionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="EventGridDomainPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetEventGridDomainPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EventGridDomainPrivateEndpointConnectionResource"/> object. </returns>
-        public static EventGridDomainPrivateEndpointConnectionResource GetEventGridDomainPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEventGridDomainPrivateEndpointConnectionResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetEventGridDomainEventGridPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -1706,20 +1706,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FooConfigurationResource"/> along with the instance operations that can be performed on it in the <see cref="ResourceGroupResource"/>.
+        /// Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it in the <see cref="ResourceGroupResource"/>.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetFooConfiguration()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetFooSettings()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> Returns a <see cref="FooConfigurationResource"/> object. </returns>
-        public static FooConfigurationResource GetFooConfiguration(this ResourceGroupResource resourceGroupResource)
+        /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
+        public static FooSettingsResource GetFooSettings(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetFooConfiguration();
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetFooSettings();
         }
 
         /// <summary>
@@ -2220,6 +2220,120 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
+        /// Gets a collection of WorkloadNetworkVmGroups in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworkVmGroups()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of WorkloadNetworkVmGroups and their operations over a WorkloadNetworkVmGroupResource. </returns>
+        public static WorkloadNetworkVmGroupCollection GetWorkloadNetworkVmGroups(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworkVmGroups();
+        }
+
+        /// <summary>
+        /// Get a VM Group by name.
+        /// Uses
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworkVmGroupAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vmGroupId"> The name of the WorkloadNetworkVmGroup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<WorkloadNetworkVmGroupResource>> GetWorkloadNetworkVmGroupAsync(this ResourceGroupResource resourceGroupResource, string vmGroupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworkVmGroupAsync(vmGroupId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a VM Group by name.
+        /// Uses
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworkVmGroup(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="vmGroupId"> The name of the WorkloadNetworkVmGroup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<WorkloadNetworkVmGroupResource> GetWorkloadNetworkVmGroup(this ResourceGroupResource resourceGroupResource, string vmGroupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworkVmGroup(vmGroupId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of WorkloadNetworkSegments in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworkSegments()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of WorkloadNetworkSegments and their operations over a WorkloadNetworkSegmentResource. </returns>
+        public static WorkloadNetworkSegmentCollection GetWorkloadNetworkSegments(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworkSegments();
+        }
+
+        /// <summary>
+        /// Get a Segment by name.
+        /// Uses
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworkSegmentAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="segmentId"> The name of the WorkloadNetworkSegment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<WorkloadNetworkSegmentResource>> GetWorkloadNetworkSegmentAsync(this ResourceGroupResource resourceGroupResource, string segmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworkSegmentAsync(segmentId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Segment by name.
+        /// Uses
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworkSegment(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="segmentId"> The name of the WorkloadNetworkSegment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<WorkloadNetworkSegmentResource> GetWorkloadNetworkSegment(this ResourceGroupResource resourceGroupResource, string segmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworkSegment(segmentId, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a collection of Clusters in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -2660,120 +2774,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets a collection of WorkloadNetworkVmGroups in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworkVmGroups()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of WorkloadNetworkVmGroups and their operations over a WorkloadNetworkVmGroupResource. </returns>
-        public static WorkloadNetworkVmGroupCollection GetWorkloadNetworkVmGroups(this ResourceGroupResource resourceGroupResource)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworkVmGroups();
-        }
-
-        /// <summary>
-        /// Get a VM Group by name.
-        /// Uses
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworkVmGroupAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vmGroupId"> The name of the WorkloadNetworkVmGroup. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<WorkloadNetworkVmGroupResource>> GetWorkloadNetworkVmGroupAsync(this ResourceGroupResource resourceGroupResource, string vmGroupId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworkVmGroupAsync(vmGroupId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a VM Group by name.
-        /// Uses
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworkVmGroup(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="vmGroupId"> The name of the WorkloadNetworkVmGroup. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<WorkloadNetworkVmGroupResource> GetWorkloadNetworkVmGroup(this ResourceGroupResource resourceGroupResource, string vmGroupId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworkVmGroup(vmGroupId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of WorkloadNetworkSegments in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworkSegments()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of WorkloadNetworkSegments and their operations over a WorkloadNetworkSegmentResource. </returns>
-        public static WorkloadNetworkSegmentCollection GetWorkloadNetworkSegments(this ResourceGroupResource resourceGroupResource)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworkSegments();
-        }
-
-        /// <summary>
-        /// Get a Segment by name.
-        /// Uses
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworkSegmentAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="segmentId"> The name of the WorkloadNetworkSegment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<WorkloadNetworkSegmentResource>> GetWorkloadNetworkSegmentAsync(this ResourceGroupResource resourceGroupResource, string segmentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworkSegmentAsync(segmentId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Segment by name.
-        /// Uses
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetWorkloadNetworkSegment(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="segmentId"> The name of the WorkloadNetworkSegment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<WorkloadNetworkSegmentResource> GetWorkloadNetworkSegment(this ResourceGroupResource resourceGroupResource, string segmentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetWorkloadNetworkSegment(segmentId, cancellationToken);
-        }
-
-        /// <summary>
         /// list private links on the given resource
         /// <item>
         /// <term> Mocking. </term>
@@ -3066,42 +3066,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetClusters(cancellationToken);
-        }
-
-        /// <summary>
-        /// List a SharedConfig
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetSharedConfigsAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SharedConfigResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SharedConfigResource> GetSharedConfigsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetSharedConfigsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List a SharedConfig
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetSharedConfigs(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SharedConfigResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SharedConfigResource> GetSharedConfigs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetSharedConfigs(cancellationToken);
         }
 
         /// <summary>

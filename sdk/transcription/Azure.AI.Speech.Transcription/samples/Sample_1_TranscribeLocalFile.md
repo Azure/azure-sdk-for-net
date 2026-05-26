@@ -36,8 +36,8 @@ Console.WriteLine($"Total audio duration: {result.Duration}");
 Console.WriteLine("\nTranscription:");
 
 // Get the first channel's phrases (most audio files have a single channel)
-var channelPhrases = result.CombinedPhrases.First();
-foreach (TranscribedPhrase phrase in result.Phrases)
+var channelPhrases = result.PhrasesByChannel.First();
+foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
 {
     Console.WriteLine($"[{phrase.Offset} - {phrase.Offset + phrase.Duration}] {phrase.Text}");
     Console.WriteLine($"  Confidence: {phrase.Confidence:F2}");

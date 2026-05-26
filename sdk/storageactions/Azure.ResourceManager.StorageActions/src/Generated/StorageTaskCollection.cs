@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.StorageActions
     {
         private readonly ClientDiagnostics _storageTasksClientDiagnostics;
         private readonly StorageTasks _storageTasksRestClient;
+        private readonly ClientDiagnostics _storageTasksReportClientDiagnostics;
+        private readonly StorageTasksReport _storageTasksReportRestClient;
+        private readonly ClientDiagnostics _storageTaskAssignmentClientDiagnostics;
+        private readonly StorageTaskAssignment _storageTaskAssignmentRestClient;
 
         /// <summary> Initializes a new instance of StorageTaskCollection for mocking. </summary>
         protected StorageTaskCollection()
@@ -42,6 +46,10 @@ namespace Azure.ResourceManager.StorageActions
             TryGetApiVersion(StorageTaskResource.ResourceType, out string storageTaskApiVersion);
             _storageTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", StorageTaskResource.ResourceType.Namespace, Diagnostics);
             _storageTasksRestClient = new StorageTasks(_storageTasksClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion ?? "2023-01-01");
+            _storageTasksReportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", StorageTaskResource.ResourceType.Namespace, Diagnostics);
+            _storageTasksReportRestClient = new StorageTasksReport(_storageTasksReportClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion ?? "2023-01-01");
+            _storageTaskAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", StorageTaskResource.ResourceType.Namespace, Diagnostics);
+            _storageTaskAssignmentRestClient = new StorageTaskAssignment(_storageTaskAssignmentClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion ?? "2023-01-01");
             ValidateResourceId(id);
         }
 

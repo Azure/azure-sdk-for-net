@@ -290,11 +290,6 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
-    "http-payload-head": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/payload/head -g AzureStubGenerator",
-      "commandName": "Executable",
-      "executablePath": "dotnet"
-    },
     "http-payload-json-merge-patch": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/payload/json-merge-patch -g AzureStubGenerator",
       "commandName": "Executable",
@@ -367,11 +362,6 @@
     },
     "http-service-multi-service": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/service/multi-service -g AzureStubGenerator",
-      "commandName": "Executable",
-      "executablePath": "dotnet"
-    },
-    "http-service-multiple-services": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/service/multiple-services -g AzureStubGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },

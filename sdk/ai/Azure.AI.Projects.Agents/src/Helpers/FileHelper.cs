@@ -67,15 +67,10 @@ internal class FileHelper
             }
             zipContents = new(stream.ToArray());
         }
-        return (zipContents, GetSha256Sum(zipContents));
-    }
-
-    internal static string GetSha256Sum(BinaryData contents)
-    {
         string strHash = default;
         using (SHA256 sha256Hash = SHA256.Create())
         {
-            byte[] hash = sha256Hash.ComputeHash(contents.ToArray());
+            byte[] hash = sha256Hash.ComputeHash(zipContents.ToArray());
             StringBuilder sbString = new();
             foreach (byte b in hash)
             {
@@ -83,6 +78,6 @@ internal class FileHelper
             }
             strHash = sbString.ToString();
         }
-        return strHash;
+        return (zipContents, strHash);
     }
 }

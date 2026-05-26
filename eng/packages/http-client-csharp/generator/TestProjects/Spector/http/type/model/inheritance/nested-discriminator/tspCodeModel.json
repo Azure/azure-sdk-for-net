@@ -70,7 +70,7 @@
     {
       "$id": "9",
       "kind": "constant",
-      "name": "GetModelAccept",
+      "name": "getModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -86,7 +86,7 @@
     {
       "$id": "11",
       "kind": "constant",
-      "name": "GetModelAccept1",
+      "name": "putModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -102,7 +102,7 @@
     {
       "$id": "13",
       "kind": "constant",
-      "name": "GetModelAccept2",
+      "name": "getRecursiveModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -118,7 +118,7 @@
     {
       "$id": "15",
       "kind": "constant",
-      "name": "GetModelAccept3",
+      "name": "putRecursiveModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -134,7 +134,7 @@
     {
       "$id": "17",
       "kind": "constant",
-      "name": "GetModelAccept4",
+      "name": "getMissingDiscriminatorContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -150,7 +150,7 @@
     {
       "$id": "19",
       "kind": "constant",
-      "name": "GetModelAccept5",
+      "name": "getWrongDiscriminatorContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {

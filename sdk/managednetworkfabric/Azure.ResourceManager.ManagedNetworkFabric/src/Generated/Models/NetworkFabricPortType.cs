@@ -24,14 +24,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         private const string SourcePortValue = "SourcePort";
         private const string DestinationPortValue = "DestinationPort";
-        private const string BidirectionalValue = "Bidirectional";
 
-        /// <summary> PortType SourcePort. </summary>
+        /// <summary> SourcePort. </summary>
         public static NetworkFabricPortType SourcePort { get; } = new NetworkFabricPortType(SourcePortValue);
-        /// <summary> PortType DestinationPort. </summary>
+        /// <summary> DestinationPort. </summary>
         public static NetworkFabricPortType DestinationPort { get; } = new NetworkFabricPortType(DestinationPortValue);
-        /// <summary> PortType Bidirectional. </summary>
-        public static NetworkFabricPortType Bidirectional { get; } = new NetworkFabricPortType(BidirectionalValue);
         /// <summary> Determines if two <see cref="NetworkFabricPortType"/> values are the same. </summary>
         public static bool operator ==(NetworkFabricPortType left, NetworkFabricPortType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkFabricPortType"/> values are not the same. </summary>

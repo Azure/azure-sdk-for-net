@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.CostManagement
         OperationStatus IOperationSource<OperationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return OperationStatus.DeserializeOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            OperationStatus result = OperationStatus.DeserializeOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.CostManagement
         async ValueTask<OperationStatus> IOperationSource<OperationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return OperationStatus.DeserializeOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            OperationStatus result = OperationStatus.DeserializeOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

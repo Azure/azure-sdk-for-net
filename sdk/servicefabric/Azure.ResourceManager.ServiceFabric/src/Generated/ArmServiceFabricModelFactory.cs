@@ -387,12 +387,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
-        /// <param name="etag"> Azure resource etag. </param>
+        /// <param name="tags"> Azure resource tags. </param>
+        /// <param name="eTag"> Azure resource etag. </param>
         /// <returns> A new <see cref="ServiceFabric.ServiceFabricApplicationTypeData"/> instance for mocking. </returns>
-        public static ServiceFabricApplicationTypeData ServiceFabricApplicationTypeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, ETag? etag = default)
+        public static ServiceFabricApplicationTypeData ServiceFabricApplicationTypeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string provisioningState = default, IDictionary<string, string> tags = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -402,24 +402,24 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
                 provisioningState is null ? default : new ApplicationTypeResourceProperties(provisioningState, null),
-                etag);
+                tags,
+                eTag);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
         /// <param name="appPackageUri"> The URL to the application package. </param>
         /// <param name="defaultParameterList"> List of application type parameters that can be overridden when creating or updating the application. </param>
-        /// <param name="etag"> Azure resource etag. </param>
+        /// <param name="tags"> Azure resource tags. </param>
+        /// <param name="eTag"> Azure resource etag. </param>
         /// <returns> A new <see cref="ServiceFabric.ServiceFabricApplicationTypeVersionData"/> instance for mocking. </returns>
-        public static ServiceFabricApplicationTypeVersionData ServiceFabricApplicationTypeVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, Uri appPackageUri = default, IReadOnlyDictionary<string, string> defaultParameterList = default, ETag? etag = default)
+        public static ServiceFabricApplicationTypeVersionData ServiceFabricApplicationTypeVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string provisioningState = default, Uri appPackageUri = default, IReadOnlyDictionary<string, string> defaultParameterList = default, IDictionary<string, string> tags = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -429,17 +429,16 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
                 provisioningState is null && appPackageUri is null && defaultParameterList is null ? default : new ApplicationTypeVersionResourceProperties(provisioningState, appPackageUri, defaultParameterList, null),
-                etag);
+                tags,
+                eTag);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="typeVersion"> The version of the application type as defined in the application manifest. </param>
         /// <param name="parameters"> List of application parameters with overridden values from their default values specified in the application manifest. </param>
@@ -451,10 +450,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
         /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
         /// <param name="typeName"> The application type name as defined in the application manifest. </param>
+        /// <param name="tags"> Azure resource tags. </param>
         /// <param name="eTag"> Azure resource etag. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ServiceFabric.ServiceFabricApplicationData"/> instance for mocking. </returns>
-        public static ServiceFabricApplicationData ServiceFabricApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string typeVersion = default, IDictionary<string, string> parameters = default, ApplicationUpgradePolicy upgradePolicy = default, long? minimumNodes = default, long? maximumNodes = default, bool? removeApplicationCapacity = default, IEnumerable<ApplicationMetricDescription> metrics = default, IEnumerable<ApplicationUserAssignedIdentity> managedIdentities = default, string provisioningState = default, string typeName = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
+        public static ServiceFabricApplicationData ServiceFabricApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string typeVersion = default, IDictionary<string, string> parameters = default, ApplicationUpgradePolicy upgradePolicy = default, long? minimumNodes = default, long? maximumNodes = default, bool? removeApplicationCapacity = default, IEnumerable<ApplicationMetricDescription> metrics = default, IEnumerable<ApplicationUserAssignedIdentity> managedIdentities = default, string provisioningState = default, string typeName = default, IDictionary<string, string> tags = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -464,7 +464,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
                 typeVersion is null && parameters is null && upgradePolicy is null && minimumNodes is null && maximumNodes is null && removeApplicationCapacity is null && metrics is null && managedIdentities is null && provisioningState is null && typeName is null ? default : new ApplicationResourceProperties(
                     typeVersion,
@@ -478,6 +477,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     null,
                     provisioningState,
                     typeName),
+                tags,
                 eTag,
                 identity);
         }
@@ -544,12 +544,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The service resource properties. </param>
+        /// <param name="tags"> Azure resource tags. </param>
         /// <param name="eTag"> Azure resource etag. </param>
         /// <returns> A new <see cref="ServiceFabric.ServiceFabricServiceData"/> instance for mocking. </returns>
-        public static ServiceFabricServiceData ServiceFabricServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ServiceResourceProperties properties = default, ETag? eTag = default)
+        public static ServiceFabricServiceData ServiceFabricServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ServiceResourceProperties properties = default, IDictionary<string, string> tags = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -559,9 +559,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
                 properties,
+                tags,
                 eTag);
         }
 
@@ -976,6 +976,62 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 etag);
         }
 
+        /// <summary> Initializes a new instance of ServiceFabricApplicationTypeData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
+        /// <param name="etag"> Azure resource etag. </param>
+        /// <returns> A new <see cref="ServiceFabric.ServiceFabricApplicationTypeData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ServiceFabricApplicationTypeData ServiceFabricApplicationTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, ETag? etag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ServiceFabricApplicationTypeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                provisioningState is null ? default : new ApplicationTypeResourceProperties(provisioningState, default),
+                tags,
+                etag);
+        }
+
+        /// <summary> Initializes a new instance of ServiceFabricApplicationTypeVersionData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
+        /// <param name="appPackageUri"> The URL to the application package. </param>
+        /// <param name="defaultParameterList"> List of application type parameters that can be overridden when creating or updating the application. </param>
+        /// <param name="etag"> Azure resource etag. </param>
+        /// <returns> A new <see cref="ServiceFabric.ServiceFabricApplicationTypeVersionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ServiceFabricApplicationTypeVersionData ServiceFabricApplicationTypeVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, Uri appPackageUri, IReadOnlyDictionary<string, string> defaultParameterList, ETag? etag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ServiceFabricApplicationTypeVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                location,
+                provisioningState is null && appPackageUri is null && defaultParameterList is null ? default : new ApplicationTypeVersionResourceProperties(provisioningState, appPackageUri, defaultParameterList ?? new ChangeTrackingDictionary<string, string>(), default),
+                tags,
+                etag);
+        }
+
         /// <summary> Initializes a new instance of ServiceFabricApplicationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1007,7 +1063,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
                 typeVersion is null && parameters is null && upgradePolicy is null && minimumNodes is null && maximumNodes is null && removeApplicationCapacity is null && metrics is null && managedIdentities is null && provisioningState is null && typeName is null ? default : new ApplicationResourceProperties(
                     typeVersion,
@@ -1021,6 +1076,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     default,
                     provisioningState,
                     typeName),
+                tags,
                 etag,
                 identity);
         }

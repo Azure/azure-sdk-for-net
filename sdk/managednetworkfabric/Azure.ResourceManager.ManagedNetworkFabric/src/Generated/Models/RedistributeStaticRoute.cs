@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string TrueValue = "True";
         private const string FalseValue = "False";
 
-        /// <summary> RedistributeStaticRoutes-True. </summary>
+        /// <summary> True. </summary>
         public static RedistributeStaticRoute True { get; } = new RedistributeStaticRoute(TrueValue);
-        /// <summary> RedistributeStaticRoutes-False. </summary>
+        /// <summary> False. </summary>
         public static RedistributeStaticRoute False { get; } = new RedistributeStaticRoute(FalseValue);
         /// <summary> Determines if two <see cref="RedistributeStaticRoute"/> values are the same. </summary>
         public static bool operator ==(RedistributeStaticRoute left, RedistributeStaticRoute right) => left.Equals(right);
