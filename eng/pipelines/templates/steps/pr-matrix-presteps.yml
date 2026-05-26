@@ -9,7 +9,7 @@ parameters:
   - name: ExcludePaths
     type: object
     default: []
-  - name: EnableBuildWeighting
+  - name: EnableLocWeighting
     type: boolean
     default: false
   - name: LocTarget
@@ -72,7 +72,7 @@ steps:
     displayName: Only target direct packages for build and test
     condition: and(succeededOrFailed(), eq(${{ parameters.ForceDirect }}, true))
 
-  - ${{ if eq(parameters.EnableBuildWeighting, true) }}:
+  - ${{ if eq(parameters.EnableLocWeighting, true) }}:
     - pwsh: |
         eng/scripts/Get-PackageLocWeights.ps1 `
           -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `

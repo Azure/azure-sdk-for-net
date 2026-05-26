@@ -78,7 +78,7 @@ jobs:
               PublishingArtifactName: BuildPackagesArtifact
               ForceDirect: true
               ExcludePaths: ${{ parameters.ExcludePaths }}
-              EnableBuildWeighting: true
+              EnableLocWeighting: true
               LocTarget: 1200000
               PublishArtifact: true
 
@@ -115,7 +115,7 @@ jobs:
               PublishingArtifactName: AnalyzePackageInfoArtifact
               ForceDirect: true
               ExcludePaths: ${{ parameters.ExcludePaths }}
-              EnableBuildWeighting: true
+              EnableLocWeighting: true
               LocTarget: 300000
               PublishArtifact: true
 
