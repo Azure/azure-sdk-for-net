@@ -20,12 +20,12 @@ Identity, Environment, Workload Identity, Chained, etc.), see the
 ## Table of Contents
 
 - [How It Works](#how-it-works)
-- [Dependency Injection with `AddAzureClient`](#dependency-injection-with-addazureclient)
-- [Standalone Configuration with `GetAzureClientSettings`](#standalone-configuration-with-getazureclientsettings)
-- [Credential-Only Resolution with `GetAzureCredentialSettings`](#credential-only-resolution-with-getazurecredentialsettings)
-- [Direct `System.ClientModel` `GetCredentialSettings` Call](#direct-systemclientmodel-getcredentialsettings-call)
+- [Dependency Injection with AddAzureClient](#dependency-injection-with-addazureclient)
+- [Standalone Configuration with GetAzureClientSettings](#standalone-configuration-with-getazureclientsettings)
+- [Credential-Only Resolution with GetAzureCredentialSettings](#credential-only-resolution-with-getazurecredentialsettings)
+- [Direct System.ClientModel GetCredentialSettings Call](#direct-systemclientmodel-getcredentialsettings-call)
 - [Resolver Ordering](#resolver-ordering)
-- [Broker `Credential` JSON Reference](#broker-credential-json-reference)
+- [Broker Credential JSON Reference](#broker-credential-json-reference)
 
 ## How It Works
 
@@ -48,7 +48,7 @@ in a future release, you must register `BrokerCredentialResolver` **before**
 `AzureCredentialResolver` so the broker resolver gets the first chance to
 claim those sections. With the wrappers below this happens automatically.
 
-## Dependency Injection with `AddAzureClient`
+## Dependency Injection with AddAzureClient
 
 Call `AddBrokerCredentialResolver()` **before** `AddAzureClient`. `AddAzureClient`
 registers the built-in `AzureCredentialResolver` for you, so both resolvers
@@ -84,7 +84,7 @@ IHost host = builder.Build();
 `AddBrokerCredentialResolver()` is idempotent — calling it multiple times
 produces a single registration.
 
-## Standalone Configuration with `GetAzureClientSettings`
+## Standalone Configuration with GetAzureClientSettings
 
 If you are not using a DI container, pass a `BrokerCredentialResolver`
 instance to `GetAzureClientSettings`. The built-in `AzureCredentialResolver`
@@ -101,7 +101,7 @@ MyClientSettings settings = configuration.GetAzureClientSettings<MyClientSetting
 MyClient client = new(settings);
 ```
 
-## Credential-Only Resolution with `GetAzureCredentialSettings`
+## Credential-Only Resolution with GetAzureCredentialSettings
 
 When you want just the credential (no client settings binding), use
 `GetAzureCredentialSettings`. It behaves the same way — your resolver
@@ -121,7 +121,7 @@ if (credential.TokenProvider is TokenCredential tokenCredential)
 }
 ```
 
-## Direct `System.ClientModel` `GetCredentialSettings` Call
+## Direct System.ClientModel GetCredentialSettings Call
 
 If you are not using any of the Azure wrappers, you can compose the chain
 yourself by passing both resolvers explicitly to the base
@@ -172,9 +172,9 @@ The wrapper APIs (`AddAzureClient`, `GetAzureClientSettings`,
 **after** your explicit resolvers, so the order above is what they produce
 by default.
 
-## Broker `Credential` JSON Reference
+## Broker Credential JSON Reference
 
-### `BrokerCredential`
+### BrokerCredential
 
 ```json
 {
@@ -207,7 +207,7 @@ by default.
 | `AdditionallyAllowedTenants` | Additional tenants to allow token acquisition for. |
 | `TokenCachePersistenceOptions` | Configures persistent token caching. |
 
-### `VisualStudioCodeCredential`
+### VisualStudioCodeCredential
 
 ```json
 {
