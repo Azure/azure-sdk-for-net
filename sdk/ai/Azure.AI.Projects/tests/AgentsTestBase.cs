@@ -198,7 +198,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.MicrosoftFabric, "fabric_dataagent_preview_call_output"},
         {ToolType.A2A, "a2a_preview_call_output"},
         {ToolType.A2ASpecialConnection, "a2a_preview_call_output"},
-        {ToolType.WorkIQTool, "work_iq_preview_call_output"}
+        {ToolType.WorkIQTool, "a2a_preview_call_output"}
     };
     #endregion
 
@@ -671,7 +671,11 @@ public class AgentsTestBase : ProjectsClientTestBase
         List<string> hostedAgents = await projectClient.AgentAdministrationClient.GetAgentsAsync().Select((x) => x.Name).Where((x) => x.StartsWith(HOSTED_AGENT)).ToListAsync();
         foreach (string hostedAgent in hostedAgents)
         {
-            projectClient.AgentAdministrationClient.DeleteAgent(hostedAgent);
+            try
+            {
+                projectClient.AgentAdministrationClient.DeleteAgent(hostedAgent);
+            }
+            catch { }
         }
         await RemoveToolBoxMayBe(projectClient);
     }

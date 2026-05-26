@@ -62,6 +62,50 @@ public class Sample_WorkIQ : ProjectsOpenAITestBase
         #endregion
     }
 
+    [Test]
+    [SyncOnly]
+    public void WorkIQSync()
+    {
+        IgnoreSampleMayBe();
+#if SNIPPET
+        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+        var workIQConnectionName = System.Environment.GetEnvironmentVariable("WORKIQ_CONNECTION_NAME");
+#else
+        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
+        var workIQConnectionName = TestEnvironment.WORKIQ_CONNECTION_NAME;
+#endif
+        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        #region Snippet:Sample_CreateAgent_WorkIQ_Sync
+        AIProjectConnection workIQConnection = projectClient.Connections.GetConnection(workIQConnectionName);
+        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+        {
+            Instructions = "You are a helpful assistant that can access Microsoft 365 data through WorkIQ. Use the WorkIQ tool to search and retrieve information from emails, calendar events, Teams messages, and other Microsoft 365 content to assist users with their questions.",
+            Tools = { new WorkIQPreviewTool(workIQConnection.Id), }
+        };
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+            agentName: "myAgent",
+            options: new(agentDefinition));
+        #endregion
+        #region Snippet:Sample_CreateResponse_WorkIQ_Sync
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
+        CreateResponseOptions responseOptions = new()
+        {
+            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+            InputItems = { ResponseItem.CreateUserMessageItem("What meetings do I have scheduled today?") },
+        };
+        ResponseResult response = responseClient.CreateResponse(responseOptions);
+        #endregion
+
+        Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
+        Console.WriteLine(response.GetOutputText());
+
+        #region Snippet:Sample_Cleanup_WorkIQ_Sync
+        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        #endregion
+    }
+
     public Sample_WorkIQ(bool isAsync) : base(isAsync)
     { }
 }

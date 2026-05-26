@@ -1914,6 +1914,15 @@ To create the Agent, capable of returning the responses grounded by these data, 
 as shown below.
 
 ```C# Snippet:Sample_CreateAgent_WorkIQ_Async
+AIProjectConnection workIQConnection = await projectClient.Connections.GetConnectionAsync(workIQConnectionName);
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful assistant that can access Microsoft 365 data through WorkIQ. Use the WorkIQ tool to search and retrieve information from emails, calendar events, Teams messages, and other Microsoft 365 content to assist users with their questions.",
+    Tools = { new WorkIQPreviewTool(workIQConnection.Id), }
+};
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition));
 ```
 
 ## Tracing

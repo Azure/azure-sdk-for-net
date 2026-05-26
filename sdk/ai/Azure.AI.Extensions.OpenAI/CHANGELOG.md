@@ -27,6 +27,9 @@
 
 ### Other Changes
 
+### Sample Updates
+- Added sample for Work IQ.
+
 ## 2.1.0-beta.1 (2026-04-21)
 
 ### Features Added
