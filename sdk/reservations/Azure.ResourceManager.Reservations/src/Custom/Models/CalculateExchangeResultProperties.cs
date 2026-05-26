@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Reservations.Models
     [CodeGenSuppress("PolicyErrors")]
     public partial class CalculateExchangeResultProperties
     {
+        /// <summary> Exchange Policy errors. </summary>
         public IReadOnlyList<ExchangePolicyError> PolicyErrors
         {
             get
