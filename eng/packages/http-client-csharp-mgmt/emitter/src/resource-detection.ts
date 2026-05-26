@@ -523,26 +523,16 @@ function assignRemainingOperations(
         scope: buildListOperationScope(resources, operationPath)
       });
     } else if (actionTarget) {
-      const collectionActionTarget = isArmResourceCollectionAction(sdkMethod)
-        ? findCollectionActionTargetResource(
-            resources,
-            operationPath,
-            actionTarget
-          )
-        : undefined;
-      const target = collectionActionTarget ?? actionTarget;
       const scope = buildScopeInfoFromPath(operationPath);
-      target.metadata.methods.push({
+      actionTarget.metadata.methods.push({
         methodId,
-        kind: collectionActionTarget
+        kind: isArmResourceCollectionAction(sdkMethod)
           ? ResourceOperationKind.CollectionAction
           : ResourceOperationKind.Action,
         operationPath,
         scope: {
           ...scope,
-          scopeIdPattern: collectionActionTarget
-            ? getCollectionContextPath(collectionActionTarget)
-            : actionTarget.metadata.resourceIdPattern
+          scopeIdPattern: actionTarget.metadata.resourceIdPattern
         }
       });
     } else {
@@ -554,6 +544,8 @@ function assignRemainingOperations(
     }
     consumedMethodIds.add(methodId);
   }
+
+  relocateCollectionActions(resources);
 
   for (const resource of resources) {
     sortResourceMethods(resource.metadata.methods);
@@ -569,26 +561,6 @@ function isArmResourceCollectionAction(
         decorator.definition?.name === armResourceCollectionActionName
     ) ?? false
   );
-}
-
-function findCollectionActionTargetResource(
-  resources: ValidArmResourceSchema[],
-  operationPath: RequestPath,
-  actionTarget: ValidArmResourceSchema
-): ValidArmResourceSchema | undefined {
-  const collectionMatches = resources.filter((resource) => {
-    const collectionPath = getResourceCollectionPath(
-      resource.metadata.resourceIdPattern
-    );
-    return (
-      (collectionPath?.isPrefixOf(operationPath) ?? false) &&
-      getCollectionContextPath(resource).equals(
-        actionTarget.metadata.resourceIdPattern
-      )
-    );
-  });
-
-  return longestResourcePath(collectionMatches);
 }
 
 function getResourceCollectionPath(
@@ -608,6 +580,53 @@ function getCollectionContextPath(
   return (
     resource.metadata.parentResourceId ?? resource.metadata.scope.scopeIdPattern
   );
+}
+
+function relocateCollectionActions(resources: ValidArmResourceSchema[]): void {
+  const relocations: Array<{
+    source: ValidArmResourceSchema;
+    target: ValidArmResourceSchema;
+    method: ResourceMethod;
+  }> = [];
+
+  for (const source of resources) {
+    for (const method of source.metadata.methods) {
+      if (method.kind !== ResourceOperationKind.CollectionAction) continue;
+
+      const target = longestResourcePath(
+        resources.filter((resource) => {
+          if (resource === source) return false;
+
+          const collectionPath = getResourceCollectionPath(
+            resource.metadata.resourceIdPattern
+          );
+          return (
+            (collectionPath?.isPrefixOf(method.operationPath) ?? false) &&
+            getCollectionContextPath(resource).equals(
+              source.metadata.resourceIdPattern
+            )
+          );
+        })
+      );
+
+      if (target) {
+        relocations.push({ source, target, method });
+      }
+    }
+  }
+
+  for (const { source, target, method } of relocations) {
+    source.metadata.methods = source.metadata.methods.filter(
+      (m) => m !== method
+    );
+    target.metadata.methods.push({
+      ...method,
+      scope: {
+        ...method.scope,
+        scopeIdPattern: getCollectionContextPath(target)
+      }
+    });
+  }
 }
 
 function longestResourcePath(
