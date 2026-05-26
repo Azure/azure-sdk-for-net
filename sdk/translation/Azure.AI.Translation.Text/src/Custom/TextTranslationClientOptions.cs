@@ -16,7 +16,7 @@ namespace Azure.AI.Translation.Text
         {
             Version = version switch
             {
-                ServiceVersion.V2025_10_01_Preview => "2025-10-01-preview",
+                ServiceVersion.V2026_06_06 => "2026-06-06",
                 ServiceVersion.V3_0 or _ => throw new NotSupportedException()
             };
             Diagnostics.LoggedHeaderNames.Add("X-RequestId");

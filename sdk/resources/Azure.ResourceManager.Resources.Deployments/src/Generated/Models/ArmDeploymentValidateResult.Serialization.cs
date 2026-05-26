@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             ResourceIdentifier id = default;
+            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResponseError error = default;
-            string name = default;
             ArmDeploymentPropertiesExtended properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,6 +139,11 @@ namespace Azure.ResourceManager.Resources.Models
                         continue;
                     }
                     id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -164,11 +169,6 @@ namespace Azure.ResourceManager.Resources.Models
                     DeserializeError(prop, ref error, options);
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -185,11 +185,11 @@ namespace Azure.ResourceManager.Resources.Models
             }
             return new ArmDeploymentValidateResult(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
                 error,
-                name,
                 properties);
         }
     }

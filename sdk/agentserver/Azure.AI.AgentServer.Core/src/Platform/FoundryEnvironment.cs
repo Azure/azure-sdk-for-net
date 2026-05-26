@@ -97,7 +97,7 @@ public static class FoundryEnvironment
     /// <summary>
     /// The managed identity client ID of the agent blueprint.
     /// Sourced from the <c>FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID</c> environment variable.
-    /// Stamped as <c>gen_ai.agent.blueprint.id</c> on telemetry spans.
+    /// Stamped as <c>microsoft.a365.agent.blueprint.id</c> on telemetry spans.
     /// </summary>
     public static string? AgentBlueprintClientId { get; private set; }
 
