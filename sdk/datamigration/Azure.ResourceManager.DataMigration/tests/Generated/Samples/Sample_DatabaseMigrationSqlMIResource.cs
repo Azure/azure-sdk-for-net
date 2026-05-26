@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
             // invoke the operation
             string expand = "MigrationStatusDetails";
-            DatabaseMigrationSqlMIResource result = await databaseMigrationSqlMI.GetAsync(migrationOperationId: (Guid?)null, expand: expand);
+            DatabaseMigrationSqlMIResource result = await databaseMigrationSqlMI.GetAsync(expand: expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             DatabaseMigrationSqlMIResource databaseMigrationSqlMI = client.GetDatabaseMigrationSqlMIResource(databaseMigrationSqlMIResourceId);
 
             // invoke the operation
-            DatabaseMigrationSqlMIResource result = await databaseMigrationSqlMI.GetAsync(migrationOperationId: (Guid?)null);
+            DatabaseMigrationSqlMIResource result = await databaseMigrationSqlMI.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
