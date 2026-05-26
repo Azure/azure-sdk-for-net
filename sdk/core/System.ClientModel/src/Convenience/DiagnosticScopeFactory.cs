@@ -4,6 +4,8 @@
 using System.Collections.Concurrent;
 using System.Diagnostics;
 
+#nullable enable
+
 namespace System.ClientModel.Primitives;
 
 /// <summary>
@@ -14,7 +16,7 @@ namespace System.ClientModel.Primitives;
 /// This class is intended to be used by client library authors only.
 /// Applications should use the System.Diagnostics package directly for custom tracing.
 /// </remarks>
-public class DiagnosticScopeFactory
+internal class DiagnosticScopeFactory
 {
     private const string ScmScopeLabel = "scm.sdk.scope";
     private static readonly object ScmScopeValue = bool.TrueString;

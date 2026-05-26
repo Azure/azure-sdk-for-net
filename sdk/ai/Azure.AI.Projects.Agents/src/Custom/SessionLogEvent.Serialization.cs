@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents;
+
 public partial class SessionLogEvent
 {
     /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="SessionLogEvent"/> from. </param>

@@ -28,9 +28,13 @@
     <Compile Include="$(AzureGeneratorSource)\Extensions\ConfigurationExtensions.cs" LinkBase="Shared/" />
     <Compile Include="$(AzureGeneratorSource)\Utilities\TypeNameUtilities.cs" LinkBase="Shared/" />
     <Compile Include="$(AzureCoreSharedSource)\TaskExtensions.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(SystemClientModelSource)\ClientDiagnostics.cs" LinkBase="Shared/SystemClientModel" />
-    <Compile Include="$(SystemClientModelSource)\DiagnosticScope.cs" LinkBase="Shared/SystemClientModel" />
-    <Compile Include="$(SystemClientModelSource)\DiagnosticScopeFactory.cs" LinkBase="Shared/SystemClientModel" />
+    <Compile Include="
+      $(SystemClientModelSource)\ClientDiagnostics.cs;
+      $(SystemClientModelSource)\DiagnosticScope.cs;
+      $(SystemClientModelSource)\DiagnosticScopeFactory.cs;">
+      <LinkBase>Shared/SystemClientModel</LinkBase>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
 
   <!-- Copy output to package dist path  -->

@@ -4,6 +4,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
+#nullable enable
+
 namespace System.ClientModel.Primitives;
 
 /// <summary>
@@ -14,7 +16,7 @@ namespace System.ClientModel.Primitives;
 /// This struct is intended to be used by client library authors only.
 /// Applications should use the System.Diagnostics package directly for custom tracing.
 /// </remarks>
-public readonly struct DiagnosticScope : IDisposable
+internal readonly struct DiagnosticScope : IDisposable
 {
     private readonly ActivityAdapter? _adapter;
 

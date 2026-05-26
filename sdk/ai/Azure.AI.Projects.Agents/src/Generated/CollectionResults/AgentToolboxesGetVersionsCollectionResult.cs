@@ -92,7 +92,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="message"> The pipeline message containing the request to send. </param>
         private ClientResult GetNextResponse(PipelineMessage message)
         {
-            return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AgentToolboxes.GetToolboxVersions");
+            scope.Start();
+            try
+            {
+                return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

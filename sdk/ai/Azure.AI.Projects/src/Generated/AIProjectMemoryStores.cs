@@ -24,11 +24,13 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary> Initializes a new instance of AIProjectMemoryStores. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AIProjectMemoryStores(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AIProjectMemoryStores(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -37,8 +39,11 @@ namespace Azure.AI.Projects.Memory
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary>
-        /// [Protocol Method] Creates a memory store resource with the provided configuration.
+        /// [Protocol Method] Create a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -52,14 +57,24 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateMemoryStore(BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.CreateMemoryStore");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateMemoryStoreRequest(content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateCreateMemoryStoreRequest(content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Creates a memory store resource with the provided configuration.
+        /// [Protocol Method] Create a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -73,13 +88,23 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> CreateMemoryStoreAsync(BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.CreateMemoryStore");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateMemoryStoreRequest(content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateCreateMemoryStoreRequest(content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Creates a memory store resource with the provided configuration. </summary>
+        /// <summary> Create a memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="definition"> The memory store definition. </param>
         /// <param name="description"> A human-readable description of the memory store. </param>
@@ -98,7 +123,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
 
-        /// <summary> Creates a memory store resource with the provided configuration. </summary>
+        /// <summary> Create a memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="definition"> The memory store definition. </param>
         /// <param name="description"> A human-readable description of the memory store. </param>
@@ -118,7 +143,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Updates the specified memory store with the supplied configuration changes.
+        /// [Protocol Method] Update a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -134,15 +159,25 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult UpdateMemoryStore(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.UpdateMemoryStore");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateMemoryStoreRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateUpdateMemoryStoreRequest(name, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Updates the specified memory store with the supplied configuration changes.
+        /// [Protocol Method] Update a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -158,14 +193,24 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> UpdateMemoryStoreAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.UpdateMemoryStore");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateMemoryStoreRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateUpdateMemoryStoreRequest(name, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Updates the specified memory store with the supplied configuration changes. </summary>
+        /// <summary> Update a memory store. </summary>
         /// <param name="name"> The name of the memory store to update. </param>
         /// <param name="description"> A human-readable description of the memory store. </param>
         /// <param name="metadata"> Arbitrary key-value metadata to associate with the memory store. </param>
@@ -182,7 +227,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
 
-        /// <summary> Updates the specified memory store with the supplied configuration changes. </summary>
+        /// <summary> Update a memory store. </summary>
         /// <param name="name"> The name of the memory store to update. </param>
         /// <param name="description"> A human-readable description of the memory store. </param>
         /// <param name="metadata"> Arbitrary key-value metadata to associate with the memory store. </param>
@@ -200,7 +245,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves the specified memory store and its current configuration.
+        /// [Protocol Method] Retrieve a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -215,14 +260,24 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetMemoryStore(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.GetMemoryStore");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetMemoryStoreRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetMemoryStoreRequest(name, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves the specified memory store and its current configuration.
+        /// [Protocol Method] Retrieve a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -237,13 +292,23 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetMemoryStoreAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.GetMemoryStore");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetMemoryStoreRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetMemoryStoreRequest(name, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Retrieves the specified memory store and its current configuration. </summary>
+        /// <summary> Retrieve a memory store. </summary>
         /// <param name="name"> The name of the memory store to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -257,7 +322,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
 
-        /// <summary> Retrieves the specified memory store and its current configuration. </summary>
+        /// <summary> Retrieve a memory store. </summary>
         /// <param name="name"> The name of the memory store to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -272,7 +337,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes the specified memory store.
+        /// [Protocol Method] Delete a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -287,14 +352,24 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteMemoryStore(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.DeleteMemoryStore");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteMemoryStoreRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDeleteMemoryStoreRequest(name, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes the specified memory store.
+        /// [Protocol Method] Delete a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -309,13 +384,23 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DeleteMemoryStoreAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.DeleteMemoryStore");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteMemoryStoreRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDeleteMemoryStoreRequest(name, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Deletes the specified memory store. </summary>
+        /// <summary> Delete a memory store. </summary>
         /// <param name="name"> The name of the memory store to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -329,7 +414,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((DeleteMemoryStoreResponse)result, result.GetRawResponse());
         }
 
-        /// <summary> Deletes the specified memory store. </summary>
+        /// <summary> Delete a memory store. </summary>
         /// <param name="name"> The name of the memory store to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -344,7 +429,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Searches the specified memory store for memories relevant to the provided conversation context.
+        /// [Protocol Method] Search for relevant memories from a memory store based on conversation context.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -360,15 +445,25 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult SearchMemories(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.SearchMemories");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateSearchMemoriesRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateSearchMemoriesRequest(name, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Searches the specified memory store for memories relevant to the provided conversation context.
+        /// [Protocol Method] Search for relevant memories from a memory store based on conversation context.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -384,16 +479,25 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> SearchMemoriesAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.SearchMemories");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateSearchMemoriesRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateSearchMemoriesRequest(name, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Starts an update that writes conversation memories into the specified memory store.
-        /// The operation returns a long-running status location for polling the update result.
+        /// [Protocol Method] Update memory store with conversation memories.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -409,16 +513,25 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult UpdateMemories(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.UpdateMemories");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateMemoriesRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateUpdateMemoriesRequest(name, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Starts an update that writes conversation memories into the specified memory store.
-        /// The operation returns a long-running status location for polling the update result.
+        /// [Protocol Method] Update memory store with conversation memories.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -434,15 +547,25 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> UpdateMemoriesAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.UpdateMemories");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateMemoriesRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateUpdateMemoriesRequest(name, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves the status and result of a memory store update operation.
+        /// [Protocol Method] Get memory store update result.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -458,15 +581,25 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetUpdateResult(string name, string updateId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(updateId, nameof(updateId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.GetUpdateResult");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(updateId, nameof(updateId));
 
-            using PipelineMessage message = CreateGetUpdateResultRequest(name, updateId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetUpdateResultRequest(name, updateId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves the status and result of a memory store update operation.
+        /// [Protocol Method] Get memory store update result.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -482,14 +615,24 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetUpdateResultAsync(string name, string updateId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(updateId, nameof(updateId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.GetUpdateResult");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(updateId, nameof(updateId));
 
-            using PipelineMessage message = CreateGetUpdateResultRequest(name, updateId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetUpdateResultRequest(name, updateId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Retrieves the status and result of a memory store update operation. </summary>
+        /// <summary> Get memory store update result. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="updateId"> The ID of the memory update operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -505,7 +648,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((MemoryUpdateResult)result, result.GetRawResponse());
         }
 
-        /// <summary> Retrieves the status and result of a memory store update operation. </summary>
+        /// <summary> Get memory store update result. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="updateId"> The ID of the memory update operation. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -522,7 +665,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes all memories in the specified memory store that are associated with the provided scope.
+        /// [Protocol Method] Delete all memories associated with a specific scope from a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -538,15 +681,25 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteScope(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.DeleteScope");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateDeleteScopeRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDeleteScopeRequest(name, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes all memories in the specified memory store that are associated with the provided scope.
+        /// [Protocol Method] Delete all memories associated with a specific scope from a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -562,14 +715,24 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DeleteScopeAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.DeleteScope");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateDeleteScopeRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDeleteScopeRequest(name, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Deletes all memories in the specified memory store that are associated with the provided scope. </summary>
+        /// <summary> Delete all memories associated with a specific scope from a memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories to delete, such as a user ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -586,7 +749,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((MemoryStoreDeleteScopeResponse)result, result.GetRawResponse());
         }
 
-        /// <summary> Deletes all memories in the specified memory store that are associated with the provided scope. </summary>
+        /// <summary> Delete all memories associated with a specific scope from a memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories to delete, such as a user ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -604,7 +767,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Creates a memory item in the specified memory store.
+        /// [Protocol Method] Create a memory item in a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -620,15 +783,25 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateMemory(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.CreateMemory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateMemoryRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateCreateMemoryRequest(name, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Creates a memory item in the specified memory store.
+        /// [Protocol Method] Create a memory item in a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -644,14 +817,24 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> CreateMemoryAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.CreateMemory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateMemoryRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateCreateMemoryRequest(name, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Creates a memory item in the specified memory store. </summary>
+        /// <summary> Create a memory item in a memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
@@ -671,7 +854,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
         }
 
-        /// <summary> Creates a memory item in the specified memory store. </summary>
+        /// <summary> Create a memory item in a memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
@@ -692,7 +875,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Updates the specified memory item in the memory store.
+        /// [Protocol Method] Update a memory item in a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -709,16 +892,26 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult UpdateMemory(string name, string memoryId, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.UpdateMemory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateMemoryRequest(name, memoryId, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateUpdateMemoryRequest(name, memoryId, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Updates the specified memory item in the memory store.
+        /// [Protocol Method] Update a memory item in a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -735,15 +928,25 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> UpdateMemoryAsync(string name, string memoryId, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.UpdateMemory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateMemoryRequest(name, memoryId, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateUpdateMemoryRequest(name, memoryId, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Updates the specified memory item in the memory store. </summary>
+        /// <summary> Update a memory item in a memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to update. </param>
         /// <param name="content"> The updated content of the memory. </param>
@@ -762,7 +965,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
         }
 
-        /// <summary> Updates the specified memory item in the memory store. </summary>
+        /// <summary> Update a memory item in a memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to update. </param>
         /// <param name="content"> The updated content of the memory. </param>
@@ -782,7 +985,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves the specified memory item from the memory store.
+        /// [Protocol Method] Retrieve a memory item from a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -798,15 +1001,25 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetMemory(string name, string memoryId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.GetMemory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
 
-            using PipelineMessage message = CreateGetMemoryRequest(name, memoryId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetMemoryRequest(name, memoryId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves the specified memory item from the memory store.
+        /// [Protocol Method] Retrieve a memory item from a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -822,14 +1035,24 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetMemoryAsync(string name, string memoryId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.GetMemory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
 
-            using PipelineMessage message = CreateGetMemoryRequest(name, memoryId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetMemoryRequest(name, memoryId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Retrieves the specified memory item from the memory store. </summary>
+        /// <summary> Retrieve a memory item from a memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -845,7 +1068,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
         }
 
-        /// <summary> Retrieves the specified memory item from the memory store. </summary>
+        /// <summary> Retrieve a memory item from a memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -862,7 +1085,7 @@ namespace Azure.AI.Projects.Memory
         }
 
         /// <summary>
-        /// [Protocol Method] Returns memory items from the specified memory store.
+        /// [Protocol Method] List all memory items in a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -870,8 +1093,6 @@ namespace Azure.AI.Projects.Memory
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the memory store. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="kind"> The kind of the memory item. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
         /// default is 20.
@@ -891,29 +1112,92 @@ namespace Azure.AI.Projects.Memory
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetMemoriesAsync(string name, BinaryContent content, string kind = default, int? limit = default, string order = default, string after = default, string before = default, RequestOptions options = null)
+        public virtual CollectionResult GetMemories(string name, int? limit, string order, string after, string before, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.GetMemories");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new AIProjectMemoryStoresGetMemoriesAsyncCollectionResult(
-                this,
-                name,
-                content,
-                kind,
-                limit,
-                order,
-                after,
-                before,
-                options);
+                return new AIProjectMemoryStoresGetMemoriesCollectionResult(
+                    this,
+                    name,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes the specified memory item from the memory store.
+        /// [Protocol Method] List all memory items in a memory store.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the memory store. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncCollectionResult GetMemoriesAsync(string name, int? limit, string order, string after, string before, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.GetMemories");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                return new AIProjectMemoryStoresGetMemoriesAsyncCollectionResult(
+                    this,
+                    name,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Delete a memory item from a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -929,15 +1213,25 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteMemory(string name, string memoryId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.DeleteMemory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
 
-            using PipelineMessage message = CreateDeleteMemoryRequest(name, memoryId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDeleteMemoryRequest(name, memoryId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes the specified memory item from the memory store.
+        /// [Protocol Method] Delete a memory item from a memory store.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -953,14 +1247,24 @@ namespace Azure.AI.Projects.Memory
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DeleteMemoryAsync(string name, string memoryId, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectMemoryStores.DeleteMemory");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
 
-            using PipelineMessage message = CreateDeleteMemoryRequest(name, memoryId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDeleteMemoryRequest(name, memoryId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Deletes the specified memory item from the memory store. </summary>
+        /// <summary> Delete a memory item from a memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -976,7 +1280,7 @@ namespace Azure.AI.Projects.Memory
             return ClientResult.FromValue((MemoryDeletionResult)result, result.GetRawResponse());
         }
 
-        /// <summary> Deletes the specified memory item from the memory store. </summary>
+        /// <summary> Delete a memory item from a memory store. </summary>
         /// <param name="name"> The name of the memory store. </param>
         /// <param name="memoryId"> The ID of the memory item to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
