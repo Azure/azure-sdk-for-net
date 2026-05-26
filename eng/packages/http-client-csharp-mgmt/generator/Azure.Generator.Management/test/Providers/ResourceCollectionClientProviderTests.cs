@@ -374,7 +374,7 @@ namespace Azure.Generator.Management.Tests.Providers
         [TestCase]
         public void CollectionEmitsCollectionActionFromSeparateOperationGroup()
         {
-            var (mainClient, actionClient, models) = InputResourceData.ClientWithResourceActionInDifferentClient(isCollectionAction: true);
+            var (mainClient, actionClient, models) = InputResourceData.ClientWithResourceCollectionActionInDifferentClient();
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [mainClient, actionClient]);
 
             var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().FirstOrDefault();
