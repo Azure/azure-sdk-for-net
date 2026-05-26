@@ -370,5 +370,28 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(fieldNames, Does.Contain("_actionClientClientDiagnostics"),
                 "Resource must declare a diagnostics field for the action's operation group.");
         }
+
+        [TestCase]
+        public void CollectionEmitsCollectionActionFromSeparateOperationGroup()
+        {
+            var (mainClient, actionClient, models) = InputResourceData.ClientWithResourceActionInDifferentClient(isCollectionAction: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [mainClient, actionClient]);
+
+            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().FirstOrDefault();
+            Assert.That(collection, Is.Not.Null);
+
+            var methodNames = collection!.Methods.Select(m => m.Signature.Name).ToArray();
+            Assert.That(methodNames, Does.Contain("DoAction"));
+            Assert.That(methodNames, Does.Contain("DoActionAsync"));
+
+            var fieldNames = collection.Fields.Select(f => f.Name).ToArray();
+            Assert.That(fieldNames, Does.Contain("_actionClientRestClient"));
+            Assert.That(fieldNames, Does.Contain("_actionClientClientDiagnostics"));
+
+            var resource = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().FirstOrDefault();
+            Assert.That(resource, Is.Not.Null);
+            Assert.That(resource!.Methods.Select(m => m.Signature.Name), Does.Not.Contain("DoAction"));
+            Assert.That(resource.Methods.Select(m => m.Signature.Name), Does.Not.Contain("DoActionAsync"));
+        }
     }
 }

@@ -3015,6 +3015,87 @@ interface Widgets {
     );
   });
 
+  it("places armResourceCollectionAction on the child collection resource", async () => {
+    const program = await typeSpecCompile(
+      `
+@subscriptionResource
+model Location is ProxyResource<LocationProperties> {
+  ...ResourceNameParameter<Location>;
+}
+
+model LocationProperties {
+  description?: string;
+}
+
+@subscriptionResource
+@parentResource(Location)
+model Alert is ProxyResource<AlertProperties> {
+  ...ResourceNameParameter<Alert>;
+}
+
+model AlertProperties {
+  description?: string;
+}
+
+@armResourceOperations
+interface Locations {
+  get is ArmResourceRead<Location>;
+}
+
+@armResourceOperations
+interface Alerts {
+  get is ArmResourceRead<Alert>;
+  listByParent is ArmResourceListByParent<Alert>;
+}
+
+interface AlertActions {
+  @post
+  @armResourceCollectionAction
+  @route("/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{locationName}/alerts/default/simulate")
+  simulate(
+    ...ApiVersionParameter,
+    ...SubscriptionIdParameter,
+    @path locationName: string
+  ): ArmAcceptedLroResponse;
+}
+`,
+      runner,
+      { providerNamespace: "Microsoft.Security" }
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    const alertResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.Security/locations/alerts"
+    );
+    ok(alertResource, "Alert resource should be detected");
+
+    const collectionAction = alertResource.metadata.methods.find(
+      (m: any) =>
+        m.kind === "CollectionAction" &&
+        m.operationPath.path.endsWith("/alerts/default/simulate")
+    );
+    ok(collectionAction, "simulate should be placed on the alert collection");
+    strictEqual(
+      collectionAction.scope.scopeIdPattern?.path,
+      "/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{locationName}"
+    );
+
+    const locationResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.Security/locations"
+    );
+    ok(locationResource, "Location resource should be detected");
+    strictEqual(
+      locationResource.metadata.methods.some((m: any) =>
+        m.operationPath.path.endsWith("/alerts/default/simulate")
+      ),
+      false,
+      "simulate should not be placed on the location resource"
+    );
+  });
+
   it("HEAD same-resource operation is CheckExistence", async () => {
     const program = await typeSpecCompile(
       `

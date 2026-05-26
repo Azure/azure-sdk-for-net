@@ -47,6 +47,11 @@ export const armResourceAction = "Azure.ResourceManager.@armResourceAction";
 export const armResourceActionName = "@armResourceAction";
 const armResourceActionRegex = "Azure\\.ResourceManager\\.@armResourceAction";
 
+// https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armResourceCollectionAction
+export const armResourceCollectionActionName = "@armResourceCollectionAction";
+const armResourceCollectionActionRegex =
+  "Azure\\.ResourceManager\\.@armResourceCollectionAction";
+
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armResourceList
 export const armResourceList = "Azure.ResourceManager.@armResourceList";
 export const armResourceListName = "@armResourceList";
@@ -147,6 +152,7 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
     nonResourceMethodMetadataRegex,
     armProviderNamespaceRegex,
     armResourceActionRegex,
+    armResourceCollectionActionRegex,
     armResourceCreateOrUpdateRegex,
     armResourceDeleteRegex,
     armResourceInternalRegex,

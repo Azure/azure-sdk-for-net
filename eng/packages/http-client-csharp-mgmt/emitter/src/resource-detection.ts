@@ -29,7 +29,8 @@ import {
   extractNameConstraintOverrides,
   extractResourceNameOverride,
   detectDynamicTypeSegments,
-  resolveFixedEnumNameSegments
+  resolveFixedEnumNameSegments,
+  isVariableSegment
 } from "./resource-metadata.js";
 import {
   SdkHttpOperation,
@@ -39,6 +40,7 @@ import {
 import pluralize from "pluralize";
 import {
   armProviderSchema,
+  armResourceCollectionActionName,
   armResourceInternal,
   armResourceWithParameter,
   builtInResourceOperationName,
@@ -505,9 +507,14 @@ function assignRemainingOperations(
       itemModelId && identifiedResourceModelIds.has(itemModelId)
         ? findListTargetResource(resources, operationPath, itemModelId)
         : undefined;
+    const collectionActionTarget =
+      !listTarget && isArmResourceCollectionAction(sdkMethod)
+        ? findCollectionActionTargetResource(resources, operationPath)
+        : undefined;
     const actionTarget = listTarget
       ? undefined
-      : findLongestPrefixMatch(
+      : collectionActionTarget ??
+        findLongestPrefixMatch(
           operationPath,
           resources,
           (resource) => resource.metadata.resourceIdPattern
@@ -519,6 +526,17 @@ function assignRemainingOperations(
         kind: ResourceOperationKind.List,
         operationPath,
         scope: buildListOperationScope(resources, operationPath)
+      });
+    } else if (collectionActionTarget) {
+      const scope = buildScopeInfoFromPath(operationPath);
+      collectionActionTarget.metadata.methods.push({
+        methodId,
+        kind: ResourceOperationKind.CollectionAction,
+        operationPath,
+        scope: {
+          ...scope,
+          scopeIdPattern: getCollectionContextPath(collectionActionTarget)
+        }
       });
     } else if (actionTarget) {
       const scope = buildScopeInfoFromPath(operationPath);
@@ -544,6 +562,62 @@ function assignRemainingOperations(
   for (const resource of resources) {
     sortResourceMethods(resource.metadata.methods);
   }
+}
+
+function isArmResourceCollectionAction(
+  method: SdkMethod<SdkHttpOperation> | undefined
+): boolean {
+  return (
+    method?.__raw?.decorators?.some(
+      (decorator) =>
+        decorator.definition?.name === armResourceCollectionActionName
+    ) ?? false
+  );
+}
+
+function findCollectionActionTargetResource(
+  resources: ValidArmResourceSchema[],
+  operationPath: RequestPath
+): ValidArmResourceSchema | undefined {
+  const collectionMatches = resources.filter((resource) => {
+    const collectionPath = getResourceCollectionPath(
+      resource.metadata.resourceIdPattern
+    );
+    return collectionPath?.isPrefixOf(operationPath) ?? false;
+  });
+
+  return longestResourcePath(collectionMatches);
+}
+
+function getResourceCollectionPath(
+  resourcePath: RequestPath
+): RequestPath | undefined {
+  const lastSegment = resourcePath.segments.at(-1);
+  if (!lastSegment || !isVariableSegment(lastSegment)) {
+    return undefined;
+  }
+
+  return RequestPath.fromSegments(resourcePath.segments.slice(0, -1));
+}
+
+function getCollectionContextPath(
+  resource: ValidArmResourceSchema
+): RequestPath {
+  return (
+    resource.metadata.parentResourceId ?? resource.metadata.scope.scopeIdPattern
+  );
+}
+
+function longestResourcePath(
+  resources: ValidArmResourceSchema[]
+): ValidArmResourceSchema | undefined {
+  return resources
+    .slice()
+    .sort(
+      (a, b) =>
+        b.metadata.resourceIdPattern.length -
+        a.metadata.resourceIdPattern.length
+    )[0];
 }
 
 function findListTargetResource(

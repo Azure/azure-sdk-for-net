@@ -639,7 +639,7 @@ namespace Azure.Generator.Management.Tests.Common
         /// private REST client field for ActionClient even though no method on the collection uses
         /// it.
         /// </summary>
-        public static (InputClient MainClient, InputClient ActionClient, IReadOnlyList<InputModelType> InputModels) ClientWithResourceActionInDifferentClient()
+        public static (InputClient MainClient, InputClient ActionClient, IReadOnlyList<InputModelType> InputModels) ClientWithResourceActionInDifferentClient(bool isCollectionAction = false)
         {
             const string MainClientName = "MainClient";
             const string ActionClientName = "ActionClient";
@@ -682,10 +682,11 @@ namespace Azure.Generator.Management.Tests.Common
             var actionMethod = InputFactory.BasicServiceMethod("doAction", actionOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
 
             var resourceIdPattern = new RequestPathPattern(resourcePath);
+            var actionKind = isCollectionAction ? ResourceOperationKind.CollectionAction : ResourceOperationKind.Action;
             var armProviderDecorator = BuildArmProviderSchema(responseModel, [
                 new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
                 new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
-                new ResourceMethod(ResourceOperationKind.Action, actionMethod, new RequestPathPattern(actionMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!)
+                new ResourceMethod(actionKind, actionMethod, new RequestPathPattern(actionMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!)
             ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var mainClient = InputFactory.Client(
