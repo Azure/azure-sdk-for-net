@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="azureHybridBenefit"> Indicates whether Azure Hybrid Benefit is opted in. </param>
         /// <param name="isGateway"> Indicates whether Gateway is enabled for the connected cluster resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterPatchProperties(string distribution, string distributionVersion, AzureHybridBenefit? azureHybridBenefit, Gateway isGateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedClusterPatchProperties(string distribution, string distributionVersion, ConnectedClusterAzureHybridBenefit? azureHybridBenefit, Gateway isGateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Distribution = distribution;
             DistributionVersion = distributionVersion;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public string DistributionVersion { get; set; }
 
         /// <summary> Indicates whether Azure Hybrid Benefit is opted in. </summary>
-        public AzureHybridBenefit? AzureHybridBenefit { get; set; }
+        public ConnectedClusterAzureHybridBenefit? AzureHybridBenefit { get; set; }
 
         /// <summary> Indicates whether Gateway is enabled for the connected cluster resource. </summary>
         internal Gateway IsGateway { get; set; }

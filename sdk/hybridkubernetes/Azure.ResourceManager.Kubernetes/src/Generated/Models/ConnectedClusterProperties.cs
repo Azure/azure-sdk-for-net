@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             Argument.AssertNotNull(agentPublicKeyCertificate, nameof(agentPublicKeyCertificate));
 
             AgentPublicKeyCertificate = agentPublicKeyCertificate;
-            ArcAgentryConfigurations = new ChangeTrackingList<ArcAgentryConfigurations>();
+            ArcAgentryConfigurations = new ChangeTrackingList<ConnectedClusterArcAgentryConfiguration>();
             MiscellaneousProperties = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="arcAgentryConfigurations"> Configuration settings for customizing the behavior of the connected cluster. </param>
         /// <param name="miscellaneousProperties"> More properties related to the Connected Cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedClusterProperties(string agentPublicKeyCertificate, string kubernetesVersion, int? totalNodeCount, int? totalCoreCount, string agentVersion, ProvisioningState? provisioningState, string distribution, string distributionVersion, string infrastructure, string offering, DateTimeOffset? managedIdentityCertificateExpirationOn, DateTimeOffset? lastConnectivityOn, ConnectivityStatus? connectivityStatus, PrivateLinkState? privateLinkState, ResourceIdentifier privateLinkScopeResourceId, AzureHybridBenefit? azureHybridBenefit, AadProfile aadProfile, ArcAgentProfile arcAgentProfile, SecurityProfile securityProfile, OidcIssuerProfile oidcIssuerProfile, Gateway isGateway, IList<ArcAgentryConfigurations> arcAgentryConfigurations, IReadOnlyDictionary<string, string> miscellaneousProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedClusterProperties(string agentPublicKeyCertificate, string kubernetesVersion, int? totalNodeCount, int? totalCoreCount, string agentVersion, ConnectedClusterProvisioningState? provisioningState, string distribution, string distributionVersion, string infrastructure, string offering, DateTimeOffset? managedIdentityCertificateExpirationOn, DateTimeOffset? lastConnectivityOn, ConnectedClusterConnectivityStatus? connectivityStatus, ConnectedClusterPrivateLinkState? privateLinkState, ResourceIdentifier privateLinkScopeResourceId, ConnectedClusterAzureHybridBenefit? azureHybridBenefit, ConnectedClusterAadProfile aadProfile, ConnectedClusterArcAgentProfile arcAgentProfile, ConnectedClusterSecurityProfile securityProfile, ConnectedClusterOidcIssuerProfile oidcIssuerProfile, Gateway isGateway, IList<ConnectedClusterArcAgentryConfiguration> arcAgentryConfigurations, IReadOnlyDictionary<string, string> miscellaneousProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentPublicKeyCertificate = agentPublicKeyCertificate;
             KubernetesVersion = kubernetesVersion;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public string AgentVersion { get; }
 
         /// <summary> Provisioning state of the connected cluster resource. </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        public ConnectedClusterProvisioningState? ProvisioningState { get; set; }
 
         /// <summary> The Kubernetes distribution running on this connected cluster. </summary>
         public string Distribution { get; set; }
@@ -120,34 +120,34 @@ namespace Azure.ResourceManager.Kubernetes.Models
         public DateTimeOffset? LastConnectivityOn { get; }
 
         /// <summary> Represents the connectivity status of the connected cluster. </summary>
-        public ConnectivityStatus? ConnectivityStatus { get; }
+        public ConnectedClusterConnectivityStatus? ConnectivityStatus { get; }
 
         /// <summary> Property which describes the state of private link on a connected cluster resource. </summary>
-        public PrivateLinkState? PrivateLinkState { get; set; }
+        public ConnectedClusterPrivateLinkState? PrivateLinkState { get; set; }
 
         /// <summary> This is populated only if privateLinkState is enabled. The resource id of the private link scope this connected cluster is assigned to, if any. </summary>
         public ResourceIdentifier PrivateLinkScopeResourceId { get; set; }
 
         /// <summary> Indicates whether Azure Hybrid Benefit is opted in. </summary>
-        public AzureHybridBenefit? AzureHybridBenefit { get; set; }
+        public ConnectedClusterAzureHybridBenefit? AzureHybridBenefit { get; set; }
 
         /// <summary> AAD profile for the connected cluster. </summary>
-        public AadProfile AadProfile { get; set; }
+        public ConnectedClusterAadProfile AadProfile { get; set; }
 
         /// <summary> Arc agentry configuration for the provisioned cluster. </summary>
-        public ArcAgentProfile ArcAgentProfile { get; set; }
+        public ConnectedClusterArcAgentProfile ArcAgentProfile { get; set; }
 
         /// <summary> Security profile for the connected cluster. </summary>
-        internal SecurityProfile SecurityProfile { get; set; }
+        internal ConnectedClusterSecurityProfile SecurityProfile { get; set; }
 
         /// <summary> Open ID Connect (OIDC) Issuer Profile for the connected cluster. </summary>
-        public OidcIssuerProfile OidcIssuerProfile { get; set; }
+        public ConnectedClusterOidcIssuerProfile OidcIssuerProfile { get; set; }
 
         /// <summary> Details of the gateway used by the Arc router for connectivity. </summary>
         internal Gateway IsGateway { get; set; }
 
         /// <summary> Configuration settings for customizing the behavior of the connected cluster. </summary>
-        public IList<ArcAgentryConfigurations> ArcAgentryConfigurations { get; set; }
+        public IList<ConnectedClusterArcAgentryConfiguration> ArcAgentryConfigurations { get; set; }
 
         /// <summary> More properties related to the Connected Cluster. </summary>
         public IReadOnlyDictionary<string, string> MiscellaneousProperties { get; }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 if (SecurityProfile is null)
                 {
-                    SecurityProfile = new SecurityProfile();
+                    SecurityProfile = new ConnectedClusterSecurityProfile();
                 }
                 SecurityProfile.IsWorkloadIdentityEnabled = value;
             }

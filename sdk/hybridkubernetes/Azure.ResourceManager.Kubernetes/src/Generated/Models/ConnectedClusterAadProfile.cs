@@ -12,23 +12,23 @@ using Azure.ResourceManager.Kubernetes;
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> AAD Profile specifies attributes for Azure Active Directory integration. </summary>
-    public partial class AadProfile
+    public partial class ConnectedClusterAadProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AadProfile"/>. </summary>
-        public AadProfile()
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterAadProfile"/>. </summary>
+        public ConnectedClusterAadProfile()
         {
             AdminGroupObjectIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AadProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterAadProfile"/>. </summary>
         /// <param name="enableAzureRbac"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
         /// <param name="adminGroupObjectIds"> The list of AAD group object IDs that will have admin role of the cluster. </param>
         /// <param name="tenantId"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AadProfile(bool? enableAzureRbac, IList<string> adminGroupObjectIds, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedClusterAadProfile(bool? enableAzureRbac, IList<string> adminGroupObjectIds, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnableAzureRbac = enableAzureRbac;
             AdminGroupObjectIds = adminGroupObjectIds;

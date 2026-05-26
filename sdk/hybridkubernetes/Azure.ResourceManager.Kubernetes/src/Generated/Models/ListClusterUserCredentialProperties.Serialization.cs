@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 return null;
             }
-            AuthenticationMethod authenticationMethod = default;
+            ClusterUserCredentialAuthenticationMethod authenticationMethod = default;
             bool useClientProxy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("authenticationMethod"u8))
                 {
-                    authenticationMethod = new AuthenticationMethod(prop.Value.GetString());
+                    authenticationMethod = new ClusterUserCredentialAuthenticationMethod(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("clientProxy"u8))

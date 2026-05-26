@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Kubernetes.Models
 {
     /// <summary> System extensions and its current versions installed on the cluster resource. </summary>
-    public partial class SystemComponent
+    public partial class ConnectedClusterSystemComponent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SystemComponent"/>. </summary>
-        public SystemComponent()
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterSystemComponent"/>. </summary>
+        public ConnectedClusterSystemComponent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemComponent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterSystemComponent"/>. </summary>
         /// <param name="type"> Type of the system extension. </param>
         /// <param name="userSpecifiedVersion"> Version of the system extension to be installed on the cluster resource. </param>
         /// <param name="majorVersion"> Major Version of the system extension that is currently installed on the cluster resource. </param>
         /// <param name="currentVersion"> Version of the system extension that is currently installed on the cluster resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SystemComponent(string @type, string userSpecifiedVersion, int? majorVersion, string currentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedClusterSystemComponent(string @type, string userSpecifiedVersion, int? majorVersion, string currentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             UserSpecifiedVersion = userSpecifiedVersion;

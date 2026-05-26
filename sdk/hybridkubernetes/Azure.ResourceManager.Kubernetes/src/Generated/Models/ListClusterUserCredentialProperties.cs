@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <summary> Initializes a new instance of <see cref="ListClusterUserCredentialProperties"/>. </summary>
         /// <param name="authenticationMethod"> The mode of client authentication. </param>
         /// <param name="useClientProxy"> Boolean value to indicate whether the request is for client side proxy or not. </param>
-        public ListClusterUserCredentialProperties(AuthenticationMethod authenticationMethod, bool useClientProxy)
+        public ListClusterUserCredentialProperties(ClusterUserCredentialAuthenticationMethod authenticationMethod, bool useClientProxy)
         {
             AuthenticationMethod = authenticationMethod;
             UseClientProxy = useClientProxy;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="authenticationMethod"> The mode of client authentication. </param>
         /// <param name="useClientProxy"> Boolean value to indicate whether the request is for client side proxy or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListClusterUserCredentialProperties(AuthenticationMethod authenticationMethod, bool useClientProxy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListClusterUserCredentialProperties(ClusterUserCredentialAuthenticationMethod authenticationMethod, bool useClientProxy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthenticationMethod = authenticationMethod;
             UseClientProxy = useClientProxy;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         }
 
         /// <summary> The mode of client authentication. </summary>
-        public AuthenticationMethod AuthenticationMethod { get; }
+        public ClusterUserCredentialAuthenticationMethod AuthenticationMethod { get; }
 
         /// <summary> Boolean value to indicate whether the request is for client side proxy or not. </summary>
         public bool UseClientProxy { get; }

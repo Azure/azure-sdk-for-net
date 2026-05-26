@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <param name="properties"> ListClusterUserCredential properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<Response<CredentialResults>> GetClusterUserCredentialAsync(ListClusterUserCredentialProperties properties, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ClusterUserCredentialsResult>> GetClusterUserCredentialAsync(ListClusterUserCredentialProperties properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Kubernetes
                 };
                 HttpMessage message = _connectedClusterRestClient.CreateGetClusterUserCredentialRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ListClusterUserCredentialProperties.ToRequestContent(properties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CredentialResults> response = Response.FromValue(CredentialResults.FromResponse(result), result);
+                Response<ClusterUserCredentialsResult> response = Response.FromValue(ClusterUserCredentialsResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <param name="properties"> ListClusterUserCredential properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual Response<CredentialResults> GetClusterUserCredential(ListClusterUserCredentialProperties properties, CancellationToken cancellationToken = default)
+        public virtual Response<ClusterUserCredentialsResult> GetClusterUserCredential(ListClusterUserCredentialProperties properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Kubernetes
                 };
                 HttpMessage message = _connectedClusterRestClient.CreateGetClusterUserCredentialRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ListClusterUserCredentialProperties.ToRequestContent(properties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CredentialResults> response = Response.FromValue(CredentialResults.FromResponse(result), result);
+                Response<ClusterUserCredentialsResult> response = Response.FromValue(ClusterUserCredentialsResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
