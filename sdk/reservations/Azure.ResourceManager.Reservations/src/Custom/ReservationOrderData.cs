@@ -4,8 +4,6 @@
 using System.Collections.Generic;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS1591
-
 namespace Azure.ResourceManager.Reservations
 {
     [CodeGenSuppress("Reservations")]
@@ -13,6 +11,7 @@ namespace Azure.ResourceManager.Reservations
     {
         // Customization is required to restore the GA public surface from the new generator's
         // flattened-properties IList<T> shape back to the previously exposed IReadOnlyList<T> shape.
+        /// <summary> Gets the reservations. </summary>
         public IReadOnlyList<ReservationDetailData> Reservations
         {
             get

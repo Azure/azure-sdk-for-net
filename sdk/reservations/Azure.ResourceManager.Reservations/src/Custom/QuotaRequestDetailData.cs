@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using Azure.ResourceManager.Reservations.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS1591
-
 namespace Azure.ResourceManager.Reservations
 {
     // Justification: GA exposed QuotaRequestDetailData.QuotaRequestValue as
@@ -15,6 +13,7 @@ namespace Azure.ResourceManager.Reservations
     [CodeGenSuppress("QuotaRequestValue")]
     public partial class QuotaRequestDetailData
     {
+        /// <summary> The quotaRequests. </summary>
         public IReadOnlyList<SubContent> QuotaRequestValue
         {
             get
