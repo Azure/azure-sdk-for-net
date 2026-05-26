@@ -54,7 +54,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             Console.WriteLine($"Transcribed audio from URL: {audioUrl}");
             Console.WriteLine($"Duration: {result.Duration}");
 
-            var channelPhrases = result.PhrasesByChannel.First();
+            var channelPhrases = result.CombinedPhrases.First();
             Console.WriteLine($"\nTranscription:\n{channelPhrases.Text}");
             #endregion Snippet:TranscribeFromUrl
         }

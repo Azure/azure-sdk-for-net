@@ -51,6 +51,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         A2ASpecialConnection,
         BrowserAutomation,
         MicrosoftFabric,
+        FabricIQ,
         Sharepoint,
         ConnectedAgent,
         DeepResearch,
@@ -87,6 +88,7 @@ public class AgentsTestBase : ProjectsClientTestBase
                 "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
                 "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it."},
         {ToolType.MicrosoftFabric, "Tell me about the weather in Texas."},
+        {ToolType.FabricIQ, "Tell me weather history in London, Ohio."},
         {ToolType.Sharepoint, "What is Contoso whistleblower policy?"},
         {ToolType.CodeInterpreter,  "Can you give me the documented codes for 'banana' and 'orange'?"},
         {ToolType.CodeInterpreterGen, "Please create PDF file showing the rendering of Mandelbrot set"},
@@ -122,6 +124,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             "You can answer questions, provide information, and assist with various tasks\n" +
             "related to web browsing using the Browser Automation tool available to you." },
         {ToolType.MicrosoftFabric, "You are helpful agent."},
+        {ToolType.FabricIQ, "Use the available Fabric IQ tools to answer questions and perform tasks."},
         {ToolType.Sharepoint, "You are helpful agent."},
         {ToolType.CodeInterpreter, "You are helpful agent."},
         {ToolType.CodeInterpreterGen, "You are a personal math tutor. When asked a math question, generate the appropriate PDF, save it and return its file ID." },
@@ -143,7 +146,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.Memory, "plagiarus"},
         {ToolType.AzureAISearch, "60"},
         {ToolType.BingGroundingCustom, "40.+gold.+44 silver.+42.+bronze"},
-        {ToolType.AzureFunction, "Bar"}
+        {ToolType.AzureFunction, "Bar"},
     };
 
     public Dictionary<ToolType, string> ExpectedAnnotationTitle = new()
@@ -196,6 +199,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.BrowserAutomation, "browser_automation_preview_call"},
         {ToolType.Sharepoint, "sharepoint_grounding_preview_call"},
         {ToolType.MicrosoftFabric, "fabric_dataagent_preview_call_output"},
+        {ToolType.FabricIQ, "mcp_call"},
         {ToolType.A2A, "a2a_preview_call_output"},
         {ToolType.A2ASpecialConnection, "a2a_preview_call_output"},
         {ToolType.WorkIQTool, "a2a_preview_call_output"}
@@ -388,6 +392,14 @@ public class AgentsTestBase : ProjectsClientTestBase
         return new(fabricToolOption);
     }
 
+    private FabricIQPreviewTool GetFabricIQAgentTool()
+    {
+        FabricIQPreviewTool fabricIQTool = new(projectConnectionId: TestEnvironment.FABRIC_IQ_CONNECTION_ID)
+        {
+            RequireApproval = BinaryData.FromObjectAsJson("never"),
+        };
+        return fabricIQTool;
+    }
     private A2APreviewTool GetA2ATool(bool useRemoteA2AConnection)
     {
         A2APreviewTool a2aTool = new()
@@ -583,6 +595,7 @@ public class AgentsTestBase : ProjectsClientTestBase
                 new BrowserAutomationToolConnectionParameters(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
             )),
             ToolType.MicrosoftFabric => GetMicrosoftFabricAgentTool(),
+            ToolType.FabricIQ => GetFabricIQAgentTool(),
             ToolType.A2A => GetA2ATool(false),
             ToolType.A2ASpecialConnection => GetA2ATool(true),
             ToolType.AzureFunction => GetFunctionTool(),

@@ -1360,39 +1360,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Gets a collection of Bars in the <see cref="FooResource"/>. </summary>
-        /// <returns> An object representing collection of Bars and their operations over a BarResource. </returns>
-        public virtual BarCollection GetBars()
-        {
-            return GetCachedClient(client => new BarCollection(client, Id));
-        }
-
-        /// <summary> Get a Bar. </summary>
-        /// <param name="barName"> The name of the Bar. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="barName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="barName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BarResource>> GetBarAsync(string barName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(barName, nameof(barName));
-
-            return await GetBars().GetAsync(barName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a Bar. </summary>
-        /// <param name="barName"> The name of the Bar. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="barName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="barName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BarResource> GetBar(string barName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(barName, nameof(barName));
-
-            return GetBars().Get(barName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of MultiFlattenTests in the <see cref="FooResource"/>. </summary>
         /// <returns> An object representing collection of MultiFlattenTests and their operations over a MultiFlattenTestResource. </returns>
         public virtual MultiFlattenTestCollection GetMultiFlattenTests()
@@ -1424,6 +1391,39 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Argument.AssertNotNullOrEmpty(multiFlattenTestName, nameof(multiFlattenTestName));
 
             return GetMultiFlattenTests().Get(multiFlattenTestName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of Bars in the <see cref="FooResource"/>. </summary>
+        /// <returns> An object representing collection of Bars and their operations over a BarResource. </returns>
+        public virtual BarCollection GetBars()
+        {
+            return GetCachedClient(client => new BarCollection(client, Id));
+        }
+
+        /// <summary> Get a Bar. </summary>
+        /// <param name="barName"> The name of the Bar. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="barName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="barName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BarResource>> GetBarAsync(string barName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(barName, nameof(barName));
+
+            return await GetBars().GetAsync(barName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a Bar. </summary>
+        /// <param name="barName"> The name of the Bar. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="barName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="barName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BarResource> GetBar(string barName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(barName, nameof(barName));
+
+            return GetBars().Get(barName, cancellationToken);
         }
     }
 }

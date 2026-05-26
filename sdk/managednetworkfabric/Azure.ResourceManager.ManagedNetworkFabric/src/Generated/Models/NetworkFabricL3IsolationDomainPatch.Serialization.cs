@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Annotation))
@@ -62,6 +67,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("connectedSubnetRoutePolicy"u8);
                 writer.WriteObjectValue(ConnectedSubnetRoutePolicy, options);
             }
+            if (Optional.IsDefined(StaticRoutePolicy))
+            {
+                writer.WritePropertyName("staticRouteRoutePolicy"u8);
+                writer.WriteObjectValue(StaticRoutePolicy, options);
+            }
+            if (Optional.IsDefined(V4RoutePrefixLimit))
+            {
+                writer.WritePropertyName("v4routePrefixLimit"u8);
+                writer.WriteObjectValue(V4RoutePrefixLimit, options);
+            }
+            if (Optional.IsDefined(V6RoutePrefixLimit))
+            {
+                writer.WritePropertyName("v6routePrefixLimit"u8);
+                writer.WriteObjectValue(V6RoutePrefixLimit, options);
+            }
+            if (Optional.IsDefined(ExportPolicyConfiguration))
+            {
+                writer.WritePropertyName("exportPolicyConfiguration"u8);
+                writer.WriteObjectValue(ExportPolicyConfiguration, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -85,16 +110,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
+            NetworkFabricManagedServiceIdentityPatch identity = default;
             IDictionary<string, string> tags = default;
             string annotation = default;
             RedistributeConnectedSubnet? redistributeConnectedSubnets = default;
             RedistributeStaticRoute? redistributeStaticRoutes = default;
             AggregateRouteConfiguration aggregateRouteConfiguration = default;
             ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = default;
+            StaticRoutePolicyPatch staticRouteRoutePolicy = default;
+            RoutePrefixLimitPatchProperties v4routePrefixLimit = default;
+            RoutePrefixLimitPatchProperties v6routePrefixLimit = default;
+            BmpExportPolicyPatchProperties exportPolicyConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -159,6 +198,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             connectedSubnetRoutePolicy = ConnectedSubnetRoutePolicy.DeserializeConnectedSubnetRoutePolicy(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("staticRouteRoutePolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            staticRouteRoutePolicy = StaticRoutePolicyPatch.DeserializeStaticRoutePolicyPatch(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("v4routePrefixLimit"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            v4routePrefixLimit = RoutePrefixLimitPatchProperties.DeserializeRoutePrefixLimitPatchProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("v6routePrefixLimit"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            v6routePrefixLimit = RoutePrefixLimitPatchProperties.DeserializeRoutePrefixLimitPatchProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("exportPolicyConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            exportPolicyConfiguration = BmpExportPolicyPatchProperties.DeserializeBmpExportPolicyPatchProperties(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -171,11 +246,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricL3IsolationDomainPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
+                identity,
                 annotation,
                 redistributeConnectedSubnets,
                 redistributeStaticRoutes,
                 aggregateRouteConfiguration,
-                connectedSubnetRoutePolicy);
+                connectedSubnetRoutePolicy,
+                staticRouteRoutePolicy,
+                v4routePrefixLimit,
+                v6routePrefixLimit,
+                exportPolicyConfiguration);
         }
 
         BinaryData IPersistableModel<NetworkFabricL3IsolationDomainPatch>.Write(ModelReaderWriterOptions options)
