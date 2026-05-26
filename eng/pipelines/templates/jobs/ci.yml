@@ -78,8 +78,7 @@ jobs:
               PublishingArtifactName: BuildPackagesArtifact
               ForceDirect: true
               ExcludePaths: ${{ parameters.ExcludePaths }}
-              EnableLocWeighting: true
-              LocTarget: 1200000
+              EnableWeightedBatching: true
               PublishArtifact: true
 
     # Analyze matrix - smaller LOC batches (300k) for more parallelism so analyze wall-clock matches build.
