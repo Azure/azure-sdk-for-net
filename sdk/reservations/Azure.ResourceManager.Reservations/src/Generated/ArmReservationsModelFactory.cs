@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -94,6 +95,23 @@ namespace Azure.ResourceManager.Reservations.Models
         public static SkuCapability SkuCapability(string name = default, string value = default)
         {
             return new SkuCapability(name, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="reservationOrderIds"> Paginated list of applied reservations. </param>
+        /// <returns> A new <see cref="Models.AppliedReservationData"/> instance for mocking. </returns>
+        public static AppliedReservationData AppliedReservationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppliedReservationList reservationOrderIds = default)
+        {
+            return new AppliedReservationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                reservationOrderIds is null ? default : new AppliedReservationsProperties(reservationOrderIds, null));
         }
 
         /// <summary> Paginated list of applied reservations. </summary>
@@ -783,24 +801,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AppliedReservationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="reservationOrderIds"> Paginated list of applied reservations. </param>
-        /// <returns> A new <see cref="Models.AppliedReservationData"/> instance for mocking. </returns>
-        public static AppliedReservationData AppliedReservationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppliedReservationList reservationOrderIds = default)
-        {
-            return new AppliedReservationData(
-                id,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                name,
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Reservations.ReservationOrderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -859,6 +859,16 @@ namespace Azure.ResourceManager.Reservations.Models
                 version,
                 default,
                 kind);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ReservationRefundResult"/>. </summary>
+        /// <param name="id"> Fully qualified identifier of the reservation being returned. </param>
+        /// <param name="properties"> The refund properties of reservation. </param>
+        /// <returns> A new <see cref="Models.ReservationRefundResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ReservationRefundResult ReservationRefundResult(string id, ReservationRefundResponseProperties properties)
+        {
+            return new ReservationRefundResult(id, properties, additionalBinaryDataProperties: null);
         }
     }
 }
