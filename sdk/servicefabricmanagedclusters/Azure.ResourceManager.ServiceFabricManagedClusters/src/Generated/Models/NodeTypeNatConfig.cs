@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Provides information about NAT configuration on the default public Load Balancer for the node type. </summary>
     public partial class NodeTypeNatConfig
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NodeTypeNatConfig"/>. </summary>
         public NodeTypeNatConfig()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="backendPort"> The internal port for the NAT configuration. </param>
         /// <param name="frontendPortRangeStart"> The port range start for the external endpoint. </param>
         /// <param name="frontendPortRangeEnd"> The port range end for the external endpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NodeTypeNatConfig(int? backendPort, int? frontendPortRangeStart, int? frontendPortRangeEnd, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NodeTypeNatConfig(int? backendPort, int? frontendPortRangeStart, int? frontendPortRangeEnd, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackendPort = backendPort;
             FrontendPortRangeStart = frontendPortRangeStart;
             FrontendPortRangeEnd = frontendPortRangeEnd;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The internal port for the NAT configuration. </summary>
         public int? BackendPort { get; set; }
+
         /// <summary> The port range start for the external endpoint. </summary>
         public int? FrontendPortRangeStart { get; set; }
+
         /// <summary> The port range end for the external endpoint. </summary>
         public int? FrontendPortRangeEnd { get; set; }
     }

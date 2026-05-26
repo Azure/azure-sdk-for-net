@@ -13,43 +13,11 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary>
-    /// A class representing the BlobInventoryPolicy data model.
-    /// The storage account blob inventory policy.
-    /// </summary>
+    /// <summary> The storage account blob inventory policy. </summary>
     public partial class BlobInventoryPolicyData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyData"/>. </summary>
         public BlobInventoryPolicyData()
@@ -57,25 +25,48 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="lastModifiedOn"> Returns the last modified date and time of the blob inventory policy. </param>
-        /// <param name="policySchema"> The storage account blob inventory policy object. It is composed of policy rules. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BlobInventoryPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, BlobInventoryPolicySchema policySchema, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Returns the storage account blob inventory policy rules. </param>
+        internal BlobInventoryPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BlobInventoryPolicyProperties properties) : base(id, name, resourceType, systemData)
         {
-            LastModifiedOn = lastModifiedOn;
-            PolicySchema = policySchema;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Returns the storage account blob inventory policy rules. </summary>
+        [WirePath("properties")]
+        internal BlobInventoryPolicyProperties Properties { get; set; }
 
         /// <summary> Returns the last modified date and time of the blob inventory policy. </summary>
         [WirePath("properties.lastModifiedTime")]
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+        }
+
         /// <summary> The storage account blob inventory policy object. It is composed of policy rules. </summary>
         [WirePath("properties.policy")]
-        public BlobInventoryPolicySchema PolicySchema { get; set; }
+        public BlobInventoryPolicySchema PolicySchema
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PolicySchema;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BlobInventoryPolicyProperties();
+                }
+                Properties.PolicySchema = value;
+            }
+        }
     }
 }

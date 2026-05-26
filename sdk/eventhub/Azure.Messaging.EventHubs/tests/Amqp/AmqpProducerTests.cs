@@ -423,7 +423,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using TransportEventBatch batch = await producer.Object.CreateBatchAsync(options, default);
 
             Assert.That(batch, Is.Not.Null, "The created batch should be populated.");
-            Assert.That(batch, Is.InstanceOf<AmqpEventBatch>(), $"The created batch should be an { nameof(AmqpEventBatch) }.");
+            Assert.That(batch, Is.InstanceOf<AmqpEventBatch>(), $"The created batch should be an {nameof(AmqpEventBatch)}.");
             Assert.That(GetEventBatchOptions((AmqpEventBatch)batch), Is.SameAs(options), "The provided options should have been used.");
         }
 

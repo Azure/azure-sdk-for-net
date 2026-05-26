@@ -4,16 +4,16 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MySql.FlexibleServers;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Models;
 using NUnit.Framework;
-using Azure.Core.TestFramework.Models;
 
 namespace Azure.ResourceManager.MySql.Tests
 {
-    public class MySqlFlexibleServerTests: MySqlManagementTestBase
+    public class MySqlFlexibleServerTests : MySqlManagementTestBase
     {
         public MySqlFlexibleServerTests(bool isAsync)
             : base(isAsync)//,RecordedTestMode.Record)
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.MySql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = "5.7",
-                Storage = new MySqlFlexibleServerStorage() {StorageSizeInGB = 512},
+                Storage = new MySqlFlexibleServerStorage() { StorageSizeInGB = 512 },
                 CreateMode = MySqlFlexibleServerCreateMode.Default,
                 Backup = new MySqlFlexibleServerBackupProperties()
                 {
-                   BackupRetentionDays = 7
+                    BackupRetentionDays = 7
                 },
                 Network = new MySqlFlexibleServerNetwork(),
                 HighAvailability = new MySqlFlexibleServerHighAvailability() { Mode = MySqlFlexibleServerHighAvailabilityMode.Disabled },
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MySql.Tests
         public async Task CreateUpdateGetDelete()
         {
             // Create
-            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "mysqlflexrg", AzureLocation.EastUS);
+            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "mysqlflexrg", AzureLocation.EastAsia);
             MySqlFlexibleServerCollection serverCollection = rg.GetMySqlFlexibleServers();
             string serverName = Recording.GenerateAssetName("mysqlflexserver");
             var data = new MySqlFlexibleServerData(rg.Data.Location)
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.MySql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = "5.7",
-                Storage = new MySqlFlexibleServerStorage() {StorageSizeInGB = 512},
+                Storage = new MySqlFlexibleServerStorage() { StorageSizeInGB = 512 },
                 CreateMode = MySqlFlexibleServerCreateMode.Default,
                 Backup = new MySqlFlexibleServerBackupProperties()
                 {
-                   BackupRetentionDays = 7
+                    BackupRetentionDays = 7
                 },
                 Network = new MySqlFlexibleServerNetwork(),
                 HighAvailability = new MySqlFlexibleServerHighAvailability() { Mode = MySqlFlexibleServerHighAvailabilityMode.Disabled },
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MySql.Tests
             // Update
             lro = await server.UpdateAsync(WaitUntil.Completed, new MySqlFlexibleServerPatch()
             {
-                Tags = {{"key", "value"}}
+                Tags = { { "key", "value" } }
             });
             MySqlFlexibleServerResource serverFromUpdate = lro.Value;
             Assert.AreEqual(serverName, serverFromUpdate.Data.Name);

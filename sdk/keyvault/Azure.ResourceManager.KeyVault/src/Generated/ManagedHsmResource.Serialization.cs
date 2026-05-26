@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.KeyVault
 {
+    /// <summary></summary>
     public partial class ManagedHsmResource : IJsonModel<ManagedHsmData>
     {
-        private static ManagedHsmData s_dataDeserializationInstance;
-        private static ManagedHsmData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ManagedHsmData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ManagedHsmData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedHsmData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedHsmData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedHsmData>)Data).Write(writer, options);
 
-        ManagedHsmData IJsonModel<ManagedHsmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedHsmData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedHsmData IJsonModel<ManagedHsmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ManagedHsmData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedHsmData>(Data, options, AzureResourceManagerKeyVaultContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ManagedHsmData IPersistableModel<ManagedHsmData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedHsmData>(data, options, AzureResourceManagerKeyVaultContext.Default);
 
-        string IPersistableModel<ManagedHsmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedHsmData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedHsmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

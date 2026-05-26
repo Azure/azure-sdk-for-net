@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class BmcKeySetTests : NetworkCloudManagementTestBase
     {
-        public BmcKeySetTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public BmcKeySetTests(bool isAsync) : base(isAsync) {}
+        public BmcKeySetTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public BmcKeySetTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         [RecordedTest]
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key1"] = "myvalue1",
                 },
             };
-            ArmOperation<NetworkCloudBmcKeySetResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, bmcKeySetName, data);
+            ArmOperation<NetworkCloudBmcKeySetResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, bmcKeySetName, data, matchConditions: null);
             Assert.AreEqual(bmcKeySetName, createResult.Value.Data.Name);
 
             // Get
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key2"] = "myvalue2",
                 },
             };
-            ArmOperation<NetworkCloudBmcKeySetResource> updateResult = await bmcKeySet.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudBmcKeySetResource> updateResult = await bmcKeySet.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             // Delete

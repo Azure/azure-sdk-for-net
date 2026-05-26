@@ -3,15 +3,15 @@
 
 #region Snippet:Manage_Deployments_Namespaces
 using System;
+using System.IO;
+using System.Security.Policy;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using System.Text.Json;
-using System.IO;
 using JsonObject = System.Collections.Generic.Dictionary<string, object>;
-using System.Security.Policy;
 #endregion Manage_Deployments_Namespaces
 
 namespace Azure.ResourceManager.Resources.Tests.Samples

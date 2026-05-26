@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary>
-    /// A Class representing a FrontDoorRulesEngine along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontDoorRulesEngineResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetFrontDoorRulesEngineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FrontDoorResource"/> using the GetFrontDoorRulesEngine method.
+    /// A class representing a FrontDoorRulesEngine along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontDoorRulesEngineResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FrontDoorResource"/> using the GetFrontDoorRulesEngines method.
     /// </summary>
     public partial class FrontDoorRulesEngineResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="FrontDoorRulesEngineResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="frontDoorName"> The frontDoorName. </param>
-        /// <param name="rulesEngineName"> The rulesEngineName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string frontDoorName, string rulesEngineName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/rulesEngines/{rulesEngineName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _frontDoorRulesEngineRulesEnginesClientDiagnostics;
-        private readonly RulesEnginesRestOperations _frontDoorRulesEngineRulesEnginesRestClient;
+        private readonly ClientDiagnostics _rulesEnginesClientDiagnostics;
+        private readonly RulesEngines _rulesEnginesRestClient;
         private readonly FrontDoorRulesEngineData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/frontDoors/rulesEngines";
 
-        /// <summary> Initializes a new instance of the <see cref="FrontDoorRulesEngineResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of FrontDoorRulesEngineResource for mocking. </summary>
         protected FrontDoorRulesEngineResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="FrontDoorRulesEngineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRulesEngineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FrontDoorRulesEngineResource(ArmClient client, FrontDoorRulesEngineData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.FrontDoor
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="FrontDoorRulesEngineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRulesEngineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FrontDoorRulesEngineResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _frontDoorRulesEngineRulesEnginesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string frontDoorRulesEngineRulesEnginesApiVersion);
-            _frontDoorRulesEngineRulesEnginesRestClient = new RulesEnginesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorRulesEngineRulesEnginesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string frontDoorRulesEngineApiVersion);
+            _rulesEnginesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
+            _rulesEnginesRestClient = new RulesEngines(_rulesEnginesClientDiagnostics, Pipeline, Endpoint, frontDoorRulesEngineApiVersion ?? "2025-11-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual FrontDoorRulesEngineData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="frontDoorName"> The frontDoorName. </param>
+        /// <param name="rulesEngineName"> The rulesEngineName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string frontDoorName, string rulesEngineName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/rulesEngines/{rulesEngineName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a Rules Engine Configuration with the specified name within the specified Front Door.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/rulesEngines/{rulesEngineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/rulesEngines/{rulesEngineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RulesEngines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RulesEngines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorRulesEngineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FrontDoorRulesEngineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FrontDoorRulesEngineResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineResource.Get");
+            using DiagnosticScope scope = _rulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineResource.Get");
             scope.Start();
             try
             {
-                var response = await _frontDoorRulesEngineRulesEnginesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _rulesEnginesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FrontDoorRulesEngineData> response = Response.FromValue(FrontDoorRulesEngineData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new FrontDoorRulesEngineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.FrontDoor
         /// Gets a Rules Engine Configuration with the specified name within the specified Front Door.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/rulesEngines/{rulesEngineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/rulesEngines/{rulesEngineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RulesEngines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RulesEngines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorRulesEngineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FrontDoorRulesEngineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FrontDoorRulesEngineResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineResource.Get");
+            using DiagnosticScope scope = _rulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineResource.Get");
             scope.Start();
             try
             {
-                var response = _frontDoorRulesEngineRulesEnginesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _rulesEnginesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FrontDoorRulesEngineData> response = Response.FromValue(FrontDoorRulesEngineData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new FrontDoorRulesEngineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.FrontDoor
         /// Deletes an existing Rules Engine Configuration with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/rulesEngines/{rulesEngineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/rulesEngines/{rulesEngineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RulesEngines_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> RulesEngines_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorRulesEngineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FrontDoorRulesEngineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,14 +212,21 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineResource.Delete");
+            using DiagnosticScope scope = _rulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineResource.Delete");
             scope.Start();
             try
             {
-                var response = await _frontDoorRulesEngineRulesEnginesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation(_frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, _frontDoorRulesEngineRulesEnginesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _rulesEnginesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                FrontDoorArmOperation operation = new FrontDoorArmOperation(_rulesEnginesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.FrontDoor
         /// Deletes an existing Rules Engine Configuration with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/rulesEngines/{rulesEngineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/rulesEngines/{rulesEngineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RulesEngines_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> RulesEngines_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorRulesEngineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FrontDoorRulesEngineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,14 +261,21 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineResource.Delete");
+            using DiagnosticScope scope = _rulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineResource.Delete");
             scope.Start();
             try
             {
-                var response = _frontDoorRulesEngineRulesEnginesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new FrontDoorArmOperation(_frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, _frontDoorRulesEngineRulesEnginesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _rulesEnginesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                FrontDoorArmOperation operation = new FrontDoorArmOperation(_rulesEnginesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -253,23 +286,23 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary>
-        /// Creates a new Rules Engine Configuration with the specified name within the specified Front Door.
+        /// Update a FrontDoorRulesEngine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/rulesEngines/{rulesEngineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/rulesEngines/{rulesEngineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RulesEngines_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> RulesEngines_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorRulesEngineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FrontDoorRulesEngineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,14 +314,27 @@ namespace Azure.ResourceManager.FrontDoor
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineResource.Update");
+            using DiagnosticScope scope = _rulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineResource.Update");
             scope.Start();
             try
             {
-                var response = await _frontDoorRulesEngineRulesEnginesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation<FrontDoorRulesEngineResource>(new FrontDoorRulesEngineOperationSource(Client), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, _frontDoorRulesEngineRulesEnginesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _rulesEnginesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorRulesEngineData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                FrontDoorArmOperation<FrontDoorRulesEngineResource> operation = new FrontDoorArmOperation<FrontDoorRulesEngineResource>(
+                    new FrontDoorRulesEngineOperationSource(Client),
+                    _rulesEnginesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -299,23 +345,23 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary>
-        /// Creates a new Rules Engine Configuration with the specified name within the specified Front Door.
+        /// Update a FrontDoorRulesEngine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/rulesEngines/{rulesEngineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/rulesEngines/{rulesEngineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RulesEngines_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> RulesEngines_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FrontDoorRulesEngineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FrontDoorRulesEngineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,14 +373,27 @@ namespace Azure.ResourceManager.FrontDoor
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineResource.Update");
+            using DiagnosticScope scope = _rulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineResource.Update");
             scope.Start();
             try
             {
-                var response = _frontDoorRulesEngineRulesEnginesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new FrontDoorArmOperation<FrontDoorRulesEngineResource>(new FrontDoorRulesEngineOperationSource(Client), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, _frontDoorRulesEngineRulesEnginesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _rulesEnginesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorRulesEngineData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                FrontDoorArmOperation<FrontDoorRulesEngineResource> operation = new FrontDoorArmOperation<FrontDoorRulesEngineResource>(
+                    new FrontDoorRulesEngineOperationSource(Client),
+                    _rulesEnginesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

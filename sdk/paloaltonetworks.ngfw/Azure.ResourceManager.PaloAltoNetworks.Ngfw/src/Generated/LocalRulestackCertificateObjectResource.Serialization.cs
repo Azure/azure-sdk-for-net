@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
+    /// <summary></summary>
     public partial class LocalRulestackCertificateObjectResource : IJsonModel<LocalRulestackCertificateObjectData>
     {
-        private static LocalRulestackCertificateObjectData s_dataDeserializationInstance;
-        private static LocalRulestackCertificateObjectData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<LocalRulestackCertificateObjectData> s_dataDeserializationInstance;
 
+        private static IJsonModel<LocalRulestackCertificateObjectData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LocalRulestackCertificateObjectData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LocalRulestackCertificateObjectData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LocalRulestackCertificateObjectData>)Data).Write(writer, options);
 
-        LocalRulestackCertificateObjectData IJsonModel<LocalRulestackCertificateObjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LocalRulestackCertificateObjectData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LocalRulestackCertificateObjectData IJsonModel<LocalRulestackCertificateObjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<LocalRulestackCertificateObjectData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LocalRulestackCertificateObjectData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         LocalRulestackCertificateObjectData IPersistableModel<LocalRulestackCertificateObjectData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LocalRulestackCertificateObjectData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
-        string IPersistableModel<LocalRulestackCertificateObjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LocalRulestackCertificateObjectData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LocalRulestackCertificateObjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

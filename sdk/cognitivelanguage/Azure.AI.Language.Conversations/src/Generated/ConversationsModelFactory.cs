@@ -12,38 +12,59 @@ using Azure.AI.Language.Conversations.Models;
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ConversationsModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationalAITask"/>. </summary>
+        /// <summary>
+        /// The base class of a conversation input task.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationalAITask"/> and <see cref="Models.ConversationLanguageUnderstandingInput"/>.
+        /// </summary>
+        /// <param name="kind"> The base class of a conversation input task. </param>
+        /// <returns> A new <see cref="Models.AnalyzeConversationInput"/> instance for mocking. </returns>
+        public static AnalyzeConversationInput AnalyzeConversationInput(string kind = default)
+        {
+            return new UnknownAnalyzeConversationInput(new AnalyzeConversationInputKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A conversational AI task. </summary>
         /// <param name="analysisInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="parameters"> Input parameters necessary for a Conversation language understanding task. </param>
         /// <returns> A new <see cref="Models.ConversationalAITask"/> instance for mocking. </returns>
-        public static ConversationalAITask ConversationalAITask(ConversationalAIAnalysisInput analysisInput = null, AIConversationLanguageUnderstandingActionContent parameters = null)
+        public static ConversationalAITask ConversationalAITask(ConversationalAIAnalysisInput analysisInput = default, AIConversationLanguageUnderstandingActionContent parameters = default)
         {
-            return new ConversationalAITask(AnalyzeConversationInputKind.ConversationalAI, serializedAdditionalRawData: null, analysisInput, parameters);
+            return new ConversationalAITask(AnalyzeConversationInputKind.ConversationalAI, additionalBinaryDataProperties: null, analysisInput, parameters);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TextConversation"/>. </summary>
+        /// <summary> The input ConversationItem and its optional parameters. </summary>
+        /// <param name="conversations"> List of multiple conversations. </param>
+        /// <returns> A new <see cref="Models.ConversationalAIAnalysisInput"/> instance for mocking. </returns>
+        public static ConversationalAIAnalysisInput ConversationalAIAnalysisInput(IEnumerable<TextConversation> conversations = default)
+        {
+            conversations ??= new ChangeTrackingList<TextConversation>();
+
+            return new ConversationalAIAnalysisInput(conversations.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> model for text conversation. </summary>
         /// <param name="id"> Unique identifier for the conversation. </param>
         /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
         /// <param name="domain"> domain. </param>
         /// <param name="conversationItems"> Ordered list of text conversation items in the conversation. </param>
         /// <returns> A new <see cref="Models.TextConversation"/> instance for mocking. </returns>
-        public static TextConversation TextConversation(string id = null, string language = null, ConversationDomain? domain = null, IEnumerable<TextConversationItem> conversationItems = null)
+        public static TextConversation TextConversation(string id = default, string language = default, ConversationDomain? domain = default, IEnumerable<TextConversationItem> conversationItems = default)
         {
-            conversationItems ??= new List<TextConversationItem>();
+            conversationItems ??= new ChangeTrackingList<TextConversationItem>();
 
             return new TextConversation(
                 id,
                 language,
                 InputModality.Text,
                 domain,
-                serializedAdditionalRawData: null,
-                conversationItems?.ToList());
+                additionalBinaryDataProperties: null,
+                conversationItems.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TextConversationItem"/>. </summary>
+        /// <summary> The text modality of an input conversation. </summary>
         /// <param name="id"> The ID of a conversation item. </param>
         /// <param name="participantId"> The participant ID of a conversation item. </param>
         /// <param name="language"> The override language of a conversation item in BCP 47 language representation. </param>
@@ -51,7 +72,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="role"> Role of the participant. </param>
         /// <param name="text"> The text input. </param>
         /// <returns> A new <see cref="Models.TextConversationItem"/> instance for mocking. </returns>
-        public static TextConversationItem TextConversationItem(string id = null, string participantId = null, string language = null, InputModality? modality = null, ParticipantRole? role = null, string text = null)
+        public static TextConversationItem TextConversationItem(string id = default, string participantId = default, string language = default, InputModality? modality = default, ParticipantRole? role = default, string text = default)
         {
             return new TextConversationItem(
                 id,
@@ -60,40 +81,43 @@ namespace Azure.AI.Language.Conversations
                 modality,
                 role,
                 text,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationInput"/>. </summary>
+        /// <summary>
+        /// Complete ordered set of utterances (spoken or written) by one or more speakers to be used for analysis.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.TextConversation"/> and <see cref="Models.TranscriptConversation"/>.
+        /// </summary>
         /// <param name="id"> Unique identifier for the conversation. </param>
         /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
         /// <param name="modality"> modality. </param>
         /// <param name="domain"> domain. </param>
         /// <returns> A new <see cref="Models.ConversationInput"/> instance for mocking. </returns>
-        public static ConversationInput ConversationInput(string id = null, string language = null, string modality = null, ConversationDomain? domain = null)
+        public static ConversationInput ConversationInput(string id = default, string language = default, string modality = default, ConversationDomain? domain = default)
         {
-            return new UnknownConversationInput(id, language, modality == null ? default : new InputModality(modality), domain, serializedAdditionalRawData: null);
+            return new UnknownConversationInput(id, language, new InputModality(modality), domain, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TranscriptConversation"/>. </summary>
+        /// <summary> model for transcript conversation. </summary>
         /// <param name="id"> Unique identifier for the conversation. </param>
         /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
         /// <param name="domain"> domain. </param>
         /// <param name="conversationItems"> Ordered list of transcript conversation items in the conversation. </param>
         /// <returns> A new <see cref="Models.TranscriptConversation"/> instance for mocking. </returns>
-        public static TranscriptConversation TranscriptConversation(string id = null, string language = null, ConversationDomain? domain = null, IEnumerable<TranscriptConversationItem> conversationItems = null)
+        public static TranscriptConversation TranscriptConversation(string id = default, string language = default, ConversationDomain? domain = default, IEnumerable<TranscriptConversationItem> conversationItems = default)
         {
-            conversationItems ??= new List<TranscriptConversationItem>();
+            conversationItems ??= new ChangeTrackingList<TranscriptConversationItem>();
 
             return new TranscriptConversation(
                 id,
                 language,
                 InputModality.Transcript,
                 domain,
-                serializedAdditionalRawData: null,
-                conversationItems?.ToList());
+                additionalBinaryDataProperties: null,
+                conversationItems.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TranscriptConversationItem"/>. </summary>
+        /// <summary> Additional properties for supporting transcript conversation. </summary>
         /// <param name="id"> The ID of a conversation item. </param>
         /// <param name="participantId"> The participant ID of a conversation item. </param>
         /// <param name="language"> The override language of a conversation item in BCP 47 language representation. </param>
@@ -106,9 +130,9 @@ namespace Azure.AI.Language.Conversations
         /// <param name="wordLevelTimings"> List of word-level audio timing information. </param>
         /// <param name="conversationItemLevelTiming"> Audio timing at the conversation item level. This still can help with AI quality if word-level audio timings are not available. </param>
         /// <returns> A new <see cref="Models.TranscriptConversationItem"/> instance for mocking. </returns>
-        public static TranscriptConversationItem TranscriptConversationItem(string id = null, string participantId = null, string language = null, InputModality? modality = null, ParticipantRole? role = null, string inverseTextNormalized = null, string maskedInverseTextNormalized = null, string text = null, string lexical = null, IEnumerable<WordLevelTiming> wordLevelTimings = null, ConversationItemLevelTiming conversationItemLevelTiming = null)
+        public static TranscriptConversationItem TranscriptConversationItem(string id = default, string participantId = default, string language = default, InputModality? modality = default, ParticipantRole? role = default, string inverseTextNormalized = default, string maskedInverseTextNormalized = default, string text = default, string lexical = default, IEnumerable<WordLevelTiming> wordLevelTimings = default, ConversationItemLevelTiming conversationItemLevelTiming = default)
         {
-            wordLevelTimings ??= new List<WordLevelTiming>();
+            wordLevelTimings ??= new ChangeTrackingList<WordLevelTiming>();
 
             return new TranscriptConversationItem(
                 id,
@@ -120,46 +144,69 @@ namespace Azure.AI.Language.Conversations
                 maskedInverseTextNormalized,
                 text,
                 lexical,
-                wordLevelTimings?.ToList(),
+                wordLevelTimings.ToList(),
                 conversationItemLevelTiming,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AIConversationLanguageUnderstandingActionContent"/>. </summary>
+        /// <summary> Word-level timing information that the speech-to-text API generates. The words in this object should have 1:1 correspondence with the lexical input to allow for audio redaction. </summary>
+        /// <param name="offset"> Offset from the start of speech audio, in ticks. 1 tick = 100 nanoseconds. </param>
+        /// <param name="duration"> Duration of word articulation, in ticks. 1 tick = 100 nanoseconds. </param>
+        /// <param name="word"> Recognized word. </param>
+        /// <returns> A new <see cref="Models.WordLevelTiming"/> instance for mocking. </returns>
+        public static WordLevelTiming WordLevelTiming(long? offset = default, long? duration = default, string word = default)
+        {
+            return new WordLevelTiming(offset, duration, word, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Audio timing at the conversation item level. </summary>
+        /// <param name="offset"> Offset from the start of speech audio, in ticks. 1 tick = 100 nanoseconds. </param>
+        /// <param name="duration"> Duration of word articulation, in ticks. 1 tick = 100 nanoseconds. </param>
+        /// <returns> A new <see cref="Models.ConversationItemLevelTiming"/> instance for mocking. </returns>
+        public static ConversationItemLevelTiming ConversationItemLevelTiming(long? offset = default, long? duration = default)
+        {
+            return new ConversationItemLevelTiming(offset, duration, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input parameters base for a Conversation task. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the deployment to use. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <returns> A new <see cref="Models.AIConversationLanguageUnderstandingActionContent"/> instance for mocking. </returns>
-        public static AIConversationLanguageUnderstandingActionContent AIConversationLanguageUnderstandingActionContent(string projectName = null, string deploymentName = null, StringIndexType? stringIndexType = null)
+        public static AIConversationLanguageUnderstandingActionContent AIConversationLanguageUnderstandingActionContent(string projectName = default, string deploymentName = default, StringIndexType? stringIndexType = default)
         {
-            return new AIConversationLanguageUnderstandingActionContent(projectName, deploymentName, stringIndexType, serializedAdditionalRawData: null);
+            return new AIConversationLanguageUnderstandingActionContent(projectName, deploymentName, stringIndexType, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationLanguageUnderstandingInput"/>. </summary>
+        /// <summary> The input for a conversation language understanding task. </summary>
         /// <param name="conversationInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="actionContent"> Input parameters necessary for a Conversation language understanding task. </param>
         /// <returns> A new <see cref="Models.ConversationLanguageUnderstandingInput"/> instance for mocking. </returns>
-        public static ConversationLanguageUnderstandingInput ConversationLanguageUnderstandingInput(ConversationAnalysisInput conversationInput = null, ConversationLanguageUnderstandingActionContent actionContent = null)
+        public static ConversationLanguageUnderstandingInput ConversationLanguageUnderstandingInput(ConversationAnalysisInput conversationInput = default, ConversationLanguageUnderstandingActionContent actionContent = default)
         {
-            return new ConversationLanguageUnderstandingInput(AnalyzeConversationInputKind.Conversation, serializedAdditionalRawData: null, conversationInput, actionContent);
+            return new ConversationLanguageUnderstandingInput(AnalyzeConversationInputKind.Conversation, additionalBinaryDataProperties: null, conversationInput, actionContent);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationLanguageUnderstandingActionContent"/>. </summary>
+        /// <summary> The input ConversationItem and its optional parameters. </summary>
+        /// <param name="conversationItem"> The abstract base for a user input formatted conversation (e.g., Text, Transcript). </param>
+        /// <returns> A new <see cref="Models.ConversationAnalysisInput"/> instance for mocking. </returns>
+        public static ConversationAnalysisInput ConversationAnalysisInput(TextConversationItem conversationItem = default)
+        {
+            return new ConversationAnalysisInput(conversationItem, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input parameters necessary for a Conversation task. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the deployment to use. </param>
         /// <param name="verbose"> If true, the service will return more detailed information in the response. </param>
         /// <param name="isLoggingEnabled"> If true, the service will keep the query for further review. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="directTarget"> The name of a target project to forward the request to. </param>
-        /// <param name="targetProjectParameters">
-        /// A dictionary representing the parameters for each target project.
-        /// Please note <see cref="AnalysisConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConversationConfig"/>, <see cref="LuisConfig"/> and <see cref="QuestionAnsweringConfig"/>.
-        /// </param>
+        /// <param name="targetProjectParameters"> A dictionary representing the parameters for each target project. </param>
         /// <returns> A new <see cref="Models.ConversationLanguageUnderstandingActionContent"/> instance for mocking. </returns>
-        public static ConversationLanguageUnderstandingActionContent ConversationLanguageUnderstandingActionContent(string projectName = null, string deploymentName = null, bool? verbose = null, bool? isLoggingEnabled = null, StringIndexType? stringIndexType = null, string directTarget = null, IDictionary<string, AnalysisConfig> targetProjectParameters = null)
+        public static ConversationLanguageUnderstandingActionContent ConversationLanguageUnderstandingActionContent(string projectName = default, string deploymentName = default, bool? verbose = default, bool? isLoggingEnabled = default, StringIndexType? stringIndexType = default, string directTarget = default, IDictionary<string, AnalysisConfig> targetProjectParameters = default)
         {
-            targetProjectParameters ??= new Dictionary<string, AnalysisConfig>();
+            targetProjectParameters ??= new ChangeTrackingDictionary<string, AnalysisConfig>();
 
             return new ConversationLanguageUnderstandingActionContent(
                 projectName,
@@ -169,75 +216,226 @@ namespace Azure.AI.Language.Conversations
                 stringIndexType,
                 directTarget,
                 targetProjectParameters,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.KnowledgeBaseAnswerContext"/>. </summary>
+        /// <summary>
+        /// This is the parameter set of either the Orchestration project itself or one of the target services.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.LuisConfig"/>, <see cref="Models.QuestionAnsweringConfig"/>, and <see cref="Models.ConversationConfig"/>.
+        /// </summary>
+        /// <param name="targetProjectKind"> The type of a target service. </param>
+        /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
+        /// <returns> A new <see cref="Models.AnalysisConfig"/> instance for mocking. </returns>
+        public static AnalysisConfig AnalysisConfig(string targetProjectKind = default, string apiVersion = default)
+        {
+            return new UnknownAnalysisConfig(new TargetProjectKind(targetProjectKind), apiVersion, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> This is a set of request parameters for LUIS Generally Available projects. </summary>
+        /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
+        /// <param name="query"> The utterance to predict. </param>
+        /// <param name="callingOptions"> This customizes how the service calls LUIS Generally Available projects. </param>
+        /// <returns> A new <see cref="Models.LuisConfig"/> instance for mocking. </returns>
+        public static LuisConfig LuisConfig(string apiVersion = default, string query = default, LuisCallingConfig callingOptions = default)
+        {
+            return new LuisConfig(TargetProjectKind.Luis, apiVersion, additionalBinaryDataProperties: null, query, callingOptions);
+        }
+
+        /// <summary> This customizes how the service calls LUIS Generally Available projects. </summary>
+        /// <param name="verbose"> Enable verbose response. </param>
+        /// <param name="log"> Save log to add in training utterances later. </param>
+        /// <param name="showAllIntents"> Set true to show all intents. </param>
+        /// <param name="timezoneOffset"> The timezone offset for the location of the request. </param>
+        /// <param name="spellCheck"> Enable spell checking. </param>
+        /// <param name="bingSpellCheckSubscriptionKey"> The subscription key to use when enabling Bing spell check. </param>
+        /// <returns> A new <see cref="Models.LuisCallingConfig"/> instance for mocking. </returns>
+        public static LuisCallingConfig LuisCallingConfig(bool? verbose = default, bool? log = default, bool? showAllIntents = default, int? timezoneOffset = default, bool? spellCheck = default, string bingSpellCheckSubscriptionKey = default)
+        {
+            return new LuisCallingConfig(
+                verbose,
+                log,
+                showAllIntents,
+                timezoneOffset,
+                spellCheck,
+                bingSpellCheckSubscriptionKey,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> This is a set of request parameters for Question Answering knowledge bases. </summary>
+        /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
+        /// <param name="callingOptions"> The options sent to a Question Answering KB. </param>
+        /// <returns> A new <see cref="Models.QuestionAnsweringConfig"/> instance for mocking. </returns>
+        public static QuestionAnsweringConfig QuestionAnsweringConfig(string apiVersion = default, QuestionAnswersConfig callingOptions = default)
+        {
+            return new QuestionAnsweringConfig(TargetProjectKind.QuestionAnswering, apiVersion, additionalBinaryDataProperties: null, callingOptions);
+        }
+
+        /// <summary> Parameters to query a knowledge base. </summary>
+        /// <param name="qnaId"> Exact QnA ID to fetch from the knowledge base, this field takes priority over question. </param>
+        /// <param name="question"> User question to query against the knowledge base. </param>
+        /// <param name="top"> Max number of answers to be returned for the question. </param>
+        /// <param name="userId"> Unique identifier for the user. </param>
+        /// <param name="confidenceThreshold"> Minimum threshold score for answers, value ranges from 0 to 1. </param>
+        /// <param name="answerContext"> Context object with previous QnA's information. </param>
+        /// <param name="rankerKind"> Type of ranker to be used. </param>
+        /// <param name="filters"> Filter QnAs based on given metadata list and knowledge base sources. </param>
+        /// <param name="shortAnswerOptions"> To configure Answer span prediction feature. </param>
+        /// <param name="includeUnstructuredSources"> (Optional) Flag to enable Query over Unstructured Sources. </param>
+        /// <returns> A new <see cref="Models.QuestionAnswersConfig"/> instance for mocking. </returns>
+        public static QuestionAnswersConfig QuestionAnswersConfig(int? qnaId = default, string question = default, int? top = default, string userId = default, double? confidenceThreshold = default, KnowledgeBaseAnswerContext answerContext = default, RankerKind? rankerKind = default, QueryFilters filters = default, ShortAnswerConfig shortAnswerOptions = default, bool? includeUnstructuredSources = default)
+        {
+            return new QuestionAnswersConfig(
+                qnaId,
+                question,
+                top,
+                userId,
+                confidenceThreshold,
+                answerContext,
+                rankerKind,
+                filters,
+                shortAnswerOptions,
+                includeUnstructuredSources,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Context object with previous QnA's information. </summary>
         /// <param name="previousQnaId"> Previous turn top answer result QnA ID. </param>
         /// <param name="previousQuestion"> Previous user query. </param>
         /// <returns> A new <see cref="Models.KnowledgeBaseAnswerContext"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswerContext KnowledgeBaseAnswerContext(int previousQnaId = default, string previousQuestion = null)
+        public static KnowledgeBaseAnswerContext KnowledgeBaseAnswerContext(int previousQnaId = default, string previousQuestion = default)
         {
-            return new KnowledgeBaseAnswerContext(previousQnaId, previousQuestion, serializedAdditionalRawData: null);
+            return new KnowledgeBaseAnswerContext(previousQnaId, previousQuestion, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationalAITaskResult"/>. </summary>
+        /// <summary> filters over knowledge base. </summary>
+        /// <param name="metadataFilter"> filters over knowledge base. </param>
+        /// <param name="sourceFilter"> filters over knowledge base. </param>
+        /// <param name="logicalOperation"> Logical operation used to join metadata filter with source filter. </param>
+        /// <returns> A new <see cref="Models.QueryFilters"/> instance for mocking. </returns>
+        public static QueryFilters QueryFilters(MetadataFilter metadataFilter = default, IEnumerable<string> sourceFilter = default, LogicalOperationKind? logicalOperation = default)
+        {
+            sourceFilter ??= new ChangeTrackingList<string>();
+
+            return new QueryFilters(metadataFilter, sourceFilter.ToList(), logicalOperation, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Find QnAs that are associated with the given list of metadata. </summary>
+        /// <param name="metadata"> List of metadata. </param>
+        /// <param name="logicalOperation"> Operation used to join metadata filters. </param>
+        /// <returns> A new <see cref="Models.MetadataFilter"/> instance for mocking. </returns>
+        public static MetadataFilter MetadataFilter(IEnumerable<MetadataRecord> metadata = default, LogicalOperationKind? logicalOperation = default)
+        {
+            metadata ??= new ChangeTrackingList<MetadataRecord>();
+
+            return new MetadataFilter(metadata.ToList(), logicalOperation, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Object to provide the key value pair for each metadata. </summary>
+        /// <param name="key"> Metadata Key from Metadata dictionary used in the QnA. </param>
+        /// <param name="value"> Metadata Value from Metadata dictionary used in the QnA. </param>
+        /// <returns> A new <see cref="Models.MetadataRecord"/> instance for mocking. </returns>
+        public static MetadataRecord MetadataRecord(string key = default, string value = default)
+        {
+            return new MetadataRecord(key, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> To configure Answer span prediction feature. </summary>
+        /// <param name="enable"> Enable or disable Answer Span prediction. </param>
+        /// <param name="confidenceThreshold"> Minimum threshold score required to include an answer span, value ranges from 0 to 1. </param>
+        /// <param name="top"> Number of Top answers to be considered for span prediction from 1 to 10. </param>
+        /// <returns> A new <see cref="Models.ShortAnswerConfig"/> instance for mocking. </returns>
+        public static ShortAnswerConfig ShortAnswerConfig(bool? enable = default, double? confidenceThreshold = default, int? top = default)
+        {
+            return new ShortAnswerConfig(enable, confidenceThreshold, top, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> This is a set of request parameters for Customized Conversation projects. </summary>
+        /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
+        /// <param name="callingOptions"> The option to set to call a Conversation project. </param>
+        /// <returns> A new <see cref="Models.ConversationConfig"/> instance for mocking. </returns>
+        public static ConversationConfig ConversationConfig(string apiVersion = default, ConversationCallingConfig callingOptions = default)
+        {
+            return new ConversationConfig(TargetProjectKind.Conversation, apiVersion, additionalBinaryDataProperties: null, callingOptions);
+        }
+
+        /// <summary> The option to set to call a Conversation project. </summary>
+        /// <param name="language"> The language of the query in BCP 47 language representation. </param>
+        /// <param name="verbose"> If true, the service will return more detailed information. </param>
+        /// <param name="isLoggingEnabled"> If true, the query will be saved for customers to further review in authoring, to improve the model quality. </param>
+        /// <returns> A new <see cref="Models.ConversationCallingConfig"/> instance for mocking. </returns>
+        public static ConversationCallingConfig ConversationCallingConfig(string language = default, bool? verbose = default, bool? isLoggingEnabled = default)
+        {
+            return new ConversationCallingConfig(language, verbose, isLoggingEnabled, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The base class of a conversation input task result.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationalAITaskResult"/> and <see cref="Models.ConversationActionResult"/>.
+        /// </summary>
+        /// <param name="kind"> The base class of a conversation input task result. </param>
+        /// <returns> A new <see cref="Models.AnalyzeConversationActionResult"/> instance for mocking. </returns>
+        public static AnalyzeConversationActionResult AnalyzeConversationActionResult(string kind = default)
+        {
+            return new UnknownAnalyzeConversationActionResult(new AnalyzeConversationResultKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The results of a ConversationalAI task. </summary>
         /// <param name="result"> Represents the conversational analysis response. </param>
         /// <returns> A new <see cref="Models.ConversationalAITaskResult"/> instance for mocking. </returns>
-        public static ConversationalAITaskResult ConversationalAITaskResult(ConversationalAIResult result = null)
+        public static ConversationalAITaskResult ConversationalAITaskResult(ConversationalAIResult result = default)
         {
-            return new ConversationalAITaskResult(AnalyzeConversationResultKind.ConversationalAIResult, serializedAdditionalRawData: null, result);
+            return new ConversationalAITaskResult(AnalyzeConversationResultKind.ConversationalAIResult, additionalBinaryDataProperties: null, result);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationalAIResult"/>. </summary>
+        /// <summary> Represents the conversational analysis response. </summary>
         /// <param name="conversations"> Multiple multi-turn conversations analyzed. </param>
         /// <param name="warnings"> Any warnings encountered during processing. </param>
         /// <returns> A new <see cref="Models.ConversationalAIResult"/> instance for mocking. </returns>
-        public static ConversationalAIResult ConversationalAIResult(IEnumerable<ConversationalAIAnalysis> conversations = null, IEnumerable<string> warnings = null)
+        public static ConversationalAIResult ConversationalAIResult(IEnumerable<ConversationalAIAnalysis> conversations = default, IEnumerable<string> warnings = default)
         {
-            conversations ??= new List<ConversationalAIAnalysis>();
-            warnings ??= new List<string>();
+            conversations ??= new ChangeTrackingList<ConversationalAIAnalysis>();
+            warnings ??= new ChangeTrackingList<string>();
 
-            return new ConversationalAIResult(conversations?.ToList(), warnings?.ToList(), serializedAdditionalRawData: null);
+            return new ConversationalAIResult(conversations.ToList(), warnings.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationalAIAnalysis"/>. </summary>
+        /// <summary> Multiple multi-turn conversations analyzed. </summary>
         /// <param name="id"> The ID of the conversation. </param>
         /// <param name="intents"> The intent classification results for this conversation. </param>
         /// <param name="entities"> Global entities that are matched but not associated with any specific intent. </param>
         /// <returns> A new <see cref="Models.ConversationalAIAnalysis"/> instance for mocking. </returns>
-        public static ConversationalAIAnalysis ConversationalAIAnalysis(string id = null, IEnumerable<ConversationalAIIntent> intents = null, IEnumerable<ConversationalAIEntity> entities = null)
+        public static ConversationalAIAnalysis ConversationalAIAnalysis(string id = default, IEnumerable<ConversationalAIIntent> intents = default, IEnumerable<ConversationalAIEntity> entities = default)
         {
-            intents ??= new List<ConversationalAIIntent>();
-            entities ??= new List<ConversationalAIEntity>();
+            intents ??= new ChangeTrackingList<ConversationalAIIntent>();
+            entities ??= new ChangeTrackingList<ConversationalAIEntity>();
 
-            return new ConversationalAIAnalysis(id, intents?.ToList(), entities?.ToList(), serializedAdditionalRawData: null);
+            return new ConversationalAIAnalysis(id, intents.ToList(), entities.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationalAIIntent"/>. </summary>
+        /// <summary> The intent classification result for this conversation. </summary>
         /// <param name="name"> The name of the detected intent. </param>
         /// <param name="type"> The type of intent, either "action" or "question". </param>
         /// <param name="conversationItemRanges"> The ranges of conversation items where this intent was identified. </param>
         /// <param name="entities"> The entities associated with this intent. </param>
         /// <returns> A new <see cref="Models.ConversationalAIIntent"/> instance for mocking. </returns>
-        public static ConversationalAIIntent ConversationalAIIntent(string name = null, string type = null, IEnumerable<ConversationItemRange> conversationItemRanges = null, IEnumerable<ConversationalAIEntity> entities = null)
+        public static ConversationalAIIntent ConversationalAIIntent(string name = default, string @type = default, IEnumerable<ConversationItemRange> conversationItemRanges = default, IEnumerable<ConversationalAIEntity> entities = default)
         {
-            conversationItemRanges ??= new List<ConversationItemRange>();
-            entities ??= new List<ConversationalAIEntity>();
+            conversationItemRanges ??= new ChangeTrackingList<ConversationItemRange>();
+            entities ??= new ChangeTrackingList<ConversationalAIEntity>();
 
-            return new ConversationalAIIntent(name, type, conversationItemRanges?.ToList(), entities?.ToList(), serializedAdditionalRawData: null);
+            return new ConversationalAIIntent(name, @type, conversationItemRanges.ToList(), entities.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationItemRange"/>. </summary>
+        /// <summary> The ranges of conversation items where this intent was identified. </summary>
         /// <param name="offset"> The starting index of the intent occurrence within the conversation. </param>
         /// <param name="count"> The number of continuous conversation items for this intent. </param>
         /// <returns> A new <see cref="Models.ConversationItemRange"/> instance for mocking. </returns>
         public static ConversationItemRange ConversationItemRange(int offset = default, int count = default)
         {
-            return new ConversationItemRange(offset, count, serializedAdditionalRawData: null);
+            return new ConversationItemRange(offset, count, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationalAIEntity"/>. </summary>
+        /// <summary> The entity associated with this intent. </summary>
         /// <param name="name"> The entity name or category. </param>
         /// <param name="text"> The detected text of the entity. </param>
         /// <param name="confidenceScore"> The confidence score of the entity detection (0.0 to 1.0). </param>
@@ -245,21 +443,13 @@ namespace Azure.AI.Language.Conversations
         /// <param name="length"> The length of the detected entity text. </param>
         /// <param name="conversationItemId"> The ID of the conversation item where the entity appears. </param>
         /// <param name="conversationItemIndex"> The index of the conversation item where the entity appears. </param>
-        /// <param name="resolutions">
-        /// Entity resolution details, if available.
-        /// Please note <see cref="ResolutionBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AgeResolution"/>, <see cref="Models.AreaResolution"/>, <see cref="Models.BooleanResolution"/>, <see cref="Models.CurrencyResolution"/>, <see cref="Models.DateTimeResolution"/>, <see cref="Models.InformationResolution"/>, <see cref="Models.LengthResolution"/>, <see cref="Models.NumberResolution"/>, <see cref="Models.NumericRangeResolution"/>, <see cref="Models.OrdinalResolution"/>, <see cref="Models.SpeedResolution"/>, <see cref="Models.TemperatureResolution"/>, <see cref="Models.TemporalSpanResolution"/>, <see cref="Models.VolumeResolution"/> and <see cref="Models.WeightResolution"/>.
-        /// </param>
-        /// <param name="extraInformation">
-        /// Additional entity metadata.
-        /// Please note <see cref="ConversationEntityExtraInformation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.EntitySubtype"/>, <see cref="Models.ListKey"/> and <see cref="Models.RegexKey"/>.
-        /// </param>
+        /// <param name="resolutions"> Entity resolution details, if available. </param>
+        /// <param name="extraInformation"> Additional entity metadata. </param>
         /// <returns> A new <see cref="Models.ConversationalAIEntity"/> instance for mocking. </returns>
-        public static ConversationalAIEntity ConversationalAIEntity(string name = null, string text = null, float confidenceScore = default, int offset = default, int length = default, string conversationItemId = null, int? conversationItemIndex = null, IEnumerable<ResolutionBase> resolutions = null, IEnumerable<ConversationEntityExtraInformation> extraInformation = null)
+        public static ConversationalAIEntity ConversationalAIEntity(string name = default, string text = default, float confidenceScore = default, int offset = default, int length = default, string conversationItemId = default, int? conversationItemIndex = default, IEnumerable<ResolutionBase> resolutions = default, IEnumerable<ConversationEntityExtraInformation> extraInformation = default)
         {
-            resolutions ??= new List<ResolutionBase>();
-            extraInformation ??= new List<ConversationEntityExtraInformation>();
+            resolutions ??= new ChangeTrackingList<ResolutionBase>();
+            extraInformation ??= new ChangeTrackingList<ConversationEntityExtraInformation>();
 
             return new ConversationalAIEntity(
                 name,
@@ -269,149 +459,160 @@ namespace Azure.AI.Language.Conversations
                 length,
                 conversationItemId,
                 conversationItemIndex,
-                resolutions?.ToList(),
-                extraInformation?.ToList(),
-                serializedAdditionalRawData: null);
+                resolutions.ToList(),
+                extraInformation.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AgeResolution"/>. </summary>
+        /// <summary>
+        /// The abstract base class for entity resolutions.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AgeResolution"/>, <see cref="Models.VolumeResolution"/>, <see cref="Models.SpeedResolution"/>, <see cref="Models.AreaResolution"/>, <see cref="Models.LengthResolution"/>, <see cref="Models.InformationResolution"/>, <see cref="Models.TemperatureResolution"/>, <see cref="Models.WeightResolution"/>, <see cref="Models.CurrencyResolution"/>, <see cref="Models.BooleanResolution"/>, <see cref="Models.DateTimeResolution"/>, <see cref="Models.NumberResolution"/>, <see cref="Models.OrdinalResolution"/>, <see cref="Models.TemporalSpanResolution"/>, and <see cref="Models.NumericRangeResolution"/>.
+        /// </summary>
+        /// <param name="resolutionKind"> The entity resolution object kind. </param>
+        /// <returns> A new <see cref="Models.ResolutionBase"/> instance for mocking. </returns>
+        public static ResolutionBase ResolutionBase(string resolutionKind = default)
+        {
+            return new UnknownResolutionBase(new ResolutionKind(resolutionKind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the Age entity resolution model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The Age Unit of measurement. </param>
         /// <returns> A new <see cref="Models.AgeResolution"/> instance for mocking. </returns>
         public static AgeResolution AgeResolution(double value = default, AgeUnit unit = default)
         {
-            return new AgeResolution(ResolutionKind.AgeResolution, serializedAdditionalRawData: null, value, unit);
+            return new AgeResolution(ResolutionKind.AgeResolution, additionalBinaryDataProperties: null, value, unit);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VolumeResolution"/>. </summary>
+        /// <summary> Represents the volume entity resolution model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The Volume Unit of measurement. </param>
         /// <returns> A new <see cref="Models.VolumeResolution"/> instance for mocking. </returns>
         public static VolumeResolution VolumeResolution(double value = default, VolumeUnit unit = default)
         {
-            return new VolumeResolution(ResolutionKind.VolumeResolution, serializedAdditionalRawData: null, value, unit);
+            return new VolumeResolution(ResolutionKind.VolumeResolution, additionalBinaryDataProperties: null, value, unit);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SpeedResolution"/>. </summary>
+        /// <summary> Represents the speed entity resolution model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The speed Unit of measurement. </param>
         /// <returns> A new <see cref="Models.SpeedResolution"/> instance for mocking. </returns>
         public static SpeedResolution SpeedResolution(double value = default, SpeedUnit unit = default)
         {
-            return new SpeedResolution(ResolutionKind.SpeedResolution, serializedAdditionalRawData: null, value, unit);
+            return new SpeedResolution(ResolutionKind.SpeedResolution, additionalBinaryDataProperties: null, value, unit);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AreaResolution"/>. </summary>
+        /// <summary> Represents the area entity resolution model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The area Unit of measurement. </param>
         /// <returns> A new <see cref="Models.AreaResolution"/> instance for mocking. </returns>
         public static AreaResolution AreaResolution(double value = default, AreaUnit unit = default)
         {
-            return new AreaResolution(ResolutionKind.AreaResolution, serializedAdditionalRawData: null, value, unit);
+            return new AreaResolution(ResolutionKind.AreaResolution, additionalBinaryDataProperties: null, value, unit);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LengthResolution"/>. </summary>
+        /// <summary> Represents the length entity resolution model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The length Unit of measurement. </param>
         /// <returns> A new <see cref="Models.LengthResolution"/> instance for mocking. </returns>
         public static LengthResolution LengthResolution(double value = default, LengthUnit unit = default)
         {
-            return new LengthResolution(ResolutionKind.LengthResolution, serializedAdditionalRawData: null, value, unit);
+            return new LengthResolution(ResolutionKind.LengthResolution, additionalBinaryDataProperties: null, value, unit);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.InformationResolution"/>. </summary>
+        /// <summary> Represents the information (data) entity resolution model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The information (data) Unit of measurement. </param>
         /// <returns> A new <see cref="Models.InformationResolution"/> instance for mocking. </returns>
         public static InformationResolution InformationResolution(double value = default, InformationUnit unit = default)
         {
-            return new InformationResolution(ResolutionKind.InformationResolution, serializedAdditionalRawData: null, value, unit);
+            return new InformationResolution(ResolutionKind.InformationResolution, additionalBinaryDataProperties: null, value, unit);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TemperatureResolution"/>. </summary>
+        /// <summary> Represents the temperature entity resolution model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The temperature Unit of measurement. </param>
         /// <returns> A new <see cref="Models.TemperatureResolution"/> instance for mocking. </returns>
         public static TemperatureResolution TemperatureResolution(double value = default, TemperatureUnit unit = default)
         {
-            return new TemperatureResolution(ResolutionKind.TemperatureResolution, serializedAdditionalRawData: null, value, unit);
+            return new TemperatureResolution(ResolutionKind.TemperatureResolution, additionalBinaryDataProperties: null, value, unit);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WeightResolution"/>. </summary>
+        /// <summary> Represents the weight entity resolution model. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The weight Unit of measurement. </param>
         /// <returns> A new <see cref="Models.WeightResolution"/> instance for mocking. </returns>
         public static WeightResolution WeightResolution(double value = default, WeightUnit unit = default)
         {
-            return new WeightResolution(ResolutionKind.WeightResolution, serializedAdditionalRawData: null, value, unit);
+            return new WeightResolution(ResolutionKind.WeightResolution, additionalBinaryDataProperties: null, value, unit);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CurrencyResolution"/>. </summary>
+        /// <summary> Represents the currency entity resolution model. </summary>
         /// <param name="iso4217"> The alphabetic code based on another ISO standard, ISO 3166, which lists the codes for country names. The first two letters of the ISO 4217 three-letter code are the same as the code for the country name, and, where possible, the third letter corresponds to the first letter of the currency name. </param>
         /// <param name="value"> The money amount captured in the extracted entity. </param>
         /// <param name="unit"> The unit of the amount captured in the extracted entity. </param>
         /// <returns> A new <see cref="Models.CurrencyResolution"/> instance for mocking. </returns>
-        public static CurrencyResolution CurrencyResolution(string iso4217 = null, double value = default, string unit = null)
+        public static CurrencyResolution CurrencyResolution(string iso4217 = default, double value = default, string unit = default)
         {
-            return new CurrencyResolution(ResolutionKind.CurrencyResolution, serializedAdditionalRawData: null, iso4217, value, unit);
+            return new CurrencyResolution(ResolutionKind.CurrencyResolution, additionalBinaryDataProperties: null, iso4217, value, unit);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BooleanResolution"/>. </summary>
+        /// <summary> A resolution for boolean expressions. </summary>
         /// <param name="value"> A resolution for boolean expressions. </param>
         /// <returns> A new <see cref="Models.BooleanResolution"/> instance for mocking. </returns>
         public static BooleanResolution BooleanResolution(bool value = default)
         {
-            return new BooleanResolution(ResolutionKind.BooleanResolution, serializedAdditionalRawData: null, value);
+            return new BooleanResolution(ResolutionKind.BooleanResolution, additionalBinaryDataProperties: null, value);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DateTimeResolution"/>. </summary>
+        /// <summary> A resolution for datetime entity instances. </summary>
         /// <param name="timex"> An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
         /// <param name="dateTimeSubKind"> The DateTime SubKind. </param>
         /// <param name="value"> The actual time that the extracted text denote. </param>
         /// <param name="modifier"> An optional modifier of a date/time instance. </param>
         /// <returns> A new <see cref="Models.DateTimeResolution"/> instance for mocking. </returns>
-        public static DateTimeResolution DateTimeResolution(string timex = null, DateTimeSubKind dateTimeSubKind = default, string value = null, TemporalModifier? modifier = null)
+        public static DateTimeResolution DateTimeResolution(string timex = default, DateTimeSubKind dateTimeSubKind = default, string value = default, TemporalModifier? modifier = default)
         {
             return new DateTimeResolution(
                 ResolutionKind.DateTimeResolution,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 timex,
                 dateTimeSubKind,
                 value,
                 modifier);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NumberResolution"/>. </summary>
+        /// <summary> A resolution for numeric entity instances. </summary>
         /// <param name="numberKind"> The type of the extracted number entity. </param>
         /// <param name="value"> A numeric representation of what the extracted text denotes. </param>
         /// <returns> A new <see cref="Models.NumberResolution"/> instance for mocking. </returns>
         public static NumberResolution NumberResolution(NumberKind numberKind = default, double value = default)
         {
-            return new NumberResolution(ResolutionKind.NumberResolution, serializedAdditionalRawData: null, numberKind, value);
+            return new NumberResolution(ResolutionKind.NumberResolution, additionalBinaryDataProperties: null, numberKind, value);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OrdinalResolution"/>. </summary>
+        /// <summary> A resolution for ordinal numbers entity instances. </summary>
         /// <param name="offset"> The offset with respect to the reference (e.g., offset = -1 indicates the second to last). </param>
         /// <param name="relativeTo"> The reference point that the ordinal number denotes. </param>
         /// <param name="value"> A simple arithmetic expression that the ordinal denotes. </param>
         /// <returns> A new <see cref="Models.OrdinalResolution"/> instance for mocking. </returns>
-        public static OrdinalResolution OrdinalResolution(string offset = null, RelativeTo relativeTo = default, string value = null)
+        public static OrdinalResolution OrdinalResolution(string offset = default, RelativeTo relativeTo = default, string value = default)
         {
-            return new OrdinalResolution(ResolutionKind.OrdinalResolution, serializedAdditionalRawData: null, offset, relativeTo, value);
+            return new OrdinalResolution(ResolutionKind.OrdinalResolution, additionalBinaryDataProperties: null, offset, relativeTo, value);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TemporalSpanResolution"/>. </summary>
+        /// <summary> represents the resolution of a date and/or time span. </summary>
         /// <param name="begin"> represents the resolution of a date and/or time span. An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
         /// <param name="end"> represents the resolution of a date and/or time span. An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
         /// <param name="duration"> An optional duration value formatted based on the ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations). </param>
         /// <param name="modifier"> An optional modifier of a date/time instance. </param>
         /// <param name="timex"> An optional triplet containing the beginning, the end, and the duration all stated as ISO 8601 formatted strings. </param>
         /// <returns> A new <see cref="Models.TemporalSpanResolution"/> instance for mocking. </returns>
-        public static TemporalSpanResolution TemporalSpanResolution(string begin = null, string end = null, string duration = null, TemporalModifier? modifier = null, string timex = null)
+        public static TemporalSpanResolution TemporalSpanResolution(string begin = default, string end = default, string duration = default, TemporalModifier? modifier = default, string timex = default)
         {
             return new TemporalSpanResolution(
                 ResolutionKind.TemporalSpanResolution,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 begin,
                 end,
                 duration,
@@ -419,127 +620,129 @@ namespace Azure.AI.Language.Conversations
                 timex);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NumericRangeResolution"/>. </summary>
+        /// <summary> represents the resolution of numeric intervals. </summary>
         /// <param name="rangeKind"> The kind of range that the resolution object represents. </param>
         /// <param name="minimum"> The beginning value of  the interval. </param>
         /// <param name="maximum"> The ending value of the interval. </param>
         /// <returns> A new <see cref="Models.NumericRangeResolution"/> instance for mocking. </returns>
         public static NumericRangeResolution NumericRangeResolution(RangeKind rangeKind = default, double minimum = default, double maximum = default)
         {
-            return new NumericRangeResolution(ResolutionKind.NumericRangeResolution, serializedAdditionalRawData: null, rangeKind, minimum, maximum);
+            return new NumericRangeResolution(ResolutionKind.NumericRangeResolution, additionalBinaryDataProperties: null, rangeKind, minimum, maximum);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EntitySubtype"/>. </summary>
+        /// <summary>
+        /// The abstract base object for entity extra information.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.EntitySubtype"/>, <see cref="Models.ListKey"/>, and <see cref="Models.RegexKey"/>.
+        /// </summary>
+        /// <param name="extraInformationKind"> The extra information object kind. </param>
+        /// <returns> A new <see cref="Models.ConversationEntityExtraInformation"/> instance for mocking. </returns>
+        public static ConversationEntityExtraInformation ConversationEntityExtraInformation(string extraInformationKind = default)
+        {
+            return new UnknownConversationEntityExtraInformation(new ExtraInformationKind(extraInformationKind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The concrete entity Subtype model of extra information. </summary>
         /// <param name="value"> The Subtype of an extracted entity type. </param>
         /// <param name="tags"> List of entity tags. Tags express similarities between entity categories for the extracted entity type. </param>
         /// <returns> A new <see cref="Models.EntitySubtype"/> instance for mocking. </returns>
-        public static EntitySubtype EntitySubtype(string value = null, IEnumerable<EntityTag> tags = null)
+        public static EntitySubtype EntitySubtype(string value = default, IEnumerable<EntityTag> tags = default)
         {
-            tags ??= new List<EntityTag>();
+            tags ??= new ChangeTrackingList<EntityTag>();
 
-            return new EntitySubtype(ExtraInformationKind.EntitySubtype, serializedAdditionalRawData: null, value, tags?.ToList());
+            return new EntitySubtype(ExtraInformationKind.EntitySubtype, additionalBinaryDataProperties: null, value, tags.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EntityTag"/>. </summary>
+        /// <summary> Tags express similarities between entity categories for the extracted entity type. </summary>
         /// <param name="name"> The name of the tag. </param>
         /// <param name="confidenceScore"> The confidence score of the tag for the extracted entity between 0.0 and 1.0. </param>
         /// <returns> A new <see cref="Models.EntityTag"/> instance for mocking. </returns>
-        public static EntityTag EntityTag(string name = null, double? confidenceScore = null)
+        public static EntityTag EntityTag(string name = default, double? confidenceScore = default)
         {
-            return new EntityTag(name, confidenceScore, serializedAdditionalRawData: null);
+            return new EntityTag(name, confidenceScore, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ListKey"/>. </summary>
+        /// <summary> The list key extra data kind. </summary>
         /// <param name="key"> The canonical form of the extracted entity. </param>
         /// <returns> A new <see cref="Models.ListKey"/> instance for mocking. </returns>
-        public static ListKey ListKey(string key = null)
+        public static ListKey ListKey(string key = default)
         {
-            return new ListKey(ExtraInformationKind.ListKey, serializedAdditionalRawData: null, key);
+            return new ListKey(ExtraInformationKind.ListKey, additionalBinaryDataProperties: null, key);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RegexKey"/>. </summary>
+        /// <summary> The regex key extra data kind. </summary>
         /// <param name="key"> The key of the regex pattern used in extracting the entity. </param>
         /// <param name="regexPattern"> The .NET regex pattern used in extracting the entity. Please visit https://learn.microsoft.com/dotnet/standard/base-types/regular-expressions for more information about .NET regular expressions. </param>
         /// <returns> A new <see cref="Models.RegexKey"/> instance for mocking. </returns>
-        public static RegexKey RegexKey(string key = null, string regexPattern = null)
+        public static RegexKey RegexKey(string key = default, string regexPattern = default)
         {
-            return new RegexKey(ExtraInformationKind.RegexKey, serializedAdditionalRawData: null, key, regexPattern);
+            return new RegexKey(ExtraInformationKind.RegexKey, additionalBinaryDataProperties: null, key, regexPattern);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationActionResult"/>. </summary>
+        /// <summary> The results of a Conversation task. </summary>
         /// <param name="result"> Represents a conversation analysis response. </param>
         /// <returns> A new <see cref="Models.ConversationActionResult"/> instance for mocking. </returns>
-        public static ConversationActionResult ConversationActionResult(AnalyzeConversationResult result = null)
+        public static ConversationActionResult ConversationActionResult(AnalyzeConversationResult result = default)
         {
-            return new ConversationActionResult(AnalyzeConversationResultKind.ConversationResult, serializedAdditionalRawData: null, result);
+            return new ConversationActionResult(AnalyzeConversationResultKind.ConversationResult, additionalBinaryDataProperties: null, result);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeConversationResult"/>. </summary>
+        /// <summary> Represents a conversation analysis response. </summary>
         /// <param name="query"> The conversation utterance given by the caller. </param>
         /// <param name="detectedLanguage"> The system detected language for the query in BCP 47 language representation.. </param>
-        /// <param name="prediction">
-        /// The prediction result of a conversation project.
-        /// Please note <see cref="Models.PredictionBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ConversationPrediction"/> and <see cref="Models.OrchestrationPrediction"/>.
-        /// </param>
+        /// <param name="prediction"> The prediction result of a conversation project. </param>
         /// <returns> A new <see cref="Models.AnalyzeConversationResult"/> instance for mocking. </returns>
-        public static AnalyzeConversationResult AnalyzeConversationResult(string query = null, string detectedLanguage = null, PredictionBase prediction = null)
+        public static AnalyzeConversationResult AnalyzeConversationResult(string query = default, string detectedLanguage = default, PredictionBase prediction = default)
         {
-            return new AnalyzeConversationResult(query, detectedLanguage, prediction, serializedAdditionalRawData: null);
+            return new AnalyzeConversationResult(query, detectedLanguage, prediction, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PredictionBase"/>. </summary>
+        /// <summary>
+        /// This is the base class of prediction
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConversationPrediction"/> and <see cref="Models.OrchestrationPrediction"/>.
+        /// </summary>
         /// <param name="projectKind"> The type of the project. </param>
         /// <param name="topIntent"> The intent with the highest score. </param>
         /// <returns> A new <see cref="Models.PredictionBase"/> instance for mocking. </returns>
-        public static PredictionBase PredictionBase(string projectKind = null, string topIntent = null)
+        public static PredictionBase PredictionBase(string projectKind = default, string topIntent = default)
         {
-            return new UnknownPredictionBase(projectKind == null ? default : new ProjectKind(projectKind), topIntent, serializedAdditionalRawData: null);
+            return new UnknownPredictionBase(new ProjectKind(projectKind), topIntent, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationPrediction"/>. </summary>
+        /// <summary> Represents the prediction section of a Conversation project. </summary>
         /// <param name="topIntent"> The intent with the highest score. </param>
         /// <param name="intents"> The intent classification results. </param>
         /// <param name="entities"> The entity extraction results. </param>
         /// <returns> A new <see cref="Models.ConversationPrediction"/> instance for mocking. </returns>
-        public static ConversationPrediction ConversationPrediction(string topIntent = null, IEnumerable<ConversationIntent> intents = null, IEnumerable<ConversationEntity> entities = null)
+        public static ConversationPrediction ConversationPrediction(string topIntent = default, IEnumerable<ConversationIntent> intents = default, IEnumerable<ConversationEntity> entities = default)
         {
-            intents ??= new List<ConversationIntent>();
-            entities ??= new List<ConversationEntity>();
+            intents ??= new ChangeTrackingList<ConversationIntent>();
+            entities ??= new ChangeTrackingList<ConversationEntity>();
 
-            return new ConversationPrediction(ProjectKind.Conversation, topIntent, serializedAdditionalRawData: null, intents?.ToList(), entities?.ToList());
+            return new ConversationPrediction(ProjectKind.Conversation, topIntent, additionalBinaryDataProperties: null, intents.ToList(), entities.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationIntent"/>. </summary>
+        /// <summary> The intent classification result of a Conversation project. </summary>
         /// <param name="category"> A predicted class. </param>
         /// <param name="confidence"> The confidence score of the class from 0.0 to 1.0. </param>
         /// <returns> A new <see cref="Models.ConversationIntent"/> instance for mocking. </returns>
-        public static ConversationIntent ConversationIntent(string category = null, float confidence = default)
+        public static ConversationIntent ConversationIntent(string category = default, float confidence = default)
         {
-            return new ConversationIntent(category, confidence, serializedAdditionalRawData: null);
+            return new ConversationIntent(category, confidence, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationEntity"/>. </summary>
+        /// <summary> The entity extraction result of a Conversation project. </summary>
         /// <param name="category"> The entity category. </param>
         /// <param name="text"> The predicted entity text. </param>
         /// <param name="offset"> The starting index of this entity in the query. </param>
         /// <param name="length"> The length of the text. </param>
         /// <param name="confidence"> The entity confidence score. </param>
-        /// <param name="resolutions">
-        /// The collection of entity resolution objects.
-        /// Please note <see cref="ResolutionBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AgeResolution"/>, <see cref="Models.AreaResolution"/>, <see cref="Models.BooleanResolution"/>, <see cref="Models.CurrencyResolution"/>, <see cref="Models.DateTimeResolution"/>, <see cref="Models.InformationResolution"/>, <see cref="Models.LengthResolution"/>, <see cref="Models.NumberResolution"/>, <see cref="Models.NumericRangeResolution"/>, <see cref="Models.OrdinalResolution"/>, <see cref="Models.SpeedResolution"/>, <see cref="Models.TemperatureResolution"/>, <see cref="Models.TemporalSpanResolution"/>, <see cref="Models.VolumeResolution"/> and <see cref="Models.WeightResolution"/>.
-        /// </param>
-        /// <param name="extraInformation">
-        /// The collection of entity extra information objects.
-        /// Please note <see cref="ConversationEntityExtraInformation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.EntitySubtype"/>, <see cref="Models.ListKey"/> and <see cref="Models.RegexKey"/>.
-        /// </param>
+        /// <param name="resolutions"> The collection of entity resolution objects. </param>
+        /// <param name="extraInformation"> The collection of entity extra information objects. </param>
         /// <returns> A new <see cref="Models.ConversationEntity"/> instance for mocking. </returns>
-        public static ConversationEntity ConversationEntity(string category = null, string text = null, int offset = default, int length = default, float confidence = default, IEnumerable<ResolutionBase> resolutions = null, IEnumerable<ConversationEntityExtraInformation> extraInformation = null)
+        public static ConversationEntity ConversationEntity(string category = default, string text = default, int offset = default, int length = default, float confidence = default, IEnumerable<ResolutionBase> resolutions = default, IEnumerable<ConversationEntityExtraInformation> extraInformation = default)
         {
-            resolutions ??= new List<ResolutionBase>();
-            extraInformation ??= new List<ConversationEntityExtraInformation>();
+            resolutions ??= new ChangeTrackingList<ResolutionBase>();
+            extraInformation ??= new ChangeTrackingList<ConversationEntityExtraInformation>();
 
             return new ConversationEntity(
                 category,
@@ -547,77 +750,76 @@ namespace Azure.AI.Language.Conversations
                 offset,
                 length,
                 confidence,
-                resolutions?.ToList(),
-                extraInformation?.ToList(),
-                serializedAdditionalRawData: null);
+                resolutions.ToList(),
+                extraInformation.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OrchestrationPrediction"/>. </summary>
+        /// <summary> This represents the prediction result of an Orchestration project. </summary>
         /// <param name="topIntent"> The intent with the highest score. </param>
-        /// <param name="intents">
-        /// A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent's value also contains the actual response from the target project.
-        /// Please note <see cref="Models.TargetIntentResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ConversationTargetIntentResult"/>, <see cref="Models.LuisTargetIntentResult"/>, <see cref="Models.NoneLinkedTargetIntentResult"/> and <see cref="Models.QuestionAnsweringTargetIntentResult"/>.
-        /// </param>
+        /// <param name="intents"> A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent's value also contains the actual response from the target project. </param>
         /// <returns> A new <see cref="Models.OrchestrationPrediction"/> instance for mocking. </returns>
-        public static OrchestrationPrediction OrchestrationPrediction(string topIntent = null, IReadOnlyDictionary<string, TargetIntentResult> intents = null)
+        public static OrchestrationPrediction OrchestrationPrediction(string topIntent = default, IDictionary<string, TargetIntentResult> intents = default)
         {
-            intents ??= new Dictionary<string, TargetIntentResult>();
+            intents ??= new ChangeTrackingDictionary<string, TargetIntentResult>();
 
-            return new OrchestrationPrediction(ProjectKind.Orchestration, topIntent, serializedAdditionalRawData: null, intents);
+            return new OrchestrationPrediction(ProjectKind.Orchestration, topIntent, additionalBinaryDataProperties: null, intents);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TargetIntentResult"/>. </summary>
+        /// <summary>
+        /// This is the base class of an intent prediction
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.LuisTargetIntentResult"/>, <see cref="Models.QuestionAnsweringTargetIntentResult"/>, <see cref="Models.NoneLinkedTargetIntentResult"/>, and <see cref="Models.ConversationTargetIntentResult"/>.
+        /// </summary>
         /// <param name="targetProjectKind"> This is the base class of an intent prediction. </param>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <returns> A new <see cref="Models.TargetIntentResult"/> instance for mocking. </returns>
-        public static TargetIntentResult TargetIntentResult(string targetProjectKind = null, string apiVersion = null, double confidence = default)
+        public static TargetIntentResult TargetIntentResult(string targetProjectKind = default, string apiVersion = default, double confidence = default)
         {
-            return new UnknownTargetIntentResult(targetProjectKind == null ? default : new TargetProjectKind(targetProjectKind), apiVersion, confidence, serializedAdditionalRawData: null);
+            return new UnknownTargetIntentResult(new TargetProjectKind(targetProjectKind), apiVersion, confidence, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LuisTargetIntentResult"/>. </summary>
+        /// <summary> It is a wrap up of LUIS Generally Available response. </summary>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="result"> The actual response from a LUIS Generally Available application. </param>
         /// <returns> A new <see cref="Models.LuisTargetIntentResult"/> instance for mocking. </returns>
-        public static LuisTargetIntentResult LuisTargetIntentResult(string apiVersion = null, double confidence = default, LuisResult result = null)
+        public static LuisTargetIntentResult LuisTargetIntentResult(string apiVersion = default, double confidence = default, LuisResult result = default)
         {
-            return new LuisTargetIntentResult(TargetProjectKind.Luis, apiVersion, confidence, serializedAdditionalRawData: null, result);
+            return new LuisTargetIntentResult(TargetProjectKind.Luis, apiVersion, confidence, additionalBinaryDataProperties: null, result);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LuisResult"/>. </summary>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <summary> It is the response from a LUIS Generally Available application. </summary>
+        /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.LuisResult"/> instance for mocking. </returns>
-        public static LuisResult LuisResult(IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static LuisResult LuisResult(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
         {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new LuisResult(additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.QuestionAnsweringTargetIntentResult"/>. </summary>
+        /// <summary> It is a wrap up a Question Answering KB response. </summary>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="result"> The generated answer by a Question Answering KB. </param>
         /// <returns> A new <see cref="Models.QuestionAnsweringTargetIntentResult"/> instance for mocking. </returns>
-        public static QuestionAnsweringTargetIntentResult QuestionAnsweringTargetIntentResult(string apiVersion = null, double confidence = default, AnswersResult result = null)
+        public static QuestionAnsweringTargetIntentResult QuestionAnsweringTargetIntentResult(string apiVersion = default, double confidence = default, AnswersResult result = default)
         {
-            return new QuestionAnsweringTargetIntentResult(TargetProjectKind.QuestionAnswering, apiVersion, confidence, serializedAdditionalRawData: null, result);
+            return new QuestionAnsweringTargetIntentResult(TargetProjectKind.QuestionAnswering, apiVersion, confidence, additionalBinaryDataProperties: null, result);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AnswersResult"/>. </summary>
+        /// <summary> Represents List of Question Answers. </summary>
         /// <param name="answers"> Represents Answer Result list. </param>
         /// <returns> A new <see cref="Models.AnswersResult"/> instance for mocking. </returns>
-        public static AnswersResult AnswersResult(IEnumerable<KnowledgeBaseAnswer> answers = null)
+        public static AnswersResult AnswersResult(IEnumerable<KnowledgeBaseAnswer> answers = default)
         {
-            answers ??= new List<KnowledgeBaseAnswer>();
+            answers ??= new ChangeTrackingList<KnowledgeBaseAnswer>();
 
-            return new AnswersResult(answers?.ToList(), serializedAdditionalRawData: null);
+            return new AnswersResult(answers.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.KnowledgeBaseAnswer"/>. </summary>
+        /// <summary> Represents knowledge base answer. </summary>
         /// <param name="questions"> List of questions associated with the answer. </param>
         /// <param name="answer"> Answer text. </param>
         /// <param name="confidence"> Answer confidence score, value ranges from 0 to 1. </param>
@@ -627,13 +829,13 @@ namespace Azure.AI.Language.Conversations
         /// <param name="dialog"> Dialog associated with Answer. </param>
         /// <param name="shortAnswer"> Answer span object of QnA with respect to user's question. </param>
         /// <returns> A new <see cref="Models.KnowledgeBaseAnswer"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswer KnowledgeBaseAnswer(IEnumerable<string> questions = null, string answer = null, double? confidence = null, int? qnaId = null, string source = null, IReadOnlyDictionary<string, string> metadata = null, KnowledgeBaseAnswerDialog dialog = null, AnswerSpan shortAnswer = null)
+        public static KnowledgeBaseAnswer KnowledgeBaseAnswer(IEnumerable<string> questions = default, string answer = default, double? confidence = default, int? qnaId = default, string source = default, IDictionary<string, string> metadata = default, KnowledgeBaseAnswerDialog dialog = default, AnswerSpan shortAnswer = default)
         {
-            questions ??= new List<string>();
-            metadata ??= new Dictionary<string, string>();
+            questions ??= new ChangeTrackingList<string>();
+            metadata ??= new ChangeTrackingDictionary<string, string>();
 
             return new KnowledgeBaseAnswer(
-                questions?.ToList(),
+                questions.ToList(),
                 answer,
                 confidence,
                 qnaId,
@@ -641,101 +843,101 @@ namespace Azure.AI.Language.Conversations
                 metadata,
                 dialog,
                 shortAnswer,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.KnowledgeBaseAnswerDialog"/>. </summary>
+        /// <summary> Dialog associated with Answer. </summary>
         /// <param name="isContextOnly"> To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as search result for queries without context; otherwise, if false, ignores context and includes this QnA in search result. </param>
         /// <param name="prompts"> List of prompts associated with the answer. </param>
         /// <returns> A new <see cref="Models.KnowledgeBaseAnswerDialog"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswerDialog KnowledgeBaseAnswerDialog(bool? isContextOnly = null, IEnumerable<KnowledgeBaseAnswerPrompt> prompts = null)
+        public static KnowledgeBaseAnswerDialog KnowledgeBaseAnswerDialog(bool? isContextOnly = default, IEnumerable<KnowledgeBaseAnswerPrompt> prompts = default)
         {
-            prompts ??= new List<KnowledgeBaseAnswerPrompt>();
+            prompts ??= new ChangeTrackingList<KnowledgeBaseAnswerPrompt>();
 
-            return new KnowledgeBaseAnswerDialog(isContextOnly, prompts?.ToList(), serializedAdditionalRawData: null);
+            return new KnowledgeBaseAnswerDialog(isContextOnly, prompts.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.KnowledgeBaseAnswerPrompt"/>. </summary>
+        /// <summary> Prompt for an answer. </summary>
         /// <param name="displayOrder"> Index of the prompt - used in ordering of the prompts. </param>
         /// <param name="qnaId"> QnA ID corresponding to the prompt. </param>
         /// <param name="displayText"> Text displayed to represent a follow up question prompt. </param>
         /// <returns> A new <see cref="Models.KnowledgeBaseAnswerPrompt"/> instance for mocking. </returns>
-        public static KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = null, int? qnaId = null, string displayText = null)
+        public static KnowledgeBaseAnswerPrompt KnowledgeBaseAnswerPrompt(int? displayOrder = default, int? qnaId = default, string displayText = default)
         {
-            return new KnowledgeBaseAnswerPrompt(displayOrder, qnaId, displayText, serializedAdditionalRawData: null);
+            return new KnowledgeBaseAnswerPrompt(displayOrder, qnaId, displayText, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AnswerSpan"/>. </summary>
+        /// <summary> Answer span object of QnA. </summary>
         /// <param name="text"> Predicted text of answer span. </param>
         /// <param name="confidenceScore"> Predicted score of answer span, value ranges from 0 to 1. </param>
         /// <param name="offset"> The answer span offset from the start of answer. </param>
         /// <param name="length"> The length of the answer span. </param>
         /// <returns> A new <see cref="Models.AnswerSpan"/> instance for mocking. </returns>
-        public static AnswerSpan AnswerSpan(string text = null, double? confidenceScore = null, int? offset = null, int? length = null)
+        public static AnswerSpan AnswerSpan(string text = default, double? confidenceScore = default, int? offset = default, int? length = default)
         {
-            return new AnswerSpan(text, confidenceScore, offset, length, serializedAdditionalRawData: null);
+            return new AnswerSpan(text, confidenceScore, offset, length, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NoneLinkedTargetIntentResult"/>. </summary>
+        /// <summary> A wrap up of non-linked intent response. </summary>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="result"> The actual response from a Conversation project. </param>
         /// <returns> A new <see cref="Models.NoneLinkedTargetIntentResult"/> instance for mocking. </returns>
-        public static NoneLinkedTargetIntentResult NoneLinkedTargetIntentResult(string apiVersion = null, double confidence = default, ConversationResult result = null)
+        public static NoneLinkedTargetIntentResult NoneLinkedTargetIntentResult(string apiVersion = default, double confidence = default, ConversationResult result = default)
         {
-            return new NoneLinkedTargetIntentResult(TargetProjectKind.NonLinked, apiVersion, confidence, serializedAdditionalRawData: null, result);
+            return new NoneLinkedTargetIntentResult(TargetProjectKind.NonLinked, apiVersion, confidence, additionalBinaryDataProperties: null, result);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationResult"/>. </summary>
+        /// <summary> The response returned by a Conversation project. </summary>
         /// <param name="query"> The same query given in request. </param>
         /// <param name="detectedLanguage"> The detected language from the query in BCP 47 language representation. </param>
         /// <param name="prediction"> The predicted result for the query. </param>
         /// <returns> A new <see cref="Models.ConversationResult"/> instance for mocking. </returns>
-        public static ConversationResult ConversationResult(string query = null, string detectedLanguage = null, ConversationPrediction prediction = null)
+        public static ConversationResult ConversationResult(string query = default, string detectedLanguage = default, ConversationPrediction prediction = default)
         {
-            return new ConversationResult(query, detectedLanguage, prediction, serializedAdditionalRawData: null);
+            return new ConversationResult(query, detectedLanguage, prediction, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationTargetIntentResult"/>. </summary>
+        /// <summary> A wrap up of Conversation project response. </summary>
         /// <param name="apiVersion"> The API version used to call a target service. </param>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
         /// <param name="result"> The actual response from a Conversation project. </param>
         /// <returns> A new <see cref="Models.ConversationTargetIntentResult"/> instance for mocking. </returns>
-        public static ConversationTargetIntentResult ConversationTargetIntentResult(string apiVersion = null, double confidence = default, ConversationResult result = null)
+        public static ConversationTargetIntentResult ConversationTargetIntentResult(string apiVersion = default, double confidence = default, ConversationResult result = default)
         {
-            return new ConversationTargetIntentResult(TargetProjectKind.Conversation, apiVersion, confidence, serializedAdditionalRawData: null, result);
+            return new ConversationTargetIntentResult(TargetProjectKind.Conversation, apiVersion, confidence, additionalBinaryDataProperties: null, result);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationError"/>. </summary>
+        /// <summary> The error object. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="target"> The target of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
         /// <returns> A new <see cref="Models.ConversationError"/> instance for mocking. </returns>
-        public static ConversationError ConversationError(ConversationErrorCode code = default, string message = null, string target = null, IEnumerable<ConversationError> details = null, InnerErrorModel innererror = null)
+        public static ConversationError ConversationError(ConversationErrorCode code = default, string message = default, string target = default, IEnumerable<ConversationError> details = default, InnerErrorModel innererror = default)
         {
-            details ??= new List<ConversationError>();
+            details ??= new ChangeTrackingList<ConversationError>();
 
             return new ConversationError(
                 code,
                 message,
                 target,
-                details?.ToList(),
+                details.ToList(),
                 innererror,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.InnerErrorModel"/>. </summary>
+        /// <summary> An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="details"> Error details. </param>
         /// <param name="target"> Error target. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
         /// <returns> A new <see cref="Models.InnerErrorModel"/> instance for mocking. </returns>
-        public static InnerErrorModel InnerErrorModel(InnerErrorCode code = default, string message = null, IReadOnlyDictionary<string, string> details = null, string target = null, InnerErrorModel innererror = null)
+        public static InnerErrorModel InnerErrorModel(InnerErrorCode code = default, string message = default, IDictionary<string, string> details = default, string target = default, InnerErrorModel innererror = default)
         {
-            details ??= new Dictionary<string, string>();
+            details ??= new ChangeTrackingDictionary<string, string>();
 
             return new InnerErrorModel(
                 code,
@@ -743,10 +945,10 @@ namespace Azure.AI.Language.Conversations
                 details,
                 target,
                 innererror,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeConversationOperationState"/>. </summary>
+        /// <summary> Contains the status of the submitted job for analyzing a conversation, along with related statistics. </summary>
         /// <param name="displayName"> display name. </param>
         /// <param name="createdDateTime"> Date and time job created. </param>
         /// <param name="expirationDateTime"> Date and time job expires. </param>
@@ -758,9 +960,9 @@ namespace Azure.AI.Language.Conversations
         /// <param name="actions"> Contains the state for the tasks that are being executed as part of the submitted job for analyzing a conversation. </param>
         /// <param name="statistics"> Contains the statistics for the submitted job. </param>
         /// <returns> A new <see cref="Models.AnalyzeConversationOperationState"/> instance for mocking. </returns>
-        public static AnalyzeConversationOperationState AnalyzeConversationOperationState(string displayName = null, DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, Guid jobId = default, DateTimeOffset lastUpdatedDateTime = default, ConversationActionState status = default, IEnumerable<ConversationError> errors = null, string nextLink = null, ConversationActions actions = null, ConversationRequestStatistics statistics = null)
+        public static AnalyzeConversationOperationState AnalyzeConversationOperationState(string displayName = default, DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = default, Guid jobId = default, DateTimeOffset lastUpdatedDateTime = default, ConversationActionState status = default, IEnumerable<ConversationError> errors = default, string nextLink = default, ConversationActions actions = default, ConversationRequestStatistics statistics = default)
         {
-            errors ??= new List<ConversationError>();
+            errors ??= new ChangeTrackingList<ConversationError>();
 
             return new AnalyzeConversationOperationState(
                 displayName,
@@ -769,143 +971,142 @@ namespace Azure.AI.Language.Conversations
                 jobId,
                 lastUpdatedDateTime,
                 status,
-                errors?.ToList(),
+                errors.ToList(),
                 nextLink,
                 actions,
                 statistics,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationActions"/>. </summary>
+        /// <summary> Contains the state for the tasks that are being executed as part of the submitted job for analyzing a conversation. </summary>
         /// <param name="completed"> Count of tasks that finished successfully. </param>
         /// <param name="failed"> Count of tasks that failed. </param>
         /// <param name="inProgress"> Count of tasks that are currently in progress. </param>
         /// <param name="total"> Total count of tasks submitted as part of the job. </param>
-        /// <param name="items">
-        /// List of results from tasks (if available).
-        /// Please note <see cref="Models.AnalyzeConversationOperationResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ConversationPiiOperationResult"/>, <see cref="Models.SummarizationOperationResult"/> and <see cref="Models.CustomSummarizationOperationResult"/>.
-        /// </param>
+        /// <param name="items"> List of results from tasks (if available). </param>
         /// <returns> A new <see cref="Models.ConversationActions"/> instance for mocking. </returns>
-        public static ConversationActions ConversationActions(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<AnalyzeConversationOperationResult> items = null)
+        public static ConversationActions ConversationActions(int completed = default, int failed = default, int inProgress = default, int total = default, IEnumerable<AnalyzeConversationOperationResult> items = default)
         {
-            items ??= new List<AnalyzeConversationOperationResult>();
+            items ??= new ChangeTrackingList<AnalyzeConversationOperationResult>();
 
             return new ConversationActions(
                 completed,
                 failed,
                 inProgress,
                 total,
-                items?.ToList(),
-                serializedAdditionalRawData: null);
+                items.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeConversationOperationResult"/>. </summary>
+        /// <summary>
+        /// Container for results of all tasks in the conversation job.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SummarizationOperationResult"/>, <see cref="Models.CustomSummarizationOperationResult"/>, and <see cref="Models.ConversationPiiOperationResult"/>.
+        /// </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> discriminator kind. </param>
         /// <returns> A new <see cref="Models.AnalyzeConversationOperationResult"/> instance for mocking. </returns>
-        public static AnalyzeConversationOperationResult AnalyzeConversationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = null, string kind = null)
+        public static AnalyzeConversationOperationResult AnalyzeConversationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = default, string kind = default)
         {
-            return new UnknownAnalyzeConversationOperationResult(lastUpdateDateTime, status, name, kind == null ? default : new AnalyzeConversationOperationResultsKind(kind), serializedAdditionalRawData: null);
+            return new UnknownAnalyzeConversationOperationResult(lastUpdateDateTime, status, name, new AnalyzeConversationOperationResultsKind(kind), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SummarizationOperationResult"/>. </summary>
+        /// <summary> Result for the summarization task on the conversation. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="results"> results. </param>
         /// <returns> A new <see cref="Models.SummarizationOperationResult"/> instance for mocking. </returns>
-        public static SummarizationOperationResult SummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = null, SummaryResult results = null)
+        public static SummarizationOperationResult SummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = default, SummaryResult results = default)
         {
             return new SummarizationOperationResult(
                 lastUpdateDateTime,
                 status,
                 name,
                 AnalyzeConversationOperationResultsKind.SummarizationOperationResults,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 results);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SummaryResult"/>. </summary>
+        /// <summary> Summary Results. </summary>
         /// <param name="conversations"> array of conversations. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> statistics. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <returns> A new <see cref="Models.SummaryResult"/> instance for mocking. </returns>
-        public static SummaryResult SummaryResult(IEnumerable<ConversationsSummaryResult> conversations = null, IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null)
+        public static SummaryResult SummaryResult(IEnumerable<ConversationsSummaryResult> conversations = default, IEnumerable<DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default)
         {
-            conversations ??= new List<ConversationsSummaryResult>();
-            errors ??= new List<DocumentError>();
+            conversations ??= new ChangeTrackingList<ConversationsSummaryResult>();
+            errors ??= new ChangeTrackingList<DocumentError>();
 
-            return new SummaryResult(conversations?.ToList(), errors?.ToList(), statistics, modelVersion, serializedAdditionalRawData: null);
+            return new SummaryResult(conversations.ToList(), errors.ToList(), statistics, modelVersion, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationsSummaryResult"/>. </summary>
+        /// <summary> Conversations Summary Result. </summary>
         /// <param name="id"> Unique, non-empty conversation identifier. </param>
         /// <param name="warnings"> Warnings encountered in processing the document. </param>
         /// <param name="statistics"> If showStats=true was specified in the request this field will contain information about the conversation payload. </param>
         /// <param name="summaries"> array of summaries. </param>
         /// <returns> A new <see cref="Models.ConversationsSummaryResult"/> instance for mocking. </returns>
-        public static ConversationsSummaryResult ConversationsSummaryResult(string id = null, IEnumerable<InputWarning> warnings = null, ConversationStatistics statistics = null, IEnumerable<SummaryResultItem> summaries = null)
+        public static ConversationsSummaryResult ConversationsSummaryResult(string id = default, IEnumerable<InputWarning> warnings = default, ConversationStatistics statistics = default, IEnumerable<SummaryResultItem> summaries = default)
         {
-            warnings ??= new List<InputWarning>();
-            summaries ??= new List<SummaryResultItem>();
+            warnings ??= new ChangeTrackingList<InputWarning>();
+            summaries ??= new ChangeTrackingList<SummaryResultItem>();
 
-            return new ConversationsSummaryResult(id, warnings?.ToList(), statistics, summaries?.ToList(), serializedAdditionalRawData: null);
+            return new ConversationsSummaryResult(id, warnings.ToList(), statistics, summaries.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.InputWarning"/>. </summary>
+        /// <summary> Contains details of warnings encountered during a job execution. </summary>
         /// <param name="code"> Warning code. </param>
         /// <param name="message"> Warning message. </param>
         /// <param name="targetRef"> A JSON pointer reference indicating the target object. </param>
         /// <returns> A new <see cref="Models.InputWarning"/> instance for mocking. </returns>
-        public static InputWarning InputWarning(string code = null, string message = null, string targetRef = null)
+        public static InputWarning InputWarning(string code = default, string message = default, string targetRef = default)
         {
-            return new InputWarning(code, message, targetRef, serializedAdditionalRawData: null);
+            return new InputWarning(code, message, targetRef, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationStatistics"/>. </summary>
+        /// <summary> If showStats=true was specified in the request, this field contains information about the conversation payload. </summary>
         /// <param name="transactionsCount"> Number of text units for the request. </param>
         /// <returns> A new <see cref="Models.ConversationStatistics"/> instance for mocking. </returns>
         public static ConversationStatistics ConversationStatistics(int transactionsCount = default)
         {
-            return new ConversationStatistics(transactionsCount, serializedAdditionalRawData: null);
+            return new ConversationStatistics(transactionsCount, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SummaryResultItem"/>. </summary>
+        /// <summary> Summary Result Item. </summary>
         /// <param name="aspect"> aspect. </param>
         /// <param name="text"> text. </param>
         /// <param name="contexts"> Context list of the summary. </param>
         /// <returns> A new <see cref="Models.SummaryResultItem"/> instance for mocking. </returns>
-        public static SummaryResultItem SummaryResultItem(string aspect = null, string text = null, IEnumerable<ItemizedSummaryContext> contexts = null)
+        public static SummaryResultItem SummaryResultItem(string aspect = default, string text = default, IEnumerable<ItemizedSummaryContext> contexts = default)
         {
-            contexts ??= new List<ItemizedSummaryContext>();
+            contexts ??= new ChangeTrackingList<ItemizedSummaryContext>();
 
-            return new SummaryResultItem(aspect, text, contexts?.ToList(), serializedAdditionalRawData: null);
+            return new SummaryResultItem(aspect, text, contexts.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ItemizedSummaryContext"/>. </summary>
+        /// <summary> Context of the summary with a conversation item ID. </summary>
         /// <param name="offset"> Start position for the context. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> The length of the context. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="conversationItemId"> Reference to the ID of ConversationItem. </param>
         /// <returns> A new <see cref="Models.ItemizedSummaryContext"/> instance for mocking. </returns>
-        public static ItemizedSummaryContext ItemizedSummaryContext(int offset = default, int length = default, string conversationItemId = null)
+        public static ItemizedSummaryContext ItemizedSummaryContext(int offset = default, int length = default, string conversationItemId = default)
         {
-            return new ItemizedSummaryContext(offset, length, conversationItemId, serializedAdditionalRawData: null);
+            return new ItemizedSummaryContext(offset, length, conversationItemId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DocumentError"/>. </summary>
+        /// <summary> Contains details of errors encountered during a job execution. </summary>
         /// <param name="id"> The ID of the input document. </param>
         /// <param name="error"> Error encountered. </param>
         /// <returns> A new <see cref="Models.DocumentError"/> instance for mocking. </returns>
-        public static DocumentError DocumentError(string id = null, ConversationError error = null)
+        public static DocumentError DocumentError(string id = default, ConversationError error = default)
         {
-            return new DocumentError(id, error, serializedAdditionalRawData: null);
+            return new DocumentError(id, error, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RequestStatistics"/>. </summary>
+        /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
         /// <param name="documentsCount"> Number of documents submitted in the request. </param>
         /// <param name="validDocumentsCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
         /// <param name="erroneousDocumentsCount"> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </param>
@@ -913,134 +1114,134 @@ namespace Azure.AI.Language.Conversations
         /// <returns> A new <see cref="Models.RequestStatistics"/> instance for mocking. </returns>
         public static RequestStatistics RequestStatistics(int documentsCount = default, int validDocumentsCount = default, int erroneousDocumentsCount = default, long transactionsCount = default)
         {
-            return new RequestStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount, serializedAdditionalRawData: null);
+            return new RequestStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CustomSummarizationOperationResult"/>. </summary>
+        /// <summary> Result for the custom summarization task on the conversation. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="results"> Custom Summary Result. </param>
         /// <returns> A new <see cref="Models.CustomSummarizationOperationResult"/> instance for mocking. </returns>
-        public static CustomSummarizationOperationResult CustomSummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = null, CustomSummaryResult results = null)
+        public static CustomSummarizationOperationResult CustomSummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = default, CustomSummaryResult results = default)
         {
             return new CustomSummarizationOperationResult(
                 lastUpdateDateTime,
                 status,
                 name,
                 AnalyzeConversationOperationResultsKind.CustomSummarizationOperationResults,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 results);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CustomSummaryResult"/>. </summary>
+        /// <summary> Custom Summary Results. </summary>
         /// <param name="conversations"> array of conversations. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <returns> A new <see cref="Models.CustomSummaryResult"/> instance for mocking. </returns>
-        public static CustomSummaryResult CustomSummaryResult(IEnumerable<ConversationsSummaryResult> conversations = null, IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string projectName = null, string deploymentName = null)
+        public static CustomSummaryResult CustomSummaryResult(IEnumerable<ConversationsSummaryResult> conversations = default, IEnumerable<DocumentError> errors = default, RequestStatistics statistics = default, string projectName = default, string deploymentName = default)
         {
-            conversations ??= new List<ConversationsSummaryResult>();
-            errors ??= new List<DocumentError>();
+            conversations ??= new ChangeTrackingList<ConversationsSummaryResult>();
+            errors ??= new ChangeTrackingList<DocumentError>();
 
             return new CustomSummaryResult(
-                conversations?.ToList(),
-                errors?.ToList(),
+                conversations.ToList(),
+                errors.ToList(),
                 statistics,
                 projectName,
                 deploymentName,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationPiiOperationResult"/>. </summary>
+        /// <summary> Result from the personally identifiable information detection and redaction operation performed on a list of conversations. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="results"> results. </param>
         /// <returns> A new <see cref="Models.ConversationPiiOperationResult"/> instance for mocking. </returns>
-        public static ConversationPiiOperationResult ConversationPiiOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = null, ConversationPiiResults results = null)
+        public static ConversationPiiOperationResult ConversationPiiOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = default, ConversationPiiResults results = default)
         {
             return new ConversationPiiOperationResult(
                 lastUpdateDateTime,
                 status,
                 name,
                 AnalyzeConversationOperationResultsKind.PiiOperationResults,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 results);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationPiiResults"/>. </summary>
+        /// <summary> The result from PII detection and redaction operation for each conversation. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> statistics. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="conversations"> array of conversations. </param>
         /// <returns> A new <see cref="Models.ConversationPiiResults"/> instance for mocking. </returns>
-        public static ConversationPiiResults ConversationPiiResults(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<ConversationalPiiResult> conversations = null)
+        public static ConversationPiiResults ConversationPiiResults(IEnumerable<DocumentError> errors = default, RequestStatistics statistics = default, string modelVersion = default, IEnumerable<ConversationalPiiResult> conversations = default)
         {
-            errors ??= new List<DocumentError>();
-            conversations ??= new List<ConversationalPiiResult>();
+            errors ??= new ChangeTrackingList<DocumentError>();
+            conversations ??= new ChangeTrackingList<ConversationalPiiResult>();
 
-            return new ConversationPiiResults(errors?.ToList(), statistics, modelVersion, conversations?.ToList(), serializedAdditionalRawData: null);
+            return new ConversationPiiResults(errors.ToList(), statistics, modelVersion, conversations.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationalPiiResult"/>. </summary>
+        /// <summary> Conversation PII result item. </summary>
         /// <param name="id"> Unique, non-empty conversation identifier. </param>
         /// <param name="warnings"> Warnings encountered in processing the document. </param>
         /// <param name="statistics"> If showStats=true was specified in the request this field will contain information about the conversation payload. </param>
         /// <param name="conversationItems"> List of conversationItems. </param>
         /// <returns> A new <see cref="Models.ConversationalPiiResult"/> instance for mocking. </returns>
-        public static ConversationalPiiResult ConversationalPiiResult(string id = null, IEnumerable<InputWarning> warnings = null, ConversationStatistics statistics = null, IEnumerable<ConversationPiiItemResult> conversationItems = null)
+        public static ConversationalPiiResult ConversationalPiiResult(string id = default, IEnumerable<InputWarning> warnings = default, ConversationStatistics statistics = default, IEnumerable<ConversationPiiItemResult> conversationItems = default)
         {
-            warnings ??= new List<InputWarning>();
-            conversationItems ??= new List<ConversationPiiItemResult>();
+            warnings ??= new ChangeTrackingList<InputWarning>();
+            conversationItems ??= new ChangeTrackingList<ConversationPiiItemResult>();
 
-            return new ConversationalPiiResult(id, warnings?.ToList(), statistics, conversationItems?.ToList(), serializedAdditionalRawData: null);
+            return new ConversationalPiiResult(id, warnings.ToList(), statistics, conversationItems.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationPiiItemResult"/>. </summary>
+        /// <summary> The result from PII detection and redaction operation for each conversation. </summary>
         /// <param name="id"> Id of the result. </param>
         /// <param name="redactedContent"> Transcript content response that the service generates, with all necessary personally identifiable information redacted. </param>
         /// <param name="entities"> Array of Entities. </param>
         /// <returns> A new <see cref="Models.ConversationPiiItemResult"/> instance for mocking. </returns>
-        public static ConversationPiiItemResult ConversationPiiItemResult(string id = null, RedactedTranscriptContent redactedContent = null, IEnumerable<NamedEntity> entities = null)
+        public static ConversationPiiItemResult ConversationPiiItemResult(string id = default, RedactedTranscriptContent redactedContent = default, IEnumerable<NamedEntity> entities = default)
         {
-            entities ??= new List<NamedEntity>();
+            entities ??= new ChangeTrackingList<NamedEntity>();
 
-            return new ConversationPiiItemResult(id, redactedContent, entities?.ToList(), serializedAdditionalRawData: null);
+            return new ConversationPiiItemResult(id, redactedContent, entities.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RedactedTranscriptContent"/>. </summary>
+        /// <summary> Transcript content response that the service generates, with all necessary personally identifiable information redacted. </summary>
         /// <param name="inverseTextNormalized"> Redacted output for input in inverse-text-normalized format. </param>
         /// <param name="maskedInverseTextNormalized"> Redacted output for input in masked inverse-text-normalized format. </param>
         /// <param name="text"> Redacted output for input in text (Microsoft's speech-to-text 'display') format. </param>
         /// <param name="lexical"> Redacted output for input in lexical format. </param>
         /// <param name="audioTimings"> List of redacted audio segments. </param>
         /// <returns> A new <see cref="Models.RedactedTranscriptContent"/> instance for mocking. </returns>
-        public static RedactedTranscriptContent RedactedTranscriptContent(string inverseTextNormalized = null, string maskedInverseTextNormalized = null, string text = null, string lexical = null, IEnumerable<AudioTiming> audioTimings = null)
+        public static RedactedTranscriptContent RedactedTranscriptContent(string inverseTextNormalized = default, string maskedInverseTextNormalized = default, string text = default, string lexical = default, IEnumerable<AudioTiming> audioTimings = default)
         {
-            audioTimings ??= new List<AudioTiming>();
+            audioTimings ??= new ChangeTrackingList<AudioTiming>();
 
             return new RedactedTranscriptContent(
                 inverseTextNormalized,
                 maskedInverseTextNormalized,
                 text,
                 lexical,
-                audioTimings?.ToList(),
-                serializedAdditionalRawData: null);
+                audioTimings.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AudioTiming"/>. </summary>
+        /// <summary> Audio timing information. </summary>
         /// <param name="offset"> Offset from the start of speech audio, in ticks. 1 tick = 100 nanoseconds. </param>
         /// <param name="duration"> Duration of word articulation, in ticks. 1 tick = 100 nanoseconds. </param>
         /// <returns> A new <see cref="Models.AudioTiming"/> instance for mocking. </returns>
-        public static AudioTiming AudioTiming(long? offset = null, long? duration = null)
+        public static AudioTiming AudioTiming(long? offset = default, long? duration = default)
         {
-            return new AudioTiming(offset, duration, serializedAdditionalRawData: null);
+            return new AudioTiming(offset, duration, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NamedEntity"/>. </summary>
+        /// <summary> Text that has been categorized into pre-defined classes or types such as: person, location, event, product, and organization. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Entity type. </param>
         /// <param name="subcategory"> (Optional) Entity sub type. </param>
@@ -1051,7 +1252,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="maskOffset"> Offset of the mask text. </param>
         /// <param name="maskLength"> Length of the mask text. </param>
         /// <returns> A new <see cref="Models.NamedEntity"/> instance for mocking. </returns>
-        public static NamedEntity NamedEntity(string text = null, string category = null, string subcategory = null, int offset = default, int length = default, double confidenceScore = default, string mask = null, int? maskOffset = null, int? maskLength = null)
+        public static NamedEntity NamedEntity(string text = default, string category = default, string subcategory = default, int offset = default, int length = default, double confidenceScore = default, string mask = default, int? maskOffset = default, int? maskLength = default)
         {
             return new NamedEntity(
                 text,
@@ -1063,10 +1264,10 @@ namespace Azure.AI.Language.Conversations
                 mask,
                 maskOffset,
                 maskLength,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationRequestStatistics"/>. </summary>
+        /// <summary> if showStats=true was specified in the request, this field contains information about the request payload. </summary>
         /// <param name="documentsCount"> Number of documents submitted in the request. </param>
         /// <param name="validDocumentsCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
         /// <param name="erroneousDocumentsCount"> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </param>
@@ -1085,27 +1286,54 @@ namespace Azure.AI.Language.Conversations
                 conversationsCount,
                 validConversationsCount,
                 erroneousConversationsCount,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeConversationOperationInput"/>. </summary>
+        /// <summary> It is a wrap up a Question Answering KB response. </summary>
         /// <param name="displayName"> Display name for the analysis job. </param>
         /// <param name="conversationInput"> Analysis Input. </param>
-        /// <param name="actions">
-        /// Set of tasks to execute on the input conversation.
-        /// Please note <see cref="AnalyzeConversationOperationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="PiiOperationAction"/>, <see cref="SummarizationOperationAction"/> and <see cref="CustomSummarizationOperationAction"/>.
-        /// </param>
+        /// <param name="actions"> Set of tasks to execute on the input conversation. </param>
         /// <param name="cancelAfter"> Optional duration in seconds after which the job will be canceled if not completed. </param>
         /// <returns> A new <see cref="Models.AnalyzeConversationOperationInput"/> instance for mocking. </returns>
-        public static AnalyzeConversationOperationInput AnalyzeConversationOperationInput(string displayName = null, MultiLanguageConversationInput conversationInput = null, IEnumerable<AnalyzeConversationOperationAction> actions = null, float? cancelAfter = null)
+        public static AnalyzeConversationOperationInput AnalyzeConversationOperationInput(string displayName = default, MultiLanguageConversationInput conversationInput = default, IEnumerable<AnalyzeConversationOperationAction> actions = default, float? cancelAfter = default)
         {
-            actions ??= new List<AnalyzeConversationOperationAction>();
+            actions ??= new ChangeTrackingList<AnalyzeConversationOperationAction>();
 
-            return new AnalyzeConversationOperationInput(displayName, conversationInput, actions?.ToList(), cancelAfter, serializedAdditionalRawData: null);
+            return new AnalyzeConversationOperationInput(displayName, conversationInput, actions.ToList(), cancelAfter, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CustomConversationSummarizationActionContent"/>. </summary>
+        /// <summary> Multi Language Conversation Analysis Input. </summary>
+        /// <param name="conversations"> Array of conversation items. </param>
+        /// <returns> A new <see cref="Models.MultiLanguageConversationInput"/> instance for mocking. </returns>
+        public static MultiLanguageConversationInput MultiLanguageConversationInput(IEnumerable<ConversationInput> conversations = default)
+        {
+            conversations ??= new ChangeTrackingList<ConversationInput>();
+
+            return new MultiLanguageConversationInput(conversations.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Base class for a long-running conversation input task.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CustomSummarizationOperationAction"/>, <see cref="Models.SummarizationOperationAction"/>, and <see cref="Models.PiiOperationAction"/>.
+        /// </summary>
+        /// <param name="name"> task name. </param>
+        /// <param name="kind"> Enumeration of supported analysis tasks on a collection of conversations. </param>
+        /// <returns> A new <see cref="Models.AnalyzeConversationOperationAction"/> instance for mocking. </returns>
+        public static AnalyzeConversationOperationAction AnalyzeConversationOperationAction(string name = default, string kind = default)
+        {
+            return new UnknownAnalyzeConversationOperationAction(name, new AnalyzeConversationOperationActionKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Task definition for custom conversational summarization. </summary>
+        /// <param name="name"> task name. </param>
+        /// <param name="actionContent"> parameters. </param>
+        /// <returns> A new <see cref="Models.CustomSummarizationOperationAction"/> instance for mocking. </returns>
+        public static CustomSummarizationOperationAction CustomSummarizationOperationAction(string name = default, CustomConversationSummarizationActionContent actionContent = default)
+        {
+            return new CustomSummarizationOperationAction(name, AnalyzeConversationOperationActionKind.CustomConversationalSummarizationTask, additionalBinaryDataProperties: null, actionContent);
+        }
+
+        /// <summary> Supported parameters for a custom conversation summarization task. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
@@ -1114,9 +1342,9 @@ namespace Azure.AI.Language.Conversations
         /// <param name="summaryLength"> Controls the approximate length of the output summaries. Recommended to use summaryLength over sentenceCount. </param>
         /// <param name="summaryAspects"> Array of Summary Aspects. </param>
         /// <returns> A new <see cref="Models.CustomConversationSummarizationActionContent"/> instance for mocking. </returns>
-        public static CustomConversationSummarizationActionContent CustomConversationSummarizationActionContent(bool? loggingOptOut = null, string projectName = null, string deploymentName = null, int? sentenceCount = null, StringIndexType? stringIndexType = null, SummaryLengthBucket? summaryLength = null, IEnumerable<SummaryAspect> summaryAspects = null)
+        public static CustomConversationSummarizationActionContent CustomConversationSummarizationActionContent(bool? loggingOptOut = default, string projectName = default, string deploymentName = default, int? sentenceCount = default, StringIndexType? stringIndexType = default, SummaryLengthBucket? summaryLength = default, IEnumerable<SummaryAspect> summaryAspects = default)
         {
-            summaryAspects ??= new List<SummaryAspect>();
+            summaryAspects ??= new ChangeTrackingList<SummaryAspect>();
 
             return new CustomConversationSummarizationActionContent(
                 loggingOptOut,
@@ -1125,8 +1353,110 @@ namespace Azure.AI.Language.Conversations
                 sentenceCount,
                 stringIndexType,
                 summaryLength,
-                summaryAspects?.ToList(),
-                serializedAdditionalRawData: null);
+                summaryAspects.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Task definition for conversational summarization. </summary>
+        /// <param name="name"> task name. </param>
+        /// <param name="actionContent"> parameters. </param>
+        /// <returns> A new <see cref="Models.SummarizationOperationAction"/> instance for mocking. </returns>
+        public static SummarizationOperationAction SummarizationOperationAction(string name = default, ConversationSummarizationActionContent actionContent = default)
+        {
+            return new SummarizationOperationAction(name, AnalyzeConversationOperationActionKind.ConversationalSummarizationTask, additionalBinaryDataProperties: null, actionContent);
+        }
+
+        /// <summary> Supported parameters for pre-build conversational summarization task. </summary>
+        /// <param name="loggingOptOut"> logging opt out. </param>
+        /// <param name="modelVersion"> model version. </param>
+        /// <param name="sentenceCount"> It controls the approximate number of sentences in the output summaries. </param>
+        /// <param name="stringIndexType"> String index type. </param>
+        /// <param name="summaryLength"> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </param>
+        /// <param name="summaryAspects"> Array of Summary Aspects. </param>
+        /// <param name="instruction"> a text field to allow customers to use natural language to describe their needs for summarization. </param>
+        /// <returns> A new <see cref="Models.ConversationSummarizationActionContent"/> instance for mocking. </returns>
+        public static ConversationSummarizationActionContent ConversationSummarizationActionContent(bool? loggingOptOut = default, string modelVersion = default, int? sentenceCount = default, StringIndexType? stringIndexType = default, SummaryLengthBucket? summaryLength = default, IEnumerable<SummaryAspect> summaryAspects = default, string instruction = default)
+        {
+            summaryAspects ??= new ChangeTrackingList<SummaryAspect>();
+
+            return new ConversationSummarizationActionContent(
+                loggingOptOut,
+                modelVersion,
+                sentenceCount,
+                stringIndexType,
+                summaryLength,
+                summaryAspects.ToList(),
+                instruction,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Task definition for a PII redaction in conversations. </summary>
+        /// <param name="name"> task name. </param>
+        /// <param name="actionContent"> parameters. </param>
+        /// <returns> A new <see cref="Models.PiiOperationAction"/> instance for mocking. </returns>
+        public static PiiOperationAction PiiOperationAction(string name = default, ConversationPiiActionContent actionContent = default)
+        {
+            return new PiiOperationAction(name, AnalyzeConversationOperationActionKind.ConversationalPIITask, additionalBinaryDataProperties: null, actionContent);
+        }
+
+        /// <summary> Supported parameters for a conversational pii task. </summary>
+        /// <param name="loggingOptOut"> logging opt out. </param>
+        /// <param name="modelVersion"> model version. </param>
+        /// <param name="piiCategories"> Array of ConversationPIICategories. </param>
+        /// <param name="redactAudioTiming"> Flag to indicate if response should include audio stream offset and duration for any detected entities to be redacted. By default, audio timing of redacted entities are not included. </param>
+        /// <param name="redactionSource"> For transcript conversations, this parameter provides information regarding which content type (ITN, Text, Lexical, Masked ITN) should be used for entity detection. The details of the entities detected - like the offset, length and the text itself - will correspond to the text type selected here. </param>
+        /// <param name="redactionCharacter"> Optional parameter to use a Custom Character to be used for redaction in PII responses. Default character will be * as before. We allow specific ascii characters for redaction. </param>
+        /// <param name="excludePiiCategories"> List of categories that need to be excluded instead of included. </param>
+        /// <param name="redactionPolicy"> Optional parameter determine what type of redaction to use. </param>
+        /// <returns> A new <see cref="Models.ConversationPiiActionContent"/> instance for mocking. </returns>
+        public static ConversationPiiActionContent ConversationPiiActionContent(bool? loggingOptOut = default, string modelVersion = default, IEnumerable<ConversationPiiCategories> piiCategories = default, bool? redactAudioTiming = default, TranscriptContentType? redactionSource = default, RedactionCharacter? redactionCharacter = default, IEnumerable<ConversationPiiCategoryExclusions> excludePiiCategories = default, BaseRedactionPolicy redactionPolicy = default)
+        {
+            piiCategories ??= new ChangeTrackingList<ConversationPiiCategories>();
+            excludePiiCategories ??= new ChangeTrackingList<ConversationPiiCategoryExclusions>();
+
+            return new ConversationPiiActionContent(
+                loggingOptOut,
+                modelVersion,
+                piiCategories.ToList(),
+                redactAudioTiming,
+                redactionSource,
+                redactionCharacter,
+                excludePiiCategories.ToList(),
+                redactionPolicy,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The abstract base class for RedactionPolicy.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CharacterMaskPolicyType"/>, <see cref="Models.NoMaskPolicyType"/>, and <see cref="Models.EntityMaskTypePolicyType"/>.
+        /// </summary>
+        /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
+        /// <returns> A new <see cref="Models.BaseRedactionPolicy"/> instance for mocking. </returns>
+        public static BaseRedactionPolicy BaseRedactionPolicy(string policyKind = default)
+        {
+            return new UnknownBaseRedactionPolicy(new RedactionPolicyKind(policyKind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the policy of masking with a redaction character. </summary>
+        /// <param name="redactionCharacter"> Optional parameter to use a Custom Character to be used for redaction in PII responses. Default character will be * as before. We allow specific ascii characters for redaction. </param>
+        /// <returns> A new <see cref="Models.CharacterMaskPolicyType"/> instance for mocking. </returns>
+        public static CharacterMaskPolicyType CharacterMaskPolicyType(RedactionCharacter? redactionCharacter = default)
+        {
+            return new CharacterMaskPolicyType(RedactionPolicyKind.CharacterMask, additionalBinaryDataProperties: null, redactionCharacter);
+        }
+
+        /// <summary> Represents the policy of not masking found PII. </summary>
+        /// <returns> A new <see cref="Models.NoMaskPolicyType"/> instance for mocking. </returns>
+        public static NoMaskPolicyType NoMaskPolicyType()
+        {
+            return new NoMaskPolicyType(RedactionPolicyKind.NoMask, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the policy of masking PII with the entity type. </summary>
+        /// <returns> A new <see cref="Models.EntityMaskTypePolicyType"/> instance for mocking. </returns>
+        public static EntityMaskTypePolicyType EntityMaskTypePolicyType()
+        {
+            return new EntityMaskTypePolicyType(RedactionPolicyKind.EntityMask, additionalBinaryDataProperties: null);
         }
     }
 }

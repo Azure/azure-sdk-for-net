@@ -13,70 +13,56 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary>
-    /// A class representing the Table data model.
-    /// Properties of the table, including Id, resource name, resource type.
-    /// </summary>
+    /// <summary> Properties of the table, including Id, resource name, resource type. </summary>
     public partial class TableData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TableData"/>. </summary>
         public TableData()
         {
-            SignedIdentifiers = new ChangeTrackingList<StorageTableSignedIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TableData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tableName"> Table name under the specified account. </param>
-        /// <param name="signedIdentifiers"> List of stored access policies specified on the table. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string tableName, IList<StorageTableSignedIdentifier> signedIdentifiers, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tableProperties"> Table resource properties. </param>
+        internal TableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, TableProperties tableProperties) : base(id, name, resourceType, systemData)
         {
-            TableName = tableName;
-            SignedIdentifiers = signedIdentifiers;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            TableProperties = tableProperties;
         }
+
+        /// <summary> Table resource properties. </summary>
+        [WirePath("properties")]
+        internal TableProperties TableProperties { get; set; }
 
         /// <summary> Table name under the specified account. </summary>
         [WirePath("properties.tableName")]
-        public string TableName { get; }
+        public string TableName
+        {
+            get
+            {
+                return TableProperties is null ? default : TableProperties.TableName;
+            }
+        }
+
         /// <summary> List of stored access policies specified on the table. </summary>
         [WirePath("properties.signedIdentifiers")]
-        public IList<StorageTableSignedIdentifier> SignedIdentifiers { get; }
+        public IList<StorageTableSignedIdentifier> SignedIdentifiers
+        {
+            get
+            {
+                if (TableProperties is null)
+                {
+                    TableProperties = new TableProperties();
+                }
+                return TableProperties.SignedIdentifiers;
+            }
+        }
     }
 }

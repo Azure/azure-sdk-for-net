@@ -14,44 +14,23 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class OrchestrationPrediction : PredictionBase
     {
         /// <summary> Initializes a new instance of <see cref="OrchestrationPrediction"/>. </summary>
-        /// <param name="intents">
-        /// A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent's value also contains the actual response from the target project.
-        /// Please note <see cref="TargetIntentResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConversationTargetIntentResult"/>, <see cref="LuisTargetIntentResult"/>, <see cref="NoneLinkedTargetIntentResult"/> and <see cref="QuestionAnsweringTargetIntentResult"/>.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="intents"/> is null. </exception>
-        internal OrchestrationPrediction(IReadOnlyDictionary<string, TargetIntentResult> intents)
+        /// <param name="intents"> A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent's value also contains the actual response from the target project. </param>
+        internal OrchestrationPrediction(IDictionary<string, TargetIntentResult> intents) : base(ProjectKind.Orchestration)
         {
-            Argument.AssertNotNull(intents, nameof(intents));
-
-            ProjectKind = ProjectKind.Orchestration;
             Intents = intents;
         }
 
         /// <summary> Initializes a new instance of <see cref="OrchestrationPrediction"/>. </summary>
         /// <param name="projectKind"> The type of the project. </param>
         /// <param name="topIntent"> The intent with the highest score. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="intents">
-        /// A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent's value also contains the actual response from the target project.
-        /// Please note <see cref="TargetIntentResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConversationTargetIntentResult"/>, <see cref="LuisTargetIntentResult"/>, <see cref="NoneLinkedTargetIntentResult"/> and <see cref="QuestionAnsweringTargetIntentResult"/>.
-        /// </param>
-        internal OrchestrationPrediction(ProjectKind projectKind, string topIntent, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, TargetIntentResult> intents) : base(projectKind, topIntent, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="intents"> A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent's value also contains the actual response from the target project. </param>
+        internal OrchestrationPrediction(ProjectKind projectKind, string topIntent, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, TargetIntentResult> intents) : base(projectKind, topIntent, additionalBinaryDataProperties)
         {
             Intents = intents;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrchestrationPrediction"/> for deserialization. </summary>
-        internal OrchestrationPrediction()
-        {
-        }
-
-        /// <summary>
-        /// A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent's value also contains the actual response from the target project.
-        /// Please note <see cref="TargetIntentResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConversationTargetIntentResult"/>, <see cref="LuisTargetIntentResult"/>, <see cref="NoneLinkedTargetIntentResult"/> and <see cref="QuestionAnsweringTargetIntentResult"/>.
-        /// </summary>
-        public IReadOnlyDictionary<string, TargetIntentResult> Intents { get; }
+        /// <summary> A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent's value also contains the actual response from the target project. </summary>
+        public IDictionary<string, TargetIntentResult> Intents { get; }
     }
 }

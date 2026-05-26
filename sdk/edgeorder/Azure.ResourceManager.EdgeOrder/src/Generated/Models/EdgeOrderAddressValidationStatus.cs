@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public readonly partial struct EdgeOrderAddressValidationStatus : IEquatable<EdgeOrderAddressValidationStatus>
     {
         private readonly string _value;
+        /// <summary> Address provided is valid. </summary>
+        private const string ValidValue = "Valid";
+        /// <summary> Address provided is invalid or not supported. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> Address provided is ambiguous, please choose one of the alternate addresses returned. </summary>
+        private const string AmbiguousValue = "Ambiguous";
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EdgeOrderAddressValidationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ValidValue = "Valid";
-        private const string InvalidValue = "Invalid";
-        private const string AmbiguousValue = "Ambiguous";
+            _value = value;
+        }
 
         /// <summary> Address provided is valid. </summary>
         public static EdgeOrderAddressValidationStatus Valid { get; } = new EdgeOrderAddressValidationStatus(ValidValue);
+
         /// <summary> Address provided is invalid or not supported. </summary>
         public static EdgeOrderAddressValidationStatus Invalid { get; } = new EdgeOrderAddressValidationStatus(InvalidValue);
+
         /// <summary> Address provided is ambiguous, please choose one of the alternate addresses returned. </summary>
         public static EdgeOrderAddressValidationStatus Ambiguous { get; } = new EdgeOrderAddressValidationStatus(AmbiguousValue);
+
         /// <summary> Determines if two <see cref="EdgeOrderAddressValidationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeOrderAddressValidationStatus left, EdgeOrderAddressValidationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EdgeOrderAddressValidationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeOrderAddressValidationStatus left, EdgeOrderAddressValidationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeOrderAddressValidationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EdgeOrderAddressValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EdgeOrderAddressValidationStatus(string value) => new EdgeOrderAddressValidationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EdgeOrderAddressValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EdgeOrderAddressValidationStatus?(string value) => value == null ? null : new EdgeOrderAddressValidationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeOrderAddressValidationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EdgeOrderAddressValidationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

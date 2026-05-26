@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the checks that should be made while validating the JWT Claims. </summary>
+    /// <summary>
+    /// The configuration settings of the checks that should be made while validating the JWT Claims.
+    /// Serialized Name: JwtClaimChecks
+    /// </summary>
     public partial class JwtClaimChecks
     {
         /// <summary>
@@ -53,8 +56,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="JwtClaimChecks"/>. </summary>
-        /// <param name="allowedGroups"> The list of the allowed groups. </param>
-        /// <param name="allowedClientApplications"> The list of the allowed client applications. </param>
+        /// <param name="allowedGroups">
+        /// The list of the allowed groups.
+        /// Serialized Name: JwtClaimChecks.allowedGroups
+        /// </param>
+        /// <param name="allowedClientApplications">
+        /// The list of the allowed client applications.
+        /// Serialized Name: JwtClaimChecks.allowedClientApplications
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal JwtClaimChecks(IList<string> allowedGroups, IList<string> allowedClientApplications, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,10 +72,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of the allowed groups. </summary>
+        /// <summary>
+        /// The list of the allowed groups.
+        /// Serialized Name: JwtClaimChecks.allowedGroups
+        /// </summary>
         [WirePath("allowedGroups")]
         public IList<string> AllowedGroups { get; }
-        /// <summary> The list of the allowed client applications. </summary>
+        /// <summary>
+        /// The list of the allowed client applications.
+        /// Serialized Name: JwtClaimChecks.allowedClientApplications
+        /// </summary>
         [WirePath("allowedClientApplications")]
         public IList<string> AllowedClientApplications { get; }
     }

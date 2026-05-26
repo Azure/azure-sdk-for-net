@@ -1,0 +1,39 @@
+<Project>
+  <!-- ============================================================== -->
+  <!--              EXTENSION LIBRARY DEPENDENCIES                    -->
+  <!--                                                                -->
+  <!-- Extension libraries (IsExtensionClientLibrary=true) bridge     -->
+  <!-- Azure SDK clients into the Microsoft.Extensions ecosystem:     -->
+  <!-- dependency injection, configuration, hosting, and ASP.NET      -->
+  <!-- Core. Examples: Azure.Extensions.AspNetCore.*, Microsoft.      -->
+  <!-- Extensions.Azure.                                              -->
+  <!-- ============================================================== -->
+  <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'
+      and '$(IsTestProject)' != 'true'
+      and '$(IsTestSupportProject)' != 'true'
+      and '$(IsPerfProject)' != 'true'
+      and '$(IsStressProject)' != 'true'
+      and '$(IsSamplesProject)' != 'true'">
+    <PackageVersion Include="Microsoft.AspNetCore.Http" Version="$(MicrosoftAspNetCoreHttpVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Azure" Version="$(MicrosoftExtensionsAzureVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="$(MicrosoftExtensionsConfigurationVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="$(MicrosoftExtensionsConfigurationBinderVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="$(MicrosoftExtensionsHostingVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsLoggingVersion)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
+    <!--
+      The AspNetCore.DataProtection 10.x package does not include a net8.0 target.  Though the package can be used
+      in net8.0 projects, via the netstandard2.0 path, it conflicts with the explicit net8.0 target of the Azure SDK
+      package, causing warnings.  To avoid these warnings, we use the last 8.0 version of the package for net8.0
+      builds and the latest 10.x version for all other target frameworks.
+    -->
+    <PackageVersion Include="Microsoft.AspNetCore.DataProtection" Version="10.0.7" Condition="'$(TargetFramework)' != 'net8.0'" />
+    <PackageVersion Include="Microsoft.AspNetCore.DataProtection" Version="8.0.26" Condition="'$(TargetFramework)' == 'net8.0'" />
+
+    <PackageVersion Include="Microsoft.AspNetCore.Http.Connections" Version="1.2.0" />
+    <PackageVersion Include="Microsoft.Azure.Functions.Worker.Extensions.Abstractions" Version="1.3.0" />
+    <PackageVersion Update="Microsoft.Extensions.Configuration.Abstractions" Version="$(MicrosoftExtensionsConfigurationAbstractionsVersion)" />
+  </ItemGroup>
+</Project>

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct DBSystemDatabaseEditionType : IEquatable<DBSystemDatabaseEditionType>
     {
         private readonly string _value;
+        /// <summary> Standard edition. </summary>
+        private const string StandardEditionValue = "StandardEdition";
+        /// <summary> Enterprise edition. </summary>
+        private const string EnterpriseEditionValue = "EnterpriseEdition";
+        /// <summary> Enterprise edition high performance. </summary>
+        private const string EnterpriseEditionHighPerformanceValue = "EnterpriseEditionHighPerformance";
+        /// <summary> Enterprise edition extreme. </summary>
+        private const string EnterpriseEditionExtremeValue = "EnterpriseEditionExtreme";
+        /// <summary> Enterprise edition developer. </summary>
+        private const string EnterpriseEditionDeveloperValue = "EnterpriseEditionDeveloper";
 
         /// <summary> Initializes a new instance of <see cref="DBSystemDatabaseEditionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DBSystemDatabaseEditionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardEditionValue = "StandardEdition";
-        private const string EnterpriseEditionValue = "EnterpriseEdition";
-        private const string EnterpriseEditionHighPerformanceValue = "EnterpriseEditionHighPerformance";
-        private const string EnterpriseEditionExtremeValue = "EnterpriseEditionExtreme";
-        private const string EnterpriseEditionDeveloperValue = "EnterpriseEditionDeveloper";
+            _value = value;
+        }
 
         /// <summary> Standard edition. </summary>
         public static DBSystemDatabaseEditionType StandardEdition { get; } = new DBSystemDatabaseEditionType(StandardEditionValue);
+
         /// <summary> Enterprise edition. </summary>
         public static DBSystemDatabaseEditionType EnterpriseEdition { get; } = new DBSystemDatabaseEditionType(EnterpriseEditionValue);
+
         /// <summary> Enterprise edition high performance. </summary>
         public static DBSystemDatabaseEditionType EnterpriseEditionHighPerformance { get; } = new DBSystemDatabaseEditionType(EnterpriseEditionHighPerformanceValue);
+
         /// <summary> Enterprise edition extreme. </summary>
         public static DBSystemDatabaseEditionType EnterpriseEditionExtreme { get; } = new DBSystemDatabaseEditionType(EnterpriseEditionExtremeValue);
+
         /// <summary> Enterprise edition developer. </summary>
         public static DBSystemDatabaseEditionType EnterpriseEditionDeveloper { get; } = new DBSystemDatabaseEditionType(EnterpriseEditionDeveloperValue);
+
         /// <summary> Determines if two <see cref="DBSystemDatabaseEditionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DBSystemDatabaseEditionType left, DBSystemDatabaseEditionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DBSystemDatabaseEditionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DBSystemDatabaseEditionType left, DBSystemDatabaseEditionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DBSystemDatabaseEditionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DBSystemDatabaseEditionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DBSystemDatabaseEditionType(string value) => new DBSystemDatabaseEditionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DBSystemDatabaseEditionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DBSystemDatabaseEditionType?(string value) => value == null ? null : new DBSystemDatabaseEditionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DBSystemDatabaseEditionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DBSystemDatabaseEditionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

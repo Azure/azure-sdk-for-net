@@ -4,10 +4,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Tests
             var vm = await CreateWindowsVM(virtualMachineName, networkInterfaceName, location, resourceGroup1);
 
             // TODO: where is this used?
-            var resourceGropu2  = await CreateResourceGroup(resourceGroupName2, location);
+            var resourceGropu2 = await CreateResourceGroup(resourceGroupName2, location);
 
             //TODO:There is no need to perform a separate create NetworkWatchers operation
             //Create NetworkWatcher

@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary> Enclave Connection Resource properties. </summary>
     public partial class VirtualEnclaveConnectionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveConnectionProperties"/>. </summary>
         /// <param name="communityResourceId"> Community Resource Id. </param>
@@ -71,8 +43,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="destinationEndpointId"> Destination Endpoint Resource Id. </param>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="resourceCollection"> List of resource ids modified by enclave Connections. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveConnectionProperties(EnclaveConnectionState? state, ResourceIdentifier communityResourceId, ResourceIdentifier sourceResourceId, string sourceCidr, ResourceIdentifier destinationEndpointId, VirtualEnclaveProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> resourceCollection, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualEnclaveConnectionProperties(EnclaveConnectionState? state, ResourceIdentifier communityResourceId, ResourceIdentifier sourceResourceId, string sourceCidr, ResourceIdentifier destinationEndpointId, VirtualEnclaveProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> resourceCollection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             CommunityResourceId = communityResourceId;
@@ -81,26 +53,27 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             DestinationEndpointId = destinationEndpointId;
             ProvisioningState = provisioningState;
             ResourceCollection = resourceCollection;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveConnectionProperties"/> for deserialization. </summary>
-        internal VirtualEnclaveConnectionProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The state of the enclaveConnection. </summary>
         public EnclaveConnectionState? State { get; }
+
         /// <summary> Community Resource Id. </summary>
         public ResourceIdentifier CommunityResourceId { get; set; }
+
         /// <summary> Source Resource Id. </summary>
         public ResourceIdentifier SourceResourceId { get; set; }
+
         /// <summary> Source CIDR. </summary>
         public string SourceCidr { get; set; }
+
         /// <summary> Destination Endpoint Resource Id. </summary>
         public ResourceIdentifier DestinationEndpointId { get; set; }
+
         /// <summary> Provisioning State. </summary>
         public VirtualEnclaveProvisioningState? ProvisioningState { get; }
+
         /// <summary> List of resource ids modified by enclave Connections. </summary>
         public IReadOnlyList<ResourceIdentifier> ResourceCollection { get; }
     }

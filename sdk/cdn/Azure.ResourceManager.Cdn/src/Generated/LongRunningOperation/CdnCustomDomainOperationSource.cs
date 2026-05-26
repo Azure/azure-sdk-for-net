@@ -5,75 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class CdnCustomDomainOperationSource : IOperationSource<CdnCustomDomainResource>
+    /// <summary></summary>
+    internal partial class CdnCustomDomainOperationSource : IOperationSource<CdnCustomDomainResource>
     {
         private readonly ArmClient _client;
-        private readonly Dictionary<string, string> _idMappings = new Dictionary<string, string>()
-        {
-            { "subscriptionId", "Microsoft.Resources/subscriptions" },
-            { "resourceGroupName", "Microsoft.Resources/resourceGroups" },
-            { "profileName", "Microsoft.Cdn/operationresults/profileresults" },
-            { "endpointName", "Microsoft.Cdn/operationresults/profileresults/endpointresults" },
-            { "customDomainName", "Microsoft.Cdn/operationresults/profileresults/endpointresults/customdomainresults" },
-        };
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal CdnCustomDomainOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         CdnCustomDomainResource IOperationSource<CdnCustomDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ScrubId(ModelReaderWriter.Read<CdnCustomDomainData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default));
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            CdnCustomDomainData data = CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new CdnCustomDomainResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<CdnCustomDomainResource> IOperationSource<CdnCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ScrubId(ModelReaderWriter.Read<CdnCustomDomainData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default));
-            return await Task.FromResult(new CdnCustomDomainResource(_client, data)).ConfigureAwait(false);
-        }
-
-        private CdnCustomDomainData ScrubId(CdnCustomDomainData data)
-        {
-            if (data.Id.ResourceType == CdnCustomDomainResource.ResourceType)
-                return data;
-
-            var newId = CdnCustomDomainResource.CreateResourceIdentifier(
-                GetName("subscriptionId", data.Id),
-                GetName("resourceGroupName", data.Id),
-                GetName("profileName", data.Id),
-                GetName("endpointName", data.Id),
-                GetName("customDomainName", data.Id));
-
-            return new CdnCustomDomainData(
-                newId,
-                newId.Name,
-                newId.ResourceType,
-                data.SystemData,
-                data.HostName,
-                data.ResourceState,
-                data.CustomHttpsProvisioningState,
-                data.CustomHttpsAvailabilityState,
-                data.CustomDomainHttpsContent,
-                data.ValidationData,
-                data.ProvisioningState,
-                null);
-        }
-
-        private string GetName(string param, ResourceIdentifier id)
-        {
-            while (id.ResourceType != _idMappings[param])
-                id = id.Parent;
-            return id.Name;
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            CdnCustomDomainData data = CdnCustomDomainData.DeserializeCdnCustomDomainData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new CdnCustomDomainResource(_client, data);
         }
     }
 }

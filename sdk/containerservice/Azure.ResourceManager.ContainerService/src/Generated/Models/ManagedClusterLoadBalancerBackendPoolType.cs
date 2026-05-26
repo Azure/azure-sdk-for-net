@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct ManagedClusterLoadBalancerBackendPoolType : IEquatable<ManagedClusterLoadBalancerBackendPoolType>
     {
         private readonly string _value;
+        /// <summary> The type of the managed inbound Load Balancer BackendPool. https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#configure-load-balancer-backend. </summary>
+        private const string NodeIPConfigurationValue = "NodeIPConfiguration";
+        /// <summary> The type of the managed inbound Load Balancer BackendPool. https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#configure-load-balancer-backend. </summary>
+        private const string NodeIPValue = "NodeIP";
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerBackendPoolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedClusterLoadBalancerBackendPoolType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NodeIPConfigurationValue = "NodeIPConfiguration";
-        private const string NodeIPValue = "NodeIP";
+            _value = value;
+        }
 
         /// <summary> The type of the managed inbound Load Balancer BackendPool. https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#configure-load-balancer-backend. </summary>
         public static ManagedClusterLoadBalancerBackendPoolType NodeIPConfiguration { get; } = new ManagedClusterLoadBalancerBackendPoolType(NodeIPConfigurationValue);
+
         /// <summary> The type of the managed inbound Load Balancer BackendPool. https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#configure-load-balancer-backend. </summary>
         public static ManagedClusterLoadBalancerBackendPoolType NodeIP { get; } = new ManagedClusterLoadBalancerBackendPoolType(NodeIPValue);
+
         /// <summary> Determines if two <see cref="ManagedClusterLoadBalancerBackendPoolType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedClusterLoadBalancerBackendPoolType left, ManagedClusterLoadBalancerBackendPoolType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedClusterLoadBalancerBackendPoolType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedClusterLoadBalancerBackendPoolType left, ManagedClusterLoadBalancerBackendPoolType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterLoadBalancerBackendPoolType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedClusterLoadBalancerBackendPoolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedClusterLoadBalancerBackendPoolType(string value) => new ManagedClusterLoadBalancerBackendPoolType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedClusterLoadBalancerBackendPoolType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedClusterLoadBalancerBackendPoolType?(string value) => value == null ? null : new ManagedClusterLoadBalancerBackendPoolType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedClusterLoadBalancerBackendPoolType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedClusterLoadBalancerBackendPoolType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

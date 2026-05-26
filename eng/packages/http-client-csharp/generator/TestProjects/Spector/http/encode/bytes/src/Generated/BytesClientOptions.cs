@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Encode.Bytes
 {
     public partial class BytesClientOptions : ClientOptions
     {
+        public BytesClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal BytesClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

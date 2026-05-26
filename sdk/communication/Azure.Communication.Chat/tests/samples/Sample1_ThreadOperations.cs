@@ -61,7 +61,7 @@ namespace Azure.Communication.Chat.Tests.samples
             AsyncPageable<ChatThreadItem> chatThreadItems = chatClient.GetChatThreadsAsync();
             await foreach (ChatThreadItem chatThreadItem in chatThreadItems)
             {
-                Console.WriteLine($"{ chatThreadItem.Id}");
+                Console.WriteLine($"{chatThreadItem.Id}");
             }
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetThreads
 

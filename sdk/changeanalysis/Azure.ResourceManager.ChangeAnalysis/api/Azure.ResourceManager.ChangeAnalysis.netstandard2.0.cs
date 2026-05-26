@@ -75,9 +75,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         public static Azure.ResourceManager.ChangeAnalysis.Models.ChangeType Remove { get { throw null; } }
         public static Azure.ResourceManager.ChangeAnalysis.Models.ChangeType Update { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ChangeAnalysis.Models.ChangeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ChangeAnalysis.Models.ChangeType left, Azure.ResourceManager.ChangeAnalysis.Models.ChangeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ChangeAnalysis.Models.ChangeType (string value) { throw null; }
@@ -124,9 +122,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
         public static Azure.ResourceManager.ChangeAnalysis.Models.PropertyChangeLevel Noisy { get { throw null; } }
         public static Azure.ResourceManager.ChangeAnalysis.Models.PropertyChangeLevel Normal { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ChangeAnalysis.Models.PropertyChangeLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ChangeAnalysis.Models.PropertyChangeLevel left, Azure.ResourceManager.ChangeAnalysis.Models.PropertyChangeLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.ChangeAnalysis.Models.PropertyChangeLevel (string value) { throw null; }

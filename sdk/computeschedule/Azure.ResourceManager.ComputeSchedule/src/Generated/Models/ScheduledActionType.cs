@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     public readonly partial struct ScheduledActionType : IEquatable<ScheduledActionType>
     {
         private readonly string _value;
+        /// <summary> Perform a start action on the specified resources. </summary>
+        private const string StartValue = "Start";
+        /// <summary> Perform a deallocate action on the specified resources. </summary>
+        private const string DeallocateValue = "Deallocate";
+        /// <summary> Perform hibernate and deallocate on the specified resources. </summary>
+        private const string HibernateValue = "Hibernate";
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScheduledActionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StartValue = "Start";
-        private const string DeallocateValue = "Deallocate";
-        private const string HibernateValue = "Hibernate";
+            _value = value;
+        }
 
         /// <summary> Perform a start action on the specified resources. </summary>
         public static ScheduledActionType Start { get; } = new ScheduledActionType(StartValue);
+
         /// <summary> Perform a deallocate action on the specified resources. </summary>
         public static ScheduledActionType Deallocate { get; } = new ScheduledActionType(DeallocateValue);
+
         /// <summary> Perform hibernate and deallocate on the specified resources. </summary>
         public static ScheduledActionType Hibernate { get; } = new ScheduledActionType(HibernateValue);
+
         /// <summary> Determines if two <see cref="ScheduledActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScheduledActionType left, ScheduledActionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScheduledActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScheduledActionType left, ScheduledActionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledActionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScheduledActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScheduledActionType(string value) => new ScheduledActionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScheduledActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScheduledActionType?(string value) => value == null ? null : new ScheduledActionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScheduledActionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScheduledActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

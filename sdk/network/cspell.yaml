@@ -1,0 +1,12 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/network/Azure.Provisioning.Network/**/*.cs'
+    words:
+      - dscp
+      - fqdns
+      - ipam
+      - snat
+      - vnets
+      - vxlan
+      - quic

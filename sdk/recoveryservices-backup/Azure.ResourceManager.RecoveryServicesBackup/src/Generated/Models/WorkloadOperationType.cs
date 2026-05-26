@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct WorkloadOperationType : IEquatable<WorkloadOperationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="WorkloadOperationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WorkloadOperationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string RegisterValue = "Register";
         private const string ReregisterValue = "Reregister";
         private const string RehydrateValue = "Rehydrate";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WorkloadOperationType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static WorkloadOperationType Invalid { get; } = new WorkloadOperationType(InvalidValue);
-        /// <summary> Register. </summary>
+
+        /// <summary> Gets the Register. </summary>
         public static WorkloadOperationType Register { get; } = new WorkloadOperationType(RegisterValue);
-        /// <summary> Reregister. </summary>
+
+        /// <summary> Gets the Reregister. </summary>
         public static WorkloadOperationType Reregister { get; } = new WorkloadOperationType(ReregisterValue);
-        /// <summary> Rehydrate. </summary>
+
+        /// <summary> Gets the Rehydrate. </summary>
         public static WorkloadOperationType Rehydrate { get; } = new WorkloadOperationType(RehydrateValue);
+
         /// <summary> Determines if two <see cref="WorkloadOperationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkloadOperationType left, WorkloadOperationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkloadOperationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkloadOperationType left, WorkloadOperationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadOperationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkloadOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkloadOperationType(string value) => new WorkloadOperationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkloadOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkloadOperationType?(string value) => value == null ? null : new WorkloadOperationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkloadOperationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkloadOperationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

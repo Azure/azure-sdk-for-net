@@ -3,14 +3,14 @@
 
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using Azure.ResourceManager.Resources;
-using NUnit.Framework;
-using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Storage;
-using Azure.ResourceManager.Network.Models;
-using Azure.Core;
+using Azure.ResourceManager.Storage.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Tests
 
         private async Task<StorageAccountResource> CreateStorageAccount(string storageAccountName)
         {
-            var parameters = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.Storage,TestEnvironment.Location);
+            var parameters = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardLrs), StorageKind.Storage, TestEnvironment.Location);
             return (await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, parameters)).Value;
         }
 
@@ -210,7 +210,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             var privateDnsZoneGroupName = Recording.GenerateAssetName("private_dns_zone_group");
             var privateDnsZoneGroupCollection = privateEndpoint.GetPrivateDnsZoneGroups();
-            var privateDnsZoneGroup = (await privateDnsZoneGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateDnsZoneGroupName, new PrivateDnsZoneGroupData {
+            var privateDnsZoneGroup = (await privateDnsZoneGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateDnsZoneGroupName, new PrivateDnsZoneGroupData
+            {
                 PrivateDnsZoneConfigs = {
                     new PrivateDnsZoneConfig
                     {
@@ -241,7 +242,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(privateDnsZone.Id, privateDnsZoneGroup.Data.PrivateDnsZoneConfigs[0].PrivateDnsZoneId);
 
             // update
-            privateDnsZoneGroup = (await privateDnsZoneGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateDnsZoneGroupName, new PrivateDnsZoneGroupData {})).Value;
+            privateDnsZoneGroup = (await privateDnsZoneGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateDnsZoneGroupName, new PrivateDnsZoneGroupData { })).Value;
             Assert.IsEmpty(privateDnsZoneGroup.Data.PrivateDnsZoneConfigs);
 
             // delete

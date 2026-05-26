@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Maps;
 
 namespace Azure.ResourceManager.Maps.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableMapsArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableMapsArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableMapsArmClient for mocking. </summary>
         protected MockableMapsArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMapsArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMapsArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMapsArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableMapsArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MapsAccountResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MapsAccountResource.CreateResourceIdentifier" /> to create a <see cref="MapsAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="MapsAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MapsAccountResource"/> object. </returns>
         public virtual MapsAccountResource GetMapsAccountResource(ResourceIdentifier id)
@@ -46,16 +35,31 @@ namespace Azure.ResourceManager.Maps.Mocking
             return new MapsAccountResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="MapsCreatorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MapsCreatorResource.CreateResourceIdentifier" /> to create a <see cref="MapsCreatorResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="MapsCreatorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MapsCreatorResource"/> object. </returns>
         public virtual MapsCreatorResource GetMapsCreatorResource(ResourceIdentifier id)
         {
             MapsCreatorResource.ValidateResourceId(id);
             return new MapsCreatorResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MapsPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MapsPrivateLinkResource"/> object. </returns>
+        public virtual MapsPrivateLinkResource GetMapsPrivateLinkResource(ResourceIdentifier id)
+        {
+            MapsPrivateLinkResource.ValidateResourceId(id);
+            return new MapsPrivateLinkResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MapsPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MapsPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual MapsPrivateEndpointConnectionResource GetMapsPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            MapsPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new MapsPrivateEndpointConnectionResource(Client, id);
         }
     }
 }

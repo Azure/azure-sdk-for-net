@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net.NetworkInformation;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests
 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests
 
             FirewallBillingPlanInfo planData = new FirewallBillingPlanInfo(FirewallBillingCycle.Monthly, "cloud-ngfw-payg-test");
             PanFirewallMarketplaceDetails mpDetails = new PanFirewallMarketplaceDetails("pan_swfw_cloud_ngfw", "paloaltonetworks");
-            PaloAltoNetworksFirewallData data = new PaloAltoNetworksFirewallData(location, np, dnsSettings,  planData, mpDetails);
+            PaloAltoNetworksFirewallData data = new PaloAltoNetworksFirewallData(location, np, dnsSettings, planData, mpDetails);
             data.AssociatedRulestack = new RulestackDetails(new ResourceIdentifier("/subscriptions/2bf4a339-294d-4c25-b0b2-ef649e9f5c27/resourceGroups/dotnetSdkTest-infra-rg/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/dotnetSdkTest-lrs-default"), "", AzureLocation.EastUS2, null);
             var lro = await resourceGroup.GetPaloAltoNetworksFirewalls().CreateOrUpdateAsync(WaitUntil.Completed, firewallName, data);
             return lro.Value;

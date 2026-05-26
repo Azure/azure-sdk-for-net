@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Dns
             TryGetApiVersion(DnsCnameRecordResource.ResourceType, out string cnameRecordInfoRecordSetsApiVersion);
             _cnameRecordInfoRecordSetsRestClient = new DnsCnameRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cnameRecordInfoRecordSetsApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

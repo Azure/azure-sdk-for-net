@@ -201,7 +201,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var eventData = new EventData(
                 eventBody: new BinaryData(new byte[] { 0x11, 0x22, 0x33 }),
-                properties: propertyValues.ToDictionary(value => $"{ value.GetType().Name }Property", value => value));
+                properties: propertyValues.ToDictionary(value => $"{value.GetType().Name}Property", value => value));
 
             using AmqpMessage message = new AmqpMessageConverter().CreateMessageFromEvent(eventData);
 
@@ -217,8 +217,8 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var containsValue = message.ApplicationProperties.Map.TryGetValue(property, out object value);
 
-                Assert.That(containsValue, Is.True, $"The message properties did not contain: [{ property }]");
-                Assert.That(value, Is.EqualTo(eventData.Properties[property]), $"The property value did not match for: [{ property }]");
+                Assert.That(containsValue, Is.True, $"The message properties did not contain: [{property}]");
+                Assert.That(value, Is.EqualTo(eventData.Properties[property]), $"The property value did not match for: [{property}]");
             }
         }
 
@@ -463,7 +463,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateMessageFromEventPopulatesTheProperties()
         {
             var sourceMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new[] { ReadOnlyMemory<byte>.Empty }));
-            sourceMessage.Properties.AbsoluteExpiryTime = new DateTimeOffset(2015, 10, 27, 0, 0 ,0 ,0, TimeSpan.Zero);
+            sourceMessage.Properties.AbsoluteExpiryTime = new DateTimeOffset(2015, 10, 27, 0, 0, 0, 0, TimeSpan.Zero);
             sourceMessage.Properties.ContentEncoding = "utf-8";
             sourceMessage.Properties.ContentType = "test/unit";
             sourceMessage.Properties.CorrelationId = new AmqpMessageId("OU812");
@@ -534,8 +534,8 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 foreach (var item in map)
                 {
-                    Assert.That(expected.TryGetValue(item.Key.ToString(), out object expectedValue), Is.True, $"The { mapName } section map did not contain: [{ item.Key }]");
-                    Assert.That(item.Value, Is.EqualTo(expectedValue), $"The { mapName } section map property value did not match for: [{ item.Key }]");
+                    Assert.That(expected.TryGetValue(item.Key.ToString(), out object expectedValue), Is.True, $"The {mapName} section map did not contain: [{item.Key}]");
+                    Assert.That(item.Value, Is.EqualTo(expectedValue), $"The {mapName} section map property value did not match for: [{item.Key}]");
                 }
             }
 
@@ -566,8 +566,8 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var containsValue = message.ApplicationProperties.Map.TryGetValue(property, out object value);
 
-                Assert.That(containsValue, Is.True, $"The application properties did not contain: [{ property }]");
-                Assert.That(value, Is.EqualTo(eventData.Properties[property]), $"The application property value did not match for: [{ property }]");
+                Assert.That(containsValue, Is.True, $"The application properties did not contain: [{property}]");
+                Assert.That(value, Is.EqualTo(eventData.Properties[property]), $"The application property value did not match for: [{property}]");
             }
         }
 
@@ -730,7 +730,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 var expected = memoryStream.ToArray();
                 var actual = ((ArraySegment<byte>)messageData[index].Value).ToArray();
 
-                Assert.That(actual, Is.EqualTo(expected), $"The batch body for message { index } should match the serialized event.");
+                Assert.That(actual, Is.EqualTo(expected), $"The batch body for message {index} should match the serialized event.");
             }
         }
 
@@ -767,7 +767,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 var expected = memoryStream.ToArray();
                 var actual = ((ArraySegment<byte>)messageData[index].Value).ToArray();
 
-                Assert.That(actual, Is.EqualTo(expected), $"The batch body for message { index } should match the serialized event.");
+                Assert.That(actual, Is.EqualTo(expected), $"The batch body for message {index} should match the serialized event.");
             }
         }
 
@@ -795,7 +795,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var converter = new AmqpMessageConverter();
 
-            using var message = AmqpMessage.Create(new[] { new FramingData { Value = new ArraySegment<byte>(new byte[] { 0x11, 0x22 }) }});
+            using var message = AmqpMessage.Create(new[] { new FramingData { Value = new ArraySegment<byte>(new byte[] { 0x11, 0x22 }) } });
             Assert.That(() => converter.CreateBatchFromMessages(new List<AmqpMessage> { message }, partitionKey), Throws.Nothing);
         }
 
@@ -939,7 +939,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 var expected = memoryStream.ToArray();
                 var actual = ((ArraySegment<byte>)messageData[index].Value).ToArray();
 
-                Assert.That(actual, Is.EqualTo(expected), $"The batch body for message { index } should match the serialized event.");
+                Assert.That(actual, Is.EqualTo(expected), $"The batch body for message {index} should match the serialized event.");
             }
         }
 
@@ -979,7 +979,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 var expected = memoryStream.ToArray();
                 var actual = ((ArraySegment<byte>)messageData[index].Value).ToArray();
 
-                Assert.That(actual, Is.EqualTo(expected), $"The batch body for message { index } should match the serialized event.");
+                Assert.That(actual, Is.EqualTo(expected), $"The batch body for message {index} should match the serialized event.");
             }
         }
 
@@ -1042,7 +1042,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 "hello"
             };
 
-            var applicationProperties = propertyValues.ToDictionary(value => $"{ value.GetType().Name }Property", value => value);
+            var applicationProperties = propertyValues.ToDictionary(value => $"{value.GetType().Name}Property", value => value);
             var dataBody = new Data { Value = new byte[] { 0x11, 0x22, 0x33 } };
 
             using var message = AmqpMessage.Create(dataBody);
@@ -1067,8 +1067,8 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 var containsValue = eventData.Properties.TryGetValue(property, out object value);
 
-                Assert.That(containsValue, Is.True, $"The event properties did not contain: [{ property }]");
-                Assert.That(value, Is.EqualTo(applicationProperties[property]), $"The property value did not match for: [{ property }]");
+                Assert.That(containsValue, Is.True, $"The event properties did not contain: [{property}]");
+                Assert.That(value, Is.EqualTo(applicationProperties[property]), $"The property value did not match for: [{property}]");
             }
         }
 
@@ -1479,7 +1479,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var body = new byte[] { 0x11, 0x22, 0x33 };
             using var sourceMessage = AmqpMessage.Create(new Data { Value = body });
-            sourceMessage.Properties.AbsoluteExpiryTime = new DateTimeOffset(2015, 10, 27, 0, 0 ,0 ,0, TimeSpan.Zero).UtcDateTime;
+            sourceMessage.Properties.AbsoluteExpiryTime = new DateTimeOffset(2015, 10, 27, 0, 0, 0, 0, TimeSpan.Zero).UtcDateTime;
             sourceMessage.Properties.ContentEncoding = "utf-8";
             sourceMessage.Properties.ContentType = "test/unit";
             sourceMessage.Properties.CorrelationId = "OU812";
@@ -1553,8 +1553,8 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 foreach (var item in expected)
                 {
-                    Assert.That(dictionary.TryGetValue(item.Key.ToString(), out object expectedValue), Is.True, $"The { mapName } section map did not contain: [{ item.Key }]");
-                    Assert.That(item.Value, Is.EqualTo(expectedValue), $"The { mapName } section map property value did not match for: [{ item.Key }]");
+                    Assert.That(dictionary.TryGetValue(item.Key.ToString(), out object expectedValue), Is.True, $"The {mapName} section map did not contain: [{item.Key}]");
+                    Assert.That(item.Value, Is.EqualTo(expectedValue), $"The {mapName} section map property value did not match for: [{item.Key}]");
                 }
             }
 
@@ -1588,7 +1588,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void CreateEventFromMessageDoesNotPopulatePropertiesByDefault()
         {
             var body = new byte[] { 0x11, 0x22, 0x33 };
-            using var message = AmqpMessage.Create(new Data { Value = body } );
+            using var message = AmqpMessage.Create(new Data { Value = body });
 
             var converter = new AmqpMessageConverter();
             var eventData = converter.CreateEventFromMessage(message);
@@ -1640,7 +1640,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Properties
 
-            sourceMessage.Properties.AbsoluteExpiryTime = new DateTimeOffset(2015, 10, 27, 0, 0 ,0 ,0, TimeSpan.Zero);
+            sourceMessage.Properties.AbsoluteExpiryTime = new DateTimeOffset(2015, 10, 27, 0, 0, 0, 0, TimeSpan.Zero);
             sourceMessage.Properties.ContentEncoding = "utf-8";
             sourceMessage.Properties.ContentType = "test/unit";
             sourceMessage.Properties.CorrelationId = new AmqpMessageId("OU812");
@@ -2111,7 +2111,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Apply the set of publisher properties and validate the outcome.
 
-            converter.ApplyPublisherPropertiesToAmqpMessage(message,sequenceNumber, groupId, ownerLevel);
+            converter.ApplyPublisherPropertiesToAmqpMessage(message, sequenceNumber, groupId, ownerLevel);
 
             if (sequenceNumber.HasValue)
             {

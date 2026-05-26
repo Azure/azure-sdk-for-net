@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
-    internal class HciClusterOperationSource : IOperationSource<HciClusterResource>
+    /// <summary></summary>
+    internal partial class HciClusterOperationSource : IOperationSource<HciClusterResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal HciClusterOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         HciClusterResource IOperationSource<HciClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HciClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            HciClusterData data = HciClusterData.DeserializeHciClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new HciClusterResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<HciClusterResource> IOperationSource<HciClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HciClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciContext.Default);
-            return await Task.FromResult(new HciClusterResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            HciClusterData data = HciClusterData.DeserializeHciClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HciClusterResource(_client, data);
         }
     }
 }

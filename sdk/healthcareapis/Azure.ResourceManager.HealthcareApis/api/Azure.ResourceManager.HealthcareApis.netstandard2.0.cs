@@ -90,7 +90,6 @@ namespace Azure.ResourceManager.HealthcareApis
     public partial class FhirServiceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.FhirServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.FhirServiceData>
     {
         public FhirServiceData(Azure.Core.AzureLocation location) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IList<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry> AccessPolicies { get { throw null; } }
         public Azure.ResourceManager.HealthcareApis.Models.FhirServiceAcrConfiguration AcrConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.HealthcareApis.Models.FhirServiceAuthenticationConfiguration AuthenticationConfiguration { get { throw null; } set { } }
@@ -608,13 +607,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     public static partial class ArmHealthcareApisModelFactory
     {
         public static Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration DicomServiceAuthenticationConfiguration(string authority = null, System.Collections.Generic.IEnumerable<string> audiences = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.HealthcareApis.DicomServiceData DicomServiceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? provisioningState, Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration authenticationConfiguration, Azure.ResourceManager.HealthcareApis.Models.DicomServiceCorsConfiguration corsConfiguration, System.Uri serviceUri, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? etag) { throw null; }
         public static Azure.ResourceManager.HealthcareApis.DicomServiceData DicomServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? provisioningState = default(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState?), Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration authenticationConfiguration = null, Azure.ResourceManager.HealthcareApis.Models.DicomServiceCorsConfiguration corsConfiguration = null, System.Uri serviceUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess?), Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState? eventState = default(Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState?), System.Uri keyEncryptionKeyUri = null, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceStorageConfiguration storageConfiguration = null, bool? isDataPartitionsEnabled = default(bool?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.HealthcareApis.DicomServiceData DicomServiceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? provisioningState, Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration authenticationConfiguration, Azure.ResourceManager.HealthcareApis.Models.DicomServiceCorsConfiguration corsConfiguration, System.Uri serviceUri, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState? eventState, System.Uri keyEncryptionKeyUri, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? etag) { throw null; }
         public static Azure.ResourceManager.HealthcareApis.FhirServiceData FhirServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HealthcareApis.Models.FhirServiceKind? kind = default(Azure.ResourceManager.HealthcareApis.Models.FhirServiceKind?), Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? provisioningState = default(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState?), Azure.ResourceManager.HealthcareApis.Models.FhirServiceAcrConfiguration acrConfiguration = null, Azure.ResourceManager.HealthcareApis.Models.FhirServiceAuthenticationConfiguration authenticationConfiguration = null, Azure.ResourceManager.HealthcareApis.Models.FhirServiceCorsConfiguration corsConfiguration = null, string exportStorageAccountName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess?), Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState? eventState = default(Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState?), Azure.ResourceManager.HealthcareApis.Models.FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration = null, Azure.ResourceManager.HealthcareApis.Models.FhirServiceImportConfiguration importConfiguration = null, bool? isUsCoreMissingDataEnabled = default(bool?), System.Uri keyEncryptionKeyUri = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.HealthcareApis.FhirServiceData FhirServiceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.HealthcareApis.Models.FhirServiceKind? kind, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry> accessPolicies, Azure.ResourceManager.HealthcareApis.Models.FhirServiceAcrConfiguration acrConfiguration, Azure.ResourceManager.HealthcareApis.Models.FhirServiceAuthenticationConfiguration authenticationConfiguration, Azure.ResourceManager.HealthcareApis.Models.FhirServiceCorsConfiguration corsConfiguration, string exportStorageAccountName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState? eventState, Azure.ResourceManager.HealthcareApis.Models.FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration, Azure.ResourceManager.HealthcareApis.Models.FhirServiceImportConfiguration importConfiguration, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? etag) { throw null; }
         public static Azure.ResourceManager.HealthcareApis.HealthcareApisIotConnectorData HealthcareApisIotConnectorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? provisioningState = default(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState?), Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorEventHubIngestionConfiguration ingestionEndpointConfiguration = null, System.BinaryData deviceMappingContent = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.HealthcareApis.HealthcareApisIotFhirDestinationData HealthcareApisIotFhirDestinationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? provisioningState = default(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState?), Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType = default(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotIdentityResolutionType), Azure.Core.ResourceIdentifier fhirServiceResourceId = null, System.BinaryData fhirMappingContent = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
@@ -674,16 +670,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static Azure.ResourceManager.HealthcareApis.Models.FhirResourceVersionPolicy Versioned { get { throw null; } }
         public static Azure.ResourceManager.HealthcareApis.Models.FhirResourceVersionPolicy VersionedUpdate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HealthcareApis.Models.FhirResourceVersionPolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HealthcareApis.Models.FhirResourceVersionPolicy left, Azure.ResourceManager.HealthcareApis.Models.FhirResourceVersionPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.HealthcareApis.Models.FhirResourceVersionPolicy (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HealthcareApis.Models.FhirResourceVersionPolicy left, Azure.ResourceManager.HealthcareApis.Models.FhirResourceVersionPolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class FhirServiceAccessPolicyEntry : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry>
     {
         public FhirServiceAccessPolicyEntry(string objectId) { }
@@ -746,9 +739,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState Enabled { get { throw null; } }
         public static Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState left, Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState (string value) { throw null; }
@@ -777,9 +768,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static Azure.ResourceManager.HealthcareApis.Models.FhirServiceKind FhirR4 { get { throw null; } }
         public static Azure.ResourceManager.HealthcareApis.Models.FhirServiceKind FhirStu3 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HealthcareApis.Models.FhirServiceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HealthcareApis.Models.FhirServiceKind left, Azure.ResourceManager.HealthcareApis.Models.FhirServiceKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.HealthcareApis.Models.FhirServiceKind (string value) { throw null; }
@@ -842,9 +831,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotIdentityResolutionType Create { get { throw null; } }
         public static Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotIdentityResolutionType Lookup { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotIdentityResolutionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotIdentityResolutionType left, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotIdentityResolutionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotIdentityResolutionType (string value) { throw null; }
@@ -909,9 +896,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateEndpointConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -928,9 +913,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateEndpointServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateEndpointServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateEndpointServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateEndpointServiceConnectionStatus (string value) { throw null; }
@@ -970,9 +953,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState Verifying { get { throw null; } }
         public static Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState Warned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState left, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState (string value) { throw null; }
@@ -988,9 +969,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess left, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess (string value) { throw null; }
@@ -1173,9 +1152,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public SmartDataAction(string value) { throw null; }
         public static Azure.ResourceManager.HealthcareApis.Models.SmartDataAction Read { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HealthcareApis.Models.SmartDataAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HealthcareApis.Models.SmartDataAction left, Azure.ResourceManager.HealthcareApis.Models.SmartDataAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.HealthcareApis.Models.SmartDataAction (string value) { throw null; }

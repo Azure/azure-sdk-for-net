@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2026-04-06)
+
+### Features Added
+
+- Upgraded API version to `2026-02-01-preview`.
+  - `PlaywrightWorkspaceData` added property `Identity` of type `ManagedServiceIdentity`.
+  - `PlaywrightWorkspacePatch` added property `Identity` of type `ManagedServiceIdentity`.
+  - `PlaywrightWorkspaceProperties` added property `Reporting` of type `PlaywrightEnablementStatus?`.
+  - `PlaywrightWorkspaceProperties` added property `StorageUri` of type `Uri`.
+  - `PlaywrightWorkspaceUpdateProperties` added property `Reporting` of type `PlaywrightEnablementStatus?`.
+  - `PlaywrightWorkspaceUpdateProperties` added property `StorageUri` of type `Uri`.
 
 ## 1.0.0 (2025-09-05)
 

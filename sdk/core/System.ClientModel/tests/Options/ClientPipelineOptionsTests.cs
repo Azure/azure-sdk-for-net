@@ -195,6 +195,90 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
             => options.EnableDistributedTracing = true);
     }
 
+    [Test]
+    public void IsReadOnlyIsFalseByDefault()
+    {
+        ClientPipelineOptions options = new();
+        Assert.IsFalse(options.IsReadOnly);
+    }
+
+    [Test]
+    public void IsReadOnlyIsTrueAfterPipelineCreation()
+    {
+        ClientPipelineOptions options = new();
+        ClientPipeline.Create(options);
+        Assert.IsTrue(options.IsReadOnly);
+    }
+
+    [Test]
+    public void IsReadOnlyIsTrueAfterExplicitFreeze()
+    {
+        ClientPipelineOptions options = new();
+        options.Freeze();
+        Assert.IsTrue(options.IsReadOnly);
+    }
+
+    [Test]
+    public void CloneCreatesModifiableCopy()
+    {
+        MockRetryPolicy retryPolicy = new();
+        MockPipelinePolicy loggingPolicy = new();
+        MockPipelineTransport transport = new MockPipelineTransport("Transport");
+        TimeSpan networkTimeout = TimeSpan.FromSeconds(30);
+        ClientLoggingOptions loggingOptions = new();
+        loggingOptions.EnableLogging = false;
+
+        ClientPipelineOptions original = new()
+        {
+            RetryPolicy = retryPolicy,
+            MessageLoggingPolicy = loggingPolicy,
+            Transport = transport,
+            NetworkTimeout = networkTimeout,
+            ClientLoggingOptions = loggingOptions,
+            EnableDistributedTracing = false,
+        };
+        original.AddPolicy(new ObservablePolicy("PerCall"), PipelinePosition.PerCall);
+        original.AddPolicy(new ObservablePolicy("PerTry"), PipelinePosition.PerTry);
+        original.AddPolicy(new ObservablePolicy("BeforeTransport"), PipelinePosition.BeforeTransport);
+        original.Freeze();
+
+        Assert.IsTrue(original.IsReadOnly);
+
+        // Create a mutable copy from the frozen original
+        ClientPipelineOptions copy = original.Clone();
+
+        Assert.IsFalse(copy.IsReadOnly);
+        Assert.AreEqual(retryPolicy, copy.RetryPolicy);
+        Assert.AreEqual(loggingPolicy, copy.MessageLoggingPolicy);
+        Assert.AreEqual(transport, copy.Transport);
+        Assert.AreEqual(networkTimeout, copy.NetworkTimeout);
+        Assert.AreEqual(false, copy.EnableDistributedTracing);
+        Assert.IsNotNull(copy.ClientLoggingOptions);
+        Assert.IsFalse(copy.ClientLoggingOptions!.IsReadOnly);
+        Assert.AreEqual(false, copy.ClientLoggingOptions!.EnableLogging);
+
+        // The copy should be modifiable
+        Assert.DoesNotThrow(() => copy.RetryPolicy = new MockRetryPolicy());
+        Assert.DoesNotThrow(() => copy.NetworkTimeout = TimeSpan.FromSeconds(60));
+        Assert.DoesNotThrow(() => copy.ClientLoggingOptions!.EnableLogging = true);
+
+        // Original should remain unaffected
+        Assert.AreEqual(retryPolicy, original.RetryPolicy);
+        Assert.AreEqual(networkTimeout, original.NetworkTimeout);
+    }
+
+    [Test]
+    public void CloneOfFrozenOptionsIsNotFrozen()
+    {
+        ClientPipelineOptions options = new();
+        ClientPipeline.Create(options);
+
+        Assert.IsTrue(options.IsReadOnly);
+
+        ClientPipelineOptions clone = options.Clone();
+        Assert.IsFalse(clone.IsReadOnly);
+    }
+
     #region Helpers
 
     #endregion

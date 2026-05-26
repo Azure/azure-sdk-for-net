@@ -10,20 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> Unknown version of ChaosExperimentAction. </summary>
     internal partial class UnknownChaosExperimentAction : ChaosExperimentAction
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChaosExperimentAction"/>. </summary>
         /// <param name="name"> String that represents a Capability URN. </param>
         /// <param name="type"> Chaos experiment action discriminator type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownChaosExperimentAction(string name, ExperimentActionType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, type, serializedAdditionalRawData)
-        {
-            Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownChaosExperimentAction"/> for deserialization. </summary>
-        internal UnknownChaosExperimentAction()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownChaosExperimentAction(string name, ExperimentActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, @type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

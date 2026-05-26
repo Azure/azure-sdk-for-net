@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Payload.JsonMergePatch
 {
     public partial class JsonMergePatchClientOptions : ClientOptions
     {
+        public JsonMergePatchClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal JsonMergePatchClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

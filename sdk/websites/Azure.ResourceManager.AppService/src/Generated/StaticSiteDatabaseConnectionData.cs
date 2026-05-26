@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the StaticSiteDatabaseConnection data model.
     /// Static Site Database Connection resource.
+    /// Serialized Name: DatabaseConnection
     /// </summary>
     public partial class StaticSiteDatabaseConnectionData : ResourceData
     {
@@ -62,41 +63,77 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="resourceId"> The resource id of the database. </param>
-        /// <param name="connectionIdentity"> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </param>
-        /// <param name="connectionString"> The connection string to use to connect to the database. </param>
-        /// <param name="region"> The region of the database resource. </param>
-        /// <param name="configurationFiles"> A list of configuration files associated with this database connection. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: DatabaseConnection.kind
+        /// </param>
+        /// <param name="resourceId">
+        /// The resource id of the database.
+        /// Serialized Name: DatabaseConnection.properties.resourceId
+        /// </param>
+        /// <param name="connectionIdentity">
+        /// If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource.
+        /// Serialized Name: DatabaseConnection.properties.connectionIdentity
+        /// </param>
+        /// <param name="connectionString">
+        /// The connection string to use to connect to the database.
+        /// Serialized Name: DatabaseConnection.properties.connectionString
+        /// </param>
+        /// <param name="region">
+        /// The region of the database resource.
+        /// Serialized Name: DatabaseConnection.properties.region
+        /// </param>
+        /// <param name="configurationFiles">
+        /// A list of configuration files associated with this database connection.
+        /// Serialized Name: DatabaseConnection.properties.configurationFiles
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteDatabaseConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier resourceId, string connectionIdentity, string connectionString, string region, IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticSiteDatabaseConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ResourceIdentifier resourceId, string connectionIdentity, string connectionString, string region, IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             ResourceId = resourceId;
             ConnectionIdentity = connectionIdentity;
             ConnectionString = connectionString;
             Region = region;
             ConfigurationFiles = configurationFiles;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource id of the database. </summary>
-        [WirePath("properties.resourceId")]
-        public ResourceIdentifier ResourceId { get; set; }
-        /// <summary> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </summary>
-        [WirePath("properties.connectionIdentity")]
-        public string ConnectionIdentity { get; set; }
-        /// <summary> The connection string to use to connect to the database. </summary>
-        [WirePath("properties.connectionString")]
-        public string ConnectionString { get; set; }
-        /// <summary> The region of the database resource. </summary>
-        [WirePath("properties.region")]
-        public string Region { get; set; }
-        /// <summary> A list of configuration files associated with this database connection. </summary>
-        [WirePath("properties.configurationFiles")]
-        public IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> ConfigurationFiles { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: DatabaseConnection.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary>
+        /// The resource id of the database.
+        /// Serialized Name: DatabaseConnection.properties.resourceId
+        /// </summary>
+        [WirePath("properties.resourceId")]
+        public ResourceIdentifier ResourceId { get; set; }
+        /// <summary>
+        /// If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource.
+        /// Serialized Name: DatabaseConnection.properties.connectionIdentity
+        /// </summary>
+        [WirePath("properties.connectionIdentity")]
+        public string ConnectionIdentity { get; set; }
+        /// <summary>
+        /// The connection string to use to connect to the database.
+        /// Serialized Name: DatabaseConnection.properties.connectionString
+        /// </summary>
+        [WirePath("properties.connectionString")]
+        public string ConnectionString { get; set; }
+        /// <summary>
+        /// The region of the database resource.
+        /// Serialized Name: DatabaseConnection.properties.region
+        /// </summary>
+        [WirePath("properties.region")]
+        public string Region { get; set; }
+        /// <summary>
+        /// A list of configuration files associated with this database connection.
+        /// Serialized Name: DatabaseConnection.properties.configurationFiles
+        /// </summary>
+        [WirePath("properties.configurationFiles")]
+        public IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> ConfigurationFiles { get; }
     }
 }

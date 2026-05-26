@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public readonly partial struct AttestHardwarePlatformType : IEquatable<AttestHardwarePlatformType>
     {
         private readonly string _value;
+        /// <summary> AttestHWPlatform is Secure Encrypted Virtualization Secure Nested Paging (SEVSNP). </summary>
+        private const string SevsnpValue = "SEVSNP";
+        /// <summary> AttestHWPlatform is unknown. </summary>
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="AttestHardwarePlatformType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AttestHardwarePlatformType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SevsnpValue = "SEVSNP";
-        private const string UnknownValue = "Unknown";
+            _value = value;
+        }
 
         /// <summary> AttestHWPlatform is Secure Encrypted Virtualization Secure Nested Paging (SEVSNP). </summary>
         public static AttestHardwarePlatformType Sevsnp { get; } = new AttestHardwarePlatformType(SevsnpValue);
+
         /// <summary> AttestHWPlatform is unknown. </summary>
         public static AttestHardwarePlatformType Unknown { get; } = new AttestHardwarePlatformType(UnknownValue);
+
         /// <summary> Determines if two <see cref="AttestHardwarePlatformType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AttestHardwarePlatformType left, AttestHardwarePlatformType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AttestHardwarePlatformType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AttestHardwarePlatformType left, AttestHardwarePlatformType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AttestHardwarePlatformType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AttestHardwarePlatformType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AttestHardwarePlatformType(string value) => new AttestHardwarePlatformType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AttestHardwarePlatformType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AttestHardwarePlatformType?(string value) => value == null ? null : new AttestHardwarePlatformType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AttestHardwarePlatformType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AttestHardwarePlatformType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

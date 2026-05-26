@@ -1,0 +1,5 @@
+<Project>
+  <ItemGroup>
+    <PackageVersion Include="OpenAI" Version="2.9.1" />
+  </ItemGroup>
+</Project>

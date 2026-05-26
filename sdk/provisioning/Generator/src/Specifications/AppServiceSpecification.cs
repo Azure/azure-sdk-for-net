@@ -12,7 +12,7 @@ using System.Reflection;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class AppServiceSpecification() :
-    Specification("AppService", typeof(AppServiceExtensions))
+    Specification("AppService", typeof(AppServiceExtensions), serviceDirectory: "websites")
 {
     protected override void Customize()
     {
@@ -29,6 +29,8 @@ public class AppServiceSpecification() :
         RemoveProperty<SiteSlotVirtualNetworkConnectionResource>("CertThumbprint");
         RemoveProperty<SiteVirtualNetworkConnectionResource>("CertThumbprint");
         RemoveProperty<StaticSiteBasicAuthPropertyResource>("BasicAuthName");
+        CustomizeProperty<StaticSiteBasicAuthPropertyResource>("Name", p => { p.IsReadOnly = true; p.GenerateDefaultValue = true; });
+        CustomizeProperty<SiteNetworkConfigResource>("Name", p => { p.IsReadOnly = true; p.GenerateDefaultValue = true; });
         RemoveProperty<StaticSiteBuildUserProvidedFunctionAppResource>("IsForced");
         RemoveProperty<StaticSiteUserProvidedFunctionAppResource>("IsForced");
         RemoveProperty<WebSiteExtensionResource>("SiteExtensionId");
@@ -36,13 +38,10 @@ public class AppServiceSpecification() :
         RemoveProperty<WebSiteSlotPublicCertificateResource>("Thumbprint");
         RemoveProperty<WebSiteSlotResource>("Slot");
         RemoveProperty<AppServiceCertificateDetails>("Thumbprint");
-        RemoveProperty<CustomDnsSuffixConfigurationData>("ResourceType");
-        RemoveProperty<AseV3NetworkingConfigurationData>("ResourceType");
         RemoveProperty<AppServiceTableStorageApplicationLogsConfig>("SasUri");
         RemoveProperty<AppServiceVirtualNetworkRoute>("ResourceType");
         RemoveProperty<ResponseMessageEnvelopeRemotePrivateEndpointConnection>("ResourceType");
         RemoveProperty<RemotePrivateEndpointConnection>("ResourceType");
-        RemoveProperty<StaticSiteUserProvidedFunctionAppData>("ResourceType");
         RemoveProperty<WebAppPushSettings>("ResourceType");
         RemoveProperty<HostNameSslState>("Thumbprint");
 
@@ -51,6 +50,7 @@ public class AppServiceSpecification() :
             r.ResourceType = "Microsoft.Web/sites/config";
         });
         CustomizeProperty<SiteAuthSettingsV2>("Name", p => { p.GenerateDefaultValue = true; p.HideAccessors = true; p.IsReadOnly = false; }); // must be `authsettingsV2`
+        CustomizeProperty<SlotConfigNamesResource>("Name", p => { p.GenerateDefaultValue = true; p.HideAccessors = true; p.IsReadOnly = false; }); // must be `slotConfigNames`
 
         // Not generated today:
         // CustomizePropertyIsoDuration<MetricAvailability>("BlobDuration");
@@ -59,6 +59,18 @@ public class AppServiceSpecification() :
         CustomizeProperty<FunctionAppScaleAndConcurrency>("MaximumInstanceCount", p => { p.HideLevel = PropertyHideLevel.HideProperty; });
         CustomizeProperty<FunctionAppScaleAndConcurrency>("InstanceMemoryMB", p => { p.HideLevel = PropertyHideLevel.HideProperty; });
         CustomizeProperty<FunctionAppScaleAndConcurrency>("HttpPerInstanceConcurrency", p => { p.HideLevel = PropertyHideLevel.HideProperty; });
+        CustomizeProperty<WebSiteSlotResource>("Name", p => { p.IsReadOnly = false; }); // make writable for slot name
+        CustomizeProperty<AppServiceEnvironmentResource>("CustomDnsSuffixConfiguration", p => { p.Name = "CustomDnsSuffixConfig"; });
+        CustomizeProperty<AppServiceEnvironmentResource>("NetworkingConfiguration", p => { p.Name = "NetworkingConfig"; });
+        CustomizeResource<AppServiceEnvironmentResource>(r =>
+        {
+            r.GeneratePartialPropertyDefinition = true;
+        });
+        CustomizeProperty<StaticSiteResource>("UserProvidedFunctionApps", p => { p.Name = "UserFunctionApps"; });
+        CustomizeResource<StaticSiteResource>(r =>
+        {
+            r.GeneratePartialPropertyDefinition = true;
+        });
 
         // Naming requirements
         AddNameRequirements<AppCertificateResource>(min: 1, max: 260, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: false);

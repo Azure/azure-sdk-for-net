@@ -104,13 +104,13 @@ namespace Azure.Generator.Providers.Abstraction
         private MethodBodyStatement[] BuildProcessMessage(HttpMessageApi message, HttpRequestOptionsApi options, bool isAsync)
         {
             var userCancellationToken = new ParameterProvider("userCancellationToken", $"", new CSharpType(typeof(CancellationToken)));
-            var statusOption = new ParameterProvider("statusOption", $"", new CSharpType(typeof(ErrorOptions)));
+            var errorOptions = new ParameterProvider("errorOptions", $"", new CSharpType(typeof(ErrorOptions)));
             return
             [
-                new VariableTupleExpression(false, userCancellationToken, statusOption).Assign(options.Invoke("Parse")).Terminate(),
+                new VariableTupleExpression(false, userCancellationToken, errorOptions).Assign(options.Invoke("Parse")).Terminate(),
                 Original.Invoke(isAsync ? nameof(HttpPipeline.SendAsync) : nameof(HttpPipeline.Send), [message, userCancellationToken], isAsync).Terminate(),
                 MethodBodyStatement.EmptyLine,
-                new IfStatement(message.Response().IsError().And(new BinaryOperatorExpression("&", options.NullConditional().Property("ErrorOptions"), options.NoThrow()).NotEqual(options.NoThrow())))
+                new IfStatement(message.Response().IsError().And(new BinaryOperatorExpression("&", errorOptions, options.NoThrow()).NotEqual(options.NoThrow())))
                 {
                     isAsync
                     ? Throw(AzureClientGenerator.Instance.TypeFactory.ClientResponseApi.ToExpression().CreateAsync(message.Response()))

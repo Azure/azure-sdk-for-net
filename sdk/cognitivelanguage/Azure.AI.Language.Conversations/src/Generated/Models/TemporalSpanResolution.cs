@@ -14,20 +14,19 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class TemporalSpanResolution : ResolutionBase
     {
         /// <summary> Initializes a new instance of <see cref="TemporalSpanResolution"/>. </summary>
-        internal TemporalSpanResolution()
+        internal TemporalSpanResolution() : base(ResolutionKind.TemporalSpanResolution)
         {
-            ResolutionKind = ResolutionKind.TemporalSpanResolution;
         }
 
         /// <summary> Initializes a new instance of <see cref="TemporalSpanResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="begin"> represents the resolution of a date and/or time span. An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
         /// <param name="end"> represents the resolution of a date and/or time span. An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
         /// <param name="duration"> An optional duration value formatted based on the ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations). </param>
         /// <param name="modifier"> An optional modifier of a date/time instance. </param>
         /// <param name="timex"> An optional triplet containing the beginning, the end, and the duration all stated as ISO 8601 formatted strings. </param>
-        internal TemporalSpanResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> serializedAdditionalRawData, string begin, string end, string duration, TemporalModifier? modifier, string timex) : base(resolutionKind, serializedAdditionalRawData)
+        internal TemporalSpanResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string begin, string end, string duration, TemporalModifier? modifier, string timex) : base(resolutionKind, additionalBinaryDataProperties)
         {
             Begin = begin;
             End = end;
@@ -38,12 +37,16 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> represents the resolution of a date and/or time span. An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </summary>
         public string Begin { get; }
+
         /// <summary> represents the resolution of a date and/or time span. An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </summary>
         public string End { get; }
+
         /// <summary> An optional duration value formatted based on the ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations). </summary>
         public string Duration { get; }
+
         /// <summary> An optional modifier of a date/time instance. </summary>
         public TemporalModifier? Modifier { get; }
+
         /// <summary> An optional triplet containing the beginning, the end, and the duration all stated as ISO 8601 formatted strings. </summary>
         public string Timex { get; }
     }

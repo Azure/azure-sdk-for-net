@@ -14,7 +14,7 @@ namespace Azure.Core.Tests
         [TestCase(float.MinValue)]
         [TestCase(false)]
         [TestCase('a')]
-        public void DefaultPrimitiveValueType<T>(T value) where T: struct
+        public void DefaultPrimitiveValueType<T>(T value) where T : struct
         {
             Optional<T> optional = default;
             Assert.False(Optional.ToNullable(optional).HasValue);

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Quantum.Models
     public readonly partial struct WorkspaceUsableStatus : IEquatable<WorkspaceUsableStatus>
     {
         private readonly string _value;
+        /// <summary> The workspace is usable and can accept jobs. </summary>
+        private const string YesValue = "Yes";
+        /// <summary> The workspace is not usable and cannot accept jobs. </summary>
+        private const string NoValue = "No";
+        /// <summary> The workspace is partially usable. </summary>
+        private const string PartialValue = "Partial";
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceUsableStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WorkspaceUsableStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string YesValue = "Yes";
-        private const string NoValue = "No";
-        private const string PartialValue = "Partial";
-
-        /// <summary> Yes. </summary>
+        /// <summary> The workspace is usable and can accept jobs. </summary>
         public static WorkspaceUsableStatus Yes { get; } = new WorkspaceUsableStatus(YesValue);
-        /// <summary> No. </summary>
+
+        /// <summary> The workspace is not usable and cannot accept jobs. </summary>
         public static WorkspaceUsableStatus No { get; } = new WorkspaceUsableStatus(NoValue);
-        /// <summary> Partial. </summary>
+
+        /// <summary> The workspace is partially usable. </summary>
         public static WorkspaceUsableStatus Partial { get; } = new WorkspaceUsableStatus(PartialValue);
+
         /// <summary> Determines if two <see cref="WorkspaceUsableStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkspaceUsableStatus left, WorkspaceUsableStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkspaceUsableStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkspaceUsableStatus left, WorkspaceUsableStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkspaceUsableStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkspaceUsableStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkspaceUsableStatus(string value) => new WorkspaceUsableStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkspaceUsableStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkspaceUsableStatus?(string value) => value == null ? null : new WorkspaceUsableStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkspaceUsableStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkspaceUsableStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

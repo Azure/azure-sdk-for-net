@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct DataGuardRoleType : IEquatable<DataGuardRoleType>
     {
         private readonly string _value;
+        /// <summary> Primary role. </summary>
+        private const string PrimaryValue = "Primary";
+        /// <summary> Standby role. </summary>
+        private const string StandbyValue = "Standby";
+        /// <summary> DisabledStandby role. </summary>
+        private const string DisabledStandbyValue = "DisabledStandby";
+        /// <summary> BackupCopy role. </summary>
+        private const string BackupCopyValue = "BackupCopy";
+        /// <summary> SnapshotStandby role. </summary>
+        private const string SnapshotStandbyValue = "SnapshotStandby";
 
         /// <summary> Initializes a new instance of <see cref="DataGuardRoleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataGuardRoleType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PrimaryValue = "Primary";
-        private const string StandbyValue = "Standby";
-        private const string DisabledStandbyValue = "DisabledStandby";
-        private const string BackupCopyValue = "BackupCopy";
-        private const string SnapshotStandbyValue = "SnapshotStandby";
+            _value = value;
+        }
 
         /// <summary> Primary role. </summary>
         public static DataGuardRoleType Primary { get; } = new DataGuardRoleType(PrimaryValue);
+
         /// <summary> Standby role. </summary>
         public static DataGuardRoleType Standby { get; } = new DataGuardRoleType(StandbyValue);
+
         /// <summary> DisabledStandby role. </summary>
         public static DataGuardRoleType DisabledStandby { get; } = new DataGuardRoleType(DisabledStandbyValue);
+
         /// <summary> BackupCopy role. </summary>
         public static DataGuardRoleType BackupCopy { get; } = new DataGuardRoleType(BackupCopyValue);
+
         /// <summary> SnapshotStandby role. </summary>
         public static DataGuardRoleType SnapshotStandby { get; } = new DataGuardRoleType(SnapshotStandbyValue);
+
         /// <summary> Determines if two <see cref="DataGuardRoleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataGuardRoleType left, DataGuardRoleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataGuardRoleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataGuardRoleType left, DataGuardRoleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataGuardRoleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataGuardRoleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataGuardRoleType(string value) => new DataGuardRoleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataGuardRoleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataGuardRoleType?(string value) => value == null ? null : new DataGuardRoleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataGuardRoleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataGuardRoleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

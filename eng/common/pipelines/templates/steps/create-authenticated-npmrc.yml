@@ -3,9 +3,13 @@ parameters:
     type: string
   - name: registryUrl
     type: string
+    default: 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js/npm/registry/'
   - name: CustomCondition
     type: string
     default: succeeded()
+  - name: ServiceConnection
+    type: string
+    default: ''
 
 steps:
 - pwsh: |
@@ -17,12 +21,14 @@ steps:
       New-Item -Path $parentFolder -ItemType Directory | Out-Null
     }
 
-    $content = "registry=${{ parameters.registryUrl }}`n`nalways-auth=true"
+    $content = "registry=${{ parameters.registryUrl }}"
     $content | Out-File '${{ parameters.npmrcPath }}'
   displayName: 'Create .npmrc'
   condition: ${{ parameters.CustomCondition }}
+
 - task: npmAuthenticate@0
   displayName: Authenticate .npmrc
   condition: ${{ parameters.CustomCondition }}
   inputs:
     workingFile: ${{ parameters.npmrcPath }}
+    azureDevOpsServiceConnection: ${{ parameters.ServiceConnection }}

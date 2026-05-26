@@ -16,18 +16,18 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
         public void ManagingExternalIdsScenario()
         {
             #region Snippet:Sample5_ExternalIds_Create_Client
-            #if SNIPPET
+#if SNIPPET
             string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
             EasmClient client = new EasmClient(new System.Uri(endpoint),
                             new DefaultAzureCredential());
-            #else
+#else
             string endpoint = $"https://{TestEnvironment.Region}.easm.defender.microsoft.com/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroupName}/workspaces/{TestEnvironment.WorkspaceName}";
             EasmClient client = new EasmClient(new System.Uri(endpoint),
                 TestEnvironment.Credential);
-            #endif
+#endif
             #endregion
             #region Snippet:Sample5_ExternalIds_Initialize_Mapping
-            #if SNIPPET
+#if SNIPPET
             Dictionary<string, string> asset1 = new Dictionary<string, string> {
                 {"name", "example.com" },
                 {"kind", "host" },
@@ -39,10 +39,10 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             List<Dictionary<string, string>> mapping = new List<Dictionary<string, string>> {
                 asset1, asset2
             };
-            #else
+#else
             string mappingJson = TestEnvironment.Mapping;
             List<Dictionary<string, string>> mapping = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(mappingJson);
-            #endif
+#endif
             #endregion
 
             #region Snippet:Sample5_ExternalIds_Update_Assets

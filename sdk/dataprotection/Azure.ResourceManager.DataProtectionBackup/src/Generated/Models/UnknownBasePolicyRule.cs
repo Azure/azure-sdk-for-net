@@ -10,20 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Unknown version of BasePolicyRule. </summary>
     internal partial class UnknownBasePolicyRule : DataProtectionBasePolicyRule
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBasePolicyRule"/>. </summary>
         /// <param name="name"></param>
         /// <param name="objectType"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownBasePolicyRule(string name, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, objectType, serializedAdditionalRawData)
-        {
-            ObjectType = objectType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownBasePolicyRule"/> for deserialization. </summary>
-        internal UnknownBasePolicyRule()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownBasePolicyRule(string name, string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, objectType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

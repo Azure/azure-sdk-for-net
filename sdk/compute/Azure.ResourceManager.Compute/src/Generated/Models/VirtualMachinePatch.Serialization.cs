@@ -195,6 +195,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
+            if (Optional.IsDefined(ResiliencyProfile))
+            {
+                writer.WritePropertyName("resiliencyProfile"u8);
+                writer.WriteObjectValue(ResiliencyProfile, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -249,6 +254,7 @@ namespace Azure.ResourceManager.Compute.Models
             CapacityReservationProfile capacityReservation = default;
             ApplicationProfile applicationProfile = default;
             DateTimeOffset? timeCreated = default;
+            ResiliencyProfile resiliencyProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -531,6 +537,15 @@ namespace Azure.ResourceManager.Compute.Models
                             timeCreated = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("resiliencyProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resiliencyProfile = ResiliencyProfile.DeserializeResiliencyProfile(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -572,7 +587,8 @@ namespace Azure.ResourceManager.Compute.Models
                 userData,
                 capacityReservation,
                 applicationProfile,
-                timeCreated);
+                timeCreated,
+                resiliencyProfile);
         }
 
         BinaryData IPersistableModel<VirtualMachinePatch>.Write(ModelReaderWriterOptions options)

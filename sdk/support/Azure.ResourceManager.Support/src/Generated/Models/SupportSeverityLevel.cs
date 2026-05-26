@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Support.Models
     public readonly partial struct SupportSeverityLevel : IEquatable<SupportSeverityLevel>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SupportSeverityLevel"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SupportSeverityLevel(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string MinimalValue = "minimal";
         private const string ModerateValue = "moderate";
         private const string CriticalValue = "critical";
         private const string HighestcriticalimpactValue = "highestcriticalimpact";
 
-        /// <summary> minimal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportSeverityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SupportSeverityLevel(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Minimal. </summary>
         public static SupportSeverityLevel Minimal { get; } = new SupportSeverityLevel(MinimalValue);
-        /// <summary> moderate. </summary>
+
+        /// <summary> Gets the Moderate. </summary>
         public static SupportSeverityLevel Moderate { get; } = new SupportSeverityLevel(ModerateValue);
-        /// <summary> critical. </summary>
+
+        /// <summary> Gets the Critical. </summary>
         public static SupportSeverityLevel Critical { get; } = new SupportSeverityLevel(CriticalValue);
-        /// <summary> highestcriticalimpact. </summary>
+
+        /// <summary> Gets the Highestcriticalimpact. </summary>
         public static SupportSeverityLevel Highestcriticalimpact { get; } = new SupportSeverityLevel(HighestcriticalimpactValue);
+
         /// <summary> Determines if two <see cref="SupportSeverityLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SupportSeverityLevel left, SupportSeverityLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SupportSeverityLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SupportSeverityLevel left, SupportSeverityLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SupportSeverityLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SupportSeverityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SupportSeverityLevel(string value) => new SupportSeverityLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SupportSeverityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SupportSeverityLevel?(string value) => value == null ? null : new SupportSeverityLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SupportSeverityLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SupportSeverityLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

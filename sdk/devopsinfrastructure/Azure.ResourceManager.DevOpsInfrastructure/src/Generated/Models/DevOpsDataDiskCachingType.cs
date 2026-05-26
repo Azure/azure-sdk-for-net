@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public readonly partial struct DevOpsDataDiskCachingType : IEquatable<DevOpsDataDiskCachingType>
     {
         private readonly string _value;
+        /// <summary> Don't use host caching. </summary>
+        private const string NoneValue = "None";
+        /// <summary> For workloads that only do read operations. </summary>
+        private const string ReadOnlyValue = "ReadOnly";
+        /// <summary> For workloads that do a balance of read and write operations. </summary>
+        private const string ReadWriteValue = "ReadWrite";
 
         /// <summary> Initializes a new instance of <see cref="DevOpsDataDiskCachingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevOpsDataDiskCachingType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string ReadOnlyValue = "ReadOnly";
-        private const string ReadWriteValue = "ReadWrite";
+            _value = value;
+        }
 
         /// <summary> Don't use host caching. </summary>
         public static DevOpsDataDiskCachingType None { get; } = new DevOpsDataDiskCachingType(NoneValue);
+
         /// <summary> For workloads that only do read operations. </summary>
         public static DevOpsDataDiskCachingType ReadOnly { get; } = new DevOpsDataDiskCachingType(ReadOnlyValue);
+
         /// <summary> For workloads that do a balance of read and write operations. </summary>
         public static DevOpsDataDiskCachingType ReadWrite { get; } = new DevOpsDataDiskCachingType(ReadWriteValue);
+
         /// <summary> Determines if two <see cref="DevOpsDataDiskCachingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevOpsDataDiskCachingType left, DevOpsDataDiskCachingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevOpsDataDiskCachingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevOpsDataDiskCachingType left, DevOpsDataDiskCachingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevOpsDataDiskCachingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevOpsDataDiskCachingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevOpsDataDiskCachingType(string value) => new DevOpsDataDiskCachingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevOpsDataDiskCachingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevOpsDataDiskCachingType?(string value) => value == null ? null : new DevOpsDataDiskCachingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevOpsDataDiskCachingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevOpsDataDiskCachingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

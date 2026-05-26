@@ -1,19 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.Inference.Telemetry;
-using Azure.AI.Inference.Tests.Utilities;
-using Azure.Core.Pipeline;
-using Azure.Core;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using static Azure.AI.Inference.Tests.Utilities.TelemetryUtils;
 using System.Text.Json;
+using System.Threading.Tasks;
+using Azure.AI.Inference.Telemetry;
+using Azure.AI.Inference.Tests.Utilities;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
+using static Azure.AI.Inference.Tests.Utilities.TelemetryUtils;
 
 namespace Azure.AI.Inference.Tests
 {
@@ -165,11 +165,14 @@ namespace Azure.AI.Inference.Tests
             {
                 switch (testType)
                 {
-                    case TestType.Basic: await client.CompleteAsync(requestOptions);
+                    case TestType.Basic:
+                        await client.CompleteAsync(requestOptions);
                         break;
-                    case TestType.Streaming: await client.CompleteStreamingAsync(_requestStreamingOptions);
+                    case TestType.Streaming:
+                        await client.CompleteStreamingAsync(_requestStreamingOptions);
                         break;
-                };
+                }
+                ;
                 Assert.Fail("The exception was not thrown.");
             }
             catch (RequestFailedException ex)
@@ -290,7 +293,8 @@ namespace Azure.AI.Inference.Tests
                         expectedResponse.FinishReasons = response.Value.Choices.Select(c => c.FinishReason.ToString()).ToArray();
                         expectedResponse.PromptTokens = response.Value.Usage?.PromptTokens;
                         expectedResponse.CompletionTokens = response.Value.Usage?.CompletionTokens;
-                        expectedResponse.Choices = response.Value.Choices.Select(c => new {
+                        expectedResponse.Choices = response.Value.Choices.Select(c => new
+                        {
                             finish_reason = c.FinishReason?.ToString(),
                             index = c.Index,
                             message = new { content = c.Message.Content, tool_calls = GetToolCalls(c.Message.ToolCalls) }
@@ -444,28 +448,28 @@ namespace Azure.AI.Inference.Tests
         }
 
         private FunctionDefinition GetFutureTemperatureFunction() => new FunctionDefinition("get_future_temperature")
-            {
-                Description = "requests the anticipated future temperature at a provided location to help inform "
+        {
+            Description = "requests the anticipated future temperature at a provided location to help inform "
                     + "advice about topics like choice of attire",
-                Parameters = BinaryData.FromObjectAsJson(new
+            Parameters = BinaryData.FromObjectAsJson(new
+            {
+                Type = "object",
+                Properties = new
                 {
-                    Type = "object",
-                    Properties = new
+                    LocationName = new
                     {
-                        LocationName = new
-                        {
-                            Type = "string",
-                            Description = "the name or brief description of a location for weather information"
-                        },
-                        DaysInAdvance = new
-                        {
-                            Type = "integer",
-                            Description = "the number of days in the future for which to retrieve weather information"
-                        }
+                        Type = "string",
+                        Description = "the name or brief description of a location for weather information"
+                    },
+                    DaysInAdvance = new
+                    {
+                        Type = "integer",
+                        Description = "the number of days in the future for which to retrieve weather information"
                     }
-                },
+                }
+            },
                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })
-            };
+        };
 
         private class AddAoaiAuthHeaderPolicy : HttpPipelinePolicy
         {

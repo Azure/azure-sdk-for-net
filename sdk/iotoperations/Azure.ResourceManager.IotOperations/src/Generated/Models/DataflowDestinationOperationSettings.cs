@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> Dataflow Destination Operation properties. </summary>
     public partial class DataflowDestinationOperationSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataflowDestinationOperationSettings"/>. </summary>
         /// <param name="endpointRef"> Reference to the Endpoint CR. Can be of Broker, Kafka, Fabric, ADLS, ADX type. </param>
@@ -56,27 +28,29 @@ namespace Azure.ResourceManager.IotOperations.Models
 
             EndpointRef = endpointRef;
             DataDestination = dataDestination;
+            Headers = new ChangeTrackingList<DataflowDestinationHeaderAction>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataflowDestinationOperationSettings"/>. </summary>
         /// <param name="endpointRef"> Reference to the Endpoint CR. Can be of Broker, Kafka, Fabric, ADLS, ADX type. </param>
         /// <param name="dataDestination"> Destination location, can be a topic or table name. Supports dynamic values with $topic, $systemProperties, $userProperties, $payload, $context, and $subscription. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowDestinationOperationSettings(string endpointRef, string dataDestination, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="headers"> Headers for the output data. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataflowDestinationOperationSettings(string endpointRef, string dataDestination, IList<DataflowDestinationHeaderAction> headers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointRef = endpointRef;
             DataDestination = dataDestination;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataflowDestinationOperationSettings"/> for deserialization. </summary>
-        internal DataflowDestinationOperationSettings()
-        {
+            Headers = headers;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Reference to the Endpoint CR. Can be of Broker, Kafka, Fabric, ADLS, ADX type. </summary>
         public string EndpointRef { get; set; }
+
         /// <summary> Destination location, can be a topic or table name. Supports dynamic values with $topic, $systemProperties, $userProperties, $payload, $context, and $subscription. </summary>
         public string DataDestination { get; set; }
+
+        /// <summary> Headers for the output data. </summary>
+        public IList<DataflowDestinationHeaderAction> Headers { get; }
     }
 }

@@ -38,7 +38,23 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
 
         private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Endpoint, "2024-10-22-preview");
 
-        /// <summary> List OrganizationResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List OrganizationResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Pinecone.VectorDb/organizations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-22-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PineconeVectorDBOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PineconeVectorDBOrganizationResource> GetPineconeVectorDBOrganizationsAsync(CancellationToken cancellationToken = default)
@@ -47,10 +63,26 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PineconeVectorDBOrganizationData, PineconeVectorDBOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PineconeVectorDBOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<PineconeVectorDBOrganizationData, PineconeVectorDBOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePineconeVectorDBSubscriptionResource.GetPineconeVectorDBOrganizations"), data => new PineconeVectorDBOrganizationResource(Client, data));
         }
 
-        /// <summary> List OrganizationResource resources by subscription ID. </summary>
+        /// <summary>
+        /// List OrganizationResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Pinecone.VectorDb/organizations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-22-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PineconeVectorDBOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PineconeVectorDBOrganizationResource> GetPineconeVectorDBOrganizations(CancellationToken cancellationToken = default)
@@ -59,7 +91,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PineconeVectorDBOrganizationData, PineconeVectorDBOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PineconeVectorDBOrganizationResource(Client, data));
+            return new PageableWrapper<PineconeVectorDBOrganizationData, PineconeVectorDBOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePineconeVectorDBSubscriptionResource.GetPineconeVectorDBOrganizations"), data => new PineconeVectorDBOrganizationResource(Client, data));
         }
     }
 }

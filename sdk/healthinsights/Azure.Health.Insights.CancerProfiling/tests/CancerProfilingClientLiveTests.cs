@@ -1,19 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading.Tasks;
-using NUnit.Framework;
-using System.IO;
-using System.Reflection;
-using Azure.Core;
-using System.Net;
-using Azure.Core.TestFramework;
-using Azure.Health.Insights.CancerProfiling.Tests.Infrastructure;
-using Azure.Health.Insights.CancerProfiling;
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Azure;
+using System.IO;
+using System.Net;
+using System.Reflection;
 using System.Text.Json;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Health.Insights.CancerProfiling;
+using Azure.Health.Insights.CancerProfiling.Tests.Infrastructure;
+using Microsoft.Extensions.Azure;
+using NUnit.Framework;
 
 namespace Azure.Health.Insights.CancerProfiling.Tests
 {

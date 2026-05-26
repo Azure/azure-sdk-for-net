@@ -6,19 +6,21 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 
 namespace Azure.Developer.LoadTesting
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ArtifactsContainerInfo))]
     [ModelReaderWriterBuildable(typeof(AutoStopCriteria))]
-    [ModelReaderWriterBuildable(typeof(CloneTestRequest1))]
+    [ModelReaderWriterBuildable(typeof(CloneTestRequest))]
     [ModelReaderWriterBuildable(typeof(DailyRecurrence))]
     [ModelReaderWriterBuildable(typeof(DimensionFilter))]
     [ModelReaderWriterBuildable(typeof(DimensionValue))]
+    [ModelReaderWriterBuildable(typeof(DimensionValueList))]
     [ModelReaderWriterBuildable(typeof(ErrorDetails))]
     [ModelReaderWriterBuildable(typeof(FunctionFlexConsumptionResourceConfiguration))]
     [ModelReaderWriterBuildable(typeof(FunctionFlexConsumptionTargetResourceConfigurations))]
@@ -34,6 +36,7 @@ namespace Azure.Developer.LoadTesting
     [ModelReaderWriterBuildable(typeof(MetricDefinitions))]
     [ModelReaderWriterBuildable(typeof(MetricNamespace))]
     [ModelReaderWriterBuildable(typeof(MetricNamespaces))]
+    [ModelReaderWriterBuildable(typeof(Metrics))]
     [ModelReaderWriterBuildable(typeof(MetricsFilters))]
     [ModelReaderWriterBuildable(typeof(MetricValue))]
     [ModelReaderWriterBuildable(typeof(MonthlyRecurrenceByDates))]
@@ -42,6 +45,13 @@ namespace Azure.Developer.LoadTesting
     [ModelReaderWriterBuildable(typeof(NotificationRule))]
     [ModelReaderWriterBuildable(typeof(OperationStatus))]
     [ModelReaderWriterBuildable(typeof(OptionalLoadTestConfiguration))]
+    [ModelReaderWriterBuildable(typeof(PagedNotificationRule))]
+    [ModelReaderWriterBuildable(typeof(PagedTest))]
+    [ModelReaderWriterBuildable(typeof(PagedTestFileInfo))]
+    [ModelReaderWriterBuildable(typeof(PagedTestProfile))]
+    [ModelReaderWriterBuildable(typeof(PagedTestProfileRun))]
+    [ModelReaderWriterBuildable(typeof(PagedTestRun))]
+    [ModelReaderWriterBuildable(typeof(PagedTrigger))]
     [ModelReaderWriterBuildable(typeof(PassFailCriteria))]
     [ModelReaderWriterBuildable(typeof(PassFailMetric))]
     [ModelReaderWriterBuildable(typeof(PassFailServerMetric))]
@@ -58,6 +68,7 @@ namespace Azure.Developer.LoadTesting
     [ModelReaderWriterBuildable(typeof(TestCertificate))]
     [ModelReaderWriterBuildable(typeof(TestFileInfo))]
     [ModelReaderWriterBuildable(typeof(TestInputArtifacts))]
+    [ModelReaderWriterBuildable(typeof(TestPreferences))]
     [ModelReaderWriterBuildable(typeof(TestProfile))]
     [ModelReaderWriterBuildable(typeof(TestProfileRun))]
     [ModelReaderWriterBuildable(typeof(TestProfileRunRecommendation))]

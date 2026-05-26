@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!--
     Force project references to Azure clients.  This is necessary because the stress project
     uses a project reference to the Event Hubs core library and the processor library.  The

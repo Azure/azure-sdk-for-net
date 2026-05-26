@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void CanCreateMapsGeofenceEventProperties()
         {
-            var model = EventGridModelFactory.MapsGeofenceEventProperties(new[]{"geometry"}, Array.Empty<MapsGeofenceGeometry>(), Array.Empty<string>(), true);
+            var model = EventGridModelFactory.MapsGeofenceEventProperties(new[] { "geometry" }, Array.Empty<MapsGeofenceGeometry>(), Array.Empty<string>(), true);
 
             CollectionAssert.Contains(model.ExpiredGeofenceGeometryId, "geometry");
             Assert.True(model.IsEventPublished);
@@ -152,13 +152,13 @@ namespace Azure.Messaging.EventGrid.Tests
                 "body",
                 new Dictionary<string, string>());
 
-                Assert.AreEqual("transaction", model.TransactionId);
-                Assert.AreEqual("thread", model.ThreadId);
-                Assert.AreEqual("message", model.MessageId);
-                Assert.AreEqual("sender", model.SenderDisplayName);
-                Assert.AreEqual("type", model.Type);
-                Assert.AreEqual(1, model.Version);
-                Assert.AreEqual("body", model.MessageBody);
+            Assert.AreEqual("transaction", model.TransactionId);
+            Assert.AreEqual("thread", model.ThreadId);
+            Assert.AreEqual("message", model.MessageId);
+            Assert.AreEqual("sender", model.SenderDisplayName);
+            Assert.AreEqual("type", model.Type);
+            Assert.AreEqual(1, model.Version);
+            Assert.AreEqual("body", model.MessageBody);
         }
 
         [Test]
@@ -261,18 +261,18 @@ namespace Azure.Messaging.EventGrid.Tests
                 "state",
                 true);
 
-                Assert.AreEqual("type", model.TrackType);
-                Assert.AreEqual("name", model.TrackName);
-                Assert.AreEqual(5, model.Bitrate);
-                Assert.AreEqual(10, model.IncomingBitrate);
-                Assert.AreEqual("stamp", model.LastTimestamp);
-                Assert.AreEqual("scale", model.Timescale);
-                Assert.AreEqual(1, model.OverlapCount);
-                Assert.AreEqual(1, model.DiscontinuityCount);
-                Assert.AreEqual(1, model.NonincreasingCount);
-                Assert.IsTrue(model.UnexpectedBitrate);
-                Assert.AreEqual("state", model.State);
-                Assert.IsTrue(model.Healthy);
+            Assert.AreEqual("type", model.TrackType);
+            Assert.AreEqual("name", model.TrackName);
+            Assert.AreEqual(5, model.Bitrate);
+            Assert.AreEqual(10, model.IncomingBitrate);
+            Assert.AreEqual("stamp", model.LastTimestamp);
+            Assert.AreEqual("scale", model.Timescale);
+            Assert.AreEqual(1, model.OverlapCount);
+            Assert.AreEqual(1, model.DiscontinuityCount);
+            Assert.AreEqual(1, model.NonincreasingCount);
+            Assert.IsTrue(model.UnexpectedBitrate);
+            Assert.AreEqual("state", model.State);
+            Assert.IsTrue(model.Healthy);
         }
 
         [Test]

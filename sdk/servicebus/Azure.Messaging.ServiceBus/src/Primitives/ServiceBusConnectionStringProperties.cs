@@ -42,7 +42,7 @@ namespace Azure.Messaging.ServiceBus
         private const string DevelopmentEmulatorToken = "UseDevelopmentEmulator";
 
         /// <summary>The formatted protocol used by an Service Bus endpoint. </summary>
-        private static readonly string ServiceBusEndpointScheme = $"{ ServiceBusEndpointSchemeName }{ Uri.SchemeDelimiter }";
+        private static readonly string ServiceBusEndpointScheme = $"{ServiceBusEndpointSchemeName}{Uri.SchemeDelimiter}";
 
         /// <summary>
         ///   The fully qualified Service Bus namespace that the consumer is associated with.  This is likely

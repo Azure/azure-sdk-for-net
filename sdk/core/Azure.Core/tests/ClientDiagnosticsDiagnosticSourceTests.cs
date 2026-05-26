@@ -160,7 +160,7 @@ namespace Azure.Core.Tests
         public void AddLinkCallsPassesLinksAsPartOfStartPayload()
         {
             using var testListener = new TestDiagnosticListener("Azure.Clients");
-            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests", true, false, true);
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false, true);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
@@ -246,7 +246,7 @@ namespace Azure.Core.Tests
         public void FailedStopsActivityAndWritesExceptionEvent()
         {
             using var testListener = new TestDiagnosticListener("Azure.Clients");
-            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests", true, false, true);
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false, true);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
@@ -281,7 +281,7 @@ namespace Azure.Core.Tests
         [Test]
         public void NoOpsWhenDisabled()
         {
-            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests", false, false, true);
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", false, false, true);
             DiagnosticScope scope = clientDiagnostics.CreateScope("");
 
             Assert.IsFalse(scope.IsEnabled);
@@ -303,9 +303,9 @@ namespace Azure.Core.Tests
         {
             using var testListener = new TestDiagnosticListener(l => l.Name.StartsWith("Azure.Clients."));
 
-            _ = new DiagnosticScopeFactory("Azure.Clients.1",  "Microsoft.Azure.Core.Cool.Tests", true, false, true);
-            _ = new DiagnosticScopeFactory("Azure.Clients.1",  "Microsoft.Azure.Core.Cool.Tests", true, false, true);
-            _ = new DiagnosticScopeFactory("Azure.Clients.2",  "Microsoft.Azure.Core.Cool.Tests", true, false, true);
+            _ = new DiagnosticScopeFactory("Azure.Clients.1", "Microsoft.Azure.Core.Cool.Tests", true, false, true);
+            _ = new DiagnosticScopeFactory("Azure.Clients.1", "Microsoft.Azure.Core.Cool.Tests", true, false, true);
+            _ = new DiagnosticScopeFactory("Azure.Clients.2", "Microsoft.Azure.Core.Cool.Tests", true, false, true);
 
             Assert.AreEqual(2, testListener.Sources.Count);
         }

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Dns
             TryGetApiVersion(DnsNaptrRecordResource.ResourceType, out string dnsNaptrRecordRecordSetsApiVersion);
             _dnsNaptrRecordRecordSetsRestClient = new DnsNaptrRecordRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dnsNaptrRecordRecordSetsApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public readonly partial struct GuestAgentProvisioningAction : IEquatable<GuestAgentProvisioningAction>
     {
         private readonly string _value;
+        /// <summary> Install guest agent. </summary>
+        private const string InstallValue = "install";
+        /// <summary> Uninstall guest agent. </summary>
+        private const string UninstallValue = "uninstall";
+        /// <summary> Repair guest agent. </summary>
+        private const string RepairValue = "repair";
 
         /// <summary> Initializes a new instance of <see cref="GuestAgentProvisioningAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GuestAgentProvisioningAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InstallValue = "install";
-        private const string UninstallValue = "uninstall";
-        private const string RepairValue = "repair";
+            _value = value;
+        }
 
         /// <summary> Install guest agent. </summary>
         public static GuestAgentProvisioningAction Install { get; } = new GuestAgentProvisioningAction(InstallValue);
+
         /// <summary> Uninstall guest agent. </summary>
         public static GuestAgentProvisioningAction Uninstall { get; } = new GuestAgentProvisioningAction(UninstallValue);
+
         /// <summary> Repair guest agent. </summary>
         public static GuestAgentProvisioningAction Repair { get; } = new GuestAgentProvisioningAction(RepairValue);
+
         /// <summary> Determines if two <see cref="GuestAgentProvisioningAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GuestAgentProvisioningAction left, GuestAgentProvisioningAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GuestAgentProvisioningAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GuestAgentProvisioningAction left, GuestAgentProvisioningAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GuestAgentProvisioningAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GuestAgentProvisioningAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GuestAgentProvisioningAction(string value) => new GuestAgentProvisioningAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GuestAgentProvisioningAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GuestAgentProvisioningAction?(string value) => value == null ? null : new GuestAgentProvisioningAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GuestAgentProvisioningAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GuestAgentProvisioningAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

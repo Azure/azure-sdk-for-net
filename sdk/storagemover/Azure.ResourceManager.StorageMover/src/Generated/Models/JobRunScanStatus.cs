@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.StorageMover.Models
     public readonly partial struct JobRunScanStatus : IEquatable<JobRunScanStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="JobRunScanStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public JobRunScanStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotStartedValue = "NotStarted";
         private const string ScanningValue = "Scanning";
         private const string CompletedValue = "Completed";
 
-        /// <summary> NotStarted. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobRunScanStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public JobRunScanStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotStarted. </summary>
         public static JobRunScanStatus NotStarted { get; } = new JobRunScanStatus(NotStartedValue);
-        /// <summary> Scanning. </summary>
+
+        /// <summary> Gets the Scanning. </summary>
         public static JobRunScanStatus Scanning { get; } = new JobRunScanStatus(ScanningValue);
-        /// <summary> Completed. </summary>
+
+        /// <summary> Gets the Completed. </summary>
         public static JobRunScanStatus Completed { get; } = new JobRunScanStatus(CompletedValue);
+
         /// <summary> Determines if two <see cref="JobRunScanStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JobRunScanStatus left, JobRunScanStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="JobRunScanStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JobRunScanStatus left, JobRunScanStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="JobRunScanStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="JobRunScanStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator JobRunScanStatus(string value) => new JobRunScanStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="JobRunScanStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator JobRunScanStatus?(string value) => value == null ? null : new JobRunScanStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is JobRunScanStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(JobRunScanStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

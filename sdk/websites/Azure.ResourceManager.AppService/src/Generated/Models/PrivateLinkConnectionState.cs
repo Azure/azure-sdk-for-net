@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The state of a private link connection. </summary>
+    /// <summary>
+    /// The state of a private link connection
+    /// Serialized Name: PrivateLinkConnectionState
+    /// </summary>
     public partial class PrivateLinkConnectionState
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkConnectionState"/>. </summary>
-        /// <param name="status"> Status of a private link connection. </param>
-        /// <param name="description"> Description of a private link connection. </param>
-        /// <param name="actionsRequired"> ActionsRequired for a private link connection. </param>
+        /// <param name="status">
+        /// Status of a private link connection
+        /// Serialized Name: PrivateLinkConnectionState.status
+        /// </param>
+        /// <param name="description">
+        /// Description of a private link connection
+        /// Serialized Name: PrivateLinkConnectionState.description
+        /// </param>
+        /// <param name="actionsRequired">
+        /// ActionsRequired for a private link connection
+        /// Serialized Name: PrivateLinkConnectionState.actionsRequired
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PrivateLinkConnectionState(string status, string description, string actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Status of a private link connection. </summary>
+        /// <summary>
+        /// Status of a private link connection
+        /// Serialized Name: PrivateLinkConnectionState.status
+        /// </summary>
         [WirePath("status")]
         public string Status { get; set; }
-        /// <summary> Description of a private link connection. </summary>
+        /// <summary>
+        /// Description of a private link connection
+        /// Serialized Name: PrivateLinkConnectionState.description
+        /// </summary>
         [WirePath("description")]
         public string Description { get; set; }
-        /// <summary> ActionsRequired for a private link connection. </summary>
+        /// <summary>
+        /// ActionsRequired for a private link connection
+        /// Serialized Name: PrivateLinkConnectionState.actionsRequired
+        /// </summary>
         [WirePath("actionsRequired")]
         public string ActionsRequired { get; set; }
     }

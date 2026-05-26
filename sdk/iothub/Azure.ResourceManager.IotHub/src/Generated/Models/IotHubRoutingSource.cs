@@ -27,7 +27,9 @@ namespace Azure.ResourceManager.IotHub.Models
         private const string TwinChangeEventsValue = "TwinChangeEvents";
         private const string DeviceLifecycleEventsValue = "DeviceLifecycleEvents";
         private const string DeviceJobLifecycleEventsValue = "DeviceJobLifecycleEvents";
+        private const string DigitalTwinChangeEventsValue = "DigitalTwinChangeEvents";
         private const string DeviceConnectionStateEventsValue = "DeviceConnectionStateEvents";
+        private const string MqttBrokerMessagesValue = "MqttBrokerMessages";
 
         /// <summary> Invalid. </summary>
         public static IotHubRoutingSource Invalid { get; } = new IotHubRoutingSource(InvalidValue);
@@ -39,8 +41,12 @@ namespace Azure.ResourceManager.IotHub.Models
         public static IotHubRoutingSource DeviceLifecycleEvents { get; } = new IotHubRoutingSource(DeviceLifecycleEventsValue);
         /// <summary> DeviceJobLifecycleEvents. </summary>
         public static IotHubRoutingSource DeviceJobLifecycleEvents { get; } = new IotHubRoutingSource(DeviceJobLifecycleEventsValue);
+        /// <summary> DigitalTwinChangeEvents. </summary>
+        public static IotHubRoutingSource DigitalTwinChangeEvents { get; } = new IotHubRoutingSource(DigitalTwinChangeEventsValue);
         /// <summary> DeviceConnectionStateEvents. </summary>
         public static IotHubRoutingSource DeviceConnectionStateEvents { get; } = new IotHubRoutingSource(DeviceConnectionStateEventsValue);
+        /// <summary> MqttBrokerMessages. </summary>
+        public static IotHubRoutingSource MqttBrokerMessages { get; } = new IotHubRoutingSource(MqttBrokerMessagesValue);
         /// <summary> Determines if two <see cref="IotHubRoutingSource"/> values are the same. </summary>
         public static bool operator ==(IotHubRoutingSource left, IotHubRoutingSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubRoutingSource"/> values are not the same. </summary>

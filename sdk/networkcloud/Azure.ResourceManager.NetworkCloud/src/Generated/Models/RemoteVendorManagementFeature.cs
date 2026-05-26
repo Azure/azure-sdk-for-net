@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct RemoteVendorManagementFeature : IEquatable<RemoteVendorManagementFeature>
     {
         private readonly string _value;
+        /// <summary> Remote vendor management is supported. </summary>
+        private const string SupportedValue = "Supported";
+        /// <summary> Remote vendor management is unsupported. </summary>
+        private const string UnsupportedValue = "Unsupported";
 
         /// <summary> Initializes a new instance of <see cref="RemoteVendorManagementFeature"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RemoteVendorManagementFeature(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SupportedValue = "Supported";
-        private const string UnsupportedValue = "Unsupported";
-
-        /// <summary> Supported. </summary>
+        /// <summary> Remote vendor management is supported. </summary>
         public static RemoteVendorManagementFeature Supported { get; } = new RemoteVendorManagementFeature(SupportedValue);
-        /// <summary> Unsupported. </summary>
+
+        /// <summary> Remote vendor management is unsupported. </summary>
         public static RemoteVendorManagementFeature Unsupported { get; } = new RemoteVendorManagementFeature(UnsupportedValue);
+
         /// <summary> Determines if two <see cref="RemoteVendorManagementFeature"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RemoteVendorManagementFeature left, RemoteVendorManagementFeature right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RemoteVendorManagementFeature"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RemoteVendorManagementFeature left, RemoteVendorManagementFeature right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RemoteVendorManagementFeature"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RemoteVendorManagementFeature"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RemoteVendorManagementFeature(string value) => new RemoteVendorManagementFeature(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RemoteVendorManagementFeature"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RemoteVendorManagementFeature?(string value) => value == null ? null : new RemoteVendorManagementFeature(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RemoteVendorManagementFeature other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RemoteVendorManagementFeature other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

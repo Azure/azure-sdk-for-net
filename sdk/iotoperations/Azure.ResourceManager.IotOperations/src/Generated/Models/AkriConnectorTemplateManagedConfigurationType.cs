@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.IotOperations.Models
     internal readonly partial struct AkriConnectorTemplateManagedConfigurationType : IEquatable<AkriConnectorTemplateManagedConfigurationType>
     {
         private readonly string _value;
+        /// <summary> Image Configuration Type. </summary>
+        private const string ImageConfigurationValue = "ImageConfiguration";
+        /// <summary> StatefulSet Configuration Type. </summary>
+        private const string StatefulSetConfigurationValue = "StatefulSetConfiguration";
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateManagedConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AkriConnectorTemplateManagedConfigurationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ImageConfigurationValue = "ImageConfiguration";
-        private const string StatefulSetConfigurationValue = "StatefulSetConfiguration";
+            _value = value;
+        }
 
         /// <summary> Image Configuration Type. </summary>
         public static AkriConnectorTemplateManagedConfigurationType ImageConfiguration { get; } = new AkriConnectorTemplateManagedConfigurationType(ImageConfigurationValue);
+
         /// <summary> StatefulSet Configuration Type. </summary>
         public static AkriConnectorTemplateManagedConfigurationType StatefulSetConfiguration { get; } = new AkriConnectorTemplateManagedConfigurationType(StatefulSetConfigurationValue);
+
         /// <summary> Determines if two <see cref="AkriConnectorTemplateManagedConfigurationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AkriConnectorTemplateManagedConfigurationType left, AkriConnectorTemplateManagedConfigurationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AkriConnectorTemplateManagedConfigurationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AkriConnectorTemplateManagedConfigurationType left, AkriConnectorTemplateManagedConfigurationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AkriConnectorTemplateManagedConfigurationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AkriConnectorTemplateManagedConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AkriConnectorTemplateManagedConfigurationType(string value) => new AkriConnectorTemplateManagedConfigurationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AkriConnectorTemplateManagedConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AkriConnectorTemplateManagedConfigurationType?(string value) => value == null ? null : new AkriConnectorTemplateManagedConfigurationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AkriConnectorTemplateManagedConfigurationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AkriConnectorTemplateManagedConfigurationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

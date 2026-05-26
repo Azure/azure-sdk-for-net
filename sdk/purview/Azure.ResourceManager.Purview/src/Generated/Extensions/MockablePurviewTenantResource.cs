@@ -8,53 +8,52 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Purview;
 using Azure.ResourceManager.Purview.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Purview.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockablePurviewTenantResource : ArmResource
     {
         private ClientDiagnostics _defaultAccountsClientDiagnostics;
-        private DefaultAccountsRestOperations _defaultAccountsRestClient;
+        private DefaultAccounts _defaultAccountsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePurviewTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockablePurviewTenantResource for mocking. </summary>
         protected MockablePurviewTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePurviewTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePurviewTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePurviewTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics DefaultAccountsClientDiagnostics => _defaultAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DefaultAccountsRestOperations DefaultAccountsRestClient => _defaultAccountsRestClient ??= new DefaultAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DefaultAccountsClientDiagnostics => _defaultAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private DefaultAccounts DefaultAccountsRestClient => _defaultAccountsRestClient ??= new DefaultAccounts(DefaultAccountsClientDiagnostics, Pipeline, Endpoint, "2024-04-01-preview");
 
         /// <summary>
         /// Get the default account for the scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Purview/getDefaultAccount</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Purview/getDefaultAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefaultAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefaultAccountsOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,13 +61,23 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
         {
-            using var scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.GetDefaultAccount");
+            using DiagnosticScope scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.GetDefaultAccount");
             scope0.Start();
             try
             {
-                var response = await DefaultAccountsRestClient.GetAsync(scopeTenantId, scopeType, scope, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DefaultAccountsRestClient.CreateGetDefaultAccountRequest(scopeTenantId, scopeType.ToString(), scope, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DefaultPurviewAccountPayload> response = Response.FromValue(DefaultPurviewAccountPayload.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -82,16 +91,16 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// Get the default account for the scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Purview/getDefaultAccount</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Purview/getDefaultAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefaultAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefaultAccountsOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,13 +108,23 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DefaultPurviewAccountPayload> GetDefaultAccount(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        public virtual Response<DefaultPurviewAccountPayload> GetDefaultAccount(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
         {
-            using var scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.GetDefaultAccount");
+            using DiagnosticScope scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.GetDefaultAccount");
             scope0.Start();
             try
             {
-                var response = DefaultAccountsRestClient.Get(scopeTenantId, scopeType, scope, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DefaultAccountsRestClient.CreateGetDefaultAccountRequest(scopeTenantId, scopeType.ToString(), scope, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DefaultPurviewAccountPayload> response = Response.FromValue(DefaultPurviewAccountPayload.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -119,16 +138,16 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// Removes the default account from the scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Purview/removeDefaultAccount</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Purview/removeDefaultAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefaultAccounts_Remove</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefaultAccountsOperationGroup_Remove. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -136,13 +155,18 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RemoveDefaultAccountAsync(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RemoveDefaultAccountAsync(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
         {
-            using var scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.RemoveDefaultAccount");
+            using DiagnosticScope scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.RemoveDefaultAccount");
             scope0.Start();
             try
             {
-                var response = await DefaultAccountsRestClient.RemoveAsync(scopeTenantId, scopeType, scope, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DefaultAccountsRestClient.CreateRemoveDefaultAccountRequest(scopeTenantId, scopeType.ToString(), scope, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -156,16 +180,16 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// Removes the default account from the scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Purview/removeDefaultAccount</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Purview/removeDefaultAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefaultAccounts_Remove</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefaultAccountsOperationGroup_Remove. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -173,13 +197,18 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RemoveDefaultAccount(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        public virtual Response RemoveDefaultAccount(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = default, CancellationToken cancellationToken = default)
         {
-            using var scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.RemoveDefaultAccount");
+            using DiagnosticScope scope0 = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.RemoveDefaultAccount");
             scope0.Start();
             try
             {
-                var response = DefaultAccountsRestClient.Remove(scopeTenantId, scopeType, scope, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DefaultAccountsRestClient.CreateRemoveDefaultAccountRequest(scopeTenantId, scopeType.ToString(), scope, context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)
@@ -193,31 +222,41 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// Sets the default account for the scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Purview/setDefaultAccount</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Purview/setDefaultAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefaultAccounts_Set</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefaultAccountsOperationGroup_Set. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
+        /// <param name="defaultAccountPayload"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
         public virtual async Task<Response<DefaultPurviewAccountPayload>> SetDefaultAccountAsync(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
 
-            using var scope = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.SetDefaultAccount");
+            using DiagnosticScope scope = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.SetDefaultAccount");
             scope.Start();
             try
             {
-                var response = await DefaultAccountsRestClient.SetAsync(defaultAccountPayload, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DefaultAccountsRestClient.CreateSetDefaultAccountRequest(DefaultPurviewAccountPayload.ToRequestContent(defaultAccountPayload), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DefaultPurviewAccountPayload> response = Response.FromValue(DefaultPurviewAccountPayload.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -231,31 +270,41 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// Sets the default account for the scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Purview/setDefaultAccount</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Purview/setDefaultAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefaultAccounts_Set</description>
+        /// <term> Operation Id. </term>
+        /// <description> DefaultAccountsOperationGroup_Set. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
+        /// <param name="defaultAccountPayload"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
         public virtual Response<DefaultPurviewAccountPayload> SetDefaultAccount(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
 
-            using var scope = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.SetDefaultAccount");
+            using DiagnosticScope scope = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.SetDefaultAccount");
             scope.Start();
             try
             {
-                var response = DefaultAccountsRestClient.Set(defaultAccountPayload, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DefaultAccountsRestClient.CreateSetDefaultAccountRequest(DefaultPurviewAccountPayload.ToRequestContent(defaultAccountPayload), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DefaultPurviewAccountPayload> response = Response.FromValue(DefaultPurviewAccountPayload.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

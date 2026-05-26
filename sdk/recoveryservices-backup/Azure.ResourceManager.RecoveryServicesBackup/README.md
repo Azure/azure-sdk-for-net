@@ -43,6 +43,7 @@ Documentation is available to help you learn how to use this package:
 ## Examples
 
 Code samples for using the management library for .NET can be found in the following locations
+- [Managing IaaS VM Backup Protection](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup/samples/Sample1_ManagingIaaSVMProtection.md)
 - [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
 
 ## Troubleshooting

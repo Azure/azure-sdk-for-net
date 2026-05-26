@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableStorageSyncResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableStorageSyncResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableStorageSyncResourceGroupResource for mocking. </summary>
         protected MockableStorageSyncResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableStorageSyncResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableStorageSyncResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableStorageSyncResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of StorageSyncServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of StorageSyncServiceResources and their operations over a StorageSyncServiceResource. </returns>
+        /// <summary> Gets a collection of StorageSyncServices in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of StorageSyncServices and their operations over a StorageSyncServiceResource. </returns>
         public virtual StorageSyncServiceCollection GetStorageSyncServices()
         {
             return GetCachedClient(client => new StorageSyncServiceCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// Get a given StorageSyncService.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageSyncServices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageSyncServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageSyncServiceResource>> GetStorageSyncServiceAsync(string storageSyncServiceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+
             return await GetStorageSyncServices().GetAsync(storageSyncServiceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// Get a given StorageSyncService.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageSyncServices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageSyncServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageSyncServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         [ForwardsClientCalls]
         public virtual Response<StorageSyncServiceResource> GetStorageSyncService(string storageSyncServiceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+
             return GetStorageSyncServices().Get(storageSyncServiceName, cancellationToken);
         }
     }

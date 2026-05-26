@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.TrafficManager
 {
+    /// <summary></summary>
     public partial class TrafficManagerHeatMapResource : IJsonModel<TrafficManagerHeatMapData>
     {
-        private static TrafficManagerHeatMapData s_dataDeserializationInstance;
-        private static TrafficManagerHeatMapData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<TrafficManagerHeatMapData> s_dataDeserializationInstance;
 
+        private static IJsonModel<TrafficManagerHeatMapData> DataDeserializationInstance => s_dataDeserializationInstance ??= new TrafficManagerHeatMapData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TrafficManagerHeatMapData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerHeatMapData>)Data).Write(writer, options);
 
-        TrafficManagerHeatMapData IJsonModel<TrafficManagerHeatMapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerHeatMapData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TrafficManagerHeatMapData IJsonModel<TrafficManagerHeatMapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<TrafficManagerHeatMapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TrafficManagerHeatMapData>(Data, options, AzureResourceManagerTrafficManagerContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         TrafficManagerHeatMapData IPersistableModel<TrafficManagerHeatMapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficManagerHeatMapData>(data, options, AzureResourceManagerTrafficManagerContext.Default);
 
-        string IPersistableModel<TrafficManagerHeatMapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficManagerHeatMapData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TrafficManagerHeatMapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -38,7 +38,8 @@ public class ProvisioningOutput : ProvisioningVariable
     protected internal override IEnumerable<BicepStatement> Compile()
     {
         OutputStatement statement = BicepSyntax.Declare.Output(BicepIdentifier, BicepType, Value.Compile());
-        if (Description is not null) { statement = statement.Decorate("description", BicepSyntax.Value(Description)); }
+        if (Description is not null)
+        { statement = statement.Decorate("description", BicepSyntax.Value(Description)); }
         yield return statement;
     }
 }

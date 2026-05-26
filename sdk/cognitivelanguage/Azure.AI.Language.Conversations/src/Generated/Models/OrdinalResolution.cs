@@ -17,13 +17,8 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="offset"> The offset with respect to the reference (e.g., offset = -1 indicates the second to last). </param>
         /// <param name="relativeTo"> The reference point that the ordinal number denotes. </param>
         /// <param name="value"> A simple arithmetic expression that the ordinal denotes. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="offset"/> or <paramref name="value"/> is null. </exception>
-        internal OrdinalResolution(string offset, RelativeTo relativeTo, string value)
+        internal OrdinalResolution(string offset, RelativeTo relativeTo, string value) : base(ResolutionKind.OrdinalResolution)
         {
-            Argument.AssertNotNull(offset, nameof(offset));
-            Argument.AssertNotNull(value, nameof(value));
-
-            ResolutionKind = ResolutionKind.OrdinalResolution;
             Offset = offset;
             RelativeTo = relativeTo;
             Value = value;
@@ -31,26 +26,23 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> Initializes a new instance of <see cref="OrdinalResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="offset"> The offset with respect to the reference (e.g., offset = -1 indicates the second to last). </param>
         /// <param name="relativeTo"> The reference point that the ordinal number denotes. </param>
         /// <param name="value"> A simple arithmetic expression that the ordinal denotes. </param>
-        internal OrdinalResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> serializedAdditionalRawData, string offset, RelativeTo relativeTo, string value) : base(resolutionKind, serializedAdditionalRawData)
+        internal OrdinalResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string offset, RelativeTo relativeTo, string value) : base(resolutionKind, additionalBinaryDataProperties)
         {
             Offset = offset;
             RelativeTo = relativeTo;
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrdinalResolution"/> for deserialization. </summary>
-        internal OrdinalResolution()
-        {
-        }
-
         /// <summary> The offset with respect to the reference (e.g., offset = -1 indicates the second to last). </summary>
         public string Offset { get; }
+
         /// <summary> The reference point that the ordinal number denotes. </summary>
         public RelativeTo RelativeTo { get; }
+
         /// <summary> A simple arithmetic expression that the ordinal denotes. </summary>
         public string Value { get; }
     }

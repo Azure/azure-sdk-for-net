@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,7 +21,12 @@ namespace Client.Structure.AnotherClientOperationGroup
 
         public SubNamespaceSecondClient(Uri endpoint, ClientType client) : this(endpoint, client, new SubNamespaceSecondClientOptions()) => throw null;
 
-        public SubNamespaceSecondClient(Uri endpoint, ClientType client, SubNamespaceSecondClientOptions options) => throw null;
+        internal SubNamespaceSecondClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ClientType client, SubNamespaceSecondClientOptions options) => throw null;
+
+        public SubNamespaceSecondClient(Uri endpoint, ClientType client, SubNamespaceSecondClientOptions options) : this(null, endpoint, client, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public SubNamespaceSecondClient(SubNamespaceSecondClientSettings settings) : this(null, settings?.Endpoint, settings?.Client ?? default, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

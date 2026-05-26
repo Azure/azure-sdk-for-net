@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct DataflowEndpointHostType : IEquatable<DataflowEndpointHostType>
     {
         private readonly string _value;
+        /// <summary> Fabric Real-Time Type. </summary>
+        private const string FabricRTValue = "FabricRT";
+        /// <summary> EventGrid Type. </summary>
+        private const string EventGridValue = "EventGrid";
+        /// <summary> Local MQTT Type. </summary>
+        private const string LocalBrokerValue = "LocalBroker";
+        /// <summary> EventHub Type. </summary>
+        private const string EventhubValue = "Eventhub";
+        /// <summary> Custom MQTT Type. </summary>
+        private const string CustomMqttValue = "CustomMqtt";
+        /// <summary> Custom Kafka Type. </summary>
+        private const string CustomKafkaValue = "CustomKafka";
 
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointHostType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataflowEndpointHostType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FabricRTValue = "FabricRT";
-        private const string EventGridValue = "EventGrid";
-        private const string LocalBrokerValue = "LocalBroker";
-        private const string EventhubValue = "Eventhub";
-        private const string CustomMqttValue = "CustomMqtt";
-        private const string CustomKafkaValue = "CustomKafka";
+            _value = value;
+        }
 
         /// <summary> Fabric Real-Time Type. </summary>
         public static DataflowEndpointHostType FabricRT { get; } = new DataflowEndpointHostType(FabricRTValue);
+
         /// <summary> EventGrid Type. </summary>
         public static DataflowEndpointHostType EventGrid { get; } = new DataflowEndpointHostType(EventGridValue);
+
         /// <summary> Local MQTT Type. </summary>
         public static DataflowEndpointHostType LocalBroker { get; } = new DataflowEndpointHostType(LocalBrokerValue);
+
         /// <summary> EventHub Type. </summary>
         public static DataflowEndpointHostType Eventhub { get; } = new DataflowEndpointHostType(EventhubValue);
+
         /// <summary> Custom MQTT Type. </summary>
         public static DataflowEndpointHostType CustomMqtt { get; } = new DataflowEndpointHostType(CustomMqttValue);
+
         /// <summary> Custom Kafka Type. </summary>
         public static DataflowEndpointHostType CustomKafka { get; } = new DataflowEndpointHostType(CustomKafkaValue);
+
         /// <summary> Determines if two <see cref="DataflowEndpointHostType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataflowEndpointHostType left, DataflowEndpointHostType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataflowEndpointHostType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataflowEndpointHostType left, DataflowEndpointHostType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataflowEndpointHostType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataflowEndpointHostType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataflowEndpointHostType(string value) => new DataflowEndpointHostType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataflowEndpointHostType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataflowEndpointHostType?(string value) => value == null ? null : new DataflowEndpointHostType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataflowEndpointHostType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataflowEndpointHostType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

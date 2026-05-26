@@ -9,5 +9,5 @@ namespace Azure.Storage.Blobs.Models
     /// BlobServiceStatistics.
     /// </summary>
     [CodeGenModel("StorageServiceStats")]
-    public partial class BlobServiceStatistics {}
+    public partial class BlobServiceStatistics { }
 }

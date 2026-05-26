@@ -6,12 +6,13 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using _Specs_.Azure.Example.Basic;
+using Specs.Azure.Example.Basic;
 
 namespace AzureExampleBasicClient
 {
@@ -19,7 +20,12 @@ namespace AzureExampleBasicClient
     {
         public AzureExampleClient() : this(new Uri("http://localhost:3000"), new AzureExampleClientOptions()) => throw null;
 
-        public AzureExampleClient(Uri endpoint, AzureExampleClientOptions options) => throw null;
+        internal AzureExampleClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, AzureExampleClientOptions options) => throw null;
+
+        public AzureExampleClient(Uri endpoint, AzureExampleClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public AzureExampleClient(AzureExampleClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

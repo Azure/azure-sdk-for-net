@@ -188,7 +188,7 @@ static bool ValidateServerCertificate(
     if ((sslPolicyErrors == SslPolicyErrors.None)
         || (certificate.Issuer == "My Company CA"))
     {
-         return true;
+        return true;
     }
 
     // Do not allow communication with unauthorized servers.

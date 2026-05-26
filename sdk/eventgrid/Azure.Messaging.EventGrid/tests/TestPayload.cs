@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid.Tests
     }
 
 #pragma warning disable SA1402 // File may only contain a single type
-    internal class DerivedTestPayload: TestPayload
+    internal class DerivedTestPayload : TestPayload
 #pragma warning restore SA1402 // File may only contain a single type
     {
         public int? DerivedProperty { get; set; }

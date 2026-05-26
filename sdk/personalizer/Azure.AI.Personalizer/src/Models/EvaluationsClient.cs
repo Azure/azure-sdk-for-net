@@ -6,5 +6,5 @@ using Azure.Core;
 
 namespace Azure.AI.Personalizer
 {
-    internal partial class EvaluationsClient {}
+    internal partial class EvaluationsClient { }
 }

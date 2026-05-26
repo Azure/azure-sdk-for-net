@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-04-01";
+            _apiVersion = apiVersion ?? "2025-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -1102,7 +1102,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal RequestUriBuilder CreateDeallocateRequestUri(string subscriptionId, string resourceGroupName, string vmName, bool? hibernate)
+        internal RequestUriBuilder CreateDeallocateRequestUri(string subscriptionId, string resourceGroupName, string vmName, bool? hibernate, bool? forceDeallocate)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1118,10 +1118,14 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("hibernate", hibernate.Value, true);
             }
+            if (forceDeallocate != null)
+            {
+                uri.AppendQuery("forceDeallocate", forceDeallocate.Value, true);
+            }
             return uri;
         }
 
-        internal HttpMessage CreateDeallocateRequest(string subscriptionId, string resourceGroupName, string vmName, bool? hibernate)
+        internal HttpMessage CreateDeallocateRequest(string subscriptionId, string resourceGroupName, string vmName, bool? hibernate, bool? forceDeallocate)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1140,6 +1144,10 @@ namespace Azure.ResourceManager.Compute
             {
                 uri.AppendQuery("hibernate", hibernate.Value, true);
             }
+            if (forceDeallocate != null)
+            {
+                uri.AppendQuery("forceDeallocate", forceDeallocate.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -1151,16 +1159,17 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="hibernate"> Optional parameter to hibernate a virtual machine. </param>
+        /// <param name="forceDeallocate"> Optional parameter to force deallocate a virtual machine. Default is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeallocateAsync(string subscriptionId, string resourceGroupName, string vmName, bool? hibernate = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeallocateAsync(string subscriptionId, string resourceGroupName, string vmName, bool? hibernate = null, bool? forceDeallocate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
-            using var message = CreateDeallocateRequest(subscriptionId, resourceGroupName, vmName, hibernate);
+            using var message = CreateDeallocateRequest(subscriptionId, resourceGroupName, vmName, hibernate, forceDeallocate);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1177,16 +1186,17 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="hibernate"> Optional parameter to hibernate a virtual machine. </param>
+        /// <param name="forceDeallocate"> Optional parameter to force deallocate a virtual machine. Default is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Deallocate(string subscriptionId, string resourceGroupName, string vmName, bool? hibernate = null, CancellationToken cancellationToken = default)
+        public Response Deallocate(string subscriptionId, string resourceGroupName, string vmName, bool? hibernate = null, bool? forceDeallocate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
-            using var message = CreateDeallocateRequest(subscriptionId, resourceGroupName, vmName, hibernate);
+            using var message = CreateDeallocateRequest(subscriptionId, resourceGroupName, vmName, hibernate, forceDeallocate);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

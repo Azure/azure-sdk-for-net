@@ -1,0 +1,106 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Azure;
+using Azure.AI.Language.Conversations.Authoring;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
+
+namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
+{
+    public partial class Sample18_ConversationsAuthoring_UnassignProjectResources : SamplesBase<AuthoringClientTestEnvironment>
+    {
+        [Test]
+        [SyncOnly]
+        public void UnassignProjectResources()
+        {
+            Uri sampleEndpoint = TestEnvironment.Endpoint;
+            DefaultAzureCredential sampleCredential = new DefaultAzureCredential();
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(sampleEndpoint, sampleCredential);
+
+            #region Snippet:Sample18_ConversationsAuthoring_UnassignProjectResources
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
+            // Set project name and create client for the project
+            string sampleProjectName = "{projectName}";
+            // Define assigned resource ID to be unassigned
+            var sampleUnassignIds = new ConversationAuthoringDeleteDeploymentDetails
+            {
+                AssignedResourceIds =
+                {
+                    "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+                }
+            };
+
+            // Start the operation
+            Operation sampleOperation = projectClient.UnassignProjectResources(
+                WaitUntil.Started,
+                sampleProjectName,
+                sampleUnassignIds
+            );
+
+            Console.WriteLine($"UnassignProjectResources initiated. Status: {sampleOperation.GetRawResponse().Status}");
+
+            // Print jobId from Operation-Location
+            if (sampleOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location))
+            {
+                string sampleJobId = new Uri(location).Segments.Last().Split('?')[0];
+                Console.WriteLine($"Job ID: {sampleJobId}");
+            }
+            else
+            {
+                Console.WriteLine("Operation-Location header not found.");
+            }
+            #endregion
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task UnassignProjectResourcesAsync()
+        {
+            Uri sampleEndpoint = TestEnvironment.Endpoint;
+            DefaultAzureCredential sampleCredential = new DefaultAzureCredential();
+            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(sampleEndpoint, sampleCredential);
+
+            #region Snippet:Sample18_ConversationsAuthoring_UnassignProjectResourcesAsync
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
+            // Set project name and create client for the project
+            string sampleProjectName = "{projectName}";
+            // Define assigned resource ID to be unassigned
+            var sampleUnassignIds = new ConversationAuthoringDeleteDeploymentDetails
+            {
+                AssignedResourceIds =
+                {
+                    "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+                }
+            };
+
+            // Call the operation
+            Operation sampleOperation = await projectClient.UnassignProjectResourcesAsync(
+                WaitUntil.Started,
+                sampleProjectName,
+                sampleUnassignIds
+            );
+
+            Console.WriteLine($"UnassignProjectResourcesAsync initiated. Status: {sampleOperation.GetRawResponse().Status}");
+
+            // Print jobId from Operation-Location
+            if (sampleOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location))
+            {
+                string sampleJobId = new Uri(location).Segments.Last().Split('?')[0];
+                Console.WriteLine($"Job ID: {sampleJobId}");
+            }
+            else
+            {
+                Console.WriteLine("Operation-Location header not found.");
+            }
+            #endregion
+        }
+    }
+}

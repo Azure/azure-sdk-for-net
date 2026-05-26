@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.KnowledgeBases.Models;
 using Azure.Search.Documents.Models;
 using Azure.Search.Documents.Tests.Samples;
 using Azure.Storage.Blobs;
@@ -101,12 +102,12 @@ namespace Azure.Search.Documents.Tests
         /// <summary>
         /// The name of the knowledge agent created for test data.
         /// </summary>
-        public string KnowledgeAgentName
+        public string KnowledgeBaseName
         {
-            get => TestFixture.Recording.GetVariable("KnowledgeAgentName", _agentName);
+            get => TestFixture.Recording.GetVariable("KnowledgeBaseName", _agentName);
             set
             {
-                TestFixture.Recording.SetVariable("KnowledgeAgentName", value);
+                TestFixture.Recording.SetVariable("KnowledgeBaseName", value);
                 _agentName = value;
             }
         }
@@ -157,7 +158,7 @@ namespace Azure.Search.Documents.Tests
         /// Flag indicating whether these knowledge agent resources need to be cleaned up.
         /// This is true for any knowledge agent resources that we created.
         /// </summary>
-        public bool RequiresKnowledgeAgentCleanup { get; private set; }
+        public bool RequiresKnowledgeBaseCleanup { get; private set; }
 
         /// <summary>
         /// Flag indicating whether these knowledge source resources need to be cleaned up.
@@ -269,10 +270,10 @@ namespace Azure.Search.Documents.Tests
         /// recordings, instrumentation, etc.
         /// </param>
         /// <returns>A new TestResources context.</returns>
-        public static async Task<SearchResources> CreateWithknowledgeAgentAsync(SearchTestBase fixture, bool isSample = false)
+        public static async Task<SearchResources> CreateWithKnowledgeBaseAsync(SearchTestBase fixture, bool isSample = false)
         {
             var resources = new SearchResources(fixture);
-            await resources.CreateKnowledgeAgentAsync();
+            await resources.CreateKnowledgeBaseAsync();
             return resources;
         }
 
@@ -450,11 +451,17 @@ namespace Azure.Search.Documents.Tests
         /// Automatically delete the Search Service when the resources are no
         /// longer needed.
         /// </summary>
-        public async ValueTask DisposeAsync() => await Task.WhenAll(
-            DeleteKnowledgeAgentAsync(),
-            DeleteKnowledgeSourceAsync(),
-            DeleteIndexAsync(),
-            DeleteBlobContainerAsync());
+        public async ValueTask DisposeAsync()
+        {
+            // Knowledge bases reference knowledge sources, so they must be
+            // deleted first.  Knowledge sources reference indexes, so they
+            // must be deleted before the index.
+            await DeleteKnowledgeBaseAsync();
+            await DeleteKnowledgeSourceAsync();
+            await Task.WhenAll(
+                DeleteIndexAsync(),
+                DeleteBlobContainerAsync());
+        }
 
         /// <summary>
         /// Deletes the index created as a test resource.
@@ -465,7 +472,14 @@ namespace Azure.Search.Documents.Tests
             if (RequiresCleanup && !string.IsNullOrEmpty(IndexName))
             {
                 SearchIndexClient client = GetIndexClient();
-                await client.DeleteIndexAsync(IndexName);
+                try
+                {
+                    await client.DeleteIndexAsync(IndexName, cancellationToken: CancellationToken.None);
+                }
+                catch (RequestFailedException ex) when (ex.Status == 404)
+                {
+                    // Index doesn't exist, which is fine during cleanup
+                }
                 RequiresCleanup = false;
 
                 await WaitForIndexDeletionAsync();
@@ -481,7 +495,14 @@ namespace Azure.Search.Documents.Tests
             if (RequiresKnowledgeSourceCleanup && !string.IsNullOrEmpty(KnowledgeSourceName))
             {
                 SearchIndexClient client = GetIndexClient();
-                await client.DeleteKnowledgeSourceAsync(KnowledgeSourceName);
+                try
+                {
+                    await client.DeleteKnowledgeSourceAsync(KnowledgeSourceName, cancellationToken: CancellationToken.None);
+                }
+                catch (RequestFailedException ex) when (ex.Status == 404)
+                {
+                    // Knowledge source doesn't exist, which is fine during cleanup
+                }
                 RequiresKnowledgeSourceCleanup = false;
 
                 await WaitForKnowledgeSourceDeletionAsync();
@@ -492,15 +513,22 @@ namespace Azure.Search.Documents.Tests
         /// Deletes the knowledge agent created as a test resource.
         /// </summary>
         /// <returns></returns>
-        private async Task DeleteKnowledgeAgentAsync()
+        private async Task DeleteKnowledgeBaseAsync()
         {
-            if (RequiresKnowledgeAgentCleanup && !string.IsNullOrEmpty(KnowledgeAgentName))
+            if (RequiresKnowledgeBaseCleanup && !string.IsNullOrEmpty(KnowledgeBaseName))
             {
                 SearchIndexClient client = GetIndexClient();
-                await client.DeleteKnowledgeAgentAsync(KnowledgeAgentName);
-                RequiresKnowledgeAgentCleanup = false;
+                try
+                {
+                    await client.DeleteKnowledgeBaseAsync(KnowledgeBaseName, cancellationToken: CancellationToken.None);
+                }
+                catch (RequestFailedException ex) when (ex.Status == 404)
+                {
+                    // Knowledge base doesn't exist, which is fine during cleanup
+                }
+                RequiresKnowledgeBaseCleanup = false;
 
-                await WaitForKnowledgeAgentDeletionAsync();
+                await WaitForKnowledgeBaseDeletionAsync();
             }
         }
 
@@ -581,10 +609,10 @@ namespace Azure.Search.Documents.Tests
         }
 
         /// <summary>
-        /// Create a new index and knowledge agent.
+        /// Create a new index and knowledge base.
         /// </summary>
         /// <returns>This TestResources context.</returns>
-        private async Task<SearchResources> CreateKnowledgeAgentAsync(bool isSample = false)
+        private async Task<SearchResources> CreateKnowledgeBaseAsync(bool isSample = false)
         {
             // Create index and upload documents
             await CreateSearchServiceIndexAndDocumentsAsync(isSample);
@@ -595,37 +623,39 @@ namespace Azure.Search.Documents.Tests
                 SearchIndexClient client = GetIndexClient();
 
                 // Generate a random knowledge agent Name
-                KnowledgeAgentName = Random.GetName(8);
+                KnowledgeBaseName = Random.GetName(8);
                 KnowledgeSourceName = Random.GetName(8);
-                string deploymentName = "gpt-4.1";
+                string deploymentName = "gpt-5-mini";
 
                 SearchIndexKnowledgeSource indexKnowledgeSource = new(KnowledgeSourceName, new(IndexName));
                 KnowledgeSource knowledgeSource = await client.CreateKnowledgeSourceAsync(indexKnowledgeSource);
                 RequiresKnowledgeSourceCleanup = true;
                 await WaitForKnowledgeSourceCreationAsync();
 
-                var knowledgeAgent = new KnowledgeAgent(
-                    KnowledgeAgentName,
-                    new List<KnowledgeAgentModel>{
-                    new KnowledgeAgentAzureOpenAIModel(
+                var knowledgeAgent = new KnowledgeBase(
+                    KnowledgeBaseName,
+                    knowledgeSources: new List<KnowledgeSourceReference>
+                    {
+                        new KnowledgeSourceReference(knowledgeSource.Name)
+                    })
+                {
+                    Description = "Description of the Knowledge Base"
+                };
+                knowledgeAgent.Models.Add(
+                    new KnowledgeBaseAzureOpenAIModel(
                         new AzureOpenAIVectorizerParameters
                         {
-                            ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
-                            ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
+                            ResourceUri = new Uri(TestFixture.TestEnvironment.OpenAIEndpoint),
+                            ApiKey = TestFixture.TestEnvironment.OpenAIKey,
                             DeploymentName = deploymentName,
-                            ModelName = AzureOpenAIModelName.Gpt41
-                        })
-                    },
-                    new List<KnowledgeSourceReference>
-                    {
-                    new KnowledgeSourceReference(knowledgeSource.Name)
-                    });
+                            ModelName = AzureOpenAIModelName.Gpt5Mini
+                        }));
 
-                await client.CreateKnowledgeAgentAsync(knowledgeAgent);
-                RequiresKnowledgeAgentCleanup = true;
+                await client.CreateKnowledgeBaseAsync(knowledgeAgent);
+                RequiresKnowledgeBaseCleanup = true;
 
-                // Give the knowledge agent time to stabilize before running tests.
-                await WaitForKnowledgeAgentCreationAsync();
+                // Give the knowledge base time to stabilize before running tests.
+                await WaitForKnowledgeBaseCreationAsync();
             }
 
             return this;
@@ -753,7 +783,7 @@ namespace Azure.Search.Documents.Tests
         /// Wait for knowledge agent creation.
         /// </summary>
         /// <returns>A Task to await.</returns>
-        public async Task WaitForKnowledgeAgentCreationAsync() =>
+        public async Task WaitForKnowledgeBaseCreationAsync() =>
             await TestFixture.DelayAsync(TimeSpan.FromSeconds(2));
 
         /// <summary>
@@ -767,7 +797,7 @@ namespace Azure.Search.Documents.Tests
         /// Wait for the knowledge agent to be deleted.
         /// </summary>
         /// <returns>A Task to await.</returns>
-        public async Task WaitForKnowledgeAgentDeletionAsync() =>
+        public async Task WaitForKnowledgeBaseDeletionAsync() =>
             await TestFixture.DelayAsync(TimeSpan.FromSeconds(5));
 
         /// <summary>

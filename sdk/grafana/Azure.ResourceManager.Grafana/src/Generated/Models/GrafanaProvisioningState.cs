@@ -7,21 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    /// <summary> The GrafanaProvisioningState. </summary>
+    /// <summary></summary>
     public readonly partial struct GrafanaProvisioningState : IEquatable<GrafanaProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="GrafanaProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public GrafanaProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AcceptedValue = "Accepted";
         private const string CreatingValue = "Creating";
         private const string UpdatingValue = "Updating";
@@ -32,41 +25,73 @@ namespace Azure.ResourceManager.Grafana.Models
         private const string DeletedValue = "Deleted";
         private const string NotSpecifiedValue = "NotSpecified";
 
-        /// <summary> Accepted. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public GrafanaProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Accepted. </summary>
         public static GrafanaProvisioningState Accepted { get; } = new GrafanaProvisioningState(AcceptedValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static GrafanaProvisioningState Creating { get; } = new GrafanaProvisioningState(CreatingValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static GrafanaProvisioningState Updating { get; } = new GrafanaProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static GrafanaProvisioningState Deleting { get; } = new GrafanaProvisioningState(DeletingValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static GrafanaProvisioningState Succeeded { get; } = new GrafanaProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static GrafanaProvisioningState Failed { get; } = new GrafanaProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static GrafanaProvisioningState Canceled { get; } = new GrafanaProvisioningState(CanceledValue);
-        /// <summary> Deleted. </summary>
+
+        /// <summary> Gets the Deleted. </summary>
         public static GrafanaProvisioningState Deleted { get; } = new GrafanaProvisioningState(DeletedValue);
-        /// <summary> NotSpecified. </summary>
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static GrafanaProvisioningState NotSpecified { get; } = new GrafanaProvisioningState(NotSpecifiedValue);
+
         /// <summary> Determines if two <see cref="GrafanaProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GrafanaProvisioningState left, GrafanaProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GrafanaProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GrafanaProvisioningState left, GrafanaProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GrafanaProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GrafanaProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GrafanaProvisioningState(string value) => new GrafanaProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GrafanaProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GrafanaProvisioningState?(string value) => value == null ? null : new GrafanaProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GrafanaProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GrafanaProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

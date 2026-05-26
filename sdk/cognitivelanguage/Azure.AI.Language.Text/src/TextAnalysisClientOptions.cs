@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Language.Text
 {
+    [CodeGenType("TextAnalysisOptions")]
     public partial class TextAnalysisClientOptions : ClientOptions
     {
         /// <summary>

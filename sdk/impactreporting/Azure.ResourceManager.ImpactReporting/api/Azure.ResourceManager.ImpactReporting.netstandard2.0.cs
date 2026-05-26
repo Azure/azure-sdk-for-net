@@ -22,7 +22,10 @@ namespace Azure.ResourceManager.ImpactReporting
     {
         internal ImpactCategoryData() { }
         public Azure.ResourceManager.ImpactReporting.Models.ImpactCategoryProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ImpactReporting.ImpactCategoryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.ImpactCategoryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.ImpactCategoryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ImpactReporting.ImpactCategoryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.ImpactCategoryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -65,7 +68,10 @@ namespace Azure.ResourceManager.ImpactReporting
     {
         public ImpactConnectorData() { }
         public Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ImpactReporting.ImpactConnectorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.ImpactConnectorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.ImpactConnectorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ImpactReporting.ImpactConnectorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.ImpactConnectorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -112,7 +118,10 @@ namespace Azure.ResourceManager.ImpactReporting
     {
         public ImpactInsightData() { }
         public Azure.ResourceManager.ImpactReporting.Models.ImpactInsightProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ImpactReporting.ImpactInsightData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.ImpactInsightData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.ImpactInsightData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ImpactReporting.ImpactInsightData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.ImpactInsightData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -175,7 +184,10 @@ namespace Azure.ResourceManager.ImpactReporting
     {
         public WorkloadImpactData() { }
         public Azure.ResourceManager.ImpactReporting.Models.WorkloadImpactProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ImpactReporting.WorkloadImpactData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.WorkloadImpactData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.WorkloadImpactData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ImpactReporting.WorkloadImpactData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.WorkloadImpactData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -251,7 +263,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public string ParentCategoryId { get { throw null; } }
         public Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ImpactReporting.Models.RequiredImpactProperties> RequiredImpactProperties { get { throw null; } }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactCategoryProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactCategoryProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ImpactReporting.Models.ImpactCategoryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactCategoryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactCategoryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ImpactReporting.Models.ImpactCategoryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.Models.ImpactCategoryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -263,7 +278,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public ImpactClientIncidentDetails() { }
         public string ClientIncidentId { get { throw null; } set { } }
         public Azure.ResourceManager.ImpactReporting.Models.ImpactIncidentSource? ClientIncidentSource { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactClientIncidentDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactClientIncidentDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ImpactReporting.Models.ImpactClientIncidentDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactClientIncidentDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactClientIncidentDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ImpactReporting.Models.ImpactClientIncidentDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.Models.ImpactClientIncidentDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -280,12 +298,11 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactConfidenceLevel Low { get { throw null; } }
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactConfidenceLevel Medium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ImpactReporting.Models.ImpactConfidenceLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ImpactReporting.Models.ImpactConfidenceLevel left, Azure.ResourceManager.ImpactReporting.Models.ImpactConfidenceLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactConfidenceLevel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactConfidenceLevel? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ImpactReporting.Models.ImpactConfidenceLevel left, Azure.ResourceManager.ImpactReporting.Models.ImpactConfidenceLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -296,7 +313,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public Azure.ResourceManager.ImpactReporting.Models.ImpactProtocol? Protocol { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceAzureResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TargetAzureResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactConnectivityDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactConnectivityDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ImpactReporting.Models.ImpactConnectivityDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactConnectivityDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactConnectivityDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ImpactReporting.Models.ImpactConnectivityDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.Models.ImpactConnectivityDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -307,7 +327,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
     {
         public ImpactConnectorPatch() { }
         public Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorType? ConnectorType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -316,13 +339,17 @@ namespace Azure.ResourceManager.ImpactReporting.Models
     }
     public partial class ImpactConnectorProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorProperties>
     {
+        public ImpactConnectorProperties(Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorType connectorType) { }
         public ImpactConnectorProperties(string connectorId, string tenantId, Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorType connectorType, System.DateTimeOffset lastRanOn) { }
         public string ConnectorId { get { throw null; } }
         public Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorType ConnectorType { get { throw null; } set { } }
         public System.DateTimeOffset LastRanOn { get { throw null; } }
         public Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState? ProvisioningState { get { throw null; } }
         public string TenantId { get { throw null; } }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -337,12 +364,11 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public ImpactConnectorType(string value) { throw null; }
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorType AzureMonitor { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorType left, Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorType left, Azure.ResourceManager.ImpactReporting.Models.ImpactConnectorType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -353,7 +379,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public Azure.Core.ResourceIdentifier ImpactedResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ImpactId { get { throw null; } set { } }
         public System.DateTimeOffset StartOn { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ImpactReporting.Models.ImpactDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ImpactReporting.Models.ImpactDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.Models.ImpactDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -365,7 +394,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public ImpactedWorkload() { }
         public string Context { get { throw null; } set { } }
         public Azure.ResourceManager.ImpactReporting.Models.ImpactToolset? Toolset { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactedWorkload JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactedWorkload PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ImpactReporting.Models.ImpactedWorkload System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactedWorkload>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactedWorkload>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ImpactReporting.Models.ImpactedWorkload System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.Models.ImpactedWorkload>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -377,7 +409,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public ImpactErrorDetails() { }
         public string ErrorCode { get { throw null; } set { } }
         public string ErrorMessage { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactErrorDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactErrorDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ImpactReporting.Models.ImpactErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ImpactReporting.Models.ImpactErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.Models.ImpactErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -396,12 +431,11 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactIncidentSource Other { get { throw null; } }
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactIncidentSource ServiceNow { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ImpactReporting.Models.ImpactIncidentSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ImpactReporting.Models.ImpactIncidentSource left, Azure.ResourceManager.ImpactReporting.Models.ImpactIncidentSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactIncidentSource (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactIncidentSource? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ImpactReporting.Models.ImpactIncidentSource left, Azure.ResourceManager.ImpactReporting.Models.ImpactIncidentSource right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -410,7 +444,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public ImpactInsightContent(string title, string description) { }
         public string Description { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactInsightContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactInsightContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ImpactReporting.Models.ImpactInsightContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactInsightContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactInsightContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ImpactReporting.Models.ImpactInsightContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.Models.ImpactInsightContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -430,7 +467,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public string InsightUniqueId { get { throw null; } set { } }
         public Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState? ProvisioningState { get { throw null; } }
         public string Status { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactInsightProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactInsightProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ImpactReporting.Models.ImpactInsightProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactInsightProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactInsightProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ImpactReporting.Models.ImpactInsightProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.Models.ImpactInsightProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -442,7 +482,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public ImpactMetricExpectedValueRange(double min, double max) { }
         public double Max { get { throw null; } set { } }
         public double Min { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactMetricExpectedValueRange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactMetricExpectedValueRange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ImpactReporting.Models.ImpactMetricExpectedValueRange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactMetricExpectedValueRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactMetricExpectedValueRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ImpactReporting.Models.ImpactMetricExpectedValueRange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.Models.ImpactMetricExpectedValueRange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -468,12 +511,11 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactMetricUnit Percent { get { throw null; } }
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactMetricUnit Seconds { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ImpactReporting.Models.ImpactMetricUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ImpactReporting.Models.ImpactMetricUnit left, Azure.ResourceManager.ImpactReporting.Models.ImpactMetricUnit right) { throw null; }
         public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactMetricUnit (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactMetricUnit? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ImpactReporting.Models.ImpactMetricUnit left, Azure.ResourceManager.ImpactReporting.Models.ImpactMetricUnit right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -485,7 +527,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public Azure.ResourceManager.ImpactReporting.Models.ImpactMetricExpectedValueRange ExpectedValueRange { get { throw null; } set { } }
         public string MetricName { get { throw null; } set { } }
         public Azure.ResourceManager.ImpactReporting.Models.ImpactMetricUnit? Unit { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactPerformance JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactPerformance PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ImpactReporting.Models.ImpactPerformance System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactPerformance>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.ImpactPerformance>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ImpactReporting.Models.ImpactPerformance System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.Models.ImpactPerformance>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -507,12 +552,11 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactProtocol Tcp { get { throw null; } }
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactProtocol Udp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ImpactReporting.Models.ImpactProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ImpactReporting.Models.ImpactProtocol left, Azure.ResourceManager.ImpactReporting.Models.ImpactProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactProtocol (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactProtocol? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ImpactReporting.Models.ImpactProtocol left, Azure.ResourceManager.ImpactReporting.Models.ImpactProtocol right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -526,12 +570,11 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState left, Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState left, Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -551,12 +594,11 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactToolset Shell { get { throw null; } }
         public static Azure.ResourceManager.ImpactReporting.Models.ImpactToolset Terraform { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ImpactReporting.Models.ImpactToolset other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ImpactReporting.Models.ImpactToolset left, Azure.ResourceManager.ImpactReporting.Models.ImpactToolset right) { throw null; }
         public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactToolset (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ImpactReporting.Models.ImpactToolset? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ImpactReporting.Models.ImpactToolset left, Azure.ResourceManager.ImpactReporting.Models.ImpactToolset right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -565,7 +607,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         internal RequiredImpactProperties() { }
         public System.Collections.Generic.IReadOnlyList<string> AllowedValues { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.RequiredImpactProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.RequiredImpactProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ImpactReporting.Models.RequiredImpactProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.RequiredImpactProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.RequiredImpactProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ImpactReporting.Models.RequiredImpactProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.Models.RequiredImpactProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -592,7 +637,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public System.DateTimeOffset? ReportedTimeUtc { get { throw null; } }
         public System.DateTimeOffset StartOn { get { throw null; } set { } }
         public Azure.ResourceManager.ImpactReporting.Models.ImpactedWorkload Workload { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.WorkloadImpactProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ImpactReporting.Models.WorkloadImpactProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ImpactReporting.Models.WorkloadImpactProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.WorkloadImpactProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.WorkloadImpactProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ImpactReporting.Models.WorkloadImpactProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.Models.WorkloadImpactProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

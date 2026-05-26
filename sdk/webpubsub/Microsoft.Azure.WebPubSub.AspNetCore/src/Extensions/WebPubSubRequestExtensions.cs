@@ -104,6 +104,18 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                             return new DisconnectedEventRequest(context, eventRequest.Reason);
                         }
                     }
+                case RequestType.JoinedGroupEvent:
+                    {
+                        var content = await new StreamReader(request.Body).ReadToEndAsync().ConfigureAwait(false);
+                        var payload = JsonSerializer.Deserialize<GroupEventRequestPayload>(content);
+                        return new JoinedGroupEventRequest(context, payload.Group);
+                    }
+                case RequestType.LeftGroupEvent:
+                    {
+                        var content = await new StreamReader(request.Body).ReadToEndAsync().ConfigureAwait(false);
+                        var payload = JsonSerializer.Deserialize<GroupEventRequestPayload>(content);
+                        return new LeftGroupEventRequest(context, payload.Group);
+                    }
                 default:
                     return null;
             }
@@ -235,6 +247,14 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             {
                 return RequestType.Connected;
             }
+            if (context.EventName.Equals(Constants.Events.JoinedGroupEvent, StringComparison.OrdinalIgnoreCase))
+            {
+                return RequestType.JoinedGroupEvent;
+            }
+            if (context.EventName.Equals(Constants.Events.LeftGroupEvent, StringComparison.OrdinalIgnoreCase))
+            {
+                return RequestType.LeftGroupEvent;
+            }
             return RequestType.Ignored;
         }
 
@@ -264,9 +284,17 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
         private static WebPubSubEventType GetEventType(this string ceType)
         {
-            return ceType.StartsWith(Constants.Headers.CloudEvents.TypeSystemPrefix, StringComparison.OrdinalIgnoreCase) ?
-                WebPubSubEventType.System :
-                WebPubSubEventType.User;
+            if (ceType.StartsWith(Constants.Headers.CloudEvents.TypeUserPrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                return WebPubSubEventType.User;
+            }
+
+            if (ceType.StartsWith(Constants.Headers.CloudEvents.TypeGroupPresencePrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                return WebPubSubEventType.GroupPresence;
+            }
+
+            return WebPubSubEventType.System;
         }
 
         private static WebPubSubDataType GetDataType(this string mediaType) =>

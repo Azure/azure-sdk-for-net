@@ -461,7 +461,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 Assert.IsTrue(MessagingClientDiagnostics.TryExtractTraceContext(eventBatch[index].Properties, out var targetId, out var _));
                 var targetSpanId = ActivityContext.Parse(targetId, null).SpanId;
-                Assert.That(activities.SelectMany(scope => scope.Links.Select(l => l.Context.SpanId)), Has.One.EqualTo(targetSpanId), $"There should have been a link for the diagnostic identifier: { targetId }");
+                Assert.That(activities.SelectMany(scope => scope.Links.Select(l => l.Context.SpanId)), Has.One.EqualTo(targetSpanId), $"There should have been a link for the diagnostic identifier: {targetId}");
             }
 
             foreach (var activity in activities)

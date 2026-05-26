@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    internal class DataBoxEdgeStorageAccountOperationSource : IOperationSource<DataBoxEdgeStorageAccountResource>
+    /// <summary></summary>
+    internal partial class DataBoxEdgeStorageAccountOperationSource : IOperationSource<DataBoxEdgeStorageAccountResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DataBoxEdgeStorageAccountOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DataBoxEdgeStorageAccountResource IOperationSource<DataBoxEdgeStorageAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataBoxEdgeStorageAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DataBoxEdgeStorageAccountData data = DataBoxEdgeStorageAccountData.DeserializeDataBoxEdgeStorageAccountData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DataBoxEdgeStorageAccountResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DataBoxEdgeStorageAccountResource> IOperationSource<DataBoxEdgeStorageAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataBoxEdgeStorageAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
-            return await Task.FromResult(new DataBoxEdgeStorageAccountResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DataBoxEdgeStorageAccountData data = DataBoxEdgeStorageAccountData.DeserializeDataBoxEdgeStorageAccountData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DataBoxEdgeStorageAccountResource(_client, data);
         }
     }
 }

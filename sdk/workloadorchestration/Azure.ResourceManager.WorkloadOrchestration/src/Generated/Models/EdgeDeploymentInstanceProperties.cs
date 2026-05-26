@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary> Instance Properties. </summary>
     public partial class EdgeDeploymentInstanceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EdgeDeploymentInstanceProperties"/>. </summary>
         /// <param name="solutionVersionId"> Solution version of instance. </param>
@@ -67,8 +39,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="status"> Status of instance. </param>
         /// <param name="deploymentTimestampEpoch"> Deployment timestamp of instance. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeDeploymentInstanceProperties(string solutionVersionId, string targetId, InstanceActiveState? activeState, InstanceReconciliationPolicy reconciliationPolicy, string solutionScope, EdgeDeploymentStatus status, long? deploymentTimestampEpoch, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeDeploymentInstanceProperties(string solutionVersionId, string targetId, InstanceActiveState? activeState, InstanceReconciliationPolicy reconciliationPolicy, string solutionScope, EdgeDeploymentStatus status, long? deploymentTimestampEpoch, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SolutionVersionId = solutionVersionId;
             TargetId = targetId;
@@ -78,28 +50,30 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             Status = status;
             DeploymentTimestampEpoch = deploymentTimestampEpoch;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EdgeDeploymentInstanceProperties"/> for deserialization. </summary>
-        internal EdgeDeploymentInstanceProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Solution version of instance. </summary>
         public string SolutionVersionId { get; set; }
+
         /// <summary> Target of instance. </summary>
         public string TargetId { get; set; }
+
         /// <summary> State of instance. </summary>
         public InstanceActiveState? ActiveState { get; set; }
+
         /// <summary> Reconciliation policy of instance. </summary>
         public InstanceReconciliationPolicy ReconciliationPolicy { get; set; }
+
         /// <summary> Scope of instance. </summary>
         public string SolutionScope { get; set; }
+
         /// <summary> Status of instance. </summary>
         public EdgeDeploymentStatus Status { get; }
+
         /// <summary> Deployment timestamp of instance. </summary>
         public long? DeploymentTimestampEpoch { get; }
+
         /// <summary> Provisioning state of resource. </summary>
         public WorkloadOrchestrationProvisioningState? ProvisioningState { get; }
     }
