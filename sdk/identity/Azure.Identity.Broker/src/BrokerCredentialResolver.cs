@@ -86,9 +86,11 @@ namespace Azure.Identity.Broker
             // identically to existing single-source resolution. IsChainedCredential
             // is set to false by the factory because explicit single-source
             // selection is not part of a DefaultAzureCredential chain.
-            // The AZC0112 suppression here goes away in phase 3.5a, when this
-            // resolver bypasses DefaultAzureCredentialOptions / DefaultAzureCredentialFactory
-            // entirely (see plan.md).
+            // The AZC0112 suppression here goes away in a future phase, when
+            // this resolver bypasses DefaultAzureCredentialOptions /
+            // DefaultAzureCredentialFactory entirely by constructing
+            // BrokerCredential / VisualStudioCodeCredential directly from
+            // the IConfigurationSection.
 #pragma warning disable AZC0112 // Accessing internal members via InternalsVisibleTo
             DefaultAzureCredentialOptions options = new(settings, credentialSection);
             DefaultAzureCredentialFactory factory = new(options);
