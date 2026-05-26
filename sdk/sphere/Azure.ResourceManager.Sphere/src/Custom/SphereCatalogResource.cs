@@ -242,3 +242,5 @@ namespace Azure.ResourceManager.Sphere
         }
     }
 }
+
+// Test comment for batching validation - DO NOT MERGE
