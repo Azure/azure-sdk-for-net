@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
     [PersistableModelProxy(typeof(UnknownAlertProcessingRuleRecurrence))]
     public abstract partial class AlertProcessingRuleRecurrence : IJsonModel<AlertProcessingRuleRecurrence>
     {
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleRecurrence"/> for deserialization. </summary>
+        internal AlertProcessingRuleRecurrence()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AlertProcessingRuleRecurrence PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

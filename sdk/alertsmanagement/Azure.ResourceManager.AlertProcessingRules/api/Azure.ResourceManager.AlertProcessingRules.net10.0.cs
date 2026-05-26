@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
     public abstract partial class AlertProcessingRuleAction : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction>
     {
-        protected AlertProcessingRuleAction() { }
+        internal AlertProcessingRuleAction() { }
         protected virtual Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -187,7 +187,6 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator Contains { get { throw null; } }
         public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator DoesNotContain { get { throw null; } }
         public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator EqualsValue { get { throw null; } }
-        public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator EqualTo { get { throw null; } }
         public static Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator NotEquals { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleOperator other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -234,7 +233,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
     }
     public abstract partial class AlertProcessingRuleRecurrence : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence>
     {
-        protected AlertProcessingRuleRecurrence() { }
+        internal AlertProcessingRuleRecurrence() { }
         public System.TimeSpan? EndOn { get { throw null; } set { } }
         public System.TimeSpan? StartOn { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.AlertProcessingRules.Models.AlertProcessingRuleRecurrence JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

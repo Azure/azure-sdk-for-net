@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
     {
         private readonly string _value;
         /// <summary> Equals. </summary>
-        private const string EqualToValue = "Equals";
+        private const string EqualsValueValue = "Equals";
         /// <summary> NotEquals. </summary>
         private const string NotEqualsValue = "NotEquals";
         /// <summary> Contains. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
         }
 
         /// <summary> Equals. </summary>
-        public static AlertProcessingRuleOperator EqualTo { get; } = new AlertProcessingRuleOperator(EqualToValue);
+        public static AlertProcessingRuleOperator EqualsValue { get; } = new AlertProcessingRuleOperator(EqualsValueValue);
 
         /// <summary> NotEquals. </summary>
         public static AlertProcessingRuleOperator NotEquals { get; } = new AlertProcessingRuleOperator(NotEqualsValue);

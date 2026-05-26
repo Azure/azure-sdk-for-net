@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
     [PersistableModelProxy(typeof(UnknownAlertProcessingRuleAction))]
     public abstract partial class AlertProcessingRuleAction : IJsonModel<AlertProcessingRuleAction>
     {
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleAction"/> for deserialization. </summary>
+        internal AlertProcessingRuleAction()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AlertProcessingRuleAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
