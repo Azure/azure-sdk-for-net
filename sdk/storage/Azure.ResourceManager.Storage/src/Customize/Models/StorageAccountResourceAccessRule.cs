@@ -10,6 +10,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Storage.Models
 {
+    // The service may return tenantId as an empty or malformed string even though the SDK exposes Guid?.
+    // Keep deserialization tolerant so storage account GET/list operations do not fail on those values.
     [CodeGenSerialization(nameof(TenantId), DeserializationValueHook = nameof(DeserializeNullableGuid))]
     public partial class StorageAccountResourceAccessRule
     {
