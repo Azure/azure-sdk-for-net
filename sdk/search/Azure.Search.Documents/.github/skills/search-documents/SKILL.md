@@ -38,6 +38,35 @@ References (load on demand):
 13. **Compound / magic-string properties are silently broken when exposed as the bare enum** — properties typed as `XxxType?` whose service format is a pipe-delimited compound string (e.g. `extractive|count-5,threshold-0.9`, `generative|count-3`) lose the parameter portion if the SDK exposes just the enum. After any regen, scan new `XxxType?` properties for compound formats in their doc comments and wrap them following [customization.md → Compound / magic-string properties](./references/customization.md#compound--magic-string-properties). Existing reference implementations: `QueryAnswer`, `QueryCaption`, `QueryRewrites`.
 ---
 
+## Preview Feature Markers
+
+Preview-only code is tagged with `// search-preview:<api-version>` comments (NOT `#if` preprocessor directives — those break code generation).
+
+**Two forms:**
+```csharp
+// Single-line — marks the next statement or declaration
+public HybridSearch HybridSearch { get; set; } // search-preview:2026-05-01-preview
+
+// Block — wraps multiple related declarations or statements
+// search-preview:2026-05-01-preview {
+public QueryLanguage? QueryLanguage { get; set; }
+public QueryRewrites QueryRewrites { get; set; }
+// search-preview:2026-05-01-preview }
+```
+
+**Detection script:** `.github/skills/search-documents/scripts/Find-PreviewFeatures.ps1`
+- `-Format summary` for human-readable output
+- `-Format json` (default) for agent consumption
+- `-ApiVersion "2026-05-01-preview"` to filter
+
+**Key rules:**
+- `[CodeGenMember]` redirectors must NEVER be inside preview markers — the generator must always see them regardless of version.
+- Preview markers go on the **public-facing** property (on `SemanticSearchOptions`, `VectorSearchOptions`, etc.), not on the private serialization redirector in `SearchOptions`.
+- For GA release: remove or comment out all code inside markers for the graduating version.
+- For new preview features: use the new version string (e.g. `// search-preview:2027-01-01-preview`).
+
+---
+
 ## Tools
 
 ALWAYS use MCP tools when available. Fall back to manual scripts only when a tool is unavailable or fails.
@@ -105,7 +134,7 @@ All workflows converge on the same **finalization steps**. Skip steps that don't
    - TypeCompleteness tests auto-discover new `IJsonModel<T>` types (Tiers 1+2).
    - New `SearchOptions` property → add 1 line to `SearchOptionsMockTests.SearchOptionProperties()`.
    - New client operation → write recorded test + mock test.
-   - New preview feature → add to `*.Preview.cs` with `#if AZURE_SEARCH_PREVIEW`.
+   - New preview feature → add to `*.Preview.cs` and tag with `// search-preview:<api-version>`.
    - New polymorphic base type → add to `SearchTestHelpers.PolymorphicBaseTypes`.
 11. **Format** — `dotnet format` on both src and tests `.csproj` files.
 12. **Snippets** — `eng/scripts/Update-Snippets.ps1 search`.

@@ -222,22 +222,19 @@ internal const ServiceVersion LatestVersion = ServiceVersion.V2026_04_01;
 > - **GA releases**: Only GA versions in the enum. Remove any preview versions and their switch arms.
 > - **Preview releases**: Add the latest preview version. Keep all GA versions.
 
-### Preview Tests (`AZURE_SEARCH_PREVIEW`)
+### Preview Tests
 
-Preview-specific tests live in dedicated files (e.g. `SearchTests.Preview.cs`) wrapped entirely in `#if AZURE_SEARCH_PREVIEW`. Main test files contain only GA versions in `[ClientTestFixture]` — no `#if` guards.
+Preview-specific tests live in dedicated `*.Preview.cs` files with their own `[ClientTestFixture]` targeting the preview version. Tag preview test classes and methods with `// search-preview:<api-version>` markers.
 
-The `AZURE_SEARCH_PREVIEW` constant is defined automatically via MSBuild `<Choose>` blocks:
-
-- **`src/Azure.Search.Documents.csproj`**: Defines `AZURE_SEARCH_PREVIEW` when `$(Version)` contains `-beta`.
-- **`tests/Azure.Search.Documents.Tests.csproj`**: Reads the src csproj file content and defines `AZURE_SEARCH_PREVIEW` when the `<Version>` tag contains `-beta`.
+**Detection:** Run `Find-PreviewFeatures.ps1` from `.github/skills/search-documents/scripts/` to list all preview markers across src and tests.
 
 #### Adding preview tests
 
-Create a `*.Preview.cs` file wrapped in `#if AZURE_SEARCH_PREVIEW` with its own `[ClientTestFixture(ServiceVersion.V<preview>)]` class that tests preview-specific features:
+Create a `*.Preview.cs` file with its own `[ClientTestFixture(ServiceVersion.V<preview>)]` class:
 
 ```csharp
 // SearchTests.Preview.cs
-#if AZURE_SEARCH_PREVIEW
+// search-preview:2026-05-01-preview {
 namespace Azure.Search.Documents.Tests
 {
     [ClientTestFixture(SearchClientOptions.ServiceVersion.V2026_05_01_Preview)]
@@ -249,17 +246,15 @@ namespace Azure.Search.Documents.Tests
         // Preview-specific test methods here
     }
 }
-#endif
+// search-preview:2026-05-01-preview }
 ```
 
 #### Promoting preview tests to GA
 
 When the preview version becomes GA:
-1. Remove the `#if AZURE_SEARCH_PREVIEW` / `#endif` wrapper.
+1. Remove `// search-preview:` markers.
 2. Merge test methods into the main test class or keep as a separate file with the GA version in `[ClientTestFixture]`.
 3. Remove the preview `ServiceVersion` enum value from `SearchClientOptions.cs`.
-
-> **Rule**: Preview version references must only appear inside `#if AZURE_SEARCH_PREVIEW` blocks. Main test files use only GA versions.
 
 ---
 
@@ -630,4 +625,3 @@ tests/
 | `ApiCompatVersion` | Set to last GA version — enforces no binary-breaking changes |
 | `DisableEnhancedAnalysis` | `true` |
 | `AotCompatOptOut` | `true` |
-| `AZURE_SEARCH_PREVIEW` | Defined when `<Version>` contains `beta` — gates preview API surface at compile time |
