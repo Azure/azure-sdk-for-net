@@ -136,10 +136,10 @@ function Apply-LPTBatching {
   # Log bucket distribution with collapsible groups
   $bucketIdx = 1
   foreach ($bucket in $buckets) {
-    $summary = "Bucket ${bucketIdx}: $($bucket.Items.Count) pkgs, weight $($bucket.TotalWeight)s ($([math]::Round($bucket.TotalWeight / 60, 1))m)"
+    $summary = "Bucket ${bucketIdx}: $($bucket.Items.Count) pkgs, weight $($bucket.TotalWeight)"
     Write-Host "##[group]$summary"
     foreach ($item in ($bucket.Items | Sort-Object Name)) {
-      Write-Host "      $($item.Name) ($($item.Weight)s)"
+      Write-Host "      $($item.Name) (weight $($item.Weight))"
     }
     Write-Host "##[endgroup]"
     $bucketIdx++
