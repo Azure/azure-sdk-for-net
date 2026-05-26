@@ -11,9 +11,6 @@ parameters:
   - name: BuildSnippets
     type: boolean
     default: true
-  - name: ArtifactName
-    type: string
-    default: BuildPackagesArtifact
   - name: DependsOn
     type: string
     default: ''
@@ -49,4 +46,3 @@ jobs:
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           SDKType: ${{ parameters.SDKType }}
           BuildSnippets: ${{ parameters.BuildSnippets }}
-          ArtifactName: ${{ parameters.ArtifactName }}

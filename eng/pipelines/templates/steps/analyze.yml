@@ -11,9 +11,6 @@ parameters:
   - name: BuildSnippets
     type: boolean
     default: true
-  - name: ArtifactName
-    type: string
-    default: BuildPackagesArtifact
 
 steps:
   - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
@@ -30,7 +27,7 @@ steps:
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
     - task: DownloadPipelineArtifact@2
       inputs:
-        artifact: ${{ parameters.ArtifactName }}
+        artifact: BuildPackagesArtifact
         path: $(Build.ArtifactStagingDirectory)/PackageInfo
   - ${{ else }}:
     - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
