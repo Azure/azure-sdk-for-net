@@ -1,0 +1,47 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    Pre-import PackageReference for Azure.Core. This must appear BEFORE the parent
+    Directory.Build.targets chain (which transitively imports eng/Directory.Build.Common.targets)
+    so it's visible to the UseProjectReferenceToAzureClients=true auto-conversion block in
+    eng/Directory.Build.Common.targets (~line 261). On CI (ProjectRef mode), that auto-conv
+    rewrites this PackageReference to a ProjectReference against the in-repo Azure.Core
+    (currently 1.58.0-beta.1 locally, 1.58.0-alpha.<date> on CI). Without this, the transitive
+    Azure.Core ProjectReference brought in by Azure.Core.Expressions.DataFactory below would
+    surface a higher Azure.Core version than the 1.57.0 PackageReference injected by the mgmt
+    template at the bottom of eng/Directory.Build.Common.targets, producing NU1605. In
+    non-ProjectRef builds, auto-conv doesn't run and this resolves to the published 1.57.0
+    (same as before), so the local dev path is unchanged.
+
+    Remove once the central Azure.Core pin in eng/centralpackagemanagement/Directory.Packages.props
+    advances to 1.58.0+.
+  -->
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'Azure.ResourceManager.DataFactory'">
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+
+  <!--
+    Chain to the parent Directory.Build.targets so the standard auto-import logic
+    (root Directory.Build.targets -> eng/Directory.Build.Common.targets) still runs.
+    The DataFactory-specific overrides below must apply AFTER that import.
+  -->
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.targets))\Directory.Build.targets" />
+
+  <!--
+    Replace the eng-injected PackageReference for Azure.Core.Expressions.DataFactory
+    (pinned to 1.0.0 by the central CPM Directory.Packages.props) with a ProjectReference
+    to the in-repo Azure.Core.Expressions.DataFactory.csproj (Version 1.1.0-beta.1).
+    The MPG-generated code calls ModelReaderWriter.Read<DataFactoryElement<T>>(...) which
+    requires IPersistableModel support added in 1.1.0-beta.1. That version is unreleased,
+    so we consume it from source until it ships.
+
+    Scoped to src by the MSBuildProjectName condition; the test project picks up the
+    reference transitively via its ProjectReference to src.
+
+    Remove once Azure.Core.Expressions.DataFactory 1.1.0-beta.1 ships and the central pin
+    in eng/centralpackagemanagement/Directory.Packages.props is bumped to 1.1.0-beta.1+.
+  -->
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'Azure.ResourceManager.DataFactory'">
+    <PackageReference Remove="Azure.Core.Expressions.DataFactory" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\core\Azure.Core.Expressions.DataFactory\src\Azure.Core.Expressions.DataFactory.csproj" />
+  </ItemGroup>
+</Project>
