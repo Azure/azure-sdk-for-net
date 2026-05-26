@@ -13,6 +13,7 @@ namespace Azure.AI.Projects.Agents
         private readonly string _value;
         private const string ActivityProtocolValue = "activity_protocol";
         private const string ResponsesValue = "responses";
+        private const string McpValue = "mcp";
         private const string InvocationsValue = "invocations";
 
         /// <summary> Initializes a new instance of <see cref="ProjectsAgentProtocol"/>. </summary>
@@ -30,6 +31,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the Responses. </summary>
         public static ProjectsAgentProtocol Responses { get; } = new ProjectsAgentProtocol(ResponsesValue);
+
+        /// <summary> Gets the Mcp. </summary>
+        public static ProjectsAgentProtocol Mcp { get; } = new ProjectsAgentProtocol(McpValue);
 
         /// <summary> Gets the Invocations. </summary>
         public static ProjectsAgentProtocol Invocations { get; } = new ProjectsAgentProtocol(InvocationsValue);

@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.GuestConfiguration
     {
         private readonly ClientDiagnostics _guestConfigurationAssignmentsVMSSClientDiagnostics;
         private readonly GuestConfigurationAssignmentsVMSS _guestConfigurationAssignmentsVMSSRestClient;
-        private readonly ClientDiagnostics _guestConfigurationAssignmentReportsVMSSClientDiagnostics;
-        private readonly GuestConfigurationAssignmentReportsVMSS _guestConfigurationAssignmentReportsVMSSRestClient;
 
         /// <summary> Initializes a new instance of GuestConfigurationVmssAssignmentCollection for mocking. </summary>
         protected GuestConfigurationVmssAssignmentCollection()
@@ -43,8 +41,6 @@ namespace Azure.ResourceManager.GuestConfiguration
             TryGetApiVersion(GuestConfigurationVmssAssignmentResource.ResourceType, out string guestConfigurationVmssAssignmentApiVersion);
             _guestConfigurationAssignmentsVMSSClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVmssAssignmentResource.ResourceType.Namespace, Diagnostics);
             _guestConfigurationAssignmentsVMSSRestClient = new GuestConfigurationAssignmentsVMSS(_guestConfigurationAssignmentsVMSSClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmssAssignmentApiVersion ?? "2024-04-05");
-            _guestConfigurationAssignmentReportsVMSSClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVmssAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _guestConfigurationAssignmentReportsVMSSRestClient = new GuestConfigurationAssignmentReportsVMSS(_guestConfigurationAssignmentReportsVMSSClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmssAssignmentApiVersion ?? "2024-04-05");
             ValidateResourceId(id);
         }
 

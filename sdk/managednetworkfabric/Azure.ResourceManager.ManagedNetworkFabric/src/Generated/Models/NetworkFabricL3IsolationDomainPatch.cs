@@ -21,20 +21,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="NetworkFabricL3IsolationDomainPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: "True" | "False". </param>
         /// <param name="redistributeStaticRoutes"> Advertise Static Routes. Ex: "True" | "False". </param>
         /// <param name="aggregateRouteConfiguration"> Aggregate route configurations. </param>
         /// <param name="connectedSubnetRoutePolicy"> Connected Subnet RoutePolicy. </param>
-        internal NetworkFabricL3IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy) : base(tags, serializedAdditionalRawData)
+        /// <param name="staticRoutePolicy"> Static Route - route policy. </param>
+        /// <param name="v4RoutePrefixLimit"> IPv4 VRF Limit configuration. </param>
+        /// <param name="v6RoutePrefixLimit"> IPv6 VRF Limit configuration. </param>
+        /// <param name="exportPolicyConfiguration"> BMP Export Policy configuration. </param>
+        internal NetworkFabricL3IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricManagedServiceIdentityPatch identity, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, StaticRoutePolicyPatch staticRoutePolicy, RoutePrefixLimitPatchProperties v4RoutePrefixLimit, RoutePrefixLimitPatchProperties v6RoutePrefixLimit, BmpExportPolicyPatchProperties exportPolicyConfiguration) : base(tags, serializedAdditionalRawData)
         {
+            Identity = identity;
             Annotation = annotation;
             RedistributeConnectedSubnets = redistributeConnectedSubnets;
             RedistributeStaticRoutes = redistributeStaticRoutes;
             AggregateRouteConfiguration = aggregateRouteConfiguration;
             ConnectedSubnetRoutePolicy = connectedSubnetRoutePolicy;
+            StaticRoutePolicy = staticRoutePolicy;
+            V4RoutePrefixLimit = v4RoutePrefixLimit;
+            V6RoutePrefixLimit = v6RoutePrefixLimit;
+            ExportPolicyConfiguration = exportPolicyConfiguration;
         }
 
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Advertise Connected Subnets. Ex: "True" | "False". </summary>
@@ -45,5 +57,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public AggregateRouteConfiguration AggregateRouteConfiguration { get; set; }
         /// <summary> Connected Subnet RoutePolicy. </summary>
         public ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy { get; set; }
+        /// <summary> Static Route - route policy. </summary>
+        internal StaticRoutePolicyPatch StaticRoutePolicy { get; set; }
+        /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
+        public L3ExportRoutePolicyPatch StaticRouteExportRoutePolicy
+        {
+            get => StaticRoutePolicy is null ? default : StaticRoutePolicy.StaticRouteExportRoutePolicy;
+            set
+            {
+                if (StaticRoutePolicy is null)
+                    StaticRoutePolicy = new StaticRoutePolicyPatch();
+                StaticRoutePolicy.StaticRouteExportRoutePolicy = value;
+            }
+        }
+
+        /// <summary> IPv4 VRF Limit configuration. </summary>
+        public RoutePrefixLimitPatchProperties V4RoutePrefixLimit { get; set; }
+        /// <summary> IPv6 VRF Limit configuration. </summary>
+        public RoutePrefixLimitPatchProperties V6RoutePrefixLimit { get; set; }
+        /// <summary> BMP Export Policy configuration. </summary>
+        internal BmpExportPolicyPatchProperties ExportPolicyConfiguration { get; set; }
+        /// <summary> Export Policy for the BGP Monitoring Protocol (BMP) Configuration. </summary>
+        public IList<BmpExportPolicy> ExportPolicies
+        {
+            get
+            {
+                if (ExportPolicyConfiguration is null)
+                    ExportPolicyConfiguration = new BmpExportPolicyPatchProperties();
+                return ExportPolicyConfiguration.ExportPolicies;
+            }
+        }
     }
 }

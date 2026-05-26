@@ -18,18 +18,32 @@ namespace Azure.AI.Extensions.OpenAI
             Argument.AssertNotNull(openApi, nameof(openApi));
 
             OpenApi = openApi;
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="openApi"> The openapi function definition. </param>
-        internal ResponsesOpenApiTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesOpenApiFunctionDefinition openApi) : base(@type, additionalBinaryDataProperties)
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        internal ResponsesOpenApiTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesOpenApiFunctionDefinition openApi, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             OpenApi = openApi;
+            ToolConfigs = toolConfigs;
         }
 
         /// <summary> The openapi function definition. </summary>
         public ResponsesOpenApiFunctionDefinition OpenApi { get; set; }
+
+        /// <summary>
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

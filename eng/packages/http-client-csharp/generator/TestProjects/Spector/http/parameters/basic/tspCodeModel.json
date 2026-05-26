@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "simpleContentType",
+      "name": "SimpleContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -22,7 +22,7 @@
     {
       "$id": "3",
       "kind": "constant",
-      "name": "simpleContentType1",
+      "name": "SimpleContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {

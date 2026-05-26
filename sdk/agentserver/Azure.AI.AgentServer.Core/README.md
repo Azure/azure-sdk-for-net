@@ -23,9 +23,25 @@ dotnet add package Azure.AI.AgentServer.Core --prerelease
 > foundation. Protocol logic has moved to [`Azure.AI.AgentServer.Responses`][responses] and
 > [`Azure.AI.AgentServer.Invocations`][invocations]. See the [Migration Guide][migration] for details.
 
-### Start a server (recommended)
+### Tier 1 — One-liner (recommended)
 
-Use the builder pattern to create a server. Protocol packages provide extension methods (`AddResponses<T>()`, `AddInvocations<T>()`) to register their endpoints:
+Each protocol package provides a one-line server that includes Core as a transitive dependency:
+
+```csharp
+// Responses protocol — install Azure.AI.AgentServer.Responses
+ResponsesServer.Run<EchoHandler>();
+
+// Invocations protocol — install Azure.AI.AgentServer.Invocations
+InvocationsServer.Run<MathHandler>();
+```
+
+This starts a Kestrel server on the `PORT` environment variable (default 8088) with OpenTelemetry, a `/readiness` health endpoint, `x-request-id` request correlation, `x-platform-server` version header, and inbound request logging — all configured automatically.
+
+Tier 1 supports customization via an `Action<AgentHostBuilder>` callback for registering additional services, middleware, or configuration. See the protocol-specific README for details.
+
+### Tier 2 — Builder pattern
+
+Use `AgentHost.CreateBuilder()` when you need to compose multiple protocols, register custom services, or customize the host:
 
 ```C# Snippet:Core_ReadMe_CreateBuilder
 var builder = AgentHost.CreateBuilder();
@@ -40,7 +56,23 @@ var app = builder.Build();
 app.Run();
 ```
 
-This starts a Kestrel server with OpenTelemetry, a `/readiness` health endpoint, and the `x-platform-server` identity header.
+The builder provides all the same defaults as Tier 1 (OpenTelemetry, health endpoint, request correlation, version header, logging). Access the underlying `WebApplicationBuilder` via `builder.WebApplicationBuilder` for full ASP.NET Core customization (CORS, authentication, custom middleware, etc.).
+
+### Tier 3 — Standalone (existing apps)
+
+If you have an existing ASP.NET Core application, call `AddAgentServerCore()` and `UseAgentServerCore()` to opt in to Core middleware, then register protocol endpoints alongside your own:
+
+```C# Snippet:Core_ReadMe_Tier3Setup
+var builder = WebApplication.CreateBuilder();
+builder.Services.AddAgentServerCore();
+
+var app = builder.Build();
+app.UseAgentServerCore();
+app.MapGet("/hello", () => "Hello!");
+app.Run();
+```
+
+This enables request correlation (`x-request-id`), server version header (`x-platform-server`), and inbound request logging. See the protocol-specific Tier 3 samples ([Responses][responses_tier3], [Invocations][invocations_tier3]) for complete examples including handler registration, health probes, and OpenTelemetry setup.
 
 ## Key concepts
 
@@ -52,9 +84,40 @@ The static entry point. `AgentHost.CreateBuilder()` returns an `AgentHostBuilder
 
 Configures the underlying ASP.NET Core host with sensible defaults: Kestrel on the `PORT` environment variable (or 8088), OpenTelemetry traces and metrics, a `/readiness` health endpoint, and `x-platform-server` version header. Protocol packages use `RegisterProtocol()` to add their endpoints — each protocol registers its identity segment with the `ServerVersionRegistry`.
 
-### AgentHostApp
+### PlatformHeaders
 
-The built application. Call `Run()` to start listening. Wraps `WebApplication` with server-specific configuration applied.
+The `PlatformHeaders` static class defines all HTTP header name constants used across the AgentServer platform. Using these constants avoids typos and keeps header names consistent across protocol packages.
+
+| Constant | Header | Direction | Description |
+|----------|--------|-----------|-------------|
+| `RequestId` | `x-request-id` | Request ↔ Response | Request correlation ID |
+| `ServerVersion` | `x-platform-server` | Response | Server SDK identity |
+| `SessionId` | `x-agent-session-id` | Response | Resolved session ID |
+| `UserIsolationKey` | `x-agent-user-isolation-key` | Request | Platform user partition key |
+| `ChatIsolationKey` | `x-agent-chat-isolation-key` | Request | Platform conversation partition key |
+| `ClientHeaderPrefix` | `x-client-` | Request | Pass-through client header prefix |
+| `ErrorSource` | `x-platform-error-source` | Response | Error origin classification |
+| `ErrorDetail` | `x-platform-error-detail` | Response | Diagnostic error context |
+
+### Request correlation (`x-request-id`)
+
+`RequestIdMiddleware` sets the `x-request-id` response header on every HTTP response. The value is resolved in priority order:
+
+1. OpenTelemetry trace ID (if an `Activity` is active)
+2. Incoming `x-request-id` request header (if present)
+3. New GUID (fallback)
+
+### Error source classification
+
+All error responses (4xx/5xx) include the `x-platform-error-source` header to classify where the error originated:
+
+| Value | Meaning | Example |
+|-------|---------|---------|
+| `user` | Caller's input is invalid — fix the request and retry | Bad JSON, missing field, unknown resource ID |
+| `platform` | SDK or infrastructure failure — not the caller's fault | Storage unreachable, auth failure, internal timeout |
+| `upstream` | Developer's handler code failed | Handler threw exception, protocol violation |
+
+Platform errors also include `x-platform-error-detail` with diagnostic context (exception type, message, stack trace). User and upstream errors omit the detail header.
 
 ### FoundryEnvironment
 
@@ -102,3 +165,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 [migration]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Core/MigrationGuide.md
 [responses]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses
 [invocations]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations
+[responses_tier3]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample9_Tier3SelfHosting.md
+[invocations_tier3]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample7_Tier3SelfHosting.md

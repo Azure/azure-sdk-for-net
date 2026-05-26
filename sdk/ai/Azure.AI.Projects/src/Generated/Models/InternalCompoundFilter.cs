@@ -36,7 +36,7 @@ namespace OpenAI
         }
 
         /// <summary> Type of operation: `and` or `or`. </summary>
-        public FileSearchToolFiltersType1 Type { get; }
+        public FileSearchToolFiltersType1 Type { get; set; }
 
         /// <summary>
         /// Array of filters to combine. Items can be `ComparisonFilter` or `CompoundFilter`.

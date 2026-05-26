@@ -177,7 +177,7 @@ public sealed class AgentHostBuilder
         // Log startup configuration
         LogStartupConfiguration(app, shutdownTimeout);
 
-        // Middleware pipeline
+        // Middleware pipeline (also enables WebSocket upgrade handling)
         app.UseAgentServerCore();
 
         // Health endpoint
@@ -199,13 +199,14 @@ public sealed class AgentHostBuilder
         // Platform environment
         logger.LogInformation(
             "AgentServer platform environment: IsHosted={IsHosted} AgentName={AgentName} AgentVersion={AgentVersion} " +
-            "Port={Port} SessionId={SessionId} SseKeepAliveInterval={SseKeepAliveInterval}",
+            "Port={Port} SessionId={SessionId} SseKeepAliveInterval={SseKeepAliveInterval} WebSocketKeepAliveInterval={WebSocketKeepAliveInterval}",
             FoundryEnvironment.IsHosted,
             FoundryEnvironment.AgentName ?? "(not set)",
             FoundryEnvironment.AgentVersion ?? "(not set)",
             FoundryEnvironment.Port,
             FoundryEnvironment.SessionId ?? "(not set)",
-            FoundryEnvironment.SseKeepAliveInterval == Timeout.InfiniteTimeSpan ? "disabled" : FoundryEnvironment.SseKeepAliveInterval.ToString());
+            FoundryEnvironment.SseKeepAliveInterval == Timeout.InfiniteTimeSpan ? "disabled" : FoundryEnvironment.SseKeepAliveInterval.ToString(),
+            FoundryEnvironment.WebSocketKeepAliveInterval == Timeout.InfiniteTimeSpan ? "disabled" : FoundryEnvironment.WebSocketKeepAliveInterval.ToString());
 
         // Connectivity (mask sensitive values)
         logger.LogInformation(
