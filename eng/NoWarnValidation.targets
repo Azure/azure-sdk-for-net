@@ -172,19 +172,29 @@
       <Code Type="Fragment" Language="cs"><![CDATA[
         int line = 1;
         int column = 1;
-        if (System.IO.File.Exists(ProjectFile))
+        try
         {
-          var lines = System.IO.File.ReadAllLines(ProjectFile);
-          for (int i = 0; i < lines.Length; i++)
+          if (System.IO.File.Exists(ProjectFile))
           {
-            int col = lines[i].IndexOf("NoWarn", System.StringComparison.OrdinalIgnoreCase);
-            if (col >= 0)
+            var lines = System.IO.File.ReadAllLines(ProjectFile);
+            for (int i = 0; i < lines.Length; i++)
             {
-              line = i + 1;
-              column = col + 1;
-              break;
+              int col = lines[i].IndexOf("NoWarn", System.StringComparison.OrdinalIgnoreCase);
+              if (col >= 0)
+              {
+                line = i + 1;
+                column = col + 1;
+                break;
+              }
             }
           }
+        }
+        catch
+        {
+          // Fall back to line/column 1 if the csproj can't be read for any reason —
+          // we still want to surface AZSDK0002 with the project file as the navigation target.
+          line = 1;
+          column = 1;
         }
         string message = "Unapproved NoWarn codes in " + ProjectName + ": " + UnapprovedCodes +
           ". Do not use NoWarn to suppress warnings. Preferred fix: remove the suppression and fix the underlying warning." +
