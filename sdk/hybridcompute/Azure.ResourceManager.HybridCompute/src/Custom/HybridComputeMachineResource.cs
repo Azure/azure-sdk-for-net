@@ -26,5 +26,12 @@ namespace Azure.ResourceManager.HybridCompute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<PrivateLinkScopeValidationDetails> GetValidationDetailsForMachinePrivateLinkScope(CancellationToken cancellationToken = default)
             => GetValidationDetailsForMachine(cancellationToken);
+
+        /// <summary> Gets the default license profile resource for this machine. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual HybridComputeLicenseProfileResource GetHybridComputeLicenseProfile()
+        {
+            return GetCachedClient(client => new HybridComputeLicenseProfileResource(client, HybridComputeLicenseProfileResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name)));
+        }
     }
 }
