@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations
     // still forwarding through mockable resources for testability.
     public static partial class ReservationsExtensions
     {
-         /// <summary>
+        /// <summary>
         /// Get the details of the `ReservationOrder`.
         /// <list type="bullet">
         /// <item>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Reservations
             return GetMockableReservationsTenantResource(tenantResource).GetReservationOrderAsync(reservationOrderId, expand, cancellationToken);
         }
 
-       /// <summary>
+        /// <summary>
         /// Get the details of the `ReservationOrder`.
         /// <list type="bullet">
         /// <item>

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Reservations
     [TypeSpecCodeGenSuppress("SplitReservationAsync", typeof(WaitUntil), typeof(SplitContent), typeof(CancellationToken))]
     public partial class ReservationOrderResource
     {
-                /// <summary>
+        /// <summary>
         /// Return a reservation.
         /// <list type="bullet">
         /// <item>
