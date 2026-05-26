@@ -15,33 +15,36 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    internal partial class TenantEventImpactedResourcesGetByTenantIdAndEventIdAsyncCollectionResultOfT : AsyncPageable<ResourceHealthEventImpactedResourceData>
+    internal partial class ResourceHealthEventImpactedResourcesGetBySubscriptionIdAndEventIdAsyncCollectionResultOfT : AsyncPageable<ResourceHealthEventImpactedResourceData>
     {
-        private readonly TenantEventImpactedResources _client;
+        private readonly ResourceHealthEventImpactedResources _client;
+        private readonly string _subscriptionId;
         private readonly string _eventTrackingId;
         private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of TenantEventImpactedResourcesGetByTenantIdAndEventIdAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The TenantEventImpactedResources client used to send requests. </param>
+        /// <summary> Initializes a new instance of ResourceHealthEventImpactedResourcesGetBySubscriptionIdAndEventIdAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ResourceHealthEventImpactedResources client used to send requests. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public TenantEventImpactedResourcesGetByTenantIdAndEventIdAsyncCollectionResultOfT(TenantEventImpactedResources client, string eventTrackingId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ResourceHealthEventImpactedResourcesGetBySubscriptionIdAndEventIdAsyncCollectionResultOfT(ResourceHealthEventImpactedResources client, string subscriptionId, string eventTrackingId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
+            _subscriptionId = subscriptionId;
             _eventTrackingId = eventTrackingId;
             _filter = filter;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of TenantEventImpactedResourcesGetByTenantIdAndEventIdAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ResourceHealthEventImpactedResourcesGetBySubscriptionIdAndEventIdAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of TenantEventImpactedResourcesGetByTenantIdAndEventIdAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ResourceHealthEventImpactedResourcesGetBySubscriptionIdAndEventIdAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ResourceHealthEventImpactedResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByTenantIdAndEventIdRequest(nextLink, _eventTrackingId, _filter, _context) : _client.CreateGetByTenantIdAndEventIdRequest(_eventTrackingId, _filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionIdAndEventIdRequest(nextLink, _subscriptionId, _eventTrackingId, _filter, _context) : _client.CreateGetBySubscriptionIdAndEventIdRequest(_subscriptionId, _eventTrackingId, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             if (options.Format != "W" && Optional.IsDefined(TargetResourceType))
             {
                 writer.WritePropertyName("targetResourceType"u8);
-                writer.WriteStringValue(TargetResourceType);
+                writer.WriteStringValue(TargetResourceType.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
             {
@@ -141,8 +142,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            string targetResourceType = default;
-            string targetResourceId = default;
+            ResourceType? targetResourceType = default;
+            ResourceIdentifier targetResourceId = default;
             string targetRegion = default;
             IList<ResourceHealthKeyValueItem> info = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,12 +151,20 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 if (prop.NameEquals("targetResourceType"u8))
                 {
-                    targetResourceType = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("targetResourceId"u8))
                 {
-                    targetResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("targetRegion"u8))

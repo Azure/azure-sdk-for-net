@@ -117,24 +117,6 @@ namespace Azure.ResourceManager.ResourceHealth
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ResourceHealthEventImpactedResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetResourceHealthEventImpactedResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ResourceHealthEventImpactedResource"/> object. </returns>
-        public static ResourceHealthEventImpactedResource GetResourceHealthEventImpactedResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableResourceHealthArmClient(client).GetResourceHealthEventImpactedResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ResourceHealthMetadataEntityResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -168,6 +150,24 @@ namespace Azure.ResourceManager.ResourceHealth
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableResourceHealthArmClient(client).GetTenantResourceHealthEventImpactedResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceHealthEventImpactedResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetResourceHealthEventImpactedResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ResourceHealthEventImpactedResource"/> object. </returns>
+        public static ResourceHealthEventImpactedResource GetResourceHealthEventImpactedResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableResourceHealthArmClient(client).GetResourceHealthEventImpactedResource(id);
         }
 
         /// <summary>
@@ -307,27 +307,27 @@ namespace Azure.ResourceManager.ResourceHealth
         }
 
         /// <summary>
-        /// Gets a collection of Events in the <see cref="SubscriptionResource"/>
+        /// Gets a collection of ResourceHealthEvents in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceHealthSubscriptionResource.GetEvents()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceHealthSubscriptionResource.GetResourceHealthEvents()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of Events and their operations over a ResourceHealthEventResource. </returns>
-        public static ResourceHealthEventCollection GetEvents(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of ResourceHealthEvents and their operations over a ResourceHealthEventResource. </returns>
+        public static ResourceHealthEventCollection GetResourceHealthEvents(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableResourceHealthSubscriptionResource(subscriptionResource).GetEvents();
+            return GetMockableResourceHealthSubscriptionResource(subscriptionResource).GetResourceHealthEvents();
         }
 
         /// <summary>
         /// Service health event in the subscription by event tracking id
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceHealthSubscriptionResource.GetEventAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceHealthSubscriptionResource.GetResourceHealthEventAsync(string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -337,18 +337,18 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ResourceHealthEventResource>> GetEventAsync(this SubscriptionResource subscriptionResource, string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceHealthEventResource>> GetResourceHealthEventAsync(this SubscriptionResource subscriptionResource, string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableResourceHealthSubscriptionResource(subscriptionResource).GetEventAsync(eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourceHealthSubscriptionResource(subscriptionResource).GetResourceHealthEventAsync(eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Service health event in the subscription by event tracking id
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableResourceHealthSubscriptionResource.GetEvent(string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableResourceHealthSubscriptionResource.GetResourceHealthEvent(string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -358,11 +358,11 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ResourceHealthEventResource> GetEvent(this SubscriptionResource subscriptionResource, string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
+        public static Response<ResourceHealthEventResource> GetResourceHealthEvent(this SubscriptionResource subscriptionResource, string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableResourceHealthSubscriptionResource(subscriptionResource).GetEvent(eventTrackingId, filter, queryStartTime, cancellationToken);
+            return GetMockableResourceHealthSubscriptionResource(subscriptionResource).GetResourceHealthEvent(eventTrackingId, filter, queryStartTime, cancellationToken);
         }
 
         /// <summary>

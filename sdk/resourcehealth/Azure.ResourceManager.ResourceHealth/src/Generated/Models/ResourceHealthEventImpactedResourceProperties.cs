@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="targetRegion"> Impacted resource region name. </param>
         /// <param name="info"> Additional information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHealthEventImpactedResourceProperties(string targetResourceType, string targetResourceId, string targetRegion, IList<ResourceHealthKeyValueItem> info, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceHealthEventImpactedResourceProperties(ResourceType? targetResourceType, ResourceIdentifier targetResourceId, string targetRegion, IList<ResourceHealthKeyValueItem> info, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceType = targetResourceType;
             TargetResourceId = targetResourceId;
@@ -39,10 +40,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         }
 
         /// <summary> Resource type within Microsoft cloud. </summary>
-        public string TargetResourceType { get; }
+        public ResourceType? TargetResourceType { get; }
 
         /// <summary> Identity for resource within Microsoft cloud. </summary>
-        public string TargetResourceId { get; }
+        public ResourceIdentifier TargetResourceId { get; }
 
         /// <summary> Impacted resource region name. </summary>
         public string TargetRegion { get; }

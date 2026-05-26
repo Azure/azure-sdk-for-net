@@ -40,6 +40,24 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Properties of impacted resource. </summary>
         internal ResourceHealthEventImpactedResourceProperties Properties { get; }
 
+        /// <summary> Resource type within Microsoft cloud. </summary>
+        public ResourceType? TargetResourceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetResourceType;
+            }
+        }
+
+        /// <summary> Identity for resource within Microsoft cloud. </summary>
+        public ResourceIdentifier TargetResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetResourceId;
+            }
+        }
+
         /// <summary> Impacted resource region name. </summary>
         public string TargetRegion
         {

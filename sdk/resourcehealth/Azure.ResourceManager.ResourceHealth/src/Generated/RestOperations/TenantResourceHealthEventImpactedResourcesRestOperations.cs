@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    internal partial class TenantEventImpactedResources
+    internal partial class TenantResourceHealthEventImpactedResources
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of TenantEventImpactedResources for mocking. </summary>
-        protected TenantEventImpactedResources()
+        /// <summary> Initializes a new instance of TenantResourceHealthEventImpactedResources for mocking. </summary>
+        protected TenantResourceHealthEventImpactedResources()
         {
         }
 
-        /// <summary> Initializes a new instance of TenantEventImpactedResources. </summary>
+        /// <summary> Initializes a new instance of TenantResourceHealthEventImpactedResources. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal TenantEventImpactedResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal TenantResourceHealthEventImpactedResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

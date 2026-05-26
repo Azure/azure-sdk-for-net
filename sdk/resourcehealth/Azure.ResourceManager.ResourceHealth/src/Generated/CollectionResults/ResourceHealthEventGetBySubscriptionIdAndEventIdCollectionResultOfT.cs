@@ -14,23 +14,23 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    internal partial class SecurityAdvisoryImpactedResourcesGetBySubscriptionIdAndEventIdCollectionResultOfT : Pageable<ResourceHealthEventImpactedResourceData>
+    internal partial class ResourceHealthEventGetBySubscriptionIdAndEventIdCollectionResultOfT : Pageable<ResourceHealthEventImpactedResourceData>
     {
-        private readonly SecurityAdvisoryImpactedResources _client;
+        private readonly ResourceHealthEvent _client;
         private readonly string _subscriptionId;
         private readonly string _eventTrackingId;
         private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of SecurityAdvisoryImpactedResourcesGetBySubscriptionIdAndEventIdCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The SecurityAdvisoryImpactedResources client used to send requests. </param>
+        /// <summary> Initializes a new instance of ResourceHealthEventGetBySubscriptionIdAndEventIdCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ResourceHealthEvent client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SecurityAdvisoryImpactedResourcesGetBySubscriptionIdAndEventIdCollectionResultOfT(SecurityAdvisoryImpactedResources client, string subscriptionId, string eventTrackingId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ResourceHealthEventGetBySubscriptionIdAndEventIdCollectionResultOfT(ResourceHealthEvent client, string subscriptionId, string eventTrackingId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.ResourceHealth
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of SecurityAdvisoryImpactedResourcesGetBySubscriptionIdAndEventIdCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ResourceHealthEventGetBySubscriptionIdAndEventIdCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of SecurityAdvisoryImpactedResourcesGetBySubscriptionIdAndEventIdCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ResourceHealthEventGetBySubscriptionIdAndEventIdCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ResourceHealthEventImpactedResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

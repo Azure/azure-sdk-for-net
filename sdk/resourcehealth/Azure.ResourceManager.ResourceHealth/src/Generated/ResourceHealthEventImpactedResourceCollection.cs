@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.ResourceHealth
     /// <summary>
     /// A class representing a collection of <see cref="ResourceHealthEventImpactedResource"/> and their operations.
     /// Each <see cref="ResourceHealthEventImpactedResource"/> in the collection will belong to the same instance of <see cref="ResourceHealthEventResource"/>.
-    /// To get a <see cref="ResourceHealthEventImpactedResourceCollection"/> instance call the GetImpactedResources method from an instance of <see cref="ResourceHealthEventResource"/>.
+    /// To get a <see cref="ResourceHealthEventImpactedResourceCollection"/> instance call the GetResourceHealthEventImpactedResources method from an instance of <see cref="ResourceHealthEventResource"/>.
     /// </summary>
     public partial class ResourceHealthEventImpactedResourceCollection : ArmCollection, IEnumerable<ResourceHealthEventImpactedResource>, IAsyncEnumerable<ResourceHealthEventImpactedResource>
     {
-        private readonly ClientDiagnostics _impactedResourcesClientDiagnostics;
-        private readonly ImpactedResources _impactedResourcesRestClient;
+        private readonly ClientDiagnostics _resourceHealthEventImpactedResourcesClientDiagnostics;
+        private readonly ResourceHealthEventImpactedResources _resourceHealthEventImpactedResourcesRestClient;
 
         /// <summary> Initializes a new instance of ResourceHealthEventImpactedResourceCollection for mocking. </summary>
         protected ResourceHealthEventImpactedResourceCollection()
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ResourceHealthEventImpactedResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceHealthEventImpactedResource.ResourceType, out string impactedResourceApiVersion);
-            _impactedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceHealthEventImpactedResource.ResourceType.Namespace, Diagnostics);
-            _impactedResourcesRestClient = new ImpactedResources(_impactedResourcesClientDiagnostics, Pipeline, Endpoint, impactedResourceApiVersion ?? "2025-05-01");
+            TryGetApiVersion(ResourceHealthEventImpactedResource.ResourceType, out string resourceHealthEventImpactedResourceApiVersion);
+            _resourceHealthEventImpactedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceHealthEventImpactedResource.ResourceType.Namespace, Diagnostics);
+            _resourceHealthEventImpactedResourcesRestClient = new ResourceHealthEventImpactedResources(_resourceHealthEventImpactedResourcesClientDiagnostics, Pipeline, Endpoint, resourceHealthEventImpactedResourceApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             Argument.AssertNotNullOrEmpty(impactedResourceName, nameof(impactedResourceName));
 
-            using DiagnosticScope scope = _impactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.Get");
+            using DiagnosticScope scope = _resourceHealthEventImpactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.Get");
             scope.Start();
             try
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactedResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, impactedResourceName, context);
+                HttpMessage message = _resourceHealthEventImpactedResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, impactedResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceHealthEventImpactedResourceData> response = Response.FromValue(ResourceHealthEventImpactedResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             Argument.AssertNotNullOrEmpty(impactedResourceName, nameof(impactedResourceName));
 
-            using DiagnosticScope scope = _impactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.Get");
+            using DiagnosticScope scope = _resourceHealthEventImpactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.Get");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactedResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, impactedResourceName, context);
+                HttpMessage message = _resourceHealthEventImpactedResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, impactedResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceHealthEventImpactedResourceData> response = Response.FromValue(ResourceHealthEventImpactedResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,8 +178,8 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceHealthEventImpactedResourceData, ResourceHealthEventImpactedResource>(new ImpactedResourcesGetBySubscriptionIdAndEventIdAsyncCollectionResultOfT(
-                _impactedResourcesRestClient,
+            return new AsyncPageableWrapper<ResourceHealthEventImpactedResourceData, ResourceHealthEventImpactedResource>(new ResourceHealthEventImpactedResourcesGetBySubscriptionIdAndEventIdAsyncCollectionResultOfT(
+                _resourceHealthEventImpactedResourcesRestClient,
                 Id.SubscriptionId,
                 Id.Name,
                 filter,
@@ -213,8 +213,8 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceHealthEventImpactedResourceData, ResourceHealthEventImpactedResource>(new ImpactedResourcesGetBySubscriptionIdAndEventIdCollectionResultOfT(
-                _impactedResourcesRestClient,
+            return new PageableWrapper<ResourceHealthEventImpactedResourceData, ResourceHealthEventImpactedResource>(new ResourceHealthEventImpactedResourcesGetBySubscriptionIdAndEventIdCollectionResultOfT(
+                _resourceHealthEventImpactedResourcesRestClient,
                 Id.SubscriptionId,
                 Id.Name,
                 filter,
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             Argument.AssertNotNullOrEmpty(impactedResourceName, nameof(impactedResourceName));
 
-            using DiagnosticScope scope = _impactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.Exists");
+            using DiagnosticScope scope = _resourceHealthEventImpactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactedResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, impactedResourceName, context);
+                HttpMessage message = _resourceHealthEventImpactedResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, impactedResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceHealthEventImpactedResourceData> response = default;
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             Argument.AssertNotNullOrEmpty(impactedResourceName, nameof(impactedResourceName));
 
-            using DiagnosticScope scope = _impactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.Exists");
+            using DiagnosticScope scope = _resourceHealthEventImpactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactedResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, impactedResourceName, context);
+                HttpMessage message = _resourceHealthEventImpactedResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, impactedResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceHealthEventImpactedResourceData> response = default;
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             Argument.AssertNotNullOrEmpty(impactedResourceName, nameof(impactedResourceName));
 
-            using DiagnosticScope scope = _impactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _resourceHealthEventImpactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactedResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, impactedResourceName, context);
+                HttpMessage message = _resourceHealthEventImpactedResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, impactedResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceHealthEventImpactedResourceData> response = default;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             Argument.AssertNotNullOrEmpty(impactedResourceName, nameof(impactedResourceName));
 
-            using DiagnosticScope scope = _impactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _resourceHealthEventImpactedResourcesClientDiagnostics.CreateScope("ResourceHealthEventImpactedResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactedResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, impactedResourceName, context);
+                HttpMessage message = _resourceHealthEventImpactedResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, impactedResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceHealthEventImpactedResourceData> response = default;

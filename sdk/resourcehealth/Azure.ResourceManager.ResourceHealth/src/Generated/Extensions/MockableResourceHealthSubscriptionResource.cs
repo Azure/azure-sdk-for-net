@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
 
         private AvailabilityStatuses AvailabilityStatusesRestClient => _availabilityStatusesRestClient ??= new AvailabilityStatuses(AvailabilityStatusesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
-        /// <summary> Gets a collection of Events in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of Events and their operations over a ResourceHealthEventResource. </returns>
-        public virtual ResourceHealthEventCollection GetEvents()
+        /// <summary> Gets a collection of ResourceHealthEvents in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of ResourceHealthEvents and their operations over a ResourceHealthEventResource. </returns>
+        public virtual ResourceHealthEventCollection GetResourceHealthEvents()
         {
             return GetCachedClient(client => new ResourceHealthEventCollection(client, Id));
         }
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ResourceHealthEventResource>> GetEventAsync(string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceHealthEventResource>> GetResourceHealthEventAsync(string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
-            return await GetEvents().GetAsync(eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
+            return await GetResourceHealthEvents().GetAsync(eventTrackingId, filter, queryStartTime, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="eventTrackingId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventTrackingId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ResourceHealthEventResource> GetEvent(string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceHealthEventResource> GetResourceHealthEvent(string eventTrackingId, string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
-            return GetEvents().Get(eventTrackingId, filter, queryStartTime, cancellationToken);
+            return GetResourceHealthEvents().Get(eventTrackingId, filter, queryStartTime, cancellationToken);
         }
 
         /// <summary>

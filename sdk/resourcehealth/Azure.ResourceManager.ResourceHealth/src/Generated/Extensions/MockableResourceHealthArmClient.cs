@@ -71,15 +71,6 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             return new ChildAvailabilityStatusResource(Client, scope.AppendProviderResource("Microsoft.ResourceHealth", "childAvailabilityStatuses", "current"));
         }
 
-        /// <summary> Gets an object representing a <see cref="ResourceHealthEventImpactedResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceHealthEventImpactedResource"/> object. </returns>
-        public virtual ResourceHealthEventImpactedResource GetResourceHealthEventImpactedResource(ResourceIdentifier id)
-        {
-            ResourceHealthEventImpactedResource.ValidateResourceId(id);
-            return new ResourceHealthEventImpactedResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="ResourceHealthMetadataEntityResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ResourceHealthMetadataEntityResource"/> object. </returns>
@@ -96,6 +87,15 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         {
             TenantResourceHealthEventImpactedResource.ValidateResourceId(id);
             return new TenantResourceHealthEventImpactedResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ResourceHealthEventImpactedResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceHealthEventImpactedResource"/> object. </returns>
+        public virtual ResourceHealthEventImpactedResource GetResourceHealthEventImpactedResource(ResourceIdentifier id)
+        {
+            ResourceHealthEventImpactedResource.ValidateResourceId(id);
+            return new ResourceHealthEventImpactedResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ResourceHealthEventResource"/> along with the instance operations that can be performed on it but with no data. </summary>

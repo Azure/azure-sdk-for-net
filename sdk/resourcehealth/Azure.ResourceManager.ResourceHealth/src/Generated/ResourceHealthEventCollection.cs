@@ -22,14 +22,12 @@ namespace Azure.ResourceManager.ResourceHealth
     /// <summary>
     /// A class representing a collection of <see cref="ResourceHealthEventResource"/> and their operations.
     /// Each <see cref="ResourceHealthEventResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="ResourceHealthEventCollection"/> instance call the GetEvents method from an instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ResourceHealthEventCollection"/> instance call the GetResourceHealthEvents method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ResourceHealthEventCollection : ArmCollection, IEnumerable<ResourceHealthEventResource>, IAsyncEnumerable<ResourceHealthEventResource>
     {
-        private readonly ClientDiagnostics _eventClientDiagnostics;
-        private readonly Event _eventRestClient;
-        private readonly ClientDiagnostics _eventsClientDiagnostics;
-        private readonly Events _eventsRestClient;
+        private readonly ClientDiagnostics _resourceHealthEventClientDiagnostics;
+        private readonly ResourceHealthEvent _resourceHealthEventRestClient;
 
         /// <summary> Initializes a new instance of ResourceHealthEventCollection for mocking. </summary>
         protected ResourceHealthEventCollection()
@@ -41,11 +39,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ResourceHealthEventCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceHealthEventResource.ResourceType, out string eventApiVersion);
-            _eventClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceHealthEventResource.ResourceType.Namespace, Diagnostics);
-            _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Endpoint, eventApiVersion ?? "2025-05-01");
-            _eventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceHealthEventResource.ResourceType.Namespace, Diagnostics);
-            _eventsRestClient = new Events(_eventsClientDiagnostics, Pipeline, Endpoint, eventApiVersion ?? "2025-05-01");
+            TryGetApiVersion(ResourceHealthEventResource.ResourceType, out string resourceHealthEventApiVersion);
+            _resourceHealthEventClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceHealthEventResource.ResourceType.Namespace, Diagnostics);
+            _resourceHealthEventRestClient = new ResourceHealthEvent(_resourceHealthEventClientDiagnostics, Pipeline, Endpoint, resourceHealthEventApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 
@@ -86,7 +82,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
-            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("ResourceHealthEventCollection.Get");
+            using DiagnosticScope scope = _resourceHealthEventClientDiagnostics.CreateScope("ResourceHealthEventCollection.Get");
             scope.Start();
             try
             {
@@ -94,7 +90,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
+                HttpMessage message = _resourceHealthEventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceHealthEventData> response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +133,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
-            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("ResourceHealthEventCollection.Get");
+            using DiagnosticScope scope = _resourceHealthEventClientDiagnostics.CreateScope("ResourceHealthEventCollection.Get");
             scope.Start();
             try
             {
@@ -145,7 +141,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
+                HttpMessage message = _resourceHealthEventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceHealthEventData> response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
                 if (response.Value == null)
@@ -188,8 +184,8 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceHealthEventData, ResourceHealthEventResource>(new EventsGetBySubscriptionIdAsyncCollectionResultOfT(
-                _eventsRestClient,
+            return new AsyncPageableWrapper<ResourceHealthEventData, ResourceHealthEventResource>(new ResourceHealthEventGetBySubscriptionIdAsyncCollectionResultOfT(
+                _resourceHealthEventRestClient,
                 Id.SubscriptionId,
                 filter,
                 queryStartTime,
@@ -224,8 +220,8 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceHealthEventData, ResourceHealthEventResource>(new EventsGetBySubscriptionIdCollectionResultOfT(
-                _eventsRestClient,
+            return new PageableWrapper<ResourceHealthEventData, ResourceHealthEventResource>(new ResourceHealthEventGetBySubscriptionIdCollectionResultOfT(
+                _resourceHealthEventRestClient,
                 Id.SubscriptionId,
                 filter,
                 queryStartTime,
@@ -260,7 +256,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
-            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("ResourceHealthEventCollection.Exists");
+            using DiagnosticScope scope = _resourceHealthEventClientDiagnostics.CreateScope("ResourceHealthEventCollection.Exists");
             scope.Start();
             try
             {
@@ -268,7 +264,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
+                HttpMessage message = _resourceHealthEventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceHealthEventData> response = default;
@@ -319,7 +315,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
-            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("ResourceHealthEventCollection.Exists");
+            using DiagnosticScope scope = _resourceHealthEventClientDiagnostics.CreateScope("ResourceHealthEventCollection.Exists");
             scope.Start();
             try
             {
@@ -327,7 +323,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
+                HttpMessage message = _resourceHealthEventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceHealthEventData> response = default;
@@ -378,7 +374,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
-            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("ResourceHealthEventCollection.GetIfExists");
+            using DiagnosticScope scope = _resourceHealthEventClientDiagnostics.CreateScope("ResourceHealthEventCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -386,7 +382,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
+                HttpMessage message = _resourceHealthEventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceHealthEventData> response = default;
@@ -441,7 +437,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             Argument.AssertNotNullOrEmpty(eventTrackingId, nameof(eventTrackingId));
 
-            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("ResourceHealthEventCollection.GetIfExists");
+            using DiagnosticScope scope = _resourceHealthEventClientDiagnostics.CreateScope("ResourceHealthEventCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -449,7 +445,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
+                HttpMessage message = _resourceHealthEventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceHealthEventData> response = default;

@@ -351,9 +351,9 @@ namespace Azure.ResourceManager.ResourceHealth
             return new TenantResourceHealthEventGetByTenantIdAndEventIdCollectionResultOfT(_tenantResourceHealthEventRestClient, Id.Name, filter, context, "TenantResourceHealthEventResource.GetByTenantIdAndEventId");
         }
 
-        /// <summary> Gets a collection of TenantEventImpactedResources in the <see cref="TenantResourceHealthEventResource"/>. </summary>
-        /// <returns> An object representing collection of TenantEventImpactedResources and their operations over a TenantResourceHealthEventImpactedResource. </returns>
-        public virtual TenantResourceHealthEventImpactedResourceCollection GetTenantEventImpactedResources()
+        /// <summary> Gets a collection of TenantResourceHealthEventImpactedResources in the <see cref="TenantResourceHealthEventResource"/>. </summary>
+        /// <returns> An object representing collection of TenantResourceHealthEventImpactedResources and their operations over a TenantResourceHealthEventImpactedResource. </returns>
+        public virtual TenantResourceHealthEventImpactedResourceCollection GetTenantResourceHealthEventImpactedResources()
         {
             return GetCachedClient(client => new TenantResourceHealthEventImpactedResourceCollection(client, Id));
         }
@@ -364,11 +364,11 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="impactedResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TenantResourceHealthEventImpactedResource>> GetTenantEventImpactedResourceAsync(string impactedResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TenantResourceHealthEventImpactedResource>> GetTenantResourceHealthEventImpactedResourceAsync(string impactedResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(impactedResourceName, nameof(impactedResourceName));
 
-            return await GetTenantEventImpactedResources().GetAsync(impactedResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetTenantResourceHealthEventImpactedResources().GetAsync(impactedResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the specific impacted resource in the tenant by an event. </summary>
@@ -377,11 +377,11 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="impactedResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TenantResourceHealthEventImpactedResource> GetTenantEventImpactedResource(string impactedResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<TenantResourceHealthEventImpactedResource> GetTenantResourceHealthEventImpactedResource(string impactedResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(impactedResourceName, nameof(impactedResourceName));
 
-            return GetTenantEventImpactedResources().Get(impactedResourceName, cancellationToken);
+            return GetTenantResourceHealthEventImpactedResources().Get(impactedResourceName, cancellationToken);
         }
     }
 }

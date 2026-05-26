@@ -14,23 +14,23 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    internal partial class EventsGetBySubscriptionIdCollectionResultOfT : Pageable<ResourceHealthEventData>
+    internal partial class ResourceHealthEventGetBySubscriptionIdCollectionResultOfT : Pageable<ResourceHealthEventData>
     {
-        private readonly Events _client;
+        private readonly ResourceHealthEvent _client;
         private readonly string _subscriptionId;
         private readonly string _filter;
         private readonly string _queryStartTime;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of EventsGetBySubscriptionIdCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Events client used to send requests. </param>
+        /// <summary> Initializes a new instance of ResourceHealthEventGetBySubscriptionIdCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ResourceHealthEvent client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="queryStartTime"> Specifies from when to return events (default is 3 days), based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public EventsGetBySubscriptionIdCollectionResultOfT(Events client, string subscriptionId, string filter, string queryStartTime, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ResourceHealthEventGetBySubscriptionIdCollectionResultOfT(ResourceHealthEvent client, string subscriptionId, string filter, string queryStartTime, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.ResourceHealth
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of EventsGetBySubscriptionIdCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ResourceHealthEventGetBySubscriptionIdCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of EventsGetBySubscriptionIdCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ResourceHealthEventGetBySubscriptionIdCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ResourceHealthEventData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
