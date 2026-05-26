@@ -142,6 +142,9 @@ namespace Azure.Security.CodeTransparency
                 if (!IsTrustedRedirectTarget(redirectUri))
                 {
                     string origin = FormatOrigin(redirectUri);
+                    // Invalidate any existing cached primary — the node that issued this
+                    // untrusted redirect is misbehaving and must not receive further traffic.
+                    InvalidateCachedPrimaryNode();
                     message.Response.Dispose();
                     throw new InvalidOperationException(
                         $"Confidential Ledger refused to follow redirect to untrusted target origin: {origin}");
