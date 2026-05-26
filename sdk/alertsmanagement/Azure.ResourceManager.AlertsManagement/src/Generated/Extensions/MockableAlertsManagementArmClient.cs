@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableAlertsManagementArmClient : ArmResource
     {
-        private ClientDiagnostics _serviceAlertClientDiagnostics;
-        private ServiceAlert _serviceAlertRestClient;
+        private ClientDiagnostics _alertsClientDiagnostics;
+        private Alerts _alertsRestClient;
 
         /// <summary> Initializes a new instance of MockableAlertsManagementArmClient for mocking. </summary>
         protected MockableAlertsManagementArmClient()
@@ -35,9 +35,18 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         {
         }
 
-        private ClientDiagnostics ServiceAlertClientDiagnostics => _serviceAlertClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AlertsManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AlertsManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ServiceAlert ServiceAlertRestClient => _serviceAlertRestClient ??= new ServiceAlert(ServiceAlertClientDiagnostics, Pipeline, Endpoint, "2025-05-25-preview");
+        private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Endpoint, "2025-05-25-preview");
+
+        /// <summary> Gets an object representing a <see cref="ServiceAlertTenantResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServiceAlertTenantResource"/> object. </returns>
+        public virtual ServiceAlertTenantResource GetServiceAlertTenantResource(ResourceIdentifier id)
+        {
+            ServiceAlertTenantResource.ValidateResourceId(id);
+            return new ServiceAlertTenantResource(Client, id);
+        }
 
         /// <summary> Gets an object representing a <see cref="ServiceAlertResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -48,21 +57,12 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
             return new ServiceAlertResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ScopedServiceAlertResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScopedServiceAlertResource"/> object. </returns>
-        public virtual ScopedServiceAlertResource GetScopedServiceAlertResource(ResourceIdentifier id)
-        {
-            ScopedServiceAlertResource.ValidateResourceId(id);
-            return new ScopedServiceAlertResource(Client, id);
-        }
-
-        /// <summary> Gets a collection of <see cref="ScopedServiceAlertCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="ServiceAlertCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="ScopedServiceAlertResource"/> objects. </returns>
-        public virtual ScopedServiceAlertCollection GetScopedServiceAlerts(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="ServiceAlertResource"/> objects. </returns>
+        public virtual ServiceAlertCollection GetServiceAlerts(ResourceIdentifier scope)
         {
-            return new ScopedServiceAlertCollection(Client, scope);
+            return new ServiceAlertCollection(Client, scope);
         }
 
         /// <summary> Get information related to a specific alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to get alert by id then use parent resource of scope. So in this example get alert by id call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}'. </summary>
@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ScopedServiceAlertResource> GetScopedServiceAlert(ResourceIdentifier scope, Guid alertId, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceAlertResource> GetServiceAlert(ResourceIdentifier scope, Guid alertId, CancellationToken cancellationToken = default)
         {
-            return GetScopedServiceAlerts(scope).Get(alertId, cancellationToken);
+            return GetServiceAlerts(scope).Get(alertId, cancellationToken);
         }
 
         /// <summary> Get information related to a specific alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to get alert by id then use parent resource of scope. So in this example get alert by id call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}'. </summary>
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ScopedServiceAlertResource>> GetScopedServiceAlertAsync(ResourceIdentifier scope, Guid alertId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceAlertResource>> GetServiceAlertAsync(ResourceIdentifier scope, Guid alertId, CancellationToken cancellationToken = default)
         {
-            return await GetScopedServiceAlerts(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
+            return await GetServiceAlerts(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using DiagnosticScope scope0 = ServiceAlertClientDiagnostics.CreateScope("MockableAlertsManagementArmClient.GetServiceAlertSummary");
+            using DiagnosticScope scope0 = AlertsClientDiagnostics.CreateScope("MockableAlertsManagementArmClient.GetServiceAlertSummary");
             scope0.Start();
             try
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServiceAlertRestClient.CreateGetServiceAlertSummaryRequest(scope.ToString(), groupby.ToString(), includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService?.ToString(), monitorCondition?.ToString(), severity?.ToString(), alertState?.ToString(), alertRule, timeRange?.ToString(), customTimeRange, context);
+                HttpMessage message = AlertsRestClient.CreateGetServiceAlertSummaryRequest(scope.ToString(), groupby.ToString(), includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService?.ToString(), monitorCondition?.ToString(), severity?.ToString(), alertState?.ToString(), alertRule, timeRange?.ToString(), customTimeRange, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceAlertSummary> response = Response.FromValue(ServiceAlertSummary.FromResponse(result), result);
                 if (response.Value == null)
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using DiagnosticScope scope0 = ServiceAlertClientDiagnostics.CreateScope("MockableAlertsManagementArmClient.GetServiceAlertSummary");
+            using DiagnosticScope scope0 = AlertsClientDiagnostics.CreateScope("MockableAlertsManagementArmClient.GetServiceAlertSummary");
             scope0.Start();
             try
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ServiceAlertRestClient.CreateGetServiceAlertSummaryRequest(scope.ToString(), groupby.ToString(), includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService?.ToString(), monitorCondition?.ToString(), severity?.ToString(), alertState?.ToString(), alertRule, timeRange?.ToString(), customTimeRange, context);
+                HttpMessage message = AlertsRestClient.CreateGetServiceAlertSummaryRequest(scope.ToString(), groupby.ToString(), includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService?.ToString(), monitorCondition?.ToString(), severity?.ToString(), alertState?.ToString(), alertRule, timeRange?.ToString(), customTimeRange, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceAlertSummary> response = Response.FromValue(ServiceAlertSummary.FromResponse(result), result);
                 if (response.Value == null)

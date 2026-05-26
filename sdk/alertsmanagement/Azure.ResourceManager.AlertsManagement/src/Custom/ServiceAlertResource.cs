@@ -10,23 +10,22 @@ using Azure.ResourceManager.AlertsManagement.Models;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    // Backward compatibility additions for the tenant-scope ServiceAlertResource:
-    //  1. ChangeState(ServiceAlertState, string, ...) - the AutoRest-based v1.1.1 SDK accepted
-    //     a plain string for the comment; the new TypeSpec spec wraps it in a
-    //     ServiceAlertChangeStateContent model. These overloads convert the string into
-    //     ServiceAlertChangeStateContent and delegate.
-    //  2. GetEnrichments / GetEnrichmentsAsync - the new spec binds the getEnrichments operation
-    //     to the extension-scope ScopedServiceAlertResource only (because it carries the @list
-    //     decorator). The v1.1.1 SDK exposed the same operation on the tenant-scope resource, so
-    //     we restore it here by forwarding to a ScopedServiceAlertResource constructed with the
-    //     tenant alert Id (which yields the same wire path).
+    // Backward compatibility additions for ServiceAlertResource:
+    //  1. CreateResourceIdentifier(string subscriptionId, Guid alertId) - matches the
+    //     v1.1.x autorest-generated subscription-scope factory that builds the
+    //     /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}
+    //     resource id. The TypeSpec spec now models the alert under the AlertOperationGroup
+    //     interface using a subscription-scoped Legacy.ExtensionOperations alias, so the
+    //     emitted Request Path matches the AutoRest GA contract byte-for-byte.
+    //  2. ChangeState(ServiceAlertState, string, ...) - v1.1.x accepted a plain string for the
+    //     comment; the new spec wraps it in ServiceAlertChangeStateContent. These overloads
+    //     convert the string into ServiceAlertChangeStateContent and delegate.
     public partial class ServiceAlertResource
     {
         /// <summary>
         /// Generate the resource identifier of a subscription-scope ServiceAlertResource.
-        /// Preserved for binary compatibility with the previous AutoRest SDK; new code should use
-        /// <see cref="CreateResourceIdentifier(Guid)"/> for tenant-scope alerts or
-        /// <see cref="ScopedServiceAlertResource.CreateResourceIdentifier(string, Guid)"/> for any scope.
+        /// Preserved for binary compatibility with the previous AutoRest SDK; new code should
+        /// use <see cref="CreateResourceIdentifier(string, Guid)"/> with the desired scope.
         /// </summary>
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="alertId"> The alert id. </param>
@@ -56,22 +55,6 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             var comments = comment != null ? new ServiceAlertChangeStateContent { Comments = comment } : default(ServiceAlertChangeStateContent);
             return ChangeState(newState, comments, cancellationToken);
-        }
-
-        /// <summary> Get the enrichments of an alert. It returns a collection of one object named default. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<AlertEnrichmentResult> GetEnrichments(CancellationToken cancellationToken = default)
-        {
-            return Client.GetCachedClient(client => new ScopedServiceAlertResource(client, Id)).GetEnrichments(cancellationToken);
-        }
-
-        /// <summary> Get the enrichments of an alert. It returns a collection of one object named default. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<AlertEnrichmentResult> GetEnrichmentsAsync(CancellationToken cancellationToken = default)
-        {
-            return Client.GetCachedClient(client => new ScopedServiceAlertResource(client, Id)).GetEnrichmentsAsync(cancellationToken);
         }
     }
 }

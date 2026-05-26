@@ -33,6 +33,24 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ServiceAlertTenantResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetServiceAlertTenantResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceAlertTenantResource"/> object. </returns>
+        public static ServiceAlertTenantResource GetServiceAlertTenantResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAlertsManagementArmClient(client).GetServiceAlertTenantResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ServiceAlertResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -51,46 +69,28 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ScopedServiceAlertResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets a collection of <see cref="ServiceAlertCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetScopedServiceAlertResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ScopedServiceAlertResource"/> object. </returns>
-        public static ScopedServiceAlertResource GetScopedServiceAlertResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAlertsManagementArmClient(client).GetScopedServiceAlertResource(id);
-        }
-
-        /// <summary>
-        /// Gets a collection of <see cref="ScopedServiceAlertCollection"/> objects within the specified scope.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetScopedServiceAlerts(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetServiceAlerts(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="ScopedServiceAlertResource"/> objects. </returns>
-        public static ScopedServiceAlertCollection GetScopedServiceAlerts(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="ServiceAlertResource"/> objects. </returns>
+        public static ServiceAlertCollection GetServiceAlerts(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAlertsManagementArmClient(client).GetScopedServiceAlerts(scope);
+            return GetMockableAlertsManagementArmClient(client).GetServiceAlerts(scope);
         }
 
         /// <summary>
         /// Get information related to a specific alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to get alert by id then use parent resource of scope. So in this example get alert by id call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}'.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetScopedServiceAlert(ResourceIdentifier, Guid, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetServiceAlert(ResourceIdentifier, Guid, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -99,18 +99,18 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ScopedServiceAlertResource> GetScopedServiceAlert(this ArmClient client, ResourceIdentifier scope, Guid alertId, CancellationToken cancellationToken = default)
+        public static Response<ServiceAlertResource> GetServiceAlert(this ArmClient client, ResourceIdentifier scope, Guid alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAlertsManagementArmClient(client).GetScopedServiceAlert(scope, alertId, cancellationToken);
+            return GetMockableAlertsManagementArmClient(client).GetServiceAlert(scope, alertId, cancellationToken);
         }
 
         /// <summary>
         /// Get information related to a specific alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to get alert by id then use parent resource of scope. So in this example get alert by id call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}'.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetScopedServiceAlertAsync(ResourceIdentifier, Guid, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetServiceAlertAsync(ResourceIdentifier, Guid, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ScopedServiceAlertResource>> GetScopedServiceAlertAsync(this ArmClient client, ResourceIdentifier scope, Guid alertId, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceAlertResource>> GetServiceAlertAsync(this ArmClient client, ResourceIdentifier scope, Guid alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableAlertsManagementArmClient(client).GetScopedServiceAlertAsync(scope, alertId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAlertsManagementArmClient(client).GetServiceAlertAsync(scope, alertId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -187,27 +187,27 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Gets a collection of ServiceAlerts in the <see cref="TenantResource"/>
+        /// Gets a collection of ServiceAlertTenants in the <see cref="TenantResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementTenantResource.GetServiceAlerts()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementTenantResource.GetServiceAlertTenants()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of ServiceAlerts and their operations over a ServiceAlertResource. </returns>
-        public static ServiceAlertCollection GetServiceAlerts(this TenantResource tenantResource)
+        /// <returns> An object representing collection of ServiceAlertTenants and their operations over a ServiceAlertTenantResource. </returns>
+        public static ServiceAlertTenantCollection GetServiceAlertTenants(this TenantResource tenantResource)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableAlertsManagementTenantResource(tenantResource).GetServiceAlerts();
+            return GetMockableAlertsManagementTenantResource(tenantResource).GetServiceAlertTenants();
         }
 
         /// <summary>
         /// Get information related to a specific alert.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementTenantResource.GetServiceAlertAsync(Guid, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementTenantResource.GetServiceAlertTenantAsync(Guid, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -215,18 +215,18 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ServiceAlertResource>> GetServiceAlertAsync(this TenantResource tenantResource, Guid alertId, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceAlertTenantResource>> GetServiceAlertTenantAsync(this TenantResource tenantResource, Guid alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableAlertsManagementTenantResource(tenantResource).GetServiceAlertAsync(alertId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAlertsManagementTenantResource(tenantResource).GetServiceAlertTenantAsync(alertId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get information related to a specific alert.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementTenantResource.GetServiceAlert(Guid, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAlertsManagementTenantResource.GetServiceAlertTenant(Guid, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -234,11 +234,11 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ServiceAlertResource> GetServiceAlert(this TenantResource tenantResource, Guid alertId, CancellationToken cancellationToken = default)
+        public static Response<ServiceAlertTenantResource> GetServiceAlertTenant(this TenantResource tenantResource, Guid alertId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableAlertsManagementTenantResource(tenantResource).GetServiceAlert(alertId, cancellationToken);
+            return GetMockableAlertsManagementTenantResource(tenantResource).GetServiceAlertTenant(alertId, cancellationToken);
         }
 
         /// <summary>

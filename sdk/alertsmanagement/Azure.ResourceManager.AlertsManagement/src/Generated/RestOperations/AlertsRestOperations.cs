@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    internal partial class ServiceAlert
+    internal partial class Alerts
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ServiceAlert for mocking. </summary>
-        protected ServiceAlert()
+        /// <summary> Initializes a new instance of Alerts for mocking. </summary>
+        protected Alerts()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAlert. </summary>
+        /// <summary> Initializes a new instance of Alerts. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ServiceAlert(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Alerts(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AlertsManagement
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, true);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts/", false);
             uri.AppendPath(alertId.ToString(), true);
             if (_apiVersion != null)
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AlertsManagement
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, true);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts", false);
             if (_apiVersion != null)
             {
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.AlertsManagement
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, true);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts/", false);
             uri.AppendPath(alertId.ToString(), true);
             uri.AppendPath("/changestate", false);
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.AlertsManagement
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, true);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts/", false);
             uri.AppendPath(alertId.ToString(), true);
             uri.AppendPath("/history", false);
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.AlertsManagement
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(scope, true);
+            uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.AlertsManagement/alerts/", false);
             uri.AppendPath(alertId.ToString(), true);
             uri.AppendPath("/enrichments", false);

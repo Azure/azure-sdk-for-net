@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -16,19 +15,18 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AlertsManagement.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="ServiceAlertResource"/> and their operations.
-    /// Each <see cref="ServiceAlertResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
-    /// To get a <see cref="ServiceAlertCollection"/> instance call the GetServiceAlerts method from an instance of <see cref="TenantResource"/>.
+    /// Each <see cref="ServiceAlertResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="ServiceAlertCollection"/> instance call the GetServiceAlerts method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class ServiceAlertCollection : ArmCollection, IEnumerable<ServiceAlertResource>, IAsyncEnumerable<ServiceAlertResource>
     {
-        private readonly ClientDiagnostics _serviceAlertClientDiagnostics;
-        private readonly ServiceAlert _serviceAlertRestClient;
+        private readonly ClientDiagnostics _alertsClientDiagnostics;
+        private readonly Alerts _alertsRestClient;
 
         /// <summary> Initializes a new instance of ServiceAlertCollection for mocking. </summary>
         protected ServiceAlertCollection()
@@ -41,31 +39,20 @@ namespace Azure.ResourceManager.AlertsManagement
         internal ServiceAlertCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ServiceAlertResource.ResourceType, out string serviceAlertApiVersion);
-            _serviceAlertClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AlertsManagement", ServiceAlertResource.ResourceType.Namespace, Diagnostics);
-            _serviceAlertRestClient = new ServiceAlert(_serviceAlertClientDiagnostics, Pipeline, Endpoint, serviceAlertApiVersion ?? "2025-05-25-preview");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != TenantResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
-            }
+            _alertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AlertsManagement", ServiceAlertResource.ResourceType.Namespace, Diagnostics);
+            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Endpoint, serviceAlertApiVersion ?? "2025-05-25-preview");
         }
 
         /// <summary>
-        /// Get information related to a specific alert.
+        /// Get information related to a specific alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to get alert by id then use parent resource of scope. So in this example get alert by id call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}'.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Alerts_GetByIdTenant. </description>
+        /// <description> AlertOperationGroup_GetById. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -77,7 +64,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceAlertResource>> GetAsync(Guid alertId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceAlertClientDiagnostics.CreateScope("ServiceAlertCollection.Get");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertCollection.Get");
             scope.Start();
             try
             {
@@ -85,7 +72,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceAlertRestClient.CreateGetByIdTenantRequest(alertId, context);
+                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -102,15 +89,15 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Get information related to a specific alert.
+        /// Get information related to a specific alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to get alert by id then use parent resource of scope. So in this example get alert by id call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}'.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Alerts_GetByIdTenant. </description>
+        /// <description> AlertOperationGroup_GetById. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -122,7 +109,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceAlertResource> Get(Guid alertId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceAlertClientDiagnostics.CreateScope("ServiceAlertCollection.Get");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertCollection.Get");
             scope.Start();
             try
             {
@@ -130,7 +117,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceAlertRestClient.CreateGetByIdTenantRequest(alertId, context);
+                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -151,11 +138,11 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AlertsManagement/alerts. </description>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AlertGetAllTenantOperation_GetAllTenant. </description>
+        /// <description> AlertOperationGroup_GetAll. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -188,8 +175,9 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceAlertData, ServiceAlertResource>(new ServiceAlertGetAllTenantAsyncCollectionResultOfT(
-                _serviceAlertRestClient,
+            return new AsyncPageableWrapper<ServiceAlertData, ServiceAlertResource>(new AlertsGetAllAsyncCollectionResultOfT(
+                _alertsRestClient,
+                Id.ToString(),
                 targetResource,
                 targetResourceType,
                 targetResourceGroup,
@@ -216,11 +204,11 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AlertsManagement/alerts. </description>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AlertGetAllTenantOperation_GetAllTenant. </description>
+        /// <description> AlertOperationGroup_GetAll. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -253,8 +241,9 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceAlertData, ServiceAlertResource>(new ServiceAlertGetAllTenantCollectionResultOfT(
-                _serviceAlertRestClient,
+            return new PageableWrapper<ServiceAlertData, ServiceAlertResource>(new AlertsGetAllCollectionResultOfT(
+                _alertsRestClient,
+                Id.ToString(),
                 targetResource,
                 targetResourceType,
                 targetResourceGroup,
@@ -281,11 +270,11 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Alerts_GetByIdTenant. </description>
+        /// <description> AlertOperationGroup_GetById. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -297,7 +286,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(Guid alertId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceAlertClientDiagnostics.CreateScope("ServiceAlertCollection.Exists");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertCollection.Exists");
             scope.Start();
             try
             {
@@ -305,7 +294,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceAlertRestClient.CreateGetByIdTenantRequest(alertId, context);
+                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceAlertData> response = default;
@@ -334,11 +323,11 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Alerts_GetByIdTenant. </description>
+        /// <description> AlertOperationGroup_GetById. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -350,7 +339,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(Guid alertId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceAlertClientDiagnostics.CreateScope("ServiceAlertCollection.Exists");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertCollection.Exists");
             scope.Start();
             try
             {
@@ -358,7 +347,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceAlertRestClient.CreateGetByIdTenantRequest(alertId, context);
+                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceAlertData> response = default;
@@ -387,11 +376,11 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Alerts_GetByIdTenant. </description>
+        /// <description> AlertOperationGroup_GetById. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -403,7 +392,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<ServiceAlertResource>> GetIfExistsAsync(Guid alertId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceAlertClientDiagnostics.CreateScope("ServiceAlertCollection.GetIfExists");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -411,7 +400,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceAlertRestClient.CreateGetByIdTenantRequest(alertId, context);
+                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceAlertData> response = default;
@@ -444,11 +433,11 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Alerts_GetByIdTenant. </description>
+        /// <description> AlertOperationGroup_GetById. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -460,7 +449,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<ServiceAlertResource> GetIfExists(Guid alertId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _serviceAlertClientDiagnostics.CreateScope("ServiceAlertCollection.GetIfExists");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -468,7 +457,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceAlertRestClient.CreateGetByIdTenantRequest(alertId, context);
+                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceAlertData> response = default;

@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.AlertsManagement
 {
     /// <summary></summary>
-    public partial class ScopedServiceAlertResource : IJsonModel<ServiceAlertData>
+    public partial class ServiceAlertTenantResource : IJsonModel<ServiceAlertData>
     {
         private static IJsonModel<ServiceAlertData> s_dataDeserializationInstance;
 
