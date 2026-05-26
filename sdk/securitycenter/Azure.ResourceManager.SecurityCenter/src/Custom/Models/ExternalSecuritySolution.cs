@@ -3,13 +3,9 @@
 
 #nullable disable
 
-using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
-
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // Compatibility customization: the spec-side replacement restores the GA model name, while this preserves the GA public constructor and settable Kind property.
-    [CodeGenSuppress("ExternalSecuritySolution")]
-    [CodeGenSuppress("Kind")]
+    // Compatibility customization: kind is read-visible in the spec and that visibility cannot be overridden for C# only, so preserve the GA settable Kind property here.
     public partial class ExternalSecuritySolution
     {
         /// <summary> Initializes a new instance of <see cref="ExternalSecuritySolution"/>. </summary>

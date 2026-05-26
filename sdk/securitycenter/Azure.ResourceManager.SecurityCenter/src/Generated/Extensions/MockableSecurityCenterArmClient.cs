@@ -1231,30 +1231,12 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return new ServerVulnerabilityAssessmentResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="ServerVulnerabilityAssessmentCollection"/> objects within the specified scope. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="ServerVulnerabilityAssessmentResource"/> objects. </returns>
-        public virtual ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments(ResourceIdentifier scope)
+        /// <summary> Gets an object representing a <see cref="ServerVulnerabilityAssessmentResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentResource"/> object. </returns>
+        public virtual ServerVulnerabilityAssessmentResource GetServerVulnerabilityAssessment(ResourceIdentifier scope)
         {
-            return new ServerVulnerabilityAssessmentCollection(Client, scope);
-        }
-
-        /// <summary> Gets a server vulnerability assessment onboarding statuses on a given resource. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ServerVulnerabilityAssessmentResource> GetServerVulnerabilityAssessment(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            return GetServerVulnerabilityAssessments(scope).Get(cancellationToken);
-        }
-
-        /// <summary> Gets a server vulnerability assessment onboarding statuses on a given resource. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServerVulnerabilityAssessmentResource>> GetServerVulnerabilityAssessmentAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            return await GetServerVulnerabilityAssessments(scope).GetAsync(cancellationToken).ConfigureAwait(false);
+            return new ServerVulnerabilityAssessmentResource(Client, scope.AppendProviderResource("Microsoft.Security", "serverVulnerabilityAssessments", "default"));
         }
 
         /// <summary> Gets an object representing a <see cref="TopologyResource"/> along with the instance operations that can be performed on it but with no data. </summary>

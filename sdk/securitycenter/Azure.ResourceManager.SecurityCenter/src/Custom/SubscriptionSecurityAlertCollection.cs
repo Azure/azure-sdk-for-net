@@ -10,6 +10,9 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    // Compatibility customization: GA exposed Simulate on SubscriptionSecurityAlertCollection.
+    // The TypeSpec route is generated on SecurityCenterLocationResource, so keep the collection
+    // overloads as forwarding helpers to preserve the GA public API.
     public partial class SubscriptionSecurityAlertCollection
     {
         /// <summary> Simulate security alerts. </summary>

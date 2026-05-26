@@ -8,7 +8,7 @@ using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.Cod
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // Suppress duplicate generated constructors and restore the legacy constructor shape.
+    // Compatibility customization: preserve the GA constructor that accepts a Guid VM UUID while the generated model stores the wire value as a string.
     [CodeGenSuppress("OnPremiseResourceDetails", typeof(string), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("OnPremiseResourceDetails", typeof(Azure.Core.ResourceIdentifier), typeof(string), typeof(string), typeof(string))]
     public partial class OnPremiseResourceDetails

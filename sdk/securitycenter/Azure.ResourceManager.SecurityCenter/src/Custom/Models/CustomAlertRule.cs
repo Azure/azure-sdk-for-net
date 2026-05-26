@@ -5,11 +5,10 @@
 
 using System;
 using System.Collections.Generic;
-using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    [CodeGenSuppress("CustomAlertRule", typeof(string), typeof(bool))]
+    // Compatibility customization: the generator emits this discriminator constructor as private protected, but the GA API exposes it as protected for derived custom alert rule types.
     public abstract partial class CustomAlertRule
     {
         /// <summary> Initializes a new instance of <see cref="CustomAlertRule"/>. </summary>

@@ -3,11 +3,9 @@
 
 #nullable disable
 
-using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
-
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    [CodeGenSuppress("SecurityAlertSimulatorRequestProperties")]
+    // Compatibility customization: preserve the GA parameterless constructor, which initializes the discriminator with its default value.
     public partial class SecurityAlertSimulatorRequestProperties
     {
         /// <summary> Initializes a new instance of <see cref="SecurityAlertSimulatorRequestProperties"/>. </summary>

@@ -11,6 +11,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    /// <summary> describes security alert properties. </summary>
     internal partial class AlertProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -166,5 +167,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Kill chain related sub-techniques behind the alert. </summary>
         public IReadOnlyList<string> SubTechniques { get; } = new ChangeTrackingList<string>();
+
+        /// <summary> Changing set of properties depending on the supportingEvidence type. </summary>
+        public SecurityAlertSupportingEvidence SupportingEvidence { get; }
     }
 }

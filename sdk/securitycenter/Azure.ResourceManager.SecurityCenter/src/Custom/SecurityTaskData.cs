@@ -6,13 +6,13 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.SecurityCenter.Models;
-using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    [CodeGenSuppress("SecurityTaskData")]
     public partial class SecurityTaskData
     {
+        // Preserve the GA parameterless constructor. The TypeSpec-generated constructor is internal
+        // because SecurityTask is a proxy resource returned by read/list operations.
         /// <summary> Initializes a new instance of <see cref="SecurityTaskData"/>. </summary>
         public SecurityTaskData()
         {
@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.SecurityCenter
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
+        // Preserve the GA flattened property on SecurityTaskData; see the backing setter in
+        // Custom/Models/SecurityTaskPropertiesGenerated.cs for why this remains custom code.
         /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
         public SecurityTaskProperties SecurityTaskParameters
         {

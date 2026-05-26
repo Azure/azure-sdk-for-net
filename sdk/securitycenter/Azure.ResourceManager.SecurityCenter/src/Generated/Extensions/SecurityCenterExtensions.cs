@@ -2209,59 +2209,21 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="ServerVulnerabilityAssessmentCollection"/> objects within the specified scope.
+        /// Gets an object representing a <see cref="ServerVulnerabilityAssessmentResource"/> along with the instance operations that can be performed on it in the ArmClient
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetServerVulnerabilityAssessments(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetServerVulnerabilityAssessment(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="ServerVulnerabilityAssessmentResource"/> objects. </returns>
-        public static ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentResource"/> object. </returns>
+        public static ServerVulnerabilityAssessmentResource GetServerVulnerabilityAssessment(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSecurityCenterArmClient(client).GetServerVulnerabilityAssessments(scope);
-        }
-
-        /// <summary>
-        /// Gets a server vulnerability assessment onboarding statuses on a given resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetServerVulnerabilityAssessment(ResourceIdentifier, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ServerVulnerabilityAssessmentResource> GetServerVulnerabilityAssessment(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSecurityCenterArmClient(client).GetServerVulnerabilityAssessment(scope, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a server vulnerability assessment onboarding statuses on a given resource.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetServerVulnerabilityAssessmentAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ServerVulnerabilityAssessmentResource>> GetServerVulnerabilityAssessmentAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return await GetMockableSecurityCenterArmClient(client).GetServerVulnerabilityAssessmentAsync(scope, cancellationToken).ConfigureAwait(false);
+            return GetMockableSecurityCenterArmClient(client).GetServerVulnerabilityAssessment(scope);
         }
 
         /// <summary>

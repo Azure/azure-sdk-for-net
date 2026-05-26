@@ -225,12 +225,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="alertSimulatorRequestBody"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertSimulatorRequestBody"/> is null. </exception>
-        public virtual async Task<ArmOperation> SimulateAsync(WaitUntil waitUntil, AlertSimulatorRequestBody alertSimulatorRequestBody, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> SimulateAsync(WaitUntil waitUntil, SecurityAlertSimulatorContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(alertSimulatorRequestBody, nameof(alertSimulatorRequestBody));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("SecurityCenterLocationResource.Simulate");
             scope.Start();
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateSimulateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, AlertSimulatorRequestBody.ToRequestContent(alertSimulatorRequestBody), context);
+                HttpMessage message = _alertsRestClient.CreateSimulateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecurityAlertSimulatorContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation operation = new SecurityCenterArmOperation(_alertsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
@@ -278,12 +278,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="alertSimulatorRequestBody"> The request body. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertSimulatorRequestBody"/> is null. </exception>
-        public virtual ArmOperation Simulate(WaitUntil waitUntil, AlertSimulatorRequestBody alertSimulatorRequestBody, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation Simulate(WaitUntil waitUntil, SecurityAlertSimulatorContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(alertSimulatorRequestBody, nameof(alertSimulatorRequestBody));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("SecurityCenterLocationResource.Simulate");
             scope.Start();
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateSimulateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, AlertSimulatorRequestBody.ToRequestContent(alertSimulatorRequestBody), context);
+                HttpMessage message = _alertsRestClient.CreateSimulateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SecurityAlertSimulatorContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation operation = new SecurityCenterArmOperation(_alertsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)

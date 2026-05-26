@@ -4,11 +4,10 @@
 #nullable disable
 
 using System;
-using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    [CodeGenSuppress("SecurityAlertSupportingEvidence")]
+    // Compatibility customization: preserve the GA public parameterless constructor for the open supporting-evidence payload.
     public partial class SecurityAlertSupportingEvidence
     {
         /// <summary> Initializes a new instance of <see cref="SecurityAlertSupportingEvidence"/>. </summary>

@@ -9,7 +9,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Compatibility customization: GA exposed the create operation on the singleton resource; the current generator emits it as Update.
+    // Compatibility customization: GA exposed this singleton PUT as CreateOrUpdate on the resource.
+    // The TypeSpec code model keeps {settingName} in the resource path while marking it as the
+    // constant value "current"; current resource detection does not fold that constant path
+    // parameter when classifying singleton shape, so it emits the resource PUT as Update.
     public partial class AdvancedThreatProtectionSettingResource
     {
         /// <summary> Creates or updates the Advanced Threat Protection settings on a specified resource. </summary>

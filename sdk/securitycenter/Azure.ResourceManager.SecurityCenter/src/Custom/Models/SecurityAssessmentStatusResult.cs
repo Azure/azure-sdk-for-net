@@ -5,8 +5,7 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // Compatibility customization: preserve the public constructor generated for the renamed response model.
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SecurityAssessmentStatusResult", typeof(SecurityAssessmentStatusCode))]
+    // Compatibility customization: preserve the GA response model constructor and legacy FirstEvaluatedOn property name.
     public partial class SecurityAssessmentStatusResult
     {
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentStatusResult"/>. </summary>

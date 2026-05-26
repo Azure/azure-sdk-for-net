@@ -13,6 +13,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    /// <summary> describes security alert properties. </summary>
     internal partial class AlertProperties : IJsonModel<AlertProperties>
     {
         /// <param name="data"> The data to parse. </param>
