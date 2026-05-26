@@ -2,6 +2,8 @@ import:
   - ../../.vscode/cspell.json
 words:
   - cuda
+  - inodes
+  - millicores
   - veth
 overrides:
   - filename: '**/sdk/containerservice/Azure.Provisioning.ContainerService/**/*.cs'
