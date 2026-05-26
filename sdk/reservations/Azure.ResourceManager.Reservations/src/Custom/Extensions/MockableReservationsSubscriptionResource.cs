@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <param name="planId"> Plan id used to get the third party products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Models.ReservationCatalog> GetCatalogAsync(string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReservationCatalog> GetCatalogAsync(string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
             => GetCatalogAsync(reservedResourceType, location, publisherId, offerId, planId, filter: default, skip: default, take: default, cancellationToken);
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <param name="planId"> Plan id used to get the third party products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Models.ReservationCatalog> GetCatalog(string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReservationCatalog> GetCatalog(string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
             => GetCatalog(reservedResourceType, location, publisherId, offerId, planId, filter: default, skip: default, take: default, cancellationToken);
 
         /// <summary>
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <param name="options"> The options to apply to the catalog request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Models.ReservationCatalog> GetCatalogAsync(Models.SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReservationCatalog> GetCatalogAsync(SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new Models.SubscriptionResourceGetCatalogOptions();
+            options ??= new SubscriptionResourceGetCatalogOptions();
             return GetCatalogAsync(options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, options.Filter, options.Skip, options.Take, cancellationToken);
         }
 
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <param name="options"> The options to apply to the catalog request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Models.ReservationCatalog> GetCatalog(Models.SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReservationCatalog> GetCatalog(SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new Models.SubscriptionResourceGetCatalogOptions();
+            options ??= new SubscriptionResourceGetCatalogOptions();
             return GetCatalog(options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, options.Filter, options.Skip, options.Take, cancellationToken);
         }
     }
