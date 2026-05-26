@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -49,7 +51,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
@@ -81,7 +85,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -99,6 +104,7 @@
           "name": "InputModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "12",
@@ -123,7 +129,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -141,6 +148,7 @@
           "name": "OutputModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "15",
@@ -165,7 +173,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -182,6 +191,7 @@
           "name": "RoundTripModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "18",
@@ -201,6 +211,7 @@
                 "name": "ResultModel"
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "20",
@@ -225,7 +236,8 @@
                     "name": "name"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -240,7 +252,8 @@
               "name": "result"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -262,6 +275,7 @@
           "name": "OrphanModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "23",
@@ -286,7 +300,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "25",
@@ -311,7 +326,8 @@
               "name": "desc"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -353,7 +369,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -414,9 +431,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.inputToInputOutput.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "36",
@@ -452,9 +471,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.inputToInputOutput.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -544,9 +565,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.outputToInputOutput.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -641,9 +664,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.modelInReadOnlyProperty.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "46",
@@ -676,9 +701,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.modelInReadOnlyProperty.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "48",
@@ -714,9 +741,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.modelInReadOnlyProperty.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -825,9 +854,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.orphanModelSerializable.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "54",
@@ -871,9 +902,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.orphanModelSerializable.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -948,7 +981,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Usage.ModelInOperation.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

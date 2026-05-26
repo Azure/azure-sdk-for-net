@@ -67,9 +67,11 @@
                     "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest.postIfMatch.ifMatch",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -158,9 +160,11 @@
                     "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest.postIfNoneMatch.ifNoneMatch",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -265,9 +269,11 @@
                     "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest.headIfModifiedSince.ifModifiedSince",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -372,9 +378,11 @@
                     "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest.postIfUnmodifiedSince.ifUnmodifiedSince",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -438,7 +446,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest.endpoint"
+          "crossLanguageDefinitionId": "SpecialHeaders.ConditionalRequest.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

@@ -102,9 +102,11 @@
                     "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withQueryApiVersion.apiVersion",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -192,9 +194,11 @@
                     "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withPathApiVersion.apiVersion",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -249,7 +253,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Server.Versions.NotVersioned.endpoint"
+          "crossLanguageDefinitionId": "Server.Versions.NotVersioned.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

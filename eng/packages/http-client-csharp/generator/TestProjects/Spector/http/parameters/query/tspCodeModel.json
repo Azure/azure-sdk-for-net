@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "constantValue",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "constantValue",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [],
@@ -74,7 +76,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Parameters.Query.endpoint"
+          "crossLanguageDefinitionId": "Parameters.Query.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -134,9 +137,11 @@
                         "crossLanguageDefinitionId": "Parameters.Query.Constant.post.queryParam",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -200,7 +205,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Query.Constant.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Query.Constant.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

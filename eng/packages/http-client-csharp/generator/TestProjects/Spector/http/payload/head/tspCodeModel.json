@@ -106,7 +106,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Payload.Head.endpoint"
+          "crossLanguageDefinitionId": "Payload.Head.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

@@ -51,7 +51,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -86,7 +87,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -104,7 +106,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "10",
@@ -120,7 +123,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "12",
@@ -136,7 +140,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "14",
@@ -152,7 +157,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "16",
@@ -168,7 +174,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "18",
@@ -184,7 +191,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "20",
@@ -200,7 +208,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "22",
@@ -216,7 +225,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -234,6 +244,7 @@
           "name": "Page"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "25",
@@ -259,6 +270,7 @@
                   "name": "User"
                 }
               },
+              "isExactName": false,
               "properties": [
                 {
                   "$id": "28",
@@ -284,7 +296,8 @@
                       "name": "id"
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 },
                 {
                   "$id": "30",
@@ -310,7 +323,8 @@
                       "name": "name"
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 },
                 {
                   "$id": "32",
@@ -336,6 +350,7 @@
                           "name": "UserOrder"
                         }
                       },
+                      "isExactName": false,
                       "properties": [
                         {
                           "$id": "35",
@@ -361,7 +376,8 @@
                               "name": "id"
                             }
                           },
-                          "isHttpMetadata": false
+                          "isHttpMetadata": false,
+                          "isExactName": false
                         },
                         {
                           "$id": "37",
@@ -387,7 +403,8 @@
                               "name": "userId"
                             }
                           },
-                          "isHttpMetadata": false
+                          "isHttpMetadata": false,
+                          "isExactName": false
                         },
                         {
                           "$id": "39",
@@ -413,7 +430,8 @@
                               "name": "detail"
                             }
                           },
-                          "isHttpMetadata": false
+                          "isHttpMetadata": false,
+                          "isExactName": false
                         }
                       ]
                     },
@@ -431,7 +449,8 @@
                       "name": "orders"
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 },
                 {
                   "$id": "41",
@@ -464,7 +483,8 @@
                       "name": "etag"
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 }
               ]
             },
@@ -482,7 +502,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "44",
@@ -515,7 +536,8 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -539,6 +561,7 @@
           "name": "ErrorResponse"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "48",
@@ -560,6 +583,7 @@
                 "name": "Error"
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "50",
@@ -585,7 +609,8 @@
                     "name": "code"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "52",
@@ -611,7 +636,8 @@
                     "name": "message"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "54",
@@ -637,7 +663,8 @@
                     "name": "target"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "56",
@@ -666,7 +693,8 @@
                     "name": "details"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "58",
@@ -688,6 +716,7 @@
                       "name": "InnerError"
                     }
                   },
+                  "isExactName": false,
                   "properties": [
                     {
                       "$id": "60",
@@ -713,7 +742,8 @@
                           "name": "code"
                         }
                       },
-                      "isHttpMetadata": false
+                      "isHttpMetadata": false,
+                      "isExactName": false
                     },
                     {
                       "$id": "62",
@@ -735,7 +765,8 @@
                           "name": "innererror"
                         }
                       },
-                      "isHttpMetadata": false
+                      "isHttpMetadata": false,
+                      "isExactName": false
                     }
                   ]
                 },
@@ -750,7 +781,8 @@
                     "name": "innererror"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -765,7 +797,8 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "63",
@@ -791,7 +824,8 @@
               "name": "errorCode"
             }
           },
-          "isHttpMetadata": true
+          "isHttpMetadata": true,
+          "isExactName": false
         }
       ]
     },
@@ -815,6 +849,7 @@
           "name": "ListItemInputBody"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "66",
@@ -840,7 +875,8 @@
               "name": "inputName"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -857,6 +893,7 @@
           "name": "CustomPageModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "69",
@@ -878,7 +915,8 @@
               "name": "items"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "70",
@@ -904,7 +942,8 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -921,6 +960,7 @@
           "name": "ParameterizedNextLinkPagingResult"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "73",
@@ -941,7 +981,8 @@
               "name": "values"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "74",
@@ -973,7 +1014,8 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -991,6 +1033,7 @@
           "name": "Page"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "78",
@@ -1016,6 +1059,7 @@
                   "name": "FirstItem"
                 }
               },
+              "isExactName": false,
               "properties": [
                 {
                   "$id": "81",
@@ -1041,7 +1085,8 @@
                       "name": "id"
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 }
               ]
             },
@@ -1059,7 +1104,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "83",
@@ -1092,7 +1138,8 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1113,6 +1160,7 @@
           "name": "Page"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "87",
@@ -1138,6 +1186,7 @@
                   "name": "SecondItem"
                 }
               },
+              "isExactName": false,
               "properties": [
                 {
                   "$id": "90",
@@ -1163,7 +1212,8 @@
                       "name": "name"
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 }
               ]
             },
@@ -1181,7 +1231,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "92",
@@ -1214,7 +1265,8 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1305,9 +1357,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithPage.apiVersion",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "104",
@@ -1340,9 +1394,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithPage.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1454,7 +1510,8 @@
                   {
                     "$ref": "101"
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "111",
@@ -1489,9 +1546,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithParameters.another",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "113",
@@ -1526,9 +1585,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithParameters.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "115",
@@ -1561,9 +1622,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithParameters.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "117",
@@ -1601,9 +1664,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithParameters.bodyInput",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "bodyInput"
@@ -1732,7 +1797,8 @@
                   {
                     "$ref": "101"
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "124",
@@ -1765,9 +1831,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.listWithCustomPageModel.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1885,9 +1953,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.withParameterizedNextLink.includePending",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "132",
@@ -1928,9 +1998,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.withParameterizedNextLink.select",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "136",
@@ -1963,9 +2035,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.withParameterizedNextLink.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -2086,9 +2160,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.withRelativeNextLink.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -2181,7 +2257,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.endpoint",
+          "isExactName": false
         },
         {
           "$ref": "101"
@@ -2249,7 +2326,8 @@
                       {
                         "$ref": "101"
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "151",
@@ -2282,9 +2360,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.TwoModelsAsPageItem.listFirstItem.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2396,7 +2476,8 @@
                       {
                         "$ref": "101"
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "158",
@@ -2429,9 +2510,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.TwoModelsAsPageItem.listSecondItem.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2524,7 +2607,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.TwoModelsAsPageItem.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.TwoModelsAsPageItem.endpoint",
+              "isExactName": false
             },
             {
               "$ref": "101"

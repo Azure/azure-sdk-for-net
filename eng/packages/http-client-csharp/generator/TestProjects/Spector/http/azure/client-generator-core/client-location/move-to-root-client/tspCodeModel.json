@@ -81,7 +81,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToRootClient.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToRootClient.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -164,7 +165,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToRootClient.ResourceOperations.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToRootClient.ResourceOperations.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

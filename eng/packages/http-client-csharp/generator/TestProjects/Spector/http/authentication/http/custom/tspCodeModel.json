@@ -17,6 +17,7 @@
           "name": "InvalidAuth"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "2",
@@ -41,7 +42,8 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -166,7 +168,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Authentication.Http.Custom.endpoint"
+          "crossLanguageDefinitionId": "Authentication.Http.Custom.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

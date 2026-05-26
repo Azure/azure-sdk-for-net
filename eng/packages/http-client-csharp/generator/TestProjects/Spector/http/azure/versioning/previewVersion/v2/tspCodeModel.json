@@ -67,7 +67,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -85,7 +86,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "8",
@@ -101,7 +103,8 @@
         "decorators": []
       },
       "value": "application/merge-patch+json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "10",
@@ -117,7 +120,8 @@
         "decorators": []
       },
       "value": "application/merge-patch+json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "12",
@@ -133,7 +137,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "14",
@@ -149,7 +154,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -167,6 +173,7 @@
           "name": "Widget"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "17",
@@ -192,7 +199,8 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "19",
@@ -218,7 +226,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "21",
@@ -244,7 +253,8 @@
               "name": "color"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -262,6 +272,7 @@
           "name": "UpdateWidgetColorRequest"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "24",
@@ -287,7 +298,8 @@
               "name": "color"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -304,6 +316,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "27",
@@ -331,7 +344,8 @@
               "name": "widgets"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -403,9 +417,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.getWidget.id",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "36",
@@ -466,9 +482,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.getWidget.apiVersion",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "42",
@@ -501,9 +519,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.getWidget.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -620,9 +640,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.updateWidgetColor.id",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "50",
@@ -655,9 +677,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.updateWidgetColor.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "52",
@@ -692,7 +716,8 @@
                   {
                     "$ref": "39"
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "55",
@@ -725,9 +750,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.updateWidgetColor.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "57",
@@ -763,9 +790,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.updateWidgetColor.colorUpdate",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "colorUpdate"
@@ -895,9 +924,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.listWidgets.name",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "65",
@@ -938,9 +969,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.listWidgets.color",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "69",
@@ -975,7 +1008,8 @@
                   {
                     "$ref": "39"
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "72",
@@ -1008,9 +1042,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.listWidgets.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1094,7 +1130,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.endpoint",
+          "isExactName": false
         },
         {
           "$ref": "39"

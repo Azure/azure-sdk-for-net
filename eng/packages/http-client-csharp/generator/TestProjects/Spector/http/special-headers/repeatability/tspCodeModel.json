@@ -46,7 +46,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Output",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [],
@@ -112,9 +113,11 @@
                     "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.immediateSuccess.repeatabilityRequestID",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "12",
@@ -171,9 +174,11 @@
                     "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.immediateSuccess.repeatabilityFirstSent",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -249,7 +254,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.endpoint"
+          "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

@@ -81,7 +81,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Routes.endpoint"
+          "crossLanguageDefinitionId": "Routes.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -149,9 +150,11 @@
                         "crossLanguageDefinitionId": "Routes.PathParameters.templateOnly.param",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -239,9 +242,11 @@
                         "crossLanguageDefinitionId": "Routes.PathParameters.explicit.param",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -329,9 +334,11 @@
                         "crossLanguageDefinitionId": "Routes.PathParameters.annotationOnly.param",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -395,7 +402,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Routes.PathParameters.endpoint"
+              "crossLanguageDefinitionId": "Routes.PathParameters.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -466,9 +474,11 @@
                             "crossLanguageDefinitionId": "Routes.PathParameters.ReservedExpansion.template.param",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       }
                     ],
                     "responses": [
@@ -556,9 +566,11 @@
                             "crossLanguageDefinitionId": "Routes.PathParameters.ReservedExpansion.annotation.param",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       }
                     ],
                     "responses": [
@@ -622,7 +634,8 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.PathParameters.ReservedExpansion.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.ReservedExpansion.endpoint",
+                  "isExactName": false
                 }
               ],
               "initializedBy": 0,
@@ -669,7 +682,8 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.endpoint",
+                  "isExactName": false
                 }
               ],
               "initializedBy": 0,
@@ -740,9 +754,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -833,9 +849,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -931,9 +949,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -997,7 +1017,8 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Standard.endpoint",
+                      "isExactName": false
                     }
                   ],
                   "initializedBy": 0,
@@ -1069,9 +1090,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -1151,9 +1174,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -1233,9 +1258,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -1299,7 +1326,8 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.SimpleExpansion.Explode.endpoint",
+                      "isExactName": false
                     }
                   ],
                   "initializedBy": 0,
@@ -1349,7 +1377,8 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.endpoint",
+                  "isExactName": false
                 }
               ],
               "initializedBy": 0,
@@ -1420,9 +1449,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -1502,9 +1533,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -1584,9 +1617,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -1650,7 +1685,8 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Standard.endpoint",
+                      "isExactName": false
                     }
                   ],
                   "initializedBy": 0,
@@ -1722,9 +1758,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -1804,9 +1842,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -1886,9 +1926,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -1952,7 +1994,8 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.PathExpansion.Explode.endpoint",
+                      "isExactName": false
                     }
                   ],
                   "initializedBy": 0,
@@ -2002,7 +2045,8 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.endpoint",
+                  "isExactName": false
                 }
               ],
               "initializedBy": 0,
@@ -2073,9 +2117,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -2155,9 +2201,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -2237,9 +2285,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -2303,7 +2353,8 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Standard.endpoint",
+                      "isExactName": false
                     }
                   ],
                   "initializedBy": 0,
@@ -2375,9 +2426,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -2457,9 +2510,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -2539,9 +2594,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -2605,7 +2662,8 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.LabelExpansion.Explode.endpoint",
+                      "isExactName": false
                     }
                   ],
                   "initializedBy": 0,
@@ -2655,7 +2713,8 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.endpoint"
+                  "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.endpoint",
+                  "isExactName": false
                 }
               ],
               "initializedBy": 0,
@@ -2726,9 +2785,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -2808,9 +2869,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -2890,9 +2953,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -2956,7 +3021,8 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Standard.endpoint",
+                      "isExactName": false
                     }
                   ],
                   "initializedBy": 0,
@@ -3028,9 +3094,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -3110,9 +3178,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -3192,9 +3262,11 @@
                                 "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -3258,7 +3330,8 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode.endpoint"
+                      "crossLanguageDefinitionId": "Routes.PathParameters.MatrixExpansion.Explode.endpoint",
+                      "isExactName": false
                     }
                   ],
                   "initializedBy": 0,
@@ -3333,9 +3406,11 @@
                         "crossLanguageDefinitionId": "Routes.QueryParameters.templateOnly.param",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3420,9 +3495,11 @@
                         "crossLanguageDefinitionId": "Routes.QueryParameters.explicit.param",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3507,9 +3584,11 @@
                         "crossLanguageDefinitionId": "Routes.QueryParameters.annotationOnly.param",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3573,7 +3652,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Routes.QueryParameters.endpoint"
+              "crossLanguageDefinitionId": "Routes.QueryParameters.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -3619,7 +3699,8 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.endpoint"
+                  "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.endpoint",
+                  "isExactName": false
                 }
               ],
               "initializedBy": 0,
@@ -3687,9 +3768,11 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -3766,9 +3849,11 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -3845,9 +3930,11 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -3911,7 +3998,8 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard.endpoint"
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Standard.endpoint",
+                      "isExactName": false
                     }
                   ],
                   "initializedBy": 0,
@@ -3980,9 +4068,11 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -4059,9 +4149,11 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -4138,9 +4230,11 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -4204,7 +4298,8 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode.endpoint"
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryExpansion.Explode.endpoint",
+                      "isExactName": false
                     }
                   ],
                   "initializedBy": 0,
@@ -4254,7 +4349,8 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.endpoint"
+                  "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.endpoint",
+                  "isExactName": false
                 }
               ],
               "initializedBy": 0,
@@ -4322,9 +4418,11 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -4401,9 +4499,11 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -4480,9 +4580,11 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -4546,7 +4648,8 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard.endpoint"
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Standard.endpoint",
+                      "isExactName": false
                     }
                   ],
                   "initializedBy": 0,
@@ -4615,9 +4718,11 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode.primitive.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -4694,9 +4799,11 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode.array.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -4773,9 +4880,11 @@
                                 "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode.record.param",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           }
                         ],
                         "responses": [
@@ -4839,7 +4948,8 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode.endpoint"
+                      "crossLanguageDefinitionId": "Routes.QueryParameters.QueryContinuation.Explode.endpoint",
+                      "isExactName": false
                     }
                   ],
                   "initializedBy": 0,
@@ -4932,7 +5042,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Routes.InInterface.endpoint"
+              "crossLanguageDefinitionId": "Routes.InInterface.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

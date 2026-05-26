@@ -37,7 +37,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [],
@@ -122,9 +123,11 @@
                     "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Header.headerApiVersion.version",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -184,7 +187,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Header.endpoint"
+          "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Header.endpoint",
+          "isExactName": false
         },
         {
           "$ref": "10"

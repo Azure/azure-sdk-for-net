@@ -124,7 +124,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Authentication.Union.endpoint"
+          "crossLanguageDefinitionId": "Authentication.Union.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

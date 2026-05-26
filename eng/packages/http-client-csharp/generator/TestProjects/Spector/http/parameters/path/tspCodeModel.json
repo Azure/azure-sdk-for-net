@@ -66,9 +66,11 @@
                     "crossLanguageDefinitionId": "Parameters.Path.normal.name",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -156,9 +158,11 @@
                     "crossLanguageDefinitionId": "Parameters.Path.optional.name",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -222,7 +226,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Parameters.Path.endpoint"
+          "crossLanguageDefinitionId": "Parameters.Path.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

@@ -41,7 +41,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -163,7 +164,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.AdminOperations.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.AdminOperations.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -250,7 +252,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.UserOperations.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveToExistingSubClient.UserOperations.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

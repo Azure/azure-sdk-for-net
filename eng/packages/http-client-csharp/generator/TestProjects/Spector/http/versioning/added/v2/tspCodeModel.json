@@ -49,7 +49,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -82,7 +83,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "8",
@@ -131,7 +133,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -149,7 +152,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "14",
@@ -165,7 +169,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "16",
@@ -181,7 +186,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "18",
@@ -197,7 +203,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "20",
@@ -213,7 +220,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "22",
@@ -229,7 +237,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -246,6 +255,7 @@
           "name": "ModelV1"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "25",
@@ -270,7 +280,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "27",
@@ -291,7 +302,8 @@
               "name": "enumProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "28",
@@ -326,7 +338,8 @@
               }
             ],
             "namespace": "Versioning.Added",
-            "decorators": []
+            "decorators": [],
+            "isExactName": false
           },
           "optional": false,
           "readOnly": false,
@@ -339,7 +352,8 @@
               "name": "unionProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -356,6 +370,7 @@
           "name": "ModelV2"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "34",
@@ -380,7 +395,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "36",
@@ -401,7 +417,8 @@
               "name": "enumProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "37",
@@ -429,7 +446,8 @@
               }
             ],
             "namespace": "Versioning.Added",
-            "decorators": []
+            "decorators": [],
+            "isExactName": false
           },
           "optional": false,
           "readOnly": false,
@@ -442,7 +460,8 @@
               "name": "unionProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -509,9 +528,11 @@
                     "crossLanguageDefinitionId": "Versioning.Added.v1.headerV2",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "48",
@@ -546,9 +567,11 @@
                     "crossLanguageDefinitionId": "Versioning.Added.v1.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "50",
@@ -581,9 +604,11 @@
                     "crossLanguageDefinitionId": "Versioning.Added.v1.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "52",
@@ -619,9 +644,11 @@
                     "crossLanguageDefinitionId": "Versioning.Added.v1.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "body"
@@ -733,9 +760,11 @@
                     "crossLanguageDefinitionId": "Versioning.Added.v2.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "58",
@@ -768,9 +797,11 @@
                     "crossLanguageDefinitionId": "Versioning.Added.v2.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "60",
@@ -806,9 +837,11 @@
                     "crossLanguageDefinitionId": "Versioning.Added.v2.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "body"
@@ -891,7 +924,8 @@
           "serverUrlTemplate": "{endpoint}/versioning/added/api-version:{version}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Versioning.Added.endpoint"
+          "crossLanguageDefinitionId": "Versioning.Added.endpoint",
+          "isExactName": false
         },
         {
           "$id": "64",
@@ -918,7 +952,8 @@
           "serverUrlTemplate": "{endpoint}/versioning/added/api-version:{version}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Versioning.Added.version"
+          "crossLanguageDefinitionId": "Versioning.Added.version",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -982,9 +1017,11 @@
                         "crossLanguageDefinitionId": "Versioning.Added.InterfaceV2.v2InInterface.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "71",
@@ -1017,9 +1054,11 @@
                         "crossLanguageDefinitionId": "Versioning.Added.InterfaceV2.v2InInterface.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "73",
@@ -1055,9 +1094,11 @@
                         "crossLanguageDefinitionId": "Versioning.Added.InterfaceV2.v2InInterface.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1140,7 +1181,8 @@
               "serverUrlTemplate": "{endpoint}/versioning/added/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.Added.InterfaceV2.endpoint"
+              "crossLanguageDefinitionId": "Versioning.Added.InterfaceV2.endpoint",
+              "isExactName": false
             },
             {
               "$id": "77",
@@ -1167,7 +1209,8 @@
               "serverUrlTemplate": "{endpoint}/versioning/added/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.Added.InterfaceV2.version"
+              "crossLanguageDefinitionId": "Versioning.Added.InterfaceV2.version",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

@@ -59,7 +59,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "6",
@@ -105,7 +106,8 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "10",
@@ -151,7 +153,8 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "14",
@@ -210,7 +213,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "19",
@@ -269,7 +273,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "24",
@@ -341,7 +346,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "30",
@@ -387,7 +393,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -405,7 +412,8 @@
         "decorators": []
       },
       "value": "a",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "36",
@@ -421,7 +429,8 @@
         "decorators": []
       },
       "value": 2,
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "38",
@@ -437,7 +446,8 @@
         "decorators": []
       },
       "value": 3.3,
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "40",
@@ -453,7 +463,8 @@
         "decorators": []
       },
       "value": true,
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "42",
@@ -469,7 +480,8 @@
         "decorators": []
       },
       "value": "a",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "44",
@@ -485,7 +497,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "46",
@@ -501,7 +514,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "48",
@@ -517,7 +531,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "50",
@@ -533,7 +548,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "52",
@@ -549,7 +565,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "54",
@@ -565,7 +582,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "56",
@@ -581,7 +599,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "58",
@@ -597,7 +616,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "60",
@@ -613,7 +633,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "62",
@@ -629,7 +650,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "64",
@@ -645,7 +667,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "66",
@@ -661,7 +684,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "68",
@@ -677,7 +701,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "70",
@@ -693,7 +718,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "72",
@@ -709,7 +735,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "74",
@@ -725,7 +752,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "76",
@@ -741,7 +769,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "78",
@@ -757,7 +786,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "80",
@@ -773,7 +803,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "82",
@@ -789,7 +820,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -806,6 +838,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "85",
@@ -826,7 +859,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -843,6 +877,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "87",
@@ -863,7 +898,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -880,6 +916,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "89",
@@ -900,7 +937,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -917,6 +955,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "91",
@@ -937,7 +976,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -954,6 +994,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "93",
@@ -974,7 +1015,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -991,6 +1033,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "95",
@@ -1011,7 +1054,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1028,6 +1072,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "97",
@@ -1048,7 +1093,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1065,6 +1111,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "99",
@@ -1085,7 +1132,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1102,6 +1150,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "101",
@@ -1122,7 +1171,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1139,6 +1189,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "103",
@@ -1159,7 +1210,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1176,6 +1228,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "105",
@@ -1200,6 +1253,7 @@
                     "name": "Cat"
                   }
                 },
+                "isExactName": false,
                 "properties": [
                   {
                     "$id": "108",
@@ -1224,7 +1278,8 @@
                         "name": "name"
                       }
                     },
-                    "isHttpMetadata": false
+                    "isHttpMetadata": false,
+                    "isExactName": false
                   }
                 ]
               },
@@ -1241,6 +1296,7 @@
                     "name": "Dog"
                   }
                 },
+                "isExactName": false,
                 "properties": [
                   {
                     "$id": "111",
@@ -1265,13 +1321,15 @@
                         "name": "bark"
                       }
                     },
-                    "isHttpMetadata": false
+                    "isHttpMetadata": false,
+                    "isExactName": false
                   }
                 ]
               }
             ],
             "namespace": "Type.Union",
-            "decorators": []
+            "decorators": [],
+            "isExactName": false
           },
           "optional": false,
           "readOnly": false,
@@ -1284,7 +1342,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1307,6 +1366,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "114",
@@ -1327,7 +1387,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1344,6 +1405,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "116",
@@ -1363,6 +1425,7 @@
                 "name": "EnumsOnlyCases"
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "118",
@@ -1384,7 +1447,8 @@
                     "name": "lr"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "119",
@@ -1406,7 +1470,8 @@
                     "name": "ud"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -1421,7 +1486,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1441,6 +1507,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "121",
@@ -1461,7 +1528,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1478,6 +1546,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "123",
@@ -1497,6 +1566,7 @@
                 "name": "StringAndArrayCases"
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "125",
@@ -1532,7 +1602,8 @@
                     }
                   ],
                   "namespace": "Type.Union",
-                  "decorators": []
+                  "decorators": [],
+                  "isExactName": false
                 },
                 "optional": false,
                 "readOnly": false,
@@ -1545,7 +1616,8 @@
                     "name": "string"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "130",
@@ -1570,7 +1642,8 @@
                     }
                   ],
                   "namespace": "Type.Union",
-                  "decorators": []
+                  "decorators": [],
+                  "isExactName": false
                 },
                 "optional": false,
                 "readOnly": false,
@@ -1583,7 +1656,8 @@
                     "name": "array"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -1598,7 +1672,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1618,6 +1693,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "134",
@@ -1638,7 +1714,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1655,6 +1732,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "136",
@@ -1674,6 +1752,7 @@
                 "name": "MixedLiteralsCases"
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "138",
@@ -1700,7 +1779,8 @@
                     }
                   ],
                   "namespace": "Type.Union",
-                  "decorators": []
+                  "decorators": [],
+                  "isExactName": false
                 },
                 "optional": false,
                 "readOnly": false,
@@ -1713,7 +1793,8 @@
                     "name": "stringLiteral"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "140",
@@ -1735,7 +1816,8 @@
                     "name": "intLiteral"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "141",
@@ -1757,7 +1839,8 @@
                     "name": "floatLiteral"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "142",
@@ -1779,7 +1862,8 @@
                     "name": "booleanLiteral"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -1794,7 +1878,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1814,6 +1899,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "144",
@@ -1834,7 +1920,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1851,6 +1938,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "146",
@@ -1870,6 +1958,7 @@
                 "name": "MixedTypesCases"
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "148",
@@ -1904,7 +1993,8 @@
                     }
                   ],
                   "namespace": "Type.Union",
-                  "decorators": []
+                  "decorators": [],
+                  "isExactName": false
                 },
                 "optional": false,
                 "readOnly": false,
@@ -1917,7 +2007,8 @@
                     "name": "model"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "152",
@@ -1939,7 +2030,8 @@
                     "name": "literal"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "153",
@@ -1961,7 +2053,8 @@
                     "name": "int"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "154",
@@ -1983,7 +2076,8 @@
                     "name": "boolean"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "155",
@@ -2012,7 +2106,8 @@
                     "name": "array"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -2027,7 +2122,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2047,6 +2143,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "158",
@@ -2067,7 +2164,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -2109,7 +2207,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Union.endpoint"
+          "crossLanguageDefinitionId": "Type.Union.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -2167,9 +2266,11 @@
                         "crossLanguageDefinitionId": "Type.Union.StringsOnly.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2262,9 +2363,11 @@
                         "crossLanguageDefinitionId": "Type.Union.StringsOnly.send.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "172",
@@ -2300,9 +2403,11 @@
                         "crossLanguageDefinitionId": "Type.Union.StringsOnly.send.prop",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -2377,7 +2482,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.StringsOnly.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.StringsOnly.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -2439,9 +2545,11 @@
                         "crossLanguageDefinitionId": "Type.Union.StringExtensible.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2534,9 +2642,11 @@
                         "crossLanguageDefinitionId": "Type.Union.StringExtensible.send.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "186",
@@ -2572,9 +2682,11 @@
                         "crossLanguageDefinitionId": "Type.Union.StringExtensible.send.prop",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -2649,7 +2761,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.StringExtensible.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.StringExtensible.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -2711,9 +2824,11 @@
                         "crossLanguageDefinitionId": "Type.Union.StringExtensibleNamed.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2806,9 +2921,11 @@
                         "crossLanguageDefinitionId": "Type.Union.StringExtensibleNamed.send.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "200",
@@ -2844,9 +2961,11 @@
                         "crossLanguageDefinitionId": "Type.Union.StringExtensibleNamed.send.prop",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -2921,7 +3040,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.StringExtensibleNamed.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.StringExtensibleNamed.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -2983,9 +3103,11 @@
                         "crossLanguageDefinitionId": "Type.Union.IntsOnly.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3078,9 +3200,11 @@
                         "crossLanguageDefinitionId": "Type.Union.IntsOnly.send.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "214",
@@ -3116,9 +3240,11 @@
                         "crossLanguageDefinitionId": "Type.Union.IntsOnly.send.prop",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -3193,7 +3319,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.IntsOnly.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.IntsOnly.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -3255,9 +3382,11 @@
                         "crossLanguageDefinitionId": "Type.Union.FloatsOnly.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3350,9 +3479,11 @@
                         "crossLanguageDefinitionId": "Type.Union.FloatsOnly.send.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "228",
@@ -3388,9 +3519,11 @@
                         "crossLanguageDefinitionId": "Type.Union.FloatsOnly.send.prop",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -3465,7 +3598,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.FloatsOnly.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.FloatsOnly.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -3527,9 +3661,11 @@
                         "crossLanguageDefinitionId": "Type.Union.ModelsOnly.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3622,9 +3758,11 @@
                         "crossLanguageDefinitionId": "Type.Union.ModelsOnly.send.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "242",
@@ -3660,9 +3798,11 @@
                         "crossLanguageDefinitionId": "Type.Union.ModelsOnly.send.prop",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -3737,7 +3877,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.ModelsOnly.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.ModelsOnly.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -3799,9 +3940,11 @@
                         "crossLanguageDefinitionId": "Type.Union.EnumsOnly.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3894,9 +4037,11 @@
                         "crossLanguageDefinitionId": "Type.Union.EnumsOnly.send.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "256",
@@ -3932,9 +4077,11 @@
                         "crossLanguageDefinitionId": "Type.Union.EnumsOnly.send.prop",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -4009,7 +4156,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.EnumsOnly.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.EnumsOnly.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -4071,9 +4219,11 @@
                         "crossLanguageDefinitionId": "Type.Union.StringAndArray.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -4166,9 +4316,11 @@
                         "crossLanguageDefinitionId": "Type.Union.StringAndArray.send.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "270",
@@ -4204,9 +4356,11 @@
                         "crossLanguageDefinitionId": "Type.Union.StringAndArray.send.prop",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -4281,7 +4435,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.StringAndArray.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.StringAndArray.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -4343,9 +4498,11 @@
                         "crossLanguageDefinitionId": "Type.Union.MixedLiterals.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -4438,9 +4595,11 @@
                         "crossLanguageDefinitionId": "Type.Union.MixedLiterals.send.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "284",
@@ -4476,9 +4635,11 @@
                         "crossLanguageDefinitionId": "Type.Union.MixedLiterals.send.prop",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -4553,7 +4714,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.MixedLiterals.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.MixedLiterals.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -4615,9 +4777,11 @@
                         "crossLanguageDefinitionId": "Type.Union.MixedTypes.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -4710,9 +4874,11 @@
                         "crossLanguageDefinitionId": "Type.Union.MixedTypes.send.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "298",
@@ -4748,9 +4914,11 @@
                         "crossLanguageDefinitionId": "Type.Union.MixedTypes.send.prop",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -4825,7 +4993,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Union.MixedTypes.endpoint"
+              "crossLanguageDefinitionId": "Type.Union.MixedTypes.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

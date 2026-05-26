@@ -72,7 +72,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Server.Path.Single.endpoint"
+          "crossLanguageDefinitionId": "Server.Path.Single.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

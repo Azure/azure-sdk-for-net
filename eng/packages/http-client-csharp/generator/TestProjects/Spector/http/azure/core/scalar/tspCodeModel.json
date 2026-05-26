@@ -37,7 +37,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -55,7 +56,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "6",
@@ -71,7 +73,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "8",
@@ -87,7 +90,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "10",
@@ -103,7 +107,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "12",
@@ -119,7 +124,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "14",
@@ -135,7 +141,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "16",
@@ -151,7 +158,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -168,6 +176,7 @@
           "name": "AzureLocationModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "19",
@@ -199,7 +208,8 @@
               "name": "location"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -240,7 +250,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -303,9 +314,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -419,9 +432,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "37",
@@ -481,9 +496,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -575,9 +592,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "47",
@@ -610,9 +629,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "49",
@@ -650,9 +671,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -785,9 +808,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.header.region",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -892,9 +917,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.query.region",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -958,7 +985,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

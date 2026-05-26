@@ -63,7 +63,8 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -81,7 +82,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "8",
@@ -97,7 +99,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "10",
@@ -113,7 +116,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "12",
@@ -129,7 +133,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "14",
@@ -145,7 +150,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "16",
@@ -161,7 +167,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "18",
@@ -177,7 +184,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "20",
@@ -193,7 +201,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "22",
@@ -209,7 +218,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "24",
@@ -225,7 +235,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "26",
@@ -241,7 +252,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "28",
@@ -257,7 +269,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "30",
@@ -273,7 +286,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "32",
@@ -289,7 +303,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "34",
@@ -305,7 +320,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "36",
@@ -321,7 +337,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "38",
@@ -337,7 +354,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "40",
@@ -353,7 +371,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "42",
@@ -369,7 +388,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "44",
@@ -385,7 +405,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "46",
@@ -401,7 +422,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "48",
@@ -417,7 +439,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "50",
@@ -433,7 +456,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "52",
@@ -449,7 +473,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "54",
@@ -465,7 +490,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "56",
@@ -481,7 +507,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "58",
@@ -497,7 +524,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "60",
@@ -513,7 +541,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "62",
@@ -529,7 +558,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "64",
@@ -545,7 +575,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "66",
@@ -561,7 +592,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "68",
@@ -577,7 +609,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "70",
@@ -593,7 +626,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "72",
@@ -609,7 +643,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "74",
@@ -625,7 +660,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "76",
@@ -641,7 +677,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "78",
@@ -657,7 +694,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "80",
@@ -673,7 +711,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "82",
@@ -689,7 +728,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "84",
@@ -705,7 +745,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "86",
@@ -721,7 +762,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "88",
@@ -737,7 +779,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "90",
@@ -753,7 +796,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "92",
@@ -769,7 +813,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "94",
@@ -785,7 +830,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "96",
@@ -801,7 +847,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "98",
@@ -817,7 +864,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "100",
@@ -833,7 +881,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "102",
@@ -849,7 +898,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "104",
@@ -865,7 +915,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "106",
@@ -881,7 +932,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "108",
@@ -897,7 +949,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "110",
@@ -913,7 +966,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "112",
@@ -929,7 +983,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "114",
@@ -945,7 +1000,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "116",
@@ -961,7 +1017,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "118",
@@ -977,7 +1034,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "120",
@@ -993,7 +1051,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "122",
@@ -1009,7 +1068,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "124",
@@ -1025,7 +1085,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "126",
@@ -1041,7 +1102,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "128",
@@ -1057,7 +1119,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "130",
@@ -1073,7 +1136,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "132",
@@ -1089,7 +1153,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "134",
@@ -1105,7 +1170,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "136",
@@ -1121,7 +1187,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "138",
@@ -1137,7 +1204,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "140",
@@ -1153,7 +1221,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "142",
@@ -1169,7 +1238,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "144",
@@ -1185,7 +1255,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "146",
@@ -1201,7 +1272,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "148",
@@ -1217,7 +1289,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "150",
@@ -1233,7 +1306,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "152",
@@ -1249,7 +1323,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "154",
@@ -1265,7 +1340,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "156",
@@ -1281,7 +1357,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "158",
@@ -1297,7 +1374,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "160",
@@ -1313,7 +1391,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "162",
@@ -1329,7 +1408,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "164",
@@ -1345,7 +1425,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "166",
@@ -1361,7 +1442,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "168",
@@ -1377,7 +1459,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "170",
@@ -1393,7 +1476,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "172",
@@ -1409,7 +1493,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "174",
@@ -1425,7 +1510,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "176",
@@ -1441,7 +1527,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "178",
@@ -1457,7 +1544,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "180",
@@ -1473,7 +1561,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "182",
@@ -1489,7 +1578,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "184",
@@ -1505,7 +1595,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "186",
@@ -1521,7 +1612,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "188",
@@ -1537,7 +1629,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "190",
@@ -1553,7 +1646,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "192",
@@ -1569,7 +1663,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "194",
@@ -1585,7 +1680,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "196",
@@ -1601,7 +1697,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "198",
@@ -1617,7 +1714,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "200",
@@ -1633,7 +1731,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "202",
@@ -1649,7 +1748,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "204",
@@ -1665,7 +1765,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "206",
@@ -1681,7 +1782,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "208",
@@ -1697,7 +1799,8 @@
         "decorators": []
       },
       "value": "application/xml",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -1717,6 +1820,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "211",
@@ -1743,7 +1847,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "213",
@@ -1770,7 +1875,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1790,6 +1896,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "216",
@@ -1823,7 +1930,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "218",
@@ -1850,7 +1958,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1877,6 +1986,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "221",
@@ -1906,7 +2016,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "222",
@@ -1936,7 +2047,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1956,6 +2068,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "224",
@@ -1978,7 +2091,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1998,6 +2112,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "226",
@@ -2027,6 +2142,7 @@
                 "unwrapped": false
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "228",
@@ -2053,7 +2169,8 @@
                     "unwrapped": false
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -2070,7 +2187,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2093,6 +2211,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "231",
@@ -2127,7 +2246,8 @@
               "itemsName": "string"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "234",
@@ -2162,7 +2282,8 @@
               "itemsName": "int32"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2182,6 +2303,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "238",
@@ -2210,7 +2332,8 @@
               "itemsName": "colors"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "239",
@@ -2234,7 +2357,8 @@
               "itemsName": "int32"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2254,6 +2378,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "241",
@@ -2288,7 +2413,8 @@
               "itemsName": "Colors"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "242",
@@ -2319,7 +2445,8 @@
               "itemsName": "int32"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2339,6 +2466,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "244",
@@ -2394,7 +2522,8 @@
               "itemsName": "ItemName"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2414,6 +2543,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "249",
@@ -2444,7 +2574,8 @@
               "itemsName": "SimpleModel"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2464,6 +2595,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "252",
@@ -2492,7 +2624,8 @@
               "itemsName": "items"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2512,6 +2645,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "254",
@@ -2542,7 +2676,8 @@
               "itemsName": "SimpleModel"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2562,6 +2697,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "256",
@@ -2596,7 +2732,8 @@
               "itemsName": "ModelItem"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2616,6 +2753,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "258",
@@ -2649,6 +2787,7 @@
                   "unwrapped": false
                 }
               },
+              "isExactName": false,
               "properties": [
                 {
                   "$id": "261",
@@ -2675,7 +2814,8 @@
                       "unwrapped": false
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 }
               ]
             },
@@ -2703,7 +2843,8 @@
               "itemsName": "XmlBook"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2726,6 +2867,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "264",
@@ -2757,7 +2899,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "266",
@@ -2789,7 +2932,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "268",
@@ -2816,7 +2960,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2836,6 +2981,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "271",
@@ -2873,7 +3019,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "273",
@@ -2900,7 +3047,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "275",
@@ -2927,7 +3075,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3028,6 +3177,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "283",
@@ -3054,7 +3204,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "285",
@@ -3081,7 +3232,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3125,6 +3277,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "289",
@@ -3151,7 +3304,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "291",
@@ -3202,7 +3356,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "294",
@@ -3253,7 +3408,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3273,6 +3429,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "298",
@@ -3304,7 +3461,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "300",
@@ -3336,7 +3494,8 @@
               "unwrapped": true
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3356,6 +3515,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "303",
@@ -3382,7 +3542,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "305",
@@ -3409,7 +3570,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3429,6 +3591,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "308",
@@ -3452,7 +3615,8 @@
               "itemsName": "SimpleModel"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3472,6 +3636,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "310",
@@ -3510,7 +3675,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3530,6 +3696,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "315",
@@ -3552,7 +3719,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "316",
@@ -3576,7 +3744,8 @@
               "itemsName": "string"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3596,6 +3765,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "318",
@@ -3618,7 +3788,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3638,6 +3809,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "320",
@@ -3673,7 +3845,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "323",
@@ -3709,7 +3882,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -3729,6 +3903,7 @@
           "unwrapped": false
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "327",
@@ -3755,7 +3930,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "329",
@@ -3782,7 +3958,8 @@
               "unwrapped": false
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -3824,7 +4001,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Payload.Xml.endpoint"
+          "crossLanguageDefinitionId": "Payload.Xml.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -3882,9 +4060,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.SimpleModelValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3983,9 +4163,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.SimpleModelValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "344",
@@ -4021,9 +4203,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.SimpleModelValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -4098,7 +4282,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.SimpleModelValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.SimpleModelValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -4160,9 +4345,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedPropertyValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -4261,9 +4448,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedPropertyValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "358",
@@ -4299,9 +4488,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedPropertyValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -4376,7 +4567,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedPropertyValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedPropertyValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -4438,9 +4630,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedFieldsValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -4539,9 +4733,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedFieldsValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "372",
@@ -4577,9 +4773,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedFieldsValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -4654,7 +4852,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedFieldsValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedFieldsValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -4716,9 +4915,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithNestedModelValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -4817,9 +5018,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithNestedModelValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "386",
@@ -4855,9 +5058,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithNestedModelValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -4932,7 +5137,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithNestedModelValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithNestedModelValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -4994,9 +5200,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedNestedModelValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -5095,9 +5303,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedNestedModelValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "400",
@@ -5133,9 +5343,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedNestedModelValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -5210,7 +5422,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedNestedModelValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedNestedModelValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -5272,9 +5485,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithSimpleArraysValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -5373,9 +5588,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithSimpleArraysValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "414",
@@ -5411,9 +5628,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithSimpleArraysValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -5488,7 +5707,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithSimpleArraysValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithSimpleArraysValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -5550,9 +5770,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedArrayValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -5651,9 +5873,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedArrayValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "428",
@@ -5689,9 +5913,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedArrayValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -5766,7 +5992,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedArrayValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedArrayValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -5828,9 +6055,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedArraysValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -5929,9 +6158,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedArraysValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "442",
@@ -5967,9 +6198,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedArraysValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -6044,7 +6277,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedArraysValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedArraysValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -6106,9 +6340,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithWrappedPrimitiveCustomItemNamesValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -6207,9 +6443,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithWrappedPrimitiveCustomItemNamesValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "456",
@@ -6245,9 +6483,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithWrappedPrimitiveCustomItemNamesValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -6322,7 +6562,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithWrappedPrimitiveCustomItemNamesValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithWrappedPrimitiveCustomItemNamesValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -6384,9 +6625,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithArrayOfModelValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -6485,9 +6728,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithArrayOfModelValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "470",
@@ -6523,9 +6768,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithArrayOfModelValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -6600,7 +6847,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithArrayOfModelValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithArrayOfModelValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -6662,9 +6910,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedModelArrayValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -6763,9 +7013,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedModelArrayValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "484",
@@ -6801,9 +7053,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedModelArrayValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -6878,7 +7132,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedModelArrayValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithUnwrappedModelArrayValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -6940,9 +7195,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedModelArrayValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -7041,9 +7298,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedModelArrayValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "498",
@@ -7079,9 +7338,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedModelArrayValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -7156,7 +7417,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedModelArrayValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedModelArrayValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -7218,9 +7480,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedUnwrappedModelArrayValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -7319,9 +7583,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedUnwrappedModelArrayValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "512",
@@ -7357,9 +7623,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedUnwrappedModelArrayValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -7434,7 +7702,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedUnwrappedModelArrayValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedUnwrappedModelArrayValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -7496,9 +7765,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedAndItemModelArrayValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -7597,9 +7868,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedAndItemModelArrayValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "526",
@@ -7635,9 +7908,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedAndItemModelArrayValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -7712,7 +7987,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedAndItemModelArrayValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedWrappedAndItemModelArrayValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -7774,9 +8050,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithAttributesValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -7875,9 +8153,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithAttributesValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "540",
@@ -7913,9 +8193,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithAttributesValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -7990,7 +8272,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithAttributesValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithAttributesValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -8052,9 +8335,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedAttributeValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -8153,9 +8438,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedAttributeValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "554",
@@ -8191,9 +8478,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedAttributeValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -8268,7 +8557,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedAttributeValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithRenamedAttributeValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -8330,9 +8620,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -8431,9 +8723,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "568",
@@ -8469,9 +8763,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -8546,7 +8842,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -8608,9 +8905,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceOnPropertiesValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -8709,9 +9008,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceOnPropertiesValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "582",
@@ -8747,9 +9048,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceOnPropertiesValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -8824,7 +9127,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceOnPropertiesValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithNamespaceOnPropertiesValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -8886,9 +9190,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithTextValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -8987,9 +9293,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithTextValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "596",
@@ -9025,9 +9333,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithTextValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -9102,7 +9412,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithTextValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithTextValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -9164,9 +9475,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithOptionalFieldValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -9265,9 +9578,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithOptionalFieldValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "610",
@@ -9303,9 +9618,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithOptionalFieldValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -9380,7 +9697,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithOptionalFieldValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithOptionalFieldValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -9442,9 +9760,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithEmptyArrayValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -9543,9 +9863,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithEmptyArrayValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "624",
@@ -9581,9 +9903,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithEmptyArrayValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -9658,7 +9982,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithEmptyArrayValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithEmptyArrayValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -9720,9 +10045,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithDictionaryValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -9821,9 +10148,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithDictionaryValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "638",
@@ -9859,9 +10188,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithDictionaryValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -9936,7 +10267,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithDictionaryValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithDictionaryValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -9998,9 +10330,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithEncodedNamesValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10099,9 +10433,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithEncodedNamesValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "652",
@@ -10137,9 +10473,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithEncodedNamesValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -10214,7 +10552,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithEncodedNamesValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithEncodedNamesValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -10276,9 +10615,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithEnumValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10377,9 +10718,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithEnumValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "666",
@@ -10415,9 +10758,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithEnumValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -10492,7 +10837,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithEnumValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithEnumValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -10554,9 +10900,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithDatetimeValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10655,9 +11003,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithDatetimeValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "680",
@@ -10693,9 +11043,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.ModelWithDatetimeValue.put.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "xml": {
                         "name": "input"
@@ -10770,7 +11122,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.ModelWithDatetimeValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.ModelWithDatetimeValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -10832,9 +11185,11 @@
                         "crossLanguageDefinitionId": "Payload.Xml.XmlErrorValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -10920,7 +11275,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.Xml.XmlErrorValue.endpoint"
+              "crossLanguageDefinitionId": "Payload.Xml.XmlErrorValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

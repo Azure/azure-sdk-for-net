@@ -41,7 +41,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -195,7 +196,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.HeadAsBoolean.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ResponseAsBool.HeadAsBoolean.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

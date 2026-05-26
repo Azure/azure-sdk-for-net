@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -49,7 +51,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -83,6 +87,7 @@
           "name": "InputRecord"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "10",
@@ -107,7 +112,8 @@
               "name": "requiredProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -125,6 +131,7 @@
           "name": "OutputRecord"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "13",
@@ -149,7 +156,8 @@
               "name": "requiredProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -167,6 +175,7 @@
           "name": "InputOutputRecord"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "16",
@@ -191,7 +200,8 @@
               "name": "requiredProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -249,9 +259,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Usage.input.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "23",
@@ -287,9 +299,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Usage.input.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "input"
@@ -377,9 +391,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Usage.output.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -472,9 +488,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Usage.inputAndOutput.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "33",
@@ -507,9 +525,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Usage.inputAndOutput.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "35",
@@ -545,9 +565,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Usage.inputAndOutput.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "body"
@@ -639,7 +661,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Model.Usage.endpoint"
+          "crossLanguageDefinitionId": "Type.Model.Usage.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -50,6 +52,7 @@
           "name": "JsonEncodedNameModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "6",
@@ -75,7 +78,8 @@
               "name": "wireName"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -117,7 +121,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Serialization.EncodedName.Json.endpoint"
+          "crossLanguageDefinitionId": "Serialization.EncodedName.Json.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -176,9 +181,11 @@
                         "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.send.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "17",
@@ -214,9 +221,11 @@
                         "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.send.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -304,9 +313,11 @@
                         "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -384,7 +395,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.endpoint"
+              "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

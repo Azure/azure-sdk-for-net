@@ -52,7 +52,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [],
@@ -166,9 +167,11 @@
                     "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromNone.new-parameter",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -260,9 +263,11 @@
                     "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneRequired.parameter",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "20",
@@ -305,9 +310,11 @@
                     "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneRequired.new-parameter",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -402,9 +409,11 @@
                     "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneOptional.parameter",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "30",
@@ -447,9 +456,11 @@
                     "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneOptional.new-parameter",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -507,7 +518,8 @@
           "serverUrlTemplate": "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.endpoint"
+          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.endpoint",
+          "isExactName": false
         },
         {
           "$id": "36",
@@ -529,7 +541,8 @@
           "serverUrlTemplate": "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.serviceDeploymentVersion"
+          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.serviceDeploymentVersion",
+          "isExactName": false
         },
         {
           "$id": "38",
@@ -560,7 +573,8 @@
           "serverUrlTemplate": "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.apiVersion"
+          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.apiVersion",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

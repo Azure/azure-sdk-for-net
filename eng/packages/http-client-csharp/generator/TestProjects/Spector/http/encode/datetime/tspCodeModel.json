@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -49,7 +51,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
@@ -81,7 +85,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
@@ -97,7 +102,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
@@ -113,7 +119,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
@@ -129,7 +136,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "17",
@@ -145,7 +153,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "19",
@@ -161,7 +170,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -178,6 +188,7 @@
           "name": "DefaultDatetimeProperty"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "22",
@@ -210,7 +221,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -227,6 +239,7 @@
           "name": "Rfc3339DatetimeProperty"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "26",
@@ -259,7 +272,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -276,6 +290,7 @@
           "name": "Rfc7231DatetimeProperty"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "30",
@@ -308,7 +323,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -325,6 +341,7 @@
           "name": "UnixTimestampDatetimeProperty"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "34",
@@ -357,7 +374,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -374,6 +392,7 @@
           "name": "UnixTimestampArrayDatetimeProperty"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "38",
@@ -428,7 +447,8 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -470,7 +490,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Encode.Datetime.endpoint"
+          "crossLanguageDefinitionId": "Encode.Datetime.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -551,9 +572,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Query.default.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -654,9 +677,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Query.rfc3339.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -757,9 +782,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Query.rfc7231.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -860,9 +887,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Query.unixTimestamp.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -940,9 +969,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Query.unixTimestampArray.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -1006,7 +1037,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Datetime.Query.endpoint"
+              "crossLanguageDefinitionId": "Encode.Datetime.Query.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -1069,9 +1101,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Property.default.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "93",
@@ -1104,9 +1138,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Property.default.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "95",
@@ -1142,9 +1178,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Property.default.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1251,9 +1289,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Property.rfc3339.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "101",
@@ -1286,9 +1326,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Property.rfc3339.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "103",
@@ -1324,9 +1366,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Property.rfc3339.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1433,9 +1477,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Property.rfc7231.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "109",
@@ -1468,9 +1514,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Property.rfc7231.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "111",
@@ -1506,9 +1554,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Property.rfc7231.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1615,9 +1665,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Property.unixTimestamp.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "117",
@@ -1650,9 +1702,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Property.unixTimestamp.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "119",
@@ -1688,9 +1742,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Property.unixTimestamp.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1797,9 +1853,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Property.unixTimestampArray.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "125",
@@ -1832,9 +1890,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Property.unixTimestampArray.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "127",
@@ -1870,9 +1930,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Property.unixTimestampArray.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1964,7 +2026,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Datetime.Property.endpoint"
+              "crossLanguageDefinitionId": "Encode.Datetime.Property.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -2049,9 +2112,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Header.default.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2152,9 +2217,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Header.rfc3339.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2255,9 +2322,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Header.rfc7231.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2358,9 +2427,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Header.unixTimestamp.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2439,9 +2510,11 @@
                         "crossLanguageDefinitionId": "Encode.Datetime.Header.unixTimestampArray.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2505,7 +2578,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Datetime.Header.endpoint"
+              "crossLanguageDefinitionId": "Encode.Datetime.Header.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -2789,7 +2863,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Encode.Datetime.ResponseHeader.endpoint"
+              "crossLanguageDefinitionId": "Encode.Datetime.ResponseHeader.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

@@ -85,7 +85,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [],
@@ -235,7 +236,8 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.endpoint"
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.endpoint",
+          "isExactName": false
         },
         {
           "$id": "17",
@@ -253,7 +255,8 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.client"
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.client",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -406,7 +409,8 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.endpoint"
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.endpoint",
+          "isExactName": false
         },
         {
           "$id": "27",
@@ -424,7 +428,8 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.client"
+          "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.client",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

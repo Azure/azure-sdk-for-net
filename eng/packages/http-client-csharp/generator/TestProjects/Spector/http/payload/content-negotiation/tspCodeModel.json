@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "image/png",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -49,7 +51,8 @@
         "decorators": []
       },
       "value": "image/png",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "image/png",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
@@ -81,7 +85,8 @@
         "decorators": []
       },
       "value": "image/jpeg",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
@@ -97,7 +102,8 @@
         "decorators": []
       },
       "value": "image/jpeg",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
@@ -113,7 +119,8 @@
         "decorators": []
       },
       "value": "image/jpeg",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
@@ -129,7 +136,8 @@
         "decorators": []
       },
       "value": "image/png",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "17",
@@ -145,7 +153,8 @@
         "decorators": []
       },
       "value": "image/png",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "19",
@@ -161,7 +170,8 @@
         "decorators": []
       },
       "value": "image/png",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "21",
@@ -177,7 +187,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "23",
@@ -193,7 +204,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "25",
@@ -209,7 +221,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -226,6 +239,7 @@
           "name": "PngImageAsJson"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "28",
@@ -246,7 +260,8 @@
               "name": "contentType"
             }
           },
-          "isHttpMetadata": true
+          "isHttpMetadata": true,
+          "isExactName": false
         },
         {
           "$id": "29",
@@ -272,7 +287,8 @@
               "name": "content"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -314,7 +330,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Payload.ContentNegotiation.endpoint"
+          "crossLanguageDefinitionId": "Payload.ContentNegotiation.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -371,9 +388,11 @@
                         "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.getAvatarAsPng.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -472,9 +491,11 @@
                         "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.getAvatarAsJpeg.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -560,7 +581,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.endpoint"
+              "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -621,9 +643,11 @@
                         "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.getAvatarAsPng.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -722,9 +746,11 @@
                         "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.getAvatarAsJson.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -810,7 +836,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.endpoint"
+              "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

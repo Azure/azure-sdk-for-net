@@ -35,7 +35,8 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "4",
@@ -70,7 +71,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -88,7 +90,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
@@ -104,7 +107,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
@@ -120,7 +124,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
@@ -136,7 +141,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
@@ -152,7 +158,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "17",
@@ -168,7 +175,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "19",
@@ -184,7 +192,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "21",
@@ -200,7 +209,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -218,6 +228,7 @@
           "name": "Dog"
         }
       },
+      "isExactName": false,
       "discriminatorProperty": {
         "$id": "24",
         "kind": "property",
@@ -238,7 +249,8 @@
             "name": "kind"
           }
         },
-        "isHttpMetadata": false
+        "isHttpMetadata": false,
+        "isExactName": false
       },
       "properties": [
         {
@@ -268,7 +280,8 @@
               "name": "weight"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ],
       "discriminatedSubtypes": {
@@ -287,6 +300,7 @@
               "name": "Golden"
             }
           },
+          "isExactName": false,
           "baseModel": {
             "$ref": "23"
           },
@@ -362,7 +376,8 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         }
@@ -385,6 +400,7 @@
           "name": "Snake"
         }
       },
+      "isExactName": false,
       "discriminatorProperty": {
         "$id": "34",
         "kind": "property",
@@ -405,7 +421,8 @@
             "name": "kind"
           }
         },
-        "isHttpMetadata": false
+        "isHttpMetadata": false,
+        "isExactName": false
       },
       "properties": [
         {
@@ -435,7 +452,8 @@
               "name": "length"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ],
       "discriminatedSubtypes": {
@@ -454,6 +472,7 @@
               "name": "Cobra"
             }
           },
+          "isExactName": false,
           "baseModel": {
             "$ref": "33"
           },
@@ -529,7 +548,8 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         }
@@ -592,9 +612,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModel.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -689,9 +711,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putExtensibleModel.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "52",
@@ -729,9 +753,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putExtensibleModel.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "input"
@@ -821,9 +847,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModelMissingDiscriminator.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -916,9 +944,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModelWrongDiscriminator.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1011,9 +1041,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModel.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1108,9 +1140,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putFixedModel.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "70",
@@ -1148,9 +1182,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putFixedModel.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "input"
@@ -1240,9 +1276,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModelMissingDiscriminator.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1335,9 +1373,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModelWrongDiscriminator.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1415,7 +1455,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.endpoint"
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

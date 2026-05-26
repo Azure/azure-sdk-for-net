@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -51,6 +53,7 @@
           "name": "User"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "6",
@@ -75,7 +78,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -92,6 +96,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "9",
@@ -116,7 +121,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -158,7 +164,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Parameters.Basic.endpoint"
+          "crossLanguageDefinitionId": "Parameters.Basic.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -217,9 +224,11 @@
                         "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.simple.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "20",
@@ -255,9 +264,11 @@
                         "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.simple.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -332,7 +343,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -395,9 +407,11 @@
                         "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "30",
@@ -437,9 +451,11 @@
                         "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.name",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -514,7 +530,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

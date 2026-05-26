@@ -63,7 +63,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -81,7 +82,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -98,6 +100,7 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "9",
@@ -118,6 +121,7 @@
                 "name": "BulletPointsModel"
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "11",
@@ -139,7 +143,8 @@
                     "name": "prop"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -154,7 +159,8 @@
               "name": "input"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -199,7 +205,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Documentation.endpoint"
+          "crossLanguageDefinitionId": "Documentation.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -299,9 +306,11 @@
                         "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "23",
@@ -337,9 +346,11 @@
                         "crossLanguageDefinitionId": "Documentation.Lists.bulletPointsModel.input",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": ""
@@ -455,7 +466,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Documentation.Lists.endpoint"
+              "crossLanguageDefinitionId": "Documentation.Lists.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -626,7 +638,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Documentation.TextFormatting.endpoint"
+              "crossLanguageDefinitionId": "Documentation.TextFormatting.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

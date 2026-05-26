@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -49,7 +51,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
@@ -81,7 +85,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
@@ -97,7 +102,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
@@ -113,7 +119,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
@@ -129,7 +136,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "17",
@@ -145,7 +153,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "19",
@@ -161,7 +170,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "21",
@@ -177,7 +187,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "23",
@@ -193,7 +204,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "25",
@@ -209,7 +221,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "27",
@@ -225,7 +238,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "29",
@@ -241,7 +255,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "31",
@@ -257,7 +272,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "33",
@@ -273,7 +289,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "35",
@@ -289,7 +306,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "37",
@@ -305,7 +323,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "39",
@@ -321,7 +340,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "41",
@@ -337,7 +357,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "43",
@@ -353,7 +374,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "45",
@@ -369,7 +391,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "47",
@@ -385,7 +408,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "49",
@@ -401,7 +425,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [],
@@ -441,7 +466,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Scalar.endpoint"
+          "crossLanguageDefinitionId": "Type.Scalar.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -500,9 +526,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.String.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -607,9 +635,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.String.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "65",
@@ -655,9 +685,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.String.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -732,7 +764,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Scalar.String.endpoint"
+              "crossLanguageDefinitionId": "Type.Scalar.String.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -795,9 +828,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.Boolean.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -902,9 +937,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.Boolean.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "82",
@@ -950,9 +987,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.Boolean.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1027,7 +1066,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Scalar.Boolean.endpoint"
+              "crossLanguageDefinitionId": "Type.Scalar.Boolean.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -1090,9 +1130,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.Unknown.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -1197,9 +1239,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.Unknown.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "99",
@@ -1245,9 +1289,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.Unknown.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1322,7 +1368,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Scalar.Unknown.endpoint"
+              "crossLanguageDefinitionId": "Type.Scalar.Unknown.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -1384,9 +1431,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.DecimalType.responseBody.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -1489,9 +1538,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.DecimalType.requestBody.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "116",
@@ -1535,9 +1586,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.DecimalType.requestBody.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1633,9 +1686,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.DecimalType.requestParameter.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -1699,7 +1754,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Scalar.DecimalType.endpoint"
+              "crossLanguageDefinitionId": "Type.Scalar.DecimalType.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -1761,9 +1817,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.Decimal128Type.responseBody.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -1866,9 +1924,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.Decimal128Type.requestBody.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "139",
@@ -1912,9 +1972,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.Decimal128Type.requestBody.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -2010,9 +2072,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.Decimal128Type.requestParameter.value",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2076,7 +2140,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Scalar.Decimal128Type.endpoint"
+              "crossLanguageDefinitionId": "Type.Scalar.Decimal128Type.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -2138,9 +2203,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.DecimalVerify.prepareVerify.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2242,9 +2309,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.DecimalVerify.verify.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "163",
@@ -2288,9 +2357,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.DecimalVerify.verify.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -2365,7 +2436,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Scalar.DecimalVerify.endpoint"
+              "crossLanguageDefinitionId": "Type.Scalar.DecimalVerify.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -2427,9 +2499,11 @@
                         "crossLanguageDefinitionId": "Type.Scalar.Decimal128Verify.prepareVerify.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2508,7 +2582,8 @@
                       {
                         "$ref": "162"
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "178",
@@ -2537,6 +2612,7 @@
                         "$ref": "165"
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -2611,7 +2687,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Scalar.Decimal128Verify.endpoint"
+              "crossLanguageDefinitionId": "Type.Scalar.Decimal128Verify.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

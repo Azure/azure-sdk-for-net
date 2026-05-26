@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -49,7 +51,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -83,6 +87,7 @@
           "name": "EmptyInput"
         }
       },
+      "isExactName": false,
       "properties": []
     },
     {
@@ -99,6 +104,7 @@
           "name": "EmptyOutput"
         }
       },
+      "isExactName": false,
       "properties": []
     },
     {
@@ -115,6 +121,7 @@
           "name": "EmptyInputOutput"
         }
       },
+      "isExactName": false,
       "properties": []
     }
   ],
@@ -171,9 +178,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Empty.putEmpty.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "17",
@@ -209,9 +218,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Empty.putEmpty.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "input"
@@ -299,9 +310,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Empty.getEmpty.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -394,9 +407,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Empty.postRoundTripEmpty.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "27",
@@ -429,9 +444,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Empty.postRoundTripEmpty.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "29",
@@ -467,9 +484,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Empty.postRoundTripEmpty.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "body"
@@ -561,7 +580,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Model.Empty.endpoint"
+          "crossLanguageDefinitionId": "Type.Model.Empty.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

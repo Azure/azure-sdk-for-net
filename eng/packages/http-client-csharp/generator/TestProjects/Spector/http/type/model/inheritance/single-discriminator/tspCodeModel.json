@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "seagull",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "sparrow",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -49,7 +51,8 @@
         "decorators": []
       },
       "value": "goose",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "eagle",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
@@ -81,7 +85,8 @@
         "decorators": []
       },
       "value": "t-rex",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
@@ -97,7 +102,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
@@ -113,7 +119,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
@@ -129,7 +136,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "17",
@@ -145,7 +153,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "19",
@@ -161,7 +170,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "21",
@@ -177,7 +187,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "23",
@@ -193,7 +204,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -211,6 +223,7 @@
           "name": "Bird"
         }
       },
+      "isExactName": false,
       "discriminatorProperty": {
         "$id": "26",
         "kind": "property",
@@ -234,7 +247,8 @@
             "name": "kind"
           }
         },
-        "isHttpMetadata": false
+        "isHttpMetadata": false,
+        "isExactName": false
       },
       "properties": [
         {
@@ -263,7 +277,8 @@
               "name": "wingspan"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ],
       "discriminatedSubtypes": {
@@ -282,6 +297,7 @@
               "name": "SeaGull"
             }
           },
+          "isExactName": false,
           "baseModel": {
             "$ref": "25"
           },
@@ -305,7 +321,8 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         },
@@ -324,6 +341,7 @@
               "name": "Sparrow"
             }
           },
+          "isExactName": false,
           "baseModel": {
             "$ref": "25"
           },
@@ -347,7 +365,8 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         },
@@ -366,6 +385,7 @@
               "name": "Goose"
             }
           },
+          "isExactName": false,
           "baseModel": {
             "$ref": "25"
           },
@@ -389,7 +409,8 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         },
@@ -408,6 +429,7 @@
               "name": "Eagle"
             }
           },
+          "isExactName": false,
           "baseModel": {
             "$ref": "25"
           },
@@ -431,7 +453,8 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             },
             {
               "$id": "38",
@@ -459,7 +482,8 @@
                   "name": "friends"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             },
             {
               "$id": "40",
@@ -492,7 +516,8 @@
                   "name": "hate"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             },
             {
               "$id": "43",
@@ -513,7 +538,8 @@
                   "name": "partner"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         }
@@ -545,6 +571,7 @@
           "name": "Dinosaur"
         }
       },
+      "isExactName": false,
       "discriminatorProperty": {
         "$id": "45",
         "kind": "property",
@@ -569,7 +596,8 @@
             "name": "kind"
           }
         },
-        "isHttpMetadata": false
+        "isHttpMetadata": false,
+        "isExactName": false
       },
       "properties": [
         {
@@ -598,7 +626,8 @@
               "name": "size"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ],
       "discriminatedSubtypes": {
@@ -617,6 +646,7 @@
               "name": "TRex"
             }
           },
+          "isExactName": false,
           "baseModel": {
             "$ref": "44"
           },
@@ -640,7 +670,8 @@
                   "name": "kind"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         }
@@ -701,9 +732,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getModel.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -796,9 +829,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putModel.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "60",
@@ -834,9 +869,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putModel.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "input"
@@ -924,9 +961,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getRecursiveModel.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1019,9 +1058,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putRecursiveModel.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "70",
@@ -1057,9 +1098,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.putRecursiveModel.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "input"
@@ -1147,9 +1190,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getMissingDiscriminator.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1240,9 +1285,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getWrongDiscriminator.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1333,9 +1380,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.getLegacyModel.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1413,7 +1462,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.endpoint"
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.SingleDiscriminator.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

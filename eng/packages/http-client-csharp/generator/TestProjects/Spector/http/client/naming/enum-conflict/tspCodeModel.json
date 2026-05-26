@@ -49,7 +49,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -98,7 +99,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -116,7 +118,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
@@ -132,7 +135,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
@@ -148,7 +152,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
@@ -164,7 +169,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -181,6 +187,7 @@
           "name": "FirstModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "18",
@@ -202,7 +209,8 @@
               "name": "status"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "19",
@@ -228,7 +236,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -245,6 +254,7 @@
           "name": "SecondModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "22",
@@ -266,7 +276,8 @@
               "name": "status"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "23",
@@ -292,7 +303,8 @@
               "name": "description"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -334,7 +346,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Naming.EnumConflict.endpoint"
+          "crossLanguageDefinitionId": "Client.Naming.EnumConflict.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -395,9 +408,11 @@
                         "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "34",
@@ -430,9 +445,11 @@
                         "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "36",
@@ -468,9 +485,11 @@
                         "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -562,7 +581,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.endpoint"
+              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -627,9 +647,11 @@
                         "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "46",
@@ -662,9 +684,11 @@
                         "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "48",
@@ -700,9 +724,11 @@
                         "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -794,7 +820,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.endpoint"
+              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

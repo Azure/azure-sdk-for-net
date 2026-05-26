@@ -36,7 +36,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "4",
@@ -82,7 +83,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "8",
@@ -131,7 +133,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -149,7 +152,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "14",
@@ -165,7 +169,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "16",
@@ -181,7 +186,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "18",
@@ -197,7 +203,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "20",
@@ -213,7 +220,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "22",
@@ -229,7 +237,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "24",
@@ -245,7 +254,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "26",
@@ -261,7 +271,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -278,6 +289,7 @@
           "name": "ModelV1"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "29",
@@ -302,7 +314,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "31",
@@ -323,7 +336,8 @@
               "name": "enumProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "32",
@@ -351,7 +365,8 @@
               }
             ],
             "namespace": "Versioning.Removed",
-            "decorators": []
+            "decorators": [],
+            "isExactName": false
           },
           "optional": false,
           "readOnly": false,
@@ -364,7 +379,8 @@
               "name": "unionProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -381,6 +397,7 @@
           "name": "ModelV2"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "37",
@@ -405,7 +422,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "39",
@@ -430,7 +448,8 @@
               "name": "removedProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "41",
@@ -451,7 +470,8 @@
               "name": "enumProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "42",
@@ -493,7 +513,8 @@
               }
             ],
             "namespace": "Versioning.Removed",
-            "decorators": []
+            "decorators": [],
+            "isExactName": false
           },
           "optional": false,
           "readOnly": false,
@@ -506,7 +527,8 @@
               "name": "unionProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -523,6 +545,7 @@
           "name": "ModelV3"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "49",
@@ -547,7 +570,8 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -610,9 +634,11 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.v1.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "56",
@@ -645,9 +671,11 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.v1.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "58",
@@ -683,9 +711,11 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.v1.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "body"
@@ -801,9 +831,11 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.v2.param",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "66",
@@ -838,9 +870,11 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.v2.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "68",
@@ -873,9 +907,11 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.v2.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "70",
@@ -911,9 +947,11 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.v2.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "body"
@@ -1028,9 +1066,11 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.modelV3.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "76",
@@ -1063,9 +1103,11 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.modelV3.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "78",
@@ -1101,9 +1143,11 @@
                     "crossLanguageDefinitionId": "Versioning.Removed.modelV3.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "body"
@@ -1186,7 +1230,8 @@
           "serverUrlTemplate": "{endpoint}/versioning/removed/api-version:{version}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Versioning.Removed.endpoint"
+          "crossLanguageDefinitionId": "Versioning.Removed.endpoint",
+          "isExactName": false
         },
         {
           "$id": "82",
@@ -1213,7 +1258,8 @@
           "serverUrlTemplate": "{endpoint}/versioning/removed/api-version:{version}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Versioning.Removed.version"
+          "crossLanguageDefinitionId": "Versioning.Removed.version",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -1279,9 +1325,11 @@
                         "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "89",
@@ -1314,9 +1362,11 @@
                         "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "91",
@@ -1352,9 +1402,11 @@
                         "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1437,7 +1489,8 @@
               "serverUrlTemplate": "{endpoint}/versioning/removed/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.endpoint"
+              "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.endpoint",
+              "isExactName": false
             },
             {
               "$id": "95",
@@ -1464,7 +1517,8 @@
               "serverUrlTemplate": "{endpoint}/versioning/removed/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.version"
+              "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.version",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "pet",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "dog",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -49,7 +51,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
@@ -81,7 +85,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
@@ -97,7 +102,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
@@ -113,7 +119,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
@@ -129,7 +136,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "17",
@@ -145,7 +153,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "19",
@@ -161,7 +170,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "21",
@@ -177,7 +187,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "23",
@@ -193,7 +204,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -210,6 +222,7 @@
           "name": "Animal"
         }
       },
+      "isExactName": false,
       "discriminatorProperty": {
         "$id": "26",
         "kind": "property",
@@ -234,7 +247,8 @@
             "name": "kind"
           }
         },
-        "isHttpMetadata": false
+        "isHttpMetadata": false,
+        "isExactName": false
       },
       "properties": [
         {
@@ -264,7 +278,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ],
       "discriminatedSubtypes": {
@@ -282,6 +297,7 @@
               "name": "Pet"
             }
           },
+          "isExactName": false,
           "discriminatorProperty": {
             "$id": "31",
             "kind": "property",
@@ -301,7 +317,8 @@
                 "name": "kind"
               }
             },
-            "isHttpMetadata": false
+            "isHttpMetadata": false,
+            "isExactName": false
           },
           "baseModel": {
             "$ref": "25"
@@ -334,7 +351,8 @@
                   "name": "trained"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ],
           "discriminatedSubtypes": {
@@ -352,6 +370,7 @@
                   "name": "Dog"
                 }
               },
+              "isExactName": false,
               "baseModel": {
                 "$ref": "30"
               },
@@ -375,7 +394,8 @@
                       "name": "kind"
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 },
                 {
                   "$id": "36",
@@ -401,7 +421,8 @@
                       "name": "breed"
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 }
               ]
             }
@@ -456,7 +477,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -517,9 +539,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "47",
@@ -552,9 +576,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "49",
@@ -590,9 +616,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal.animal",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "animal"
@@ -701,9 +729,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "55",
@@ -736,9 +766,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "57",
@@ -774,9 +806,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal.animal",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "animal"
@@ -868,7 +902,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -933,9 +968,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "67",
@@ -968,9 +1005,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "69",
@@ -1006,9 +1045,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet.pet",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "pet"
@@ -1117,9 +1158,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "75",
@@ -1152,9 +1195,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "77",
@@ -1190,9 +1235,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet.pet",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "pet"
@@ -1284,7 +1331,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -1349,9 +1397,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "87",
@@ -1384,9 +1434,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "89",
@@ -1422,9 +1474,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog.dog",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "dog"
@@ -1516,7 +1570,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -51,6 +53,7 @@
           "name": "Extension"
         }
       },
+      "isExactName": false,
       "baseModel": {
         "$id": "6",
         "kind": "model",
@@ -65,6 +68,7 @@
             "name": "Element"
           }
         },
+        "isExactName": false,
         "properties": [
           {
             "$id": "7",
@@ -92,7 +96,8 @@
                 "name": "extension"
               }
             },
-            "isHttpMetadata": false
+            "isHttpMetadata": false,
+            "isExactName": false
           }
         ]
       },
@@ -120,7 +125,8 @@
               "name": "level"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -181,9 +187,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.put.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "16",
@@ -219,9 +227,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.put.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "input"
@@ -309,9 +319,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.get.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -389,7 +401,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.endpoint"
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

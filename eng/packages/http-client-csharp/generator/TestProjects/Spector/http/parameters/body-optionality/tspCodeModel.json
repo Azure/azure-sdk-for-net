@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -49,7 +51,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -82,6 +86,7 @@
           "name": "BodyModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "10",
@@ -106,7 +111,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -164,9 +170,11 @@
                     "crossLanguageDefinitionId": "Parameters.BodyOptionality.requiredExplicit.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "17",
@@ -202,9 +210,11 @@
                     "crossLanguageDefinitionId": "Parameters.BodyOptionality.requiredExplicit.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "body"
@@ -294,9 +304,11 @@
                     "crossLanguageDefinitionId": "Parameters.BodyOptionality.requiredImplicit.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "23",
@@ -336,9 +348,11 @@
                     "crossLanguageDefinitionId": "Parameters.BodyOptionality.requiredImplicit.name",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": ""
@@ -413,7 +427,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Parameters.BodyOptionality.endpoint"
+          "crossLanguageDefinitionId": "Parameters.BodyOptionality.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -472,9 +487,11 @@
                         "crossLanguageDefinitionId": "Parameters.BodyOptionality.OptionalExplicit.set.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "34",
@@ -510,9 +527,11 @@
                         "crossLanguageDefinitionId": "Parameters.BodyOptionality.OptionalExplicit.set.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -602,9 +621,11 @@
                         "crossLanguageDefinitionId": "Parameters.BodyOptionality.OptionalExplicit.omit.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "40",
@@ -640,9 +661,11 @@
                         "crossLanguageDefinitionId": "Parameters.BodyOptionality.OptionalExplicit.omit.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -717,7 +740,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.BodyOptionality.OptionalExplicit.endpoint"
+              "crossLanguageDefinitionId": "Parameters.BodyOptionality.OptionalExplicit.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

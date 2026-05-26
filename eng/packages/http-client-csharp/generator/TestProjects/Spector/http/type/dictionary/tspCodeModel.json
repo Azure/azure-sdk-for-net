@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -49,7 +51,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
@@ -81,7 +85,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
@@ -97,7 +102,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
@@ -113,7 +119,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
@@ -129,7 +136,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "17",
@@ -145,7 +153,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "19",
@@ -161,7 +170,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "21",
@@ -177,7 +187,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "23",
@@ -193,7 +204,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "25",
@@ -209,7 +221,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "27",
@@ -225,7 +238,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "29",
@@ -241,7 +255,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "31",
@@ -257,7 +272,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "33",
@@ -273,7 +289,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "35",
@@ -289,7 +306,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "37",
@@ -305,7 +323,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "39",
@@ -321,7 +340,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "41",
@@ -337,7 +357,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "43",
@@ -353,7 +374,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -371,6 +393,7 @@
           "name": "InnerModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "46",
@@ -396,7 +419,8 @@
               "name": "property"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "48",
@@ -429,7 +453,8 @@
               "name": "children"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -471,7 +496,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Dictionary.endpoint"
+          "crossLanguageDefinitionId": "Type.Dictionary.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -529,9 +555,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.Int32Value.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -640,9 +668,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.Int32Value.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "67",
@@ -678,9 +708,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.Int32Value.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -755,7 +787,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.Int32Value.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.Int32Value.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -817,9 +850,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.Int64Value.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -928,9 +963,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.Int64Value.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "84",
@@ -966,9 +1003,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.Int64Value.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1043,7 +1082,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.Int64Value.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.Int64Value.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -1105,9 +1145,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.BooleanValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -1216,9 +1258,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.BooleanValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "101",
@@ -1254,9 +1298,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.BooleanValue.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1331,7 +1377,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.BooleanValue.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.BooleanValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -1393,9 +1440,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.StringValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -1504,9 +1553,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.StringValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "118",
@@ -1542,9 +1593,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.StringValue.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1619,7 +1672,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.StringValue.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.StringValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -1681,9 +1735,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.Float32Value.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -1792,9 +1848,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.Float32Value.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "135",
@@ -1830,9 +1888,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.Float32Value.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -1907,7 +1967,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.Float32Value.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.Float32Value.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -1969,9 +2030,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.DatetimeValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2088,9 +2151,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.DatetimeValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "153",
@@ -2126,9 +2191,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.DatetimeValue.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -2203,7 +2270,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.DatetimeValue.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.DatetimeValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -2265,9 +2333,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.DurationValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2384,9 +2454,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.DurationValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "171",
@@ -2422,9 +2494,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.DurationValue.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -2499,7 +2573,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.DurationValue.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.DurationValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -2561,9 +2636,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.UnknownValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2672,9 +2749,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.UnknownValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "188",
@@ -2710,9 +2789,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.UnknownValue.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -2787,7 +2868,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.UnknownValue.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.UnknownValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -2849,9 +2931,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.ModelValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -2944,9 +3028,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.ModelValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "202",
@@ -2982,9 +3068,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.ModelValue.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -3059,7 +3147,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.ModelValue.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.ModelValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -3121,9 +3210,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.RecursiveModelValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3216,9 +3307,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.RecursiveModelValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "216",
@@ -3254,9 +3347,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.RecursiveModelValue.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -3331,7 +3426,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.RecursiveModelValue.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.RecursiveModelValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -3393,9 +3489,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.NullableFloatValue.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -3509,9 +3607,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.NullableFloatValue.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "234",
@@ -3547,9 +3647,11 @@
                         "crossLanguageDefinitionId": "Type.Dictionary.NullableFloatValue.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
                     ],
+                    "isExactName": false,
                     "serializationOptions": {
                       "json": {
                         "name": "body"
@@ -3624,7 +3726,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Dictionary.NullableFloatValue.endpoint"
+              "crossLanguageDefinitionId": "Type.Dictionary.NullableFloatValue.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

@@ -51,7 +51,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Output",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
@@ -86,7 +87,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -104,7 +106,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "10",
@@ -120,7 +123,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "12",
@@ -136,7 +140,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -154,6 +159,7 @@
           "name": "User"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "15",
@@ -179,7 +185,8 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "17",
@@ -205,7 +212,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -223,6 +231,7 @@
           "name": "ErrorResponse"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "20",
@@ -244,6 +253,7 @@
                 "name": "Error"
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "22",
@@ -269,7 +279,8 @@
                     "name": "code"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "24",
@@ -295,7 +306,8 @@
                     "name": "message"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "26",
@@ -321,7 +333,8 @@
                     "name": "target"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "28",
@@ -350,7 +363,8 @@
                     "name": "details"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "30",
@@ -372,6 +386,7 @@
                       "name": "InnerError"
                     }
                   },
+                  "isExactName": false,
                   "properties": [
                     {
                       "$id": "32",
@@ -397,7 +412,8 @@
                           "name": "code"
                         }
                       },
-                      "isHttpMetadata": false
+                      "isHttpMetadata": false,
+                      "isExactName": false
                     },
                     {
                       "$id": "34",
@@ -419,7 +435,8 @@
                           "name": "innererror"
                         }
                       },
-                      "isHttpMetadata": false
+                      "isHttpMetadata": false,
+                      "isExactName": false
                     }
                   ]
                 },
@@ -434,7 +451,8 @@
                     "name": "innererror"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -449,7 +467,8 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "35",
@@ -475,7 +494,8 @@
               "name": "errorCode"
             }
           },
-          "isHttpMetadata": true
+          "isHttpMetadata": true,
+          "isExactName": false
         }
       ]
     },
@@ -499,6 +519,7 @@
           "name": "UserActionParam"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "38",
@@ -524,7 +545,8 @@
               "name": "userActionValue"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -542,6 +564,7 @@
           "name": "UserActionResponse"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "41",
@@ -567,7 +590,8 @@
               "name": "userActionResult"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -655,9 +679,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.apiVersion",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "52",
@@ -703,9 +729,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.id",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "56",
@@ -748,9 +776,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.foo",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "60",
@@ -793,9 +823,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifMatch",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "64",
@@ -838,9 +870,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifNoneMatch",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "68",
@@ -899,9 +933,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifUnmodifiedSince",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "74",
@@ -960,9 +996,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifModifiedSince",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "80",
@@ -1019,9 +1057,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.clientRequestId",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "86",
@@ -1054,9 +1094,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1217,7 +1259,8 @@
                   {
                     "$ref": "49"
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "97",
@@ -1263,9 +1306,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.id",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "101",
@@ -1308,9 +1353,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.repeatabilityRequestId",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "105",
@@ -1369,9 +1416,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.repeatabilityFirstSent",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "111",
@@ -1406,9 +1455,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "113",
@@ -1441,9 +1492,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "115",
@@ -1481,9 +1534,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
                 ],
+                "isExactName": false,
                 "serializationOptions": {
                   "json": {
                     "name": "body"
@@ -1593,7 +1648,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.endpoint",
+          "isExactName": false
         },
         {
           "$ref": "49"

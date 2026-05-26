@@ -65,9 +65,11 @@
                     "crossLanguageDefinitionId": "Azure.SpecialHeaders.XmsClientRequestId.get.clientRequestId",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -131,7 +133,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Azure.SpecialHeaders.XmsClientRequestId.endpoint"
+          "crossLanguageDefinitionId": "Azure.SpecialHeaders.XmsClientRequestId.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
