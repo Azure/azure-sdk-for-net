@@ -106,7 +106,7 @@ public class DataGenerationJobTests : ProjectsClientTestBase
     }
 
     [RecordedTest]
-    public async Task TestMemoryStoreItemPagination()
+    public async Task TestDataGenerationJobPagination()
     {
         AIProjectClient projectClient = GetTestProjectClient();
         for (int i = 0; i < PAGE_SIZE + 1; i++)
@@ -179,14 +179,14 @@ public class DataGenerationJobTests : ProjectsClientTestBase
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
         // Delete Jobs
-        List<DataGenerationJob> dataGenerations = await projectClient.DataGenerationJobs.GetGenerationJobsAsync().ToListAsync();
-        foreach (DataGenerationJob job in dataGenerations)
-        {
-            if (job.Inputs.Name.StartsWith(INPUT_PREFIX))
-            {
-                await projectClient.DataGenerationJobs.DeleteGenerationJobAsync(job.Id);
-            }
-        }
+        //List<DataGenerationJob> dataGenerations = await projectClient.DataGenerationJobs.GetGenerationJobsAsync().ToListAsync();
+        //foreach (DataGenerationJob job in dataGenerations)
+        //{
+        //    if (job.Inputs.Name.StartsWith(INPUT_PREFIX))
+        //    {
+        //        await projectClient.DataGenerationJobs.DeleteGenerationJobAsync(job.Id);
+        //    }
+        //}
         // Delete generated data sets.
         // Deletion data sets result in 500 error.
         //List<string> versions = await projectClient.Datasets.GetDatasetVersionsAsync(DATASET_NAME).Select(x => x.Version).ToListAsync();
