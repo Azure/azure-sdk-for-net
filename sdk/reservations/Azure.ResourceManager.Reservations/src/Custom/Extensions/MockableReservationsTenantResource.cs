@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
     // or long-parameter methods, so these forwarders preserve the GA convenience surface.
     public partial class MockableReservationsTenantResource
     {
-                /// <summary>
+        /// <summary>
         /// List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant.
         /// <list type="bullet">
         /// <item>
