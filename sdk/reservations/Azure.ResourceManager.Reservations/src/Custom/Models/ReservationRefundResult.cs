@@ -1,31 +1,33 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Text.Json;
+#nullable disable
 
-#pragma warning disable CS1591
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    // Justification: GA exposed ReservationRefundResult as the body of the synchronous Return
-    // operation. The new generator models Return as an LRO whose final state is
-    // ReservationOrderResource and never surfaces the RefundResponse body type. This shim
-    // reintroduces the GA model so the GA-shape Return overloads can return it.
+    /// <summary> The response of refund request containing refund information of reservation. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class ReservationRefundResult
     {
+        /// <summary> Initializes a new instance of ReservationRefundResult. </summary>
         internal ReservationRefundResult()
         {
         }
 
+        /// <summary> Initializes a new instance of ReservationRefundResult. </summary>
+        /// <param name="id"> Fully qualified identifier of the reservation being returned. </param>
+        /// <param name="properties"> The refund properties of reservation. </param>
         internal ReservationRefundResult(string id, ReservationRefundResponseProperties properties)
         {
             Id = id;
             Properties = properties;
         }
 
+        /// <summary> Fully qualified identifier of the reservation being returned. </summary>
         public string Id { get; }
-
+        /// <summary> The refund properties of reservation. </summary>
         public ReservationRefundResponseProperties Properties { get; }
     }
 }
