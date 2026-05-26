@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,6 +21,8 @@ namespace Routes._PathParameters
     public partial class PathParameters
     {
         protected PathParameters() => throw null;
+
+        internal PathParameters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

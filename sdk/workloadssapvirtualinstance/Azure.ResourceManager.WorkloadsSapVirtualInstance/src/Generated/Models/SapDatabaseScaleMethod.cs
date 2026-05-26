@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public readonly partial struct SapDatabaseScaleMethod : IEquatable<SapDatabaseScaleMethod>
     {
         private readonly string _value;
+        /// <summary> ScaleUp Hana Database deployment type. </summary>
+        private const string ScaleUpValue = "ScaleUp";
 
         /// <summary> Initializes a new instance of <see cref="SapDatabaseScaleMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapDatabaseScaleMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ScaleUpValue = "ScaleUp";
+            _value = value;
+        }
 
         /// <summary> ScaleUp Hana Database deployment type. </summary>
         public static SapDatabaseScaleMethod ScaleUp { get; } = new SapDatabaseScaleMethod(ScaleUpValue);
+
         /// <summary> Determines if two <see cref="SapDatabaseScaleMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapDatabaseScaleMethod left, SapDatabaseScaleMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SapDatabaseScaleMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapDatabaseScaleMethod left, SapDatabaseScaleMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SapDatabaseScaleMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SapDatabaseScaleMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SapDatabaseScaleMethod(string value) => new SapDatabaseScaleMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SapDatabaseScaleMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SapDatabaseScaleMethod?(string value) => value == null ? null : new SapDatabaseScaleMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapDatabaseScaleMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SapDatabaseScaleMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

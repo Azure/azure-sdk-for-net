@@ -3,12 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
-using System.IO;
 using Azure.Storage.Blobs;
+using NUnit.Framework;
 
 namespace Azure.AI.Translation.Document.Tests
 {
@@ -20,7 +20,7 @@ namespace Azure.AI.Translation.Document.Tests
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public TranslationOperationLiveTests(bool isAsync)
             : base(isAsync)
-            //: base(isAsync, RecordedTestMode.Record)
+        //: base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -424,7 +424,7 @@ namespace Azure.AI.Translation.Document.Tests
             //changing the word test --> glossaryTest
             string glossaryContent = "test, glossaryTest";
 
-            var glossarySasUri = await CreateGlossaryAsync(new TestDocument (glossaryName, glossaryContent));
+            var glossarySasUri = await CreateGlossaryAsync(new TestDocument(glossaryName, glossaryContent));
 
             //Perform Translation Process
             DocumentTranslationClient client = GetClient();

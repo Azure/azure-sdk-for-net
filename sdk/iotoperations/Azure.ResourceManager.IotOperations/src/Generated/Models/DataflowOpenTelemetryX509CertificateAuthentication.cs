@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,38 +15,38 @@ namespace Azure.ResourceManager.IotOperations.Models
     public partial class DataflowOpenTelemetryX509CertificateAuthentication : DataflowOpenTelemetryAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="DataflowOpenTelemetryX509CertificateAuthentication"/>. </summary>
-        /// <param name="x509CertificateSettings"> X.509 certificate authentication settings. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="x509CertificateSettings"/> is null. </exception>
-        public DataflowOpenTelemetryX509CertificateAuthentication(DataflowEndpointAuthenticationX509 x509CertificateSettings)
+        /// <param name="x509CertificateSecretRef"> Secret reference of the X.509 certificate. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="x509CertificateSecretRef"/> is null. </exception>
+        public DataflowOpenTelemetryX509CertificateAuthentication(string x509CertificateSecretRef) : base(DataflowOpenTelemetryAuthenticationMethod.X509Certificate)
         {
-            Argument.AssertNotNull(x509CertificateSettings, nameof(x509CertificateSettings));
+            Argument.AssertNotNull(x509CertificateSecretRef, nameof(x509CertificateSecretRef));
 
-            X509CertificateSettings = x509CertificateSettings;
-            Method = DataflowOpenTelemetryAuthenticationMethod.X509Certificate;
+            X509CertificateSettings = new DataflowEndpointAuthenticationX509(x509CertificateSecretRef);
         }
 
         /// <summary> Initializes a new instance of <see cref="DataflowOpenTelemetryX509CertificateAuthentication"/>. </summary>
         /// <param name="method"> The authentication method. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="x509CertificateSettings"> X.509 certificate authentication settings. </param>
-        internal DataflowOpenTelemetryX509CertificateAuthentication(DataflowOpenTelemetryAuthenticationMethod method, IDictionary<string, BinaryData> serializedAdditionalRawData, DataflowEndpointAuthenticationX509 x509CertificateSettings) : base(method, serializedAdditionalRawData)
+        internal DataflowOpenTelemetryX509CertificateAuthentication(DataflowOpenTelemetryAuthenticationMethod @method, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataflowEndpointAuthenticationX509 x509CertificateSettings) : base(@method, additionalBinaryDataProperties)
         {
             X509CertificateSettings = x509CertificateSettings;
-            Method = method;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataflowOpenTelemetryX509CertificateAuthentication"/> for deserialization. </summary>
-        internal DataflowOpenTelemetryX509CertificateAuthentication()
-        {
         }
 
         /// <summary> X.509 certificate authentication settings. </summary>
         internal DataflowEndpointAuthenticationX509 X509CertificateSettings { get; set; }
+
         /// <summary> Secret reference of the X.509 certificate. </summary>
         public string X509CertificateSecretRef
         {
-            get => X509CertificateSettings is null ? default : X509CertificateSettings.SecretRef;
-            set => X509CertificateSettings = new DataflowEndpointAuthenticationX509(value);
+            get
+            {
+                return X509CertificateSettings is null ? default : X509CertificateSettings.SecretRef;
+            }
+            set
+            {
+                X509CertificateSettings = new DataflowEndpointAuthenticationX509(value);
+            }
         }
     }
 }

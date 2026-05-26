@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.IotOperations.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,8 +14,9 @@ namespace Azure.ResourceManager.IotOperations
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AkriConnectorAllocatedDevice))]
     [ModelReaderWriterBuildable(typeof(AkriConnectorResourceListResult))]
     [ModelReaderWriterBuildable(typeof(AkriConnectorsContainerRegistry))]
     [ModelReaderWriterBuildable(typeof(AkriConnectorsContainerRegistrySettings))]
@@ -33,20 +35,8 @@ namespace Azure.ResourceManager.IotOperations
     [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateAioMetadata))]
     [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateAllocation))]
     [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateBucketizedAllocation))]
-    [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateDeviceInboundEndpointConfigurationSchemaRefs))]
     [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateDeviceInboundEndpointType))]
     [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateDiagnostics))]
-    [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateHelmAdvancedConfiguration))]
-    [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateHelmAuthSecretRef))]
-    [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateHelmConfiguration))]
-    [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateHelmConfigurationSettings))]
-    [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateHelmContainerRegistry))]
-    [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateHelmContainerRegistrySettings))]
-    [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateHelmDeleteConfiguration))]
-    [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateHelmInstallConfiguration))]
-    [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateHelmRegistryEndpointRef))]
-    [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateHelmRegistrySettings))]
-    [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateHelmUpgradeConfiguration))]
     [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateManagedConfiguration))]
     [ModelReaderWriterBuildable(typeof(AkriConnectorTemplateManagedConfigurationSettings))]
     [ModelReaderWriterBuildable(typeof(AkriConnectorTemplatePersistentVolumeClaim))]
@@ -78,7 +68,6 @@ namespace Azure.ResourceManager.IotOperations
     [ModelReaderWriterBuildable(typeof(BrokerListenerPort))]
     [ModelReaderWriterBuildable(typeof(BrokerListenerResourceListResult))]
     [ModelReaderWriterBuildable(typeof(BrokerPersistence))]
-    [ModelReaderWriterBuildable(typeof(BrokerPersistenceDynamicSettings))]
     [ModelReaderWriterBuildable(typeof(BrokerPersistenceEncryption))]
     [ModelReaderWriterBuildable(typeof(BrokerResourceListResult))]
     [ModelReaderWriterBuildable(typeof(BrokerResourceRule))]
@@ -95,6 +84,7 @@ namespace Azure.ResourceManager.IotOperations
     [ModelReaderWriterBuildable(typeof(BrokerSubscriberQueueCustomPolicySettings))]
     [ModelReaderWriterBuildable(typeof(BrokerSubscriberQueueDynamic))]
     [ModelReaderWriterBuildable(typeof(BrokerSubscriberQueuePolicy))]
+    [ModelReaderWriterBuildable(typeof(BrokerX509ManualCertificate))]
     [ModelReaderWriterBuildable(typeof(CertManagerCertConfig))]
     [ModelReaderWriterBuildable(typeof(CertManagerCertificateSpec))]
     [ModelReaderWriterBuildable(typeof(CertManagerIssuerRef))]
@@ -103,7 +93,11 @@ namespace Azure.ResourceManager.IotOperations
     [ModelReaderWriterBuildable(typeof(DataflowBuiltInTransformationFilter))]
     [ModelReaderWriterBuildable(typeof(DataflowBuiltInTransformationMap))]
     [ModelReaderWriterBuildable(typeof(DataflowBuiltInTransformationSettings))]
+    [ModelReaderWriterBuildable(typeof(DataflowDestinationAddIfNotPresentHeaderAction))]
+    [ModelReaderWriterBuildable(typeof(DataflowDestinationAddOrReplaceHeaderAction))]
+    [ModelReaderWriterBuildable(typeof(DataflowDestinationHeaderAction))]
     [ModelReaderWriterBuildable(typeof(DataflowDestinationOperationSettings))]
+    [ModelReaderWriterBuildable(typeof(DataflowDestinationRemoveHeaderAction))]
     [ModelReaderWriterBuildable(typeof(DataflowEndpointAuthenticationAccessToken))]
     [ModelReaderWriterBuildable(typeof(DataflowEndpointAuthenticationAnonymous))]
     [ModelReaderWriterBuildable(typeof(DataflowEndpointAuthenticationSasl))]
@@ -129,9 +123,12 @@ namespace Azure.ResourceManager.IotOperations
     [ModelReaderWriterBuildable(typeof(DataflowGraphConnectionInput))]
     [ModelReaderWriterBuildable(typeof(DataflowGraphConnectionOutput))]
     [ModelReaderWriterBuildable(typeof(DataflowGraphConnectionSchemaSettings))]
+    [ModelReaderWriterBuildable(typeof(DataflowGraphDestinationAddIfNotPresentHeaderAction))]
+    [ModelReaderWriterBuildable(typeof(DataflowGraphDestinationAddOrReplaceHeaderAction))]
+    [ModelReaderWriterBuildable(typeof(DataflowGraphDestinationHeaderAction))]
     [ModelReaderWriterBuildable(typeof(DataflowGraphDestinationNode))]
     [ModelReaderWriterBuildable(typeof(DataflowGraphDestinationNodeSettings))]
-    [ModelReaderWriterBuildable(typeof(DataflowGraphDestinationSchemaSettings))]
+    [ModelReaderWriterBuildable(typeof(DataflowGraphDestinationRemoveHeaderAction))]
     [ModelReaderWriterBuildable(typeof(DataflowGraphGraphNode))]
     [ModelReaderWriterBuildable(typeof(DataflowGraphGraphNodeConfiguration))]
     [ModelReaderWriterBuildable(typeof(DataflowGraphNode))]
@@ -209,7 +206,6 @@ namespace Azure.ResourceManager.IotOperations
     [ModelReaderWriterBuildable(typeof(RegistryEndpointResourceListResult))]
     [ModelReaderWriterBuildable(typeof(RegistryEndpointSystemAssignedIdentityAuthentication))]
     [ModelReaderWriterBuildable(typeof(RegistryEndpointSystemAssignedManagedIdentitySettings))]
-    [ModelReaderWriterBuildable(typeof(RegistryEndpointTrustedSettings))]
     [ModelReaderWriterBuildable(typeof(RegistryEndpointTrustedSigningKey))]
     [ModelReaderWriterBuildable(typeof(RegistryEndpointTrustedSigningKeyConfigMap))]
     [ModelReaderWriterBuildable(typeof(RegistryEndpointTrustedSigningKeySecret))]
@@ -226,12 +222,13 @@ namespace Azure.ResourceManager.IotOperations
     [ModelReaderWriterBuildable(typeof(UnknownAkriConnectorsRegistrySettings))]
     [ModelReaderWriterBuildable(typeof(UnknownAkriConnectorsTagDigestSettings))]
     [ModelReaderWriterBuildable(typeof(UnknownAkriConnectorTemplateAllocation))]
-    [ModelReaderWriterBuildable(typeof(UnknownAkriConnectorTemplateHelmRegistrySettings))]
     [ModelReaderWriterBuildable(typeof(UnknownAkriConnectorTemplateManagedConfigurationSettings))]
     [ModelReaderWriterBuildable(typeof(UnknownAkriConnectorTemplateRuntimeConfiguration))]
     [ModelReaderWriterBuildable(typeof(UnknownBrokerRetainMessagesPolicy))]
     [ModelReaderWriterBuildable(typeof(UnknownBrokerStateStorePolicy))]
     [ModelReaderWriterBuildable(typeof(UnknownBrokerSubscriberQueuePolicy))]
+    [ModelReaderWriterBuildable(typeof(UnknownDataflowDestinationHeaderAction))]
+    [ModelReaderWriterBuildable(typeof(UnknownDataflowGraphDestinationHeaderAction))]
     [ModelReaderWriterBuildable(typeof(UnknownDataflowGraphNode))]
     [ModelReaderWriterBuildable(typeof(UnknownDataflowOpenTelemetryAuthentication))]
     [ModelReaderWriterBuildable(typeof(UnknownRegistryEndpointAuthentication))]
@@ -242,7 +239,6 @@ namespace Azure.ResourceManager.IotOperations
     [ModelReaderWriterBuildable(typeof(VolumeClaimSpec))]
     [ModelReaderWriterBuildable(typeof(VolumeClaimSpecSelector))]
     [ModelReaderWriterBuildable(typeof(VolumeClaimSpecSelectorMatchExpressions))]
-    [ModelReaderWriterBuildable(typeof(X509ManualCertificate))]
     public partial class AzureResourceManagerIotOperationsContext : ModelReaderWriterContext
     {
     }

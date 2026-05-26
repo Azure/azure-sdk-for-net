@@ -310,7 +310,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 updatedBlobTags.OldTags.Add(kv.Key, (string)kv.Value);
             }
 
-            foreach (KeyValuePair <string, object> kv in newTags)
+            foreach (KeyValuePair<string, object> kv in newTags)
             {
                 updatedBlobTags.NewTags.Add(kv.Key, (string)kv.Value);
             }

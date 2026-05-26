@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
-    internal class DataReplicationExtensionOperationSource : IOperationSource<DataReplicationExtensionResource>
+    /// <summary></summary>
+    internal partial class DataReplicationExtensionOperationSource : IOperationSource<DataReplicationExtensionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DataReplicationExtensionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DataReplicationExtensionResource IOperationSource<DataReplicationExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataReplicationExtensionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DataReplicationExtensionData data = DataReplicationExtensionData.DeserializeDataReplicationExtensionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DataReplicationExtensionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DataReplicationExtensionResource> IOperationSource<DataReplicationExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataReplicationExtensionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
-            return await Task.FromResult(new DataReplicationExtensionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DataReplicationExtensionData data = DataReplicationExtensionData.DeserializeDataReplicationExtensionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DataReplicationExtensionResource(_client, data);
         }
     }
 }

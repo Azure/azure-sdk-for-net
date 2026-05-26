@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus.Stress;
 public class SessionSendReceiveTest : TestScenario
 {
     /// <summary> The array of <see cref="Role"  />s needed to run this test scenario.</summary>
-    public override Role[] Roles { get; } = {Role.SessionSender, Role.SessionReceiver};
+    public override Role[] Roles { get; } = { Role.SessionSender, Role.SessionReceiver };
 
     /// <summary> The name of this test.</summary>
     public override string Name { get; } = "SessionSendReceiveTest";

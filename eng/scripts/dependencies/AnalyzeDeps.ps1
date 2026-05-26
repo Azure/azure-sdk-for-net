@@ -5,8 +5,9 @@
   .PARAMETER PackagesPath
   The path to the package(s) to analyze. Globs are supported.
 
-  .PARAMETER LockfilePath
-  The path to the lockfile to analyze.
+  .PARAMETER CpmDirectory
+  The path to the Central Package Management (CPM) directory.
+  All .props files will be scanned recursively.
 
   .PARAMETER OutPath
   The path to the write the HTML-formatted report.
@@ -17,7 +18,7 @@
 
 Param(
   [Parameter(Mandatory = $true)][string]$PackagesPath,
-  [Parameter(Mandatory = $false)][string]$LockfilePath,
+  [Parameter(Mandatory = $false)][string]$CpmDirectory,
   [Parameter(Mandatory = $false)][string]$OutPath,
   [Parameter(Mandatory = $false)][string]$DumpPath
 )
@@ -77,7 +78,7 @@ Function Save-PkgDep($PkgDeps, $TargetFramework, $DepName, $DepVersion) {
 
 Function Save-Locked($Locked, $DepName, $DepVersion, $Condition) {
   if (!$DepVersion) {
-    Write-Warning "$DepName in $LockfilePath does not contain a Version property so skipping it."
+    Write-Warning "$DepName in CPM files does not contain a Version property so skipping it."
     return
   }
   if (-Not $Locked[$DepName]) {
@@ -174,25 +175,50 @@ foreach ($PkgFile in (Get-ChildItem "$PackagesPath/*.nupkg")) {
 
 Write-Host "Analyzing $($Pkgs.Count) packages..."
 
-# Analyze lockfile
+# Analyze CPM (Central Package Management) files
 $Locked = @{ }
-if ($LockfilePath) {
-  [xml]$PackageProps = Get-Content $LockfilePath
+
+Function Read-CpmFile($FilePath, $Locked) {
+  if (-Not (Test-Path $FilePath)) {
+    Write-Warning "CPM file not found: $FilePath"
+    return
+  }
+
+  [xml]$PackageProps = Get-Content $FilePath
+
+  # Process ItemGroups for package versions
   foreach ($ItemGroup in $PackageProps.Project.ItemGroup) {
     if ($ItemGroup.Condition) {
       $Condition = $ItemGroup.Condition
     } else {
       $Condition = ""
     }
-    foreach ($Entry in $ItemGroup.PackageReference) {
+
+    # Handle CPM format: <PackageVersion Include="..." Version="..." /> or <PackageVersion Update="..." Version="..." />
+    foreach ($Entry in $ItemGroup.PackageVersion) {
+      if ($Entry.Include) {
+        Save-Locked $Locked $Entry.Include $Entry.Version $Condition
+      }
       if ($Entry.Update) {
         Save-Locked $Locked $Entry.Update $Entry.Version $Condition
       }
     }
   }
-  Write-Host "Discovered $($Locked.Count) versions pinned in the lockfile."
+}
+
+if ($CpmDirectory) {
+  if (-Not (Test-Path $CpmDirectory -PathType Container)) {
+    Write-Error "CpmDirectory must be a directory path: $CpmDirectory"
+    exit 1
+  }
+  $PropsFiles = Get-ChildItem -Path $CpmDirectory -Filter "*.props" -Recurse
+  foreach ($PropsFile in $PropsFiles) {
+    Write-Host "Reading CPM file: $($PropsFile.FullName)"
+    Read-CpmFile $PropsFile.FullName $Locked
+  }
+  Write-Host "Discovered $($Locked.Count) versions pinned in CPM files."
 } else {
-  Write-Warning "No lockfile was provided, or the lockfile was empty. Declared dependency versions were not able to be validated against the lockfile."
+  Write-Warning "No CPM directory was provided. Declared dependency versions were not able to be validated."
 }
 
 # Precompute some derived data for the template
@@ -234,13 +260,13 @@ if ($Inconsistent) {
 
 if ($MismatchedVersions -or $Unlocked) {
   if ($MismatchedVersions) {
-    Write-Warning "$($MismatchedVersions.Count) dependency version overrides are present, causing dependency versions to differ from the version in the lockfile."
+    Write-Warning "$($MismatchedVersions.Count) dependency version overrides are present, causing dependency versions to differ from the version in CPM."
   }
   if ($Unlocked) {
-    Write-Warning "$($Unlocked.Count) dependencies are missing from the lockfile."
+    Write-Warning "$($Unlocked.Count) dependencies are missing from CPM."
   }
 } else {
-  Write-Host "All declared dependency versions match those specified in the lockfile."
+  Write-Host "All declared dependency versions match those specified in CPM."
 }
 
 if ($OutPath) {

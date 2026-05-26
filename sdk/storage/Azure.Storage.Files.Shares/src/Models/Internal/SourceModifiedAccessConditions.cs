@@ -3,5 +3,5 @@
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class SourceModifiedAccessConditions {}
+    internal partial class SourceModifiedAccessConditions { }
 }

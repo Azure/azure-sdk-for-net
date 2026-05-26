@@ -7,7 +7,7 @@ Instead of manually importing discovery seeds for your discovery run, you can us
 To create an EasmClient, you need your subscription ID, region, and some sort of credential.
 
 ```C# Snippet:Sample3_DiscoTemplates_Create_Client
-            string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
+string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
 EasmClient client = new EasmClient(new System.Uri(endpoint),
                 new DefaultAzureCredential());
 ```
@@ -17,8 +17,8 @@ EasmClient client = new EasmClient(new System.Uri(endpoint),
 The `DiscoveryTemplatesList` method can be used to find a discovery template using a filter. The endpoint will return templates based on a partial match on the name field.
 
 ```C# Snippet:Sample3_DiscoTemplates_Get_Templates
-            string partialName = "<partial_name>";
-                        var response = client.GetDiscoveryTemplates(partialName);
+string partialName = "<partial_name>";
+var response = client.GetDiscoveryTemplates(partialName);
 foreach (DiscoveryTemplate template in response)
 {
     Console.WriteLine($"{template.Id}: {template.DisplayName}");
@@ -30,8 +30,8 @@ foreach (DiscoveryTemplate template in response)
 To get more detail about a disco template, we can use the `DiscoveryTemplatesGet` method. From here, we can see the names and seeds which would be used in a discovery run.
 
 ```C# Snippet:Sample3_DiscoTemplates_Get_Template_Seeds
-            string templateId = Console.ReadLine();
-                        var discoTemplateResponse = client.GetDiscoveryTemplate(templateId);
+string templateId = Console.ReadLine();
+var discoTemplateResponse = client.GetDiscoveryTemplate(templateId);
 DiscoveryTemplate discoTemplate = discoTemplateResponse.Value;
 Console.WriteLine($"Chosen template id: {discoTemplate.Id}");
 Console.WriteLine("The following names will be used:");

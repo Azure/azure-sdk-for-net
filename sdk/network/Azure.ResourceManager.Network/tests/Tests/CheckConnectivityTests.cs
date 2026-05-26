@@ -4,10 +4,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -55,7 +55,8 @@ namespace Azure.ResourceManager.Network.Tests
                 new ConnectivityContent(new ConnectivitySource(vm.Id), new ConnectivityDestination { Address = "bing.com", Port = 80 });
 
             Operation<ConnectivityInformation> connectivityCheckOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus2").Value.CheckConnectivityAsync(WaitUntil.Completed, connectivityParameters);
-            Response<ConnectivityInformation> connectivityCheck = await connectivityCheckOperation.WaitForCompletionAsync();;
+            Response<ConnectivityInformation> connectivityCheck = await connectivityCheckOperation.WaitForCompletionAsync();
+            ;
 
             //Validation
             Assert.AreEqual("Reachable", connectivityCheck.Value.NetworkConnectionStatus.ToString());

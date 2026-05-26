@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridConnectivity;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     public readonly partial struct PublicCloudHostType : IEquatable<PublicCloudHostType>
     {
         private readonly string _value;
+        /// <summary> AWS state. </summary>
+        private const string AwsValue = "AWS";
 
         /// <summary> Initializes a new instance of <see cref="PublicCloudHostType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PublicCloudHostType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AwsValue = "AWS";
+            _value = value;
+        }
 
         /// <summary> AWS state. </summary>
         public static PublicCloudHostType Aws { get; } = new PublicCloudHostType(AwsValue);
+
         /// <summary> Determines if two <see cref="PublicCloudHostType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PublicCloudHostType left, PublicCloudHostType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PublicCloudHostType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PublicCloudHostType left, PublicCloudHostType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PublicCloudHostType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PublicCloudHostType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PublicCloudHostType(string value) => new PublicCloudHostType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PublicCloudHostType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PublicCloudHostType?(string value) => value == null ? null : new PublicCloudHostType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PublicCloudHostType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PublicCloudHostType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             #region Snippet:Batch_Migration_Exception
             try
             {
-                batchClient.ResizePool("fakepool", resizeOptions);
+                batchClient.ResizePool(WaitUntil.Started, "fakepool", resizeOptions);
             }
             catch (Azure.RequestFailedException e)
             {
@@ -57,7 +57,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            DeletePoolOperation operation = batchClient.DeletePool("poolID");
+            DeletePoolOperation operation = batchClient.DeletePool(WaitUntil.Started, "poolID");
 
             // Optional, wait for operation to complete
             operation.WaitForCompletion();
@@ -70,7 +70,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            batchClient.DeletePool("poolID");
+            batchClient.DeletePool(WaitUntil.Started, "poolID");
             #endregion
         }
 
@@ -103,15 +103,7 @@ namespace Azure.Compute.Batch.Tests.Samples
                     }
                 };
 
-            BatchCertificateReference[] certificateReferences = new BatchCertificateReference[] {
-                    new BatchCertificateReference("thumbprint","thumbprintAlgorithm")
-                    {
-                        StoreLocation = "storeLocation",
-                        StoreName = "storeName"
-                    }
-            };
-
-            BatchPoolReplaceOptions replaceOptions = new BatchPoolReplaceOptions(certificateReferences, batchApplicationPackageReferences, metadataItems);
+            BatchPoolReplaceOptions replaceOptions = new BatchPoolReplaceOptions(batchApplicationPackageReferences, metadataItems);
             batchClient.ReplacePoolProperties("poolID", replaceOptions);
             #endregion
         }
@@ -128,7 +120,7 @@ namespace Azure.Compute.Batch.Tests.Samples
                 ResizeTimeout = TimeSpan.FromMinutes(10),
             };
 
-            batchClient.ResizePool("poolID", resizeOptions);
+            batchClient.ResizePool(WaitUntil.Started, "poolID", resizeOptions);
             #endregion
         }
 
@@ -138,7 +130,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            batchClient.StopPoolResize("poolId");
+            batchClient.StopPoolResize(WaitUntil.Started, "poolId");
             #endregion
         }
 
@@ -275,7 +267,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            DeleteJobOperation operation = batchClient.DeleteJob("jobID");
+            DeleteJobOperation operation = batchClient.DeleteJob(WaitUntil.Started, "jobID");
 
             // Optional, wait for operation to complete
             operation.WaitForCompletion();
@@ -288,7 +280,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            batchClient.DeleteJob("jobID");
+            batchClient.DeleteJob(WaitUntil.Completed, "jobID");
             #endregion
         }
 
@@ -324,7 +316,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
             BatchJobDisableOptions options = new BatchJobDisableOptions(DisableBatchJobOption.Requeue);
-            DisableJobOperation operation = batchClient.DisableJob("jobID", options);
+            DisableJobOperation operation = batchClient.DisableJob(WaitUntil.Started, "jobID", options);
 
             // Optional, wait for operation to complete
             operation.WaitForCompletion();
@@ -338,7 +330,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
             BatchJobDisableOptions options = new BatchJobDisableOptions(DisableBatchJobOption.Requeue);
-            batchClient.DisableJob("jobID", options);
+            batchClient.DisableJob(WaitUntil.Started, "jobID", options);
             #endregion
         }
 
@@ -348,7 +340,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            batchClient.EnableJob("jobID");
+            batchClient.EnableJob(WaitUntil.Started, "jobID");
             #endregion
         }
 
@@ -358,7 +350,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            EnableJobOperation operation = batchClient.EnableJob("jobID");
+            EnableJobOperation operation = batchClient.EnableJob(WaitUntil.Started, "jobID");
 
             // Optional, wait for operation to complete
             operation.WaitForCompletion();
@@ -394,7 +386,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            TerminateJobOperation operation = batchClient.TerminateJob("jobID");
+            TerminateJobOperation operation = batchClient.TerminateJob(WaitUntil.Started, "jobID");
 
             // Optional, wait for operation to complete
             operation.WaitForCompletion();
@@ -407,7 +399,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            batchClient.TerminateJob("jobID");
+            batchClient.TerminateJob(WaitUntil.Started, "jobID");
             #endregion
         }
 
@@ -465,7 +457,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            DeleteJobScheduleOperation operation = batchClient.DeleteJobSchedule("jobScheduleId");
+            DeleteJobScheduleOperation operation = batchClient.DeleteJobSchedule(WaitUntil.Started, "jobScheduleId");
 
             // Optional, wait for operation to complete
             operation.WaitForCompletion();
@@ -478,7 +470,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            batchClient.DeleteJobSchedule("jobScheduleId");
+            batchClient.DeleteJobSchedule(WaitUntil.Started, "jobScheduleId");
             #endregion
         }
 
@@ -493,7 +485,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             DateTime unboundDNRU = DateTime.Parse("2026-08-18T00:00:00.0000000Z");
             batchJobSchedule.Schedule = new BatchJobScheduleConfiguration()
             {
-                DoNotRunUntil = unboundDNRU,
+                DoNotRunBefore = unboundDNRU,
             };
             batchClient.ReplaceJobSchedule("jobScheduleId", batchJobSchedule);
             #endregion
@@ -538,7 +530,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            TerminateJobScheduleOperation operation = batchClient.TerminateJobSchedule("jobScheduleId");
+            TerminateJobScheduleOperation operation = batchClient.TerminateJobSchedule(WaitUntil.Started, "jobScheduleId");
 
             // Optional, wait for operation to complete
             operation.WaitForCompletion();
@@ -551,7 +543,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            batchClient.TerminateJobSchedule("jobScheduleId");
+            batchClient.TerminateJobSchedule(WaitUntil.Started, "jobScheduleId");
             #endregion
         }
 
@@ -625,7 +617,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            RebootNodeOperation operation = batchClient.RebootNode("poolId", "computeNodeId");
+            RebootNodeOperation operation = batchClient.RebootNode(WaitUntil.Started, "poolId", "computeNodeId");
 
             // Optional, wait for operation to complete
             operation.WaitForCompletion();
@@ -638,7 +630,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            batchClient.RebootNode("poolId", "computeNodeId");
+            batchClient.RebootNode(WaitUntil.Started, "poolId", "computeNodeId");
             #endregion
         }
 
@@ -648,7 +640,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            ReimageNodeOperation operation = batchClient.ReimageNode("poolId", "computeNodeId");
+            ReimageNodeOperation operation = batchClient.ReimageNode(WaitUntil.Started, "poolId", "computeNodeId");
 
             // Optional, wait for operation to complete
             operation.WaitForCompletion();
@@ -661,7 +653,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            ReimageNodeOperation operation = batchClient.ReimageNode("poolId", "computeNodeId");
+            ReimageNodeOperation operation = batchClient.ReimageNode(WaitUntil.Started, "poolId", "computeNodeId");
 
             // Optional, wait for operation to complete
             operation.WaitForCompletion();
@@ -674,7 +666,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            StartNodeOperation operation = batchClient.StartNode("poolId", "computeNodeId");
+            StartNodeOperation operation = batchClient.StartNode(WaitUntil.Started, "poolId", "computeNodeId");
 
             // Optional, wait for operation to complete
             operation.WaitForCompletion();
@@ -687,7 +679,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            batchClient.StartNode("poolId", "computeNodeId");
+            batchClient.StartNode(WaitUntil.Started, "poolId", "computeNodeId");
             #endregion
         }
 
@@ -697,7 +689,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            DeallocateNodeOperation operation = batchClient.DeallocateNode("poolId", "computeNodeId");
+            DeallocateNodeOperation operation = batchClient.DeallocateNode(WaitUntil.Started, "poolId", "computeNodeId");
 
             // Optional, wait for operation to complete
             operation.WaitForCompletion();
@@ -710,7 +702,7 @@ namespace Azure.Compute.Batch.Tests.Samples
             BatchClient batchClient = new BatchClient(
             new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
 
-            batchClient.DeallocateNode("poolId", "computeNodeId");
+            batchClient.DeallocateNode(WaitUntil.Started, "poolId", "computeNodeId");
             #endregion
         }
 
@@ -823,95 +815,6 @@ namespace Azure.Compute.Batch.Tests.Samples
             {
                 // do something
             }
-            #endregion
-        }
-
-        public void BatchGetCertificate()
-        {
-            #region Snippet:Batch_Migration_GetCertificate
-            BatchClient batchClient = new BatchClient(
-            new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-            BatchCertificate cerCertificateResponse = batchClient.GetCertificate("ThumbprintAlgorithm", "Thumbprint");
-            #endregion
-        }
-
-        public void BatchCreateCertificate()
-        {
-            #region Snippet:Batch_Migration_CreateCerCertificate
-            BatchClient batchClient = new BatchClient(
-            new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-            byte[] certData = File.ReadAllBytes("certPath");
-            BatchCertificate cerCertificate = new BatchCertificate("Thumbprint", "ThumbprintAlgorithm", BinaryData.FromBytes(certData))
-            {
-                CertificateFormat = BatchCertificateFormat.Cer,
-                Password = "",
-            };
-
-            Response response = batchClient.CreateCertificate(cerCertificate);
-            #endregion
-        }
-
-        public void BatchCreatePfxCerrtificate()
-        {
-            #region Snippet:Batch_Migration_CreatePfxCertificate
-            BatchClient batchClient = new BatchClient(
-            new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-            byte[] certData = File.ReadAllBytes("certPath");
-            BatchCertificate cerCertificate = new BatchCertificate("Thumbprint", "ThumbprintAlgorithm", BinaryData.FromBytes(certData))
-            {
-                CertificateFormat = BatchCertificateFormat.Pfx,
-                Password = "password",
-            };
-
-            Response response = batchClient.CreateCertificate(cerCertificate);
-            #endregion
-        }
-
-        public void BatchListCerrtificate()
-        {
-            #region Snippet:Batch_Migration_ListCertificate
-            BatchClient batchClient = new BatchClient(
-            new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-            foreach (BatchCertificate item in batchClient.GetCertificates())
-            {
-                // do something
-            }
-            #endregion
-        }
-
-        public void BatchDeleteCerrtificateOperation()
-        {
-            #region Snippet:Batch_Migration_DeleteCertificate_Operation
-            BatchClient batchClient = new BatchClient(
-            new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-            DeleteCertificateOperation operation = batchClient.DeleteCertificate("ThumbprintAlgorithm", "Thumbprint");
-
-            // Optional, wait for operation to complete
-            operation.WaitForCompletion();
-            #endregion
-        }
-
-        public void BatchDeleteCerrtificate()
-        {
-            #region Snippet:Batch_Migration_DeleteCertificate
-            BatchClient batchClient = new BatchClient(
-            new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-            batchClient.DeleteCertificate("ThumbprintAlgorithm", "Thumbprint");
-            #endregion
-        }
-
-        public void BatchCancelDeleteCerrtificate()
-        {
-            #region Snippet:Batch_Migration_CancelDeleteCertificate
-            BatchClient batchClient = new BatchClient(
-            new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-            batchClient.CancelCertificateDeletion("ThumbprintAlgorithm", "Thumbprint");
             #endregion
         }
     }

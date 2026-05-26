@@ -3,5 +3,5 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial struct PremiumPageBlobAccessTier {}
+    public partial struct PremiumPageBlobAccessTier { }
 }

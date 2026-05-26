@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The retry history. </summary>
+    /// <summary>
+    /// The retry history.
+    /// Serialized Name: RetryHistory
+    /// </summary>
     public partial class WebAppRetryHistory
     {
         /// <summary>
@@ -51,12 +54,30 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppRetryHistory"/>. </summary>
-        /// <param name="startOn"> Gets the start time. </param>
-        /// <param name="endOn"> Gets the end time. </param>
-        /// <param name="code"> Gets the status code. </param>
-        /// <param name="clientRequestId"> Gets the client request Id. </param>
-        /// <param name="serviceRequestId"> Gets the service request Id. </param>
-        /// <param name="error"> Gets the error response. </param>
+        /// <param name="startOn">
+        /// Gets the start time.
+        /// Serialized Name: RetryHistory.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// Gets the end time.
+        /// Serialized Name: RetryHistory.endTime
+        /// </param>
+        /// <param name="code">
+        /// Gets the status code.
+        /// Serialized Name: RetryHistory.code
+        /// </param>
+        /// <param name="clientRequestId">
+        /// Gets the client request Id.
+        /// Serialized Name: RetryHistory.clientRequestId
+        /// </param>
+        /// <param name="serviceRequestId">
+        /// Gets the service request Id.
+        /// Serialized Name: RetryHistory.serviceRequestId
+        /// </param>
+        /// <param name="error">
+        /// Gets the error response.
+        /// Serialized Name: RetryHistory.error
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppRetryHistory(DateTimeOffset? startOn, DateTimeOffset? endOn, string code, string clientRequestId, string serviceRequestId, WebAppErrorResponse error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,24 +90,45 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the start time. </summary>
+        /// <summary>
+        /// Gets the start time.
+        /// Serialized Name: RetryHistory.startTime
+        /// </summary>
         [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary> Gets the end time. </summary>
+        /// <summary>
+        /// Gets the end time.
+        /// Serialized Name: RetryHistory.endTime
+        /// </summary>
         [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary> Gets the status code. </summary>
+        /// <summary>
+        /// Gets the status code.
+        /// Serialized Name: RetryHistory.code
+        /// </summary>
         [WirePath("code")]
         public string Code { get; set; }
-        /// <summary> Gets the client request Id. </summary>
+        /// <summary>
+        /// Gets the client request Id.
+        /// Serialized Name: RetryHistory.clientRequestId
+        /// </summary>
         [WirePath("clientRequestId")]
         public string ClientRequestId { get; set; }
-        /// <summary> Gets the service request Id. </summary>
+        /// <summary>
+        /// Gets the service request Id.
+        /// Serialized Name: RetryHistory.serviceRequestId
+        /// </summary>
         [WirePath("serviceRequestId")]
         public string ServiceRequestId { get; set; }
-        /// <summary> Gets the error response. </summary>
+        /// <summary>
+        /// Gets the error response.
+        /// Serialized Name: RetryHistory.error
+        /// </summary>
         internal WebAppErrorResponse Error { get; set; }
-        /// <summary> The error properties. </summary>
+        /// <summary>
+        /// The error properties.
+        /// Serialized Name: ErrorResponse.error
+        /// </summary>
         [WirePath("error.error")]
         public WebAppErrorProperties ErrorInfo
         {

@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Purview
 {
     /// <summary>
-    /// A Class representing a PurviewPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PurviewPrivateEndpointConnectionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetPurviewPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PurviewAccountResource"/> using the GetPurviewPrivateEndpointConnection method.
+    /// A class representing a PurviewPrivateEndpointConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PurviewPrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PurviewAccountResource"/> using the GetPurviewPrivateEndpointConnections method.
     /// </summary>
     public partial class PurviewPrivateEndpointConnectionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PurviewPrivateEndpointConnectionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="accountName"> The accountName. </param>
-        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _purviewPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics;
-        private readonly PrivateEndpointConnectionsRestOperations _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
+        private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
+        private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
         private readonly PurviewPrivateEndpointConnectionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Purview/accounts/privateEndpointConnections";
 
-        /// <summary> Initializes a new instance of the <see cref="PurviewPrivateEndpointConnectionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PurviewPrivateEndpointConnectionResource for mocking. </summary>
         protected PurviewPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PurviewPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PurviewPrivateEndpointConnectionResource(ArmClient client, PurviewPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.Purview
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PurviewPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PurviewPrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _purviewPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string purviewPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
-            _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, purviewPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string purviewPrivateEndpointConnectionApiVersion);
+            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", ResourceType.Namespace, Diagnostics);
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, purviewPrivateEndpointConnectionApiVersion ?? "2024-04-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual PurviewPrivateEndpointConnectionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get a private endpoint connection
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewPrivateEndpointConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PurviewPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PurviewPrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _purviewPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PurviewPrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PurviewPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = await _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PurviewPrivateEndpointConnectionData> response = Response.FromValue(PurviewPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PurviewPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.Purview
         /// Get a private endpoint connection
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewPrivateEndpointConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PurviewPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PurviewPrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _purviewPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PurviewPrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PurviewPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PurviewPrivateEndpointConnectionData> response = Response.FromValue(PurviewPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PurviewPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.Purview
         /// Delete a private endpoint connection
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewPrivateEndpointConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PurviewPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,14 +212,21 @@ namespace Azure.ResourceManager.Purview
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _purviewPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PurviewPrivateEndpointConnectionResource.Delete");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PurviewPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PurviewArmOperation(_purviewPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                PurviewArmOperation operation = new PurviewArmOperation(_privateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.Purview
         /// Delete a private endpoint connection
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewPrivateEndpointConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PurviewPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,14 +261,21 @@ namespace Azure.ResourceManager.Purview
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _purviewPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PurviewPrivateEndpointConnectionResource.Delete");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PurviewPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new PurviewArmOperation(_purviewPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                PurviewArmOperation operation = new PurviewArmOperation(_privateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -253,23 +286,23 @@ namespace Azure.ResourceManager.Purview
         }
 
         /// <summary>
-        /// Create or update a private endpoint connection
+        /// Update a PurviewPrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewPrivateEndpointConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PurviewPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,14 +314,27 @@ namespace Azure.ResourceManager.Purview
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _purviewPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PurviewPrivateEndpointConnectionResource.Update");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PurviewPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = await _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PurviewArmOperation<PurviewPrivateEndpointConnectionResource>(new PurviewPrivateEndpointConnectionOperationSource(Client), _purviewPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, PurviewPrivateEndpointConnectionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                PurviewArmOperation<PurviewPrivateEndpointConnectionResource> operation = new PurviewArmOperation<PurviewPrivateEndpointConnectionResource>(
+                    new PurviewPrivateEndpointConnectionOperationSource(Client),
+                    _privateEndpointConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -299,23 +345,23 @@ namespace Azure.ResourceManager.Purview
         }
 
         /// <summary>
-        /// Create or update a private endpoint connection
+        /// Update a PurviewPrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewPrivateEndpointConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PurviewPrivateEndpointConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,14 +373,27 @@ namespace Azure.ResourceManager.Purview
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _purviewPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("PurviewPrivateEndpointConnectionResource.Update");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("PurviewPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new PurviewArmOperation<PurviewPrivateEndpointConnectionResource>(new PurviewPrivateEndpointConnectionOperationSource(Client), _purviewPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, PurviewPrivateEndpointConnectionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                PurviewArmOperation<PurviewPrivateEndpointConnectionResource> operation = new PurviewArmOperation<PurviewPrivateEndpointConnectionResource>(
+                    new PurviewPrivateEndpointConnectionOperationSource(Client),
+                    _privateEndpointConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

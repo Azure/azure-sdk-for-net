@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct PersistentVolumeRestoreMode : IEquatable<PersistentVolumeRestoreMode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PersistentVolumeRestoreMode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PersistentVolumeRestoreMode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string RestoreWithVolumeDataValue = "RestoreWithVolumeData";
         private const string RestoreWithoutVolumeDataValue = "RestoreWithoutVolumeData";
 
-        /// <summary> RestoreWithVolumeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PersistentVolumeRestoreMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PersistentVolumeRestoreMode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the RestoreWithVolumeData. </summary>
         public static PersistentVolumeRestoreMode RestoreWithVolumeData { get; } = new PersistentVolumeRestoreMode(RestoreWithVolumeDataValue);
-        /// <summary> RestoreWithoutVolumeData. </summary>
+
+        /// <summary> Gets the RestoreWithoutVolumeData. </summary>
         public static PersistentVolumeRestoreMode RestoreWithoutVolumeData { get; } = new PersistentVolumeRestoreMode(RestoreWithoutVolumeDataValue);
+
         /// <summary> Determines if two <see cref="PersistentVolumeRestoreMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PersistentVolumeRestoreMode left, PersistentVolumeRestoreMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PersistentVolumeRestoreMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PersistentVolumeRestoreMode left, PersistentVolumeRestoreMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PersistentVolumeRestoreMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PersistentVolumeRestoreMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PersistentVolumeRestoreMode(string value) => new PersistentVolumeRestoreMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PersistentVolumeRestoreMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PersistentVolumeRestoreMode?(string value) => value == null ? null : new PersistentVolumeRestoreMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PersistentVolumeRestoreMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PersistentVolumeRestoreMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

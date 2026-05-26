@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PureStorageBlock;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
     public readonly partial struct PureStorageResourceProvisioningState : IEquatable<PureStorageResourceProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="PureStorageResourceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PureStorageResourceProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static PureStorageResourceProvisioningState Succeeded { get; } = new PureStorageResourceProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static PureStorageResourceProvisioningState Failed { get; } = new PureStorageResourceProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static PureStorageResourceProvisioningState Canceled { get; } = new PureStorageResourceProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="PureStorageResourceProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PureStorageResourceProvisioningState left, PureStorageResourceProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PureStorageResourceProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PureStorageResourceProvisioningState left, PureStorageResourceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PureStorageResourceProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PureStorageResourceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PureStorageResourceProvisioningState(string value) => new PureStorageResourceProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PureStorageResourceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PureStorageResourceProvisioningState?(string value) => value == null ? null : new PureStorageResourceProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PureStorageResourceProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PureStorageResourceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

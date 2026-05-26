@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExecutedValidationType);
             }
-            if (Optional.IsDefined(Status))
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

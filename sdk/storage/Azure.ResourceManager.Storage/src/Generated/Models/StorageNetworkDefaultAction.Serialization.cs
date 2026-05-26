@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     internal static partial class StorageNetworkDefaultActionExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StorageNetworkDefaultAction value) => value switch
         {
             StorageNetworkDefaultAction.Allow => "Allow",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageNetworkDefaultAction value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static StorageNetworkDefaultAction ToStorageNetworkDefaultAction(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Allow")) return StorageNetworkDefaultAction.Allow;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deny")) return StorageNetworkDefaultAction.Deny;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Allow"))
+            {
+                return StorageNetworkDefaultAction.Allow;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deny"))
+            {
+                return StorageNetworkDefaultAction.Deny;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageNetworkDefaultAction value.");
         }
     }

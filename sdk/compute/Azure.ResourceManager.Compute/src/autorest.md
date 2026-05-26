@@ -10,12 +10,16 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/0ddf6bed82bb62f5b07efb86ef62e74fd63b3fc1/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/0607ac7cf513761c4ffbc3a65dd8a01e1ef9a6da/specification/compute/resource-manager/Microsoft.Compute/Compute/readme.md
+tag: package-2025-11-01-with-cloudservice
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
+  skipped-operations:
+    - CommunityGalleries_Get
+    - SharedGalleries_Get
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -101,14 +105,6 @@ override-operation-name:
   VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade: StartOSUpgrade
   VirtualMachineScaleSetVMs_Start: PowerOn
 
-request-path-to-resource-data:
-  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}: CommunityGallery
-  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}: CommunityGalleryImage
-  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/communityGalleries/{publicGalleryName}/images/{galleryImageName}/versions/{galleryImageVersionName}: CommunityGalleryImageVersion
-  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}: SharedGallery
-  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}: SharedGalleryImage
-  /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}: SharedGalleryImageVersion
-
 prepend-rp-prefix:
 - ApiError
 - ApiErrorBase
@@ -149,6 +145,9 @@ rename-mapping:
   CreationData.performancePlus: IsPerformancePlusEnabled
   CreationData.sourceResourceId: -|arm-id
   CreationData.storageAccountId: -|arm-id
+  CommunityGallery: CommunityGalleryData
+  CommunityGalleryImage: CommunityGalleryImageData
+  CommunityGalleryImageVersion: CommunityGalleryImageVersionData
   DataDisk: VirtualMachineDataDisk
   DedicatedHostGroup.properties.hosts: DedicatedHosts
   Disk: ManagedDisk
@@ -249,6 +248,9 @@ rename-mapping:
   SecurityPostureReference: ComputeSecurityPostureReference
   SecurityPostureReference.excludeExtensions: ExcludeExtensionNames
   SecurityPostureReference.id: -|arm-id
+  SharedGallery: SharedGalleryData
+  SharedGalleryImage: SharedGalleryImageData
+  SharedGalleryImageVersion: SharedGalleryImageVersionData
   SharedGalleryImageVersion.properties.excludeFromLatest: IsExcludedFromLatest
   SharingProfile.permissions: permission
   SkuProfile : ComputeSkuProfile
@@ -303,6 +305,10 @@ rename-mapping:
   VirtualMachineScaleSetVMInstanceView.assignedHost: -|arm-id
   VmDiskTypes: VirtualMachineDiskType
   VMDiskSecurityProfile: VirtualMachineDiskSecurityProfile
+  # `Resource` suffix is reserved for ArmResource-derived types (enforced by
+  # InheritanceCheckTests.ValidateInheritanceForResourceAndCollectionSuffix).
+  # This model is a plain payload model, so drop the suffix.
+  VMScaleSetLifecycleHookEventTargetResource: VmScaleSetLifecycleHookEventTarget
   VMGalleryApplication: VirtualMachineGalleryApplication
   VMGuestPatchClassificationLinux: VmGuestPatchClassificationForLinux
   VMGuestPatchClassificationWindows: VmGuestPatchClassificationForWindows
@@ -458,3 +464,19 @@ directive:
       delete $["$ref"];
       $["type"] = "string";
 ```
+
+## Tag: package-2025-11-01-with-cloudservice
+
+This tag is used to generate code for the API version 2025-11-01 which includes the cloud service resource.
+
+These settings apply only when `--tag=package-2025-11-01-with-cloudservice` is specified on the command line.
+
+```yaml $(tag) == 'package-2025-11-01-with-cloudservice'
+input-file:
+- https://github.com/Azure/azure-rest-api-specs/blob/0607ac7cf513761c4ffbc3a65dd8a01e1ef9a6da/specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/ComputeRP.json
+- https://github.com/Azure/azure-rest-api-specs/blob/0607ac7cf513761c4ffbc3a65dd8a01e1ef9a6da/specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-01-02/DiskRP.json
+- https://github.com/Azure/azure-rest-api-specs/blob/0607ac7cf513761c4ffbc3a65dd8a01e1ef9a6da/specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2021-07-01/skus.json
+- https://github.com/Azure/azure-rest-api-specs/blob/0607ac7cf513761c4ffbc3a65dd8a01e1ef9a6da/specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-03-03/GalleryRP.json
+- https://github.com/Azure/azure-rest-api-specs/blob/0607ac7cf513761c4ffbc3a65dd8a01e1ef9a6da/specification/compute/resource-manager/Microsoft.Compute/Compute/Cloudservice/stable/2024-11-04/cloudService.json
+```
+

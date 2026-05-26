@@ -1,18 +1,20 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
+using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Agents.Persistent
 {
-    [CodeGenClient("Files")]
+    [CodeGenType("Files")]
     public partial class PersistentAgentsFiles
     {
         /// <summary>
@@ -60,11 +62,12 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNullOrEmpty(filename, nameof(filename));
 
-            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
-            using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using MultiPartFormDataRequestContent content = new MultiPartFormDataRequestContent();
+            content.Add(data, "file", filename);
+            content.Add(purpose.ToString(), "purpose");
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
-            return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
+            return Response.FromValue((PersistentAgentFileInfo)response, response);
         }
 
         /// <summary> Uploads a file for use by other operations. </summary>
@@ -78,11 +81,12 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNullOrEmpty(filename, nameof(filename));
 
-            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
-            using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using MultiPartFormDataRequestContent content = new MultiPartFormDataRequestContent();
+            content.Add(data, "file", filename);
+            content.Add(purpose.ToString(), "purpose");
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = UploadFile(content, content.ContentType, context);
-            return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
+            return Response.FromValue((PersistentAgentFileInfo)response, response);
         }
 
         /// <summary> Uploads a file for use by other operations. </summary>
@@ -93,10 +97,10 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using MultiPartFormDataRequestContent content = body.ToMultipartRequestContent();
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
-            return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
+            return Response.FromValue((PersistentAgentFileInfo)response, response);
         }
 
         /// <summary> Uploads a file for use by other operations. </summary>
@@ -107,10 +111,10 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            using MultiPartFormDataRequestContent content = body.ToMultipartRequestContent();
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = UploadFile(content, content.ContentType, context);
-            return Response.FromValue(PersistentAgentFileInfo.FromResponse(response), response);
+            return Response.FromValue((PersistentAgentFileInfo)response, response);
         }
 
         /// <summary> Returns a list of files that belong to the user's organization. </summary>
@@ -121,7 +125,7 @@ namespace Azure.AI.Agents.Persistent
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetFiles");
             scope.Start();
             Response<InternalFileListResponse> baseResponse = InternalListFiles(purpose, cancellationToken);
-            return Response.FromValue(baseResponse.Value?.Data, baseResponse.GetRawResponse());
+            return Response.FromValue((IReadOnlyList<PersistentAgentFileInfo>)baseResponse.Value?.Data?.ToList(), baseResponse.GetRawResponse());
         }
 
         /// <summary> Returns a list of files that belong to the user's organization. </summary>
@@ -134,7 +138,7 @@ namespace Azure.AI.Agents.Persistent
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.GetFiles");
             scope.Start();
             Response<InternalFileListResponse> baseResponse = await InternalListFilesAsync(purpose, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(baseResponse.Value?.Data, baseResponse.GetRawResponse());
+            return Response.FromValue((IReadOnlyList<PersistentAgentFileInfo>)baseResponse.Value?.Data?.ToList(), baseResponse.GetRawResponse());
         }
 
         /// <summary> Delete a previously uploaded file. </summary>

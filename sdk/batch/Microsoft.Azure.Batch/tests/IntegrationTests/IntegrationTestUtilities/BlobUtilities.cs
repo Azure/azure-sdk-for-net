@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Batch.Integration.Tests.IntegrationTestUtilities
 
             while (continuationToken != string.Empty)
             {
-                var resultSegment = containerClient.GetBlobs(traits).AsPages(continuationToken);
+                var resultSegment = containerClient.GetBlobs(traits, BlobStates.None, null, default).AsPages(continuationToken);
 
                 foreach (Page<BlobItem> blobPage in resultSegment)
                 {

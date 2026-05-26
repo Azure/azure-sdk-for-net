@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Search.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            var result = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
+            var result = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
             Assert.IsNotNull(result);
             Assert.AreEqual(name, result.Data.Name);
             Assert.AreEqual(DefaultLocation, result.Data.Location);
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.Search.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            var result = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
+            var result = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions())).Value;
 
-            result = (await SearchCollection.GetAsync(name)).Value;
+            result = (await SearchCollection.GetAsync(name, new SearchManagementRequestOptions())).Value;
             Assert.IsNotNull(result);
             Assert.AreEqual(name, result.Data.Name);
             Assert.AreEqual(DefaultLocation, result.Data.Location);
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Search.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name1, data1);
-            await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name2, data2);
+            await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name1, data1, new SearchManagementRequestOptions());
+            await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name2, data2, new SearchManagementRequestOptions());
 
-            List<SearchServiceResource> searchServices = await SearchCollection.GetAllAsync().ToEnumerableAsync();
+            List<SearchServiceResource> searchServices = await SearchCollection.GetAllAsync(new SearchManagementRequestOptions()).ToEnumerableAsync();
             Assert.AreEqual(2, searchServices.Count);
             Assert.IsTrue(searchServices.First(x => x.Data.Name == name1).Data.SearchSkuName == SearchServiceSkuName.Standard);
             Assert.IsTrue(searchServices.First(x => x.Data.Name == name1).Data.PartitionCount == 1);
@@ -123,8 +123,8 @@ namespace Azure.ResourceManager.Search.Tests
                 ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
-            await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
-            var result = (await SearchCollection.ExistsAsync(name)).Value;
+            await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data, new SearchManagementRequestOptions());
+            var result = (await SearchCollection.ExistsAsync(name, new SearchManagementRequestOptions())).Value;
             Assert.NotNull(result);
             Assert.IsTrue(result == true);
         }

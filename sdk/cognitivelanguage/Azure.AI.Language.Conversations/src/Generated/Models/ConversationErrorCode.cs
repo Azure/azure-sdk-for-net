@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,86 +15,137 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct ConversationErrorCode : IEquatable<ConversationErrorCode>
     {
         private readonly string _value;
+        /// <summary> Invalid request error. </summary>
+        private const string InvalidRequestValue = "InvalidRequest";
+        /// <summary> Invalid argument error. </summary>
+        private const string InvalidArgumentValue = "InvalidArgument";
+        /// <summary> Unauthorized access error. </summary>
+        private const string UnauthorizedValue = "Unauthorized";
+        /// <summary> Forbidden access error. </summary>
+        private const string ForbiddenValue = "Forbidden";
+        /// <summary> Not found error. </summary>
+        private const string NotFoundValue = "NotFound";
+        /// <summary> Project not found error. </summary>
+        private const string ProjectNotFoundValue = "ProjectNotFound";
+        /// <summary> Operation not found error. </summary>
+        private const string OperationNotFoundValue = "OperationNotFound";
+        /// <summary> Azure Cognitive Search not found error. </summary>
+        private const string AzureCognitiveSearchNotFoundValue = "AzureCognitiveSearchNotFound";
+        /// <summary> Azure Cognitive Search index not found error. </summary>
+        private const string AzureCognitiveSearchIndexNotFoundValue = "AzureCognitiveSearchIndexNotFound";
+        /// <summary> Too many requests error. </summary>
+        private const string TooManyRequestsValue = "TooManyRequests";
+        /// <summary> Azure Cognitive Search throttling error. </summary>
+        private const string AzureCognitiveSearchThrottlingValue = "AzureCognitiveSearchThrottling";
+        /// <summary> Azure Cognitive Search index limit reached error. </summary>
+        private const string AzureCognitiveSearchIndexLimitReachedValue = "AzureCognitiveSearchIndexLimitReached";
+        /// <summary> Internal server error. </summary>
+        private const string InternalServerErrorValue = "InternalServerError";
+        /// <summary> Service unavailable error. </summary>
+        private const string ServiceUnavailableValue = "ServiceUnavailable";
+        /// <summary> Timeout error. </summary>
+        private const string TimeoutValue = "Timeout";
+        /// <summary> Quota exceeded error. </summary>
+        private const string QuotaExceededValue = "QuotaExceeded";
+        /// <summary> Conflict error. </summary>
+        private const string ConflictValue = "Conflict";
+        /// <summary> Warning error. </summary>
+        private const string WarningValue = "Warning";
 
         /// <summary> Initializes a new instance of <see cref="ConversationErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConversationErrorCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InvalidRequestValue = "InvalidRequest";
-        private const string InvalidArgumentValue = "InvalidArgument";
-        private const string UnauthorizedValue = "Unauthorized";
-        private const string ForbiddenValue = "Forbidden";
-        private const string NotFoundValue = "NotFound";
-        private const string ProjectNotFoundValue = "ProjectNotFound";
-        private const string OperationNotFoundValue = "OperationNotFound";
-        private const string AzureCognitiveSearchNotFoundValue = "AzureCognitiveSearchNotFound";
-        private const string AzureCognitiveSearchIndexNotFoundValue = "AzureCognitiveSearchIndexNotFound";
-        private const string TooManyRequestsValue = "TooManyRequests";
-        private const string AzureCognitiveSearchThrottlingValue = "AzureCognitiveSearchThrottling";
-        private const string AzureCognitiveSearchIndexLimitReachedValue = "AzureCognitiveSearchIndexLimitReached";
-        private const string InternalServerErrorValue = "InternalServerError";
-        private const string ServiceUnavailableValue = "ServiceUnavailable";
-        private const string TimeoutValue = "Timeout";
-        private const string QuotaExceededValue = "QuotaExceeded";
-        private const string ConflictValue = "Conflict";
-        private const string WarningValue = "Warning";
+            _value = value;
+        }
 
         /// <summary> Invalid request error. </summary>
         public static ConversationErrorCode InvalidRequest { get; } = new ConversationErrorCode(InvalidRequestValue);
+
         /// <summary> Invalid argument error. </summary>
         public static ConversationErrorCode InvalidArgument { get; } = new ConversationErrorCode(InvalidArgumentValue);
+
         /// <summary> Unauthorized access error. </summary>
         public static ConversationErrorCode Unauthorized { get; } = new ConversationErrorCode(UnauthorizedValue);
+
         /// <summary> Forbidden access error. </summary>
         public static ConversationErrorCode Forbidden { get; } = new ConversationErrorCode(ForbiddenValue);
+
         /// <summary> Not found error. </summary>
         public static ConversationErrorCode NotFound { get; } = new ConversationErrorCode(NotFoundValue);
+
         /// <summary> Project not found error. </summary>
         public static ConversationErrorCode ProjectNotFound { get; } = new ConversationErrorCode(ProjectNotFoundValue);
+
         /// <summary> Operation not found error. </summary>
         public static ConversationErrorCode OperationNotFound { get; } = new ConversationErrorCode(OperationNotFoundValue);
+
         /// <summary> Azure Cognitive Search not found error. </summary>
         public static ConversationErrorCode AzureCognitiveSearchNotFound { get; } = new ConversationErrorCode(AzureCognitiveSearchNotFoundValue);
+
         /// <summary> Azure Cognitive Search index not found error. </summary>
         public static ConversationErrorCode AzureCognitiveSearchIndexNotFound { get; } = new ConversationErrorCode(AzureCognitiveSearchIndexNotFoundValue);
+
         /// <summary> Too many requests error. </summary>
         public static ConversationErrorCode TooManyRequests { get; } = new ConversationErrorCode(TooManyRequestsValue);
+
         /// <summary> Azure Cognitive Search throttling error. </summary>
         public static ConversationErrorCode AzureCognitiveSearchThrottling { get; } = new ConversationErrorCode(AzureCognitiveSearchThrottlingValue);
+
         /// <summary> Azure Cognitive Search index limit reached error. </summary>
         public static ConversationErrorCode AzureCognitiveSearchIndexLimitReached { get; } = new ConversationErrorCode(AzureCognitiveSearchIndexLimitReachedValue);
+
         /// <summary> Internal server error. </summary>
         public static ConversationErrorCode InternalServerError { get; } = new ConversationErrorCode(InternalServerErrorValue);
+
         /// <summary> Service unavailable error. </summary>
         public static ConversationErrorCode ServiceUnavailable { get; } = new ConversationErrorCode(ServiceUnavailableValue);
+
         /// <summary> Timeout error. </summary>
         public static ConversationErrorCode Timeout { get; } = new ConversationErrorCode(TimeoutValue);
+
         /// <summary> Quota exceeded error. </summary>
         public static ConversationErrorCode QuotaExceeded { get; } = new ConversationErrorCode(QuotaExceededValue);
+
         /// <summary> Conflict error. </summary>
         public static ConversationErrorCode Conflict { get; } = new ConversationErrorCode(ConflictValue);
+
         /// <summary> Warning error. </summary>
         public static ConversationErrorCode Warning { get; } = new ConversationErrorCode(WarningValue);
+
         /// <summary> Determines if two <see cref="ConversationErrorCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConversationErrorCode left, ConversationErrorCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConversationErrorCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConversationErrorCode left, ConversationErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConversationErrorCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConversationErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConversationErrorCode(string value) => new ConversationErrorCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConversationErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConversationErrorCode?(string value) => value == null ? null : new ConversationErrorCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConversationErrorCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConversationErrorCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

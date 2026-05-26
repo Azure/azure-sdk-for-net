@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchAccountKeySourceExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchAccountKeySource value) => value switch
         {
             BatchAccountKeySource.MicrosoftBatch => "Microsoft.Batch",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAccountKeySource value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchAccountKeySource ToBatchAccountKeySource(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Batch")) return BatchAccountKeySource.MicrosoftBatch;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.KeyVault")) return BatchAccountKeySource.MicrosoftKeyVault;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Batch"))
+            {
+                return BatchAccountKeySource.MicrosoftBatch;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.KeyVault"))
+            {
+                return BatchAccountKeySource.MicrosoftKeyVault;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAccountKeySource value.");
         }
     }

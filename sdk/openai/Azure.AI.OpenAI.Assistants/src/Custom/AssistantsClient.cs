@@ -12,6 +12,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.OpenAI.Assistants;
+
 public partial class AssistantsClient
 {
     /*
@@ -759,7 +760,7 @@ public partial class AssistantsClient
     internal HttpMessage CreateInternalListFilesRequest(string purpose, RequestContext context)
         => CreateRequestMessage("/files", content: null, context, RequestMethod.Get, ("purpose", purpose));
 
-    internal HttpMessage CreateUploadFileRequest(RequestContent content, string contentType,RequestContext context)
+    internal HttpMessage CreateUploadFileRequest(RequestContent content, string contentType, RequestContext context)
     {
         HttpMessage message = CreateRequestMessage("/files", content, context, RequestMethod.Post);
         message.Request.Headers.SetValue(HttpHeader.Names.ContentType, contentType);

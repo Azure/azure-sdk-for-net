@@ -9,43 +9,15 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxDeploymentPatch. </summary>
+    /// <summary> Nginx Deployment Update Parameters. </summary>
     public partial class NginxDeploymentPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentPatch"/>. </summary>
         public NginxDeploymentPatch()
@@ -54,38 +26,48 @@ namespace Azure.ResourceManager.Nginx.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentPatch"/>. </summary>
-        /// <param name="identity"> Gets or sets the identity. </param>
+        /// <param name="identity"> Identity Properties. </param>
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="sku"></param>
-        /// <param name="location"></param>
-        /// <param name="properties"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, NginxResourceSku sku, AzureLocation? location, NginxDeploymentUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="sku"> Resource Sku. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Nginx Deployment Update Properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NginxDeploymentPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, NginxResourceSku sku, AzureLocation? location, NginxDeploymentUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Tags = tags;
             Sku = sku;
             Location = location;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the identity. </summary>
+        /// <summary> Identity Properties. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Dictionary of &lt;string&gt;. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Gets or sets the sku. </summary>
+
+        /// <summary> Resource Sku. </summary>
         internal NginxResourceSku Sku { get; set; }
+
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; set; }
+
+        /// <summary> Nginx Deployment Update Properties. </summary>
+        public NginxDeploymentUpdateProperties Properties { get; set; }
+
         /// <summary> Name of the SKU. </summary>
         public string SkuName
         {
-            get => Sku is null ? default : Sku.Name;
-            set => Sku = new NginxResourceSku(value);
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                Sku = new NginxResourceSku(value);
+            }
         }
-
-        /// <summary> Gets or sets the location. </summary>
-        public AzureLocation? Location { get; set; }
-        /// <summary> Gets or sets the properties. </summary>
-        public NginxDeploymentUpdateProperties Properties { get; set; }
     }
 }

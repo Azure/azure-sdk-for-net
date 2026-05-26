@@ -9,14 +9,59 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class UnknownCustomDomainHttpsParameters : IUtf8JsonSerializable, IJsonModel<CustomDomainHttpsContent>
+    internal partial class UnknownCustomDomainHttpsParameters : CustomDomainHttpsContent, IJsonModel<CustomDomainHttpsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomDomainHttpsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="UnknownCustomDomainHttpsParameters"/> for deserialization. </summary>
+        internal UnknownCustomDomainHttpsParameters()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CustomDomainHttpsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCustomDomainHttpsContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CustomDomainHttpsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomDomainHttpsContent IPersistableModel<CustomDomainHttpsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CustomDomainHttpsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomDomainHttpsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,99 +73,70 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
         }
 
-        CustomDomainHttpsContent IJsonModel<CustomDomainHttpsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomDomainHttpsContent IJsonModel<CustomDomainHttpsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CustomDomainHttpsContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCustomDomainHttpsContent(document.RootElement, options);
         }
 
-        internal static UnknownCustomDomainHttpsParameters DeserializeUnknownCustomDomainHttpsParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static UnknownCustomDomainHttpsParameters DeserializeUnknownCustomDomainHttpsParameters(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            CertificateSource certificateSource = "Unknown";
+            CertificateSource certificateSource = default;
             SecureDeliveryProtocolType protocolType = default;
             CdnMinimumTlsVersion? minimumTlsVersion = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("certificateSource"u8))
+                if (prop.NameEquals("certificateSource"u8))
                 {
-                    certificateSource = new CertificateSource(property.Value.GetString());
+                    certificateSource = new CertificateSource(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("protocolType"u8))
+                if (prop.NameEquals("protocolType"u8))
                 {
-                    protocolType = new SecureDeliveryProtocolType(property.Value.GetString());
+                    protocolType = new SecureDeliveryProtocolType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("minimumTlsVersion"u8))
+                if (prop.NameEquals("minimumTlsVersion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minimumTlsVersion = property.Value.GetString().ToCdnMinimumTlsVersion();
+                    minimumTlsVersion = prop.Value.GetString().ToCdnMinimumTlsVersion();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownCustomDomainHttpsParameters(certificateSource, protocolType, minimumTlsVersion, serializedAdditionalRawData);
+            return new UnknownCustomDomainHttpsParameters(certificateSource, protocolType, minimumTlsVersion, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<CustomDomainHttpsContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CustomDomainHttpsContent IPersistableModel<CustomDomainHttpsContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCustomDomainHttpsContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CustomDomainHttpsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

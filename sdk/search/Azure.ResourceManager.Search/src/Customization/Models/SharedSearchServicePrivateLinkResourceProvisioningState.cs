@@ -7,6 +7,7 @@
 
 using System.ComponentModel;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> The provisioning state of the shared private link resource. Valid values are Updating, Deleting, Failed, Succeeded or Incomplete. </summary>

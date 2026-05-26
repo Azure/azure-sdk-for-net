@@ -13,44 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary>
-    /// A class representing the CdnOrigin data model.
-    /// CDN origin is the source of the content being delivered via CDN. When the edge nodes represented by an endpoint do not have the requested content cached, they attempt to fetch it from one or more of the configured origins.
-    /// Serialized Name: Origin
-    /// </summary>
+    /// <summary> CDN origin is the source of the content being delivered via CDN. When the edge nodes represented by an endpoint do not have the requested content cached, they attempt to fetch it from one or more of the configured origins. </summary>
     public partial class CdnOriginData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CdnOriginData"/>. </summary>
         public CdnOriginData()
@@ -58,155 +25,248 @@ namespace Azure.ResourceManager.Cdn
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnOriginData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="hostName">
-        /// The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint.
-        /// Serialized Name: Origin.properties.hostName
-        /// </param>
-        /// <param name="httpPort">
-        /// The value of the HTTP port. Must be between 1 and 65535.
-        /// Serialized Name: Origin.properties.httpPort
-        /// </param>
-        /// <param name="httpsPort">
-        /// The value of the HTTPS port. Must be between 1 and 65535.
-        /// Serialized Name: Origin.properties.httpsPort
-        /// </param>
-        /// <param name="originHostHeader">
-        /// The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint
-        /// Serialized Name: Origin.properties.originHostHeader
-        /// </param>
-        /// <param name="priority">
-        /// Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5
-        /// Serialized Name: Origin.properties.priority
-        /// </param>
-        /// <param name="weight">
-        /// Weight of the origin in given origin group for load balancing. Must be between 1 and 1000
-        /// Serialized Name: Origin.properties.weight
-        /// </param>
-        /// <param name="enabled">
-        /// Origin is enabled for load balancing or not
-        /// Serialized Name: Origin.properties.enabled
-        /// </param>
-        /// <param name="privateLinkAlias">
-        /// The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'
-        /// Serialized Name: Origin.properties.privateLinkAlias
-        /// </param>
-        /// <param name="privateLinkResourceId">
-        /// The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'
-        /// Serialized Name: Origin.properties.privateLinkResourceId
-        /// </param>
-        /// <param name="privateLinkLocation">
-        /// The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated
-        /// Serialized Name: Origin.properties.privateLinkLocation
-        /// </param>
-        /// <param name="privateLinkApprovalMessage">
-        /// A custom message to be included in the approval request to connect to the Private Link.
-        /// Serialized Name: Origin.properties.privateLinkApprovalMessage
-        /// </param>
-        /// <param name="resourceState">
-        /// Resource status of the origin.
-        /// Serialized Name: Origin.properties.resourceState
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning status of the origin.
-        /// Serialized Name: Origin.properties.provisioningState
-        /// </param>
-        /// <param name="privateEndpointStatus">
-        /// The approval status for the connection to the Private Link
-        /// Serialized Name: Origin.properties.privateEndpointStatus
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CdnOriginData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, ResourceIdentifier privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, OriginResourceState? resourceState, OriginProvisioningState? provisioningState, PrivateEndpointStatus? privateEndpointStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The JSON object that contains the properties of the origin. </param>
+        internal CdnOriginData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, OriginProperties properties) : base(id, name, resourceType, systemData)
         {
-            HostName = hostName;
-            HttpPort = httpPort;
-            HttpsPort = httpsPort;
-            OriginHostHeader = originHostHeader;
-            Priority = priority;
-            Weight = weight;
-            Enabled = enabled;
-            PrivateLinkAlias = privateLinkAlias;
-            PrivateLinkResourceId = privateLinkResourceId;
-            PrivateLinkLocation = privateLinkLocation;
-            PrivateLinkApprovalMessage = privateLinkApprovalMessage;
-            ResourceState = resourceState;
-            ProvisioningState = provisioningState;
-            PrivateEndpointStatus = privateEndpointStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary>
-        /// The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint.
-        /// Serialized Name: Origin.properties.hostName
-        /// </summary>
-        public string HostName { get; set; }
-        /// <summary>
-        /// The value of the HTTP port. Must be between 1 and 65535.
-        /// Serialized Name: Origin.properties.httpPort
-        /// </summary>
-        public int? HttpPort { get; set; }
-        /// <summary>
-        /// The value of the HTTPS port. Must be between 1 and 65535.
-        /// Serialized Name: Origin.properties.httpsPort
-        /// </summary>
-        public int? HttpsPort { get; set; }
-        /// <summary>
-        /// The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint
-        /// Serialized Name: Origin.properties.originHostHeader
-        /// </summary>
-        public string OriginHostHeader { get; set; }
-        /// <summary>
-        /// Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5
-        /// Serialized Name: Origin.properties.priority
-        /// </summary>
-        public int? Priority { get; set; }
-        /// <summary>
-        /// Weight of the origin in given origin group for load balancing. Must be between 1 and 1000
-        /// Serialized Name: Origin.properties.weight
-        /// </summary>
-        public int? Weight { get; set; }
-        /// <summary>
-        /// Origin is enabled for load balancing or not
-        /// Serialized Name: Origin.properties.enabled
-        /// </summary>
-        public bool? Enabled { get; set; }
-        /// <summary>
-        /// The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'
-        /// Serialized Name: Origin.properties.privateLinkAlias
-        /// </summary>
-        public string PrivateLinkAlias { get; set; }
-        /// <summary>
-        /// The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'
-        /// Serialized Name: Origin.properties.privateLinkResourceId
-        /// </summary>
-        public ResourceIdentifier PrivateLinkResourceId { get; set; }
-        /// <summary>
-        /// The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated
-        /// Serialized Name: Origin.properties.privateLinkLocation
-        /// </summary>
-        public string PrivateLinkLocation { get; set; }
-        /// <summary>
-        /// A custom message to be included in the approval request to connect to the Private Link.
-        /// Serialized Name: Origin.properties.privateLinkApprovalMessage
-        /// </summary>
-        public string PrivateLinkApprovalMessage { get; set; }
-        /// <summary>
-        /// Resource status of the origin.
-        /// Serialized Name: Origin.properties.resourceState
-        /// </summary>
-        public OriginResourceState? ResourceState { get; }
-        /// <summary>
-        /// Provisioning status of the origin.
-        /// Serialized Name: Origin.properties.provisioningState
-        /// </summary>
-        public OriginProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The approval status for the connection to the Private Link
-        /// Serialized Name: Origin.properties.privateEndpointStatus
-        /// </summary>
-        public PrivateEndpointStatus? PrivateEndpointStatus { get; }
+        /// <summary> The JSON object that contains the properties of the origin. </summary>
+        [WirePath("properties")]
+        internal OriginProperties Properties { get; set; }
+
+        /// <summary> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </summary>
+        [WirePath("properties.hostName")]
+        public string HostName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginProperties();
+                }
+                Properties.HostName = value;
+            }
+        }
+
+        /// <summary> The value of the HTTP port. Must be between 1 and 65535. </summary>
+        [WirePath("properties.httpPort")]
+        public int? HttpPort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HttpPort;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginProperties();
+                }
+                Properties.HttpPort = value;
+            }
+        }
+
+        /// <summary> The value of the HTTPS port. Must be between 1 and 65535. </summary>
+        [WirePath("properties.httpsPort")]
+        public int? HttpsPort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HttpsPort;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginProperties();
+                }
+                Properties.HttpsPort = value;
+            }
+        }
+
+        /// <summary> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint. </summary>
+        [WirePath("properties.originHostHeader")]
+        public string OriginHostHeader
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OriginHostHeader;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginProperties();
+                }
+                Properties.OriginHostHeader = value;
+            }
+        }
+
+        /// <summary> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </summary>
+        [WirePath("properties.priority")]
+        public int? Priority
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Priority;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginProperties();
+                }
+                Properties.Priority = value;
+            }
+        }
+
+        /// <summary> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </summary>
+        [WirePath("properties.weight")]
+        public int? Weight
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Weight;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginProperties();
+                }
+                Properties.Weight = value;
+            }
+        }
+
+        /// <summary> Origin is enabled for load balancing or not. </summary>
+        [WirePath("properties.enabled")]
+        public bool? Enabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Enabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginProperties();
+                }
+                Properties.Enabled = value;
+            }
+        }
+
+        /// <summary> The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'. </summary>
+        [WirePath("properties.privateLinkAlias")]
+        public string PrivateLinkAlias
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkAlias;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginProperties();
+                }
+                Properties.PrivateLinkAlias = value;
+            }
+        }
+
+        /// <summary> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </summary>
+        [WirePath("properties.privateLinkResourceId")]
+        public ResourceIdentifier PrivateLinkResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginProperties();
+                }
+                Properties.PrivateLinkResourceId = value;
+            }
+        }
+
+        /// <summary> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </summary>
+        [WirePath("properties.privateLinkLocation")]
+        public string PrivateLinkLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkLocation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginProperties();
+                }
+                Properties.PrivateLinkLocation = value;
+            }
+        }
+
+        /// <summary> A custom message to be included in the approval request to connect to the Private Link. </summary>
+        [WirePath("properties.privateLinkApprovalMessage")]
+        public string PrivateLinkApprovalMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkApprovalMessage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginProperties();
+                }
+                Properties.PrivateLinkApprovalMessage = value;
+            }
+        }
+
+        /// <summary> Resource status of the origin. </summary>
+        [WirePath("properties.resourceState")]
+        public OriginResourceState? ResourceState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceState;
+            }
+        }
+
+        /// <summary> Provisioning status of the origin. </summary>
+        [WirePath("properties.provisioningState")]
+        public OriginProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The approval status for the connection to the Private Link. </summary>
+        [WirePath("properties.privateEndpointStatus")]
+        public PrivateEndpointStatus? PrivateEndpointStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointStatus;
+            }
+        }
     }
 }

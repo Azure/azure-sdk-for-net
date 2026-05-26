@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
-using Azure.Messaging.ServiceBus;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
+using Azure.Messaging.ServiceBus;
 
 namespace Azure.Messaging.ServiceBus.Stress;
 
@@ -196,7 +196,7 @@ public static class MessageTracking
 
         if (expectedMessageBodyHash != receivedMessageBodyHash)
         {
-            var messageProperties = new Dictionary<string,string>();
+            var messageProperties = new Dictionary<string, string>();
             messageProperties.Add(Metrics.SenderDefinedId, messageId.ToString());
             messageProperties.Add(Metrics.MessageBody, message.Body.ToString());
             metrics.Client.TrackEvent(Metrics.InvalidBodies, messageProperties);

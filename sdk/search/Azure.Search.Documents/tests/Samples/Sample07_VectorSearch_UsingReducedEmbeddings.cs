@@ -2,15 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
-using Azure.Search.Documents.Indexes.Models;
+using Azure.AI.OpenAI;
+using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
-using Azure.Core.TestFramework;
-using Azure.AI.OpenAI;
 using OpenAI.Embeddings;
-using System.ClientModel;
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
@@ -63,7 +63,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName);
+                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
             }
         }
 
@@ -80,9 +80,9 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             Environment.SetEnvironmentVariable("OPENAI_KEY", openAIKey);
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Reduced_Vector_Search_Index
-            string vectorSearchProfileName = "my-vector-profile";
-            string vectorSearchHnswConfig = "my-hsnw-vector-config";
-            string deploymentName = "my-text-embedding-3-small";
+            string vectorSearchProfileName = "vector-profile";
+            string vectorSearchHnswConfig = "hsnw-vector-config";
+            string deploymentName = "text-embedding-3-small";
             int modelDimensions = 256; // Here's the reduced model dimensions
 
             string indexName = "hotel";

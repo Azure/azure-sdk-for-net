@@ -251,7 +251,7 @@ namespace Azure.Storage
                     }
                     else
                     {
-                         return weight1 - weight2;
+                        return weight1 - weight2;
                     }
                 }
 

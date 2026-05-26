@@ -87,7 +87,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new AIProjectDatasetsOperationsGetDatasetVersionsCollectionResultOfT(this, name, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new AIProjectDatasetsOperationsGetDatasetVersionsCollectionResultOfT(this, name, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List all versions of the given DatasetVersion. </summary>
@@ -100,7 +100,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new AIProjectDatasetsOperationsGetDatasetVersionsAsyncCollectionResultOfT(this, name, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new AIProjectDatasetsOperationsGetDatasetVersionsAsyncCollectionResultOfT(this, name, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual CollectionResult<AIProjectDataset> GetDatasets(CancellationToken cancellationToken = default)
         {
-            return new AIProjectDatasetsOperationsGetDatasetsCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new AIProjectDatasetsOperationsGetDatasetsCollectionResultOfT(this, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> List the latest version of each DatasetVersion. </summary>
@@ -148,7 +148,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual AsyncCollectionResult<AIProjectDataset> GetDatasetsAsync(CancellationToken cancellationToken = default)
         {
-            return new AIProjectDatasetsOperationsGetDatasetsAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new AIProjectDatasetsOperationsGetDatasetsAsyncCollectionResultOfT(this, cancellationToken.ToRequestOptions());
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = GetDataset(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetDataset(name, version, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AIProjectDataset)result, result.GetRawResponse());
         }
 
@@ -227,7 +227,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = await GetDatasetAsync(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetDatasetAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AIProjectDataset)result, result.GetRawResponse());
         }
 
@@ -291,7 +291,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return Delete(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return Delete(name, version, cancellationToken.ToRequestOptions());
         }
 
         /// <summary> Delete the specific version of the DatasetVersion. The service returns 204 No Content if the DatasetVersion was deleted successfully or if the DatasetVersion does not exist. </summary>
@@ -306,7 +306,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return await DeleteAsync(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await DeleteAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -427,7 +427,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(configuration, nameof(configuration));
 
-            ClientResult result = PendingUpload(name, version, configuration, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = PendingUpload(name, version, configuration, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((PendingUploadResult)result, result.GetRawResponse());
         }
 
@@ -445,7 +445,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(configuration, nameof(configuration));
 
-            ClientResult result = await PendingUploadAsync(name, version, configuration, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await PendingUploadAsync(name, version, configuration, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((PendingUploadResult)result, result.GetRawResponse());
         }
 
@@ -509,7 +509,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = GetCredentials(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetCredentials(name, version, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
         }
 
@@ -525,7 +525,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = await GetCredentialsAsync(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetCredentialsAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
         }
     }

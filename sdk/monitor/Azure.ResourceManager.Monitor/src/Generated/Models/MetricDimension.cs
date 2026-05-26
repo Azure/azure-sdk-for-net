@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="MetricDimension"/>. </summary>
         /// <param name="name"> Name of the dimension. </param>
-        /// <param name="operator"> the dimension operator. Only 'Include' and 'Exclude' are supported. </param>
-        /// <param name="values"> list of dimension values. </param>
+        /// <param name="operator"> The dimension operator. Only 'Include' and 'Exclude' are supported. </param>
+        /// <param name="values"> List of dimension values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="operator"/> or <paramref name="values"/> is null. </exception>
         public MetricDimension(string name, string @operator, IEnumerable<string> values)
         {
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="MetricDimension"/>. </summary>
         /// <param name="name"> Name of the dimension. </param>
-        /// <param name="operator"> the dimension operator. Only 'Include' and 'Exclude' are supported. </param>
-        /// <param name="values"> list of dimension values. </param>
+        /// <param name="operator"> The dimension operator. Only 'Include' and 'Exclude' are supported. </param>
+        /// <param name="values"> List of dimension values. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MetricDimension(string name, string @operator, IList<string> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Name of the dimension. </summary>
         public string Name { get; set; }
-        /// <summary> the dimension operator. Only 'Include' and 'Exclude' are supported. </summary>
+        /// <summary> The dimension operator. Only 'Include' and 'Exclude' are supported. </summary>
         public string Operator { get; set; }
-        /// <summary> list of dimension values. </summary>
+        /// <summary> List of dimension values. </summary>
         public IList<string> Values { get; }
     }
 }

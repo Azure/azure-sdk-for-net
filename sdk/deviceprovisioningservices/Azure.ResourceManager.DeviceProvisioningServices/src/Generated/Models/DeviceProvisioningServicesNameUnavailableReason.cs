@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     public readonly partial struct DeviceProvisioningServicesNameUnavailableReason : IEquatable<DeviceProvisioningServicesNameUnavailableReason>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesNameUnavailableReason"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DeviceProvisioningServicesNameUnavailableReason(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string AlreadyExistsValue = "AlreadyExists";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DeviceProvisioningServicesNameUnavailableReason(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static DeviceProvisioningServicesNameUnavailableReason Invalid { get; } = new DeviceProvisioningServicesNameUnavailableReason(InvalidValue);
-        /// <summary> AlreadyExists. </summary>
+
+        /// <summary> Gets the AlreadyExists. </summary>
         public static DeviceProvisioningServicesNameUnavailableReason AlreadyExists { get; } = new DeviceProvisioningServicesNameUnavailableReason(AlreadyExistsValue);
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesNameUnavailableReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeviceProvisioningServicesNameUnavailableReason left, DeviceProvisioningServicesNameUnavailableReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesNameUnavailableReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeviceProvisioningServicesNameUnavailableReason left, DeviceProvisioningServicesNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceProvisioningServicesNameUnavailableReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeviceProvisioningServicesNameUnavailableReason(string value) => new DeviceProvisioningServicesNameUnavailableReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeviceProvisioningServicesNameUnavailableReason?(string value) => value == null ? null : new DeviceProvisioningServicesNameUnavailableReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeviceProvisioningServicesNameUnavailableReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeviceProvisioningServicesNameUnavailableReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

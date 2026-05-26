@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ImpactReporting;
 
 namespace Azure.ResourceManager.ImpactReporting.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableImpactReportingArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableImpactReportingArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableImpactReportingArmClient for mocking. </summary>
         protected MockableImpactReportingArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableImpactReportingArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableImpactReportingArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableImpactReportingArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableImpactReportingArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="WorkloadImpactResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkloadImpactResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadImpactResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="WorkloadImpactResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WorkloadImpactResource"/> object. </returns>
         public virtual WorkloadImpactResource GetWorkloadImpactResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
             return new WorkloadImpactResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="ImpactCategoryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ImpactCategoryResource.CreateResourceIdentifier" /> to create an <see cref="ImpactCategoryResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ImpactCategoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ImpactCategoryResource"/> object. </returns>
         public virtual ImpactCategoryResource GetImpactCategoryResource(ResourceIdentifier id)
@@ -58,10 +44,7 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
             return new ImpactCategoryResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="ImpactInsightResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ImpactInsightResource.CreateResourceIdentifier" /> to create an <see cref="ImpactInsightResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ImpactInsightResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ImpactInsightResource"/> object. </returns>
         public virtual ImpactInsightResource GetImpactInsightResource(ResourceIdentifier id)
@@ -70,10 +53,7 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
             return new ImpactInsightResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="ImpactConnectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ImpactConnectorResource.CreateResourceIdentifier" /> to create an <see cref="ImpactConnectorResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ImpactConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ImpactConnectorResource"/> object. </returns>
         public virtual ImpactConnectorResource GetImpactConnectorResource(ResourceIdentifier id)

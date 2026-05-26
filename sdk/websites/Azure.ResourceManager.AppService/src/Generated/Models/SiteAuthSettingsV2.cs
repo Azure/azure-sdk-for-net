@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Configuration settings for the Azure App Service Authentication / Authorization V2 feature. </summary>
+    /// <summary>
+    /// Configuration settings for the Azure App Service Authentication / Authorization V2 feature.
+    /// Serialized Name: SiteAuthSettingsV2
+    /// </summary>
     public partial class SiteAuthSettingsV2 : ResourceData
     {
         /// <summary>
@@ -57,41 +60,77 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="platform"> The configuration settings of the platform of App Service Authentication/Authorization. </param>
-        /// <param name="globalValidation"> The configuration settings that determines the validation flow of users using App Service Authentication/Authorization. </param>
-        /// <param name="identityProviders"> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </param>
-        /// <param name="login"> The configuration settings of the login flow of users using App Service Authentication/Authorization. </param>
-        /// <param name="httpSettings"> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind.
+        /// Serialized Name: SiteAuthSettingsV2.kind
+        /// </param>
+        /// <param name="platform">
+        /// The configuration settings of the platform of App Service Authentication/Authorization.
+        /// Serialized Name: SiteAuthSettingsV2.properties.platform
+        /// </param>
+        /// <param name="globalValidation">
+        /// The configuration settings that determines the validation flow of users using App Service Authentication/Authorization.
+        /// Serialized Name: SiteAuthSettingsV2.properties.globalValidation
+        /// </param>
+        /// <param name="identityProviders">
+        /// The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization.
+        /// Serialized Name: SiteAuthSettingsV2.properties.identityProviders
+        /// </param>
+        /// <param name="login">
+        /// The configuration settings of the login flow of users using App Service Authentication/Authorization.
+        /// Serialized Name: SiteAuthSettingsV2.properties.login
+        /// </param>
+        /// <param name="httpSettings">
+        /// The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization.
+        /// Serialized Name: SiteAuthSettingsV2.properties.httpSettings
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteAuthSettingsV2(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AuthPlatform platform, GlobalValidation globalValidation, AppServiceIdentityProviders identityProviders, WebAppLoginInfo login, AppServiceHttpSettings httpSettings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SiteAuthSettingsV2(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AuthPlatform platform, GlobalValidation globalValidation, AppServiceIdentityProviders identityProviders, WebAppLoginInfo login, AppServiceHttpSettings httpSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             Platform = platform;
             GlobalValidation = globalValidation;
             IdentityProviders = identityProviders;
             Login = login;
             HttpSettings = httpSettings;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The configuration settings of the platform of App Service Authentication/Authorization. </summary>
-        [WirePath("properties.platform")]
-        public AuthPlatform Platform { get; set; }
-        /// <summary> The configuration settings that determines the validation flow of users using App Service Authentication/Authorization. </summary>
-        [WirePath("properties.globalValidation")]
-        public GlobalValidation GlobalValidation { get; set; }
-        /// <summary> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </summary>
-        [WirePath("properties.identityProviders")]
-        public AppServiceIdentityProviders IdentityProviders { get; set; }
-        /// <summary> The configuration settings of the login flow of users using App Service Authentication/Authorization. </summary>
-        [WirePath("properties.login")]
-        public WebAppLoginInfo Login { get; set; }
-        /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </summary>
-        [WirePath("properties.httpSettings")]
-        public AppServiceHttpSettings HttpSettings { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind.
+        /// Serialized Name: SiteAuthSettingsV2.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary>
+        /// The configuration settings of the platform of App Service Authentication/Authorization.
+        /// Serialized Name: SiteAuthSettingsV2.properties.platform
+        /// </summary>
+        [WirePath("properties.platform")]
+        public AuthPlatform Platform { get; set; }
+        /// <summary>
+        /// The configuration settings that determines the validation flow of users using App Service Authentication/Authorization.
+        /// Serialized Name: SiteAuthSettingsV2.properties.globalValidation
+        /// </summary>
+        [WirePath("properties.globalValidation")]
+        public GlobalValidation GlobalValidation { get; set; }
+        /// <summary>
+        /// The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization.
+        /// Serialized Name: SiteAuthSettingsV2.properties.identityProviders
+        /// </summary>
+        [WirePath("properties.identityProviders")]
+        public AppServiceIdentityProviders IdentityProviders { get; set; }
+        /// <summary>
+        /// The configuration settings of the login flow of users using App Service Authentication/Authorization.
+        /// Serialized Name: SiteAuthSettingsV2.properties.login
+        /// </summary>
+        [WirePath("properties.login")]
+        public WebAppLoginInfo Login { get; set; }
+        /// <summary>
+        /// The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization.
+        /// Serialized Name: SiteAuthSettingsV2.properties.httpSettings
+        /// </summary>
+        [WirePath("properties.httpSettings")]
+        public AppServiceHttpSettings HttpSettings { get; set; }
     }
 }

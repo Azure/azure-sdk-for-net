@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> MSDeploy ARM PUT information. </summary>
+    /// <summary>
+    /// MSDeploy ARM PUT information
+    /// Serialized Name: MSDeploy
+    /// </summary>
     public partial class WebAppMSDeploy : ResourceData
     {
         /// <summary>
@@ -51,6 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
         public WebAppMSDeploy()
         {
             SetParameters = new ChangeTrackingDictionary<string, string>();
+            AddOnPackages = new ChangeTrackingList<MSDeployCore>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppMSDeploy"/>. </summary>
@@ -58,24 +62,48 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="packageUri"> Package URI. </param>
-        /// <param name="connectionString"> SQL Connection String. </param>
-        /// <param name="dbType"> Database Type. </param>
-        /// <param name="setParametersXmlFileUri"> URI of MSDeploy Parameters file. Must not be set if SetParameters is used. </param>
-        /// <param name="setParameters"> MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used. </param>
+        /// <param name="packageUri">
+        /// Package URI
+        /// Serialized Name: MSDeploy.properties.packageUri
+        /// </param>
+        /// <param name="connectionString">
+        /// SQL Connection String
+        /// Serialized Name: MSDeploy.properties.connectionString
+        /// </param>
+        /// <param name="dbType">
+        /// Database Type
+        /// Serialized Name: MSDeploy.properties.dbType
+        /// </param>
+        /// <param name="setParametersXmlFileUri">
+        /// URI of MSDeploy Parameters file. Must not be set if SetParameters is used.
+        /// Serialized Name: MSDeploy.properties.setParametersXmlFileUri
+        /// </param>
+        /// <param name="setParameters">
+        /// MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used.
+        /// Serialized Name: MSDeploy.properties.setParameters
+        /// </param>
         /// <param name="skipAppData">
         /// Controls whether the MSDeploy operation skips the App_Data directory.
         /// If set to &lt;code&gt;true&lt;/code&gt;, the existing App_Data directory on the destination
         /// will not be deleted, and any App_Data directory in the source will be ignored.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
+        /// Serialized Name: MSDeploy.properties.skipAppData
         /// </param>
         /// <param name="isAppOffline">
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
+        /// Serialized Name: MSDeploy.properties.appOffline
         /// </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="addOnPackages">
+        /// List of Add-On packages. Add-On packages implicitly enable the Do Not Delete MSDeploy rule.
+        /// Serialized Name: MSDeploy.properties.addOnPackages
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppMSDeploy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? isAppOffline, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WebAppMSDeploy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? isAppOffline, IList<MSDeployCore> addOnPackages, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PackageUri = packageUri;
             ConnectionString = connectionString;
@@ -84,23 +112,39 @@ namespace Azure.ResourceManager.AppService.Models
             SetParameters = setParameters;
             SkipAppData = skipAppData;
             IsAppOffline = isAppOffline;
+            AddOnPackages = addOnPackages;
             Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Package URI. </summary>
+        /// <summary>
+        /// Package URI
+        /// Serialized Name: MSDeploy.properties.packageUri
+        /// </summary>
         [WirePath("properties.packageUri")]
         public Uri PackageUri { get; set; }
-        /// <summary> SQL Connection String. </summary>
+        /// <summary>
+        /// SQL Connection String
+        /// Serialized Name: MSDeploy.properties.connectionString
+        /// </summary>
         [WirePath("properties.connectionString")]
         public string ConnectionString { get; set; }
-        /// <summary> Database Type. </summary>
+        /// <summary>
+        /// Database Type
+        /// Serialized Name: MSDeploy.properties.dbType
+        /// </summary>
         [WirePath("properties.dbType")]
         public string DBType { get; set; }
-        /// <summary> URI of MSDeploy Parameters file. Must not be set if SetParameters is used. </summary>
+        /// <summary>
+        /// URI of MSDeploy Parameters file. Must not be set if SetParameters is used.
+        /// Serialized Name: MSDeploy.properties.setParametersXmlFileUri
+        /// </summary>
         [WirePath("properties.setParametersXmlFileUri")]
         public Uri SetParametersXmlFileUri { get; set; }
-        /// <summary> MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used. </summary>
+        /// <summary>
+        /// MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used.
+        /// Serialized Name: MSDeploy.properties.setParameters
+        /// </summary>
         [WirePath("properties.setParameters")]
         public IDictionary<string, string> SetParameters { get; }
         /// <summary>
@@ -108,16 +152,27 @@ namespace Azure.ResourceManager.AppService.Models
         /// If set to &lt;code&gt;true&lt;/code&gt;, the existing App_Data directory on the destination
         /// will not be deleted, and any App_Data directory in the source will be ignored.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
+        /// Serialized Name: MSDeploy.properties.skipAppData
         /// </summary>
         [WirePath("properties.skipAppData")]
         public bool? SkipAppData { get; set; }
         /// <summary>
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
+        /// Serialized Name: MSDeploy.properties.appOffline
         /// </summary>
         [WirePath("properties.appOffline")]
         public bool? IsAppOffline { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// List of Add-On packages. Add-On packages implicitly enable the Do Not Delete MSDeploy rule.
+        /// Serialized Name: MSDeploy.properties.addOnPackages
+        /// </summary>
+        [WirePath("properties.addOnPackages")]
+        public IList<MSDeployCore> AddOnPackages { get; }
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

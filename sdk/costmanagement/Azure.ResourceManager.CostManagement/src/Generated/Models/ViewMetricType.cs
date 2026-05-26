@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct ViewMetricType : IEquatable<ViewMetricType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ViewMetricType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ViewMetricType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ActualCostValue = "ActualCost";
         private const string AmortizedCostValue = "AmortizedCost";
         private const string AhubValue = "AHUB";
 
-        /// <summary> ActualCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="ViewMetricType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ViewMetricType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the ActualCost. </summary>
         public static ViewMetricType ActualCost { get; } = new ViewMetricType(ActualCostValue);
-        /// <summary> AmortizedCost. </summary>
+
+        /// <summary> Gets the AmortizedCost. </summary>
         public static ViewMetricType AmortizedCost { get; } = new ViewMetricType(AmortizedCostValue);
-        /// <summary> AHUB. </summary>
+
+        /// <summary> Gets the Ahub. </summary>
         public static ViewMetricType Ahub { get; } = new ViewMetricType(AhubValue);
+
         /// <summary> Determines if two <see cref="ViewMetricType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ViewMetricType left, ViewMetricType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ViewMetricType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ViewMetricType left, ViewMetricType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ViewMetricType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ViewMetricType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ViewMetricType(string value) => new ViewMetricType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ViewMetricType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ViewMetricType?(string value) => value == null ? null : new ViewMetricType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ViewMetricType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ViewMetricType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

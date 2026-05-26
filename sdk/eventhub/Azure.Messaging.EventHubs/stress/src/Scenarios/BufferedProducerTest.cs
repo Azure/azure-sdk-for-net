@@ -18,7 +18,7 @@ public class BufferedProducerTest : TestScenario
     public override string Name { get; } = "BufferedProducerTest";
 
     /// <summary> The array of <see cref="Role"/>s needed to run this test scenario.</summary>
-    public override Role[] Roles { get; } = {Role.BufferedPublisher, Role.BufferedPublisher};
+    public override Role[] Roles { get; } = { Role.BufferedPublisher, Role.BufferedPublisher };
 
     /// <summary>
     ///  Initializes a new <see cref="BufferedProducerTest"/> instance.

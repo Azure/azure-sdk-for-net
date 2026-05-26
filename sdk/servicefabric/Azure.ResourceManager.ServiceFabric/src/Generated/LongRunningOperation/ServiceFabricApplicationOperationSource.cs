@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceFabric
 {
-    internal class ServiceFabricApplicationOperationSource : IOperationSource<ServiceFabricApplicationResource>
+    /// <summary></summary>
+    internal partial class ServiceFabricApplicationOperationSource : IOperationSource<ServiceFabricApplicationResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ServiceFabricApplicationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ServiceFabricApplicationResource IOperationSource<ServiceFabricApplicationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServiceFabricApplicationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceFabricContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ServiceFabricApplicationData data = ServiceFabricApplicationData.DeserializeServiceFabricApplicationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ServiceFabricApplicationResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ServiceFabricApplicationResource> IOperationSource<ServiceFabricApplicationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServiceFabricApplicationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceFabricContext.Default);
-            return await Task.FromResult(new ServiceFabricApplicationResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ServiceFabricApplicationData data = ServiceFabricApplicationData.DeserializeServiceFabricApplicationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ServiceFabricApplicationResource(_client, data);
         }
     }
 }

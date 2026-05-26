@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("firstRowOnly"u8);
                 JsonSerializer.Serialize(writer, FirstRowOnly);
             }
+            if (Optional.IsDefined(TreatDecimalAsString))
+            {
+                writer.WritePropertyName("treatDecimalAsString"u8);
+                JsonSerializer.Serialize(writer, TreatDecimalAsString);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -94,6 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopyActivitySource source = default;
             DatasetReference dataset = default;
             DataFactoryElement<bool> firstRowOnly = default;
+            DataFactoryElement<bool> treatDecimalAsString = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,6 +211,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                             firstRowOnly = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("treatDecimalAsString"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            treatDecimalAsString = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -224,7 +239,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 policy,
                 source,
                 dataset,
-                firstRowOnly);
+                firstRowOnly,
+                treatDecimalAsString);
         }
 
         BinaryData IPersistableModel<LookupActivity>.Write(ModelReaderWriterOptions options)

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Core;
@@ -23,23 +23,26 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         protected HealthcareApisManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
-            JsonPathSanitizers.Add("$..authority");
-            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+api-version=(?<group>[a-z0-9-]+)")
-            {
-                GroupForReplace = "group",
-                Value = "**"
-            });
-            UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+/eventhubs/[^/]+api-version=(?<group>[a-z0-9-]+)")
-            {
-                GroupForReplace = "group",
-                Value = "**"
-            });
+            ConfigureSanitizers();
         }
 
         protected HealthcareApisManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            ConfigureSanitizers();
+        }
+
+        private void ConfigureSanitizers()
+        {
             JsonPathSanitizers.Add("$..authority");
+
+            // TODO: Remove this sanitizer after re-recording (see https://github.com/Azure/azure-sdk-for-net/issues/57316)
+            // EventHubs SDK now serializes empty "properties": {} unconditionally, but recordings predate that change.
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@",?\s*""properties""\s*:\s*\{\s*\}")
+            {
+                Value = ""
+            });
+
             UriRegexSanitizers.Add(new UriRegexSanitizer(@"/Microsoft.EventHub/namespaces/[^/]+api-version=(?<group>[a-z0-9-]+)")
             {
                 GroupForReplace = "group",

@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Collections.Generic;
 
 namespace Azure.AI.Inference.Tests.Samples
 {

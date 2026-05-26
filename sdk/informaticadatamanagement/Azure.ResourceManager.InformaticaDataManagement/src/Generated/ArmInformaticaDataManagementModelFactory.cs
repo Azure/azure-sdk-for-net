@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.InformaticaDataManagement;
 using Azure.ResourceManager.Models;
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 marketplaceDetails,
                 userDetails,
                 companyDetails,
-                linkOrganizationToken is null ? default : new LinkOrganization(linkOrganizationToken, new Dictionary<string, BinaryData>()),
+                linkOrganizationToken is null ? default : new LinkOrganization(linkOrganizationToken, null),
                 additionalBinaryDataProperties: null);
         }
 
@@ -266,7 +267,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="serverlessRuntimeConfig"> Serverless config properties. </param>
         /// <param name="serverlessRuntimeTags"> Serverless Runtime Tags. </param>
         /// <param name="userContextToken"> User context token for OBO flow. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceConfiguration"/> or <paramref name="userContextToken"/> is null. </exception>
         /// <returns> A new <see cref="Models.InformaticaServerlessRuntimeProperties"/> instance for mocking. </returns>
         public static InformaticaServerlessRuntimeProperties InformaticaServerlessRuntimeProperties(InformaticaProvisioningState? provisioningState = default, string description = default, InformaticaPlatformType? platform = default, InformaticaApplicationType? applicationType = default, string computeUnits = default, string executionTimeout = default, string serverlessAccountLocation = default, InformaticaNetworkInterfaceConfiguration networkInterfaceConfiguration = default, IEnumerable<AdvancedCustomProperties> advancedCustomProperties = default, string supplementaryFileLocation = default, ServerlessRuntimeConfigProperties serverlessRuntimeConfig = default, IEnumerable<ServerlessRuntimeTag> serverlessRuntimeTags = default, string userContextToken = default)
         {
@@ -281,12 +281,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 computeUnits,
                 executionTimeout,
                 serverlessAccountLocation,
-                networkInterfaceConfiguration is null ? default : new ServerlessRuntimeNetworkProfile(networkInterfaceConfiguration, new Dictionary<string, BinaryData>()),
+                networkInterfaceConfiguration is null ? default : new ServerlessRuntimeNetworkProfile(networkInterfaceConfiguration, null),
                 advancedCustomProperties.ToList(),
                 supplementaryFileLocation,
                 serverlessRuntimeConfig,
                 serverlessRuntimeTags.ToList(),
-                userContextToken is null ? default : new ServerlessRuntimeUserContextProperties(userContextToken, new Dictionary<string, BinaryData>()),
+                userContextToken is null ? default : new ServerlessRuntimeUserContextProperties(userContextToken, null),
                 additionalBinaryDataProperties: null);
         }
 
@@ -302,7 +302,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         /// <param name="serverlessRuntimeConfig"> Serverless config properties. </param>
         /// <param name="serverlessRuntimeTags"> Serverless Runtime Tags. </param>
         /// <param name="userContextToken"> User context token for OBO flow. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceConfiguration"/> is null. </exception>
         /// <returns> A new <see cref="Models.ServerlessRuntimePropertiesUpdate"/> instance for mocking. </returns>
         public static ServerlessRuntimePropertiesUpdate ServerlessRuntimePropertiesUpdate(string description = default, InformaticaPlatformType? platform = default, InformaticaApplicationType? applicationType = default, string computeUnits = default, string executionTimeout = default, string serverlessAccountLocation = default, InformaticaNetworkInterfaceConfigurationUpdate networkInterfaceConfiguration = default, IEnumerable<AdvancedCustomProperties> advancedCustomProperties = default, string supplementaryFileLocation = default, ServerlessRuntimeConfigPropertiesUpdate serverlessRuntimeConfig = default, IEnumerable<ServerlessRuntimeTag> serverlessRuntimeTags = default, string userContextToken = default)
         {
@@ -316,12 +315,12 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 computeUnits,
                 executionTimeout,
                 serverlessAccountLocation,
-                networkInterfaceConfiguration is null ? default : new ServerlessRuntimeNetworkProfileUpdate(networkInterfaceConfiguration, new Dictionary<string, BinaryData>()),
+                networkInterfaceConfiguration is null ? default : new ServerlessRuntimeNetworkProfileUpdate(networkInterfaceConfiguration, null),
                 advancedCustomProperties.ToList(),
                 supplementaryFileLocation,
                 serverlessRuntimeConfig,
                 serverlessRuntimeTags.ToList(),
-                userContextToken is null ? default : new ServerlessRuntimeUserContextPropertiesUpdate(userContextToken, new Dictionary<string, BinaryData>()),
+                userContextToken is null ? default : new ServerlessRuntimeUserContextPropertiesUpdate(userContextToken, null),
                 additionalBinaryDataProperties: null);
         }
 

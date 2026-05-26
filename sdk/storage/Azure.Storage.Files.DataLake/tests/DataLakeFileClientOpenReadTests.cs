@@ -97,7 +97,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         protected override async Task StageDataAsync(DataLakeFileClient client, Stream data)
         {
-            using Stream writeStream = await client.OpenWriteAsync( overwrite: true);
+            using Stream writeStream = await client.OpenWriteAsync(overwrite: true);
             await data.CopyToAsync(writeStream);
         }
 

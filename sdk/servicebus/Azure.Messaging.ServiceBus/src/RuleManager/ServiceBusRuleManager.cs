@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Shared;
+using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Administration;
 
 namespace Azure.Messaging.ServiceBus
 {

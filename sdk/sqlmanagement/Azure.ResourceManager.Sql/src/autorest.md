@@ -4,8 +4,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-tag: package-preview-2024-11-01-preview
-require: https://github.com/Azure/azure-rest-api-specs/blob/0d68729fe5000a0e7dcdccd2c5f5e6e712f901a9/specification/sql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/347957f6f5b15889f48000bbca92b7ed1d759dca/specification/sql/resource-manager/Microsoft.Sql/SQL/readme.md
+#tag: package-2025-01-01
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -29,8 +29,8 @@ head-as-boolean: false
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-# mgmt-debug:
-#  show-serialized-names: true
+#mgmt-debug:
+# show-serialized-names: true
 
 # this is temporary, to be removed when we find the owner of this feature
 operation-groups-to-omit:
@@ -380,10 +380,9 @@ rename-mapping:
   ReplicationModeType: SqlReplicationModeType
   RoleChangeType: DistributedAvailabilityGroupRoleChangeType
   InstancePoolOperation: SqlInstancePoolOperation
-  ManagedInstance.properties.totalMemoryMB: TotalMemoryInMB
-  ManagedInstanceUpdate.properties.totalMemoryMB: TotalMemoryInMB
   ErrorType: SqlInstancePoolOperationErrorType
-  InaccessibilityReason: ManagedDatabaseInaccessibilityReason 
+  InaccessibilityReason: ManagedDatabaseInaccessibilityReason
+  ManagedInstanceVcoresCapability.supportedMemoryLimitsMB: SupportedMemoryLimitsInMB
 
 prompted-enum-values:
   - Default
@@ -719,3 +718,9 @@ directive:
               "format": "date-time",
               "description": "The next reset time for the metric (ISO8601 format)."
             };
+    # Avoid generating dup model
+    - from: Servers.json
+      where: $.definitions.NetworkIsolationSettings
+      transform: >
+          delete $.properties.storageAccountResourceId['x-ms-arm-id-details'];
+          delete $.properties.sqlServerResourceId['x-ms-arm-id-details'];

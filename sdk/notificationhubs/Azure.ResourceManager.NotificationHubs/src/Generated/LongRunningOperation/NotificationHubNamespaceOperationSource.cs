@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
-    internal class NotificationHubNamespaceOperationSource : IOperationSource<NotificationHubNamespaceResource>
+    /// <summary></summary>
+    internal partial class NotificationHubNamespaceOperationSource : IOperationSource<NotificationHubNamespaceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NotificationHubNamespaceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NotificationHubNamespaceResource IOperationSource<NotificationHubNamespaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NotificationHubNamespaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNotificationHubsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NotificationHubNamespaceData data = NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NotificationHubNamespaceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NotificationHubNamespaceResource> IOperationSource<NotificationHubNamespaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NotificationHubNamespaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNotificationHubsContext.Default);
-            return await Task.FromResult(new NotificationHubNamespaceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NotificationHubNamespaceData data = NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NotificationHubNamespaceResource(_client, data);
         }
     }
 }

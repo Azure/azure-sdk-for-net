@@ -4,16 +4,17 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
+using NUnit.Framework;
 
-namespace Azure.AI.Projects.Tests;
+namespace Azure.AI.Projects.Tests.Samples;
 
-public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
+public class Sample_Deployment : SamplesBase
 {
     private void EnableSystemClientModelDebugging()
     {
@@ -67,14 +68,14 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:AI_Projects_DeploymentExampleSync
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
 
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
 
         // Enable debugging for System.ClientModel
@@ -108,14 +109,14 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
     {
         #region Snippet:AI_Projects_DeploymentExampleAsync
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
 
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
 
         // Enable debugging for System.ClientModel
@@ -142,4 +143,7 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
         Console.WriteLine(deploymentDetails);
         #endregion
     }
+
+    public Sample_Deployment(bool isAsync) : base(isAsync)
+    { }
 }

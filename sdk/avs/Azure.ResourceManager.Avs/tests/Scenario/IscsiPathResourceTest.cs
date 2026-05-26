@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
         [RecordedTest]
         public async Task Delete()
         {
-            ArmOperation lro =  await getIscsiPathResource().DeleteAsync(WaitUntil.Started);
+            ArmOperation lro = await getIscsiPathResource().DeleteAsync(WaitUntil.Started);
         }
     }
 }

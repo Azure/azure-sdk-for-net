@@ -3,5 +3,5 @@
 
 namespace Azure.AI.Personalizer
 {
-    internal partial class MultiSlotEventsClient {}
+    internal partial class MultiSlotEventsClient { }
 }

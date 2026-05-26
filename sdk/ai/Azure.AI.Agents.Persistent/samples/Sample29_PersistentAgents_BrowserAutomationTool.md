@@ -207,7 +207,7 @@ private static void printRunStepInfo(IReadOnlyList<RunStep> steps)
 
 Synchronous sample:
 ```C# Snippet:PersistentAgents_BrowserAutomationTool_ShowRunSteps_Sync
-IReadOnlyList<RunStep> steps = [..client.Runs.GetRunSteps(run)];
+IReadOnlyList<RunStep> steps = [.. client.Runs.GetRunSteps(run)];
 printRunStepInfo(steps);
 ```
 

@@ -87,11 +87,31 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
-        /// <summary> Create a BarSettingsResource. </summary>
+        /// <summary>
+        /// Create a BarSettingsResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/settings/current. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BarSettingsOperations_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BarSettingsResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -108,7 +128,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _barSettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarSettingsResourceData.ToRequestContent(data), context);
+                HttpMessage message = _barSettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, BarSettingsResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<BarSettingsResource> operation = new TestsArmOperation<BarSettingsResource>(
                     new BarSettingsResourceOperationSource(Client),
@@ -116,7 +136,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -130,7 +151,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Create a BarSettingsResource. </summary>
+        /// <summary>
+        /// Create a BarSettingsResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/settings/current. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BarSettingsOperations_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BarSettingsResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -147,7 +188,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _barSettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarSettingsResourceData.ToRequestContent(data), context);
+                HttpMessage message = _barSettingsOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, BarSettingsResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<BarSettingsResource> operation = new TestsArmOperation<BarSettingsResource>(
                     new BarSettingsResourceOperationSource(Client),
@@ -155,7 +196,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -169,7 +211,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Get a BarSettingsResource. </summary>
+        /// <summary>
+        /// Get a BarSettingsResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/settings/current. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BarSettingsOperations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BarSettingsResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BarSettingsResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -181,7 +243,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _barSettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _barSettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BarSettingsResourceData> response = Response.FromValue(BarSettingsResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -197,7 +259,27 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Get a BarSettingsResource. </summary>
+        /// <summary>
+        /// Get a BarSettingsResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/settings/current. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BarSettingsOperations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BarSettingsResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BarSettingsResource> Get(CancellationToken cancellationToken = default)
         {
@@ -209,7 +291,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _barSettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _barSettingsOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BarSettingsResourceData> response = Response.FromValue(BarSettingsResourceData.FromResponse(result), result);
                 if (response.Value == null)

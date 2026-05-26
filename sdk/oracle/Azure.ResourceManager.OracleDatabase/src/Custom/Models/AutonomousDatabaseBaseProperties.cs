@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// </summary>
     public abstract partial class AutonomousDatabaseBaseProperties
     {
+        /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseBaseProperties"/> for deserialization. </summary>
+        protected AutonomousDatabaseBaseProperties()
+        {
+        }
+
         /// <summary> The compute model of the Autonomous Database. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]

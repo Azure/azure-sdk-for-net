@@ -234,7 +234,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorAllowsTheEventHubToBePassedTwiceIfEqual()
         {
             var eventHubName = "myHub";
-            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={ eventHubName }";
+            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={eventHubName}";
             Assert.That(() => new EventHubConnection(fakeConnection, eventHubName), Throws.Nothing, "The constructor without options should allow the same Event Hub in multiple places");
             Assert.That(() => new EventHubConnection(fakeConnection, eventHubName, new EventHubConnectionOptions()), Throws.Nothing, "The constructor with options should allow the same Event Hub in multiple places");
         }
@@ -294,10 +294,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var defaultOptions = new EventHubConnectionOptions();
             EventHubConnectionOptions options = connection.Options;
 
-            Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
-            Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
-            Assert.That(options.TransportType, Is.EqualTo(defaultOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
-            Assert.That(options.Proxy, Is.EqualTo(defaultOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
+            Assert.That(options, Is.Not.Null, $"The {constructorDescription} constructor should have set default options.");
+            Assert.That(options, Is.Not.SameAs(defaultOptions), $"The {constructorDescription} constructor should not have the same options instance.");
+            Assert.That(options.TransportType, Is.EqualTo(defaultOptions.TransportType), $"The {constructorDescription} constructor should have the correct connection type.");
+            Assert.That(options.Proxy, Is.EqualTo(defaultOptions.Proxy), $"The {constructorDescription} constructor should have the correct proxy.");
         }
 
         /// <summary>
@@ -313,10 +313,10 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             EventHubConnectionOptions options = connection.Options;
 
-            Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set the options.");
-            Assert.That(options, Is.Not.SameAs(constructorOptions), $"The { constructorDescription } constructor should have cloned the options.");
-            Assert.That(options.TransportType, Is.EqualTo(constructorOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
-            Assert.That(options.Proxy, Is.EqualTo(constructorOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
+            Assert.That(options, Is.Not.Null, $"The {constructorDescription} constructor should have set the options.");
+            Assert.That(options, Is.Not.SameAs(constructorOptions), $"The {constructorDescription} constructor should have cloned the options.");
+            Assert.That(options.TransportType, Is.EqualTo(constructorOptions.TransportType), $"The {constructorDescription} constructor should have the correct connection type.");
+            Assert.That(options.Proxy, Is.EqualTo(constructorOptions.Proxy), $"The {constructorDescription} constructor should have the correct proxy.");
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorWithFullConnectionStringInitializesProperties()
         {
             var entityPath = "somePath";
-            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={ entityPath }";
+            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath={entityPath}";
             var connection = new EventHubConnection(fakeConnection);
 
             Assert.That(connection.EventHubName, Is.EqualTo(entityPath));
@@ -358,7 +358,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorWithConnectionStringAndDevelopmentEmulatorInitializesProperties()
         {
             var endpoint = new Uri("sb://localhost:1234", UriKind.Absolute);
-            var fakeConnection = $"Endpoint={ endpoint };SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=ehName;UseDevelopmentEmulator=true";
+            var fakeConnection = $"Endpoint={endpoint};SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=ehName;UseDevelopmentEmulator=true";
             var connection = new ReadableOptionsMock(fakeConnection);
             var options = connection.Options;
 
@@ -429,7 +429,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var fullyQualifiedNamespace = "host.windows.servicebus.net";
             var entityPath = "somePath";
-            var signature = new SharedAccessSignature($"amqps://{ fullyQualifiedNamespace }/{ entityPath }", "fakeName", "fakeKey");
+            var signature = new SharedAccessSignature($"amqps://{fullyQualifiedNamespace}/{entityPath}", "fakeName", "fakeKey");
             var credential = new AzureSasCredential(signature.Value);
             var connection = new EventHubConnection(fullyQualifiedNamespace, entityPath, credential);
 
@@ -484,7 +484,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorWithConnectionStringUsingSharedAccessSignatureCreatesTheCorrectTransportCredential()
         {
             var sasToken = new SharedAccessSignature("hub", "root", "abc1234").Value;
-            var connection = new InjectableTransportClientMock(Mock.Of<TransportClient>(), $"Endpoint=sb://not-real.servicebus.windows.net/;EntityPath=fake;SharedAccessSignature={ sasToken }");
+            var connection = new InjectableTransportClientMock(Mock.Of<TransportClient>(), $"Endpoint=sb://not-real.servicebus.windows.net/;EntityPath=fake;SharedAccessSignature={sasToken}");
 
             Assert.That(connection.TransportClientCredential, Is.Not.Null, "The transport client should have been given a credential.");
             Assert.That(connection.TransportClientCredential.GetToken(default, default).Token, Is.EqualTo(sasToken), "The transport client credential should use the provided SAS token.");
@@ -502,7 +502,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var path = "some-hub";
             var keyName = "aWonderfulKey";
             var key = "ABC4223";
-            var resource = $"amqps://{ fullyQualifiedNamespace }/{ path }";
+            var resource = $"amqps://{fullyQualifiedNamespace}/{path}";
             var options = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpTcp };
             var signature = new SharedAccessSignature(resource, keyName, key);
             var connection = new EventHubConnection(fullyQualifiedNamespace, path, new SharedAccessCredential(signature), options);
@@ -542,7 +542,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var keyName = "aWonderfulKey";
             var key = "ABC4223";
             var options = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpTcp };
-            var signature = new SharedAccessSignature($"amqps://{ fullyQualifiedNamespace }/{ path }", keyName, key);
+            var signature = new SharedAccessSignature($"amqps://{fullyQualifiedNamespace}/{path}", keyName, key);
             var credential = new AzureSasCredential(signature.Value);
             var connection = new EventHubConnection(fullyQualifiedNamespace, path, credential, options);
 
@@ -558,7 +558,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = Mock.Of<TokenCredential>();
             var host = "mynamespace.servicebus.windows.net";
-            var namespaceUri = $"sb://{ host }";
+            var namespaceUri = $"sb://{host}";
             var connection = new EventHubConnection(namespaceUri, "eventhub", credential);
 
             Assert.That(connection.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
@@ -573,7 +573,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = new AzureNamedKeyCredential("key", "value");
             var host = "mynamespace.servicebus.windows.net";
-            var namespaceUri = $"sb://{ host }";
+            var namespaceUri = $"sb://{host}";
             var connection = new EventHubConnection(namespaceUri, "eventhub", credential);
 
             Assert.That(connection.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
@@ -588,7 +588,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var credential = new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value);
             var host = "mynamespace.servicebus.windows.net";
-            var namespaceUri = $"sb://{ host }";
+            var namespaceUri = $"sb://{host}";
             var connection = new EventHubConnection(namespaceUri, "eventhub", credential);
 
             Assert.That(connection.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
@@ -607,10 +607,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var defaultOptions = new EventHubConnectionOptions();
             EventHubConnectionOptions options = connection.TransportClientOptions;
 
-            Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
-            Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
-            Assert.That(options.TransportType, Is.EqualTo(defaultOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
-            Assert.That(options.Proxy, Is.EqualTo(defaultOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
+            Assert.That(options, Is.Not.Null, $"The {constructorDescription} constructor should have set default options.");
+            Assert.That(options, Is.Not.SameAs(defaultOptions), $"The {constructorDescription} constructor should not have the same options instance.");
+            Assert.That(options.TransportType, Is.EqualTo(defaultOptions.TransportType), $"The {constructorDescription} constructor should have the correct connection type.");
+            Assert.That(options.Proxy, Is.EqualTo(defaultOptions.Proxy), $"The {constructorDescription} constructor should have the correct proxy.");
         }
 
         /// <summary>
@@ -626,10 +626,10 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             EventHubConnectionOptions options = connection.TransportClientOptions;
 
-            Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set the options.");
-            Assert.That(options, Is.Not.SameAs(constructorOptions), $"The { constructorDescription } constructor should have cloned the options.");
-            Assert.That(options.TransportType, Is.EqualTo(constructorOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
-            Assert.That(options.Proxy, Is.EqualTo(constructorOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
+            Assert.That(options, Is.Not.Null, $"The {constructorDescription} constructor should have set the options.");
+            Assert.That(options, Is.Not.SameAs(constructorOptions), $"The {constructorDescription} constructor should have cloned the options.");
+            Assert.That(options.TransportType, Is.EqualTo(constructorOptions.TransportType), $"The {constructorDescription} constructor should have the correct connection type.");
+            Assert.That(options.Proxy, Is.EqualTo(constructorOptions.Proxy), $"The {constructorDescription} constructor should have the correct proxy.");
         }
 
         /// <summary>
@@ -645,7 +645,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var path = "some-hub";
             var keyName = "aWonderfulKey";
             var key = "ABC4223";
-            var resource = $"amqps://{ fullyQualifiedNamespace }/{ path }";
+            var resource = $"amqps://{fullyQualifiedNamespace}/{path}";
             var options = new EventHubConnectionOptions { TransportType = connectionType };
             var signature = new SharedAccessSignature(resource, keyName, key);
             var credential = new SharedAccessCredential(signature);
@@ -667,7 +667,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var path = "some-hub";
             var keyName = "aWonderfulKey";
             var key = "ABC4223";
-            var resource = $"amqps://{ fullyQualifiedNamespace }/{ path }";
+            var resource = $"amqps://{fullyQualifiedNamespace}/{path}";
             var connectionType = (EventHubsTransportType)int.MinValue;
             var options = new EventHubConnectionOptions { TransportType = connectionType };
             var signature = new SharedAccessSignature(resource, keyName, key);
@@ -929,7 +929,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var path = "someHub";
             var transportClient = new ObservableTransportClientMock();
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
-            var expectedPath = $"/{ path.ToLowerInvariant() }";
+            var expectedPath = $"/{path.ToLowerInvariant()}";
             var resource = EventHubConnection.BuildConnectionSignatureAuthorizationResource(EventHubsTransportType.AmqpTcp, fullyQualifiedNamespace, path);
 
             Assert.That(resource, Is.Not.Null.Or.Empty, "The resource should have been populated.");

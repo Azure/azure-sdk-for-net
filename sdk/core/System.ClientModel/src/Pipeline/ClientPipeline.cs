@@ -234,7 +234,6 @@ public sealed partial class ClientPipeline
     public void Send(PipelineMessage message)
     {
         Argument.AssertNotNull(message, nameof(message));
-        message.Request.ClientRequestId = Activity.Current?.Id ?? Guid.NewGuid().ToString();
 
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
 
@@ -257,7 +256,6 @@ public sealed partial class ClientPipeline
     public async ValueTask SendAsync(PipelineMessage message)
     {
         Argument.AssertNotNull(message, nameof(message));
-        message.Request.ClientRequestId = Activity.Current?.Id ?? Guid.NewGuid().ToString();
 
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
 

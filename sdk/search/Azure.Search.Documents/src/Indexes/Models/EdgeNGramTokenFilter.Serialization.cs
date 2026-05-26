@@ -1,0 +1,270 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text.Json;
+using Azure.Core;
+
+namespace Azure.Search.Documents.Indexes.Models
+{
+    public partial class EdgeNGramTokenFilter : IUtf8JsonSerializable, IJsonModel<EdgeNGramTokenFilter>
+    {
+        void IJsonModel<EdgeNGramTokenFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeNGramTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeNGramTokenFilter)} does not support writing '{format}' format.");
+            }
+
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(MinGram))
+            {
+                writer.WritePropertyName("minGram"u8);
+                writer.WriteNumberValue(MinGram.Value);
+            }
+            if (Optional.IsDefined(MaxGram))
+            {
+                writer.WritePropertyName("maxGram"u8);
+                writer.WriteNumberValue(MaxGram.Value);
+            }
+            if (Optional.IsDefined(Side))
+            {
+                writer.WritePropertyName("side"u8);
+                writer.WriteStringValue(Side.Value.ToSerialString());
+            }
+        }
+
+        EdgeNGramTokenFilter IJsonModel<EdgeNGramTokenFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeNGramTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeNGramTokenFilter)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeNGramTokenFilter(document.RootElement, options);
+        }
+
+        internal static EdgeNGramTokenFilter DeserializeEdgeNGramTokenFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int? minGram = default;
+            int? maxGram = default;
+            EdgeNGramTokenFilterSide? side = default;
+            string odataType = default;
+            string name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("minGram"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minGram = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("maxGram"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxGram = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("side"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    side = property.Value.GetString().ToEdgeNGramTokenFilterSide();
+                    continue;
+                }
+                if (property.NameEquals("@odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EdgeNGramTokenFilter(
+                odataType,
+                name,
+                serializedAdditionalRawData,
+                minGram,
+                maxGram,
+                side);
+        }
+
+        BinaryData IPersistableModel<EdgeNGramTokenFilter>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeNGramTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeNGramTokenFilter)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EdgeNGramTokenFilter IPersistableModel<EdgeNGramTokenFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeNGramTokenFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeEdgeNGramTokenFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeNGramTokenFilter)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdgeNGramTokenFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static EdgeNGramTokenFilter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeEdgeNGramTokenFilter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        void global::Azure.Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+
+            writer.WritePropertyName("@odata.type");
+            writer.WriteStringValue(OdataType);
+
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name);
+
+            if (MinGram != null)
+            {
+                writer.WritePropertyName("minGram");
+                writer.WriteNumberValue(MinGram.Value);
+            }
+
+            if (MaxGram != null)
+            {
+                writer.WritePropertyName("maxGram");
+                writer.WriteNumberValue(MaxGram.Value);
+            }
+
+            if (Side != null)
+            {
+                writer.WritePropertyName("side");
+                writer.WriteStringValue(Side.Value.ToSerialString());
+            }
+
+            writer.WriteEndObject();
+        }
+
+        internal static EdgeNGramTokenFilter DeserializeEdgeNGramTokenFilter(JsonElement element)
+        {
+            int? minGram = default;
+            int? maxGram = default;
+            EdgeNGramTokenFilterSide? side = default;
+            string odataType = default;
+            string name = default;
+
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("@odata.type"))
+                {
+                    odataType = property.Value.GetString();
+                    continue;
+                }
+
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+
+                if (property.NameEquals("minGram"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minGram = property.Value.GetInt32();
+                    continue;
+                }
+
+                if (property.NameEquals("maxGram"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxGram = property.Value.GetInt32();
+                    continue;
+                }
+
+                if (property.NameEquals("side"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    side = property.Value.GetString().ToEdgeNGramTokenFilterSide();
+                    continue;
+                }
+            }
+
+            return new EdgeNGramTokenFilter(name)
+            {
+                OdataType = odataType,
+                MinGram = minGram,
+                MaxGram = maxGram,
+                Side = side,
+            };
+        }
+    }
+}

@@ -12,13 +12,73 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubAvailabilityContent : IUtf8JsonSerializable, IJsonModel<NotificationHubAvailabilityContent>
+    /// <summary>
+    /// Parameters supplied to the Check Name Availability for Namespace and
+    /// NotificationHubs.
+    /// </summary>
+    public partial class NotificationHubAvailabilityContent : TrackedResourceData, IJsonModel<NotificationHubAvailabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubAvailabilityContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="NotificationHubAvailabilityContent"/> for deserialization. </summary>
+        internal NotificationHubAvailabilityContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NotificationHubAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNotificationHubAvailabilityContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NotificationHubAvailabilityContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NotificationHubAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNotificationHubsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NotificationHubAvailabilityContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NotificationHubAvailabilityContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NotificationHubAvailabilityContent IPersistableModel<NotificationHubAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (NotificationHubAvailabilityContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NotificationHubAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="notificationHubAvailabilityContent"> The <see cref="NotificationHubAvailabilityContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NotificationHubAvailabilityContent notificationHubAvailabilityContent)
+        {
+            if (notificationHubAvailabilityContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(notificationHubAvailabilityContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NotificationHubAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +90,11 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NotificationHubAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NotificationHubAvailabilityContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(IsAvailiable))
             {
@@ -49,146 +108,133 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
         }
 
-        NotificationHubAvailabilityContent IJsonModel<NotificationHubAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NotificationHubAvailabilityContent IJsonModel<NotificationHubAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NotificationHubAvailabilityContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NotificationHubAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NotificationHubAvailabilityContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNotificationHubAvailabilityContent(document.RootElement, options);
         }
 
-        internal static NotificationHubAvailabilityContent DeserializeNotificationHubAvailabilityContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NotificationHubAvailabilityContent DeserializeNotificationHubAvailabilityContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? isAvailiable = default;
-            NotificationHubSku sku = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            bool? isAvailiable = default;
+            NotificationHubSku sku = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("isAvailiable"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isAvailiable = property.Value.GetBoolean();
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sku"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value, options);
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNotificationHubsContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("isAvailiable"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNotificationHubsContext.Default);
+                    isAvailiable = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("sku"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = NotificationHubSku.DeserializeNotificationHubSku(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new NotificationHubAvailabilityContent(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 isAvailiable,
-                sku,
-                serializedAdditionalRawData);
+                sku);
         }
-
-        BinaryData IPersistableModel<NotificationHubAvailabilityContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNotificationHubsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NotificationHubAvailabilityContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NotificationHubAvailabilityContent IPersistableModel<NotificationHubAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNotificationHubAvailabilityContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NotificationHubAvailabilityContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NotificationHubAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

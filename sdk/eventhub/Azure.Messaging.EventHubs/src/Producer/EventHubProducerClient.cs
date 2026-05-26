@@ -320,7 +320,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public EventHubProducerClient(string fullyQualifiedNamespace,
                                       string eventHubName,
                                       TokenCredential credential,
-                                      EventHubProducerClientOptions clientOptions = default): this(fullyQualifiedNamespace, eventHubName, (object)credential, clientOptions)
+                                      EventHubProducerClientOptions clientOptions = default) : this(fullyQualifiedNamespace, eventHubName, (object)credential, clientOptions)
         {
         }
 

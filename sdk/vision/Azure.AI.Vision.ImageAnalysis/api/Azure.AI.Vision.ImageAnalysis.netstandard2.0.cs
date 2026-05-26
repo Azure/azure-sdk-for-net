@@ -182,6 +182,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class ImageAnalysisClient
     {
         protected ImageAnalysisClient() { }
+        public ImageAnalysisClient(Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientSettings settings) { }
         public ImageAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public ImageAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientOptions options) { }
         public ImageAnalysisClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -192,6 +193,13 @@ namespace Azure.AI.Vision.ImageAnalysis
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult>> AnalyzeAsync(System.BinaryData imageData, Azure.AI.Vision.ImageAnalysis.VisualFeatures visualFeatures, Azure.AI.Vision.ImageAnalysis.ImageAnalysisOptions options = default(Azure.AI.Vision.ImageAnalysis.ImageAnalysisOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult>> AnalyzeAsync(System.Uri imageUri, Azure.AI.Vision.ImageAnalysis.VisualFeatures visualFeatures, Azure.AI.Vision.ImageAnalysis.ImageAnalysisOptions options = default(Azure.AI.Vision.ImageAnalysis.ImageAnalysisOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class ImageAnalysisClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddImageAnalysisClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddImageAnalysisClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedImageAnalysisClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedImageAnalysisClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientSettings> configureSettings) { throw null; }
+    }
     public partial class ImageAnalysisClientOptions : Azure.Core.ClientOptions
     {
         public ImageAnalysisClientOptions(Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientOptions.ServiceVersion version = Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientOptions.ServiceVersion.V2023_10_01) { }
@@ -199,6 +207,13 @@ namespace Azure.AI.Vision.ImageAnalysis
         {
             V2023_10_01 = 1,
         }
+    }
+    public partial class ImageAnalysisClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public ImageAnalysisClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Vision.ImageAnalysis.ImageAnalysisClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct ImageAnalysisOptions
@@ -224,7 +239,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         public Azure.AI.Vision.ImageAnalysis.TagsResult Tags { get { throw null; } }
         protected virtual Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult (Azure.Response result) { throw null; }
+        public static explicit operator Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult (Azure.Response response) { throw null; }
         protected virtual Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Vision.ImageAnalysis.ImageAnalysisResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading;
+using Microsoft.Extensions.Configuration;
 
 namespace System.ClientModel.Primitives;
 
@@ -25,6 +28,42 @@ public class ClientPipelineOptions
     private TimeSpan? _timeout;
     private ClientLoggingOptions? _loggingOptions;
     private bool? _enabledDistributedTracing;
+
+    /// <summary>
+    /// Initializes a new instance of <see cref="ClientPipelineOptions"/>.
+    /// </summary>
+    public ClientPipelineOptions()
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of <see cref="ClientPipelineOptions"/> from configuration.
+    /// </summary>
+    /// <param name="section">The configuration section to bind from.</param>
+    [Experimental("SCME0002")]
+    protected ClientPipelineOptions(IConfigurationSection section)
+    {
+        if (section is null)
+        {
+            return;
+        }
+
+        if (TimeSpan.TryParse(section["NetworkTimeout"], out TimeSpan networkTimeout))
+        {
+            NetworkTimeout = networkTimeout;
+        }
+
+        if (bool.TryParse(section["EnableDistributedTracing"], out bool enableTracing))
+        {
+            EnableDistributedTracing = enableTracing;
+        }
+
+        IConfigurationSection loggingSection = section.GetSection("ClientLoggingOptions");
+        if (loggingSection.Exists())
+        {
+            ClientLoggingOptions = new ClientLoggingOptions(loggingSection);
+        }
+    }
 
     #region Pipeline creation: Overrides of default pipeline policies
 
@@ -206,6 +245,52 @@ public class ClientPipelineOptions
     }
 
     #endregion
+
+    /// <summary>
+    /// Gets a value that indicates whether this <see cref="ClientPipelineOptions"/>
+    /// instance is read-only.  If <c>true</c>, any attempt to set properties on
+    /// the instance or call methods that would change its state will throw
+    /// <see cref="InvalidOperationException"/>.
+    /// </summary>
+    /// <remarks>
+    /// Options become read-only when they are used to create a
+    /// <see cref="ClientPipeline"/> or when <see cref="Freeze"/> is called
+    /// explicitly.  To create a mutable copy of a read-only instance, use
+    /// <see cref="Clone"/>.
+    /// </remarks>
+    public bool IsReadOnly => Volatile.Read(ref _frozen);
+
+    /// <summary>
+    /// Creates a new mutable instance of <see cref="ClientPipelineOptions"/> from this
+    /// instance.  This method can be used to create a mutable copy of an instance that
+    /// may have been frozen.
+    /// </summary>
+    /// <returns>A new mutable <see cref="ClientPipelineOptions"/> with the same settings
+    /// as this instance.</returns>
+    /// <remarks>
+    /// This method only copies base-class fields. Subclasses should override this method
+    /// to copy their own fields, calling <c>base.Clone()</c> and casting the result.
+    /// </remarks>
+    public virtual ClientPipelineOptions Clone()
+    {
+        var clone = new ClientPipelineOptions();
+        clone._retryPolicy = _retryPolicy;
+        clone._loggingPolicy = _loggingPolicy;
+        clone._transport = _transport;
+        clone._timeout = _timeout;
+        clone._enabledDistributedTracing = _enabledDistributedTracing;
+        clone._loggingOptions = _loggingOptions?.Clone();
+        clone.PerCallPolicies = PerCallPolicies is not null
+            ? (PipelinePolicy[])PerCallPolicies.Clone()
+            : null;
+        clone.PerTryPolicies = PerTryPolicies is not null
+            ? (PipelinePolicy[])PerTryPolicies.Clone()
+            : null;
+        clone.BeforeTransportPolicies = BeforeTransportPolicies is not null
+            ? (PipelinePolicy[])BeforeTransportPolicies.Clone()
+            : null;
+        return clone;
+    }
 
     /// <summary>
     /// Freeze this instance of <see cref="ClientPipelineOptions"/>.  After

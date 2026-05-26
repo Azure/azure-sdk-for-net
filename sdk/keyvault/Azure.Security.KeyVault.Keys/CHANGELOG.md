@@ -1,12 +1,26 @@
 # Release History
 
-## 4.9.0-beta.1 (Unreleased)
+## 4.11.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 4.10.0 (2026-05-05)
+
+### Features Added
+
+- Added `KeyProperties.KeySize` to expose the key size in bits.
+
+## 4.9.0 (2026-03-04)
+
+### Bugs Fixed
+
+- Fixed challenge-based authentication to correctly parse tenant ID from DSTSv2 authority URIs.
 
 ### Other Changes
 

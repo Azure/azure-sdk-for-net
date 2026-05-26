@@ -77,9 +77,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType RestorePointMarkerCreated { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType UnspecifiedEventType { get { throw null; } }
         public bool Equals(Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType left, Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType right) { throw null; }
         public static implicit operator Azure.Storage.Blobs.ChangeFeed.BlobChangeFeedEventType (string value) { throw null; }
@@ -120,9 +118,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public static Azure.Storage.Blobs.ChangeFeed.BlobOperationName UndeleteBlob { get { throw null; } }
         public static Azure.Storage.Blobs.ChangeFeed.BlobOperationName UnspecifiedApi { get { throw null; } }
         public bool Equals(Azure.Storage.Blobs.ChangeFeed.BlobOperationName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Storage.Blobs.ChangeFeed.BlobOperationName left, Azure.Storage.Blobs.ChangeFeed.BlobOperationName right) { throw null; }
         public static implicit operator Azure.Storage.Blobs.ChangeFeed.BlobOperationName (string value) { throw null; }

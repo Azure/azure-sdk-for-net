@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Static Route Configuration properties. </summary>
+    /// <summary> Internal network static route configuration. </summary>
     public partial class InternalNetworkStaticRouteConfiguration : StaticRouteConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="InternalNetworkStaticRouteConfiguration"/>. </summary>
@@ -22,14 +22,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
         /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="extension"> Extension. Example: NoExtension | NPB. </param>
-        internal InternalNetworkStaticRouteConfiguration(BfdConfiguration bfdConfiguration, IList<StaticRouteProperties> ipv4Routes, IList<StaticRouteProperties> ipv6Routes, IDictionary<string, BinaryData> serializedAdditionalRawData, StaticRouteConfigurationExtension? extension) : base(bfdConfiguration, ipv4Routes, ipv6Routes, serializedAdditionalRawData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InternalNetworkStaticRouteConfiguration(BfdConfiguration bfdConfiguration, IList<StaticRouteProperties> ipv4Routes, IList<StaticRouteProperties> ipv6Routes, StaticRouteConfigurationExtension? extension, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(bfdConfiguration, ipv4Routes, ipv6Routes, extension, serializedAdditionalRawData)
         {
-            Extension = extension;
         }
-
-        /// <summary> Extension. Example: NoExtension | NPB. </summary>
-        public StaticRouteConfigurationExtension? Extension { get; set; }
     }
 }

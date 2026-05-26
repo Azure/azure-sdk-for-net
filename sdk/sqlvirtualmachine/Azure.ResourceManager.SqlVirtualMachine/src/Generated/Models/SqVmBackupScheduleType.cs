@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     public readonly partial struct SqVmBackupScheduleType : IEquatable<SqVmBackupScheduleType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SqVmBackupScheduleType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SqVmBackupScheduleType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ManualValue = "Manual";
         private const string AutomatedValue = "Automated";
 
-        /// <summary> Manual. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqVmBackupScheduleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SqVmBackupScheduleType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Manual. </summary>
         public static SqVmBackupScheduleType Manual { get; } = new SqVmBackupScheduleType(ManualValue);
-        /// <summary> Automated. </summary>
+
+        /// <summary> Gets the Automated. </summary>
         public static SqVmBackupScheduleType Automated { get; } = new SqVmBackupScheduleType(AutomatedValue);
+
         /// <summary> Determines if two <see cref="SqVmBackupScheduleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqVmBackupScheduleType left, SqVmBackupScheduleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqVmBackupScheduleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqVmBackupScheduleType left, SqVmBackupScheduleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqVmBackupScheduleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqVmBackupScheduleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqVmBackupScheduleType(string value) => new SqVmBackupScheduleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqVmBackupScheduleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqVmBackupScheduleType?(string value) => value == null ? null : new SqVmBackupScheduleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqVmBackupScheduleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqVmBackupScheduleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotOperations
 {
-    internal class IotOperationsDataflowOperationSource : IOperationSource<IotOperationsDataflowResource>
+    /// <summary></summary>
+    internal partial class IotOperationsDataflowOperationSource : IOperationSource<IotOperationsDataflowResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal IotOperationsDataflowOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         IotOperationsDataflowResource IOperationSource<IotOperationsDataflowResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IotOperationsDataflowData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotOperationsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            IotOperationsDataflowData data = IotOperationsDataflowData.DeserializeIotOperationsDataflowData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new IotOperationsDataflowResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<IotOperationsDataflowResource> IOperationSource<IotOperationsDataflowResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IotOperationsDataflowData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotOperationsContext.Default);
-            return await Task.FromResult(new IotOperationsDataflowResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            IotOperationsDataflowData data = IotOperationsDataflowData.DeserializeIotOperationsDataflowData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new IotOperationsDataflowResource(_client, data);
         }
     }
 }

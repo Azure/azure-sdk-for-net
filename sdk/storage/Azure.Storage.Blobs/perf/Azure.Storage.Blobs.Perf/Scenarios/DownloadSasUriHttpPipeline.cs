@@ -45,7 +45,8 @@ namespace Azure.Storage.Blobs.Perf
         }
 
 #pragma warning disable CA1034 // Nested types should not be visible
-        public class BufferOptions : SizeOptions {
+        public class BufferOptions : SizeOptions
+        {
 #pragma warning restore CA1034 // Nested types should not be visible
             [Option("buffer", Default = false, HelpText = "Whether to buffer the response")]
             public bool Buffer { get; set; }

@@ -89,15 +89,15 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
         }
     }
 
-    #pragma warning disable SA1402 // File may only contain a single type
+#pragma warning disable SA1402 // File may only contain a single type
     #region Snippet:EventHubs_Migrate_T1_SimpleEventProcessor
 
     public class SimpleEventProcessor : IEventProcessor
     {
         public Task CloseAsync(PartitionContext context, CloseReason reason)
         {
-             Debug.WriteLine($"Partition '{context.PartitionId}' is closing.");
-             return Task.CompletedTask;
+            Debug.WriteLine($"Partition '{context.PartitionId}' is closing.");
+            return Task.CompletedTask;
         }
 
         public Task OpenAsync(PartitionContext context)
@@ -134,5 +134,5 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
     }
 
     #endregion
-    #pragma warning restore SA1402 // File may only contain a single type
+#pragma warning restore SA1402 // File may only contain a single type
 }

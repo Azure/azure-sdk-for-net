@@ -10,26 +10,17 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    // Data plane generated sub-client.
     /// <summary> The TypeDefinition sub-client. </summary>
     public partial class TypeDefinition
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of TypeDefinition for mocking. </summary>
         protected TypeDefinition()
@@ -37,82 +28,140 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Initializes a new instance of TypeDefinition. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="tokenCredential"> The token credential to copy. </param>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal TypeDefinition(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal TypeDefinition(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _tokenCredential = tokenCredential;
             _endpoint = endpoint;
+            Pipeline = pipeline;
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Get the businessMetadata definition for the given guid. </summary>
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary>
+        /// [Protocol Method] Get the businessMetadata definition for the given guid.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="guid"> businessMetadata guid. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataByIdAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasBusinessMetadataDef>> GetBusinessMetadataByIdAsync(string guid, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetBusinessMetadataById(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetBusinessMetadataById");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetBusinessMetadataByIdAsync(guid, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasBusinessMetadataDef.FromResponse(response), response);
+                using HttpMessage message = CreateGetBusinessMetadataByIdRequest(guid, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the businessMetadata definition for the given guid.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> businessMetadata guid. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetBusinessMetadataByIdAsync(string guid, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetBusinessMetadataById");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+                using HttpMessage message = CreateGetBusinessMetadataByIdRequest(guid, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get the businessMetadata definition for the given guid. </summary>
         /// <param name="guid"> businessMetadata guid. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataById(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasBusinessMetadataDef> GetBusinessMetadataById(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetBusinessMetadataById(guid, context);
-            return Response.FromValue(AtlasBusinessMetadataDef.FromResponse(response), response);
+            Response result = GetBusinessMetadataById(guid, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasBusinessMetadataDef)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get the businessMetadata definition for the given guid.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetBusinessMetadataByIdAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the businessMetadata definition for the given guid. </summary>
         /// <param name="guid"> businessMetadata guid. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataByIdAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetBusinessMetadataByIdAsync(string guid, RequestContext context)
+        public virtual async Task<Response<AtlasBusinessMetadataDef>> GetBusinessMetadataByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetBusinessMetadataById");
+            Response result = await GetBusinessMetadataByIdAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasBusinessMetadataDef)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the businessMetadata definition by it's name (unique).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> businessMetadata name. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetBusinessMetadataByName(string name, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetBusinessMetadataByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBusinessMetadataByIdRequest(guid, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                using HttpMessage message = CreateGetBusinessMetadataByNameRequest(name, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -122,37 +171,29 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Get the businessMetadata definition for the given guid.
+        /// [Protocol Method] Get the businessMetadata definition by it's name (unique).
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetBusinessMetadataById(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="guid"> businessMetadata guid. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="name"> businessMetadata name. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataById(string,RequestContext)']/*" />
-        public virtual Response GetBusinessMetadataById(string guid, RequestContext context)
+        public virtual async Task<Response> GetBusinessMetadataByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetBusinessMetadataById");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetBusinessMetadataByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBusinessMetadataByIdRequest(guid, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                using HttpMessage message = CreateGetBusinessMetadataByNameRequest(name, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -163,66 +204,56 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get the businessMetadata definition by it's name (unique). </summary>
         /// <param name="name"> businessMetadata name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataByNameAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasBusinessMetadataDef>> GetBusinessMetadataByNameAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetBusinessMetadataByNameAsync(name, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasBusinessMetadataDef.FromResponse(response), response);
-        }
-
-        /// <summary> Get the businessMetadata definition by it's name (unique). </summary>
-        /// <param name="name"> businessMetadata name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataByName(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasBusinessMetadataDef> GetBusinessMetadataByName(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetBusinessMetadataByName(name, context);
-            return Response.FromValue(AtlasBusinessMetadataDef.FromResponse(response), response);
+            Response result = GetBusinessMetadataByName(name, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasBusinessMetadataDef)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get the businessMetadata definition by it's name (unique).
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetBusinessMetadataByNameAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the businessMetadata definition by it's name (unique). </summary>
         /// <param name="name"> businessMetadata name. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataByNameAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetBusinessMetadataByNameAsync(string name, RequestContext context)
+        public virtual async Task<Response<AtlasBusinessMetadataDef>> GetBusinessMetadataByNameAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetBusinessMetadataByName");
+            Response result = await GetBusinessMetadataByNameAsync(name, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasBusinessMetadataDef)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the classification definition for the given GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the classification. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetClassificationById(string guid, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetClassificationById");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBusinessMetadataByNameRequest(name, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+                using HttpMessage message = CreateGetClassificationByIdRequest(guid, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -232,37 +263,29 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Get the businessMetadata definition by it's name (unique).
+        /// [Protocol Method] Get the classification definition for the given GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetBusinessMetadataByName(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> businessMetadata name. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="guid"> The globally unique identifier of the classification. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataByName(string,RequestContext)']/*" />
-        public virtual Response GetBusinessMetadataByName(string name, RequestContext context)
+        public virtual async Task<Response> GetClassificationByIdAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetBusinessMetadataByName");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetClassificationById");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBusinessMetadataByNameRequest(name, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+                using HttpMessage message = CreateGetClassificationByIdRequest(guid, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -273,66 +296,56 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get the classification definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the classification. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationByIdAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasClassificationDef>> GetClassificationByIdAsync(string guid, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetClassificationByIdAsync(guid, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasClassificationDef.FromResponse(response), response);
-        }
-
-        /// <summary> Get the classification definition for the given GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the classification. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationById(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasClassificationDef> GetClassificationById(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetClassificationById(guid, context);
-            return Response.FromValue(AtlasClassificationDef.FromResponse(response), response);
+            Response result = GetClassificationById(guid, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasClassificationDef)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get the classification definition for the given GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetClassificationByIdAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the classification definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the classification. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationByIdAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetClassificationByIdAsync(string guid, RequestContext context)
+        public virtual async Task<Response<AtlasClassificationDef>> GetClassificationByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetClassificationById");
+            Response result = await GetClassificationByIdAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasClassificationDef)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the classification definition by its name (unique).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the classification. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetClassificationByName(string name, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetClassificationByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetClassificationByIdRequest(guid, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                using HttpMessage message = CreateGetClassificationByNameRequest(name, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -342,37 +355,29 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Get the classification definition for the given GUID.
+        /// [Protocol Method] Get the classification definition by its name (unique).
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetClassificationById(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="guid"> The globally unique identifier of the classification. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="name"> The name of the classification. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationById(string,RequestContext)']/*" />
-        public virtual Response GetClassificationById(string guid, RequestContext context)
+        public virtual async Task<Response> GetClassificationByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetClassificationById");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetClassificationByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetClassificationByIdRequest(guid, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                using HttpMessage message = CreateGetClassificationByNameRequest(name, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -383,66 +388,56 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get the classification definition by its name (unique). </summary>
         /// <param name="name"> The name of the classification. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationByNameAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasClassificationDef>> GetClassificationByNameAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetClassificationByNameAsync(name, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasClassificationDef.FromResponse(response), response);
-        }
-
-        /// <summary> Get the classification definition by its name (unique). </summary>
-        /// <param name="name"> The name of the classification. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationByName(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasClassificationDef> GetClassificationByName(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetClassificationByName(name, context);
-            return Response.FromValue(AtlasClassificationDef.FromResponse(response), response);
+            Response result = GetClassificationByName(name, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasClassificationDef)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get the classification definition by its name (unique).
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetClassificationByNameAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the classification definition by its name (unique). </summary>
         /// <param name="name"> The name of the classification. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationByNameAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetClassificationByNameAsync(string name, RequestContext context)
+        public virtual async Task<Response<AtlasClassificationDef>> GetClassificationByNameAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetClassificationByName");
+            Response result = await GetClassificationByNameAsync(name, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasClassificationDef)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the Entity definition for the given GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetEntityById(string guid, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEntityById");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetClassificationByNameRequest(name, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+                using HttpMessage message = CreateGetEntityByIdRequest(guid, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -452,37 +447,29 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Get the classification definition by its name (unique).
+        /// [Protocol Method] Get the Entity definition for the given GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetClassificationByName(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the classification. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationByName(string,RequestContext)']/*" />
-        public virtual Response GetClassificationByName(string name, RequestContext context)
+        public virtual async Task<Response> GetEntityByIdAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetClassificationByName");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEntityById");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetClassificationByNameRequest(name, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+                using HttpMessage message = CreateGetEntityByIdRequest(guid, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -493,66 +480,56 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get the Entity definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityByIdAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasEntityDef>> GetEntityByIdAsync(string guid, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetEntityByIdAsync(guid, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasEntityDef.FromResponse(response), response);
-        }
-
-        /// <summary> Get the Entity definition for the given GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityById(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasEntityDef> GetEntityById(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetEntityById(guid, context);
-            return Response.FromValue(AtlasEntityDef.FromResponse(response), response);
+            Response result = GetEntityById(guid, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasEntityDef)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get the Entity definition for the given GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetEntityByIdAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the Entity definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityByIdAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetEntityByIdAsync(string guid, RequestContext context)
+        public virtual async Task<Response<AtlasEntityDef>> GetEntityByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEntityById");
+            Response result = await GetEntityByIdAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasEntityDef)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the entity definition by its name (unique).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the entity. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetEntityByName(string name, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEntityByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntityByIdRequest(guid, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                using HttpMessage message = CreateGetEntityByNameRequest(name, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -562,37 +539,29 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Get the Entity definition for the given GUID.
+        /// [Protocol Method] Get the entity definition by its name (unique).
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetEntityById(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="name"> The name of the entity. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityById(string,RequestContext)']/*" />
-        public virtual Response GetEntityById(string guid, RequestContext context)
+        public virtual async Task<Response> GetEntityByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEntityById");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEntityByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntityByIdRequest(guid, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                using HttpMessage message = CreateGetEntityByNameRequest(name, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -603,66 +572,56 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get the entity definition by its name (unique). </summary>
         /// <param name="name"> The name of the entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityByNameAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasEntityDef>> GetEntityByNameAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetEntityByNameAsync(name, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasEntityDef.FromResponse(response), response);
-        }
-
-        /// <summary> Get the entity definition by its name (unique). </summary>
-        /// <param name="name"> The name of the entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityByName(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasEntityDef> GetEntityByName(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetEntityByName(name, context);
-            return Response.FromValue(AtlasEntityDef.FromResponse(response), response);
+            Response result = GetEntityByName(name, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasEntityDef)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get the entity definition by its name (unique).
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetEntityByNameAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the entity definition by its name (unique). </summary>
         /// <param name="name"> The name of the entity. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityByNameAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetEntityByNameAsync(string name, RequestContext context)
+        public virtual async Task<Response<AtlasEntityDef>> GetEntityByNameAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEntityByName");
+            Response result = await GetEntityByNameAsync(name, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasEntityDef)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the enum definition for the given GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the enum. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetEnumById(string guid, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEnumById");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntityByNameRequest(name, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+                using HttpMessage message = CreateGetEnumByIdRequest(guid, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -672,37 +631,29 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Get the entity definition by its name (unique).
+        /// [Protocol Method] Get the enum definition for the given GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetEntityByName(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the entity. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="guid"> The globally unique identifier of the enum. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityByName(string,RequestContext)']/*" />
-        public virtual Response GetEntityByName(string name, RequestContext context)
+        public virtual async Task<Response> GetEnumByIdAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEntityByName");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEnumById");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEntityByNameRequest(name, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+                using HttpMessage message = CreateGetEnumByIdRequest(guid, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -713,66 +664,56 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get the enum definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the enum. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumByIdAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasEnumDef>> GetEnumByIdAsync(string guid, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetEnumByIdAsync(guid, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasEnumDef.FromResponse(response), response);
-        }
-
-        /// <summary> Get the enum definition for the given GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the enum. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumById(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasEnumDef> GetEnumById(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetEnumById(guid, context);
-            return Response.FromValue(AtlasEnumDef.FromResponse(response), response);
+            Response result = GetEnumById(guid, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasEnumDef)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get the enum definition for the given GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetEnumByIdAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the enum definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the enum. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumByIdAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetEnumByIdAsync(string guid, RequestContext context)
+        public virtual async Task<Response<AtlasEnumDef>> GetEnumByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEnumById");
+            Response result = await GetEnumByIdAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasEnumDef)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the enum definition by its name (unique).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the enum. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetEnumByName(string name, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEnumByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEnumByIdRequest(guid, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                using HttpMessage message = CreateGetEnumByNameRequest(name, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -782,37 +723,29 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Get the enum definition for the given GUID.
+        /// [Protocol Method] Get the enum definition by its name (unique).
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetEnumById(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="guid"> The globally unique identifier of the enum. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="name"> The name of the enum. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumById(string,RequestContext)']/*" />
-        public virtual Response GetEnumById(string guid, RequestContext context)
+        public virtual async Task<Response> GetEnumByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEnumById");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEnumByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEnumByIdRequest(guid, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                using HttpMessage message = CreateGetEnumByNameRequest(name, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -823,66 +756,56 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get the enum definition by its name (unique). </summary>
         /// <param name="name"> The name of the enum. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumByNameAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasEnumDef>> GetEnumByNameAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetEnumByNameAsync(name, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasEnumDef.FromResponse(response), response);
-        }
-
-        /// <summary> Get the enum definition by its name (unique). </summary>
-        /// <param name="name"> The name of the enum. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumByName(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasEnumDef> GetEnumByName(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetEnumByName(name, context);
-            return Response.FromValue(AtlasEnumDef.FromResponse(response), response);
+            Response result = GetEnumByName(name, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasEnumDef)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get the enum definition by its name (unique).
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetEnumByNameAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the enum definition by its name (unique). </summary>
         /// <param name="name"> The name of the enum. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumByNameAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetEnumByNameAsync(string name, RequestContext context)
+        public virtual async Task<Response<AtlasEnumDef>> GetEnumByNameAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEnumByName");
+            Response result = await GetEnumByNameAsync(name, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasEnumDef)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the relationship definition for the given GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the relationship. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetRelationshipById(string guid, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetRelationshipById");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEnumByNameRequest(name, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+                using HttpMessage message = CreateGetRelationshipByIdRequest(guid, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -892,37 +815,29 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Get the enum definition by its name (unique).
+        /// [Protocol Method] Get the relationship definition for the given GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetEnumByName(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the enum. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="guid"> The globally unique identifier of the relationship. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumByName(string,RequestContext)']/*" />
-        public virtual Response GetEnumByName(string name, RequestContext context)
+        public virtual async Task<Response> GetRelationshipByIdAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetEnumByName");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetRelationshipById");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetEnumByNameRequest(name, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+                using HttpMessage message = CreateGetRelationshipByIdRequest(guid, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -933,66 +848,56 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get the relationship definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipByIdAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasRelationshipDef>> GetRelationshipByIdAsync(string guid, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetRelationshipByIdAsync(guid, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasRelationshipDef.FromResponse(response), response);
-        }
-
-        /// <summary> Get the relationship definition for the given GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipById(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasRelationshipDef> GetRelationshipById(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetRelationshipById(guid, context);
-            return Response.FromValue(AtlasRelationshipDef.FromResponse(response), response);
+            Response result = GetRelationshipById(guid, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasRelationshipDef)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get the relationship definition for the given GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetRelationshipByIdAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the relationship definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipByIdAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetRelationshipByIdAsync(string guid, RequestContext context)
+        public virtual async Task<Response<AtlasRelationshipDef>> GetRelationshipByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetRelationshipById");
+            Response result = await GetRelationshipByIdAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasRelationshipDef)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the relationship definition by its name (unique).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the relationship. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetRelationshipByName(string name, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetRelationshipByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRelationshipByIdRequest(guid, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                using HttpMessage message = CreateGetRelationshipByNameRequest(name, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1002,37 +907,29 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Get the relationship definition for the given GUID.
+        /// [Protocol Method] Get the relationship definition by its name (unique).
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetRelationshipById(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="name"> The name of the relationship. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipById(string,RequestContext)']/*" />
-        public virtual Response GetRelationshipById(string guid, RequestContext context)
+        public virtual async Task<Response> GetRelationshipByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetRelationshipById");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetRelationshipByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRelationshipByIdRequest(guid, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                using HttpMessage message = CreateGetRelationshipByNameRequest(name, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1043,66 +940,56 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get the relationship definition by its name (unique). </summary>
         /// <param name="name"> The name of the relationship. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipByNameAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasRelationshipDef>> GetRelationshipByNameAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetRelationshipByNameAsync(name, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasRelationshipDef.FromResponse(response), response);
-        }
-
-        /// <summary> Get the relationship definition by its name (unique). </summary>
-        /// <param name="name"> The name of the relationship. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipByName(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasRelationshipDef> GetRelationshipByName(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetRelationshipByName(name, context);
-            return Response.FromValue(AtlasRelationshipDef.FromResponse(response), response);
+            Response result = GetRelationshipByName(name, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasRelationshipDef)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get the relationship definition by its name (unique).
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetRelationshipByNameAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the relationship definition by its name (unique). </summary>
         /// <param name="name"> The name of the relationship. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipByNameAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetRelationshipByNameAsync(string name, RequestContext context)
+        public virtual async Task<Response<AtlasRelationshipDef>> GetRelationshipByNameAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetRelationshipByName");
+            Response result = await GetRelationshipByNameAsync(name, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasRelationshipDef)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the struct definition for the given GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the struct. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetStructById(string guid, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetStructById");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRelationshipByNameRequest(name, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+                using HttpMessage message = CreateGetStructByIdRequest(guid, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1112,37 +999,29 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Get the relationship definition by its name (unique).
+        /// [Protocol Method] Get the struct definition for the given GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetRelationshipByName(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the relationship. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="guid"> The globally unique identifier of the struct. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipByName(string,RequestContext)']/*" />
-        public virtual Response GetRelationshipByName(string name, RequestContext context)
+        public virtual async Task<Response> GetStructByIdAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetRelationshipByName");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetStructById");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRelationshipByNameRequest(name, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+                using HttpMessage message = CreateGetStructByIdRequest(guid, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1153,66 +1032,56 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get the struct definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the struct. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructByIdAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasStructDef>> GetStructByIdAsync(string guid, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetStructByIdAsync(guid, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasStructDef.FromResponse(response), response);
-        }
-
-        /// <summary> Get the struct definition for the given GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the struct. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructById(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasStructDef> GetStructById(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetStructById(guid, context);
-            return Response.FromValue(AtlasStructDef.FromResponse(response), response);
+            Response result = GetStructById(guid, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasStructDef)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get the struct definition for the given GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetStructByIdAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the struct definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the struct. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructByIdAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetStructByIdAsync(string guid, RequestContext context)
+        public virtual async Task<Response<AtlasStructDef>> GetStructByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetStructById");
+            Response result = await GetStructByIdAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasStructDef)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the struct definition by its name (unique).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the struct. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetStructByName(string name, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetStructByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetStructByIdRequest(guid, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                using HttpMessage message = CreateGetStructByNameRequest(name, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1222,37 +1091,29 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Get the struct definition for the given GUID.
+        /// [Protocol Method] Get the struct definition by its name (unique).
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetStructById(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="guid"> The globally unique identifier of the struct. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="name"> The name of the struct. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructById(string,RequestContext)']/*" />
-        public virtual Response GetStructById(string guid, RequestContext context)
+        public virtual async Task<Response> GetStructByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetStructById");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetStructByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetStructByIdRequest(guid, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                using HttpMessage message = CreateGetStructByNameRequest(name, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1263,66 +1124,56 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get the struct definition by its name (unique). </summary>
         /// <param name="name"> The name of the struct. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructByNameAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasStructDef>> GetStructByNameAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetStructByNameAsync(name, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasStructDef.FromResponse(response), response);
-        }
-
-        /// <summary> Get the struct definition by its name (unique). </summary>
-        /// <param name="name"> The name of the struct. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructByName(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasStructDef> GetStructByName(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetStructByName(name, context);
-            return Response.FromValue(AtlasStructDef.FromResponse(response), response);
+            Response result = GetStructByName(name, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasStructDef)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get the struct definition by its name (unique).
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetStructByNameAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the struct definition by its name (unique). </summary>
         /// <param name="name"> The name of the struct. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructByNameAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetStructByNameAsync(string name, RequestContext context)
+        public virtual async Task<Response<AtlasStructDef>> GetStructByNameAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetStructByName");
+            Response result = await GetStructByNameAsync(name, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasStructDef)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the type definition for the given GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the type. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetById(string guid, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetById");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetStructByNameRequest(name, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+                using HttpMessage message = CreateGetByIdRequest(guid, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1332,37 +1183,29 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Get the struct definition by its name (unique).
+        /// [Protocol Method] Get the type definition for the given GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetStructByName(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the struct. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="guid"> The globally unique identifier of the type. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructByName(string,RequestContext)']/*" />
-        public virtual Response GetStructByName(string name, RequestContext context)
+        public virtual async Task<Response> GetByIdAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetStructByName");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetById");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetStructByNameRequest(name, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+                using HttpMessage message = CreateGetByIdRequest(guid, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1373,66 +1216,56 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get the type definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetByIdAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasTypeDef>> GetByIdAsync(string guid, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetByIdAsync(guid, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasTypeDef.FromResponse(response), response);
-        }
-
-        /// <summary> Get the type definition for the given GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetById(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasTypeDef> GetById(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetById(guid, context);
-            return Response.FromValue(AtlasTypeDef.FromResponse(response), response);
+            Response result = GetById(guid, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasTypeDef)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get the type definition for the given GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetByIdAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the type definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the type. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetByIdAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetByIdAsync(string guid, RequestContext context)
+        public virtual async Task<Response<AtlasTypeDef>> GetByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetById");
+            Response result = await GetByIdAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasTypeDef)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the type definition by its name (unique).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the type. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetByName(string name, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetByIdRequest(guid, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                using HttpMessage message = CreateGetByNameRequest(name, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1442,37 +1275,29 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Get the type definition for the given GUID.
+        /// [Protocol Method] Get the type definition by its name (unique).
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetById(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="guid"> The globally unique identifier of the type. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="name"> The name of the type. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetById(string,RequestContext)']/*" />
-        public virtual Response GetById(string guid, RequestContext context)
+        public virtual async Task<Response> GetByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetById");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetByIdRequest(guid, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                using HttpMessage message = CreateGetByNameRequest(name, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1483,142 +1308,56 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get the type definition by its name (unique). </summary>
         /// <param name="name"> The name of the type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetByNameAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasTypeDef>> GetByNameAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetByNameAsync(name, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasTypeDef.FromResponse(response), response);
-        }
-
-        /// <summary> Get the type definition by its name (unique). </summary>
-        /// <param name="name"> The name of the type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetByName(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasTypeDef> GetByName(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetByName(name, context);
-            return Response.FromValue(AtlasTypeDef.FromResponse(response), response);
+            Response result = GetByName(name, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasTypeDef)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get the type definition by its name (unique).
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetByNameAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the type definition by its name (unique). </summary>
         /// <param name="name"> The name of the type. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetByNameAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetByNameAsync(string name, RequestContext context)
+        public virtual async Task<Response<AtlasTypeDef>> GetByNameAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetByName");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetByNameRequest(name, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = await GetByNameAsync(name, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasTypeDef)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get the type definition by its name (unique).
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetByName(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the type. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetByName(string,RequestContext)']/*" />
-        public virtual Response GetByName(string name, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetByName");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetByNameRequest(name, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete API for type identified by its name.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the type. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAsync(string name, RequestContext context = null)
+        public virtual Response Delete(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.Delete");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.Delete");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
                 using HttpMessage message = CreateDeleteRequest(name, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1627,34 +1366,122 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete API for type identified by its name.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the type. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
-        public virtual Response Delete(string name, RequestContext context = null)
+        public virtual async Task<Response> DeleteAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.Delete");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.Delete");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
                 using HttpMessage message = CreateDeleteRequest(name, context);
-                return _pipeline.ProcessMessage(message, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete API for type identified by its name. </summary>
+        /// <param name="name"> The name of the type. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response Delete(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return Delete(name, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Delete API for type identified by its name. </summary>
+        /// <param name="name"> The name of the type. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await DeleteAsync(name, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List all type definitions in bulk.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="includeTermTemplate">
+        /// Whether include termtemplatedef when return all typedefs.
+        /// This is always true
+        /// when search filter type=term_template
+        /// </param>
+        /// <param name="type"> Typedef name as search filter when get typedefs. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetTypeDefinition(bool? includeTermTemplate, string @type, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetTypeDefinition");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetTypeDefinitionRequest(includeTermTemplate, @type, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] List all type definitions in bulk.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="includeTermTemplate">
+        /// Whether include termtemplatedef when return all typedefs.
+        /// This is always true
+        /// when search filter type=term_template
+        /// </param>
+        /// <param name="type"> Typedef name as search filter when get typedefs. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTypeDefinitionAsync(bool? includeTermTemplate, string @type, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetTypeDefinition");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetTypeDefinitionRequest(includeTermTemplate, @type, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1670,13 +1497,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTypeDefinitionAsync(bool?,TypeCategory?,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasTypesDef>> GetTypeDefinitionAsync(bool? includeTermTemplate = null, TypeCategory? type = null, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<AtlasTypesDef> GetTypeDefinition(bool? includeTermTemplate = default, TypeCategory? @type = default, CancellationToken cancellationToken = default)
         {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTypeDefinitionAsync(includeTermTemplate, type?.ToString(), context).ConfigureAwait(false);
-            return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
+            Response result = GetTypeDefinition(includeTermTemplate, @type?.ToString(), cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasTypesDef)result, result);
         }
 
         /// <summary> List all type definitions in bulk. </summary>
@@ -1686,48 +1512,37 @@ namespace Azure.Analytics.Purview.DataMap
         /// when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTypeDefinition(bool?,TypeCategory?,CancellationToken)']/*" />
-        public virtual Response<AtlasTypesDef> GetTypeDefinition(bool? includeTermTemplate = null, TypeCategory? type = null, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<AtlasTypesDef>> GetTypeDefinitionAsync(bool? includeTermTemplate = default, TypeCategory? @type = default, CancellationToken cancellationToken = default)
         {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTypeDefinition(includeTermTemplate, type?.ToString(), context);
-            return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
+            Response result = await GetTypeDefinitionAsync(includeTermTemplate, @type?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasTypesDef)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] List all type definitions in bulk.
+        /// [Protocol Method] Create all atlas type definitions in bulk. Please avoid recreating existing types.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTypeDefinitionAsync(bool?,TypeCategory?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="includeTermTemplate">
-        /// Whether include termtemplatedef when return all typedefs.
-        /// This is always true
-        /// when search filter type=term_template
-        /// </param>
-        /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: "PRIMITIVE" | "OBJECT_ID_TYPE" | "ENUM" | "STRUCT" | "CLASSIFICATION" | "ENTITY" | "ARRAY" | "MAP" | "RELATIONSHIP" | "TERM_TEMPLATE". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTypeDefinitionAsync(bool?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTypeDefinitionAsync(bool? includeTermTemplate, string type, RequestContext context)
+        public virtual Response BatchCreate(RequestContent content, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetTypeDefinition");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.BatchCreate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTypeDefinitionRequest(includeTermTemplate, type, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateBatchCreateRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1737,38 +1552,28 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] List all type definitions in bulk.
+        /// [Protocol Method] Create all atlas type definitions in bulk. Please avoid recreating existing types.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTypeDefinition(bool?,TypeCategory?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="includeTermTemplate">
-        /// Whether include termtemplatedef when return all typedefs.
-        /// This is always true
-        /// when search filter type=term_template
-        /// </param>
-        /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: "PRIMITIVE" | "OBJECT_ID_TYPE" | "ENUM" | "STRUCT" | "CLASSIFICATION" | "ENTITY" | "ARRAY" | "MAP" | "RELATIONSHIP" | "TERM_TEMPLATE". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTypeDefinition(bool?,string,RequestContext)']/*" />
-        public virtual Response GetTypeDefinition(bool? includeTermTemplate, string type, RequestContext context)
+        public virtual async Task<Response> BatchCreateAsync(RequestContent content, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetTypeDefinition");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.BatchCreate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTypeDefinitionRequest(includeTermTemplate, type, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateBatchCreateRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1779,128 +1584,92 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Create all atlas type definitions in bulk. Please avoid recreating existing types. </summary>
         /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchCreateAsync(AtlasTypesDef,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasTypesDef>> BatchCreateAsync(AtlasTypesDef body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await BatchCreateAsync(content, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
-        }
-
-        /// <summary> Create all atlas type definitions in bulk. Please avoid recreating existing types. </summary>
-        /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchCreate(AtlasTypesDef,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasTypesDef> BatchCreate(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = BatchCreate(content, context);
-            return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
+            Response result = BatchCreate(body, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasTypesDef)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Create all atlas type definitions in bulk. Please avoid recreating existing types.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="BatchCreateAsync(AtlasTypesDef,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchCreateAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> BatchCreateAsync(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.BatchCreate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateBatchCreateRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create all atlas type definitions in bulk. Please avoid recreating existing types.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="BatchCreate(AtlasTypesDef,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchCreate(RequestContent,RequestContext)']/*" />
-        public virtual Response BatchCreate(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.BatchCreate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateBatchCreateRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update all types in bulk, changes detected in the type definitions would be
-        /// persisted.
-        /// </summary>
+        /// <summary> Create all atlas type definitions in bulk. Please avoid recreating existing types. </summary>
         /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchUpdateAsync(AtlasTypesDef,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasTypesDef>> BatchUpdateAsync(AtlasTypesDef body, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<AtlasTypesDef>> BatchCreateAsync(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await BatchUpdateAsync(content, context).ConfigureAwait(false);
-            return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
+            Response result = await BatchCreateAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasTypesDef)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Update all types in bulk, changes detected in the type definitions would be
+        /// persisted.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response BatchUpdate(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.BatchUpdate");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateBatchUpdateRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Update all types in bulk, changes detected in the type definitions would be
+        /// persisted.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> BatchUpdateAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.BatchUpdate");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateBatchUpdateRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1908,160 +1677,144 @@ namespace Azure.Analytics.Purview.DataMap
         /// persisted.
         /// </summary>
         /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchUpdate(AtlasTypesDef,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<AtlasTypesDef> BatchUpdate(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = BatchUpdate(content, context);
-            return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
+            Response result = BatchUpdate(body, cancellationToken.ToRequestContext());
+            return Response.FromValue((AtlasTypesDef)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Update all types in bulk, changes detected in the type definitions would be
+        /// Update all types in bulk, changes detected in the type definitions would be
         /// persisted.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="BatchUpdateAsync(AtlasTypesDef,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
         /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchUpdateAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> BatchUpdateAsync(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.BatchUpdate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateBatchUpdateRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update all types in bulk, changes detected in the type definitions would be
-        /// persisted.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="BatchUpdate(AtlasTypesDef,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchUpdate(RequestContent,RequestContext)']/*" />
-        public virtual Response BatchUpdate(RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.BatchUpdate");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateBatchUpdateRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete API for all types in bulk. </summary>
         /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchDeleteAsync(AtlasTypesDef,CancellationToken)']/*" />
-        public virtual async Task<Response> BatchDeleteAsync(AtlasTypesDef body, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<AtlasTypesDef>> BatchUpdateAsync(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await BatchDeleteAsync(content, context).ConfigureAwait(false);
-            return response;
+            Response result = await BatchUpdateAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AtlasTypesDef)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Delete API for all types in bulk.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response BatchDelete(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.BatchDelete");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateBatchDeleteRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Delete API for all types in bulk.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> BatchDeleteAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.BatchDelete");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateBatchDeleteRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Delete API for all types in bulk. </summary>
         /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchDelete(AtlasTypesDef,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response BatchDelete(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = BatchDelete(content, context);
-            return response;
+            return BatchDelete(body, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Delete API for all types in bulk. </summary>
+        /// <param name="body"> Body parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> BatchDeleteAsync(AtlasTypesDef body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            return await BatchDeleteAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// [Protocol Method] Delete API for all types in bulk.
+        /// [Protocol Method] List all type definitions returned as a list of minimal information header.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="BatchDeleteAsync(AtlasTypesDef,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <param name="includeTermTemplate">
+        /// Whether include termtemplatedef when return all typedefs.
+        /// This is always true
+        /// when search filter type=term_template
+        /// </param>
+        /// <param name="type"> Typedef name as search filter when get typedefs. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchDeleteAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> BatchDeleteAsync(RequestContent content, RequestContext context = null)
+        public virtual Response GetHeaders(bool? includeTermTemplate, string @type, RequestContext context)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.BatchDelete");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetHeaders");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateBatchDeleteRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetHeadersRequest(includeTermTemplate, @type, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2071,36 +1824,30 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Delete API for all types in bulk.
+        /// [Protocol Method] List all type definitions returned as a list of minimal information header.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="BatchDelete(AtlasTypesDef,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <param name="includeTermTemplate">
+        /// Whether include termtemplatedef when return all typedefs.
+        /// This is always true
+        /// when search filter type=term_template
+        /// </param>
+        /// <param name="type"> Typedef name as search filter when get typedefs. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchDelete(RequestContent,RequestContext)']/*" />
-        public virtual Response BatchDelete(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> GetHeadersAsync(bool? includeTermTemplate, string @type, RequestContext context)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.BatchDelete");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetHeaders");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateBatchDeleteRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateGetHeadersRequest(includeTermTemplate, @type, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2116,21 +1863,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetHeadersAsync(bool?,TypeCategory?,CancellationToken)']/*" />
-        public virtual async Task<Response<IReadOnlyList<AtlasTypeDefHeader>>> GetHeadersAsync(bool? includeTermTemplate = null, TypeCategory? type = null, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<AtlasTypeDefHeader>> GetHeaders(bool? includeTermTemplate = default, TypeCategory? @type = default, CancellationToken cancellationToken = default)
         {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetHeadersAsync(includeTermTemplate, type?.ToString(), context).ConfigureAwait(false);
-            IReadOnlyList<AtlasTypeDefHeader> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            List<AtlasTypeDefHeader> array = new List<AtlasTypeDefHeader>();
+            Response result = GetHeaders(includeTermTemplate, @type?.ToString(), cancellationToken.ToRequestContext());
+            List<AtlasTypeDefHeader> value = new List<AtlasTypeDefHeader>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(AtlasTypeDefHeader.DeserializeAtlasTypeDefHeader(item));
+                value.Add(AtlasTypeDefHeader.DeserializeAtlasTypeDefHeader(item, ModelSerializationExtensions.WireOptions));
             }
-            value = array;
-            return Response.FromValue(value, response);
+            return Response.FromValue((IReadOnlyList<AtlasTypeDefHeader>)value, result);
         }
 
         /// <summary> List all type definitions returned as a list of minimal information header. </summary>
@@ -2140,56 +1885,45 @@ namespace Azure.Analytics.Purview.DataMap
         /// when search filter type=term_template
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetHeaders(bool?,TypeCategory?,CancellationToken)']/*" />
-        public virtual Response<IReadOnlyList<AtlasTypeDefHeader>> GetHeaders(bool? includeTermTemplate = null, TypeCategory? type = null, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<AtlasTypeDefHeader>>> GetHeadersAsync(bool? includeTermTemplate = default, TypeCategory? @type = default, CancellationToken cancellationToken = default)
         {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetHeaders(includeTermTemplate, type?.ToString(), context);
-            IReadOnlyList<AtlasTypeDefHeader> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            List<AtlasTypeDefHeader> array = new List<AtlasTypeDefHeader>();
+            Response result = await GetHeadersAsync(includeTermTemplate, @type?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<AtlasTypeDefHeader> value = new List<AtlasTypeDefHeader>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(AtlasTypeDefHeader.DeserializeAtlasTypeDefHeader(item));
+                value.Add(AtlasTypeDefHeader.DeserializeAtlasTypeDefHeader(item, ModelSerializationExtensions.WireOptions));
             }
-            value = array;
-            return Response.FromValue(value, response);
+            return Response.FromValue((IReadOnlyList<AtlasTypeDefHeader>)value, result);
         }
 
         /// <summary>
-        /// [Protocol Method] List all type definitions returned as a list of minimal information header.
+        /// [Protocol Method] Get the term template definition for the given GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetHeadersAsync(bool?,TypeCategory?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="includeTermTemplate">
-        /// Whether include termtemplatedef when return all typedefs.
-        /// This is always true
-        /// when search filter type=term_template
-        /// </param>
-        /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: "PRIMITIVE" | "OBJECT_ID_TYPE" | "ENUM" | "STRUCT" | "CLASSIFICATION" | "ENTITY" | "ARRAY" | "MAP" | "RELATIONSHIP" | "TERM_TEMPLATE". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="guid"> The globally unique identifier of the term template. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetHeadersAsync(bool?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetHeadersAsync(bool? includeTermTemplate, string type, RequestContext context)
+        public virtual Response GetTermTemplateById(string guid, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetHeaders");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetTermTemplateById");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetHeadersRequest(includeTermTemplate, type, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+                using HttpMessage message = CreateGetTermTemplateByIdRequest(guid, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2199,38 +1933,29 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] List all type definitions returned as a list of minimal information header.
+        /// [Protocol Method] Get the term template definition for the given GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetHeaders(bool?,TypeCategory?,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="includeTermTemplate">
-        /// Whether include termtemplatedef when return all typedefs.
-        /// This is always true
-        /// when search filter type=term_template
-        /// </param>
-        /// <param name="type"> Typedef name as search filter when get typedefs. Allowed values: "PRIMITIVE" | "OBJECT_ID_TYPE" | "ENUM" | "STRUCT" | "CLASSIFICATION" | "ENTITY" | "ARRAY" | "MAP" | "RELATIONSHIP" | "TERM_TEMPLATE". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="guid"> The globally unique identifier of the term template. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetHeaders(bool?,string,RequestContext)']/*" />
-        public virtual Response GetHeaders(bool? includeTermTemplate, string type, RequestContext context)
+        public virtual async Task<Response> GetTermTemplateByIdAsync(string guid, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetHeaders");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetTermTemplateById");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetHeadersRequest(includeTermTemplate, type, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+                using HttpMessage message = CreateGetTermTemplateByIdRequest(guid, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2241,66 +1966,56 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get the term template definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the term template. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateByIdAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<TermTemplateDef>> GetTermTemplateByIdAsync(string guid, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTermTemplateByIdAsync(guid, context).ConfigureAwait(false);
-            return Response.FromValue(TermTemplateDef.FromResponse(response), response);
-        }
-
-        /// <summary> Get the term template definition for the given GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the term template. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateById(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<TermTemplateDef> GetTermTemplateById(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTermTemplateById(guid, context);
-            return Response.FromValue(TermTemplateDef.FromResponse(response), response);
+            Response result = GetTermTemplateById(guid, cancellationToken.ToRequestContext());
+            return Response.FromValue((TermTemplateDef)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get the term template definition for the given GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTermTemplateByIdAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the term template definition for the given GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the term template. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateByIdAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTermTemplateByIdAsync(string guid, RequestContext context)
+        public virtual async Task<Response<TermTemplateDef>> GetTermTemplateByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetTermTemplateById");
+            Response result = await GetTermTemplateByIdAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TermTemplateDef)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the term template definition by its name (unique).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The unique name of the term template. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetTermTemplateByName(string name, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetTermTemplateByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTermTemplateByIdRequest(guid, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                using HttpMessage message = CreateGetTermTemplateByNameRequest(name, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2310,37 +2025,29 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Get the term template definition for the given GUID.
+        /// [Protocol Method] Get the term template definition by its name (unique).
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTermTemplateById(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="guid"> The globally unique identifier of the term template. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="name"> The unique name of the term template. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateById(string,RequestContext)']/*" />
-        public virtual Response GetTermTemplateById(string guid, RequestContext context)
+        public virtual async Task<Response> GetTermTemplateByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetTermTemplateById");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TypeDefinition.GetTermTemplateByName");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTermTemplateByIdRequest(guid, context);
-                return _pipeline.ProcessMessage(message, context);
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+                using HttpMessage message = CreateGetTermTemplateByNameRequest(name, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2351,477 +2058,30 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get the term template definition by its name (unique). </summary>
         /// <param name="name"> The unique name of the term template. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateByNameAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<TermTemplateDef>> GetTermTemplateByNameAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTermTemplateByNameAsync(name, context).ConfigureAwait(false);
-            return Response.FromValue(TermTemplateDef.FromResponse(response), response);
-        }
-
-        /// <summary> Get the term template definition by its name (unique). </summary>
-        /// <param name="name"> The unique name of the term template. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateByName(string,CancellationToken)']/*" />
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<TermTemplateDef> GetTermTemplateByName(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTermTemplateByName(name, context);
-            return Response.FromValue(TermTemplateDef.FromResponse(response), response);
+            Response result = GetTermTemplateByName(name, cancellationToken.ToRequestContext());
+            return Response.FromValue((TermTemplateDef)result, result);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get the term template definition by its name (unique).
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTermTemplateByNameAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the term template definition by its name (unique). </summary>
         /// <param name="name"> The unique name of the term template. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateByNameAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTermTemplateByNameAsync(string name, RequestContext context)
+        public virtual async Task<Response<TermTemplateDef>> GetTermTemplateByNameAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetTermTemplateByName");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTermTemplateByNameRequest(name, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Response result = await GetTermTemplateByNameAsync(name, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TermTemplateDef)result, result);
         }
-
-        /// <summary>
-        /// [Protocol Method] Get the term template definition by its name (unique).
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetTermTemplateByName(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The unique name of the term template. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateByName(string,RequestContext)']/*" />
-        public virtual Response GetTermTemplateByName(string name, RequestContext context)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            using var scope = ClientDiagnostics.CreateScope("TypeDefinition.GetTermTemplateByName");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTermTemplateByNameRequest(name, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        internal HttpMessage CreateGetBusinessMetadataByIdRequest(string guid, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/businessmetadatadef/guid/", false);
-            uri.AppendPath(guid, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetBusinessMetadataByNameRequest(string name, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/businessmetadatadef/name/", false);
-            uri.AppendPath(name, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetClassificationByIdRequest(string guid, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/classificationdef/guid/", false);
-            uri.AppendPath(guid, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetClassificationByNameRequest(string name, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/classificationdef/name/", false);
-            uri.AppendPath(name, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetEntityByIdRequest(string guid, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/entitydef/guid/", false);
-            uri.AppendPath(guid, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetEntityByNameRequest(string name, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/entitydef/name/", false);
-            uri.AppendPath(name, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetEnumByIdRequest(string guid, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/enumdef/guid/", false);
-            uri.AppendPath(guid, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetEnumByNameRequest(string name, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/enumdef/name/", false);
-            uri.AppendPath(name, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetRelationshipByIdRequest(string guid, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/relationshipdef/guid/", false);
-            uri.AppendPath(guid, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetRelationshipByNameRequest(string name, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/relationshipdef/name/", false);
-            uri.AppendPath(name, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetStructByIdRequest(string guid, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/structdef/guid/", false);
-            uri.AppendPath(guid, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetStructByNameRequest(string name, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/structdef/name/", false);
-            uri.AppendPath(name, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetByIdRequest(string guid, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/typedef/guid/", false);
-            uri.AppendPath(guid, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetByNameRequest(string name, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/typedef/name/", false);
-            uri.AppendPath(name, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string name, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/typedef/name/", false);
-            uri.AppendPath(name, true);
-            request.Uri = uri;
-            return message;
-        }
-
-        internal HttpMessage CreateGetTypeDefinitionRequest(bool? includeTermTemplate, string type, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/typedefs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (includeTermTemplate != null)
-            {
-                uri.AppendQuery("includeTermTemplate", includeTermTemplate.Value, true);
-            }
-            if (type != null)
-            {
-                uri.AppendQuery("type", type, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateBatchCreateRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/typedefs", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateBatchUpdateRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/typedefs", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateBatchDeleteRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/typedefs", false);
-            request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetHeadersRequest(bool? includeTermTemplate, string type, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/atlas/v2/types/typedefs/headers", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (includeTermTemplate != null)
-            {
-                uri.AppendQuery("includeTermTemplate", includeTermTemplate.Value, true);
-            }
-            if (type != null)
-            {
-                uri.AppendQuery("type", type, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTermTemplateByIdRequest(string guid, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/types/termtemplatedef/guid/", false);
-            uri.AppendPath(guid, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetTermTemplateByNameRequest(string name, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/datamap/api", false);
-            uri.AppendPath("/types/termtemplatedef/name/", false);
-            uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
-        }
-
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
-        private static ResponseClassifier _responseClassifier204;
-        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }
 }

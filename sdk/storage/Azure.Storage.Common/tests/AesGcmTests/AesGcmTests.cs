@@ -4,12 +4,12 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
-using NUnit.Framework;
-using System.Globalization;
-using System;
 using Azure.Storage.Shared.AesGcm;
+using NUnit.Framework;
 
 namespace Azure.Storage.Common.AesGcm.Tests
 {

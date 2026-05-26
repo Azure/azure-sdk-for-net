@@ -8,44 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The properties that define a direct peering. </summary>
     public partial class DirectPeeringProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DirectPeeringProperties"/>. </summary>
         public DirectPeeringProperties()
@@ -56,35 +27,26 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of <see cref="DirectPeeringProperties"/>. </summary>
         /// <param name="connections"> The set of connections that constitute a direct peering. </param>
         /// <param name="useForPeeringService"> The flag that indicates whether or not the peering is used for peering service. </param>
-        /// <param name="peerAsn"> The reference of the peer ASN. </param>
+        /// <param name="peerAsnId"> The reference of the peer ASN. </param>
         /// <param name="directPeeringType"> The type of direct peering. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DirectPeeringProperties(IList<PeeringDirectConnection> connections, bool? useForPeeringService, WritableSubResource peerAsn, DirectPeeringType? directPeeringType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DirectPeeringProperties(IList<PeeringDirectConnection> connections, bool? useForPeeringService, ResourceIdentifier peerAsnId, DirectPeeringType? directPeeringType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Connections = connections;
             UseForPeeringService = useForPeeringService;
-            PeerAsn = peerAsn;
+            PeerAsnId = peerAsnId;
             DirectPeeringType = directPeeringType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The set of connections that constitute a direct peering. </summary>
         public IList<PeeringDirectConnection> Connections { get; }
+
         /// <summary> The flag that indicates whether or not the peering is used for peering service. </summary>
         public bool? UseForPeeringService { get; }
+
         /// <summary> The reference of the peer ASN. </summary>
-        internal WritableSubResource PeerAsn { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier PeerAsnId
-        {
-            get => PeerAsn is null ? default : PeerAsn.Id;
-            set
-            {
-                if (PeerAsn is null)
-                    PeerAsn = new WritableSubResource();
-                PeerAsn.Id = value;
-            }
-        }
+        public ResourceIdentifier PeerAsnId { get; set; }
 
         /// <summary> The type of direct peering. </summary>
         public DirectPeeringType? DirectPeeringType { get; set; }

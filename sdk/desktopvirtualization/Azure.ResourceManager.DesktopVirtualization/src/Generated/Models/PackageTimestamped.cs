@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct PackageTimestamped : IEquatable<PackageTimestamped>
     {
         private readonly string _value;
+        /// <summary> Package is timestamped. </summary>
+        private const string TimestampedValue = "Timestamped";
+        /// <summary> Package is not timestamped, use certificate expiry date. </summary>
+        private const string NotTimestampedValue = "NotTimestamped";
 
         /// <summary> Initializes a new instance of <see cref="PackageTimestamped"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PackageTimestamped(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TimestampedValue = "Timestamped";
-        private const string NotTimestampedValue = "NotTimestamped";
-
-        /// <summary> Timestamped. </summary>
+        /// <summary> Package is timestamped. </summary>
         public static PackageTimestamped Timestamped { get; } = new PackageTimestamped(TimestampedValue);
-        /// <summary> NotTimestamped. </summary>
+
+        /// <summary> Package is not timestamped, use certificate expiry date. </summary>
         public static PackageTimestamped NotTimestamped { get; } = new PackageTimestamped(NotTimestampedValue);
+
         /// <summary> Determines if two <see cref="PackageTimestamped"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PackageTimestamped left, PackageTimestamped right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PackageTimestamped"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PackageTimestamped left, PackageTimestamped right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PackageTimestamped"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PackageTimestamped"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PackageTimestamped(string value) => new PackageTimestamped(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PackageTimestamped"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PackageTimestamped?(string value) => value == null ? null : new PackageTimestamped(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PackageTimestamped other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PackageTimestamped other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

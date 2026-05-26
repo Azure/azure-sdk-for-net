@@ -241,8 +241,8 @@ namespace Azure.Core.GeoJson
             int i = 0;
             foreach (JsonElement coordinate in coordinatesElement.EnumerateArray())
             {
-                 coordinates[i] = ReadCoordinate(coordinate);
-                 i++;
+                coordinates[i] = ReadCoordinate(coordinate);
+                i++;
             }
 
             return coordinates;

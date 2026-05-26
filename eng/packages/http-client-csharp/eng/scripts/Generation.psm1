@@ -103,6 +103,12 @@ function Refresh-Build {
     if ($LASTEXITCODE -ne 0) {
         exit $LASTEXITCODE
     }
+
+    Invoke "dotnet build $repoRoot/../generator/Azure.Generator.StubLibrary/src"
+    # exit if the generation failed
+    if ($LASTEXITCODE -ne 0) {
+        exit $LASTEXITCODE
+    }
 }
 
 function Refresh-Mgmt-Build {

@@ -33,7 +33,11 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             var scriptDataUpdate = new KustoScriptData
             {
-                ForceUpdateTag = "tag1", ScriptContent = scriptUpdateContent, ShouldContinueOnErrors = true, ScriptLevel = KustoScriptLevel.Database,  PrincipalPermissionsAction = PrincipalPermissionsAction.RetainPermissionOnScriptCompletion
+                ForceUpdateTag = "tag1",
+                ScriptContent = scriptUpdateContent,
+                ShouldContinueOnErrors = true,
+                ScriptLevel = KustoScriptLevel.Database,
+                PrincipalPermissionsAction = PrincipalPermissionsAction.RetainPermissionOnScriptCompletion
             };
 
             var scriptContent =
@@ -41,7 +45,11 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 "(Level:string, Timestamp:datetime, UserId:string, TraceId:string, Message:string, ProcessId:int32)";
             var scriptDataCreate = new KustoScriptData
             {
-                ForceUpdateTag = "tag2", ScriptContent = scriptContent, ShouldContinueOnErrors = true, ScriptLevel = KustoScriptLevel.Database, PrincipalPermissionsAction = PrincipalPermissionsAction.RetainPermissionOnScriptCompletion
+                ForceUpdateTag = "tag2",
+                ScriptContent = scriptContent,
+                ShouldContinueOnErrors = true,
+                ScriptLevel = KustoScriptLevel.Database,
+                PrincipalPermissionsAction = PrincipalPermissionsAction.RetainPermissionOnScriptCompletion
             };
 
             Task<ArmOperation<KustoScriptResource>> CreateOrUpdateScriptAsync(

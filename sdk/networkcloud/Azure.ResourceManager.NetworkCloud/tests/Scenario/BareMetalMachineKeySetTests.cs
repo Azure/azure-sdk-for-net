@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class BareMetalMachineKeySetTests : NetworkCloudManagementTestBase
     {
-        public BareMetalMachineKeySetTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public BareMetalMachineKeySetTests(bool isAsync) : base(isAsync) {}
+        public BareMetalMachineKeySetTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public BareMetalMachineKeySetTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         [RecordedTest]
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key1"] = "myvalue1",
                 },
             };
-            ArmOperation<NetworkCloudBareMetalMachineKeySetResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, bareMetalMachineKeySetName, data);
+            ArmOperation<NetworkCloudBareMetalMachineKeySetResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, bareMetalMachineKeySetName, data, matchConditions: null);
             Assert.AreEqual(bareMetalMachineKeySetName, createResult.Value.Data.Name);
 
             // Get
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key2"] = "myvalue2",
                 },
             };
-            ArmOperation<NetworkCloudBareMetalMachineKeySetResource> updateResult = await bareMetalMachineKeySet.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudBareMetalMachineKeySetResource> updateResult = await bareMetalMachineKeySet.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             // Delete

@@ -1,0 +1,1606 @@
+{
+    "openapi": "3.0.1",
+    "servers": [
+      {
+        "url": "https://api.content.tripadvisor.com/api"
+      }
+    ],
+    "info": {
+      "version": "1.0.0",
+      "title": "Content API - TripAdvisor(Knowledge)",
+      "description": "SSP includes Locations Details, Locations Photos, Locations Reviews, Location Search"
+    },
+    "paths": {
+      "/v1/location/{locationId}/details": {
+        "get": {
+          "summary": "Location Details",
+          "description": "A Location Details request returns comprehensive information about a location (hotel, restaurant, or an attraction) such as name, address, rating, and URLs for the listing on Tripadvisor.",
+          "operationId": "getLocationDetails",
+          "tags": [
+            "Location Details"
+          ],
+          "parameters": [
+            {
+              "name": "locationId",
+              "in": "path",
+              "description": "A unique identifier for a location on Tripadvisor. The location ID can be obtained using the Location Search.",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "language",
+              "in": "query",
+              "description": "The language in which to return results (e.g. \"en\" for English or \"es\" for Spanish) from the list of our Supported Languages.",
+              "required": false,
+              "schema": {
+                "default": "en",
+                "type": "string",
+                "enum": [
+                  "ar",
+                  "zh",
+                  "zh_TW",
+                  "da",
+                  "nl",
+                  "en_AU",
+                  "en_CA",
+                  "en_HK",
+                  "en_IN",
+                  "en_IE",
+                  "en_MY",
+                  "en_NZ",
+                  "en_PH",
+                  "en_SG",
+                  "en_ZA",
+                  "en_UK",
+                  "en",
+                  "fr",
+                  "fr_BE",
+                  "fr_CA",
+                  "fr_CH",
+                  "de_AT",
+                  "de",
+                  "el",
+                  "iw",
+                  "in",
+                  "it",
+                  "it_CH",
+                  "ja",
+                  "ko",
+                  "no",
+                  "pt_PT",
+                  "pt",
+                  "ru",
+                  "es_AR",
+                  "es_CO",
+                  "es_MX",
+                  "es_PE",
+                  "es",
+                  "es_VE",
+                  "es_CL",
+                  "sv",
+                  "th",
+                  "tr",
+                  "vi"
+                ]
+              }
+            },
+            {
+              "name": "currency",
+              "in": "query",
+              "description": "The currency code to use for request and response (should follow ISO 4217).",
+              "required": false,
+              "schema": {
+                "type": "string",
+                "default": "USD"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Details for the location",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "location_id": {
+                        "description": "Unique Tripadvisor location ID of the destination or POI",
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "name": {
+                        "description": "Name of the POI as listed on Tripadvisor",
+                        "type": "string"
+                      },
+                      "description": {
+                        "description": "Description of the POI as listed on Tripadvisor",
+                        "type": "string"
+                      },
+                      "web_url": {
+                        "description": "Link to the POI detail page on Tripadvisor. Link is localized to the correct domain if a language other than English is requested.",
+                        "type": "string"
+                      },
+                      "address_obj": {
+                        "description": "Object containing address data for this location",
+                        "type": "object",
+                        "properties": {
+                          "street1": {
+                            "type": "string",
+                            "description": "The street name"
+                          },
+                          "street2": {
+                            "type": "string",
+                            "description": "The street name continuation"
+                          },
+                          "city": {
+                            "type": "string",
+                            "description": "The city name"
+                          },
+                          "state": {
+                            "type": "string",
+                            "description": "The state"
+                          },
+                          "country": {
+                            "type": "string",
+                            "description": "The country"
+                          },
+                          "postalcode": {
+                            "type": "string",
+                            "description": "The address postal code"
+                          },
+                          "address_string": {
+                            "type": "string",
+                            "description": "The address in one single sentence"
+                          }
+                        }
+                      },
+                      "ancestors": {
+                        "description": "Ancestors describe where the POI or destination lives within the Tripadvisor destination or geo hierarchy.From this, you can derive the city where a POI is located, as well as state/province/region and country.",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "abbrv": {
+                              "description": "The ancestor location abbreviation",
+                              "type": "string"
+                            },
+                            "level": {
+                              "description": "The ancestor location level in relation to the location",
+                              "type": "string"
+                            },
+                            "name": {
+                              "description": "The ancestor location name",
+                              "type": "string"
+                            },
+                            "location_id": {
+                              "description": "The ancestor location location identifier",
+                              "type": "integer",
+                              "format": "int32"
+                            }
+                          }
+                        }
+                      },
+                      "latitude": {
+                        "description": "The latitude of this location in degrees, if available",
+                        "type": "number"
+                      },
+                      "longitude": {
+                        "description": "The longitude of this location in degrees, if available",
+                        "type": "number"
+                      },
+                      "timezone": {
+                        "description": "The timezone of the location",
+                        "type": "string"
+                      },
+                      "email": {
+                        "description": "The email of the location, if available",
+                        "type": "string"
+                      },
+                      "phone": {
+                        "description": "The phone number of the location, if available",
+                        "type": "string"
+                      },
+                      "website": {
+                        "description": "The website of the location, if available",
+                        "type": "string"
+                      },
+                      "write_review": {
+                        "description": "Link to the review form for this specific POI on Tripadvisor. Link is localized to the correct domain if a language other than English is requested.",
+                        "type": "string"
+                      },
+                      "ranking_data": {
+                        "description": "Describes a POI's Popularity Index ranking on Tripadvisor, which compares places of interest (accomodations, restaurants, and attractions) within the same destination based on their popularity.This is measured by the quality, quantity, and recency of their review content on Tripadvisor.",
+                        "type": "object",
+                        "properties": {
+                          "geo_location_id": {
+                            "description": "The destination id",
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "ranking_string": {
+                            "description": "The description of the ranking",
+                            "type": "string"
+                          },
+                          "geo_location_name": {
+                            "description": "The destination name",
+                            "type": "string"
+                          },
+                          "ranking_out_of": {
+                            "description": "The total number of locations on the ranking score",
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "ranking": {
+                            "description": "The location ranking",
+                            "type": "integer",
+                            "format": "int32"
+                          }
+                        }
+                      },
+                      "rating": {
+                        "description": "Overall rating for this POI. Not applicable to geographic locations. Rating levels are defined as follows:5: Excellent4: Very good3: Average2: Poor1: Terrible",
+                        "type": "number"
+                      },
+                      "rating_image_url": {
+                        "description": "URL to the bubble rating image for this location. Overall Bubble Ratings must be displayed using the Tripadvisor bubble rating image with the owl icon.",
+                        "type": "string"
+                      },
+                      "num_reviews": {
+                        "description": "Count of total reviews published for this location",
+                        "type": "string"
+                      },
+                      "review_rating_count": {
+                        "description": "Count of reviews for this location at each traveler rating level (1,2,3,4,5)",
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "string"
+                        }
+                      },
+                      "subratings": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "allOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "localized_name": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "rating_image_url": {
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "type": "number",
+                                  "format": "float"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      "photo_count": {
+                        "description": "The count of photos for this POI published on Tripadvisor",
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "see_all_photos": {
+                        "description": "Link to open all photos posted for this POI in a photo viewer on Tripadvisor. Link is localized to the correct domain if a language other than English is requested.",
+                        "type": "string"
+                      },
+                      "price_level": {
+                        "description": "The relative price level for the POI. Not available for all POIs. This string is localized to other currency symbols (e.g. ££££ or €€€€) if a language other than English (en_US) is requested or if a specific currency is selected.",
+                        "type": "string"
+                      },
+                      "hours": {
+                        "description": "Provides localized opening hours for Restaurants and Attractions, using ISO 8601 format",
+                        "type": "object",
+                        "properties": {
+                          "periods": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "open": {
+                                  "description": "The day and times intervals in which the location is open",
+                                  "type": "object",
+                                  "properties": {
+                                    "day": {
+                                      "type": "integer",
+                                      "format": "int32"
+                                    },
+                                    "time": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "close": {
+                                  "description": "The day and times intervals in which the location is closed",
+                                  "type": "object",
+                                  "properties": {
+                                    "day": {
+                                      "type": "integer",
+                                      "format": "int32"
+                                    },
+                                    "time": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "weekday_text": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "amenities": {
+                        "description": "The amenities provided by this hotel",
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "features": {
+                        "description": "The features provided by this restaurant",
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "cuisine": {
+                        "description": "The cuisines of this restaurant",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "localized_name": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "parent_brand": {
+                        "description": "The parent brand of this hotel",
+                        "type": "string"
+                      },
+                      "brand": {
+                        "description": "The brand of this hotel",
+                        "type": "string"
+                      },
+                      "category": {
+                        "description": "Each POI on Tripadvisor is classified under a \"category\" and \"subcategory\", which is included in the API response.",
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "localized_name": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "subcategory": {
+                        "description": "Listings that are accommodations/hotels or restaurants are assigned a single subcategory.Deprecated as of February 2017 for Attractions. Refer to the \"groups\" object for the most up to date classifications.",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "localized_name": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "groups": {
+                        "description": "Hierarchical display of Attraction Groups and Categories. These fields are only applicable for location type \"attraction\".",
+                        "type": "array",
+                        "items": {
+                          "allOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "localized_name": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "categories": {
+                                  "description": "Attraction Categories",
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "name": {
+                                        "type": "string"
+                                      },
+                                      "localized_name": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      "styles": {
+                        "description": "The styles of the hotel",
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "neighborhood_info": {
+                        "description": "List of neighborhoods close to the location",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "location_id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "trip_types": {
+                        "description": "Each review submitted on Tripadvisor is tagged with a trip type, as designated by the reviewer.For each POI location, a breakdown of the total review count by trip type is included in the \"trip_types\" object.",
+                        "type": "array",
+                        "items": {
+                          "allOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "localized_name": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      "awards": {
+                        "description": "Returns a list of all of the awards for this location, which could include Certificate of Excellence, Travelers' Choice, and Green Leader.For each award, a small and large image will be returned as well.",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "award_type": {
+                              "description": "Award type name",
+                              "type": "string"
+                            },
+                            "year": {
+                              "description": "The year in which the award was awarded",
+                              "type": "integer",
+                              "format": "int32"
+                            },
+                            "images": {
+                              "description": "The award image in its different sizes",
+                              "type": "object",
+                              "properties": {
+                                "tiny": {
+                                  "type": "string"
+                                },
+                                "small": {
+                                  "type": "string"
+                                },
+                                "large": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "categories": {
+                              "description": "The categories in which the award was awarded",
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "display_name": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "error": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "code": {
+                            "type": "integer",
+                            "format": "int32"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "cosoLocationApiLambdaAuthorizer": []
+            }
+          ]
+        }
+      },
+      "/v1/location/{locationId}/photos": {
+        "get": {
+          "summary": "Location Photos",
+          "description": "The Location Photos request returns up to 5 high-quality photos for a specific location. Please note that the limits are different for the beta subscribers. You need to upgrade to get the higher limits mentioned here.The photos are ordered by recency.Sizes (height x width) for each photo type are as follows:Thumbnail: Fixed 50x50px, cropped, resized, and optimized by TripadvisorSmall: Fixed 150x150px, cropped, resized, and optimized by TripadvisorMedium: Max dimension 250px (can be height or width, depending on photo orientation), the other dimension is resized to maintain the aspect ratioLarge: Max dimension 550px (same rules as Medium, resized to maintain aspect ratio)Original: This is the photo in its original resolution and aspect ratio as provided by the user who submitted it.",
+          "operationId": "getLocationPhotos",
+          "tags": [
+            "Location Photos"
+          ],
+          "parameters": [
+            {
+              "name": "locationId",
+              "in": "path",
+              "description": "A unique identifier for a location on Tripadvisor. The location ID can be obtained using the Location Search.",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "language",
+              "in": "query",
+              "description": "The language in which to return results (e.g. \"en\" for English or \"es\" for Spanish) from the list of our Supported Languages.",
+              "required": false,
+              "schema": {
+                "default": "en",
+                "type": "string",
+                "enum": [
+                  "ar",
+                  "zh",
+                  "zh_TW",
+                  "da",
+                  "nl",
+                  "en_AU",
+                  "en_CA",
+                  "en_HK",
+                  "en_IN",
+                  "en_IE",
+                  "en_MY",
+                  "en_NZ",
+                  "en_PH",
+                  "en_SG",
+                  "en_ZA",
+                  "en_UK",
+                  "en",
+                  "fr",
+                  "fr_BE",
+                  "fr_CA",
+                  "fr_CH",
+                  "de_AT",
+                  "de",
+                  "el",
+                  "iw",
+                  "in",
+                  "it",
+                  "it_CH",
+                  "ja",
+                  "ko",
+                  "no",
+                  "pt_PT",
+                  "pt",
+                  "ru",
+                  "es_AR",
+                  "es_CO",
+                  "es_MX",
+                  "es_PE",
+                  "es",
+                  "es_VE",
+                  "es_CL",
+                  "sv",
+                  "th",
+                  "tr",
+                  "vi"
+                ]
+              }
+            },
+            {
+              "name": "limit",
+              "in": "query",
+              "description": "The number of results to return",
+              "required": false,
+              "schema": {
+                "type": "number",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "offset",
+              "in": "query",
+              "description": "The index of the first result",
+              "required": false,
+              "schema": {
+                "type": "number",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "source",
+              "in": "query",
+              "description": "A comma-separated list of allowed photo sources. Allowed values are 'Expert', 'Management', 'Traveler'. If not specified, allow photos from all sources.",
+              "required": false,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Details for the location",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "description": "A unique ID for this photo",
+                              "type": "integer",
+                              "format": "int32"
+                            },
+                            "is_blessed": {
+                              "description": "Boolean whether or not this photo is blessed, i.e. reviewed at Tripadvisor as being a photo of exceptional quality",
+                              "type": "boolean"
+                            },
+                            "album": {
+                              "description": "Name of the album the photo is featured in",
+                              "type": "string"
+                            },
+                            "caption": {
+                              "description": "Caption of the photo",
+                              "type": "string"
+                            },
+                            "published_date": {
+                              "description": "Date when this photo was published to Tripadvisor",
+                              "type": "string"
+                            },
+                            "images": {
+                              "description": "Links to the photo in various sizes, along with the dimensions in pixels of each size",
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "object",
+                                "properties": {
+                                  "width": {
+                                    "type": "number"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  },
+                                  "height": {
+                                    "type": "number"
+                                  }
+                                }
+                              }
+                            },
+                            "source": {
+                              "description": "Origin of the photo (Traveler, Expert, Management)",
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "localized_name": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "user": {
+                              "type": "object",
+                              "properties": {
+                                "username": {
+                                  "description": "The username that appears on the Tripadvisor website for the user",
+                                  "type": "string"
+                                },
+                                "user_location": {
+                                  "type": "object",
+                                  "properties": {
+                                    "name": {
+                                      "description": "The name of the user's location",
+                                      "type": "string"
+                                    },
+                                    "id": {
+                                      "description": "The location ID of the user's location",
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "review_count": {
+                                  "description": "The Review Count that appears on the Tripadvisor website for the user",
+                                  "type": "integer",
+                                  "format": "int32"
+                                },
+                                "reviewer_badge": {
+                                  "description": "The Reviewer Badge that appears on the Tripadvisor website for the user",
+                                  "type": "string"
+                                },
+                                "avatar": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "paging": {
+                        "type": "object",
+                        "properties": {
+                          "next": {
+                            "type": "string"
+                          },
+                          "previous": {
+                            "type": "string"
+                          },
+                          "results": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "total_results": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "skipped": {
+                            "type": "integer",
+                            "format": "int32"
+                          }
+                        }
+                      },
+                      "error": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "code": {
+                            "type": "integer",
+                            "format": "int32"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "cosoLocationApiLambdaAuthorizer": []
+            }
+          ]
+        }
+      },
+      "/v1/location/{locationId}/reviews": {
+        "get": {
+          "summary": "Location Reviews",
+          "description": "The Location Reviews request returns up to 5 of the most recent reviews for a specific location. Please note that the limits are different for the beta subscribers. You need to upgrade to get the higher limits mentioned here.",
+          "operationId": "getLocationReviews",
+          "tags": [
+            "Location Reviews"
+          ],
+          "parameters": [
+            {
+              "name": "locationId",
+              "in": "path",
+              "description": "A unique identifier for a location on Tripadvisor. The location ID can be obtained using the Location Search.",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "language",
+              "in": "query",
+              "description": "The language in which to return results (e.g. \"en\" for English or \"es\" for Spanish) from the list of our Supported Languages.",
+              "required": false,
+              "schema": {
+                "default": "en",
+                "type": "string",
+                "enum": [
+                  "ar",
+                  "zh",
+                  "zh_TW",
+                  "da",
+                  "nl",
+                  "en_AU",
+                  "en_CA",
+                  "en_HK",
+                  "en_IN",
+                  "en_IE",
+                  "en_MY",
+                  "en_NZ",
+                  "en_PH",
+                  "en_SG",
+                  "en_ZA",
+                  "en_UK",
+                  "en",
+                  "fr",
+                  "fr_BE",
+                  "fr_CA",
+                  "fr_CH",
+                  "de_AT",
+                  "de",
+                  "el",
+                  "iw",
+                  "in",
+                  "it",
+                  "it_CH",
+                  "ja",
+                  "ko",
+                  "no",
+                  "pt_PT",
+                  "pt",
+                  "ru",
+                  "es_AR",
+                  "es_CO",
+                  "es_MX",
+                  "es_PE",
+                  "es",
+                  "es_VE",
+                  "es_CL",
+                  "sv",
+                  "th",
+                  "tr",
+                  "vi"
+                ]
+              }
+            },
+            {
+              "name": "limit",
+              "in": "query",
+              "description": "The number of results to return",
+              "required": false,
+              "schema": {
+                "type": "number",
+                "format": "int32"
+              }
+            },
+            {
+              "name": "offset",
+              "in": "query",
+              "description": "The index of the first result",
+              "required": false,
+              "schema": {
+                "type": "number",
+                "format": "int32"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Details for the location",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "description": "The Tripadvisor ID for the review.",
+                              "type": "integer",
+                              "format": "int32"
+                            },
+                            "lang": {
+                              "description": "The language of the review.",
+                              "type": "string"
+                            },
+                            "location_id": {
+                              "description": "Unique Tripadvisor location ID of the destination or POI.",
+                              "type": "integer",
+                              "format": "int32"
+                            },
+                            "published_date": {
+                              "description": "The date the review was published to Tripadvisor.",
+                              "type": "string"
+                            },
+                            "rating": {
+                              "description": "Overall rating for this POI. Not applicable to geographic locations. Rating levels are defined as follows:5: Excellent4: Very good3: Average2: Poor1: Terrible",
+                              "type": "integer",
+                              "format": "int32"
+                            },
+                            "helpful_votes": {
+                              "description": "The number of helpful votes",
+                              "type": "integer",
+                              "format": "int32"
+                            },
+                            "rating_image_url": {
+                              "description": "The URL to the bubble rating image for this location.",
+                              "type": "string"
+                            },
+                            "url": {
+                              "description": "The URL to the review",
+                              "type": "string"
+                            },
+                            "trip_type": {
+                              "description": "The Trip type of the review (Business, Couples, Family, Friends, Solo).",
+                              "type": "string"
+                            },
+                            "travel_date": {
+                              "description": "The travel date of the review",
+                              "type": "string"
+                            },
+                            "text": {
+                              "description": "The full text of the review.",
+                              "type": "string"
+                            },
+                            "title": {
+                              "description": "The title of this review.",
+                              "type": "string"
+                            },
+                            "owner_response": {
+                              "description": "The Management Response to this review, if one exists.",
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "description": "The Tripadvisor ID for the owner respose.",
+                                  "type": "integer",
+                                  "format": "int32"
+                                },
+                                "lang": {
+                                  "description": "The language of the review.",
+                                  "type": "string"
+                                },
+                                "text": {
+                                  "description": "The full text of the review.",
+                                  "type": "string"
+                                },
+                                "title": {
+                                  "description": "The title of this review.",
+                                  "type": "string"
+                                },
+                                "author": {
+                                  "description": "The owners name.",
+                                  "type": "string"
+                                },
+                                "published_date": {
+                                  "description": "The date the review response was published to Tripadvisor.",
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "is_machine_translated": {
+                              "description": "True or false depending on whether this is a machine-translated review. (Outputs only if partner configured for inclusion of machine-translated reviews)",
+                              "type": "boolean"
+                            },
+                            "user": {
+                              "type": "object",
+                              "properties": {
+                                "username": {
+                                  "description": "The username that appears on the Tripadvisor website for the user",
+                                  "type": "string"
+                                },
+                                "user_location": {
+                                  "type": "object",
+                                  "properties": {
+                                    "name": {
+                                      "description": "The name of the user's location",
+                                      "type": "string"
+                                    },
+                                    "id": {
+                                      "description": "The location ID of the user's location",
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                "review_count": {
+                                  "description": "The Review Count that appears on the Tripadvisor website for the user",
+                                  "type": "integer",
+                                  "format": "int32"
+                                },
+                                "reviewer_badge": {
+                                  "description": "The Reviewer Badge that appears on the Tripadvisor website for the user",
+                                  "type": "string"
+                                },
+                                "avatar": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            },
+                            "subratings": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "allOf": [
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "name": {
+                                        "type": "string"
+                                      },
+                                      "localized_name": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "rating_image_url": {
+                                        "type": "string"
+                                      },
+                                      "value": {
+                                        "type": "number",
+                                        "format": "float"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "paging": {
+                        "type": "object",
+                        "properties": {
+                          "next": {
+                            "type": "string"
+                          },
+                          "previous": {
+                            "type": "string"
+                          },
+                          "results": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "total_results": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "skipped": {
+                            "type": "integer",
+                            "format": "int32"
+                          }
+                        }
+                      },
+                      "error": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "code": {
+                            "type": "integer",
+                            "format": "int32"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "cosoLocationApiLambdaAuthorizer": []
+            }
+          ]
+        }
+      },
+      "/v1/location/search": {
+        "get": {
+          "summary": "Find Search",
+          "description": "The Location Search request returns up to 10 locations found by the given search query.You can use category (\"hotels\", \"attractions\", \"restaurants\", \"geos\"), phone number, address, and latitude/longtitude to search with more accuracy.",
+          "operationId": "searchForLocations",
+          "tags": [
+            "Location Search"
+          ],
+          "parameters": [
+            {
+              "name": "searchQuery",
+              "in": "query",
+              "description": "Text to use for searching based on the name of the location",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "category",
+              "in": "query",
+              "description": "Filters result set based on property type. Valid options are \"hotels\", \"attractions\", \"restaurants\", and \"geos\"",
+              "required": false,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "phone",
+              "in": "query",
+              "description": "Phone number to filter the search results by (this can be in any format with spaces and dashes but without the \"+\" sign at the beginning)",
+              "required": false,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "address",
+              "in": "query",
+              "description": "Address to filter the search results by",
+              "required": false,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "latLong",
+              "in": "query",
+              "description": "Latitude/Longitude pair to scope down the search around a specifc point - eg. \"42.3455,-71.10767\"",
+              "required": false,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "radius",
+              "in": "query",
+              "description": "Length of the radius from the provided latitude/longitude pair to filter results.",
+              "required": false,
+              "schema": {
+                "type": "number",
+                "minimum": 0,
+                "exclusiveMinimum": true
+              }
+            },
+            {
+              "name": "radiusUnit",
+              "in": "query",
+              "description": "Unit for length of the radius. Valid options are \"km\", \"mi\", \"m\" (km=kilometers, mi=miles, m=meters)",
+              "required": false,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "language",
+              "in": "query",
+              "description": "The language in which to return results (e.g. \"en\" for English or \"es\" for Spanish) from the list of our Supported Languages.",
+              "required": false,
+              "schema": {
+                "default": "en",
+                "type": "string",
+                "enum": [
+                  "ar",
+                  "zh",
+                  "zh_TW",
+                  "da",
+                  "nl",
+                  "en_AU",
+                  "en_CA",
+                  "en_HK",
+                  "en_IN",
+                  "en_IE",
+                  "en_MY",
+                  "en_NZ",
+                  "en_PH",
+                  "en_SG",
+                  "en_ZA",
+                  "en_UK",
+                  "en",
+                  "fr",
+                  "fr_BE",
+                  "fr_CA",
+                  "fr_CH",
+                  "de_AT",
+                  "de",
+                  "el",
+                  "iw",
+                  "in",
+                  "it",
+                  "it_CH",
+                  "ja",
+                  "ko",
+                  "no",
+                  "pt_PT",
+                  "pt",
+                  "ru",
+                  "es_AR",
+                  "es_CO",
+                  "es_MX",
+                  "es_PE",
+                  "es",
+                  "es_VE",
+                  "es_CL",
+                  "sv",
+                  "th",
+                  "tr",
+                  "vi"
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Location Search Results",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "location_id": {
+                              "description": "A unique identifier for a location on Tripadvisor. This is to be used in the other endpoints that require a location ID.",
+                              "type": "integer",
+                              "format": "int32"
+                            },
+                            "name": {
+                              "description": "Name of the location",
+                              "type": "string"
+                            },
+                            "distance": {
+                              "description": "Distance, in miles, this location is from the passed in LatLong parameters",
+                              "type": "string"
+                            },
+                            "bearing": {
+                              "description": "Direction this location is from the passed in LatLong parameters",
+                              "type": "string"
+                            },
+                            "address_obj": {
+                              "description": "Object consisting of various address data",
+                              "type": "object",
+                              "properties": {
+                                "street1": {
+                                  "type": "string",
+                                  "description": "The street name"
+                                },
+                                "street2": {
+                                  "type": "string",
+                                  "description": "The street name continuation"
+                                },
+                                "city": {
+                                  "type": "string",
+                                  "description": "The city name"
+                                },
+                                "state": {
+                                  "type": "string",
+                                  "description": "The state"
+                                },
+                                "country": {
+                                  "type": "string",
+                                  "description": "The country"
+                                },
+                                "postalcode": {
+                                  "type": "string",
+                                  "description": "The address postal code"
+                                },
+                                "address_string": {
+                                  "type": "string",
+                                  "description": "The address in one single sentence"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "error": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "code": {
+                            "type": "integer",
+                            "format": "int32"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "cosoLocationApiLambdaAuthorizer": []
+            }
+          ]
+        }
+      },
+      "/v1/location/nearby_search": {
+        "get": {
+          "summary": "Nearby Search",
+          "description": "The Nearby Location Search request returns up to 10 locations found near the given latitude/longtitude.You can use category (\"hotels\", \"attractions\", \"restaurants\", \"geos\"), phone number, address to search with more accuracy.",
+          "operationId": "searchForNearbyLocations",
+          "tags": [
+            "Nearby Location Search"
+          ],
+          "parameters": [
+            {
+              "name": "latLong",
+              "in": "query",
+              "description": "Latitude/Longitude pair to scope down the search around a specifc point - eg. \"42.3455,-71.10767\"",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "category",
+              "in": "query",
+              "description": "Filters result set based on property type. Valid options are \"hotels\", \"attractions\", \"restaurants\", and \"geos\"",
+              "required": false,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "phone",
+              "in": "query",
+              "description": "Phone number to filter the search results by (this can be in any format with spaces and dashes but without the \"+\" sign at the beginning)",
+              "required": false,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "address",
+              "in": "query",
+              "description": "Address to filter the search results by",
+              "required": false,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "radius",
+              "in": "query",
+              "description": "Length of the radius from the provided latitude/longitude pair to filter results.",
+              "required": false,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "radiusUnit",
+              "in": "query",
+              "description": "Unit for length of the radius. Valid options are \"km\", \"mi\", \"m\" (km=kilometers, mi=miles, m=meters)",
+              "required": false,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "language",
+              "in": "query",
+              "description": "The language in which to return results (e.g. \"en\" for English or \"es\" for Spanish) from the list of our Supported Languages.",
+              "required": false,
+              "schema": {
+                "default": "en",
+                "type": "string",
+                "enum": [
+                  "ar",
+                  "zh",
+                  "zh_TW",
+                  "da",
+                  "nl",
+                  "en_AU",
+                  "en_CA",
+                  "en_HK",
+                  "en_IN",
+                  "en_IE",
+                  "en_MY",
+                  "en_NZ",
+                  "en_PH",
+                  "en_SG",
+                  "en_ZA",
+                  "en_UK",
+                  "en",
+                  "fr",
+                  "fr_BE",
+                  "fr_CA",
+                  "fr_CH",
+                  "de_AT",
+                  "de",
+                  "el",
+                  "iw",
+                  "in",
+                  "it",
+                  "it_CH",
+                  "ja",
+                  "ko",
+                  "no",
+                  "pt_PT",
+                  "pt",
+                  "ru",
+                  "es_AR",
+                  "es_CO",
+                  "es_MX",
+                  "es_PE",
+                  "es",
+                  "es_VE",
+                  "es_CL",
+                  "sv",
+                  "th",
+                  "tr",
+                  "vi"
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Nearby Location Search Results",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "location_id": {
+                              "description": "A unique identifier for a location on Tripadvisor. This is to be used in the other endpoints that require a location ID.",
+                              "type": "integer",
+                              "format": "int32"
+                            },
+                            "name": {
+                              "description": "Name of the location",
+                              "type": "string"
+                            },
+                            "distance": {
+                              "description": "Distance, in miles, this location is from the passed in LatLong parameters",
+                              "type": "string"
+                            },
+                            "bearing": {
+                              "description": "Direction this location is from the passed in LatLong parameters",
+                              "type": "string"
+                            },
+                            "address_obj": {
+                              "description": "Object consisting of various address data",
+                              "type": "object",
+                              "properties": {
+                                "street1": {
+                                  "type": "string",
+                                  "description": "The street name"
+                                },
+                                "street2": {
+                                  "type": "string",
+                                  "description": "The street name continuation"
+                                },
+                                "city": {
+                                  "type": "string",
+                                  "description": "The city name"
+                                },
+                                "state": {
+                                  "type": "string",
+                                  "description": "The state"
+                                },
+                                "country": {
+                                  "type": "string",
+                                  "description": "The country"
+                                },
+                                "postalcode": {
+                                  "type": "string",
+                                  "description": "The address postal code"
+                                },
+                                "address_string": {
+                                  "type": "string",
+                                  "description": "The address in one single sentence"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "error": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          },
+                          "code": {
+                            "type": "integer",
+                            "format": "int32"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "cosoLocationApiLambdaAuthorizer": []
+            }
+          ]
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "cosoLocationApiLambdaAuthorizer": {
+          "type": "apiKey",
+          "name": "key",
+          "in": "query"
+        }
+      }
+    }
+  }

@@ -8,19 +8,77 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    public partial class ContainerServiceMaintenanceConfigurationData : IUtf8JsonSerializable, IJsonModel<ContainerServiceMaintenanceConfigurationData>
+    /// <summary> Planned maintenance configuration, used to configure when updates can be deployed to a Managed Cluster. See [planned maintenance](https://docs.microsoft.com/azure/aks/planned-maintenance) for more information about planned maintenance. </summary>
+    public partial class ContainerServiceMaintenanceConfigurationData : ResourceData, IJsonModel<ContainerServiceMaintenanceConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceMaintenanceConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceMaintenanceConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeContainerServiceMaintenanceConfigurationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerServiceMaintenanceConfigurationData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceMaintenanceConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerServiceMaintenanceConfigurationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerServiceMaintenanceConfigurationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerServiceMaintenanceConfigurationData IPersistableModel<ContainerServiceMaintenanceConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContainerServiceMaintenanceConfigurationData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerServiceMaintenanceConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="containerServiceMaintenanceConfigurationData"> The <see cref="ContainerServiceMaintenanceConfigurationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ContainerServiceMaintenanceConfigurationData containerServiceMaintenanceConfigurationData)
+        {
+            if (containerServiceMaintenanceConfigurationData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(containerServiceMaintenanceConfigurationData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContainerServiceMaintenanceConfigurationData"/> from. </param>
+        internal static ContainerServiceMaintenanceConfigurationData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeContainerServiceMaintenanceConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerServiceMaintenanceConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -32,327 +90,105 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceMaintenanceConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceMaintenanceConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerServiceMaintenanceConfigurationData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TimesInWeek))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("timeInWeek"u8);
-                writer.WriteStartArray();
-                foreach (var item in TimesInWeek)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsCollectionDefined(NotAllowedTimes))
-            {
-                writer.WritePropertyName("notAllowedTime"u8);
-                writer.WriteStartArray();
-                foreach (var item in NotAllowedTimes)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(MaintenanceWindow))
-            {
-                writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow, options);
-            }
-            writer.WriteEndObject();
         }
 
-        ContainerServiceMaintenanceConfigurationData IJsonModel<ContainerServiceMaintenanceConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerServiceMaintenanceConfigurationData IJsonModel<ContainerServiceMaintenanceConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ContainerServiceMaintenanceConfigurationData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceMaintenanceConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceMaintenanceConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerServiceMaintenanceConfigurationData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeContainerServiceMaintenanceConfigurationData(document.RootElement, options);
         }
 
-        internal static ContainerServiceMaintenanceConfigurationData DeserializeContainerServiceMaintenanceConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ContainerServiceMaintenanceConfigurationData DeserializeContainerServiceMaintenanceConfigurationData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            IList<ContainerServiceTimeInWeek> timeInWeek = default;
-            IList<ContainerServiceTimeSpan> notAllowedTime = default;
-            ContainerServiceMaintenanceWindow maintenanceWindow = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            MaintenanceConfigurationProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerServiceContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("timeInWeek"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ContainerServiceTimeInWeek> array = new List<ContainerServiceTimeInWeek>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ContainerServiceTimeInWeek.DeserializeContainerServiceTimeInWeek(item, options));
-                            }
-                            timeInWeek = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("notAllowedTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ContainerServiceTimeSpan> array = new List<ContainerServiceTimeSpan>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ContainerServiceTimeSpan.DeserializeContainerServiceTimeSpan(item, options));
-                            }
-                            notAllowedTime = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("maintenanceWindow"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maintenanceWindow = ContainerServiceMaintenanceWindow.DeserializeContainerServiceMaintenanceWindow(property0.Value, options);
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerServiceContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = MaintenanceConfigurationProperties.DeserializeMaintenanceConfigurationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerServiceMaintenanceConfigurationData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                timeInWeek ?? new ChangeTrackingList<ContainerServiceTimeInWeek>(),
-                notAllowedTime ?? new ChangeTrackingList<ContainerServiceTimeSpan>(),
-                maintenanceWindow,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimesInWeek), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    timeInWeek: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(TimesInWeek))
-                {
-                    if (TimesInWeek.Any())
-                    {
-                        builder.Append("    timeInWeek: ");
-                        builder.AppendLine("[");
-                        foreach (var item in TimesInWeek)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    timeInWeek: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotAllowedTimes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    notAllowedTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(NotAllowedTimes))
-                {
-                    if (NotAllowedTimes.Any())
-                    {
-                        builder.Append("    notAllowedTime: ");
-                        builder.AppendLine("[");
-                        foreach (var item in NotAllowedTimes)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    notAllowedTime: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaintenanceWindow), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    maintenanceWindow: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaintenanceWindow))
-                {
-                    builder.Append("    maintenanceWindow: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, MaintenanceWindow, options, 4, false, "    maintenanceWindow: ");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ContainerServiceMaintenanceConfigurationData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceMaintenanceConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ContainerServiceMaintenanceConfigurationData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ContainerServiceMaintenanceConfigurationData IPersistableModel<ContainerServiceMaintenanceConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceMaintenanceConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeContainerServiceMaintenanceConfigurationData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContainerServiceMaintenanceConfigurationData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ContainerServiceMaintenanceConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

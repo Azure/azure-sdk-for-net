@@ -13,46 +13,14 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    /// <summary>
-    /// A class representing the Peering data model.
-    /// Peering is a logical representation of a set of connections to the Microsoft Cloud Edge at a location.
-    /// </summary>
+    /// <summary> Peering is a logical representation of a set of connections to the Microsoft Cloud Edge at a location. </summary>
     public partial class PeeringData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PeeringData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> The SKU that defines the tier and kind of the peering. </param>
         /// <param name="kind"> The kind of the peering. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -65,46 +33,104 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Initializes a new instance of <see cref="PeeringData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties that define a peering. </param>
         /// <param name="sku"> The SKU that defines the tier and kind of the peering. </param>
         /// <param name="kind"> The kind of the peering. </param>
-        /// <param name="direct"> The properties that define a direct peering. </param>
-        /// <param name="exchange"> The properties that define an exchange peering. </param>
-        /// <param name="peeringLocation"> The location of the peering. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PeeringSku sku, PeeringKind kind, DirectPeeringProperties direct, ExchangePeeringProperties exchange, string peeringLocation, PeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PeeringData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, PeeringProperties properties, PeeringSku sku, PeeringKind kind) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
             Kind = kind;
-            Direct = direct;
-            Exchange = exchange;
-            PeeringLocation = peeringLocation;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PeeringData"/> for deserialization. </summary>
-        internal PeeringData()
-        {
-        }
+        /// <summary> The properties that define a peering. </summary>
+        internal PeeringProperties Properties { get; set; }
 
         /// <summary> The SKU that defines the tier and kind of the peering. </summary>
         public PeeringSku Sku { get; set; }
+
         /// <summary> The kind of the peering. </summary>
         public PeeringKind Kind { get; set; }
+
         /// <summary> The properties that define a direct peering. </summary>
-        public DirectPeeringProperties Direct { get; set; }
+        public DirectPeeringProperties Direct
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Direct;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeeringProperties();
+                }
+                Properties.Direct = value;
+            }
+        }
+
         /// <summary> The properties that define an exchange peering. </summary>
-        public ExchangePeeringProperties Exchange { get; set; }
+        public ExchangePeeringProperties Exchange
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Exchange;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeeringProperties();
+                }
+                Properties.Exchange = value;
+            }
+        }
+
+        /// <summary> The connectivity probes associated with the peering. </summary>
+        public IList<PeeringConnectivityProbe> ConnectivityProbes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeeringProperties();
+                }
+                return Properties.ConnectivityProbes;
+            }
+        }
+
         /// <summary> The location of the peering. </summary>
-        public string PeeringLocation { get; set; }
+        public string PeeringLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeeringLocation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeeringProperties();
+                }
+                Properties.PeeringLocation = value;
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
-        public PeeringProvisioningState? ProvisioningState { get; }
+        public PeeringProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

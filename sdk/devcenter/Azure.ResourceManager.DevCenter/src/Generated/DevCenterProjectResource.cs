@@ -7,47 +7,39 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A Class representing a DevCenterProject along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevCenterProjectResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDevCenterProjectResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDevCenterProject method.
+    /// A class representing a DevCenterProject along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevCenterProjectResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDevCenterProjects method.
     /// </summary>
     public partial class DevCenterProjectResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DevCenterProjectResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="projectName"> The projectName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _devCenterProjectProjectsClientDiagnostics;
-        private readonly ProjectsRestOperations _devCenterProjectProjectsRestClient;
+        private readonly ClientDiagnostics _projectsClientDiagnostics;
+        private readonly Projects _projectsRestClient;
+        private readonly ClientDiagnostics _skusClientDiagnostics;
+        private readonly Skus _skusRestClient;
         private readonly DevCenterProjectData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects";
 
-        /// <summary> Initializes a new instance of the <see cref="DevCenterProjectResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DevCenterProjectResource for mocking. </summary>
         protected DevCenterProjectResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevCenterProjectResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevCenterProjectResource(ArmClient client, DevCenterProjectData data) : this(client, data.Id)
@@ -56,416 +48,94 @@ namespace Azure.ResourceManager.DevCenter
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevCenterProjectResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DevCenterProjectResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _devCenterProjectProjectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string devCenterProjectProjectsApiVersion);
-            _devCenterProjectProjectsRestClient = new ProjectsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterProjectProjectsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string devCenterProjectApiVersion);
+            _projectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
+            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Endpoint, devCenterProjectApiVersion ?? "2026-01-01-preview");
+            _skusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
+            _skusRestClient = new Skus(_skusClientDiagnostics, Pipeline, Endpoint, devCenterProjectApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DevCenterProjectData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="projectName"> The projectName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of ProjectAttachedNetworkConnectionResources in the DevCenterProject. </summary>
-        /// <returns> An object representing collection of ProjectAttachedNetworkConnectionResources and their operations over a ProjectAttachedNetworkConnectionResource. </returns>
-        public virtual ProjectAttachedNetworkConnectionCollection GetProjectAttachedNetworkConnections()
-        {
-            return GetCachedClient(client => new ProjectAttachedNetworkConnectionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an attached NetworkConnection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/attachednetworks/{attachedNetworkConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttachedNetworks_GetByProject</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProjectAttachedNetworkConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="attachedNetworkConnectionName"> The name of the attached NetworkConnection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ProjectAttachedNetworkConnectionResource>> GetProjectAttachedNetworkConnectionAsync(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
-        {
-            return await GetProjectAttachedNetworkConnections().GetAsync(attachedNetworkConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an attached NetworkConnection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/attachednetworks/{attachedNetworkConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AttachedNetworks_GetByProject</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProjectAttachedNetworkConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="attachedNetworkConnectionName"> The name of the attached NetworkConnection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ProjectAttachedNetworkConnectionResource> GetProjectAttachedNetworkConnection(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
-        {
-            return GetProjectAttachedNetworkConnections().Get(attachedNetworkConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AllowedEnvironmentTypeResources in the DevCenterProject. </summary>
-        /// <returns> An object representing collection of AllowedEnvironmentTypeResources and their operations over a AllowedEnvironmentTypeResource. </returns>
-        public virtual AllowedEnvironmentTypeCollection GetAllowedEnvironmentTypes()
-        {
-            return GetCachedClient(client => new AllowedEnvironmentTypeCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an allowed environment type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/allowedEnvironmentTypes/{environmentTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProjectAllowedEnvironmentTypes_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AllowedEnvironmentTypeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="environmentTypeName"> The name of the environment type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AllowedEnvironmentTypeResource>> GetAllowedEnvironmentTypeAsync(string environmentTypeName, CancellationToken cancellationToken = default)
-        {
-            return await GetAllowedEnvironmentTypes().GetAsync(environmentTypeName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an allowed environment type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/allowedEnvironmentTypes/{environmentTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProjectAllowedEnvironmentTypes_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AllowedEnvironmentTypeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="environmentTypeName"> The name of the environment type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AllowedEnvironmentTypeResource> GetAllowedEnvironmentType(string environmentTypeName, CancellationToken cancellationToken = default)
-        {
-            return GetAllowedEnvironmentTypes().Get(environmentTypeName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DevCenterProjectEnvironmentResources in the DevCenterProject. </summary>
-        /// <returns> An object representing collection of DevCenterProjectEnvironmentResources and their operations over a DevCenterProjectEnvironmentResource. </returns>
-        public virtual DevCenterProjectEnvironmentCollection GetDevCenterProjectEnvironments()
-        {
-            return GetCachedClient(client => new DevCenterProjectEnvironmentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a project environment type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/environmentTypes/{environmentTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProjectEnvironmentTypes_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="environmentTypeName"> The name of the environment type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DevCenterProjectEnvironmentResource>> GetDevCenterProjectEnvironmentAsync(string environmentTypeName, CancellationToken cancellationToken = default)
-        {
-            return await GetDevCenterProjectEnvironments().GetAsync(environmentTypeName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a project environment type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/environmentTypes/{environmentTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProjectEnvironmentTypes_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="environmentTypeName"> The name of the environment type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DevCenterProjectEnvironmentResource> GetDevCenterProjectEnvironment(string environmentTypeName, CancellationToken cancellationToken = default)
-        {
-            return GetDevCenterProjectEnvironments().Get(environmentTypeName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ProjectDevBoxDefinitionResources in the DevCenterProject. </summary>
-        /// <returns> An object representing collection of ProjectDevBoxDefinitionResources and their operations over a ProjectDevBoxDefinitionResource. </returns>
-        public virtual ProjectDevBoxDefinitionCollection GetProjectDevBoxDefinitions()
-        {
-            return GetCachedClient(client => new ProjectDevBoxDefinitionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a Dev Box definition configured for a project
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions/{devBoxDefinitionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevBoxDefinitions_GetByProject</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProjectDevBoxDefinitionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ProjectDevBoxDefinitionResource>> GetProjectDevBoxDefinitionAsync(string devBoxDefinitionName, CancellationToken cancellationToken = default)
-        {
-            return await GetProjectDevBoxDefinitions().GetAsync(devBoxDefinitionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a Dev Box definition configured for a project
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions/{devBoxDefinitionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DevBoxDefinitions_GetByProject</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProjectDevBoxDefinitionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ProjectDevBoxDefinitionResource> GetProjectDevBoxDefinition(string devBoxDefinitionName, CancellationToken cancellationToken = default)
-        {
-            return GetProjectDevBoxDefinitions().Get(devBoxDefinitionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DevCenterPoolResources in the DevCenterProject. </summary>
-        /// <returns> An object representing collection of DevCenterPoolResources and their operations over a DevCenterPoolResource. </returns>
-        public virtual DevCenterPoolCollection GetDevCenterPools()
-        {
-            return GetCachedClient(client => new DevCenterPoolCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a machine pool
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/pools/{poolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pools_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterPoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="poolName"> Name of the pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DevCenterPoolResource>> GetDevCenterPoolAsync(string poolName, CancellationToken cancellationToken = default)
-        {
-            return await GetDevCenterPools().GetAsync(poolName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a machine pool
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/pools/{poolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Pools_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterPoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="poolName"> Name of the pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DevCenterPoolResource> GetDevCenterPool(string poolName, CancellationToken cancellationToken = default)
-        {
-            return GetDevCenterPools().Get(poolName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a specific project.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevCenterProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DevCenterProjectResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _devCenterProjectProjectsClientDiagnostics.CreateScope("DevCenterProjectResource.Get");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("DevCenterProjectResource.Get");
             scope.Start();
             try
             {
-                var response = await _devCenterProjectProjectsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DevCenterProjectData> response = Response.FromValue(DevCenterProjectData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevCenterProjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -479,118 +149,42 @@ namespace Azure.ResourceManager.DevCenter
         /// Gets a specific project.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevCenterProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DevCenterProjectResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _devCenterProjectProjectsClientDiagnostics.CreateScope("DevCenterProjectResource.Get");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("DevCenterProjectResource.Get");
             scope.Start();
             try
             {
-                var response = _devCenterProjectProjectsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DevCenterProjectData> response = Response.FromValue(DevCenterProjectData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevCenterProjectResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a project resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _devCenterProjectProjectsClientDiagnostics.CreateScope("DevCenterProjectResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _devCenterProjectProjectsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation(_devCenterProjectProjectsClientDiagnostics, Pipeline, _devCenterProjectProjectsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a project resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _devCenterProjectProjectsClientDiagnostics.CreateScope("DevCenterProjectResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _devCenterProjectProjectsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DevCenterArmOperation(_devCenterProjectProjectsClientDiagnostics, Pipeline, _devCenterProjectProjectsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -603,20 +197,20 @@ namespace Azure.ResourceManager.DevCenter
         /// Partially updates a project.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevCenterProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -628,14 +222,27 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _devCenterProjectProjectsClientDiagnostics.CreateScope("DevCenterProjectResource.Update");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("DevCenterProjectResource.Update");
             scope.Start();
             try
             {
-                var response = await _devCenterProjectProjectsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<DevCenterProjectResource>(new DevCenterProjectOperationSource(Client), _devCenterProjectProjectsClientDiagnostics, Pipeline, _devCenterProjectProjectsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _projectsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevCenterProjectPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevCenterArmOperation<DevCenterProjectResource> operation = new DevCenterArmOperation<DevCenterProjectResource>(
+                    new DevCenterProjectOperationSource(Client),
+                    _projectsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -649,20 +256,20 @@ namespace Azure.ResourceManager.DevCenter
         /// Partially updates a project.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevCenterProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -674,14 +281,27 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _devCenterProjectProjectsClientDiagnostics.CreateScope("DevCenterProjectResource.Update");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("DevCenterProjectResource.Update");
             scope.Start();
             try
             {
-                var response = _devCenterProjectProjectsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new DevCenterArmOperation<DevCenterProjectResource>(new DevCenterProjectOperationSource(Client), _devCenterProjectProjectsClientDiagnostics, Pipeline, _devCenterProjectProjectsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _projectsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevCenterProjectPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevCenterArmOperation<DevCenterProjectResource> operation = new DevCenterArmOperation<DevCenterProjectResource>(
+                    new DevCenterProjectOperationSource(Client),
+                    _projectsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -692,26 +312,276 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Deletes a project resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevCenterProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("DevCenterProjectResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _projectsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DevCenterArmOperation operation = new DevCenterArmOperation(_projectsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a project resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevCenterProjectResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("DevCenterProjectResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _projectsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DevCenterArmOperation operation = new DevCenterArmOperation(_projectsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets applicable inherited settings for this project.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/getInheritedSettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_GetInheritedSettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevCenterProjectResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DevCenterInheritedSettingsForProject>> GetInheritedSettingsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("DevCenterProjectResource.GetInheritedSettings");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _projectsRestClient.CreateGetInheritedSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DevCenterInheritedSettingsForProject> response = Response.FromValue(DevCenterInheritedSettingsForProject.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets applicable inherited settings for this project.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/getInheritedSettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_GetInheritedSettings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevCenterProjectResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DevCenterInheritedSettingsForProject> GetInheritedSettings(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("DevCenterProjectResource.GetInheritedSettings");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _projectsRestClient.CreateGetInheritedSettingsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DevCenterInheritedSettingsForProject> response = Response.FromValue(DevCenterInheritedSettingsForProject.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists SKUs available to the project.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/listSkus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_ListByProject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevCenterProjectResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevCenterSkuDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevCenterSkuDetails> GetByProjectAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SkusGetByProjectAsyncCollectionResultOfT(
+                _skusRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DevCenterProjectResource.GetByProject");
+        }
+
+        /// <summary>
+        /// Lists SKUs available to the project.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/listSkus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_ListByProject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DevCenterProjectResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevCenterSkuDetails"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevCenterSkuDetails> GetByProject(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SkusGetByProjectCollectionResultOfT(
+                _skusRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DevCenterProjectResource.GetByProject");
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -721,28 +591,34 @@ namespace Azure.ResourceManager.DevCenter
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _devCenterProjectProjectsClientDiagnostics.CreateScope("DevCenterProjectResource.AddTag");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("DevCenterProjectResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _devCenterProjectProjectsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DevCenterProjectResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DevCenterProjectData> response = Response.FromValue(DevCenterProjectData.FromResponse(result), result);
+                    return Response.FromValue(new DevCenterProjectResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DevCenterProjectPatch();
-                    foreach (var tag in current.Tags)
+                    DevCenterProjectData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DevCenterProjectPatch patch = new DevCenterProjectPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DevCenterProjectResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -753,27 +629,7 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -783,28 +639,34 @@ namespace Azure.ResourceManager.DevCenter
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _devCenterProjectProjectsClientDiagnostics.CreateScope("DevCenterProjectResource.AddTag");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("DevCenterProjectResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _devCenterProjectProjectsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DevCenterProjectResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DevCenterProjectData> response = Response.FromValue(DevCenterProjectData.FromResponse(result), result);
+                    return Response.FromValue(new DevCenterProjectResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DevCenterProjectPatch();
-                    foreach (var tag in current.Tags)
+                    DevCenterProjectData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DevCenterProjectPatch patch = new DevCenterProjectPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DevCenterProjectResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -815,53 +677,39 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DevCenterProjectResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _devCenterProjectProjectsClientDiagnostics.CreateScope("DevCenterProjectResource.SetTags");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("DevCenterProjectResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _devCenterProjectProjectsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DevCenterProjectResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DevCenterProjectData> response = Response.FromValue(DevCenterProjectData.FromResponse(result), result);
+                    return Response.FromValue(new DevCenterProjectResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DevCenterProjectPatch();
+                    DevCenterProjectData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DevCenterProjectPatch patch = new DevCenterProjectPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DevCenterProjectResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -872,53 +720,39 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DevCenterProjectResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _devCenterProjectProjectsClientDiagnostics.CreateScope("DevCenterProjectResource.SetTags");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("DevCenterProjectResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _devCenterProjectProjectsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DevCenterProjectResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DevCenterProjectData> response = Response.FromValue(DevCenterProjectData.FromResponse(result), result);
+                    return Response.FromValue(new DevCenterProjectResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DevCenterProjectPatch();
+                    DevCenterProjectData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DevCenterProjectPatch patch = new DevCenterProjectPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DevCenterProjectResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -929,27 +763,7 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -957,28 +771,34 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _devCenterProjectProjectsClientDiagnostics.CreateScope("DevCenterProjectResource.RemoveTag");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("DevCenterProjectResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _devCenterProjectProjectsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new DevCenterProjectResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DevCenterProjectData> response = Response.FromValue(DevCenterProjectData.FromResponse(result), result);
+                    return Response.FromValue(new DevCenterProjectResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new DevCenterProjectPatch();
-                    foreach (var tag in current.Tags)
+                    DevCenterProjectData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DevCenterProjectPatch patch = new DevCenterProjectPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DevCenterProjectResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -989,27 +809,7 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterProjectResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1017,28 +817,34 @@ namespace Azure.ResourceManager.DevCenter
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _devCenterProjectProjectsClientDiagnostics.CreateScope("DevCenterProjectResource.RemoveTag");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("DevCenterProjectResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _devCenterProjectProjectsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new DevCenterProjectResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DevCenterProjectData> response = Response.FromValue(DevCenterProjectData.FromResponse(result), result);
+                    return Response.FromValue(new DevCenterProjectResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new DevCenterProjectPatch();
-                    foreach (var tag in current.Tags)
+                    DevCenterProjectData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DevCenterProjectPatch patch = new DevCenterProjectPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<DevCenterProjectResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1047,6 +853,237 @@ namespace Azure.ResourceManager.DevCenter
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of ProjectAttachedNetworkConnections in the <see cref="DevCenterProjectResource"/>. </summary>
+        /// <returns> An object representing collection of ProjectAttachedNetworkConnections and their operations over a ProjectAttachedNetworkConnectionResource. </returns>
+        public virtual ProjectAttachedNetworkConnectionCollection GetProjectAttachedNetworkConnections()
+        {
+            return GetCachedClient(client => new ProjectAttachedNetworkConnectionCollection(client, Id));
+        }
+
+        /// <summary> Gets an attached NetworkConnection. </summary>
+        /// <param name="attachedNetworkConnectionName"> The name of the attached NetworkConnection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ProjectAttachedNetworkConnectionResource>> GetProjectAttachedNetworkConnectionAsync(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
+
+            return await GetProjectAttachedNetworkConnections().GetAsync(attachedNetworkConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an attached NetworkConnection. </summary>
+        /// <param name="attachedNetworkConnectionName"> The name of the attached NetworkConnection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ProjectAttachedNetworkConnectionResource> GetProjectAttachedNetworkConnection(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(attachedNetworkConnectionName, nameof(attachedNetworkConnectionName));
+
+            return GetProjectAttachedNetworkConnections().Get(attachedNetworkConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ProjectImages in the <see cref="DevCenterProjectResource"/>. </summary>
+        /// <returns> An object representing collection of ProjectImages and their operations over a ProjectImageResource. </returns>
+        public virtual ProjectImageCollection GetProjectImages()
+        {
+            return GetCachedClient(client => new ProjectImageCollection(client, Id));
+        }
+
+        /// <summary> Gets an image. </summary>
+        /// <param name="imageName"> The name of the image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ProjectImageResource>> GetProjectImageAsync(string imageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+
+            return await GetProjectImages().GetAsync(imageName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an image. </summary>
+        /// <param name="imageName"> The name of the image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ProjectImageResource> GetProjectImage(string imageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+
+            return GetProjectImages().Get(imageName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevCenterProjectEnvironments in the <see cref="DevCenterProjectResource"/>. </summary>
+        /// <returns> An object representing collection of DevCenterProjectEnvironments and their operations over a DevCenterProjectEnvironmentResource. </returns>
+        public virtual DevCenterProjectEnvironmentCollection GetDevCenterProjectEnvironments()
+        {
+            return GetCachedClient(client => new DevCenterProjectEnvironmentCollection(client, Id));
+        }
+
+        /// <summary> Gets a project environment type. </summary>
+        /// <param name="environmentTypeName"> The name of the environment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevCenterProjectEnvironmentResource>> GetDevCenterProjectEnvironmentAsync(string environmentTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+
+            return await GetDevCenterProjectEnvironments().GetAsync(environmentTypeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a project environment type. </summary>
+        /// <param name="environmentTypeName"> The name of the environment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevCenterProjectEnvironmentResource> GetDevCenterProjectEnvironment(string environmentTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+
+            return GetDevCenterProjectEnvironments().Get(environmentTypeName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ProjectDevBoxDefinitions in the <see cref="DevCenterProjectResource"/>. </summary>
+        /// <returns> An object representing collection of ProjectDevBoxDefinitions and their operations over a ProjectDevBoxDefinitionResource. </returns>
+        public virtual ProjectDevBoxDefinitionCollection GetProjectDevBoxDefinitions()
+        {
+            return GetCachedClient(client => new ProjectDevBoxDefinitionCollection(client, Id));
+        }
+
+        /// <summary> Gets a Dev Box definition configured for a project. </summary>
+        /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ProjectDevBoxDefinitionResource>> GetProjectDevBoxDefinitionAsync(string devBoxDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(devBoxDefinitionName, nameof(devBoxDefinitionName));
+
+            return await GetProjectDevBoxDefinitions().GetAsync(devBoxDefinitionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a Dev Box definition configured for a project. </summary>
+        /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ProjectDevBoxDefinitionResource> GetProjectDevBoxDefinition(string devBoxDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(devBoxDefinitionName, nameof(devBoxDefinitionName));
+
+            return GetProjectDevBoxDefinitions().Get(devBoxDefinitionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevCenterPools in the <see cref="DevCenterProjectResource"/>. </summary>
+        /// <returns> An object representing collection of DevCenterPools and their operations over a DevCenterPoolResource. </returns>
+        public virtual DevCenterPoolCollection GetDevCenterPools()
+        {
+            return GetCachedClient(client => new DevCenterPoolCollection(client, Id));
+        }
+
+        /// <summary> Gets a machine pool. </summary>
+        /// <param name="poolName"> Name of the pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevCenterPoolResource>> GetDevCenterPoolAsync(string poolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+
+            return await GetDevCenterPools().GetAsync(poolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a machine pool. </summary>
+        /// <param name="poolName"> Name of the pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevCenterPoolResource> GetDevCenterPool(string poolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+
+            return GetDevCenterPools().Get(poolName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ProjectCatalogs in the <see cref="DevCenterProjectResource"/>. </summary>
+        /// <returns> An object representing collection of ProjectCatalogs and their operations over a ProjectCatalogResource. </returns>
+        public virtual ProjectCatalogCollection GetProjectCatalogs()
+        {
+            return GetCachedClient(client => new ProjectCatalogCollection(client, Id));
+        }
+
+        /// <summary> Gets an associated project catalog. </summary>
+        /// <param name="catalogName"> The name of the Catalog. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ProjectCatalogResource>> GetProjectCatalogAsync(string catalogName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+
+            return await GetProjectCatalogs().GetAsync(catalogName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an associated project catalog. </summary>
+        /// <param name="catalogName"> The name of the Catalog. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ProjectCatalogResource> GetProjectCatalog(string catalogName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
+
+            return GetProjectCatalogs().Get(catalogName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AllowedEnvironmentTypes in the <see cref="DevCenterProjectResource"/>. </summary>
+        /// <returns> An object representing collection of AllowedEnvironmentTypes and their operations over a AllowedEnvironmentTypeResource. </returns>
+        public virtual AllowedEnvironmentTypeCollection GetAllowedEnvironmentTypes()
+        {
+            return GetCachedClient(client => new AllowedEnvironmentTypeCollection(client, Id));
+        }
+
+        /// <summary> Gets an allowed environment type. </summary>
+        /// <param name="environmentTypeName"> The name of the environment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AllowedEnvironmentTypeResource>> GetAllowedEnvironmentTypeAsync(string environmentTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+
+            return await GetAllowedEnvironmentTypes().GetAsync(environmentTypeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an allowed environment type. </summary>
+        /// <param name="environmentTypeName"> The name of the environment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AllowedEnvironmentTypeResource> GetAllowedEnvironmentType(string environmentTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+
+            return GetAllowedEnvironmentTypes().Get(environmentTypeName, cancellationToken);
         }
     }
 }

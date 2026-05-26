@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute
             {
                 writer.WritePropertyName("settings"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(Settings);
+                writer.WriteRawValue(Settings);
 #else
                 using (JsonDocument document = JsonDocument.Parse(Settings))
                 {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute
             {
                 writer.WritePropertyName("protectedSettings"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(ProtectedSettings);
+                writer.WriteRawValue(ProtectedSettings);
 #else
                 using (JsonDocument document = JsonDocument.Parse(ProtectedSettings))
                 {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {

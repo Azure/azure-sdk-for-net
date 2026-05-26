@@ -127,7 +127,7 @@ namespace Azure.Containers.ContainerRegistry
             Response<AcrAccessToken> acrAccessToken = null;
             if (async)
             {
-                acrAccessToken = await _authenticationClient.ExchangeAcrRefreshTokenForAcrAccessTokenAsync(service, scope, string.Empty, TokenGrantType.Password, cancellationToken ).ConfigureAwait(false);
+                acrAccessToken = await _authenticationClient.ExchangeAcrRefreshTokenForAcrAccessTokenAsync(service, scope, string.Empty, TokenGrantType.Password, cancellationToken).ConfigureAwait(false);
             }
             else
             {

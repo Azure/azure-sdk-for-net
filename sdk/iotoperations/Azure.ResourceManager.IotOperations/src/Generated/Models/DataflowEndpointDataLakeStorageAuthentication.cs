@@ -13,43 +13,14 @@ namespace Azure.ResourceManager.IotOperations.Models
     /// <summary> Azure Data Lake endpoint Authentication properties.  NOTE Enum - Only one method is supported for one entry. </summary>
     public partial class DataflowEndpointDataLakeStorageAuthentication
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointDataLakeStorageAuthentication"/>. </summary>
         /// <param name="method"> Mode of Authentication. </param>
-        public DataflowEndpointDataLakeStorageAuthentication(DataLakeStorageAuthMethod method)
+        public DataflowEndpointDataLakeStorageAuthentication(DataLakeStorageAuthMethod @method)
         {
-            Method = method;
+            Method = @method;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointDataLakeStorageAuthentication"/>. </summary>
@@ -57,47 +28,56 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="accessTokenSettings"> SAS token authentication. </param>
         /// <param name="systemAssignedManagedIdentitySettings"> System-assigned managed identity authentication. </param>
         /// <param name="userAssignedManagedIdentitySettings"> User-assigned managed identity authentication. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowEndpointDataLakeStorageAuthentication(DataLakeStorageAuthMethod method, DataflowEndpointAuthenticationAccessToken accessTokenSettings, DataflowEndpointAuthenticationSystemAssignedManagedIdentity systemAssignedManagedIdentitySettings, DataflowEndpointAuthenticationUserAssignedManagedIdentity userAssignedManagedIdentitySettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataflowEndpointDataLakeStorageAuthentication(DataLakeStorageAuthMethod @method, DataflowEndpointAuthenticationAccessToken accessTokenSettings, DataflowEndpointAuthenticationSystemAssignedManagedIdentity systemAssignedManagedIdentitySettings, DataflowEndpointAuthenticationUserAssignedManagedIdentity userAssignedManagedIdentitySettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Method = method;
+            Method = @method;
             AccessTokenSettings = accessTokenSettings;
             SystemAssignedManagedIdentitySettings = systemAssignedManagedIdentitySettings;
             UserAssignedManagedIdentitySettings = userAssignedManagedIdentitySettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataflowEndpointDataLakeStorageAuthentication"/> for deserialization. </summary>
-        internal DataflowEndpointDataLakeStorageAuthentication()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Mode of Authentication. </summary>
         public DataLakeStorageAuthMethod Method { get; set; }
+
         /// <summary> SAS token authentication. </summary>
         internal DataflowEndpointAuthenticationAccessToken AccessTokenSettings { get; set; }
-        /// <summary> Token secret name. </summary>
-        public string AccessTokenSecretRef
-        {
-            get => AccessTokenSettings is null ? default : AccessTokenSettings.SecretRef;
-            set => AccessTokenSettings = new DataflowEndpointAuthenticationAccessToken(value);
-        }
 
         /// <summary> System-assigned managed identity authentication. </summary>
         internal DataflowEndpointAuthenticationSystemAssignedManagedIdentity SystemAssignedManagedIdentitySettings { get; set; }
-        /// <summary> Audience of the service to authenticate against. Optional; defaults to the audience for Service host configuration. </summary>
-        public string SystemAssignedManagedIdentityAudience
-        {
-            get => SystemAssignedManagedIdentitySettings is null ? default : SystemAssignedManagedIdentitySettings.Audience;
-            set
-            {
-                if (SystemAssignedManagedIdentitySettings is null)
-                    SystemAssignedManagedIdentitySettings = new DataflowEndpointAuthenticationSystemAssignedManagedIdentity();
-                SystemAssignedManagedIdentitySettings.Audience = value;
-            }
-        }
 
         /// <summary> User-assigned managed identity authentication. </summary>
         public DataflowEndpointAuthenticationUserAssignedManagedIdentity UserAssignedManagedIdentitySettings { get; set; }
+
+        /// <summary> Token secret name. </summary>
+        public string AccessTokenSecretRef
+        {
+            get
+            {
+                return AccessTokenSettings is null ? default : AccessTokenSettings.SecretRef;
+            }
+            set
+            {
+                AccessTokenSettings = new DataflowEndpointAuthenticationAccessToken(value);
+            }
+        }
+
+        /// <summary> Audience of the service to authenticate against. Optional; defaults to the audience for Service host configuration. </summary>
+        public string SystemAssignedManagedIdentityAudience
+        {
+            get
+            {
+                return SystemAssignedManagedIdentitySettings is null ? default : SystemAssignedManagedIdentitySettings.Audience;
+            }
+            set
+            {
+                if (SystemAssignedManagedIdentitySettings is null)
+                {
+                    SystemAssignedManagedIdentitySettings = new DataflowEndpointAuthenticationSystemAssignedManagedIdentity();
+                }
+                SystemAssignedManagedIdentitySettings.Audience = value;
+            }
+        }
     }
 }

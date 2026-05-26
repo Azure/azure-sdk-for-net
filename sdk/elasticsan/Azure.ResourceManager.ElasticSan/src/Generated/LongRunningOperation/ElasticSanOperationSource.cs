@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    internal class ElasticSanOperationSource : IOperationSource<ElasticSanResource>
+    /// <summary></summary>
+    internal partial class ElasticSanOperationSource : IOperationSource<ElasticSanResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ElasticSanOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ElasticSanResource IOperationSource<ElasticSanResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticSanData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticSanContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ElasticSanData data = ElasticSanData.DeserializeElasticSanData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ElasticSanResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ElasticSanResource> IOperationSource<ElasticSanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ElasticSanData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticSanContext.Default);
-            return await Task.FromResult(new ElasticSanResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ElasticSanData data = ElasticSanData.DeserializeElasticSanData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ElasticSanResource(_client, data);
         }
     }
 }

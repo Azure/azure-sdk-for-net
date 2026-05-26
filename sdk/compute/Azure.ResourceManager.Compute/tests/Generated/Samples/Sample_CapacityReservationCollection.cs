@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateABlockCapacityReservation()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/BlockCapacityReservation_CreateOrUpdate.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/BlockCapacityReservation_CreateOrUpdate.json
             // this example is just showing the usage of "CapacityReservations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateACapacityReservation()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/CapacityReservation_CreateOrUpdate.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/CapacityReservation_CreateOrUpdate.json
             // this example is just showing the usage of "CapacityReservations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateATargetedCapacityReservation()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/TargetedCapacityReservation_CreateOrUpdate.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/TargetedCapacityReservation_CreateOrUpdate.json
             // this example is just showing the usage of "CapacityReservations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetABlockCapacityReservation()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/BlockCapacityReservation_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/BlockCapacityReservation_Get.json
             // this example is just showing the usage of "CapacityReservations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACapacityReservation()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/CapacityReservation_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/CapacityReservation_Get.json
             // this example is just showing the usage of "CapacityReservations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetATargetedCapacityReservation()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/TargetedCapacityReservation_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/TargetedCapacityReservation_Get.json
             // this example is just showing the usage of "CapacityReservations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListBlockCapacityReservationsInReservationGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/BlockCapacityReservation_ListByReservationGroup.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/BlockCapacityReservation_ListByReservationGroup.json
             // this example is just showing the usage of "CapacityReservations_ListByCapacityReservationGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -291,7 +291,8 @@ namespace Azure.ResourceManager.Compute.Samples
             CapacityReservationCollection collection = capacityReservationGroup.GetCapacityReservations();
 
             // invoke the operation and iterate over the result
-            await foreach (CapacityReservationResource item in collection.GetAllAsync())
+            CapacityReservationGroupGetExpand? expand = CapacityReservationGroupGetExpand.VirtualMachinesRef;
+            await foreach (CapacityReservationResource item in collection.GetAllAsync(expand: expand))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -307,7 +308,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListCapacityReservationsInReservationGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/CapacityReservation_ListByReservationGroup.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/CapacityReservation_ListByReservationGroup.json
             // this example is just showing the usage of "CapacityReservations_ListByCapacityReservationGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -327,7 +328,8 @@ namespace Azure.ResourceManager.Compute.Samples
             CapacityReservationCollection collection = capacityReservationGroup.GetCapacityReservations();
 
             // invoke the operation and iterate over the result
-            await foreach (CapacityReservationResource item in collection.GetAllAsync())
+            CapacityReservationGroupGetExpand? expand = CapacityReservationGroupGetExpand.VirtualMachinesRef;
+            await foreach (CapacityReservationResource item in collection.GetAllAsync(expand: expand))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -343,7 +345,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListCapacityReservationsInTargetedReservationGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/TargetedCapacityReservation_ListByReservationGroup.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/TargetedCapacityReservation_ListByReservationGroup.json
             // this example is just showing the usage of "CapacityReservations_ListByCapacityReservationGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -363,7 +365,8 @@ namespace Azure.ResourceManager.Compute.Samples
             CapacityReservationCollection collection = capacityReservationGroup.GetCapacityReservations();
 
             // invoke the operation and iterate over the result
-            await foreach (CapacityReservationResource item in collection.GetAllAsync())
+            CapacityReservationGroupGetExpand? expand = CapacityReservationGroupGetExpand.VirtualMachinesRef;
+            await foreach (CapacityReservationResource item in collection.GetAllAsync(expand: expand))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -379,7 +382,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetABlockCapacityReservation()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/BlockCapacityReservation_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/BlockCapacityReservation_Get.json
             // this example is just showing the usage of "CapacityReservations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -410,7 +413,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetACapacityReservation()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/CapacityReservation_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/CapacityReservation_Get.json
             // this example is just showing the usage of "CapacityReservations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -441,7 +444,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetATargetedCapacityReservation()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/TargetedCapacityReservation_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/TargetedCapacityReservation_Get.json
             // this example is just showing the usage of "CapacityReservations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -472,7 +475,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetABlockCapacityReservation()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/BlockCapacityReservation_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/BlockCapacityReservation_Get.json
             // this example is just showing the usage of "CapacityReservations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -515,7 +518,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetACapacityReservation()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/CapacityReservation_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/CapacityReservation_Get.json
             // this example is just showing the usage of "CapacityReservations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -558,7 +561,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetATargetedCapacityReservation()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/TargetedCapacityReservation_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/TargetedCapacityReservation_Get.json
             // this example is just showing the usage of "CapacityReservations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

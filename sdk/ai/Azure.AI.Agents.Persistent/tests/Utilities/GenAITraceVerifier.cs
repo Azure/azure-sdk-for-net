@@ -44,7 +44,7 @@ namespace Azure.AI.Agents.Persistent.Tests.Utilities
             return CheckSpanEvents(spanEvents, expectedEvents);
         }
 
-        public bool CheckSpanEvents(List<ActivityEvent> spanEvents, List<(string Name, Dictionary<string, object> Attributes)> expectedEvents, bool allowAdditionalEvents=false)
+        public bool CheckSpanEvents(List<ActivityEvent> spanEvents, List<(string Name, Dictionary<string, object> Attributes)> expectedEvents, bool allowAdditionalEvents = false)
         {
             foreach (var expectedEvent in expectedEvents)
             {

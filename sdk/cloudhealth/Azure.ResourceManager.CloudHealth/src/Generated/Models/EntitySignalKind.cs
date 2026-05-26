@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.CloudHealth.Models
     internal readonly partial struct EntitySignalKind : IEquatable<EntitySignalKind>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EntitySignalKind"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EntitySignalKind(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AzureResourceMetricValue = "AzureResourceMetric";
         private const string LogAnalyticsQueryValue = "LogAnalyticsQuery";
         private const string PrometheusMetricsQueryValue = "PrometheusMetricsQuery";
 
-        /// <summary> AzureResourceMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntitySignalKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EntitySignalKind(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the AzureResourceMetric. </summary>
         public static EntitySignalKind AzureResourceMetric { get; } = new EntitySignalKind(AzureResourceMetricValue);
-        /// <summary> LogAnalyticsQuery. </summary>
+
+        /// <summary> Gets the LogAnalyticsQuery. </summary>
         public static EntitySignalKind LogAnalyticsQuery { get; } = new EntitySignalKind(LogAnalyticsQueryValue);
-        /// <summary> PrometheusMetricsQuery. </summary>
+
+        /// <summary> Gets the PrometheusMetricsQuery. </summary>
         public static EntitySignalKind PrometheusMetricsQuery { get; } = new EntitySignalKind(PrometheusMetricsQueryValue);
+
         /// <summary> Determines if two <see cref="EntitySignalKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EntitySignalKind left, EntitySignalKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EntitySignalKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EntitySignalKind left, EntitySignalKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EntitySignalKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EntitySignalKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EntitySignalKind(string value) => new EntitySignalKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EntitySignalKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EntitySignalKind?(string value) => value == null ? null : new EntitySignalKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EntitySignalKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EntitySignalKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

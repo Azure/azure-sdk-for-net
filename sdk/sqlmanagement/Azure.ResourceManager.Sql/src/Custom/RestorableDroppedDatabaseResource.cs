@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Azure.Core;
-using System.Threading.Tasks;
-using System.Threading;
 using System.ComponentModel;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-         [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<RestorableDroppedDatabaseResource>> GetAsync(CancellationToken cancellationToken)
         {
             return await GetAsync(null, null, cancellationToken).ConfigureAwait(false);
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-         [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<RestorableDroppedDatabaseResource> Get(CancellationToken cancellationToken)
         {
             return Get(null, null, cancellationToken);

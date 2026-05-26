@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     /// <summary> Trigger evaluation response. </summary>
     public partial class TriggerEvaluationProperty
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TriggerEvaluationProperty"/>. </summary>
         internal TriggerEvaluationProperty()
@@ -57,22 +29,25 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="evaluationEndOn"> The time when the evaluation is end. </param>
         /// <param name="resourceIds"> List of resource ids to be evaluated. </param>
         /// <param name="quickAssessments"> List of quick assessments. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriggerEvaluationProperty(DateTimeOffset? triggerOn, DateTimeOffset? evaluationEndOn, IReadOnlyList<string> resourceIds, IReadOnlyList<QuickAssessment> quickAssessments, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TriggerEvaluationProperty(DateTimeOffset? triggerOn, DateTimeOffset? evaluationEndOn, IReadOnlyList<string> resourceIds, IReadOnlyList<QuickAssessment> quickAssessments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TriggerOn = triggerOn;
             EvaluationEndOn = evaluationEndOn;
             ResourceIds = resourceIds;
             QuickAssessments = quickAssessments;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The time when the evaluation is triggered. </summary>
         public DateTimeOffset? TriggerOn { get; }
+
         /// <summary> The time when the evaluation is end. </summary>
         public DateTimeOffset? EvaluationEndOn { get; }
+
         /// <summary> List of resource ids to be evaluated. </summary>
         public IReadOnlyList<string> ResourceIds { get; }
+
         /// <summary> List of quick assessments. </summary>
         public IReadOnlyList<QuickAssessment> QuickAssessments { get; }
     }

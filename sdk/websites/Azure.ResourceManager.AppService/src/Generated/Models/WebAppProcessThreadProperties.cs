@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Process Thread properties. </summary>
+    /// <summary>
+    /// Process Thread properties.
+    /// Serialized Name: ProcessThreadProperties
+    /// </summary>
     public partial class WebAppProcessThreadProperties
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppProcessThreadProperties"/>. </summary>
-        /// <param name="id"> Thread ID. </param>
-        /// <param name="href"> HRef URI. </param>
-        /// <param name="state"> Thread state. </param>
+        /// <param name="id">
+        /// Thread ID.
+        /// Serialized Name: ProcessThreadProperties.id
+        /// </param>
+        /// <param name="href">
+        /// HRef URI.
+        /// Serialized Name: ProcessThreadProperties.href
+        /// </param>
+        /// <param name="state">
+        /// Thread state.
+        /// Serialized Name: ProcessThreadProperties.state
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppProcessThreadProperties(int? id, Uri href, string state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Thread ID. </summary>
+        /// <summary>
+        /// Thread ID.
+        /// Serialized Name: ProcessThreadProperties.id
+        /// </summary>
         [WirePath("id")]
         public int? Id { get; }
-        /// <summary> HRef URI. </summary>
+        /// <summary>
+        /// HRef URI.
+        /// Serialized Name: ProcessThreadProperties.href
+        /// </summary>
         [WirePath("href")]
         public Uri Href { get; set; }
-        /// <summary> Thread state. </summary>
+        /// <summary>
+        /// Thread state.
+        /// Serialized Name: ProcessThreadProperties.state
+        /// </summary>
         [WirePath("state")]
         public string State { get; set; }
     }

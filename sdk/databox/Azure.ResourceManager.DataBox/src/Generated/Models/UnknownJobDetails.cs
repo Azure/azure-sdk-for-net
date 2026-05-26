@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> Unknown version of DataBoxBasicJobDetails. </summary>
     internal partial class UnknownJobDetails : DataBoxBasicJobDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownJobDetails"/>. </summary>
@@ -24,11 +23,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="jobDetailsType"> Indicates the type of job details. </param>
         /// <param name="preferences"> Preferences for the order. </param>
         /// <param name="reverseShippingDetails"> Optional Reverse Shipping details for order. </param>
-        /// <param name="copyLogDetails">
-        /// List of copy log details.
-        /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataBoxAccountCopyLogDetails"/>, <see cref="DataBoxCustomerDiskCopyLogDetails"/>, <see cref="DataBoxDiskCopyLogDetails"/> and <see cref="DataBoxHeavyAccountCopyLogDetails"/>.
-        /// </param>
+        /// <param name="copyLogDetails"> List of copy log details. </param>
         /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
         /// <param name="chainOfCustodySasKey"> Shared access key to download the chain of custody logs. </param>
         /// <param name="deviceErasureDetails"> Holds device data erasure details. </param>
@@ -36,20 +31,10 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
         /// <param name="actions"> Available actions on the job. </param>
         /// <param name="lastMitigationActionOnJob"> Last mitigation action performed on the job. </param>
-        /// <param name="dataCenterAddress">
-        /// Datacenter address to ship to, for the given sku and storage location.
-        /// Please note <see cref="DataCenterAddressResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
-        /// </param>
+        /// <param name="dataCenterAddress"> Datacenter address to ship to, for the given sku and storage location. </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, ReverseShippingDetails reverseShippingDetails, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, reverseShippingDetails, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions, lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, serializedAdditionalRawData)
-        {
-            JobDetailsType = jobDetailsType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownJobDetails"/> for deserialization. </summary>
-        internal UnknownJobDetails()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, ReverseShippingDetails reverseShippingDetails, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, reverseShippingDetails, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions, lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, additionalBinaryDataProperties)
         {
         }
     }

@@ -38,7 +38,23 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
             return GetCachedClient(client => new TrustedSigningAccountCollection(client, Id));
         }
 
-        /// <summary> Get a trusted Signing Account. </summary>
+        /// <summary>
+        /// Get a trusted Signing Account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CodeSigningAccounts_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="accountName"> Trusted Signing account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
@@ -51,7 +67,23 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
             return await GetTrustedSigningAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a trusted Signing Account. </summary>
+        /// <summary>
+        /// Get a trusted Signing Account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts/{accountName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CodeSigningAccounts_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="accountName"> Trusted Signing account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>

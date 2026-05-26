@@ -1,4 +1,4 @@
-﻿﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -33,7 +33,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [SetUp]
         public async Task TestSetup()
         {
-            _defaultResourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync(DevOpsConnectorsResourceGroup);        }
+            _defaultResourceGroup = await DefaultSubscription.GetResourceGroups().GetAsync(DevOpsConnectorsResourceGroup);
+        }
 
         [RecordedTest]
         public async Task GenericDevOpsConfiguration_CreateOrUpdateAndDeleteFailed()
@@ -79,7 +80,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
             devOpsConfigurationData.Properties.TopLevelInventoryList.Add("dfdsdktests");
 
-            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => {
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
                 try
                 {
                     await devopsConfigurationResource.CreateOrUpdateAsync(WaitUntil.Completed, devOpsConfigurationData);
@@ -93,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                     }
                     throw;
                 }
-             });
+            });
             Assert.IsNotNull(ex);
             Assert.AreEqual("TokenExchangeFailed", ex.ErrorCode);
 

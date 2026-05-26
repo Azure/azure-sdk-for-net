@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             VirtualMachinePatch updateOptions2 = new VirtualMachinePatch();
             updateOptions2.DiagnosticsProfile = new DiagnosticsProfile();
-            updateOptions2.DiagnosticsProfile.BootDiagnostics= new BootDiagnostics();
+            updateOptions2.DiagnosticsProfile.BootDiagnostics = new BootDiagnostics();
             updateOptions2.DiagnosticsProfile.BootDiagnostics.Enabled = true;
             virtualMachine2 = (await virtualMachine2.UpdateAsync(WaitUntil.Completed, updateOptions2)).Value;
             Assert.AreEqual(true, virtualMachine2.Data.DiagnosticsProfile.BootDiagnostics.Enabled);

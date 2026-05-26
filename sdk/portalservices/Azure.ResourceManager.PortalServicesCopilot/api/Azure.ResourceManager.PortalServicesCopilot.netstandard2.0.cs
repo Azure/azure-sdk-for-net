@@ -106,9 +106,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         public static Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState left, Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState (string value) { throw null; }

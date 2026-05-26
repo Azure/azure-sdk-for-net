@@ -3,9 +3,9 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Resources.Models;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {

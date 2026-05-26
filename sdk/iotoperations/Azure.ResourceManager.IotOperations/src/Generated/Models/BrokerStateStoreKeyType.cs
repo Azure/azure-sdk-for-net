@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct BrokerStateStoreKeyType : IEquatable<BrokerStateStoreKeyType>
     {
         private readonly string _value;
+        /// <summary> Used for glob-style pattern matching. </summary>
+        private const string PatternValue = "Pattern";
+        /// <summary> Used to do exact match, for example, when a key contains characters that might be otherwise matched as a pattern (*, ?, [0-9]). </summary>
+        private const string StringValue = "String";
+        /// <summary> Used to match a binary key. </summary>
+        private const string BinaryValue = "Binary";
 
         /// <summary> Initializes a new instance of <see cref="BrokerStateStoreKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BrokerStateStoreKeyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PatternValue = "Pattern";
-        private const string StringValue = "String";
-        private const string BinaryValue = "Binary";
+            _value = value;
+        }
 
         /// <summary> Used for glob-style pattern matching. </summary>
         public static BrokerStateStoreKeyType Pattern { get; } = new BrokerStateStoreKeyType(PatternValue);
+
         /// <summary> Used to do exact match, for example, when a key contains characters that might be otherwise matched as a pattern (*, ?, [0-9]). </summary>
         public static BrokerStateStoreKeyType String { get; } = new BrokerStateStoreKeyType(StringValue);
+
         /// <summary> Used to match a binary key. </summary>
         public static BrokerStateStoreKeyType Binary { get; } = new BrokerStateStoreKeyType(BinaryValue);
+
         /// <summary> Determines if two <see cref="BrokerStateStoreKeyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BrokerStateStoreKeyType left, BrokerStateStoreKeyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BrokerStateStoreKeyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BrokerStateStoreKeyType left, BrokerStateStoreKeyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BrokerStateStoreKeyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BrokerStateStoreKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BrokerStateStoreKeyType(string value) => new BrokerStateStoreKeyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BrokerStateStoreKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BrokerStateStoreKeyType?(string value) => value == null ? null : new BrokerStateStoreKeyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BrokerStateStoreKeyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BrokerStateStoreKeyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

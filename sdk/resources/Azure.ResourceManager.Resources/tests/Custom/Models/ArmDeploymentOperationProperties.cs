@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text.Json;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using System.Text.Json;
 
 namespace Azure.ResourceManager.Resources.Tests;
 

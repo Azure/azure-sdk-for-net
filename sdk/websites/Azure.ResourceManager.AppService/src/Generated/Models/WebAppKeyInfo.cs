@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Function key info. </summary>
+    /// <summary>
+    /// Function key info.
+    /// Serialized Name: KeyInfo
+    /// </summary>
     public partial class WebAppKeyInfo
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppKeyInfo"/>. </summary>
-        /// <param name="properties"> Properties of function key info. </param>
+        /// <param name="properties">
+        /// Properties of function key info.
+        /// Serialized Name: KeyInfo.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppKeyInfo(WebAppKeyInfoProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Properties of function key info. </summary>
+        /// <summary>
+        /// Properties of function key info.
+        /// Serialized Name: KeyInfo.properties
+        /// </summary>
         [WirePath("properties")]
         public WebAppKeyInfoProperties Properties { get; set; }
     }

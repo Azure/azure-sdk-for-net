@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary> Role assignment item that indicates which principals should be assigned this role definition. </summary>
     public partial class VirtualEnclaveRoleAssignmentItem
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveRoleAssignmentItem"/>. </summary>
         /// <param name="roleDefinitionId"> Role definition identifier. </param>
@@ -59,21 +31,17 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveRoleAssignmentItem"/>. </summary>
         /// <param name="roleDefinitionId"> Role definition identifier. </param>
         /// <param name="principals"> List of principal IDs to which to assign this role definition. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveRoleAssignmentItem(string roleDefinitionId, IList<VirtualEnclavePrincipal> principals, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualEnclaveRoleAssignmentItem(string roleDefinitionId, IList<VirtualEnclavePrincipal> principals, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RoleDefinitionId = roleDefinitionId;
             Principals = principals;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveRoleAssignmentItem"/> for deserialization. </summary>
-        internal VirtualEnclaveRoleAssignmentItem()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Role definition identifier. </summary>
         public string RoleDefinitionId { get; set; }
+
         /// <summary> List of principal IDs to which to assign this role definition. </summary>
         public IList<VirtualEnclavePrincipal> Principals { get; }
     }

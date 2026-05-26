@@ -13,158 +13,253 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary>
-    /// A class representing the SessionPool data model.
-    /// Container App session pool.
-    /// </summary>
+    /// <summary> Container App session pool. </summary>
     public partial class SessionPoolData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SessionPoolData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public SessionPoolData(AzureLocation location) : base(location)
         {
-            Secrets = new ChangeTrackingList<SessionPoolSecret>();
-            ManagedIdentitySettings = new ChangeTrackingList<SessionPoolManagedIdentitySetting>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SessionPoolData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed identities needed by a session pool to interact with other Azure services to not maintain any secrets or credentials in code. </param>
-        /// <param name="environmentId"> Resource ID of the session pool's environment. </param>
-        /// <param name="containerType"> The container type of the sessions. </param>
-        /// <param name="poolManagementType"> The pool management type of the session pool. </param>
-        /// <param name="nodeCount"> The number of nodes the session pool is using. </param>
-        /// <param name="scaleConfiguration"> The scale configuration of the session pool. </param>
-        /// <param name="secrets"> The secrets of the session pool. </param>
-        /// <param name="dynamicPoolConfiguration"> The pool configuration if the poolManagementType is dynamic. </param>
-        /// <param name="customContainerTemplate"> The custom container configuration if the containerType is CustomContainer. </param>
-        /// <param name="sessionNetworkConfiguration"> The network configuration of the sessions in the session pool. </param>
-        /// <param name="poolManagementEndpoint"> The endpoint to manage the pool. </param>
-        /// <param name="provisioningState"> Provisioning state of the session pool. </param>
-        /// <param name="managedIdentitySettings"> Optional settings for a Managed Identity that is assigned to the Session pool. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SessionPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier environmentId, ContainerType? containerType, PoolManagementType? poolManagementType, int? nodeCount, SessionPoolScaleConfiguration scaleConfiguration, IList<SessionPoolSecret> secrets, DynamicPoolConfiguration dynamicPoolConfiguration, CustomContainerTemplate customContainerTemplate, SessionNetworkConfiguration sessionNetworkConfiguration, Uri poolManagementEndpoint, SessionPoolProvisioningState? provisioningState, IList<SessionPoolManagedIdentitySetting> managedIdentitySettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Container App session pool resource specific properties. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        internal SessionPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SessionPoolProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
-            EnvironmentId = environmentId;
-            ContainerType = containerType;
-            PoolManagementType = poolManagementType;
-            NodeCount = nodeCount;
-            ScaleConfiguration = scaleConfiguration;
-            Secrets = secrets;
-            DynamicPoolConfiguration = dynamicPoolConfiguration;
-            CustomContainerTemplate = customContainerTemplate;
-            SessionNetworkConfiguration = sessionNetworkConfiguration;
-            PoolManagementEndpoint = poolManagementEndpoint;
-            ProvisioningState = provisioningState;
-            ManagedIdentitySettings = managedIdentitySettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionPoolData"/> for deserialization. </summary>
-        internal SessionPoolData()
-        {
-        }
+        /// <summary> Container App session pool resource specific properties. </summary>
+        [WirePath("properties")]
+        internal SessionPoolProperties Properties { get; set; }
 
-        /// <summary> Managed identities needed by a session pool to interact with other Azure services to not maintain any secrets or credentials in code. </summary>
+        /// <summary> The managed service identities assigned to this resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Resource ID of the session pool's environment. </summary>
         [WirePath("properties.environmentId")]
-        public ResourceIdentifier EnvironmentId { get; set; }
-        /// <summary> The container type of the sessions. </summary>
-        [WirePath("properties.containerType")]
-        public ContainerType? ContainerType { get; set; }
-        /// <summary> The pool management type of the session pool. </summary>
-        [WirePath("properties.poolManagementType")]
-        public PoolManagementType? PoolManagementType { get; set; }
-        /// <summary> The number of nodes the session pool is using. </summary>
-        [WirePath("properties.nodeCount")]
-        public int? NodeCount { get; }
-        /// <summary> The scale configuration of the session pool. </summary>
-        [WirePath("properties.scaleConfiguration")]
-        public SessionPoolScaleConfiguration ScaleConfiguration { get; set; }
-        /// <summary> The secrets of the session pool. </summary>
-        [WirePath("properties.secrets")]
-        public IList<SessionPoolSecret> Secrets { get; }
-        /// <summary> The pool configuration if the poolManagementType is dynamic. </summary>
-        internal DynamicPoolConfiguration DynamicPoolConfiguration { get; set; }
-        /// <summary> The lifecycle configuration of a session in the dynamic session pool. </summary>
-        [WirePath("properties.dynamicPoolConfiguration.lifecycleConfiguration")]
-        public SessionPoolLifecycleConfiguration DynamicPoolLifecycleConfiguration
+        public ResourceIdentifier EnvironmentId
         {
-            get => DynamicPoolConfiguration is null ? default : DynamicPoolConfiguration.LifecycleConfiguration;
+            get
+            {
+                return Properties is null ? default : Properties.EnvironmentId;
+            }
             set
             {
-                if (DynamicPoolConfiguration is null)
-                    DynamicPoolConfiguration = new DynamicPoolConfiguration();
-                DynamicPoolConfiguration.LifecycleConfiguration = value;
+                if (Properties is null)
+                {
+                    Properties = new SessionPoolProperties();
+                }
+                Properties.EnvironmentId = value;
+            }
+        }
+
+        /// <summary> The container type of the sessions. You can use your own container to build the session pool, or you can use a predefined container to run workload with specific language. </summary>
+        [WirePath("properties.containerType")]
+        public ContainerType? ContainerType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContainerType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SessionPoolProperties();
+                }
+                Properties.ContainerType = value;
+            }
+        }
+
+        /// <summary> The pool management type of the session pool. </summary>
+        [WirePath("properties.poolManagementType")]
+        public PoolManagementType? PoolManagementType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PoolManagementType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SessionPoolProperties();
+                }
+                Properties.PoolManagementType = value;
+            }
+        }
+
+        /// <summary> The number of nodes the session pool is using. </summary>
+        [WirePath("properties.nodeCount")]
+        public int? NodeCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeCount;
+            }
+        }
+
+        /// <summary> The scale configuration of the session pool. </summary>
+        [WirePath("properties.scaleConfiguration")]
+        public SessionPoolScaleConfiguration ScaleConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScaleConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SessionPoolProperties();
+                }
+                Properties.ScaleConfiguration = value;
+            }
+        }
+
+        /// <summary> The secrets of the session pool. </summary>
+        [WirePath("properties.secrets")]
+        public IList<SessionPoolSecret> Secrets
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SessionPoolProperties();
+                }
+                return Properties.Secrets;
             }
         }
 
         /// <summary> The custom container configuration if the containerType is CustomContainer. </summary>
         [WirePath("properties.customContainerTemplate")]
-        public CustomContainerTemplate CustomContainerTemplate { get; set; }
-        /// <summary> The network configuration of the sessions in the session pool. </summary>
-        internal SessionNetworkConfiguration SessionNetworkConfiguration { get; set; }
-        /// <summary> Network status for the sessions. </summary>
-        [WirePath("properties.sessionNetworkConfiguration.status")]
-        public SessionNetworkStatus? SessionNetworkStatus
+        public CustomContainerTemplate CustomContainerTemplate
         {
-            get => SessionNetworkConfiguration is null ? default : SessionNetworkConfiguration.Status;
+            get
+            {
+                return Properties is null ? default : Properties.CustomContainerTemplate;
+            }
             set
             {
-                if (SessionNetworkConfiguration is null)
-                    SessionNetworkConfiguration = new SessionNetworkConfiguration();
-                SessionNetworkConfiguration.Status = value;
+                if (Properties is null)
+                {
+                    Properties = new SessionPoolProperties();
+                }
+                Properties.CustomContainerTemplate = value;
+            }
+        }
+
+        /// <summary> The template status of the session pool, showing active template, or desired template during session pool update. This is only available if the containerType is CustomContainer. </summary>
+        [WirePath("properties.templateUpdateStatus")]
+        public TemplateUpdateStatus TemplateUpdateStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TemplateUpdateStatus;
             }
         }
 
         /// <summary> The endpoint to manage the pool. </summary>
         [WirePath("properties.poolManagementEndpoint")]
-        public Uri PoolManagementEndpoint { get; }
+        public Uri PoolManagementEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PoolManagementEndpoint;
+            }
+        }
+
         /// <summary> Provisioning state of the session pool. </summary>
         [WirePath("properties.provisioningState")]
-        public SessionPoolProvisioningState? ProvisioningState { get; }
+        public SessionPoolProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Optional settings for a Managed Identity that is assigned to the Session pool. </summary>
         [WirePath("properties.managedIdentitySettings")]
-        public IList<SessionPoolManagedIdentitySetting> ManagedIdentitySettings { get; }
+        public IList<SessionPoolManagedIdentitySetting> ManagedIdentitySettings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SessionPoolProperties();
+                }
+                return Properties.ManagedIdentitySettings;
+            }
+        }
+
+        /// <summary> The MCP (Model Context Protocol) server settings of the session pool. </summary>
+        [WirePath("properties.mcpServerSettings")]
+        public McpServerSettings McpServerSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.McpServerSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SessionPoolProperties();
+                }
+                Properties.McpServerSettings = value;
+            }
+        }
+
+        /// <summary> The lifecycle configuration of a session in the dynamic session pool. </summary>
+        [WirePath("properties.dynamicPoolConfiguration.lifecycleConfiguration")]
+        public SessionPoolLifecycleConfiguration DynamicPoolLifecycleConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DynamicPoolLifecycleConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SessionPoolProperties();
+                }
+                Properties.DynamicPoolLifecycleConfiguration = value;
+            }
+        }
+
+        /// <summary> Network status for the sessions. </summary>
+        [WirePath("properties.sessionNetworkConfiguration.status")]
+        public SessionNetworkStatus? SessionNetworkStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SessionNetworkStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SessionPoolProperties();
+                }
+                Properties.SessionNetworkStatus = value;
+            }
+        }
     }
 }

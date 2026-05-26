@@ -18,7 +18,7 @@ namespace Azure.Core.GeoJson
         /// Initializes new instance of <see cref="GeoPointCollection"/>.
         /// </summary>
         /// <param name="points">The collection of inner points.</param>
-        public GeoPointCollection(IEnumerable<GeoPoint> points): this(points, null, DefaultProperties)
+        public GeoPointCollection(IEnumerable<GeoPoint> points) : this(points, null, DefaultProperties)
         {
         }
 
@@ -28,7 +28,7 @@ namespace Azure.Core.GeoJson
         /// <param name="points">The collection of inner points.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
         /// <param name="customProperties">The set of custom properties associated with the <see cref="GeoObject"/>.</param>
-        public GeoPointCollection(IEnumerable<GeoPoint> points, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
+        public GeoPointCollection(IEnumerable<GeoPoint> points, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties) : base(boundingBox, customProperties)
         {
             Argument.AssertNotNull(points, nameof(points));
 

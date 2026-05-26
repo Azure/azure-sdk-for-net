@@ -13,20 +13,6 @@ trigger:
     - sdk/maps/Azure.ResourceManager.Maps/
     - sdk/maps/ci.mgmt.yml
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/maps/
-    exclude:
-    - sdk/maps/Azure.ResourceManager.Maps/
-    - sdk/maps/ci.mgmt.yml
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

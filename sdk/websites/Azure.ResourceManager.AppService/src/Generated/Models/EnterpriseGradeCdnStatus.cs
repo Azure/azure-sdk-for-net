@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> State indicating the status of the enterprise grade CDN serving traffic to the static web app. </summary>
+    /// <summary>
+    /// State indicating the status of the enterprise grade CDN serving traffic to the static web app.
+    /// Serialized Name: EnterpriseGradeCdnStatus
+    /// </summary>
     public readonly partial struct EnterpriseGradeCdnStatus : IEquatable<EnterpriseGradeCdnStatus>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.AppService.Models
         private const string DisabledValue = "Disabled";
         private const string DisablingValue = "Disabling";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: EnterpriseGradeCdnStatus.Enabled
+        /// </summary>
         public static EnterpriseGradeCdnStatus Enabled { get; } = new EnterpriseGradeCdnStatus(EnabledValue);
-        /// <summary> Enabling. </summary>
+        /// <summary>
+        /// Enabling
+        /// Serialized Name: EnterpriseGradeCdnStatus.Enabling
+        /// </summary>
         public static EnterpriseGradeCdnStatus Enabling { get; } = new EnterpriseGradeCdnStatus(EnablingValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: EnterpriseGradeCdnStatus.Disabled
+        /// </summary>
         public static EnterpriseGradeCdnStatus Disabled { get; } = new EnterpriseGradeCdnStatus(DisabledValue);
-        /// <summary> Disabling. </summary>
+        /// <summary>
+        /// Disabling
+        /// Serialized Name: EnterpriseGradeCdnStatus.Disabling
+        /// </summary>
         public static EnterpriseGradeCdnStatus Disabling { get; } = new EnterpriseGradeCdnStatus(DisablingValue);
         /// <summary> Determines if two <see cref="EnterpriseGradeCdnStatus"/> values are the same. </summary>
         public static bool operator ==(EnterpriseGradeCdnStatus left, EnterpriseGradeCdnStatus right) => left.Equals(right);

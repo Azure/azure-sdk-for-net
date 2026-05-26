@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
@@ -24,73 +25,84 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeStorageContainerCollection : ArmCollection, IEnumerable<DataBoxEdgeStorageContainerResource>, IAsyncEnumerable<DataBoxEdgeStorageContainerResource>
     {
-        private readonly ClientDiagnostics _dataBoxEdgeStorageContainerContainersClientDiagnostics;
-        private readonly ContainersRestOperations _dataBoxEdgeStorageContainerContainersRestClient;
+        private readonly ClientDiagnostics _containersClientDiagnostics;
+        private readonly Containers _containersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeStorageContainerCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataBoxEdgeStorageContainerCollection for mocking. </summary>
         protected DataBoxEdgeStorageContainerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeStorageContainerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageContainerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataBoxEdgeStorageContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataBoxEdgeStorageContainerContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeStorageContainerResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DataBoxEdgeStorageContainerResource.ResourceType, out string dataBoxEdgeStorageContainerContainersApiVersion);
-            _dataBoxEdgeStorageContainerContainersRestClient = new ContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeStorageContainerContainersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DataBoxEdgeStorageContainerResource.ResourceType, out string dataBoxEdgeStorageContainerApiVersion);
+            _containersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeStorageContainerResource.ResourceType.Namespace, Diagnostics);
+            _containersRestClient = new Containers(_containersClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeStorageContainerApiVersion ?? "2023-12-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DataBoxEdgeStorageAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeStorageAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeStorageAccountResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates a new container or updates an existing container on the device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Containers_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Containers_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeStorageContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="containerName"> The container name. </param>
+        /// <param name="containerName"> The container Name. </param>
         /// <param name="data"> The container properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<DataBoxEdgeStorageContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string containerName, DataBoxEdgeStorageContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataBoxEdgeStorageContainerContainersClientDiagnostics.CreateScope("DataBoxEdgeStorageContainerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("DataBoxEdgeStorageContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dataBoxEdgeStorageContainerContainersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageContainerResource>(new DataBoxEdgeStorageContainerOperationSource(Client), _dataBoxEdgeStorageContainerContainersClientDiagnostics, Pipeline, _dataBoxEdgeStorageContainerContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, DataBoxEdgeStorageContainerData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DataBoxEdgeArmOperation<DataBoxEdgeStorageContainerResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageContainerResource>(
+                    new DataBoxEdgeStorageContainerOperationSource(Client),
+                    _containersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,42 +116,51 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Creates a new container or updates an existing container on the device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Containers_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Containers_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeStorageContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="containerName"> The container name. </param>
+        /// <param name="containerName"> The container Name. </param>
         /// <param name="data"> The container properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<DataBoxEdgeStorageContainerResource> CreateOrUpdate(WaitUntil waitUntil, string containerName, DataBoxEdgeStorageContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataBoxEdgeStorageContainerContainersClientDiagnostics.CreateScope("DataBoxEdgeStorageContainerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("DataBoxEdgeStorageContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dataBoxEdgeStorageContainerContainersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, data, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageContainerResource>(new DataBoxEdgeStorageContainerOperationSource(Client), _dataBoxEdgeStorageContainerContainersClientDiagnostics, Pipeline, _dataBoxEdgeStorageContainerContainersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, DataBoxEdgeStorageContainerData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DataBoxEdgeArmOperation<DataBoxEdgeStorageContainerResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageContainerResource>(
+                    new DataBoxEdgeStorageContainerOperationSource(Client),
+                    _containersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Gets a container by name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Containers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Containers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeStorageContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> The container Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DataBoxEdgeStorageContainerResource>> GetAsync(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _dataBoxEdgeStorageContainerContainersClientDiagnostics.CreateScope("DataBoxEdgeStorageContainerCollection.Get");
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("DataBoxEdgeStorageContainerCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataBoxEdgeStorageContainerContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataBoxEdgeStorageContainerData> response = Response.FromValue(DataBoxEdgeStorageContainerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataBoxEdgeStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Gets a container by name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Containers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Containers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeStorageContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> The container Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DataBoxEdgeStorageContainerResource> Get(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _dataBoxEdgeStorageContainerContainersClientDiagnostics.CreateScope("DataBoxEdgeStorageContainerCollection.Get");
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("DataBoxEdgeStorageContainerCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataBoxEdgeStorageContainerContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataBoxEdgeStorageContainerData> response = Response.FromValue(DataBoxEdgeStorageContainerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataBoxEdgeStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,51 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Lists all the containers of a storage Account in a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Containers_ListByStorageAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> Containers_ListByStorageAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeStorageContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxEdgeStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataBoxEdgeStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeStorageContainerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeStorageContainerContainersRestClient.CreateListByStorageAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeStorageContainerContainersRestClient.CreateListByStorageAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeStorageContainerResource(Client, DataBoxEdgeStorageContainerData.DeserializeDataBoxEdgeStorageContainerData(e)), _dataBoxEdgeStorageContainerContainersClientDiagnostics, Pipeline, "DataBoxEdgeStorageContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataBoxEdgeStorageContainerData, DataBoxEdgeStorageContainerResource>(new ContainersGetByStorageAccountAsyncCollectionResultOfT(
+                _containersRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "DataBoxEdgeStorageContainerCollection.GetAll"), data => new DataBoxEdgeStorageContainerResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the containers of a storage Account in a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Containers_ListByStorageAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> Containers_ListByStorageAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeStorageContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +324,68 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> A collection of <see cref="DataBoxEdgeStorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeStorageContainerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeStorageContainerContainersRestClient.CreateListByStorageAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeStorageContainerContainersRestClient.CreateListByStorageAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeStorageContainerResource(Client, DataBoxEdgeStorageContainerData.DeserializeDataBoxEdgeStorageContainerData(e)), _dataBoxEdgeStorageContainerContainersClientDiagnostics, Pipeline, "DataBoxEdgeStorageContainerCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataBoxEdgeStorageContainerData, DataBoxEdgeStorageContainerResource>(new ContainersGetByStorageAccountCollectionResultOfT(
+                _containersRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "DataBoxEdgeStorageContainerCollection.GetAll"), data => new DataBoxEdgeStorageContainerResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Containers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Containers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeStorageContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> The container Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _dataBoxEdgeStorageContainerContainersClientDiagnostics.CreateScope("DataBoxEdgeStorageContainerCollection.Exists");
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("DataBoxEdgeStorageContainerCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataBoxEdgeStorageContainerContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataBoxEdgeStorageContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataBoxEdgeStorageContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataBoxEdgeStorageContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +399,50 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Containers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Containers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeStorageContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> The container Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _dataBoxEdgeStorageContainerContainersClientDiagnostics.CreateScope("DataBoxEdgeStorageContainerCollection.Exists");
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("DataBoxEdgeStorageContainerCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataBoxEdgeStorageContainerContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataBoxEdgeStorageContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataBoxEdgeStorageContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataBoxEdgeStorageContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +456,54 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Containers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Containers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeStorageContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> The container Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DataBoxEdgeStorageContainerResource>> GetIfExistsAsync(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _dataBoxEdgeStorageContainerContainersClientDiagnostics.CreateScope("DataBoxEdgeStorageContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("DataBoxEdgeStorageContainerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataBoxEdgeStorageContainerContainersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataBoxEdgeStorageContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataBoxEdgeStorageContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataBoxEdgeStorageContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataBoxEdgeStorageContainerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataBoxEdgeStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +517,54 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccounts/{storageAccountName}/containers/{containerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Containers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Containers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataBoxEdgeStorageContainerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> The container Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DataBoxEdgeStorageContainerResource> GetIfExists(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using var scope = _dataBoxEdgeStorageContainerContainersClientDiagnostics.CreateScope("DataBoxEdgeStorageContainerCollection.GetIfExists");
+            using DiagnosticScope scope = _containersClientDiagnostics.CreateScope("DataBoxEdgeStorageContainerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataBoxEdgeStorageContainerContainersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _containersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataBoxEdgeStorageContainerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataBoxEdgeStorageContainerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataBoxEdgeStorageContainerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataBoxEdgeStorageContainerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataBoxEdgeStorageContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +584,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataBoxEdgeStorageContainerResource> IAsyncEnumerable<DataBoxEdgeStorageContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

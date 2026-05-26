@@ -15,7 +15,6 @@ public partial class AzureOpenAISamples
 {
     public void BasicEmbeddings()
     {
-        #region Snippet:BasicEmbeddings
         AzureOpenAIClient azureClient = new(
             new Uri("https://your-azure-openai-resource.com"),
             new DefaultAzureCredential());
@@ -23,13 +22,12 @@ public partial class AzureOpenAISamples
 
         // Generate embeddings for a single text
         string text = "Azure OpenAI provides powerful AI capabilities for developers.";
-        
+
         OpenAIEmbedding embedding = embeddingClient.GenerateEmbedding(text);
-        
+
         var floats = embedding.ToFloats();
         Console.WriteLine($"Generated embedding with {floats.Length} dimensions");
         Console.WriteLine($"First few values: [{string.Join(", ", floats.Span.Slice(0, Math.Min(5, floats.Length)).ToArray().Select(v => v.ToString("F4")))}...]");
-        #endregion
     }
 
     public void BatchEmbeddings()
@@ -39,7 +37,6 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         EmbeddingClient embeddingClient = azureClient.GetEmbeddingClient("my-text-embedding-deployment");
 
-        #region Snippet:BatchEmbeddings
         // Generate embeddings for multiple texts in a single request
         string[] texts = {
             "Machine learning is a subset of artificial intelligence.",
@@ -49,7 +46,7 @@ public partial class AzureOpenAISamples
         };
 
         OpenAIEmbeddingCollection embeddings = embeddingClient.GenerateEmbeddings(texts);
-        
+
         Console.WriteLine($"Generated {embeddings.Count} embeddings:");
         for (int i = 0; i < embeddings.Count; i++)
         {
@@ -58,7 +55,6 @@ public partial class AzureOpenAISamples
             Console.WriteLine($"  Embedding dimensions: {floats.Length}");
             Console.WriteLine($"  First few values: [{string.Join(", ", floats.Span.Slice(0, Math.Min(3, floats.Length)).ToArray().Select(v => v.ToString("F4")))}...]");
         }
-        #endregion
     }
 
     public void SemanticSearch()
@@ -68,7 +64,6 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         EmbeddingClient embeddingClient = azureClient.GetEmbeddingClient("my-text-embedding-deployment");
 
-        #region Snippet:SemanticSearch
         // Create a knowledge base of documents
         string[] documents = {
             "The Azure cloud platform provides scalable computing resources and services for businesses.",
@@ -87,19 +82,19 @@ public partial class AzureOpenAISamples
         // User query
         string query = "What are cloud computing services?";
         Console.WriteLine($"\nUser query: \"{query}\"");
-        
+
         // Generate embedding for the query
         OpenAIEmbedding queryEmbedding = embeddingClient.GenerateEmbedding(query);
 
         // Calculate cosine similarity between query and each document
         var similarities = new List<(int Index, double Similarity, string Document)>();
-        
+
         for (int i = 0; i < documentEmbeddings.Count; i++)
         {
             double similarity = CalculateCosineSimilarity(
-                queryEmbedding.ToFloats().ToArray(), 
+                queryEmbedding.ToFloats().ToArray(),
                 documentEmbeddings[i].ToFloats().ToArray());
-            
+
             similarities.Add((i, similarity, documents[i]));
         }
 
@@ -114,7 +109,6 @@ public partial class AzureOpenAISamples
             Console.WriteLine($"   Document: {result.Document}");
             Console.WriteLine();
         }
-        #endregion
     }
 
     public void TextClustering()
@@ -124,7 +118,6 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         EmbeddingClient embeddingClient = azureClient.GetEmbeddingClient("my-text-embedding-deployment");
 
-        #region Snippet:TextClustering
         // Sample customer feedback texts for clustering
         string[] customerFeedback = {
             "The delivery was very fast and the product arrived in perfect condition.",
@@ -144,13 +137,14 @@ public partial class AzureOpenAISamples
 
         // Simple clustering: find feedback items that are similar to each other
         Console.WriteLine("\nFinding similar feedback clusters:");
-        
+
         var processed = new bool[customerFeedback.Length];
         int clusterNumber = 1;
 
         for (int i = 0; i < customerFeedback.Length; i++)
         {
-            if (processed[i]) continue;
+            if (processed[i])
+                continue;
 
             var cluster = new List<(int Index, string Text, double Similarity)>();
             cluster.Add((i, customerFeedback[i], 1.0));
@@ -159,7 +153,8 @@ public partial class AzureOpenAISamples
             // Find similar items
             for (int j = i + 1; j < customerFeedback.Length; j++)
             {
-                if (processed[j]) continue;
+                if (processed[j])
+                    continue;
 
                 double similarity = CalculateCosineSimilarity(
                     feedbackEmbeddings[i].ToFloats().ToArray(),
@@ -184,12 +179,11 @@ public partial class AzureOpenAISamples
                 clusterNumber++;
             }
         }
-        
+
         Console.WriteLine("\nClustering complete! This helps identify:");
         Console.WriteLine("- Common themes in customer feedback");
         Console.WriteLine("- Similar complaints or compliments");
         Console.WriteLine("- Areas for business improvement");
-        #endregion
     }
 
     public void EmbeddingBasedRecommendations()
@@ -199,7 +193,6 @@ public partial class AzureOpenAISamples
             new DefaultAzureCredential());
         EmbeddingClient embeddingClient = azureClient.GetEmbeddingClient("my-text-embedding-deployment");
 
-        #region Snippet:EmbeddingBasedRecommendations
         // Product catalog with descriptions
         var products = new Dictionary<string, string>
         {
@@ -217,24 +210,24 @@ public partial class AzureOpenAISamples
         Console.WriteLine("Building product recommendation system...");
         var productNames = products.Keys.ToArray();
         var productDescriptions = products.Values.ToArray();
-        
+
         OpenAIEmbeddingCollection productEmbeddings = embeddingClient.GenerateEmbeddings(productDescriptions);
 
         // Customer preference query
         string customerQuery = "I need a device for creating digital art and design work";
         Console.WriteLine($"\nCustomer query: \"{customerQuery}\"");
-        
+
         OpenAIEmbedding queryEmbedding = embeddingClient.GenerateEmbedding(customerQuery);
 
         // Calculate relevance scores
         var recommendations = new List<(string Product, string Description, double Score)>();
-        
+
         for (int i = 0; i < productEmbeddings.Count; i++)
         {
             double score = CalculateCosineSimilarity(
                 queryEmbedding.ToFloats().ToArray(),
                 productEmbeddings[i].ToFloats().ToArray());
-            
+
             recommendations.Add((productNames[i], productDescriptions[i], score));
         }
 
@@ -249,12 +242,11 @@ public partial class AzureOpenAISamples
             Console.WriteLine($"   {rec.Description}");
             Console.WriteLine();
         }
-        
+
         Console.WriteLine("Recommendation system can be used for:");
         Console.WriteLine("- E-commerce product suggestions");
         Console.WriteLine("- Content recommendation engines");
         Console.WriteLine("- Personalized search results");
-        #endregion
     }
 
     #region Helper Methods
