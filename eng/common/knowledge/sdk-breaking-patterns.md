@@ -41,6 +41,12 @@ enum FooStatusEnum
 
 **Detection:** TypeSpec diff shows a model definition's name changed while its structure remains the same or similar. This is distinct from Pattern 5 (Model Removed) — a rename has a clear old→new mapping, while a removal has no replacement.
 
+This pattern covers two scenarios:
+1. **Explicit rename:** A model is renamed across API versions (detectable via `@renamedFrom` decorator or paired model removal + addition in TypeSpec diff)
+2. **Migration naming divergence:** During Swagger→TypeSpec migration, TypeSpec default naming conventions produce different SDK class names than the old Swagger-generated SDK had (e.g., TypeSpec `AccessMode` generates `AccessMode` in C#, but the Swagger SDK used `ContainerAppAccessMode`)
+
+Both scenarios use the same mitigation (`@@clientName`).
+
 **How to distinguish from Pattern 5:** If a model disappears from the changelog AND a new model with similar properties appears, this is a rename (Pattern 4). If a model disappears with no replacement, that's a removal (Pattern 5).
 
 **TypeSpec pattern**
