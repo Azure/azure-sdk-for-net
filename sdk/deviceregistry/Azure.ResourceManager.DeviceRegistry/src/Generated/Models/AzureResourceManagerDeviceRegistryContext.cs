@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DeviceRegistry
     [ModelReaderWriterBuildable(typeof(CertificateAuthorityConfiguration))]
     [ModelReaderWriterBuildable(typeof(CertificateConfiguration))]
     [ModelReaderWriterBuildable(typeof(CredentialData))]
-    [ModelReaderWriterBuildable(typeof(CredentialListResult))]
     [ModelReaderWriterBuildable(typeof(CredentialPatch))]
     [ModelReaderWriterBuildable(typeof(CredentialProperties))]
     [ModelReaderWriterBuildable(typeof(CredentialResource))]

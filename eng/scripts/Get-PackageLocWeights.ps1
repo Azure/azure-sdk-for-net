@@ -4,7 +4,8 @@ Counts lines of code per package and generates a weight file for build/analyze b
 
 .DESCRIPTION
 For each PackageInfo JSON file, finds the corresponding src directory and counts
-total lines of C# code. Outputs a JSON mapping of package name to LOC count.
+total lines of C# code. Outputs a JSON mapping of artifact name (the `ArtifactName`
+field from PackageInfo) to LOC count.
 
 .PARAMETER PackageInfoFolder
 Path to the folder containing PackageInfo JSON files.
@@ -38,7 +39,12 @@ foreach ($file in $packageFiles) {
     continue
   }
 
-  $srcPath = Join-Path $dirPath "src"
+  if ([System.IO.Path]::IsPathRooted($dirPath)) {
+    $srcPath = Join-Path $dirPath "src"
+  }
+  else {
+    $srcPath = Join-Path $RepoRoot $dirPath "src"
+  }
   if (-not (Test-Path $srcPath)) {
     $weights[$name] = 1
     continue

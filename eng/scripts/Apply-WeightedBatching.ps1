@@ -1,13 +1,16 @@
 <#
 .SYNOPSIS
-Applies weighted LPT bin-packing to PackageInfo files for balanced CI test batching.
+Applies weighted LPT bin-packing to PackageInfo files for balanced CI job batching.
 
 .DESCRIPTION
-Reads PackageInfo JSON files and a test weights file, performs LPT (Longest Processing Time)
+Reads PackageInfo JSON files and a weights file, performs LPT (Longest Processing Time)
 bin-packing to create balanced batches, then consolidates the PackageInfo files so that each
 batch becomes a single representative file. The ArtifactName of each consolidated file contains
 the comma-separated names of all packages in that batch, which flows through to the
 ProjectNames parameter in the matrix generation.
+
+Used by the Build and Analyze pre-steps with LOC-derived weights, but the script itself is
+weight-source-agnostic — any numeric weight file (package name -> integer) will work.
 
 After this script runs, set PRJobBatchSize to 1 so each consolidated file becomes its own job.
 
@@ -15,13 +18,16 @@ After this script runs, set PRJobBatchSize to 1 so each consolidated file become
 Path to the folder containing PackageInfo JSON files.
 
 .PARAMETER WeightsFile
-Path to the JSON weights file (package name → seconds).
+Path to the JSON weights file (artifact name -> weight, e.g. LOC count). The key must match
+the `ArtifactName` field of the corresponding PackageInfo JSON.
 
-.PARAMETER TargetSeconds
-Target maximum time per bucket in seconds for direct packages. Default is 1800 (30 minutes).
+.PARAMETER Target
+Target average weight per bucket for direct packages. Default is 1800. Used to derive
+the bucket count via ceil(totalWeight / Target); individual buckets may exceed this
+after greedy LPT packing — it's a goal, not a hard cap.
 
-.PARAMETER IndirectTargetSeconds
-Target maximum time per bucket in seconds for indirect packages. Defaults to TargetSeconds if not specified.
+.PARAMETER IndirectTarget
+Target average weight per bucket for indirect packages. Defaults to Target if not specified.
 Indirect packages only run on Linux, so they can use a higher target than direct packages which run across all platforms.
 
 .PARAMETER DefaultWeight
@@ -32,14 +38,14 @@ Weight assigned to packages not found in the weights file. Default is 1.
 param (
   [Parameter(Mandatory = $true)][string]$PackageInfoFolder,
   [Parameter(Mandatory = $true)][string]$WeightsFile,
-  [Parameter()][int]$TargetSeconds = 1800,
-  [Parameter()][int]$IndirectTargetSeconds = 0,
+  [Parameter()][int]$Target = 1800,
+  [Parameter()][int]$IndirectTarget = 0,
   [Parameter()][int]$DefaultWeight = 1
 )
 
 Set-StrictMode -Version 4
 
-if ($IndirectTargetSeconds -le 0) { $IndirectTargetSeconds = $TargetSeconds }
+if ($IndirectTarget -le 0) { $IndirectTarget = $Target }
 
 # Load weights
 $weights = @{}
@@ -87,7 +93,7 @@ function Apply-LPTBatching {
   param(
     [object[]]$Packages,
     [hashtable]$Weights,
-    [int]$TargetSeconds,
+    [int]$Target,
     [int]$DefaultWeight,
     [string]$Label
   )
@@ -110,12 +116,12 @@ function Apply-LPTBatching {
   # Calculate number of buckets
   [int]$totalWeight = 0
   foreach ($i in $items) { $totalWeight += $i.Weight }
-  $numBuckets = [math]::Max(1, [math]::Ceiling($totalWeight / $TargetSeconds))
+  $numBuckets = [math]::Max(1, [math]::Ceiling($totalWeight / $Target))
 
   # Don't create more buckets than packages
   $numBuckets = [math]::Min($numBuckets, $Packages.Count)
 
-  Write-Host "  $Label`: $($Packages.Count) packages, total weight ${totalWeight}s, target ${TargetSeconds}s -> $numBuckets buckets"
+  Write-Host "  $Label`: $($Packages.Count) packages, total weight ${totalWeight}, target ${Target} -> $numBuckets buckets"
 
   # Create buckets
   $buckets = @()
@@ -136,10 +142,10 @@ function Apply-LPTBatching {
   # Log bucket distribution with collapsible groups
   $bucketIdx = 1
   foreach ($bucket in $buckets) {
-    $summary = "Bucket ${bucketIdx}: $($bucket.Items.Count) pkgs, weight $($bucket.TotalWeight)s ($([math]::Round($bucket.TotalWeight / 60, 1))m)"
+    $summary = "Bucket ${bucketIdx}: $($bucket.Items.Count) pkgs, weight $($bucket.TotalWeight)"
     Write-Host "##[group]$summary"
     foreach ($item in ($bucket.Items | Sort-Object Name)) {
-      Write-Host "      $($item.Name) ($($item.Weight)s)"
+      Write-Host "      $($item.Name) (weight $($item.Weight))"
     }
     Write-Host "##[endgroup]"
     $bucketIdx++
@@ -170,12 +176,12 @@ function Apply-LPTBatching {
 # Apply LPT batching to direct and indirect packages separately
 if ($directPackages.Count -gt 0) {
   Apply-LPTBatching -Packages $directPackages -Weights $weights `
-    -TargetSeconds $TargetSeconds -DefaultWeight $DefaultWeight -Label "Direct"
+    -Target $Target -DefaultWeight $DefaultWeight -Label "Direct"
 }
 
 if ($indirectPackages.Count -gt 0) {
   Apply-LPTBatching -Packages $indirectPackages -Weights $weights `
-    -TargetSeconds $IndirectTargetSeconds -DefaultWeight $DefaultWeight -Label "Indirect"
+    -Target $IndirectTarget -DefaultWeight $DefaultWeight -Label "Indirect"
 }
 
 # Verify

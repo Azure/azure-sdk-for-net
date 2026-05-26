@@ -93,6 +93,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -126,6 +131,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AppServiceCertificateProperties properties = default;
+            string kind = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -169,6 +175,11 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                     properties = AppServiceCertificateProperties.DeserializeAppServiceCertificateProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -180,7 +191,8 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties);
+                properties,
+                kind);
         }
     }
 }
