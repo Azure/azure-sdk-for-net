@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -52,10 +51,29 @@ internal sealed class SseReplayResult : IResult
 
         _logger.LogInformation("SSE replay started for response {ResponseId}", _responseId);
 
-        await using var keepAliveSession = SseKeepAliveSession.Start(
-            httpContext.Response.Body, _keepAliveInterval, _logger, $"response {_responseId}");
-        var sseWriter = new SseWriter(keepAliveSession, _jsonOptions);
+        using var sseWriter = new SseWriter(httpContext.Response.Body, _jsonOptions);
         var ct = httpContext.RequestAborted;
+
+        // Start keep-alive timer if configured
+        Timer? keepAliveTimer = null;
+        if (_keepAliveInterval != Timeout.InfiniteTimeSpan && _keepAliveInterval > TimeSpan.Zero)
+        {
+            keepAliveTimer = new Timer(
+                async _ =>
+                {
+                    try
+                    {
+                        await sseWriter.WriteKeepAliveAsync(CancellationToken.None);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogDebug(ex, "Keep-alive write failed for response {ResponseId}", _responseId);
+                    }
+                },
+                null,
+                _keepAliveInterval,
+                _keepAliveInterval);
+        }
 
         try
         {
@@ -94,6 +112,13 @@ internal sealed class SseReplayResult : IResult
         {
             _logger.LogInformation(
                 "SSE replay cancelled (client disconnected) for response {ResponseId}", _responseId);
+        }
+        finally
+        {
+            if (keepAliveTimer is not null)
+            {
+                await keepAliveTimer.DisposeAsync();
+            }
         }
     }
 

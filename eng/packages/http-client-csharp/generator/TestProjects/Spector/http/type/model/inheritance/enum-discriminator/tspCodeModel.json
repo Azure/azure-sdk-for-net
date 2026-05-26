@@ -77,7 +77,7 @@
     {
       "$id": "7",
       "kind": "constant",
-      "name": "GetExtensibleModelAccept",
+      "name": "getExtensibleModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -93,7 +93,7 @@
     {
       "$id": "9",
       "kind": "constant",
-      "name": "GetExtensibleModelAccept1",
+      "name": "putExtensibleModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -109,7 +109,7 @@
     {
       "$id": "11",
       "kind": "constant",
-      "name": "GetExtensibleModelAccept2",
+      "name": "getExtensibleModelMissingDiscriminatorContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -125,7 +125,7 @@
     {
       "$id": "13",
       "kind": "constant",
-      "name": "GetExtensibleModelAccept3",
+      "name": "getExtensibleModelWrongDiscriminatorContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -141,7 +141,7 @@
     {
       "$id": "15",
       "kind": "constant",
-      "name": "GetExtensibleModelAccept4",
+      "name": "getFixedModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -157,7 +157,7 @@
     {
       "$id": "17",
       "kind": "constant",
-      "name": "GetExtensibleModelAccept5",
+      "name": "putFixedModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -173,7 +173,7 @@
     {
       "$id": "19",
       "kind": "constant",
-      "name": "GetExtensibleModelAccept6",
+      "name": "getFixedModelMissingDiscriminatorContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -189,7 +189,7 @@
     {
       "$id": "21",
       "kind": "constant",
-      "name": "GetExtensibleModelAccept7",
+      "name": "getFixedModelWrongDiscriminatorContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -312,7 +312,6 @@
                   "doc": "extensible enum type for discriminator",
                   "name": "DogKind",
                   "isGeneratedName": false,
-                  "isExactName": false,
                   "namespace": "Type.Model.Inheritance.EnumDiscriminator",
                   "valueType": {
                     "$id": "31",
@@ -479,7 +478,6 @@
                   "doc": "fixed enum type for discriminator",
                   "name": "SnakeKind",
                   "isGeneratedName": false,
-                  "isExactName": false,
                   "namespace": "Type.Model.Inheritance.EnumDiscriminator",
                   "valueType": {
                     "$id": "41",

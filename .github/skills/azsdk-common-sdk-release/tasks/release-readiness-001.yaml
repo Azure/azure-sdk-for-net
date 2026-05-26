@@ -1,0 +1,18 @@
+id: release-readiness-001
+name: Check Release Readiness Only
+description: |
+  Test that the skill checks readiness without triggering release.
+tags:
+  - basic
+inputs:
+  prompt: "Check if azure-messaging-eventhubs is ready for release in Java."
+expected:
+  output_contains:
+    - "ready"
+    - "azsdk_release_sdk"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_release_sdk
+  behavior:
+    max_tool_calls: 3
+    max_response_time_ms: 30000

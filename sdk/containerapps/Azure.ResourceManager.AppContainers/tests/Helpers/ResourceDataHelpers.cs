@@ -486,15 +486,18 @@ Name = "testcontainerappsjob-1102",
                 PoolManagementType = PoolManagementType.Dynamic,
                 ContainerType = ContainerType.CustomContainer,
                 ScaleConfiguration = new SessionPoolScaleConfiguration() { MaxConcurrentSessions = 10, ReadySessionInstances = 10 },
-                DynamicPoolLifecycleConfiguration = new SessionPoolLifecycleConfiguration()
+                DynamicPoolConfiguration = new DynamicPoolConfiguration()
                 {
-                    CooldownPeriodInSeconds = 1000,
-                    LifecycleType = SessionPoolLifecycleType.Timed,
+                    LifecycleConfiguration = new SessionPoolLifecycleConfiguration()
+                    {
+                        CooldownPeriodInSeconds = 1000,
+                        LifecycleType = SessionPoolLifecycleType.Timed,
+                    }
                 },
-                CustomContainerTemplate = new CustomContainerTemplate()
-                {
-                    IngressTargetPort = 80,
-                    Containers =
+                CustomContainerTemplate = new CustomContainerTemplate(
+                    ingress: new SessionIngress() { TargetPort = 80 },
+                    registryCredentials: null,
+                    containers: new List<SessionContainer>()
                     {
                         new SessionContainer()
                         {
@@ -506,8 +509,9 @@ Name = "testcontainerappsjob-1102",
                                 Memory = "0.5Gi",
                             }
                         }
-                    }
-                }
+                    },
+                    serializedAdditionalRawData: new Dictionary<string, BinaryData>()
+                    )
             };
             return data;
         }

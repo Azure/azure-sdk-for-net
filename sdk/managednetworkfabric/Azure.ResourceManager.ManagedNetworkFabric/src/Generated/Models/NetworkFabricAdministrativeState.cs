@@ -26,21 +26,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string DisabledValue = "Disabled";
         private const string MatValue = "MAT";
         private const string RmaValue = "RMA";
-        private const string UnderMaintenanceValue = "UnderMaintenance";
-        private const string EnabledDegradedValue = "EnabledDegraded";
 
-        /// <summary> Enabled Administrative State. </summary>
+        /// <summary> Enabled. </summary>
         public static NetworkFabricAdministrativeState Enabled { get; } = new NetworkFabricAdministrativeState(EnabledValue);
-        /// <summary> Disabled Administrative State. </summary>
+        /// <summary> Disabled. </summary>
         public static NetworkFabricAdministrativeState Disabled { get; } = new NetworkFabricAdministrativeState(DisabledValue);
-        /// <summary> MAT(Manual Action Taken) Administrative State. </summary>
+        /// <summary> MAT. </summary>
         public static NetworkFabricAdministrativeState Mat { get; } = new NetworkFabricAdministrativeState(MatValue);
-        /// <summary> RMA(Return Material Authorization) Administrative State. </summary>
+        /// <summary> RMA. </summary>
         public static NetworkFabricAdministrativeState Rma { get; } = new NetworkFabricAdministrativeState(RmaValue);
-        /// <summary> UnderMaintenance Administrative State. </summary>
-        public static NetworkFabricAdministrativeState UnderMaintenance { get; } = new NetworkFabricAdministrativeState(UnderMaintenanceValue);
-        /// <summary> EnabledDegraded Administrative State. </summary>
-        public static NetworkFabricAdministrativeState EnabledDegraded { get; } = new NetworkFabricAdministrativeState(EnabledDegradedValue);
         /// <summary> Determines if two <see cref="NetworkFabricAdministrativeState"/> values are the same. </summary>
         public static bool operator ==(NetworkFabricAdministrativeState left, NetworkFabricAdministrativeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkFabricAdministrativeState"/> values are not the same. </summary>

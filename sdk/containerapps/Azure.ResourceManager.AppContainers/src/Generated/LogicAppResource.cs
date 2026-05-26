@@ -6,36 +6,46 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppContainers.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing a LogicApp along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogicAppResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppResource"/> using the GetLogicApps method.
+    /// A Class representing a LogicApp along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogicAppResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLogicAppResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppResource"/> using the GetLogicApp method.
     /// </summary>
     public partial class LogicAppResource : ArmResource
     {
-        private readonly ClientDiagnostics _logicAppsClientDiagnostics;
-        private readonly LogicApps _logicAppsRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="LogicAppResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="containerAppName"> The containerAppName. </param>
+        /// <param name="logicAppName"> The logicAppName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName, string logicAppName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _logicAppClientDiagnostics;
+        private readonly LogicAppsRestOperations _logicAppRestClient;
         private readonly LogicAppData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/logicApps";
 
-        /// <summary> Initializes a new instance of LogicAppResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogicAppResource"/> class for mocking. </summary>
         protected LogicAppResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LogicAppResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogicAppResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LogicAppResource(ArmClient client, LogicAppData data) : this(client, data.Id)
@@ -44,93 +54,140 @@ namespace Azure.ResourceManager.AppContainers
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LogicAppResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogicAppResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LogicAppResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _logicAppClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string logicAppApiVersion);
-            _logicAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _logicAppsRestClient = new LogicApps(_logicAppsClientDiagnostics, Pipeline, Endpoint, logicAppApiVersion ?? "2025-10-02-preview");
-            ValidateResourceId(id);
+            _logicAppRestClient = new LogicAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, logicAppApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual LogicAppData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="containerAppName"> The containerAppName. </param>
-        /// <param name="logicAppName"> The logicAppName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName, string logicAppName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
+        /// <summary> Gets a collection of LogicAppWorkflowEnvelopeResources in the LogicApp. </summary>
+        /// <returns> An object representing collection of LogicAppWorkflowEnvelopeResources and their operations over a LogicAppWorkflowEnvelopeResource. </returns>
+        public virtual LogicAppWorkflowEnvelopeCollection GetLogicAppWorkflowEnvelopes()
+        {
+            return GetCachedClient(client => new LogicAppWorkflowEnvelopeCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get workflow information by its name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/workflows/{workflowName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LogicApps_GetWorkflow</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicAppWorkflowEnvelopeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LogicAppWorkflowEnvelopeResource>> GetLogicAppWorkflowEnvelopeAsync(string workflowName, CancellationToken cancellationToken = default)
+        {
+            return await GetLogicAppWorkflowEnvelopes().GetAsync(workflowName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get workflow information by its name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/workflows/{workflowName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LogicApps_GetWorkflow</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicAppWorkflowEnvelopeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<LogicAppWorkflowEnvelopeResource> GetLogicAppWorkflowEnvelope(string workflowName, CancellationToken cancellationToken = default)
+        {
+            return GetLogicAppWorkflowEnvelopes().Get(workflowName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a logic app extension resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LogicApps_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>LogicApps_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="LogicAppResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<LogicAppResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _logicAppsClientDiagnostics.CreateScope("LogicAppResource.Get");
+            using var scope = _logicAppClientDiagnostics.CreateScope("LogicAppResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _logicAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LogicAppData> response = Response.FromValue(LogicAppData.FromResponse(result), result);
+                var response = await _logicAppRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new LogicAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -144,41 +201,33 @@ namespace Azure.ResourceManager.AppContainers
         /// Gets a logic app extension resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LogicApps_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>LogicApps_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="LogicAppResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LogicAppResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _logicAppsClientDiagnostics.CreateScope("LogicAppResource.Get");
+            using var scope = _logicAppClientDiagnostics.CreateScope("LogicAppResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _logicAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<LogicAppData> response = Response.FromValue(LogicAppData.FromResponse(result), result);
+                var response = _logicAppRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new LogicAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -192,20 +241,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Deletes a Logic App extension resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LogicApps_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>LogicApps_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="LogicAppResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,23 +262,16 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _logicAppsClientDiagnostics.CreateScope("LogicAppResource.Delete");
+            using var scope = _logicAppClientDiagnostics.CreateScope("LogicAppResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _logicAppsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppContainersArmOperation operation = new AppContainersArmOperation(response, rehydrationToken);
+                var response = await _logicAppRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _logicAppRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppContainersArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -243,20 +285,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Deletes a Logic App extension resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LogicApps_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>LogicApps_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="LogicAppResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,23 +306,16 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _logicAppsClientDiagnostics.CreateScope("LogicAppResource.Delete");
+            using var scope = _logicAppClientDiagnostics.CreateScope("LogicAppResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _logicAppsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppContainersArmOperation operation = new AppContainersArmOperation(response, rehydrationToken);
+                var response = _logicAppRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _logicAppRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppContainersArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -291,315 +326,23 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Creates or updates the artifacts for the logic app
+        /// Create or update a Logic App extension resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/deployWorkflowArtifacts. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LogicApps_DeployWorkflowArtifacts. </description>
+        /// <term>Operation Id</term>
+        /// <description>LogicApps_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="LogicAppResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="workflowArtifacts"> Application settings and files of the workflow. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeployWorkflowArtifactsAsync(WorkflowArtifacts workflowArtifacts = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _logicAppsClientDiagnostics.CreateScope("LogicAppResource.DeployWorkflowArtifacts");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _logicAppsRestClient.CreateDeployWorkflowArtifactsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WorkflowArtifacts.ToRequestContent(workflowArtifacts), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates or updates the artifacts for the logic app
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/deployWorkflowArtifacts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LogicApps_DeployWorkflowArtifacts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="LogicAppResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="workflowArtifacts"> Application settings and files of the workflow. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeployWorkflowArtifacts(WorkflowArtifacts workflowArtifacts = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _logicAppsClientDiagnostics.CreateScope("LogicAppResource.DeployWorkflowArtifacts");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _logicAppsRestClient.CreateDeployWorkflowArtifactsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WorkflowArtifacts.ToRequestContent(workflowArtifacts), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Proxies a the API call to the logic app backed by the container app.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/invoke. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LogicApps_Invoke. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="LogicAppResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="xMsLogicAppsProxyPath"> The proxy path for the API call. </param>
-        /// <param name="xMsLogicAppsProxyMethod"> The proxy method for the API call. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="xMsLogicAppsProxyPath"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="xMsLogicAppsProxyPath"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Models.Object>> InvokeAsync(string xMsLogicAppsProxyPath, LogicAppsProxyMethod xMsLogicAppsProxyMethod, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(xMsLogicAppsProxyPath, nameof(xMsLogicAppsProxyPath));
-
-            using DiagnosticScope scope = _logicAppsClientDiagnostics.CreateScope("LogicAppResource.Invoke");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _logicAppsRestClient.CreateInvokeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, xMsLogicAppsProxyPath, xMsLogicAppsProxyMethod.ToString(), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<Models.Object> response = Response.FromValue(Models.Object.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Proxies a the API call to the logic app backed by the container app.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/invoke. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LogicApps_Invoke. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="LogicAppResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="xMsLogicAppsProxyPath"> The proxy path for the API call. </param>
-        /// <param name="xMsLogicAppsProxyMethod"> The proxy method for the API call. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="xMsLogicAppsProxyPath"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="xMsLogicAppsProxyPath"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Models.Object> Invoke(string xMsLogicAppsProxyPath, LogicAppsProxyMethod xMsLogicAppsProxyMethod, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(xMsLogicAppsProxyPath, nameof(xMsLogicAppsProxyPath));
-
-            using DiagnosticScope scope = _logicAppsClientDiagnostics.CreateScope("LogicAppResource.Invoke");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _logicAppsRestClient.CreateInvokeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, xMsLogicAppsProxyPath, xMsLogicAppsProxyMethod.ToString(), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<Models.Object> response = Response.FromValue(Models.Object.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets logic app's connections.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/listWorkflowsConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LogicApps_ListWorkflowsConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="LogicAppResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LogicAppWorkflowEnvelopeResource>> GetWorkflowsConnectionsAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _logicAppsClientDiagnostics.CreateScope("LogicAppResource.GetWorkflowsConnections");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _logicAppsRestClient.CreateGetWorkflowsConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LogicAppWorkflowEnvelopeData> response = Response.FromValue(LogicAppWorkflowEnvelopeData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new LogicAppWorkflowEnvelopeResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets logic app's connections.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/listWorkflowsConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LogicApps_ListWorkflowsConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="LogicAppResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LogicAppWorkflowEnvelopeResource> GetWorkflowsConnections(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _logicAppsClientDiagnostics.CreateScope("LogicAppResource.GetWorkflowsConnections");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _logicAppsRestClient.CreateGetWorkflowsConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<LogicAppWorkflowEnvelopeData> response = Response.FromValue(LogicAppWorkflowEnvelopeData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new LogicAppWorkflowEnvelopeResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a LogicApp.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LogicApps_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="LogicAppResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -611,24 +354,16 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _logicAppsClientDiagnostics.CreateScope("LogicAppResource.Update");
+            using var scope = _logicAppClientDiagnostics.CreateScope("LogicAppResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _logicAppsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, LogicAppData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LogicAppData> response = Response.FromValue(LogicAppData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppContainersArmOperation<LogicAppResource> operation = new AppContainersArmOperation<LogicAppResource>(Response.FromValue(new LogicAppResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _logicAppRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var uri = _logicAppRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppContainersArmOperation<LogicAppResource>(Response.FromValue(new LogicAppResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -639,23 +374,23 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Update a LogicApp.
+        /// Create or update a Logic App extension resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LogicApps_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>LogicApps_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="LogicAppResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -667,24 +402,16 @@ namespace Azure.ResourceManager.AppContainers
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _logicAppsClientDiagnostics.CreateScope("LogicAppResource.Update");
+            using var scope = _logicAppClientDiagnostics.CreateScope("LogicAppResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _logicAppsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, LogicAppData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<LogicAppData> response = Response.FromValue(LogicAppData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppContainersArmOperation<LogicAppResource> operation = new AppContainersArmOperation<LogicAppResource>(Response.FromValue(new LogicAppResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _logicAppRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var uri = _logicAppRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppContainersArmOperation<LogicAppResource>(Response.FromValue(new LogicAppResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -694,37 +421,80 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> Gets a collection of LogicAppWorkflowEnvelopes in the <see cref="LogicAppResource"/>. </summary>
-        /// <returns> An object representing collection of LogicAppWorkflowEnvelopes and their operations over a LogicAppWorkflowEnvelopeResource. </returns>
-        public virtual LogicAppWorkflowEnvelopeCollection GetLogicAppWorkflowEnvelopes()
+        /// <summary>
+        /// Gets logic app's connections.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/listWorkflowsConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LogicApps_ListWorkflowsConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicAppResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<LogicAppWorkflowEnvelopeResource>> GetWorkflowsConnectionsAsync(CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new LogicAppWorkflowEnvelopeCollection(client, Id));
+            using var scope = _logicAppClientDiagnostics.CreateScope("LogicAppResource.GetWorkflowsConnections");
+            scope.Start();
+            try
+            {
+                var response = await _logicAppRestClient.ListWorkflowsConnectionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new LogicAppWorkflowEnvelopeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Get workflow information by its name. </summary>
-        /// <param name="workflowName"> Workflow name. </param>
+        /// <summary>
+        /// Gets logic app's connections.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/providers/Microsoft.App/logicApps/{logicAppName}/listWorkflowsConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LogicApps_ListWorkflowsConnections</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicAppResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<LogicAppWorkflowEnvelopeResource>> GetLogicAppWorkflowEnvelopeAsync(string workflowName, CancellationToken cancellationToken = default)
+        public virtual Response<LogicAppWorkflowEnvelopeResource> GetWorkflowsConnections(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
-
-            return await GetLogicAppWorkflowEnvelopes().GetAsync(workflowName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get workflow information by its name. </summary>
-        /// <param name="workflowName"> Workflow name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<LogicAppWorkflowEnvelopeResource> GetLogicAppWorkflowEnvelope(string workflowName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
-
-            return GetLogicAppWorkflowEnvelopes().Get(workflowName, cancellationToken);
+            using var scope = _logicAppClientDiagnostics.CreateScope("LogicAppResource.GetWorkflowsConnections");
+            scope.Start();
+            try
+            {
+                var response = _logicAppRestClient.ListWorkflowsConnections(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new LogicAppWorkflowEnvelopeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

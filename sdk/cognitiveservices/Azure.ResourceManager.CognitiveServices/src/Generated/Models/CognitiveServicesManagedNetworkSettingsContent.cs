@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The CognitiveServicesManagedNetworkSettingsContent. </summary>
-    internal partial class CognitiveServicesManagedNetworkSettingsContent : ResourceData
+    public partial class CognitiveServicesManagedNetworkSettingsContent : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

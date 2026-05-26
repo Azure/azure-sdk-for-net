@@ -11,22 +11,26 @@ namespace Azure.AI.Projects
     public partial class TracesEvaluatorGenerationJobSource : EvaluatorGenerationJobSource
     {
         /// <summary> Initializes a new instance of <see cref="TracesEvaluatorGenerationJobSource"/>. </summary>
-        /// <param name="startTime"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        public TracesEvaluatorGenerationJobSource(DateTimeOffset startTime) : base(EvaluatorGenerationJobSourceType.Traces)
+        /// <param name="agentName"> The agent name to fetch traces for. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        public TracesEvaluatorGenerationJobSource(string agentName) : base(EvaluatorGenerationJobSourceType.Traces)
         {
-            StartTime = startTime;
+            Argument.AssertNotNull(agentName, nameof(agentName));
+
+            AgentName = agentName;
         }
 
         /// <summary> Initializes a new instance of <see cref="TracesEvaluatorGenerationJobSource"/>. </summary>
         /// <param name="type"> The type of source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
-        /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
-        /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
+        /// <param name="agentId"> The unique agent ID used to filter traces. Optional — when omitted, traces are filtered by `agent_name` (and `agent_version` if specified). </param>
+        /// <param name="agentName"> The agent name to fetch traces for. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
         /// <param name="startTime"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
         /// <param name="endTime"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
-        internal TracesEvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, string agentId, string agentName, string agentVersion, DateTimeOffset startTime, DateTimeOffset? endTime) : base(@type, additionalBinaryDataProperties)
+        /// <param name="maxTraces"> Maximum number of traces to retrieve. </param>
+        internal TracesEvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, string agentId, string agentName, string agentVersion, DateTimeOffset? startTime, DateTimeOffset? endTime, int? maxTraces) : base(@type, additionalBinaryDataProperties)
         {
             Description = description;
             AgentId = agentId;
@@ -34,24 +38,28 @@ namespace Azure.AI.Projects
             AgentVersion = agentVersion;
             StartTime = startTime;
             EndTime = endTime;
+            MaxTraces = maxTraces;
         }
 
         /// <summary> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </summary>
         public string Description { get; set; }
 
-        /// <summary> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </summary>
+        /// <summary> The unique agent ID used to filter traces. Optional — when omitted, traces are filtered by `agent_name` (and `agent_version` if specified). </summary>
         public string AgentId { get; set; }
 
-        /// <summary> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </summary>
+        /// <summary> The agent name to fetch traces for. </summary>
         public string AgentName { get; set; }
 
         /// <summary> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </summary>
         public string AgentVersion { get; set; }
 
         /// <summary> Start of the time window (Unix timestamp in seconds) for fetching traces. </summary>
-        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset? StartTime { get; set; }
 
         /// <summary> End of the time window (Unix timestamp in seconds). Defaults to current time. </summary>
         public DateTimeOffset? EndTime { get; set; }
+
+        /// <summary> Maximum number of traces to retrieve. </summary>
+        public int? MaxTraces { get; set; }
     }
 }

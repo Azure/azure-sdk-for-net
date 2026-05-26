@@ -10,7 +10,7 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// A single memory item stored in the memory store, containing content and metadata.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UserProfileMemoryItem"/>, <see cref="ChatSummaryMemoryItem"/>, and <see cref="ProceduralMemoryItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UserProfileMemoryItem"/> and <see cref="ChatSummaryMemoryItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownMemoryOutputItem))]
     public abstract partial class MemoryOutputItem : IJsonModel<MemoryOutputItem>
@@ -138,8 +138,6 @@ namespace Azure.AI.Extensions.OpenAI
                         return UserProfileMemoryItem.DeserializeUserProfileMemoryItem(element, options);
                     case "chat_summary":
                         return ChatSummaryMemoryItem.DeserializeChatSummaryMemoryItem(element, options);
-                    case "procedural":
-                        return ProceduralMemoryItem.DeserializeProceduralMemoryItem(element, options);
                 }
             }
             return UnknownMemoryOutputItem.DeserializeUnknownMemoryOutputItem(element, options);

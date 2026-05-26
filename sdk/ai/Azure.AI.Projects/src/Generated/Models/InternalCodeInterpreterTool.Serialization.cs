@@ -81,17 +81,6 @@ namespace OpenAI
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(ToolConfigs))
-            {
-                writer.WritePropertyName("tool_configs"u8);
-                writer.WriteStartObject();
-                foreach (var item in ToolConfigs)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
             if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
@@ -135,7 +124,6 @@ namespace OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             string description = default;
-            IDictionary<string, ToolConfig> toolConfigs = default;
             BinaryData container = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,20 +142,6 @@ namespace OpenAI
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("tool_configs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
-                    }
-                    toolConfigs = dictionary;
-                    continue;
-                }
                 if (prop.NameEquals("container"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -182,13 +156,7 @@ namespace OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalCodeInterpreterTool(
-                @type,
-                additionalBinaryDataProperties,
-                name,
-                description,
-                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
-                container);
+            return new InternalCodeInterpreterTool(@type, additionalBinaryDataProperties, name, description, container);
         }
     }
 }

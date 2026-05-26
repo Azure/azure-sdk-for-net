@@ -87,17 +87,6 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(ToolConfigs))
-            {
-                writer.WritePropertyName("tool_configs"u8);
-                writer.WriteStartObject();
-                foreach (var item in ToolConfigs)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
             writer.WritePropertyName("browser_automation_preview"u8);
             writer.WriteObjectValue(ToolParameters, options);
         }
@@ -131,7 +120,6 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             string description = default;
-            IDictionary<string, ToolConfig> toolConfigs = default;
             BrowserAutomationToolOptions toolParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,20 +138,6 @@ namespace Azure.AI.Projects.Agents
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("tool_configs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
-                    }
-                    toolConfigs = dictionary;
-                    continue;
-                }
                 if (prop.NameEquals("browser_automation_preview"u8))
                 {
                     toolParameters = BrowserAutomationToolOptions.DeserializeBrowserAutomationToolOptions(prop.Value, options);
@@ -174,13 +148,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BrowserAutomationPreviewTool(
-                @type,
-                additionalBinaryDataProperties,
-                name,
-                description,
-                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
-                toolParameters);
+            return new BrowserAutomationPreviewTool(@type, additionalBinaryDataProperties, name, description, toolParameters);
         }
     }
 }

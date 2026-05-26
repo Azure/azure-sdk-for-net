@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Option A properties. </summary>
+    /// <summary> Peering optionA properties. </summary>
     public partial class OptionAProperties
     {
         /// <summary>
@@ -51,26 +51,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OptionAProperties"/>. </summary>
-        /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>
-        /// <param name="vlanId"> Vlan Id.Example : 501. </param>
         /// <param name="mtu"> MTU to use for option A peering. </param>
+        /// <param name="vlanId"> Vlan Id.Example : 501. </param>
+        /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>
         /// <param name="bfdConfiguration"> BFD Configuration properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OptionAProperties(long? peerAsn, int? vlanId, int? mtu, BfdConfiguration bfdConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OptionAProperties(int? mtu, int? vlanId, long? peerAsn, BfdConfiguration bfdConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            PeerAsn = peerAsn;
-            VlanId = vlanId;
             Mtu = mtu;
+            VlanId = vlanId;
+            PeerAsn = peerAsn;
             BfdConfiguration = bfdConfiguration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Peer ASN number.Example : 28. </summary>
-        public long? PeerAsn { get; set; }
-        /// <summary> Vlan Id.Example : 501. </summary>
-        public int? VlanId { get; set; }
         /// <summary> MTU to use for option A peering. </summary>
         public int? Mtu { get; set; }
+        /// <summary> Vlan Id.Example : 501. </summary>
+        public int? VlanId { get; set; }
+        /// <summary> Peer ASN number.Example : 28. </summary>
+        public long? PeerAsn { get; set; }
         /// <summary> BFD Configuration properties. </summary>
         public BfdConfiguration BfdConfiguration { get; set; }
     }

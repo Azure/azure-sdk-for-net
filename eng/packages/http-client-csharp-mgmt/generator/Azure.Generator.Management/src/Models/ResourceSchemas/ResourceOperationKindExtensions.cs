@@ -8,7 +8,6 @@ internal static class ResourceOperationKindExtensions
     public static bool IsCrudKind(this ResourceOperationKind kind)
     {
         return kind == ResourceOperationKind.Create ||
-               kind == ResourceOperationKind.CheckExistence ||
                kind == ResourceOperationKind.Read ||
                kind == ResourceOperationKind.Update ||
                kind == ResourceOperationKind.Delete;

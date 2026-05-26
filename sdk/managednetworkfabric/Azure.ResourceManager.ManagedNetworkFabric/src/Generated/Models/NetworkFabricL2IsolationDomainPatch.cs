@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -22,29 +21,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="NetworkFabricL2IsolationDomainPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
-        /// <param name="extendedVlan"> Extended VLAN status. </param>
-        /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the networkToNetworkInterconnectId of the L2 ISD resource. </param>
-        internal NetworkFabricL2IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricManagedServiceIdentityPatch identity, string annotation, int? mtu, NetworkFabricExtendedVlan? extendedVlan, ResourceIdentifier networkToNetworkInterconnectId) : base(tags, serializedAdditionalRawData)
+        internal NetworkFabricL2IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string annotation, int? mtu) : base(tags, serializedAdditionalRawData)
         {
-            Identity = identity;
             Annotation = annotation;
             Mtu = mtu;
-            ExtendedVlan = extendedVlan;
-            NetworkToNetworkInterconnectId = networkToNetworkInterconnectId;
         }
 
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Maximum transmission unit. Default value is 1500. </summary>
         public int? Mtu { get; set; }
-        /// <summary> Extended VLAN status. </summary>
-        public NetworkFabricExtendedVlan? ExtendedVlan { get; set; }
-        /// <summary> ARM Resource ID of the networkToNetworkInterconnectId of the L2 ISD resource. </summary>
-        public ResourceIdentifier NetworkToNetworkInterconnectId { get; set; }
     }
 }

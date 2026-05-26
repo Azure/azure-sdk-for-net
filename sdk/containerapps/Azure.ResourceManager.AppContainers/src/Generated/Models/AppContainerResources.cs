@@ -7,15 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container App container resource requirements. </summary>
     public partial class AppContainerResources
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppContainerResources"/>. </summary>
         public AppContainerResources()
@@ -26,31 +54,23 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="cpu"> Required CPU in cores, e.g. 0.5. </param>
         /// <param name="memory"> Required memory, e.g. "250Mb". </param>
         /// <param name="ephemeralStorage"> Ephemeral Storage, e.g. "1Gi". </param>
-        /// <param name="gpu"> Required GPU in cores for GPU based app, e.g. 1.0. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppContainerResources(double? cpu, string memory, string ephemeralStorage, double? gpu, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppContainerResources(double? cpu, string memory, string ephemeralStorage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Cpu = cpu;
             Memory = memory;
             EphemeralStorage = ephemeralStorage;
-            Gpu = gpu;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Required CPU in cores, e.g. 0.5. </summary>
         [WirePath("cpu")]
         public double? Cpu { get; set; }
-
         /// <summary> Required memory, e.g. "250Mb". </summary>
         [WirePath("memory")]
         public string Memory { get; set; }
-
         /// <summary> Ephemeral Storage, e.g. "1Gi". </summary>
         [WirePath("ephemeralStorage")]
         public string EphemeralStorage { get; }
-
-        /// <summary> Required GPU in cores for GPU based app, e.g. 1.0. </summary>
-        [WirePath("gpu")]
-        public double? Gpu { get; set; }
     }
 }

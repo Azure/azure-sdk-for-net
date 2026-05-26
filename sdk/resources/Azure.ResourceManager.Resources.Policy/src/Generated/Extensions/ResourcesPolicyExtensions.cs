@@ -750,6 +750,74 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary>
+        /// This operation lists all the built-in policy definition versions for all built-in policy definitions.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesPolicyTenantResource.GetPolicyDefinitionsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<PolicyDefinitionVersionListResult>> GetPolicyDefinitionsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableResourcesPolicyTenantResource(tenantResource).GetPolicyDefinitionsAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation lists all the built-in policy definition versions for all built-in policy definitions.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesPolicyTenantResource.GetPolicyDefinitions(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<PolicyDefinitionVersionListResult> GetPolicyDefinitions(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableResourcesPolicyTenantResource(tenantResource).GetPolicyDefinitions(cancellationToken);
+        }
+
+        /// <summary>
+        /// This operation lists all the built-in policy set definition versions for all built-in policy set definitions.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesPolicyTenantResource.GetPolicySetDefinitionsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<PolicySetDefinitionVersionListResult>> GetPolicySetDefinitionsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableResourcesPolicyTenantResource(tenantResource).GetPolicySetDefinitionsAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation lists all the built-in policy set definition versions for all built-in policy set definitions.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesPolicyTenantResource.GetPolicySetDefinitions(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<PolicySetDefinitionVersionListResult> GetPolicySetDefinitions(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableResourcesPolicyTenantResource(tenantResource).GetPolicySetDefinitions(cancellationToken);
+        }
+
+        /// <summary>
         /// The operation retrieves the policy assignment with the given ID. Policy assignment IDs have this format: '{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}'. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}', or resource (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/[{parentResourcePath}/]{resourceType}/{resourceName}'.
         /// <item>
         /// <term> Mocking. </term>
@@ -940,6 +1008,40 @@ namespace Azure.ResourceManager.Resources.Policy
         }
 
         /// <summary>
+        /// This operation lists all the policy definition versions for all policy definitions at the management group scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesPolicyManagementGroupResource.GetPolicyDefinitionsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
+        public static async Task<Response<PolicyDefinitionVersionListResult>> GetPolicyDefinitionsAsync(this ManagementGroupResource managementGroupResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return await GetMockableResourcesPolicyManagementGroupResource(managementGroupResource).GetPolicyDefinitionsAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation lists all the policy definition versions for all policy definitions at the management group scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesPolicyManagementGroupResource.GetPolicyDefinitions(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
+        public static Response<PolicyDefinitionVersionListResult> GetPolicyDefinitions(this ManagementGroupResource managementGroupResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableResourcesPolicyManagementGroupResource(managementGroupResource).GetPolicyDefinitions(cancellationToken);
+        }
+
+        /// <summary>
         /// This operation retrieves the list of all policy exemptions applicable to the management group that match the given $filter. Valid values for $filter are: 'atScope()', 'atExactScope()', 'excludeExpired()' or 'policyAssignmentId eq '{value}''. If $filter=atScope() is provided, the returned list includes all policy exemptions that are assigned to the management group or the management group's ancestors.
         /// <item>
         /// <term> Mocking. </term>
@@ -975,6 +1077,40 @@ namespace Azure.ResourceManager.Resources.Policy
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
             return GetMockableResourcesPolicyManagementGroupResource(managementGroupResource).GetPolicyExemptions(filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// This operation lists all the policy set definition versions for all policy set definitions at the management group scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesPolicyManagementGroupResource.GetPolicySetDefinitionsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
+        public static async Task<Response<PolicySetDefinitionVersionListResult>> GetPolicySetDefinitionsAsync(this ManagementGroupResource managementGroupResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return await GetMockableResourcesPolicyManagementGroupResource(managementGroupResource).GetPolicySetDefinitionsAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// This operation lists all the policy set definition versions for all policy set definitions at the management group scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesPolicyManagementGroupResource.GetPolicySetDefinitions(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> is null. </exception>
+        public static Response<PolicySetDefinitionVersionListResult> GetPolicySetDefinitions(this ManagementGroupResource managementGroupResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableResourcesPolicyManagementGroupResource(managementGroupResource).GetPolicySetDefinitions(cancellationToken);
         }
 
         /// <summary>

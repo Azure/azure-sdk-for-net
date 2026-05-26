@@ -28,6 +28,12 @@ namespace Azure.ResourceManager.DataBoxEdge
     {
         private readonly ClientDiagnostics _devicesClientDiagnostics;
         private readonly Devices _devicesRestClient;
+        private readonly ClientDiagnostics _deviceCapacityCheckClientDiagnostics;
+        private readonly DeviceCapacityCheck _deviceCapacityCheckRestClient;
+        private readonly ClientDiagnostics _nodesClientDiagnostics;
+        private readonly Nodes _nodesRestClient;
+        private readonly ClientDiagnostics _supportPackagesClientDiagnostics;
+        private readonly SupportPackages _supportPackagesRestClient;
 
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceCollection for mocking. </summary>
         protected DataBoxEdgeDeviceCollection()
@@ -42,6 +48,12 @@ namespace Azure.ResourceManager.DataBoxEdge
             TryGetApiVersion(DataBoxEdgeDeviceResource.ResourceType, out string dataBoxEdgeDeviceApiVersion);
             _devicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeDeviceResource.ResourceType.Namespace, Diagnostics);
             _devicesRestClient = new Devices(_devicesClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeDeviceApiVersion ?? "2023-12-01");
+            _deviceCapacityCheckClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeDeviceResource.ResourceType.Namespace, Diagnostics);
+            _deviceCapacityCheckRestClient = new DeviceCapacityCheck(_deviceCapacityCheckClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeDeviceApiVersion ?? "2023-12-01");
+            _nodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeDeviceResource.ResourceType.Namespace, Diagnostics);
+            _nodesRestClient = new Nodes(_nodesClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeDeviceApiVersion ?? "2023-12-01");
+            _supportPackagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeDeviceResource.ResourceType.Namespace, Diagnostics);
+            _supportPackagesRestClient = new SupportPackages(_supportPackagesClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeDeviceApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 

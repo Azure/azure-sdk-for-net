@@ -38,7 +38,7 @@
     {
       "$id": "5",
       "kind": "constant",
-      "name": "SendAsTextRequestContentType2",
+      "name": "getAsTextContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -54,7 +54,7 @@
     {
       "$id": "7",
       "kind": "constant",
-      "name": "SendAsTextRequestContentType3",
+      "name": "SendAsTextRequestContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -102,7 +102,7 @@
     {
       "$id": "13",
       "kind": "constant",
-      "name": "SendAsJsonRequestContentType2",
+      "name": "getAsJsonContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -118,7 +118,7 @@
     {
       "$id": "15",
       "kind": "constant",
-      "name": "SendAsJsonRequestContentType3",
+      "name": "SendAsJsonRequestContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {

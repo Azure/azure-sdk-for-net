@@ -701,7 +701,6 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.Sharepoint)]
     [TestCase(ToolType.BrowserAutomation)]
     [TestCase(ToolType.MicrosoftFabric)]
-    [TestCase(ToolType.FabricIQ)]
     [TestCase(ToolType.A2A)]
     [TestCase(ToolType.A2ASpecialConnection)]
     [TestCase(ToolType.AzureFunction)]
@@ -802,7 +801,6 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.Sharepoint)]
     [TestCase(ToolType.BrowserAutomation)]
     [TestCase(ToolType.MicrosoftFabric)]
-    [TestCase(ToolType.FabricIQ)]
     [TestCase(ToolType.A2A)]
     [TestCase(ToolType.A2ASpecialConnection)]
     [TestCase(ToolType.AzureFunction)]
@@ -943,7 +941,6 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.FunctionCall)]
     [TestCase(ToolType.MCP)]
     [TestCase(ToolType.MCPConnection)]
-    [TestCase(ToolType.MCPToolbox)]
     public async Task TestInterativeTools(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -987,9 +984,9 @@ public class AgentsTests : AgentsTestBase
                     funcionCalled = true;
                     functionWasCalled = true;
                 }
-                else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection || toolType == ToolType.MCPToolbox) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
+                else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
                 {
-                    Assert.That(mcpToolCall.ServerLabel, Is.EqualTo(toolType == ToolType.MCPToolbox? "search-tool" : "api-specs"));
+                    Assert.That(mcpToolCall.ServerLabel, Is.EqualTo("api-specs"));
                     responseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
                     funcionCalled = true;
                     functionWasCalled = true;
@@ -1455,10 +1452,7 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    [TestCase(true, false)]
-    [TestCase(true, true)]
-    [TestCase(false, false)]
-    public async Task TestHostedAgentEndpoint(bool useNewClient, bool useGetMethod)
+    public async Task TestHostedAgentEndpoint()
     {
         AIProjectClient projectClient = GetTestProjectClient();
         Uri uriEndpoint = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
@@ -1497,29 +1491,8 @@ public class AgentsTests : AgentsTestBase
             apiVersion: "v1"
         );
         responsesOptions.AgentName = agentVersion.Name;
-        ProjectResponsesClient responseClient;
-        if (useNewClient)
-        {
-            ProjectOpenAIClient openAIClient = CreateProxyFromClient(new ProjectOpenAIClient(uriEndpoint, GetTestTokenProvider(), responsesOptions));
-            if (useGetMethod)
-            {
-                // We have to create options one more time as once the pipeline is created, it
-                // becomes frozen.
-                responsesOptions = CreateTestProjectOpenAIClientOptions(
-                    apiVersion: "v1"
-                );
-                responsesOptions.AgentName = agentVersion.Name;
-                responseClient = CreateProxyFromClient(openAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
-            }
-            else
-            {
-                responseClient = openAIClient.GetProjectResponsesClient();
-            }
-        }
-        else
-        {
-            responseClient = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
-        }
+        ProjectOpenAIClient openAIClient = CreateProxyFromClient(new ProjectOpenAIClient(uriEndpoint, GetTestTokenProvider(), responsesOptions));
+        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
         ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
         Assert.That(response.GetOutputText(), Is.Not.Empty);
     }

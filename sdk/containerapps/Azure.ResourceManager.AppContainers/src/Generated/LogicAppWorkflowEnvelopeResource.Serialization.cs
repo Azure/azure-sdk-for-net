@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary></summary>
     public partial class LogicAppWorkflowEnvelopeResource : IJsonModel<LogicAppWorkflowEnvelopeData>
     {
-        private static IJsonModel<LogicAppWorkflowEnvelopeData> s_dataDeserializationInstance;
+        private static LogicAppWorkflowEnvelopeData s_dataDeserializationInstance;
+        private static LogicAppWorkflowEnvelopeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<LogicAppWorkflowEnvelopeData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LogicAppWorkflowEnvelopeData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LogicAppWorkflowEnvelopeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LogicAppWorkflowEnvelopeData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LogicAppWorkflowEnvelopeData IJsonModel<LogicAppWorkflowEnvelopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        LogicAppWorkflowEnvelopeData IJsonModel<LogicAppWorkflowEnvelopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogicAppWorkflowEnvelopeData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<LogicAppWorkflowEnvelopeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LogicAppWorkflowEnvelopeData>(Data, options, AzureResourceManagerAppContainersContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         LogicAppWorkflowEnvelopeData IPersistableModel<LogicAppWorkflowEnvelopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogicAppWorkflowEnvelopeData>(data, options, AzureResourceManagerAppContainersContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LogicAppWorkflowEnvelopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<LogicAppWorkflowEnvelopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogicAppWorkflowEnvelopeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

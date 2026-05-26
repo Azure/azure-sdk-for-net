@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppContainers
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppJobCollection : ArmCollection, IEnumerable<ContainerAppJobResource>, IAsyncEnumerable<ContainerAppJobResource>
     {
-        private readonly ClientDiagnostics _containerAppJobsClientDiagnostics;
-        private readonly ContainerAppJobs _containerAppJobsRestClient;
+        private readonly ClientDiagnostics _containerAppJobJobsClientDiagnostics;
+        private readonly JobsRestOperations _containerAppJobJobsRestClient;
 
-        /// <summary> Initializes a new instance of ContainerAppJobCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppJobCollection"/> class for mocking. </summary>
         protected ContainerAppJobCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerAppJobCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppJobCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ContainerAppJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ContainerAppJobResource.ResourceType, out string containerAppJobApiVersion);
-            _containerAppJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobResource.ResourceType.Namespace, Diagnostics);
-            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Endpoint, containerAppJobApiVersion ?? "2025-10-02-preview");
-            ValidateResourceId(id);
+            _containerAppJobJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ContainerAppJobResource.ResourceType, out string containerAppJobJobsApiVersion);
+            _containerAppJobJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobJobsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or Update a Container Apps Job.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Jobs_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="jobName"> Job Name. </param>
         /// <param name="data"> Properties used to create a container apps job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerAppJobResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string jobName, ContainerAppJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _containerAppJobsClientDiagnostics.CreateScope("ContainerAppJobCollection.CreateOrUpdate");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppJobsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, jobName, ContainerAppJobData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AppContainersArmOperation<ContainerAppJobResource> operation = new AppContainersArmOperation<ContainerAppJobResource>(
-                    new ContainerAppJobOperationSource(Client),
-                    _containerAppJobsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _containerAppJobJobsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation<ContainerAppJobResource>(new ContainerAppJobOperationSource(Client), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Create or Update a Container Apps Job.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Jobs_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="jobName"> Job Name. </param>
         /// <param name="data"> Properties used to create a container apps job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerAppJobResource> CreateOrUpdate(WaitUntil waitUntil, string jobName, ContainerAppJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _containerAppJobsClientDiagnostics.CreateScope("ContainerAppJobCollection.CreateOrUpdate");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppJobsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, jobName, ContainerAppJobData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                AppContainersArmOperation<ContainerAppJobResource> operation = new AppContainersArmOperation<ContainerAppJobResource>(
-                    new ContainerAppJobOperationSource(Client),
-                    _containerAppJobsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _containerAppJobJobsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, cancellationToken);
+                var operation = new AppContainersArmOperation<ContainerAppJobResource>(new ContainerAppJobOperationSource(Client), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.AppContainers
         /// Get the properties of a Container Apps Job.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Jobs_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> Job Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual async Task<Response<ContainerAppJobResource>> GetAsync(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using DiagnosticScope scope = _containerAppJobsClientDiagnostics.CreateScope("ContainerAppJobCollection.Get");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, jobName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ContainerAppJobData> response = Response.FromValue(ContainerAppJobData.FromResponse(result), result);
+                var response = await _containerAppJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, jobName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerAppJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.AppContainers
         /// Get the properties of a Container Apps Job.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Jobs_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> Job Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual Response<ContainerAppJobResource> Get(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using DiagnosticScope scope = _containerAppJobsClientDiagnostics.CreateScope("ContainerAppJobCollection.Get");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, jobName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ContainerAppJobData> response = Response.FromValue(ContainerAppJobData.FromResponse(result), result);
+                var response = _containerAppJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, jobName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerAppJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.AppContainers
         /// Get the Container Apps Jobs in a given resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Jobs_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppJobResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerAppJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppJobResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ContainerAppJobData, ContainerAppJobResource>(new ContainerAppJobsGetByResourceGroupAsyncCollectionResultOfT(_containerAppJobsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppJobCollection.GetAll"), data => new ContainerAppJobResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobJobsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppJobJobsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppJobResource(Client, ContainerAppJobData.DeserializeContainerAppJobData(e)), _containerAppJobJobsClientDiagnostics, Pipeline, "ContainerAppJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get the Container Apps Jobs in a given resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Jobs_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppJobResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ContainerAppJobData, ContainerAppJobResource>(new ContainerAppJobsGetByResourceGroupCollectionResultOfT(_containerAppJobsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppJobCollection.GetAll"), data => new ContainerAppJobResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobJobsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppJobJobsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppJobResource(Client, ContainerAppJobData.DeserializeContainerAppJobData(e)), _containerAppJobJobsClientDiagnostics, Pipeline, "ContainerAppJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Jobs_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> Job Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using DiagnosticScope scope = _containerAppJobsClientDiagnostics.CreateScope("ContainerAppJobCollection.Exists");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, jobName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ContainerAppJobData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerAppJobData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerAppJobData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _containerAppJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.AppContainers
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Jobs_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> Job Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual Response<bool> Exists(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using DiagnosticScope scope = _containerAppJobsClientDiagnostics.CreateScope("ContainerAppJobCollection.Exists");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, jobName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ContainerAppJobData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerAppJobData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerAppJobData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _containerAppJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, jobName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.AppContainers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Jobs_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> Job Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerAppJobResource>> GetIfExistsAsync(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using DiagnosticScope scope = _containerAppJobsClientDiagnostics.CreateScope("ContainerAppJobCollection.GetIfExists");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, jobName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ContainerAppJobData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerAppJobData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerAppJobData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _containerAppJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ContainerAppJobResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerAppJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.AppContainers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Jobs_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> Job Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual NullableResponse<ContainerAppJobResource> GetIfExists(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using DiagnosticScope scope = _containerAppJobsClientDiagnostics.CreateScope("ContainerAppJobCollection.GetIfExists");
+            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, jobName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ContainerAppJobData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerAppJobData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerAppJobData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _containerAppJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, jobName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ContainerAppJobResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerAppJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.AppContainers
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ContainerAppJobResource> IAsyncEnumerable<ContainerAppJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

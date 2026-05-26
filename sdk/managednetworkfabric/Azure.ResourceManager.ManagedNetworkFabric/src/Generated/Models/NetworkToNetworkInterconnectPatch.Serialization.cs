@@ -54,11 +54,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("npbStaticRouteConfiguration"u8);
                 writer.WriteObjectValue(NpbStaticRouteConfiguration, options);
             }
-            if (Optional.IsDefined(StaticRouteConfiguration))
-            {
-                writer.WritePropertyName("staticRouteConfiguration"u8);
-                writer.WriteObjectValue(StaticRouteConfiguration, options);
-            }
             if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
@@ -78,11 +73,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("ingressAclId"u8);
                 writer.WriteStringValue(IngressAclId);
-            }
-            if (Optional.IsDefined(MicroBfdState))
-            {
-                writer.WritePropertyName("microBfdState"u8);
-                writer.WriteStringValue(MicroBfdState.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -114,12 +104,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Layer2Configuration layer2Configuration = default;
             OptionBLayer3Configuration optionBLayer3Configuration = default;
             NpbStaticRouteConfiguration npbStaticRouteConfiguration = default;
-            NniStaticRoutePatchConfiguration staticRouteConfiguration = default;
             ImportRoutePolicyInformation importRoutePolicy = default;
             ExportRoutePolicyInformation exportRoutePolicy = default;
             ResourceIdentifier egressAclId = default;
             ResourceIdentifier ingressAclId = default;
-            NetworkFabricMicroBfdState? microBfdState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,15 +172,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             npbStaticRouteConfiguration = NpbStaticRouteConfiguration.DeserializeNpbStaticRouteConfiguration(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("staticRouteConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            staticRouteConfiguration = NniStaticRoutePatchConfiguration.DeserializeNniStaticRoutePatchConfiguration(property0.Value, options);
-                            continue;
-                        }
                         if (property0.NameEquals("importRoutePolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -229,15 +208,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             ingressAclId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("microBfdState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            microBfdState = new NetworkFabricMicroBfdState(property0.Value.GetString());
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -255,12 +225,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 layer2Configuration,
                 optionBLayer3Configuration,
                 npbStaticRouteConfiguration,
-                staticRouteConfiguration,
                 importRoutePolicy,
                 exportRoutePolicy,
                 egressAclId,
                 ingressAclId,
-                microBfdState,
                 serializedAdditionalRawData);
         }
 

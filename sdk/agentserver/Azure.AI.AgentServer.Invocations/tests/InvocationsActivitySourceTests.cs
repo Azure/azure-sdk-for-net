@@ -9,12 +9,8 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Invocations.Tests;
 
 [TestFixture]
-[NonParallelizable]
 public class InvocationsActivitySourceTests
 {
-    private const string TestSourceName = "test.invocations.baggage";
-    private static readonly ActivitySource s_testSource = new(TestSourceName);
-
     [TearDown]
     public void TearDown()
     {
@@ -22,21 +18,21 @@ public class InvocationsActivitySourceTests
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", null);
         Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID", null);
         FoundryEnvironment.Reload();
-        Activity.Current = null;
     }
 
     [Test]
-    public void PropagateInvocationBaggage_SetsBaggageOnCurrentActivity()
+    public void StartInvocationActivity_ReturnsActivity_WhenListenerRegistered()
     {
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "test-agent");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
+        FoundryEnvironment.Reload();
+
         using var listener = new ActivityListener
         {
-            ShouldListenTo = source => source.Name == TestSourceName,
+            ShouldListenTo = source => source.Name == InvocationsActivitySource.DefaultName,
             Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
         };
         ActivitySource.AddActivityListener(listener);
-
-        using var parent = s_testSource.StartActivity("parent-request");
-        Assert.That(Activity.Current, Is.Not.Null);
 
         var source = new InvocationsActivitySource();
         var context = new InvocationContext(
@@ -45,24 +41,27 @@ public class InvocationsActivitySourceTests
             new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
             IsolationContext.Empty);
 
-        source.PropagateInvocationBaggage(context, new HeaderDictionary());
+        var headers = new HeaderDictionary();
 
-        Assert.That(Activity.Current!.GetBaggageItem("azure.ai.agentserver.invocation_id"), Is.EqualTo("inv-123"));
-        Assert.That(Activity.Current!.GetBaggageItem("azure.ai.agentserver.session_id"), Is.EqualTo("sess-456"));
+        using var activity = source.StartInvocationActivity(context, headers);
+
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity!.OperationName, Is.EqualTo("invoke_agent test-agent:1.0.0"));
     }
 
     [Test]
-    public void PropagateInvocationBaggage_DoesNotCreateNewActivity()
+    public void StartInvocationActivity_SpanName_NameOnly_WhenVersionEmpty()
     {
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "my-agent");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", null);
+        FoundryEnvironment.Reload();
+
         using var listener = new ActivityListener
         {
-            ShouldListenTo = source => source.Name == TestSourceName,
+            ShouldListenTo = source => source.Name == InvocationsActivitySource.DefaultName,
             Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
         };
         ActivitySource.AddActivityListener(listener);
-
-        using var parent = s_testSource.StartActivity("parent-request");
-        var parentId = Activity.Current!.Id;
 
         var source = new InvocationsActivitySource();
         var context = new InvocationContext(
@@ -71,23 +70,214 @@ public class InvocationsActivitySourceTests
             new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
             IsolationContext.Empty);
 
-        source.PropagateInvocationBaggage(context, new HeaderDictionary());
+        using var activity = source.StartInvocationActivity(context, new HeaderDictionary());
 
-        // Activity.Current should still be the same parent — no new activity created
-        Assert.That(Activity.Current!.Id, Is.EqualTo(parentId));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity!.OperationName, Is.EqualTo("invoke_agent my-agent"));
     }
 
     [Test]
-    public void PropagateInvocationBaggage_PropagatesXRequestId()
+    public void StartInvocationActivity_SpanName_Bare_WhenNoAgentInfo()
     {
+        // No FOUNDRY_AGENT_NAME or FOUNDRY_AGENT_VERSION set
+        FoundryEnvironment.Reload();
+
         using var listener = new ActivityListener
         {
-            ShouldListenTo = source => source.Name == TestSourceName,
+            ShouldListenTo = source => source.Name == InvocationsActivitySource.DefaultName,
             Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
         };
         ActivitySource.AddActivityListener(listener);
 
-        using var parent = s_testSource.StartActivity("parent-request");
+        var source = new InvocationsActivitySource();
+        var context = new InvocationContext(
+            "inv-1", "sess-1",
+            new Dictionary<string, string>(),
+            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
+            IsolationContext.Empty);
+
+        using var activity = source.StartInvocationActivity(context, new HeaderDictionary());
+
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity!.OperationName, Is.EqualTo("invoke_agent"));
+    }
+
+    [Test]
+    public void StartInvocationActivity_SetsAllSpecTags()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "my-agent");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "2.0.0");
+        Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID", "/subscriptions/1234/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/ws");
+        FoundryEnvironment.Reload();
+
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = source => source.Name == InvocationsActivitySource.DefaultName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
+        };
+        ActivitySource.AddActivityListener(listener);
+
+        var source = new InvocationsActivitySource();
+        var context = new InvocationContext(
+            "inv-abc", "sess-def",
+            new Dictionary<string, string>(),
+            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
+            IsolationContext.Empty);
+
+        using var activity = source.StartInvocationActivity(context, new HeaderDictionary());
+
+        Assert.That(activity, Is.Not.Null);
+
+        // Identity & GenAI convention tags (§4.2)
+        Assert.That(activity!.GetTagItem("service.name"), Is.EqualTo("azure.ai.agentserver"));
+        Assert.That(activity.GetTagItem("gen_ai.provider.name"), Is.EqualTo("AzureAI Hosted Agents"));
+        Assert.That(activity.GetTagItem("gen_ai.operation.name"), Is.EqualTo("invoke_agent"));
+        Assert.That(activity.GetTagItem("gen_ai.response.id"), Is.EqualTo("inv-abc"));
+        Assert.That(activity.GetTagItem("microsoft.session.id"), Is.EqualTo("sess-def"));
+        Assert.That(activity.GetTagItem("gen_ai.agent.id"), Is.EqualTo("my-agent:2.0.0"));
+        Assert.That(activity.GetTagItem("gen_ai.agent.name"), Is.EqualTo("my-agent"));
+        Assert.That(activity.GetTagItem("gen_ai.agent.version"), Is.EqualTo("2.0.0"));
+
+        // Namespaced tags (§4.2)
+        Assert.That(activity.GetTagItem("azure.ai.agentserver.invocations.invocation_id"), Is.EqualTo("inv-abc"));
+        Assert.That(activity.GetTagItem("azure.ai.agentserver.invocations.session_id"), Is.EqualTo("sess-def"));
+        Assert.That(activity.GetTagItem("microsoft.foundry.project.id"),
+            Is.EqualTo("/subscriptions/1234/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/ws"));
+
+        // gen_ai.system MUST NOT be present
+        Assert.That(activity.GetTagItem("gen_ai.system"), Is.Null);
+    }
+
+    [Test]
+    public void StartInvocationActivity_AgentId_NameOnly_WhenVersionMissing()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "my-agent");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", null);
+        FoundryEnvironment.Reload();
+
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = source => source.Name == InvocationsActivitySource.DefaultName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
+        };
+        ActivitySource.AddActivityListener(listener);
+
+        var source = new InvocationsActivitySource();
+        var context = new InvocationContext(
+            "inv-1", "sess-1",
+            new Dictionary<string, string>(),
+            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
+            IsolationContext.Empty);
+
+        using var activity = source.StartInvocationActivity(context, new HeaderDictionary());
+
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity!.GetTagItem("gen_ai.agent.id"), Is.EqualTo("my-agent"));
+        Assert.That(activity.GetTagItem("gen_ai.agent.name"), Is.EqualTo("my-agent"));
+        Assert.That(activity.GetTagItem("gen_ai.agent.version"), Is.Null);
+    }
+
+    [Test]
+    public void StartInvocationActivity_AgentId_EmptyString_WhenNoAgentInfo()
+    {
+        FoundryEnvironment.Reload();
+
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = source => source.Name == InvocationsActivitySource.DefaultName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
+        };
+        ActivitySource.AddActivityListener(listener);
+
+        var source = new InvocationsActivitySource();
+        var context = new InvocationContext(
+            "inv-1", "sess-auto",
+            new Dictionary<string, string>(),
+            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
+            IsolationContext.Empty);
+
+        using var activity = source.StartInvocationActivity(context, new HeaderDictionary());
+
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity!.GetTagItem("gen_ai.agent.id"), Is.EqualTo(string.Empty));
+        Assert.That(activity.GetTagItem("gen_ai.agent.name"), Is.Null);
+        Assert.That(activity.GetTagItem("gen_ai.agent.version"), Is.Null);
+    }
+
+    [Test]
+    public void StartInvocationActivity_SessionId_MapsToMicrosoftSessionId()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "agent");
+        FoundryEnvironment.Reload();
+
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = source => source.Name == InvocationsActivitySource.DefaultName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
+        };
+        ActivitySource.AddActivityListener(listener);
+
+        var source = new InvocationsActivitySource();
+        var context = new InvocationContext(
+            "inv-1", "sess-42",
+            new Dictionary<string, string>(),
+            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
+            IsolationContext.Empty);
+
+        using var activity = source.StartInvocationActivity(context, new HeaderDictionary());
+
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity!.GetTagItem("microsoft.session.id"), Is.EqualTo("sess-42"));
+        Assert.That(activity.GetTagItem("azure.ai.agentserver.invocations.session_id"), Is.EqualTo("sess-42"));
+
+        // Session ID must NOT go to gen_ai.conversation.id
+        Assert.That(activity.GetTagItem("gen_ai.conversation.id"), Is.Null);
+    }
+
+    [Test]
+    public void StartInvocationActivity_SetsBaggageKeys()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "agent");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0");
+        FoundryEnvironment.Reload();
+
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = source => source.Name == InvocationsActivitySource.DefaultName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
+        };
+        ActivitySource.AddActivityListener(listener);
+
+        var source = new InvocationsActivitySource();
+        var context = new InvocationContext(
+            "inv-1", "sess-2",
+            new Dictionary<string, string>(),
+            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
+            IsolationContext.Empty);
+
+        using var activity = source.StartInvocationActivity(context, new HeaderDictionary());
+
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity!.GetBaggageItem("azure.ai.agentserver.invocation_id"), Is.EqualTo("inv-1"));
+        Assert.That(activity!.GetBaggageItem("azure.ai.agentserver.session_id"), Is.EqualTo("sess-2"));
+
+        // Old bare keys must NOT be present
+        Assert.That(activity.GetBaggageItem("invocation_id"), Is.Null);
+        Assert.That(activity.GetBaggageItem("session_id"), Is.Null);
+    }
+
+    [Test]
+    public void StartInvocationActivity_PropagatesXRequestId()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "agent");
+        FoundryEnvironment.Reload();
+
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = source => source.Name == InvocationsActivitySource.DefaultName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
+        };
+        ActivitySource.AddActivityListener(listener);
 
         var source = new InvocationsActivitySource();
         var context = new InvocationContext(
@@ -98,45 +288,16 @@ public class InvocationsActivitySourceTests
 
         var headers = new HeaderDictionary { ["x-request-id"] = "req-abc-123" };
 
-        source.PropagateInvocationBaggage(context, headers);
+        using var activity = source.StartInvocationActivity(context, headers);
 
-        Assert.That(Activity.Current!.GetBaggageItem("x-request-id"), Is.EqualTo("req-abc-123"));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity!.GetTagItem("azure.ai.agentserver.x-request-id"), Is.EqualTo("req-abc-123"));
+        Assert.That(activity!.GetBaggageItem("x-request-id"), Is.EqualTo("req-abc-123"));
     }
 
     [Test]
-    public void PropagateInvocationBaggage_TruncatesXRequestId_At256Characters()
+    public void StartInvocationActivity_ReturnsNull_WhenNoListener()
     {
-        using var listener = new ActivityListener
-        {
-            ShouldListenTo = source => source.Name == TestSourceName,
-            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
-        };
-        ActivitySource.AddActivityListener(listener);
-
-        using var parent = s_testSource.StartActivity("parent-request");
-
-        var source = new InvocationsActivitySource();
-        var context = new InvocationContext(
-            "inv-1", "sess-1",
-            new Dictionary<string, string>(),
-            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
-            IsolationContext.Empty);
-
-        var longRequestId = new string('x', 300);
-        var headers = new HeaderDictionary { ["x-request-id"] = longRequestId };
-
-        source.PropagateInvocationBaggage(context, headers);
-
-        var baggageValue = Activity.Current!.GetBaggageItem("x-request-id");
-        Assert.That(baggageValue, Is.Not.Null);
-        Assert.That(baggageValue!.Length, Is.EqualTo(256));
-    }
-
-    [Test]
-    public void PropagateInvocationBaggage_NoOp_WhenNoCurrentActivity()
-    {
-        Activity.Current = null;
-
         var source = new InvocationsActivitySource();
         var context = new InvocationContext(
             "inv-1", "sess-2",
@@ -144,35 +305,8 @@ public class InvocationsActivitySourceTests
             new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
             IsolationContext.Empty);
 
-        // Should not throw
-        source.PropagateInvocationBaggage(context, new HeaderDictionary());
+        var activity = source.StartInvocationActivity(context, new HeaderDictionary());
 
-        Assert.That(Activity.Current, Is.Null);
-    }
-
-    [Test]
-    public void PropagateInvocationBaggage_OldBareKeys_NotPresent()
-    {
-        using var listener = new ActivityListener
-        {
-            ShouldListenTo = source => source.Name == TestSourceName,
-            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
-        };
-        ActivitySource.AddActivityListener(listener);
-
-        using var parent = s_testSource.StartActivity("parent-request");
-
-        var source = new InvocationsActivitySource();
-        var context = new InvocationContext(
-            "inv-1", "sess-2",
-            new Dictionary<string, string>(),
-            new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
-            IsolationContext.Empty);
-
-        source.PropagateInvocationBaggage(context, new HeaderDictionary());
-
-        // Old bare keys must NOT be present
-        Assert.That(Activity.Current!.GetBaggageItem("invocation_id"), Is.Null);
-        Assert.That(Activity.Current!.GetBaggageItem("session_id"), Is.Null);
+        Assert.That(activity, Is.Null);
     }
 }

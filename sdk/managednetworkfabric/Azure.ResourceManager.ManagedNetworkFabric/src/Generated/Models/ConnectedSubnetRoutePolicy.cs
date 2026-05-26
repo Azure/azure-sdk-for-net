@@ -52,16 +52,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectedSubnetRoutePolicy"/>. </summary>
+        /// <param name="exportRoutePolicyId"> ARM Resource ID of the Route Policy. This is used for the backward compatibility. </param>
         /// <param name="exportRoutePolicy"> Array of ARM Resource ID of the RoutePolicies. </param>
-        /// <param name="exportRoutePolicyId"> ARM Resource ID of the RoutePolicy. Backward compatible property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedSubnetRoutePolicy(L3ExportRoutePolicy exportRoutePolicy, ResourceIdentifier exportRoutePolicyId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectedSubnetRoutePolicy(ResourceIdentifier exportRoutePolicyId, L3ExportRoutePolicy exportRoutePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ExportRoutePolicy = exportRoutePolicy;
             ExportRoutePolicyId = exportRoutePolicyId;
+            ExportRoutePolicy = exportRoutePolicy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> ARM Resource ID of the Route Policy. This is used for the backward compatibility. </summary>
+        public ResourceIdentifier ExportRoutePolicyId { get; set; }
         /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
         public L3ExportRoutePolicy ExportRoutePolicy { get; set; }
     }

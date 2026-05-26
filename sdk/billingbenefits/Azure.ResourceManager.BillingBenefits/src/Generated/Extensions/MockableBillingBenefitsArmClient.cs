@@ -68,6 +68,15 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
 
         private ApplicableMaccs ApplicableMaccsRestClient => _applicableMaccsRestClient ??= new ApplicableMaccs(ApplicableMaccsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
 
+        /// <summary> Gets an object representing a <see cref="DiscountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DiscountResource"/> object. </returns>
+        public virtual DiscountResource GetDiscountResource(ResourceIdentifier id)
+        {
+            DiscountResource.ValidateResourceId(id);
+            return new DiscountResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ContributorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ContributorResource"/> object. </returns>
@@ -147,15 +156,6 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         {
             BillingBenefitsReservationOrderAliasResource.ValidateResourceId(id);
             return new BillingBenefitsReservationOrderAliasResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="DiscountResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiscountResource"/> object. </returns>
-        public virtual DiscountResource GetDiscountResource(ResourceIdentifier id)
-        {
-            DiscountResource.ValidateResourceId(id);
-            return new DiscountResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="CreditSourceResource"/> along with the instance operations that can be performed on it but with no data. </summary>

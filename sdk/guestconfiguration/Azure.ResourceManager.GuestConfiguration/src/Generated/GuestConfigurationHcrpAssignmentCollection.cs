@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.GuestConfiguration
     {
         private readonly ClientDiagnostics _guestConfigurationHCRPAssignmentsClientDiagnostics;
         private readonly GuestConfigurationHCRPAssignments _guestConfigurationHCRPAssignmentsRestClient;
+        private readonly ClientDiagnostics _guestConfigurationHCRPAssignmentReportsClientDiagnostics;
+        private readonly GuestConfigurationHCRPAssignmentReports _guestConfigurationHCRPAssignmentReportsRestClient;
 
         /// <summary> Initializes a new instance of GuestConfigurationHcrpAssignmentCollection for mocking. </summary>
         protected GuestConfigurationHcrpAssignmentCollection()
@@ -41,6 +43,8 @@ namespace Azure.ResourceManager.GuestConfiguration
             TryGetApiVersion(GuestConfigurationHcrpAssignmentResource.ResourceType, out string guestConfigurationHcrpAssignmentApiVersion);
             _guestConfigurationHCRPAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationHcrpAssignmentResource.ResourceType.Namespace, Diagnostics);
             _guestConfigurationHCRPAssignmentsRestClient = new GuestConfigurationHCRPAssignments(_guestConfigurationHCRPAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationHcrpAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationHCRPAssignmentReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationHcrpAssignmentResource.ResourceType.Namespace, Diagnostics);
+            _guestConfigurationHCRPAssignmentReportsRestClient = new GuestConfigurationHCRPAssignmentReports(_guestConfigurationHCRPAssignmentReportsClientDiagnostics, Pipeline, Endpoint, guestConfigurationHcrpAssignmentApiVersion ?? "2024-04-05");
             ValidateResourceId(id);
         }
 

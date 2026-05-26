@@ -26,6 +26,15 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         {
         }
 
+        /// <summary> Gets an object representing a <see cref="OperationsPutContentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OperationsPutContentResource"/> object. </returns>
+        public virtual OperationsPutContentResource GetOperationsPutContentResource(ResourceIdentifier id)
+        {
+            OperationsPutContentResource.ValidateResourceId(id);
+            return new OperationsPutContentResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="CustomRolloutResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CustomRolloutResource"/> object. </returns>

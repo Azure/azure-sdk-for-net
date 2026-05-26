@@ -12,7 +12,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> List of outbound rules for the managed network of a cognitive services account. </summary>
-    internal partial class CognitiveServicesOutboundRuleListResult
+    public partial class CognitiveServicesOutboundRuleListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

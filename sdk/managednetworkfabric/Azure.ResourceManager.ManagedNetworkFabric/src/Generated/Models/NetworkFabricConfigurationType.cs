@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string FileValue = "File";
         private const string InlineValue = "Inline";
 
-        /// <summary> File Configuration Type. </summary>
+        /// <summary> File. </summary>
         public static NetworkFabricConfigurationType File { get; } = new NetworkFabricConfigurationType(FileValue);
-        /// <summary> Inline Configuration Type. </summary>
+        /// <summary> Inline. </summary>
         public static NetworkFabricConfigurationType Inline { get; } = new NetworkFabricConfigurationType(InlineValue);
         /// <summary> Determines if two <see cref="NetworkFabricConfigurationType"/> values are the same. </summary>
         public static bool operator ==(NetworkFabricConfigurationType left, NetworkFabricConfigurationType right) => left.Equals(right);

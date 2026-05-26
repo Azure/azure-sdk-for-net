@@ -31,7 +31,7 @@ Typical triggers:
 
 1. **Never edit `src/Generated/` or `metadata.json` by hand.**
 2. **Never add `ApiCompatBaseline.txt` entries or disable ApiCompat/package validation.**
-3. **Prefer spec-side decorators first**: `@@clientName`, `@@alternateType`, `@@markAsPageable`.
+3. **Prefer spec-side decorators first**: `@@clientName`, `@@access`, `@@alternateType`, `@@markAsPageable`.
 4. **Use MCP tools first for deterministic custom-code edits**; hand-edit only the remaining shim logic.
 5. **Use SDK customizations only** for backward-compat shims or when decorators cannot express the fix.
 
@@ -101,6 +101,7 @@ Treat deleted custom code as **suspect by default**. Re-add only the smallest co
 |---------|-----------|
 | Wrong property type | `@@alternateType(Model.prop, targetType, "csharp")` |
 | Wrong name | `@@clientName(target, "NewName", "csharp")` |
+| Type should be public | `@@access(Model, Access.public, "csharp")` |
 | Model should be input and output | `@@usage(Model, Usage.input, "csharp")` (decorator appends; only specify the missing flag) |
 | Needs pageable return type | `@@markAsPageable(Interface.op, "csharp")` |
 | Flatten properties envelope | `@@flattenProperty(Model.properties, "csharp")` |

@@ -188,7 +188,7 @@ namespace Azure.Provisioning.Batch
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
-        public BicepValue<BatchPublicNetworkAccess> PublicNetworkAccess
+        public BicepValue<BicepValue<BatchPublicNetworkAccess>> PublicNetworkAccess
         {
             get
             {
@@ -205,7 +205,7 @@ namespace Azure.Provisioning.Batch
         }
 
         /// <summary> Gets or sets the NetworkProfile. </summary>
-        public BatchNetworkProfile NetworkProfile
+        public BicepValue<BatchNetworkProfile> NetworkProfile
         {
             get
             {
@@ -222,7 +222,7 @@ namespace Azure.Provisioning.Batch
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<BatchPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepValue<BicepList<BatchPrivateEndpointConnection>> PrivateEndpointConnections
         {
             get
             {
@@ -253,7 +253,7 @@ namespace Azure.Provisioning.Batch
         }
 
         /// <summary> Gets the DedicatedCoreQuota. </summary>
-        public BicepValue<int> DedicatedCoreQuota
+        public BicepValue<BicepValue<int>> DedicatedCoreQuota
         {
             get
             {
@@ -266,7 +266,7 @@ namespace Azure.Provisioning.Batch
         }
 
         /// <summary> Gets the LowPriorityCoreQuota. </summary>
-        public BicepValue<int> LowPriorityCoreQuota
+        public BicepValue<BicepValue<int>> LowPriorityCoreQuota
         {
             get
             {
@@ -279,7 +279,7 @@ namespace Azure.Provisioning.Batch
         }
 
         /// <summary> Gets the DedicatedCoreQuotaPerVmFamily. </summary>
-        public BicepList<BatchVmFamilyCoreQuota> DedicatedCoreQuotaPerVmFamily
+        public BicepValue<BicepList<BatchVmFamilyCoreQuota>> DedicatedCoreQuotaPerVmFamily
         {
             get
             {
@@ -331,7 +331,7 @@ namespace Azure.Provisioning.Batch
         }
 
         /// <summary> Gets the AllowedAuthenticationModes. </summary>
-        public BicepList<BatchAuthenticationMode> AllowedAuthenticationModes
+        public BicepValue<BicepList<BatchAuthenticationMode>> AllowedAuthenticationModes
         {
             get
             {

@@ -10,65 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> A resource listing all tags. </summary>
-    public partial class ConsumptionTagsResult : ResourceData, IJsonModel<ConsumptionTagsResult>
+    public partial class ConsumptionTagsResult : IUtf8JsonSerializable, IJsonModel<ConsumptionTagsResult>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionTagsResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeConsumptionTagsResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConsumptionTagsResult)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionTagsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionTagsResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConsumptionContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ConsumptionTagsResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConsumptionTagsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConsumptionTagsResult IPersistableModel<ConsumptionTagsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConsumptionTagsResult)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConsumptionTagsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConsumptionTagsResult"/> from. </param>
-        internal static ConsumptionTagsResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeConsumptionTagsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConsumptionTagsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -80,121 +30,191 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionTagsResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionTagsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConsumptionTagsResult)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartArray();
+                foreach (var item in Tags)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PreviousLink))
+            {
+                writer.WritePropertyName("previousLink"u8);
+                writer.WriteStringValue(PreviousLink);
+            }
+            writer.WriteEndObject();
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConsumptionTagsResult IJsonModel<ConsumptionTagsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConsumptionTagsResult)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConsumptionTagsResult IJsonModel<ConsumptionTagsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionTagsResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionTagsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConsumptionTagsResult)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConsumptionTagsResult(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ConsumptionTagsResult DeserializeConsumptionTagsResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConsumptionTagsResult DeserializeConsumptionTagsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType resourceType = default;
+            ResourceType type = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            TagProperties properties = default;
-            ETag? eTag = default;
-            foreach (var prop in element.EnumerateObject())
+            IList<ConsumptionTag> tags = default;
+            string nextLink = default;
+            string previousLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (property.NameEquals("eTag"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    name = prop.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerConsumptionContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("systemData"u8))
+                if (property.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerConsumptionContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        continue;
+                        if (property0.NameEquals("tags"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ConsumptionTag> array = new List<ConsumptionTag>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ConsumptionTag.DeserializeConsumptionTag(item, options));
+                            }
+                            tags = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("nextLink"u8))
+                        {
+                            nextLink = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("previousLink"u8))
+                        {
+                            previousLink = property0.Value.GetString();
+                            continue;
+                        }
                     }
-                    properties = TagProperties.DeserializeTagProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("eTag"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConsumptionTagsResult(
                 id,
                 name,
-                resourceType,
+                type,
                 systemData,
-                additionalBinaryDataProperties,
-                properties,
-                eTag);
+                tags ?? new ChangeTrackingList<ConsumptionTag>(),
+                nextLink,
+                previousLink,
+                etag,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConsumptionTagsResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionTagsResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConsumptionContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionTagsResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConsumptionTagsResult IPersistableModel<ConsumptionTagsResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionTagsResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeConsumptionTagsResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionTagsResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumptionTagsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

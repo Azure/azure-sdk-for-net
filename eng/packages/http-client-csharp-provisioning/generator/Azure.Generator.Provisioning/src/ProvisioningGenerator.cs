@@ -43,7 +43,7 @@ namespace Azure.Generator.Provisioning
         public override ProvisioningOutputLibrary OutputLibrary => _outputLibrary ??= new ProvisioningOutputLibrary();
 
         /// <inheritdoc/>
-        public override ProvisioningTypeFactory TypeFactory { get; }
+        public override ManagementTypeFactory TypeFactory { get; }
 
         /// <inheritdoc/>
         protected override void Configure()

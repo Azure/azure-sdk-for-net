@@ -234,10 +234,7 @@ namespace Azure.Storage.DataMovement
                 {
                     if (!part.JobPartStatus.HasCompletedSuccessfully)
                     {
-                        // Use ResetToQueued to bypass the state-machine guard.
-                        // Parts may be in transient states (Pausing, Stopping)
-                        // if the process exited mid-pause/stop.
-                        part.JobPartStatus.ResetToQueued();
+                        part.JobPartStatus.SetTransferStateChange(TransferState.Queued);
                         yield return part;
                     }
                 }

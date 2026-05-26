@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.ApiCenter
     {
         private readonly ClientDiagnostics _servicesClientDiagnostics;
         private readonly Services _servicesRestClient;
+        private readonly ClientDiagnostics _metadataSchemasClientDiagnostics;
+        private readonly MetadataSchemas _metadataSchemasRestClient;
+        private readonly ClientDiagnostics _workspacesClientDiagnostics;
+        private readonly Workspaces _workspacesRestClient;
 
         /// <summary> Initializes a new instance of ApiCenterServiceCollection for mocking. </summary>
         protected ApiCenterServiceCollection()
@@ -42,6 +46,10 @@ namespace Azure.ResourceManager.ApiCenter
             TryGetApiVersion(ApiCenterServiceResource.ResourceType, out string apiCenterServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterServiceResource.ResourceType.Namespace, Diagnostics);
             _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, apiCenterServiceApiVersion ?? "2024-06-01-preview");
+            _metadataSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterServiceResource.ResourceType.Namespace, Diagnostics);
+            _metadataSchemasRestClient = new MetadataSchemas(_metadataSchemasClientDiagnostics, Pipeline, Endpoint, apiCenterServiceApiVersion ?? "2024-06-01-preview");
+            _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterServiceResource.ResourceType.Namespace, Diagnostics);
+            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Endpoint, apiCenterServiceApiVersion ?? "2024-06-01-preview");
             ValidateResourceId(id);
         }
 

@@ -172,15 +172,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of Cognitive Services account. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="kind"> The kind (type) of cognitive service account. </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CognitiveServices.CognitiveServicesAccountData"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountData CognitiveServicesAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CognitiveServicesAccountProperties properties = default, ETag? eTag = default, string kind = default, CognitiveServicesSku sku = default, ManagedServiceIdentity identity = default)
+        public static CognitiveServicesAccountData CognitiveServicesAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, CognitiveServicesAccountProperties properties = default, IDictionary<string, string> tags = default, ETag? eTag = default, string kind = default, CognitiveServicesSku sku = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
                 properties,
+                tags,
                 eTag,
                 kind,
                 sku,
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="spilloverDeploymentName"> Specifies the deployment name that should serve requests when the request would have otherwise been throttled due to reaching current deployment throughput limit. </param>
         /// <param name="serviceTier"> The service tier for the deployment. Determines the pricing and performance level for request processing. Use 'Default' for standard pricing or 'Priority' for higher-priority processing with premium pricing. Note: Pause operations are only supported on Standard, DataZoneStandard, and GlobalStandard SKUs. </param>
         /// <param name="deploymentState"> The state of the deployment. Controls whether the deployment is accepting inference requests. Use 'Running' for active deployments that process requests, or 'Paused' to temporarily stop inference while preserving the deployment configuration. </param>
-        /// <param name="routing"> Routing configuration for the model-router deployment. This property is only applicable when the deployed model is 'model-router' version 2025-11-18 or later. Allows you to select the models subset for routing and the routing mode (balanced, quality, cost) for routing across all supported models or the model subset. </param>
+        /// <param name="routing"> Routing configuration for the deployment. This property is only applicable when the deployed model is 'model-router' version 2025-11-18 or later. Allows you to select the models subset for routing and the routing mode (balanced, accuracy, cost) for routing across all supported models or the model subset. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentProperties"/> instance for mocking. </returns>
         public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState = default, CognitiveServicesAccountDeploymentModel model = default, CognitiveServicesAccountDeploymentScaleSettings scaleSettings = default, IReadOnlyDictionary<string, string> capabilities = default, string raiPolicyName = default, ServiceAccountCallRateLimit callRateLimit = default, IEnumerable<ServiceAccountThrottlingRule> rateLimits = default, DeploymentModelVersionUpgradeOption? versionUpgradeOption = default, bool? isDynamicThrottlingEnabled = default, int? currentCapacity = default, DeploymentCapacitySettings capacitySettings = default, string parentDeploymentName = default, string spilloverDeploymentName = default, CognitiveServicesDeploymentServiceTier? serviceTier = default, CognitiveServicesDeploymentState? deploymentState = default, CognitiveServicesDeploymentRouting routing = default)
         {
@@ -729,9 +729,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesAccountDeploymentScaleSettings(scaleType, capacity, activeCapacity, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Routing configuration for the model-router deployment. Specifies how requests are routed across multiple models. </summary>
-        /// <param name="mode"> The model-router routing mode that determines how requests are distributed across models. </param>
-        /// <param name="models"> Optional. The list of model-router supported models that the model router can use to route requests across. If not specified, the model router will route to all available models specified in the model-router version. </param>
+        /// <summary> Routing configuration for the deployment. Specifies how requests are routed across multiple models. </summary>
+        /// <param name="mode"> The routing mode that determines how requests are distributed across models. </param>
+        /// <param name="models"> Optional. The list of models that the model router can use to route requests across. If not specified, the model router will route to all available models specified in the model-router version. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesDeploymentRouting"/> instance for mocking. </returns>
         public static CognitiveServicesDeploymentRouting CognitiveServicesDeploymentRouting(CognitiveServicesRoutingMode? mode = default, IEnumerable<CognitiveServicesAccountDeploymentModel> models = default)
         {
@@ -1228,13 +1228,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of Cognitive Services project. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CognitiveServices.CognitiveServicesProjectData"/> instance for mocking. </returns>
-        public static CognitiveServicesProjectData CognitiveServicesProjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CognitiveServicesProjectProperties properties = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
+        public static CognitiveServicesProjectData CognitiveServicesProjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, CognitiveServicesProjectProperties properties = default, IDictionary<string, string> tags = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1244,9 +1244,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
                 properties,
+                tags,
                 eTag,
                 identity);
         }
@@ -2039,6 +2039,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> List of outbound rules for the managed network of a cognitive services account. </summary>
+        /// <param name="nextLink"> The link to the next page constructed using the continuationToken.  If null, there are no additional pages. </param>
+        /// <param name="value"> The list of cognitive services accounts. Since this list may be incomplete, the nextLink field should be used to request the next list of cognitive services accounts. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesOutboundRuleListResult"/> instance for mocking. </returns>
+        public static CognitiveServicesOutboundRuleListResult CognitiveServicesOutboundRuleListResult(string nextLink = default, IEnumerable<CognitiveServicesOutboundRuleBasicData> value = default)
+        {
+            value ??= new ChangeTrackingList<CognitiveServicesOutboundRuleBasicData>();
+
+            return new CognitiveServicesOutboundRuleListResult(nextLink, value.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -2117,6 +2128,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 firewallPublicIpAddress,
                 provisioningState,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The CognitiveServicesManagedNetworkSettingsContent. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Managed Network settings for a cognitive services account. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesManagedNetworkSettingsContent"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedNetworkSettingsContent CognitiveServicesManagedNetworkSettingsContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesManagedNetworkConfiguration properties = default)
+        {
+            return new CognitiveServicesManagedNetworkSettingsContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
         /// <summary> Agent Application resource. </summary>
@@ -2543,9 +2572,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
                 properties,
+                tags,
                 etag,
                 kind,
                 sku,
@@ -2933,9 +2962,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                tags,
                 location,
                 properties,
+                tags,
                 etag,
                 identity);
         }

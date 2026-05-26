@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
         ConfidentialLedgerFilesExportResult IOperationSource<ConfidentialLedgerFilesExportResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return ConfidentialLedgerFilesExportResult.DeserializeConfidentialLedgerFilesExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ConfidentialLedgerFilesExportResult result = ConfidentialLedgerFilesExportResult.DeserializeConfidentialLedgerFilesExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.ConfidentialLedger
         async ValueTask<ConfidentialLedgerFilesExportResult> IOperationSource<ConfidentialLedgerFilesExportResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ConfidentialLedgerFilesExportResult.DeserializeConfidentialLedgerFilesExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ConfidentialLedgerFilesExportResult result = ConfidentialLedgerFilesExportResult.DeserializeConfidentialLedgerFilesExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

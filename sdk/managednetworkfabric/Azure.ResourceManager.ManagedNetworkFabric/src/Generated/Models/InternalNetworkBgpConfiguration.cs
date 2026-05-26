@@ -10,12 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Internal network BGP configuration. </summary>
+    /// <summary> BGP configuration properties. </summary>
     public partial class InternalNetworkBgpConfiguration : BgpConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="InternalNetworkBgpConfiguration"/>. </summary>
-        /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
-        public InternalNetworkBgpConfiguration(long? peerAsn) : base(peerAsn)
+        public InternalNetworkBgpConfiguration()
         {
         }
 
@@ -32,10 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ipv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
         /// <param name="ipv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
         /// <param name="ipv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
-        /// <param name="bmpConfiguration"> InternalNetwork BMP Configuration. </param>
-        /// <param name="v4OverV6BgpSession"> V4 over V6 bgp session. </param>
-        /// <param name="v6OverV4BgpSession"> v6 over v4 bgp session. </param>
-        internal InternalNetworkBgpConfiguration(string annotation, IDictionary<string, BinaryData> serializedAdditionalRawData, BfdConfiguration bfdConfiguration, NetworkFabricBooleanValue? defaultRouteOriginate, int? allowAS, AllowASOverride? allowASOverride, long? fabricAsn, long? peerAsn, IList<string> ipv4ListenRangePrefixes, IList<string> ipv6ListenRangePrefixes, IList<NeighborAddress> ipv4NeighborAddress, IList<NeighborAddress> ipv6NeighborAddress, InternalNetworkBmpProperties bmpConfiguration, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession) : base(annotation, serializedAdditionalRawData, bfdConfiguration, defaultRouteOriginate, allowAS, allowASOverride, fabricAsn, peerAsn, ipv4ListenRangePrefixes, ipv6ListenRangePrefixes, ipv4NeighborAddress, ipv6NeighborAddress, bmpConfiguration, v4OverV6BgpSession, v6OverV4BgpSession)
+        internal InternalNetworkBgpConfiguration(string annotation, IDictionary<string, BinaryData> serializedAdditionalRawData, BfdConfiguration bfdConfiguration, NetworkFabricBooleanValue? defaultRouteOriginate, int? allowAS, AllowASOverride? allowASOverride, long? fabricAsn, long? peerAsn, IList<string> ipv4ListenRangePrefixes, IList<string> ipv6ListenRangePrefixes, IList<NeighborAddress> ipv4NeighborAddress, IList<NeighborAddress> ipv6NeighborAddress) : base(annotation, serializedAdditionalRawData, bfdConfiguration, defaultRouteOriginate, allowAS, allowASOverride, fabricAsn, peerAsn, ipv4ListenRangePrefixes, ipv6ListenRangePrefixes, ipv4NeighborAddress, ipv6NeighborAddress)
         {
         }
     }

@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -35,30 +34,18 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer.Providers
         protected override string BuildName() => $"{_input.Name}ControllerBase";
 
         protected override string BuildNamespace() =>
-            $"{AspNetServerCodeModelGenerator.Instance.GeneratedNamespace}.Controllers";
+            $"{CodeModelGenerator.Instance.TypeFactory.PrimaryNamespace}.Controllers";
 
         protected override string BuildRelativeFilePath() =>
-            Path.Combine(AspNetServerCodeModelGenerator.Instance.GeneratedDirectory, "Controllers", $"{Name}.cs");
+            Path.Combine("src", "Generated", "Controllers", $"{Name}.cs");
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers() =>
             TypeSignatureModifiers.Public | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Abstract | TypeSignatureModifiers.Class;
 
         protected override CSharpType[] BuildImplements() => [typeof(ControllerBase)];
 
-        protected override IReadOnlyList<AttributeStatement> BuildAttributes()
-        {
-            var attributes = new List<AttributeStatement>
-            {
-                new AttributeStatement(typeof(ApiControllerAttribute))
-            };
-
-            if (AspNetServerCodeModelGenerator.Instance.CurrentApiVersion is string apiVersion)
-            {
-                attributes.Add(new AttributeStatement(typeof(ApiVersionAttribute), Literal(apiVersion)));
-            }
-
-            return attributes;
-        }
+        protected override IReadOnlyList<AttributeStatement> BuildAttributes() =>
+            [new AttributeStatement(typeof(ApiControllerAttribute))];
 
         protected override XmlDocProvider BuildXmlDocs()
         {

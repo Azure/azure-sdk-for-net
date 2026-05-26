@@ -60,24 +60,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="layer2Configuration"> Common properties for Layer2Configuration. </param>
         /// <param name="optionBLayer3Configuration"> Common properties for Layer3Configuration. </param>
         /// <param name="npbStaticRouteConfiguration"> NPB Static Route Configuration properties. </param>
-        /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
         /// <param name="importRoutePolicy"> Import Route Policy information. </param>
         /// <param name="exportRoutePolicy"> Export Route Policy information. </param>
         /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
-        /// <param name="microBfdState"> Micro BFD enabled/disabled state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, NniStaticRoutePatchConfiguration staticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, NetworkFabricMicroBfdState? microBfdState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Layer2Configuration = layer2Configuration;
             OptionBLayer3Configuration = optionBLayer3Configuration;
             NpbStaticRouteConfiguration = npbStaticRouteConfiguration;
-            StaticRouteConfiguration = staticRouteConfiguration;
             ImportRoutePolicy = importRoutePolicy;
             ExportRoutePolicy = exportRoutePolicy;
             EgressAclId = egressAclId;
             IngressAclId = ingressAclId;
-            MicroBfdState = microBfdState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -87,8 +83,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public OptionBLayer3Configuration OptionBLayer3Configuration { get; set; }
         /// <summary> NPB Static Route Configuration properties. </summary>
         public NpbStaticRouteConfiguration NpbStaticRouteConfiguration { get; set; }
-        /// <summary> Static Route Configuration. </summary>
-        public NniStaticRoutePatchConfiguration StaticRouteConfiguration { get; set; }
         /// <summary> Import Route Policy information. </summary>
         public ImportRoutePolicyInformation ImportRoutePolicy { get; set; }
         /// <summary> Export Route Policy information. </summary>
@@ -97,7 +91,5 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public ResourceIdentifier EgressAclId { get; set; }
         /// <summary> Ingress Acl. ARM resource ID of Access Control Lists. </summary>
         public ResourceIdentifier IngressAclId { get; set; }
-        /// <summary> Micro BFD enabled/disabled state. </summary>
-        public NetworkFabricMicroBfdState? MicroBfdState { get; set; }
     }
 }

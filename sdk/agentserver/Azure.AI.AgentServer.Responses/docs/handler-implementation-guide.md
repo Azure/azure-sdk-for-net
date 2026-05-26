@@ -193,19 +193,15 @@ var app = builder.Build();
 app.Run();
 ```
 
-### Tier 3: Manual Setup (Standalone)
+### Tier 3: Manual Setup (Without Core)
 
-If you have an existing ASP.NET Core application, register Core middleware and protocol services directly. See the [Tier 3 self-hosting sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples/Sample9_Tier3SelfHosting.md) for a complete example with health checks and OpenTelemetry.
+If you don't use the Core package, register services and map endpoints directly:
 
 #### Basic Setup
 
 ```csharp
-builder.Services.AddAgentServerCore();  // Core middleware (request ID, server version, logging)
 builder.Services.AddResponsesServer();
-builder.Services.AddScoped<ResponseHandler, MyHandler>();
-// ...
-app.UseAgentServerCore();  // Core middleware pipeline
-app.MapResponsesServer();
+builder.Services.AddSingleton<ResponseHandler, MyHandler>();
 ```
 
 #### With Options
@@ -1190,7 +1186,7 @@ When `store=true` (the default), the library persists the response to durable st
 
 | Mode | When persistence fails | What the handler sees | What the client sees |
 |------|----------------------|----------------------|---------------------|
-| Non-streaming, non-background | After handler completes (in `FinalizeExecutionAsync`) | Nothing — handler already finished | Response with `status: "failed"`, `error.code: "storage_error"` |
+| Non-streaming, non-background | After handler completes (in `FinalizeExecutionAsync`) | Nothing — handler already finished | Response with `status: "failed"`, `error.code: "server_error"` |
 | Streaming, non-background | Before yielding the terminal event | Nothing — handler already emitted terminal | Terminal event replaced with `response.failed` |
 | Background, non-streaming | Phase 1 (CreateResponse): before response returned to client | `CancellationToken` fires (`OperationCanceledException`) | HTTP 500 error (pre-creation failure) |
 | Background, non-streaming | Phase 2 (UpdateResponse): after handler completes | Nothing — handler already finished | `GET` returns `status: "failed"` |

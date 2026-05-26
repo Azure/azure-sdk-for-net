@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -15,72 +14,47 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct JavaComponentProvisioningState : IEquatable<JavaComponentProvisioningState>
     {
         private readonly string _value;
-        /// <summary> Succeeded. </summary>
-        private const string SucceededValue = "Succeeded";
-        /// <summary> Failed. </summary>
-        private const string FailedValue = "Failed";
-        /// <summary> Canceled. </summary>
-        private const string CanceledValue = "Canceled";
-        /// <summary> Deleting. </summary>
-        private const string DeletingValue = "Deleting";
-        /// <summary> InProgress. </summary>
-        private const string InProgressValue = "InProgress";
 
         /// <summary> Initializes a new instance of <see cref="JavaComponentProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JavaComponentProvisioningState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string SucceededValue = "Succeeded";
+        private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
+        private const string DeletingValue = "Deleting";
+        private const string InProgressValue = "InProgress";
 
         /// <summary> Succeeded. </summary>
         public static JavaComponentProvisioningState Succeeded { get; } = new JavaComponentProvisioningState(SucceededValue);
-
         /// <summary> Failed. </summary>
         public static JavaComponentProvisioningState Failed { get; } = new JavaComponentProvisioningState(FailedValue);
-
         /// <summary> Canceled. </summary>
         public static JavaComponentProvisioningState Canceled { get; } = new JavaComponentProvisioningState(CanceledValue);
-
         /// <summary> Deleting. </summary>
         public static JavaComponentProvisioningState Deleting { get; } = new JavaComponentProvisioningState(DeletingValue);
-
         /// <summary> InProgress. </summary>
         public static JavaComponentProvisioningState InProgress { get; } = new JavaComponentProvisioningState(InProgressValue);
-
         /// <summary> Determines if two <see cref="JavaComponentProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JavaComponentProvisioningState left, JavaComponentProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="JavaComponentProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JavaComponentProvisioningState left, JavaComponentProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="JavaComponentProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JavaComponentProvisioningState"/>. </summary>
         public static implicit operator JavaComponentProvisioningState(string value) => new JavaComponentProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="JavaComponentProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator JavaComponentProvisioningState?(string value) => value == null ? null : new JavaComponentProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is JavaComponentProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(JavaComponentProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

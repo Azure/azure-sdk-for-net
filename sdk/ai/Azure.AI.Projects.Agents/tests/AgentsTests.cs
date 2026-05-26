@@ -485,7 +485,8 @@ public class AgentsTests : AgentsTestBase
         // Create
         ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
-            versionIndicator: new VersionRefIndicator(agentVersion.Version)
+            versionIndicator: new VersionRefIndicator(agentVersion.Version),
+            cancellationToken: default
         );
         Assert.That(session1.VersionIndicator, Is.InstanceOf(typeof(VersionRefIndicator)));
         Assert.That(((VersionRefIndicator)session1.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
@@ -521,29 +522,12 @@ public class AgentsTests : AgentsTestBase
         Assert.That(sessions, Does.Contain(session2.AgentSessionId));
         // Delete
         await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
-        Assert.ThrowsAsync<ClientResultException>(async () => await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId));
-        // See work item 5291142. [HostedAgentsVNext] Bug: Removed session is still being listed.
-        //sessions = [.. await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Select(x => x.AgentSessionId).ToListAsync()];
-        //Assert.That(sessions, Has.Count.EqualTo(1));
-        //Assert.That(sessions, Does.Not.Contain(session1.AgentSessionId));
-        //Assert.That(sessions, Does.Contain(session2.AgentSessionId));
-        // Workaround
-        sessions = [.. await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Where(x => x.Status == AgentSessionStatus.Active).Select(x => x.AgentSessionId).ToListAsync()];
+        sessions = [.. await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Select(x => x.AgentSessionId).ToListAsync()];
         Assert.That(sessions, Has.Count.EqualTo(1));
         Assert.That(sessions, Does.Not.Contain(session1.AgentSessionId));
         Assert.That(sessions, Does.Contain(session2.AgentSessionId));
-        sessions = [.. await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Where(x => x.Status == AgentSessionStatus.Deleted).Select(x => x.AgentSessionId).ToListAsync()];
-        Assert.That(sessions, Has.Count.EqualTo(1));
-        Assert.That(sessions, Does.Not.Contain(session2.AgentSessionId));
-        Assert.That(sessions, Does.Contain(session1.AgentSessionId));
         await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
-        //sessions = [.. await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Select(x => x.AgentSessionId).ToListAsync()];
-        //Assert.That(sessions, Has.Count.EqualTo(0));
-        // Workaround
-        sessions = [.. await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Where(x => x.Status == AgentSessionStatus.Deleted).Select(x => x.AgentSessionId).ToListAsync()];
-        Assert.That(sessions, Does.Contain(session1.AgentSessionId));
-        Assert.That(sessions, Does.Contain(session2.AgentSessionId));
-        sessions = [.. await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Where(x => x.Status == AgentSessionStatus.Active).Select(x => x.AgentSessionId).ToListAsync()];
+        sessions = [.. await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Select(x => x.AgentSessionId).ToListAsync()];
         Assert.That(sessions, Has.Count.EqualTo(0));
     }
 
@@ -553,7 +537,7 @@ public class AgentsTests : AgentsTestBase
         AgentAdministrationClient agentsClient = GetTestClient();
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient, "01");
         await DeleteAllSessionsAsync(agentsClient, agentVersion.Name);
-        string sessionIdBase = $"session_{(IsAsync ? "async" : "sync")}_10";
+        string sessionIdBase = $"session_{(IsAsync ? "async" : "sync")}_09";
         // Make sure that chronological order is the reverse of session ID alphanumeric order.
         for (int i = 0; i < PAGE_SIZE + 1; i++)
         {

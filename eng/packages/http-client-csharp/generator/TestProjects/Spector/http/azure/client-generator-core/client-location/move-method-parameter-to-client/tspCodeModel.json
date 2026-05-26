@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "GetBlobAccept",
+      "name": "getBlobContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {

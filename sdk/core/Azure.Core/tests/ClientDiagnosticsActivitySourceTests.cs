@@ -430,9 +430,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(traceId, activity.TraceId.ToString());
             Assert.AreEqual(spanId, activity.ParentSpanId.ToString());
             Assert.AreEqual(traceState, activity.TraceStateString);
-            // The traceparent comes from an external source (e.g. a messaging broker), so the parent context
-            // must be marked as remote so samplers that distinguish local vs. remote parents behave correctly.
-            Assert.IsTrue(activity.HasRemoteParent);
         }
 
         [Test]

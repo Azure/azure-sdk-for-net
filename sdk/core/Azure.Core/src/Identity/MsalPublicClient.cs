@@ -143,7 +143,6 @@ namespace Azure.Identity
                 builder.WithProofOfPossession(context.ProofOfPossessionNonce, new(context.ResourceRequestMethod), context.ResourceRequestUri);
             }
 
-            ApplyTokenRequestCallback(builder);
             return await builder
                 .ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
@@ -203,7 +202,6 @@ namespace Azure.Identity
                 builder.WithProofOfPossession(context.ProofOfPossessionNonce, new(context.ResourceRequestMethod), context.ResourceRequestUri);
             }
 
-            ApplyTokenRequestCallback(builder);
             return await builder.ExecuteAsync(async, cancellationToken)
                            .ConfigureAwait(false);
         }
@@ -312,7 +310,6 @@ namespace Azure.Identity
             {
                 builder.WithProofOfPossession(tokenRequestContext.ProofOfPossessionNonce, new(tokenRequestContext.ResourceRequestMethod), tokenRequestContext.ResourceRequestUri);
             }
-            ApplyTokenRequestCallback(builder);
             return await builder
                 .ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
@@ -341,7 +338,6 @@ namespace Azure.Identity
             {
                 builder.WithTenantId(tenantId);
             }
-            ApplyTokenRequestCallback(builder);
             return await builder.ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
         }
@@ -367,7 +363,6 @@ namespace Azure.Identity
                 builder.WithTenantId(TenantId);
             }
 
-            ApplyTokenRequestCallback(builder);
             return await builder.ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
         }
@@ -394,7 +389,6 @@ namespace Azure.Identity
                 builder.WithTenantId(TenantId);
             }
 
-            ApplyTokenRequestCallback(builder);
             return await builder.ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
         }

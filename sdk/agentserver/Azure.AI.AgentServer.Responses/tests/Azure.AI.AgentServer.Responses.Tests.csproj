@@ -22,9 +22,9 @@
     <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" />
   </ItemGroup>
 
+  <!-- ASP.NET Core packages require net8.0 or later -->
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
-    <PackageReference Include="Microsoft.OpenTelemetry" />
     <PackageReference Include="OpenAI" />
   </ItemGroup>
 

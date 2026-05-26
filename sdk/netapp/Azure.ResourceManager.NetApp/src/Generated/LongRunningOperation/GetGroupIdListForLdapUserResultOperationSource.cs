@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.NetApp
         GetGroupIdListForLdapUserResult IOperationSource<GetGroupIdListForLdapUserResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return GetGroupIdListForLdapUserResult.DeserializeGetGroupIdListForLdapUserResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            GetGroupIdListForLdapUserResult result = GetGroupIdListForLdapUserResult.DeserializeGetGroupIdListForLdapUserResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.NetApp
         async ValueTask<GetGroupIdListForLdapUserResult> IOperationSource<GetGroupIdListForLdapUserResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return GetGroupIdListForLdapUserResult.DeserializeGetGroupIdListForLdapUserResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            GetGroupIdListForLdapUserResult result = GetGroupIdListForLdapUserResult.DeserializeGetGroupIdListForLdapUserResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

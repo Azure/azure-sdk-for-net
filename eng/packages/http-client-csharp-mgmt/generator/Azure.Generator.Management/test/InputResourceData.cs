@@ -10,7 +10,7 @@ namespace Azure.Generator.Management.Tests.Common
 {
     internal static class InputResourceData
     {
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType")
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource()
         {
             const string TestClientName = "TestClient";
             const string ResourceModelName = "ResponseType";
@@ -25,7 +25,6 @@ namespace Azure.Generator.Management.Tests.Common
                         ],
                         decorators: []);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
-            var noContentResponseType = InputFactory.OperationResponse(statusCodes: [204], bodytype: null);
             var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
             // the http operation parameters
             var subsIdOpParameter = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
@@ -35,7 +34,6 @@ namespace Azure.Generator.Management.Tests.Common
             var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var createOperation = InputFactory.Operation(name: "createTest", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "PUT");
             var updateOperation = InputFactory.Operation(name: "update", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "PATCH");
-            var checkExistenceOperation = InputFactory.Operation(name: "checkExistence", responses: [noContentResponseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "HEAD");
             // the method parameters
             var subscriptionIdParameter = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
             var resourceGroupParameter = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
@@ -44,27 +42,17 @@ namespace Azure.Generator.Management.Tests.Common
             var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var updateMethod = InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
-            var checkExistenceMethod = InputFactory.BasicServiceMethod("checkExistence", checkExistenceOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
 
             var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
-            var resourceMethods = new List<ResourceMethod>
-            {
+            var armProviderDecorator = BuildArmProviderSchema(responseModel, [
                 new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
                 new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
                 new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!)
-            };
-            var clientMethods = new List<InputServiceMethod> { getMethod, createMethod, updateMethod };
-            if (includeCheckExistence)
-            {
-                resourceMethods.Add(new ResourceMethod(ResourceOperationKind.CheckExistence, checkExistenceMethod, new RequestPathPattern(checkExistenceMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!));
-                clientMethods.Add(checkExistenceMethod);
-            }
-
-            var armProviderDecorator = BuildArmProviderSchema(responseModel, resourceMethods, resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, resourceName);
+            ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
 
             var client = InputFactory.Client(
                 TestClientName,
-                methods: clientMethods,
+                methods: [getMethod, createMethod, updateMethod],
                 decorators: [armProviderDecorator],
                 crossLanguageDefinitionId: $"Test.{TestClientName}");
 
@@ -629,78 +617,6 @@ namespace Azure.Generator.Management.Tests.Common
                 crossLanguageDefinitionId: $"Test.{ChildClientName}");
 
             return (parentClient, childClient, [parentModel, childModel, childPageModel]);
-        }
-
-        /// <summary>
-        /// Two-client fixture used to reproduce https://github.com/Azure/azure-sdk-for-net/issues/59242.
-        /// MainClient contains the CRUD methods that go on the collection (Read/Create) and the
-        /// resource (Read). ActionClient contains a single Action method that only goes on the
-        /// resource. The bug being guarded against is that the collection would otherwise emit a
-        /// private REST client field for ActionClient even though no method on the collection uses
-        /// it.
-        /// </summary>
-        public static (InputClient MainClient, InputClient ActionClient, IReadOnlyList<InputModelType> InputModels) ClientWithResourceActionInDifferentClient()
-        {
-            const string MainClientName = "MainClient";
-            const string ActionClientName = "ActionClient";
-            const string ResourceModelName = "ResponseType";
-
-            var responseModel = InputFactory.Model(ResourceModelName,
-                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
-                properties:
-                [
-                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("tags", new InputDictionaryType("dict", InputPrimitiveType.String, InputPrimitiveType.String), isReadOnly: false),
-                ],
-                decorators: []);
-            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
-            var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
-
-            // CRUD operation parameters
-            var subsIdOpParameter = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
-            var rgOpParameter = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
-            var testNameOpParameter = InputFactory.PathParameter("testName", InputPrimitiveType.String, isRequired: true);
-            var dataOpParameter = InputFactory.BodyParameter("data", responseModel, isRequired: true);
-
-            var resourcePath = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
-            var actionPath = resourcePath + "/doAction";
-
-            var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: resourcePath);
-            var createOperation = InputFactory.Operation(name: "createTest", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: resourcePath, httpMethod: "PUT");
-            // The action lives at a sub-path on the resource and belongs to a separate InputClient.
-            var actionOperation = InputFactory.Operation(name: "doAction", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: actionPath, httpMethod: "POST");
-
-            var subscriptionIdParameter = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
-            var resourceGroupParameter = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
-            var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
-            var dataParameter = InputFactory.MethodParameter("data", responseModel, location: InputRequestLocation.Body, isRequired: true);
-
-            var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
-            var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
-            var actionMethod = InputFactory.BasicServiceMethod("doAction", actionOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
-
-            var resourceIdPattern = new RequestPathPattern(resourcePath);
-            var armProviderDecorator = BuildArmProviderSchema(responseModel, [
-                new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
-                new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
-                new ResourceMethod(ResourceOperationKind.Action, actionMethod, new RequestPathPattern(actionMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!)
-            ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
-
-            var mainClient = InputFactory.Client(
-                MainClientName,
-                methods: [getMethod, createMethod],
-                decorators: [armProviderDecorator],
-                crossLanguageDefinitionId: $"Test.{MainClientName}");
-
-            var actionClient = InputFactory.Client(
-                ActionClientName,
-                methods: [actionMethod],
-                decorators: [],
-                crossLanguageDefinitionId: $"Test.{ActionClientName}");
-
-            return (mainClient, actionClient, [responseModel]);
         }
 
         private static InputDecoratorInfo BuildArmProviderSchema(InputModelType resourceModel, IReadOnlyList<ResourceMethod> methods, RequestPathPattern resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, string? resourceName)

@@ -23,7 +23,6 @@ namespace Azure.AI.Extensions.OpenAI
             Argument.AssertNotNull(memoryStoreName, nameof(memoryStoreName));
             Argument.AssertNotNull(scope, nameof(scope));
 
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             MemoryStoreName = memoryStoreName;
             Scope = scope;
         }
@@ -33,11 +32,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
         /// <param name="memoryStoreName"> The name of the memory store to use. </param>
         /// <param name="scope">
         /// The namespace used to group and isolate memories, such as a user ID.
@@ -46,11 +40,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// </param>
         /// <param name="searchOptions"> Options for searching the memory store. </param>
         /// <param name="updateDelayInSeconds"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
-        internal ResponsesMemorySearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, string memoryStoreName, string scope, ResponsesMemorySearchOptions searchOptions, int? updateDelayInSeconds) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesMemorySearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, string memoryStoreName, string scope, ResponsesMemorySearchOptions searchOptions, int? updateDelayInSeconds) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
-            ToolConfigs = toolConfigs;
             MemoryStoreName = memoryStoreName;
             Scope = scope;
             SearchOptions = searchOptions;
@@ -62,13 +55,6 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
         public string Description { get; set; }
-
-        /// <summary>
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The name of the memory store to use. </summary>
         public string MemoryStoreName { get; set; }

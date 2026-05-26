@@ -211,12 +211,12 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<ArmOperation<HorizonDBReplicaResource>> UpdateAsync(WaitUntil waitUntil, HorizonDBReplicaForPatchUpdate properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<HorizonDBReplicaResource>> UpdateAsync(WaitUntil waitUntil, HorizonDBReplicaPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _horizonDBReplicasClientDiagnostics.CreateScope("HorizonDBReplicaResource.Update");
             scope.Start();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBReplicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HorizonDBReplicaForPatchUpdate.ToRequestContent(properties), context);
+                HttpMessage message = _horizonDBReplicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HorizonDBReplicaPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HorizonDBArmOperation<HorizonDBReplicaResource> operation = new HorizonDBArmOperation<HorizonDBReplicaResource>(
                     new HorizonDBReplicaOperationSource(Client),
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual ArmOperation<HorizonDBReplicaResource> Update(WaitUntil waitUntil, HorizonDBReplicaForPatchUpdate properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<HorizonDBReplicaResource> Update(WaitUntil waitUntil, HorizonDBReplicaPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _horizonDBReplicasClientDiagnostics.CreateScope("HorizonDBReplicaResource.Update");
             scope.Start();
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBReplicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HorizonDBReplicaForPatchUpdate.ToRequestContent(properties), context);
+                HttpMessage message = _horizonDBReplicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HorizonDBReplicaPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HorizonDBArmOperation<HorizonDBReplicaResource> operation = new HorizonDBArmOperation<HorizonDBReplicaResource>(
                     new HorizonDBReplicaOperationSource(Client),

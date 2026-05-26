@@ -30,6 +30,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The ID of the referenced container. </summary>
-        public string ContainerId { get; set; }
+        public string ContainerId { get; }
     }
 }

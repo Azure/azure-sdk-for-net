@@ -345,42 +345,6 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageConnectorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableStorageArmClient.GetStorageConnectorResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StorageConnectorResource"/> object. </returns>
-        public static StorageConnectorResource GetStorageConnectorResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableStorageArmClient(client).GetStorageConnectorResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageDataShareResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableStorageArmClient.GetStorageDataShareResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StorageDataShareResource"/> object. </returns>
-        public static StorageDataShareResource GetStorageDataShareResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableStorageArmClient(client).GetStorageDataShareResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="StorageQueueResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>

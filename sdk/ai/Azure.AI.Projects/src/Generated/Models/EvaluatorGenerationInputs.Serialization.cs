@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects.Evaluation;
 
 namespace Azure.AI.Projects
 {
@@ -75,6 +76,8 @@ namespace Azure.AI.Projects
             {
                 throw new FormatException($"The model {nameof(EvaluatorGenerationInputs)} does not support writing '{format}' format.");
             }
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
             writer.WritePropertyName("sources"u8);
             writer.WriteStartArray();
             foreach (EvaluatorGenerationJobSource item in Sources)
@@ -82,20 +85,15 @@ namespace Azure.AI.Projects
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category.Value.ToString());
+            }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
             writer.WritePropertyName("evaluator_name"u8);
             writer.WriteStringValue(EvaluatorName);
-            if (Optional.IsDefined(EvaluatorDisplayName))
-            {
-                writer.WritePropertyName("evaluator_display_name"u8);
-                writer.WriteStringValue(EvaluatorDisplayName);
-            }
-            if (Optional.IsDefined(EvaluatorDescription))
-            {
-                writer.WritePropertyName("evaluator_description"u8);
-                writer.WriteStringValue(EvaluatorDescription);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -138,14 +136,19 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
+            string name = default;
             IList<EvaluatorGenerationJobSource> sources = default;
+            EvaluatorCategory? category = default;
             string model = default;
             string evaluatorName = default;
-            string evaluatorDisplayName = default;
-            string evaluatorDescription = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("sources"u8))
                 {
                     List<EvaluatorGenerationJobSource> array = new List<EvaluatorGenerationJobSource>();
@@ -154,6 +157,15 @@ namespace Azure.AI.Projects
                         array.Add(EvaluatorGenerationJobSource.DeserializeEvaluatorGenerationJobSource(item, options));
                     }
                     sources = array;
+                    continue;
+                }
+                if (prop.NameEquals("category"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    category = new EvaluatorCategory(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("model"u8))
@@ -166,27 +178,17 @@ namespace Azure.AI.Projects
                     evaluatorName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("evaluator_display_name"u8))
-                {
-                    evaluatorDisplayName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("evaluator_description"u8))
-                {
-                    evaluatorDescription = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new EvaluatorGenerationInputs(
+                name,
                 sources,
+                category,
                 model,
                 evaluatorName,
-                evaluatorDisplayName,
-                evaluatorDescription,
                 additionalBinaryDataProperties);
         }
     }

@@ -420,16 +420,9 @@ namespace Azure.Generator.Management
 
         private void ProcessLroMethod(InputServiceMethod inputMethod, Dictionary<CSharpType, OperationSourceProvider> operationSources)
         {
-            var lroMetadata = inputMethod switch
+            if (inputMethod is InputLongRunningServiceMethod lroMethod)
             {
-                InputLongRunningServiceMethod lroMethod => lroMethod.LongRunningServiceMetadata,
-                InputLongRunningPagingServiceMethod lroPagingMethod => lroPagingMethod.LongRunningServiceMetadata,
-                _ => null
-            };
-
-            if (lroMetadata != null)
-            {
-                var returnType = lroMetadata.ReturnType;
+                var returnType = lroMethod.LongRunningServiceMetadata.ReturnType;
                 if (returnType is InputModelType inputModelType)
                 {
                     var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(inputModelType);

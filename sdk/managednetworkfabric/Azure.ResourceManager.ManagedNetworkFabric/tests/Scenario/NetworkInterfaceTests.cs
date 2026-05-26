@@ -57,15 +57,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             {
                 State = AdministrativeEnableState.Disable
             };
-            ArmOperation<UpdateAdministrativeStateResult> disableAdminStateResponse = await networkInterface.SetAdministrativeStateAsync(WaitUntil.Completed, cotnent);
-            UpdateAdministrativeStateResult result = disableAdminStateResponse.Value;
+            ArmOperation<StateUpdateCommonPostActionResult> disableAdminStateResponse = await networkInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, cotnent);
+            StateUpdateCommonPostActionResult result = disableAdminStateResponse.Value;
             TestContext.WriteLine($"Succeeded: {result}");
 
             cotnent = new UpdateAdministrativeStateContent()
             {
                 State = AdministrativeEnableState.Enable
             };
-            ArmOperation<UpdateAdministrativeStateResult> enableAdminStateResponse = await networkInterface.SetAdministrativeStateAsync(WaitUntil.Completed, cotnent);
+            ArmOperation<StateUpdateCommonPostActionResult> enableAdminStateResponse = await networkInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, cotnent);
             result = enableAdminStateResponse.Value;
             TestContext.WriteLine($"Succeeded: {result}");
         }

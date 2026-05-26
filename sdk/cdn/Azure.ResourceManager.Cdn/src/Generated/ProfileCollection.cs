@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Cdn
     {
         private readonly ClientDiagnostics _profilesClientDiagnostics;
         private readonly Profiles _profilesRestClient;
+        private readonly ClientDiagnostics _afdProfilesClientDiagnostics;
+        private readonly AFDProfiles _afdProfilesRestClient;
+        private readonly ClientDiagnostics _logAnalyticsClientDiagnostics;
+        private readonly LogAnalytics _logAnalyticsRestClient;
 
         /// <summary> Initializes a new instance of ProfileCollection for mocking. </summary>
         protected ProfileCollection()
@@ -42,6 +46,10 @@ namespace Azure.ResourceManager.Cdn
             TryGetApiVersion(ProfileResource.ResourceType, out string profileApiVersion);
             _profilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ProfileResource.ResourceType.Namespace, Diagnostics);
             _profilesRestClient = new Profiles(_profilesClientDiagnostics, Pipeline, Endpoint, profileApiVersion ?? "2025-09-01-preview");
+            _afdProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ProfileResource.ResourceType.Namespace, Diagnostics);
+            _afdProfilesRestClient = new AFDProfiles(_afdProfilesClientDiagnostics, Pipeline, Endpoint, profileApiVersion ?? "2025-09-01-preview");
+            _logAnalyticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ProfileResource.ResourceType.Namespace, Diagnostics);
+            _logAnalyticsRestClient = new LogAnalytics(_logAnalyticsClientDiagnostics, Pipeline, Endpoint, profileApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

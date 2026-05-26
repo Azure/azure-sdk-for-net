@@ -37,12 +37,12 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The domain associated with the secret. </summary>
-        public string Domain { get; set; }
+        public string Domain { get; }
 
         /// <summary> The name of the secret to inject for the domain. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> The secret value to inject for the domain. </summary>
-        public string Value { get; set; }
+        public string Value { get; }
     }
 }

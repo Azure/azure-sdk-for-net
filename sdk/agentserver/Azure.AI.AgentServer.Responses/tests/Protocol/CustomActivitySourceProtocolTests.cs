@@ -12,13 +12,41 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// E2E protocol tests verifying that <see cref="ResponsesActivitySource"/> can be
-/// subclassed to customize baggage propagation during response processing.
+/// subclassed to customize distributed tracing activity creation.
 /// Tests both the default behaviour and the composition pattern:
-/// call <c>base</c>, then add extra baggage items.
+/// call <c>base</c>, then selectively override tags via <c>SetTag</c>.
 /// </summary>
 public sealed class CustomActivitySourceProtocolTests
 {
     // ── Default behaviour (no override) ──────────────────────────────────
+
+    [Test]
+    public async Task Default_ServiceName_IsAzureAiAgentserver()
+    {
+        using var env = CreateEnv();
+        await env.PostAsync(new { model = "test" });
+
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.ProviderName], Is.EqualTo(ResponsesTracingConstants.ProviderName));
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.ServiceName], Is.EqualTo(ResponsesTracingConstants.ServiceName));
+    }
+
+    [Test]
+    public async Task Default_ActivityName_IncludesModel()
+    {
+        using var env = CreateEnv();
+        await env.PostAsync(new { model = "test-model" });
+
+        Assert.That(env.DisplayName, Is.EqualTo("invoke_agent test-model"));
+    }
+
+    [Test]
+    public async Task Default_ActivityName_NoModel_JustCreateResponse()
+    {
+        using var env = CreateEnv();
+        await env.PostAsync(new { });
+
+        Assert.That(env.DisplayName, Is.EqualTo("invoke_agent"));
+    }
 
     [Test]
     public async Task Default_Baggage_HasNamespacedKeys()
@@ -28,128 +56,109 @@ public sealed class CustomActivitySourceProtocolTests
 
         Assert.That(env.Baggage.ContainsKey(ResponsesTracingConstants.Baggage.ResponseId), Is.True);
         Assert.That(env.Baggage.ContainsKey(ResponsesTracingConstants.Baggage.Streaming), Is.True);
-        Assert.That(env.Baggage.ContainsKey(ResponsesTracingConstants.Baggage.ConversationId), Is.True);
         // Short-key baggage removed
         Assert.That(env.Baggage.ContainsKey("provider.name"), Is.False);
-        Assert.That(env.Baggage.ContainsKey("streaming"), Is.False);
     }
 
+    // ── Composition pattern: base + selective SetTag ─────────────────────
+
     [Test]
-    public async Task Default_Baggage_ResponseId_HasExpectedPrefix()
+    public async Task Composition_OverridesServiceIdentity_ViaSetTag()
     {
-        using var env = CreateEnv();
+        using var env = CreateEnvWithCustomSource<CustomServiceNameActivitySource>();
         await env.PostAsync(new { model = "test" });
 
-        var responseId = env.Baggage[ResponsesTracingConstants.Baggage.ResponseId];
-        Assert.That(responseId, Is.Not.Null);
-        XAssert.StartsWith("caresp_", responseId);
+        // Overridden tags
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.ProviderName], Is.EqualTo("my.custom.provider"));
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.ServiceName], Is.EqualTo("my.custom.provider"));
+
+        // Base defaults still present
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.OperationName], Is.EqualTo(ResponsesTracingConstants.OperationName));
     }
 
     [Test]
-    public async Task Default_Baggage_StreamingIsTrue_WhenStreamSet()
+    public async Task Composition_AddsNamespaceTag()
     {
-        using var env = CreateEnv();
-        await env.PostAsync(new { model = "test", stream = true });
-
-        Assert.That(env.Baggage[ResponsesTracingConstants.Baggage.Streaming], Is.EqualTo("True"));
-    }
-
-    [Test]
-    public async Task Default_Baggage_StreamingIsFalse_WhenStreamNotSet()
-    {
-        using var env = CreateEnv();
+        using var env = CreateEnvWithCustomSource<NamespaceActivitySource>();
         await env.PostAsync(new { model = "test" });
 
-        Assert.That(env.Baggage[ResponsesTracingConstants.Baggage.Streaming], Is.EqualTo("False"));
+        Assert.That(env.Tags["service.namespace"], Is.EqualTo("my.namespace"));
+        // Other base defaults intact
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.ProviderName], Is.EqualTo(ResponsesTracingConstants.ProviderName));
     }
 
     [Test]
-    public async Task Default_NoInvokeAgentSpan_Created()
-    {
-        using var env = CreateEnv();
-        await env.PostAsync(new { model = "test" });
-
-        // No invoke_agent span — Activity.Current is the ASP.NET Core request activity
-        // (or null if no listener); we verify no custom display name was set
-        if (env.DisplayName is not null)
-        {
-            Assert.That(env.DisplayName, Does.Not.Contain("invoke_agent"));
-        }
-    }
-
-    // ── XRequestId propagation ──────────────────────────────────────────
-
-    [Test]
-    public async Task Default_XRequestId_PropagatedAsBaggage()
-    {
-        using var env = CreateEnv();
-        await env.PostWithHeadersAsync(
-            new { model = "test" },
-            ("X-Request-Id", "req-abc-123"));
-
-        Assert.That(env.Baggage[ResponsesTracingConstants.Baggage.RequestId], Is.EqualTo("req-abc-123"));
-    }
-
-    [Test]
-    public async Task Default_NoXRequestId_OmittedFromBaggage()
-    {
-        using var env = CreateEnv();
-        await env.PostAsync(new { model = "test" });
-
-        Assert.That(env.Baggage.ContainsKey(ResponsesTracingConstants.Baggage.RequestId), Is.False);
-    }
-
-    // ── Composition pattern: base + extra baggage ────────────────────────
-
-    [Test]
-    public async Task Composition_AddsExtraBaggage_WhilePreservingDefaults()
-    {
-        using var env = CreateEnvWithCustomSource<ExtraBaggageActivitySource>();
-        await env.PostAsync(new { model = "test" });
-
-        // Base defaults present
-        Assert.That(env.Baggage.ContainsKey(ResponsesTracingConstants.Baggage.ResponseId), Is.True);
-        Assert.That(env.Baggage.ContainsKey(ResponsesTracingConstants.Baggage.Streaming), Is.True);
-        // Extra baggage from override
-        Assert.That(env.Baggage["custom.tenant"], Is.EqualTo("tenant-from-override"));
-    }
-
-    [Test]
-    public async Task Composition_ReadsCustomHeader_AddsToBaggage()
+    public async Task Composition_ReadsCustomHeader()
     {
         using var env = CreateEnvWithCustomSource<TenantHeaderActivitySource>();
         await env.PostWithHeadersAsync(
             new { model = "test" },
             ("X-Tenant-Id", "tenant-abc"));
 
+        Assert.That(env.Tags["tenant.id"], Is.EqualTo("tenant-abc"));
+        // Base defaults still present
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.ProviderName], Is.EqualTo(ResponsesTracingConstants.ProviderName));
+    }
+
+    [Test]
+    public async Task Composition_StillSetsResponseId()
+    {
+        using var env = CreateEnvWithCustomSource<CustomServiceNameActivitySource>();
+        await env.PostAsync(new { model = "test" });
+
+        Assert.That(env.Tags.ContainsKey(ResponsesTracingConstants.Tags.ResponseId), Is.True);
+        var responseId = env.Tags[ResponsesTracingConstants.Tags.ResponseId] as string;
+        Assert.That(responseId, Is.Not.Null);
+        XAssert.StartsWith("caresp_", responseId);
+    }
+
+    [Test]
+    public async Task Composition_BaseAndExtend_PreservesDefaults()
+    {
+        using var env = CreateEnvWithCustomSource<ExtendedActivitySource>();
+        await env.PostAsync(new { model = "test" });
+
         // Base defaults present
-        Assert.That(env.Baggage.ContainsKey(ResponsesTracingConstants.Baggage.ResponseId), Is.True);
-        // Custom baggage from header
-        Assert.That(env.Baggage["custom.tenant.id"], Is.EqualTo("tenant-abc"));
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.ProviderName], Is.EqualTo(ResponsesTracingConstants.ProviderName));
+        // Plus the extra tag from the subclass
+        Assert.That(env.Tags["custom.extended"], Is.EqualTo("extended-value"));
     }
 
     // ── Full override (no base call) ─────────────────────────────────────
 
     [Test]
-    public async Task FullOverride_CanSetCompletelyDifferentBaggage()
+    public async Task FullOverride_CanSetCompletelyDifferentTags()
     {
         using var env = CreateEnvWithCustomSource<MinimalActivitySource>();
         await env.PostAsync(new { model = "gpt-4o" });
 
-        // Custom baggage present
-        Assert.That(env.Baggage["custom.only"], Is.EqualTo("minimal"));
-        // Default baggage NOT present (base not called)
-        Assert.That(env.Baggage.ContainsKey(ResponsesTracingConstants.Baggage.ResponseId), Is.False);
-        Assert.That(env.Baggage.ContainsKey(ResponsesTracingConstants.Baggage.Streaming), Is.False);
+        Assert.That(env.DisplayName, Is.EqualTo("minimal-op"));
+        Assert.That(env.Tags.ContainsKey("custom.tag"), Is.True);
+        Assert.That(env.Tags["custom.tag"], Is.EqualTo("yes"));
+
+        // Default GenAI tags NOT present (base not called)
+        Assert.That(env.Tags.ContainsKey(ResponsesTracingConstants.Tags.ProviderName), Is.False);
+        Assert.That(env.Tags.ContainsKey(ResponsesTracingConstants.Tags.ServiceName), Is.False);
+    }
+
+    [Test]
+    public async Task FullOverride_CustomActivityName()
+    {
+        using var env = CreateEnvWithCustomSource<CustomNameActivitySource>();
+        await env.PostAsync(new { model = "gpt-4o" });
+
+        Assert.That(env.DisplayName, Is.Not.Null);
+        XAssert.StartsWith("HostedAgents-caresp_", env.DisplayName);
     }
 
     [Test]
     public async Task CustomSubclass_RegisteredViaDI_TakesPrecedence()
     {
-        using var env = CreateEnvWithCustomSource<ExtraBaggageActivitySource>();
+        // Register custom source BEFORE AddResponsesServer — TryAddSingleton skips default
+        using var env = CreateEnvWithCustomSource<CustomServiceNameActivitySource>();
         await env.PostAsync(new { model = "test" });
 
-        Assert.That(env.Baggage["custom.tenant"], Is.EqualTo("tenant-from-override"));
+        Assert.That(env.Tags[ResponsesTracingConstants.Tags.ProviderName], Is.EqualTo("my.custom.provider"));
     }
 
     // ── Custom ActivitySource subclasses ─────────────────────────────────
@@ -163,50 +172,107 @@ public sealed class CustomActivitySourceProtocolTests
     }
 
     /// <summary>
-    /// Composition pattern: call base, then add extra baggage.
+    /// Composition pattern: call base, then override service identity tags.
     /// </summary>
-    private sealed class ExtraBaggageActivitySource : TestableActivitySource
+    private sealed class CustomServiceNameActivitySource : TestableActivitySource
     {
-        public ExtraBaggageActivitySource(string? name) : base(name) { }
+        public CustomServiceNameActivitySource(string? name) : base(name) { }
 
-        public override void PropagateResponseBaggage(
+        public override Activity? StartCreateResponseActivity(
             CreateResponse request, string responseId, IHeaderDictionary headers)
         {
-            base.PropagateResponseBaggage(request, responseId, headers);
-            Activity.Current?.AddBaggage("custom.tenant", "tenant-from-override");
+            var activity = base.StartCreateResponseActivity(request, responseId, headers);
+            if (activity is null)
+                return null;
+
+            activity.SetTag(ResponsesTracingConstants.Tags.ProviderName, "my.custom.provider");
+            activity.SetTag(ResponsesTracingConstants.Tags.ServiceName, "my.custom.provider");
+            return activity;
         }
     }
 
     /// <summary>
-    /// Composition pattern: call base, then read a custom header into baggage.
+    /// Composition pattern: call base, then add namespace tag.
+    /// </summary>
+    private sealed class NamespaceActivitySource : TestableActivitySource
+    {
+        public NamespaceActivitySource(string? name) : base(name) { }
+
+        public override Activity? StartCreateResponseActivity(
+            CreateResponse request, string responseId, IHeaderDictionary headers)
+        {
+            var activity = base.StartCreateResponseActivity(request, responseId, headers);
+            activity?.SetTag("service.namespace", "my.namespace");
+            return activity;
+        }
+    }
+
+    /// <summary>
+    /// Composition pattern: call base, then read a custom header.
     /// </summary>
     private sealed class TenantHeaderActivitySource : TestableActivitySource
     {
         public TenantHeaderActivitySource(string? name) : base(name) { }
 
-        public override void PropagateResponseBaggage(
+        public override Activity? StartCreateResponseActivity(
             CreateResponse request, string responseId, IHeaderDictionary headers)
         {
-            base.PropagateResponseBaggage(request, responseId, headers);
-            if (headers.TryGetValue("X-Tenant-Id", out var tenantId))
+            var activity = base.StartCreateResponseActivity(request, responseId, headers);
+            if (activity is not null && headers.TryGetValue("X-Tenant-Id", out var tenantId))
             {
-                Activity.Current?.AddBaggage("custom.tenant.id", tenantId.ToString());
+                activity.SetTag("tenant.id", tenantId.ToString());
             }
+            return activity;
         }
     }
 
     /// <summary>
-    /// Full override: completely replaces default baggage propagation.
+    /// Full override: completely replaces default behaviour.
+    /// </summary>
+    private sealed class CustomNameActivitySource : TestableActivitySource
+    {
+        public CustomNameActivitySource(string? name) : base(name) { }
+
+        public override Activity? StartCreateResponseActivity(
+            CreateResponse request, string responseId, IHeaderDictionary headers)
+        {
+            var activity = Source.StartActivity($"HostedAgents-{responseId}");
+            if (activity is null)
+                return null;
+            activity.SetTag(ResponsesTracingConstants.Tags.ResponseId, responseId);
+            return activity;
+        }
+    }
+
+    /// <summary>
+    /// Full override: minimal tags, no base call.
     /// </summary>
     private sealed class MinimalActivitySource : TestableActivitySource
     {
         public MinimalActivitySource(string? name) : base(name) { }
 
-        public override void PropagateResponseBaggage(
+        public override Activity? StartCreateResponseActivity(
             CreateResponse request, string responseId, IHeaderDictionary headers)
         {
-            // Intentionally do NOT call base — only set custom baggage
-            Activity.Current?.AddBaggage("custom.only", "minimal");
+            var activity = Source.StartActivity("minimal-op");
+            activity?.SetTag("custom.tag", "yes");
+            return activity;
+        }
+    }
+
+    /// <summary>
+    /// Composition pattern: call base, add extra tag.
+    /// </summary>
+    private sealed class ExtendedActivitySource : TestableActivitySource
+    {
+        public ExtendedActivitySource(string? name) : base(name) { }
+
+        public override Activity? StartCreateResponseActivity(
+            CreateResponse request, string responseId, IHeaderDictionary headers)
+        {
+            var activity = base.StartCreateResponseActivity(request, responseId, headers);
+            activity?.SetTag("custom.extended", "extended-value");
+            return activity;
         }
     }
 
@@ -241,7 +307,7 @@ public sealed class CustomActivitySourceProtocolTests
 
             _listener = new ActivityListener
             {
-                ShouldListenTo = _ => true,
+                ShouldListenTo = source => source.Name == _sourceName,
                 Sample = (ref ActivityCreationOptions<ActivityContext> _) =>
                     ActivitySamplingResult.AllDataAndRecorded,
             };

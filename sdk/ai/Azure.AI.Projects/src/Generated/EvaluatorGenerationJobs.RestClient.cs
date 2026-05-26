@@ -67,7 +67,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetAllRequest(string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
+        internal PipelineMessage CreateGetAllRequest(string foundryFeatures, int? limit, string order, string after, string before, string category, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -87,6 +87,10 @@ namespace Azure.AI.Projects
             if (before != null)
             {
                 uri.AppendQuery("before", before, true);
+            }
+            if (category != null)
+            {
+                uri.AppendQuery("category", category, true);
             }
             if (_apiVersion != null)
             {

@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Paged collection of NetworkFabric items. </summary>
+    /// <summary> List of Network Fabrics. </summary>
     internal partial class NetworkFabricsListResult
     {
         /// <summary>
@@ -47,34 +46,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricsListResult"/>. </summary>
-        /// <param name="value"> The NetworkFabric items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal NetworkFabricsListResult(IEnumerable<NetworkFabricData> value)
+        internal NetworkFabricsListResult()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<NetworkFabricData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricsListResult"/>. </summary>
-        /// <param name="value"> The NetworkFabric items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value"> List of Network Fabric resources. </param>
+        /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricsListResult(IReadOnlyList<NetworkFabricData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkFabricsListResult(IReadOnlyList<NetworkFabricData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricsListResult"/> for deserialization. </summary>
-        internal NetworkFabricsListResult()
-        {
-        }
-
-        /// <summary> The NetworkFabric items on this page. </summary>
+        /// <summary> List of Network Fabric resources. </summary>
         public IReadOnlyList<NetworkFabricData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Url to follow for getting next page of resources. </summary>
+        public string NextLink { get; }
     }
 }

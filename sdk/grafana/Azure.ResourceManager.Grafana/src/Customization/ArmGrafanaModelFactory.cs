@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public static ManagedGrafanaData ManagedGrafanaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location = default, string skuName = default, ManagedGrafanaProperties properties = default, ManagedServiceIdentity identity = default)
         {
             ManagedGrafanaSku sku = new ManagedGrafanaSku(skuName);
-            return ManagedGrafanaData(id, name, resourceType, systemData, tags, location, properties, sku, identity);
+            return ManagedGrafanaData(id, name, resourceType, systemData, location, properties, sku, tags, identity);
         }
     }
 }

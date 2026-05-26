@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetDeletedAppConfigurationStoresRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetDeletedRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateNextGetDeletedAppConfigurationStoresRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateNextGetDeletedRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

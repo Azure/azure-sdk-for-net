@@ -42,10 +42,10 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The namespace name used in tool calls (for example, `crm`). </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> A description of the namespace shown to the model. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// The function/custom tools available inside this namespace.

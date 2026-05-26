@@ -34,7 +34,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Always `auto`. </summary>
-        public string Type { get; } = "auto";
+        internal string Type { get; } = "auto";
 
         /// <summary> An optional list of uploaded files to make available to your code. </summary>
         public IList<string> FileIds { get; }

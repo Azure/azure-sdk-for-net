@@ -47,7 +47,6 @@ namespace Azure.AI.Projects.Tests
         public string OPENAPI_PROJECT_CONNECTION_ID => GetRecordedOptionalVariable(nameof(OPENAPI_PROJECT_CONNECTION_ID));
         public string SHAREPOINT_CONNECTION_ID => GetRecordedOptionalVariable(nameof(SHAREPOINT_CONNECTION_ID));
         public string FABRIC_CONNECTION_ID => GetRecordedOptionalVariable(nameof(FABRIC_CONNECTION_ID));
-        public string FABRIC_IQ_CONNECTION_ID => GetRecordedOptionalVariable(nameof(FABRIC_IQ_CONNECTION_ID));
         public string A2A_CONNECTION_ID => GetRecordedOptionalVariable(nameof(A2A_CONNECTION_ID));
         public string REMOTE_A2A_CONNECTION_ID => GetRecordedOptionalVariable("A2A_SPECIAL_CONNECTION_ID");
         public string A2A_BASE_URI => GetRecordedOptionalVariable("A2A_BASE_URI");

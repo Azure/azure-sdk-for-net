@@ -18,7 +18,4 @@
     -->
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Asp.Versioning.Mvc" />
-  </ItemGroup>
 </Project>

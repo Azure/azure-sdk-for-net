@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Asp.Versioning.Mvc" />
     <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
     <PackageReference Include="Microsoft.TypeSpec.Generator.Input" />
     <FrameworkReference Include="Microsoft.AspNetCore.App" />

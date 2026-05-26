@@ -85,16 +85,6 @@ namespace Azure.AI.Projects.Memory
             }
             writer.WritePropertyName("chat_summary_enabled"u8);
             writer.WriteBooleanValue(IsChatSummaryEnabled);
-            if (Optional.IsDefined(ProceduralMemoryEnabled))
-            {
-                writer.WritePropertyName("procedural_memory_enabled"u8);
-                writer.WriteBooleanValue(ProceduralMemoryEnabled.Value);
-            }
-            if (Optional.IsDefined(DefaultTtlSeconds))
-            {
-                writer.WritePropertyName("default_ttl_seconds"u8);
-                writer.WriteNumberValue(Convert.ToInt32(DefaultTtlSeconds.Value.TotalSeconds));
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -140,8 +130,6 @@ namespace Azure.AI.Projects.Memory
             bool isUserProfileEnabled = default;
             string userProfileDetails = default;
             bool isChatSummaryEnabled = default;
-            bool? proceduralMemoryEnabled = default;
-            TimeSpan? defaultTtlSeconds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,36 +148,12 @@ namespace Azure.AI.Projects.Memory
                     isChatSummaryEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("procedural_memory_enabled"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    proceduralMemoryEnabled = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("default_ttl_seconds"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    defaultTtlSeconds = TimeSpan.FromSeconds(prop.Value.GetInt32());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MemoryStoreDefaultOptions(
-                isUserProfileEnabled,
-                userProfileDetails,
-                isChatSummaryEnabled,
-                proceduralMemoryEnabled,
-                defaultTtlSeconds,
-                additionalBinaryDataProperties);
+            return new MemoryStoreDefaultOptions(isUserProfileEnabled, userProfileDetails, isChatSummaryEnabled, additionalBinaryDataProperties);
         }
     }
 }

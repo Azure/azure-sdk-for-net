@@ -10,13 +10,6 @@
 
 ### Other Changes
 
-## 1.8.1 (2026-05-20)
-
-### Features Added
-
-- Added GenAI main agent attribution support. Automatically propagates `microsoft.gen_ai.main_agent.*` attributes from parent spans to child spans and log records, enabling end-to-end tracing of AI agent orchestration.
-  ([#59368](https://github.com/Azure/azure-sdk-for-net/pull/59368))
-
 ## 1.8.0 (2026-04-29)
 
 ### Other Changes

@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         CloudHsmClusterBackupResult IOperationSource<CloudHsmClusterBackupResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return CloudHsmClusterBackupResult.DeserializeCloudHsmClusterBackupResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            CloudHsmClusterBackupResult result = CloudHsmClusterBackupResult.DeserializeCloudHsmClusterBackupResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         async ValueTask<CloudHsmClusterBackupResult> IOperationSource<CloudHsmClusterBackupResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return CloudHsmClusterBackupResult.DeserializeCloudHsmClusterBackupResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            CloudHsmClusterBackupResult result = CloudHsmClusterBackupResult.DeserializeCloudHsmClusterBackupResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

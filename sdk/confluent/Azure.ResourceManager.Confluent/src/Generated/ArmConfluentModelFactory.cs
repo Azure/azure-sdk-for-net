@@ -731,10 +731,21 @@ namespace Azure.ResourceManager.Confluent.Models
                     null));
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <summary> Validation response from the provider. </summary>
+        /// <param name="info"> Info from the response. </param>
+        /// <returns> A new <see cref="Models.ConfluentOrganizationValidationResult"/> instance for mocking. </returns>
+        public static ConfluentOrganizationValidationResult ConfluentOrganizationValidationResult(IReadOnlyDictionary<string, string> info = default)
+        {
+            info ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConfluentOrganizationValidationResult(info, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConfluentAgreement"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="publisher"> Publisher identifier string. </param>
         /// <param name="product"> Product identifier string. </param>
         /// <param name="plan"> Plan identifier string. </param>
@@ -748,30 +759,11 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             return new ConfluentAgreement(
                 id,
-                name,
                 resourceType,
-                systemData,
                 additionalBinaryDataProperties: null,
-                publisher is null && product is null && plan is null && licenseTextLink is null && privacyPolicyLink is null && retrieveOn is null && signature is null && isAccepted is null ? default : new ConfluentAgreementProperties(
-                    publisher,
-                    product,
-                    plan,
-                    licenseTextLink,
-                    privacyPolicyLink,
-                    retrieveOn,
-                    signature,
-                    isAccepted,
-                    null));
-        }
-
-        /// <summary> Validation response from the provider. </summary>
-        /// <param name="info"> Info from the response. </param>
-        /// <returns> A new <see cref="Models.ConfluentOrganizationValidationResult"/> instance for mocking. </returns>
-        public static ConfluentOrganizationValidationResult ConfluentOrganizationValidationResult(IReadOnlyDictionary<string, string> info = default)
-        {
-            info ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ConfluentOrganizationValidationResult(info, additionalBinaryDataProperties: null);
+                name,
+                systemData,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ClusterStatusEntity"/>. </summary>

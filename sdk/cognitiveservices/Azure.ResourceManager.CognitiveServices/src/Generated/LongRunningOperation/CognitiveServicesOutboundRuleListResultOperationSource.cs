@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.CognitiveServices
         CognitiveServicesOutboundRuleListResult IOperationSource<CognitiveServicesOutboundRuleListResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return CognitiveServicesOutboundRuleListResult.DeserializeCognitiveServicesOutboundRuleListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            CognitiveServicesOutboundRuleListResult result = CognitiveServicesOutboundRuleListResult.DeserializeCognitiveServicesOutboundRuleListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.CognitiveServices
         async ValueTask<CognitiveServicesOutboundRuleListResult> IOperationSource<CognitiveServicesOutboundRuleListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return CognitiveServicesOutboundRuleListResult.DeserializeCognitiveServicesOutboundRuleListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            CognitiveServicesOutboundRuleListResult result = CognitiveServicesOutboundRuleListResult.DeserializeCognitiveServicesOutboundRuleListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

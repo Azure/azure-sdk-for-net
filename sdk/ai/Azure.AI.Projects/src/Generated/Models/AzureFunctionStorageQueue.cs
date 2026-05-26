@@ -38,9 +38,9 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> URI to the Azure Storage Queue service allowing you to manipulate a queue. </summary>
-        public string QueueServiceEndpoint { get; set; }
+        public string QueueServiceEndpoint { get; }
 
         /// <summary> The name of an Azure function storage queue. </summary>
-        public string QueueName { get; set; }
+        public string QueueName { get; }
     }
 }

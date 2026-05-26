@@ -30,7 +30,7 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="combinedPhrases"> The full transcript for each channel. </param>
         /// <param name="phrases"> The transcription results segmented into phrases. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptionResult(int durationMilliseconds, IList<ChannelCombinedPhrases> combinedPhrases, IList<TranscribedPhrase> phrases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranscriptionResult(int durationMilliseconds, IList<ChannelCombinedPhrases> combinedPhrases, IReadOnlyList<TranscribedPhrase> phrases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DurationMilliseconds = durationMilliseconds;
             CombinedPhrases = combinedPhrases;
@@ -40,8 +40,5 @@ namespace Azure.AI.Speech.Transcription
 
         /// <summary> The full transcript for each channel. </summary>
         public IList<ChannelCombinedPhrases> CombinedPhrases { get; }
-
-        /// <summary> The transcription results segmented into phrases. </summary>
-        public IList<TranscribedPhrase> Phrases { get; }
     }
 }

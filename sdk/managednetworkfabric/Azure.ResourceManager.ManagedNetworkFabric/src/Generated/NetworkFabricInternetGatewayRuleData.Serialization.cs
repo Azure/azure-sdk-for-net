@@ -47,11 +47,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
             writer.WritePropertyName("ruleProperties"u8);
             writer.WriteObjectValue(RuleProperties, options);
-            if (options.Format != "W" && Optional.IsDefined(LastOperation))
-            {
-                writer.WritePropertyName("lastOperation"u8);
-                writer.WriteObjectValue(LastOperation, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -103,7 +98,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             SystemData systemData = default;
             string annotation = default;
             InternetGatewayRules ruleProperties = default;
-            LastOperationProperties lastOperation = default;
             NetworkFabricProvisioningState? provisioningState = default;
             IReadOnlyList<ResourceIdentifier> internetGatewayIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -172,15 +166,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             ruleProperties = InternetGatewayRules.DeserializeInternetGatewayRules(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("lastOperation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
-                            continue;
-                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -229,7 +214,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 location,
                 annotation,
                 ruleProperties,
-                lastOperation,
                 provisioningState,
                 internetGatewayIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 serializedAdditionalRawData);

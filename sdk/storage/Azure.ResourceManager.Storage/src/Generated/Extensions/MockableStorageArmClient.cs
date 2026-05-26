@@ -179,24 +179,6 @@ namespace Azure.ResourceManager.Storage.Mocking
             return new StorageTaskAssignmentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="StorageConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageConnectorResource"/> object. </returns>
-        public virtual StorageConnectorResource GetStorageConnectorResource(ResourceIdentifier id)
-        {
-            StorageConnectorResource.ValidateResourceId(id);
-            return new StorageConnectorResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="StorageDataShareResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageDataShareResource"/> object. </returns>
-        public virtual StorageDataShareResource GetStorageDataShareResource(ResourceIdentifier id)
-        {
-            StorageDataShareResource.ValidateResourceId(id);
-            return new StorageDataShareResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="StorageQueueResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StorageQueueResource"/> object. </returns>

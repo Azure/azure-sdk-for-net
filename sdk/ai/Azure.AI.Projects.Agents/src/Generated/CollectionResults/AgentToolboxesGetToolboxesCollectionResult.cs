@@ -57,7 +57,7 @@ namespace Azure.AI.Projects.Agents
             string nextToken = null;
             while (true)
             {
-                ClientResult result = GetNextResponse(message);
+                ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
                 yield return result;
 
                 nextToken = ((AgentsPagedResultToolboxObject)result).LastId;
@@ -83,13 +83,6 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-        }
-
-        /// <summary> Sends the request in the pipeline message and returns the response. </summary>
-        /// <param name="message"> The pipeline message containing the request to send. </param>
-        private ClientResult GetNextResponse(PipelineMessage message)
-        {
-            return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
         }
     }
 }

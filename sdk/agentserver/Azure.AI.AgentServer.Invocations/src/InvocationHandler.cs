@@ -10,10 +10,6 @@ namespace Azure.AI.AgentServer.Invocations;
 /// is required. Override the optional methods to opt in to GET, cancel, and
 /// OpenAPI endpoints (they return 404 by default).
 /// </summary>
-/// <remarks>
-/// To opt in to the <c>invocations_ws</c> (WebSocket) transport, derive from
-/// <see cref="InvocationWebSocketHandler"/> instead.
-/// </remarks>
 public abstract class InvocationHandler
 {
     /// <summary>

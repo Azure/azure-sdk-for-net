@@ -138,10 +138,7 @@ internal sealed class ResponseOrchestrator
                 throw execution.PersistenceException;
             }
 
-            // Persistence failed with a non-mapped exception (TCP, I/O, etc.) — platform infra failure
-            var persistenceEx = ApiErrorFactory.ServerException();
-            persistenceEx.Data[StorageErrorMapper.PlatformErrorDataKey] = true;
-            throw persistenceEx;
+            throw ApiErrorFactory.ServerException();
         }
 
         return OrchestratorResult.Completed(execution.Response!);

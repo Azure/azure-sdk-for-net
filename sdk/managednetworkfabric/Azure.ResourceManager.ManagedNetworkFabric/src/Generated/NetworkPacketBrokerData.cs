@@ -73,27 +73,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
         /// <param name="networkDeviceIds"> List of ARM resource IDs of Network Devices [NPB]. </param>
         /// <param name="sourceInterfaceIds"> List of network interfaces across NPB devices that are used to mirror source traffic. </param>
         /// <param name="networkTapIds"> List of network Tap IDs configured on NPB. </param>
         /// <param name="neighborGroupIds"> List of neighbor group IDs configured on NPB. </param>
-        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkPacketBrokerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceIdentifier networkFabricId, IReadOnlyList<ResourceIdentifier> networkDeviceIds, IReadOnlyList<ResourceIdentifier> sourceInterfaceIds, IReadOnlyList<ResourceIdentifier> networkTapIds, IReadOnlyList<ResourceIdentifier> neighborGroupIds, LastOperationProperties lastOperation, NetworkFabricProvisioningState? provisioningState, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkPacketBrokerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier networkFabricId, IReadOnlyList<ResourceIdentifier> networkDeviceIds, IReadOnlyList<ResourceIdentifier> sourceInterfaceIds, IReadOnlyList<ResourceIdentifier> networkTapIds, IReadOnlyList<ResourceIdentifier> neighborGroupIds, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Identity = identity;
             NetworkFabricId = networkFabricId;
             NetworkDeviceIds = networkDeviceIds;
             SourceInterfaceIds = sourceInterfaceIds;
             NetworkTapIds = networkTapIds;
             NeighborGroupIds = neighborGroupIds;
-            LastOperation = lastOperation;
             ProvisioningState = provisioningState;
-            ConfigurationState = configurationState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -102,8 +96,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> ARM resource ID of the Network Fabric. </summary>
         public ResourceIdentifier NetworkFabricId { get; set; }
         /// <summary> List of ARM resource IDs of Network Devices [NPB]. </summary>
@@ -114,17 +106,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public IReadOnlyList<ResourceIdentifier> NetworkTapIds { get; }
         /// <summary> List of neighbor group IDs configured on NPB. </summary>
         public IReadOnlyList<ResourceIdentifier> NeighborGroupIds { get; }
-        /// <summary> Details of the last operation performed on the resource. </summary>
-        internal LastOperationProperties LastOperation { get; }
-        /// <summary> Details status of the last operation performed on the resource. </summary>
-        public string LastOperationDetails
-        {
-            get => LastOperation?.Details;
-        }
-
         /// <summary> Provisioning state of the resource. </summary>
         public NetworkFabricProvisioningState? ProvisioningState { get; }
-        /// <summary> Configuration state of the resource. </summary>
-        public NetworkFabricConfigurationState? ConfigurationState { get; }
     }
 }

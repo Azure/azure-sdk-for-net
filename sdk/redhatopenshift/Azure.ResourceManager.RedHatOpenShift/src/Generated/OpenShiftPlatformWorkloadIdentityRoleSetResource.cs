@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.RedHatOpenShift
     {
         private readonly ClientDiagnostics _platformWorkloadIdentityRoleSetClientDiagnostics;
         private readonly PlatformWorkloadIdentityRoleSet _platformWorkloadIdentityRoleSetRestClient;
+        private readonly ClientDiagnostics _platformWorkloadIdentityRoleSetsClientDiagnostics;
+        private readonly PlatformWorkloadIdentityRoleSets _platformWorkloadIdentityRoleSetsRestClient;
         private readonly OpenShiftPlatformWorkloadIdentityRoleSetData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RedHatOpenShift/locations/platformWorkloadIdentityRoleSets";
@@ -52,6 +54,8 @@ namespace Azure.ResourceManager.RedHatOpenShift
             TryGetApiVersion(ResourceType, out string openShiftPlatformWorkloadIdentityRoleSetApiVersion);
             _platformWorkloadIdentityRoleSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", ResourceType.Namespace, Diagnostics);
             _platformWorkloadIdentityRoleSetRestClient = new PlatformWorkloadIdentityRoleSet(_platformWorkloadIdentityRoleSetClientDiagnostics, Pipeline, Endpoint, openShiftPlatformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
+            _platformWorkloadIdentityRoleSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", ResourceType.Namespace, Diagnostics);
+            _platformWorkloadIdentityRoleSetsRestClient = new PlatformWorkloadIdentityRoleSets(_platformWorkloadIdentityRoleSetsClientDiagnostics, Pipeline, Endpoint, openShiftPlatformWorkloadIdentityRoleSetApiVersion ?? "2025-07-25");
             ValidateResourceId(id);
         }
 

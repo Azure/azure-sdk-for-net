@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
-            SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataBoxEdgeDeviceExtendedInfoProperties properties = default;
+            SystemData systemData = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -149,15 +149,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataBoxEdgeContext.Default);
-                    continue;
-                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -165,6 +156,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         continue;
                     }
                     properties = DataBoxEdgeDeviceExtendedInfoProperties.DeserializeDataBoxEdgeDeviceExtendedInfoProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataBoxEdgeContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,9 +176,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 id,
                 name,
                 resourceType,
-                systemData,
                 additionalBinaryDataProperties,
-                properties);
+                properties,
+                systemData);
         }
     }
 }

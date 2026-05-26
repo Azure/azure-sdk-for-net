@@ -11,35 +11,21 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     internal static partial class LogicAppWorkflowHealthStateExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this LogicAppWorkflowHealthState value) => value switch
         {
+            LogicAppWorkflowHealthState.Unknown => "Unknown",
             LogicAppWorkflowHealthState.NotSpecified => "NotSpecified",
             LogicAppWorkflowHealthState.Healthy => "Healthy",
             LogicAppWorkflowHealthState.Unhealthy => "Unhealthy",
-            LogicAppWorkflowHealthState.Unknown => "Unknown",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LogicAppWorkflowHealthState value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static LogicAppWorkflowHealthState ToLogicAppWorkflowHealthState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified"))
-            {
-                return LogicAppWorkflowHealthState.NotSpecified;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Healthy"))
-            {
-                return LogicAppWorkflowHealthState.Healthy;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unhealthy"))
-            {
-                return LogicAppWorkflowHealthState.Unhealthy;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown"))
-            {
-                return LogicAppWorkflowHealthState.Unknown;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return LogicAppWorkflowHealthState.Unknown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified")) return LogicAppWorkflowHealthState.NotSpecified;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Healthy")) return LogicAppWorkflowHealthState.Healthy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unhealthy")) return LogicAppWorkflowHealthState.Unhealthy;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LogicAppWorkflowHealthState value.");
         }
     }

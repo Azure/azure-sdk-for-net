@@ -15,8 +15,6 @@ namespace Azure.AI.Extensions.OpenAI
         private const string UserProfileValue = "user_profile";
         /// <summary> Summary of chat conversations. </summary>
         private const string ChatSummaryValue = "chat_summary";
-        /// <summary> Routine procedures extracted from conversations. </summary>
-        private const string ProceduralValue = "procedural";
 
         /// <summary> Initializes a new instance of <see cref="MemoryItemKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,9 +31,6 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Summary of chat conversations. </summary>
         public static MemoryItemKind ChatSummary { get; } = new MemoryItemKind(ChatSummaryValue);
-
-        /// <summary> Routine procedures extracted from conversations. </summary>
-        public static MemoryItemKind Procedural { get; } = new MemoryItemKind(ProceduralValue);
 
         /// <summary> Determines if two <see cref="MemoryItemKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

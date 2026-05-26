@@ -70,31 +70,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("egressAclId"u8);
                 writer.WriteStringValue(EgressAclId);
             }
-            if (Optional.IsDefined(BmpConfiguration))
-            {
-                writer.WritePropertyName("bmpConfiguration"u8);
-                writer.WriteObjectValue(BmpConfiguration, options);
-            }
-            if (Optional.IsDefined(V4OverV6BgpSession))
-            {
-                writer.WritePropertyName("v4OverV6BgpSession"u8);
-                writer.WriteStringValue(V4OverV6BgpSession.Value.ToString());
-            }
-            if (Optional.IsDefined(V6OverV4BgpSession))
-            {
-                writer.WritePropertyName("v6OverV4BgpSession"u8);
-                writer.WriteStringValue(V6OverV4BgpSession.Value.ToString());
-            }
-            if (Optional.IsDefined(NativeIPv4PrefixLimit))
-            {
-                writer.WritePropertyName("nativeIpv4PrefixLimit"u8);
-                writer.WriteObjectValue(NativeIPv4PrefixLimit, options);
-            }
-            if (Optional.IsDefined(NativeIPv6PrefixLimit))
-            {
-                writer.WritePropertyName("nativeIpv6PrefixLimit"u8);
-                writer.WriteObjectValue(NativeIPv6PrefixLimit, options);
-            }
         }
 
         ExternalNetworkPatchOptionAProperties IJsonModel<ExternalNetworkPatchOptionAProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -124,11 +99,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             BfdConfiguration bfdConfiguration = default;
             ResourceIdentifier ingressAclId = default;
             ResourceIdentifier egressAclId = default;
-            ExternalNetworkBmpPatchProperties bmpConfiguration = default;
-            NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default;
-            NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default;
-            NativeIPv4PrefixLimitPatchProperties nativeIPv4PrefixLimit = default;
-            NativeIPv6PrefixLimitPatchProperties nativeIPv6PrefixLimit = default;
             string primaryIPv4Prefix = default;
             string primaryIPv6Prefix = default;
             string secondaryIPv4Prefix = default;
@@ -200,51 +170,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     egressAclId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("bmpConfiguration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    bmpConfiguration = ExternalNetworkBmpPatchProperties.DeserializeExternalNetworkBmpPatchProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("v4OverV6BgpSession"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    v4OverV6BgpSession = new NetworkFabricV4OverV6BgpSessionState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("v6OverV4BgpSession"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    v6OverV4BgpSession = new NetworkFabricV6OverV4BgpSessionState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("nativeIpv4PrefixLimit"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nativeIPv4PrefixLimit = NativeIPv4PrefixLimitPatchProperties.DeserializeNativeIPv4PrefixLimitPatchProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("nativeIpv6PrefixLimit"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nativeIPv6PrefixLimit = NativeIPv6PrefixLimitPatchProperties.DeserializeNativeIPv6PrefixLimitPatchProperties(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("primaryIpv4Prefix"u8))
                 {
                     primaryIPv4Prefix = property.Value.GetString();
@@ -283,12 +208,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 peerAsn,
                 bfdConfiguration,
                 ingressAclId,
-                egressAclId,
-                bmpConfiguration,
-                v4OverV6BgpSession,
-                v6OverV4BgpSession,
-                nativeIPv4PrefixLimit,
-                nativeIPv6PrefixLimit);
+                egressAclId);
         }
 
         BinaryData IPersistableModel<ExternalNetworkPatchOptionAProperties>.Write(ModelReaderWriterOptions options)

@@ -7,50 +7,70 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
     internal partial class BlobStorageTokenStore
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BlobStorageTokenStore"/>. </summary>
-        public BlobStorageTokenStore()
+        /// <param name="sasUrlSettingName"> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sasUrlSettingName"/> is null. </exception>
+        public BlobStorageTokenStore(string sasUrlSettingName)
         {
+            Argument.AssertNotNull(sasUrlSettingName, nameof(sasUrlSettingName));
+
+            SasUrlSettingName = sasUrlSettingName;
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobStorageTokenStore"/>. </summary>
-        /// <param name="azureBlobStorageSasUrlSettingName"> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. Should not be used along with blobContainerUri. </param>
-        /// <param name="blobContainerUri"> The URI of the blob storage containing the tokens. Should not be used along with sasUrlSettingName. </param>
-        /// <param name="clientId"> The Client ID of a User-Assigned Managed Identity. Should not be used along with managedIdentityResourceId. </param>
-        /// <param name="managedIdentityResourceId"> The Resource ID of a User-Assigned Managed Identity. Should not be used along with clientId. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobStorageTokenStore(string azureBlobStorageSasUrlSettingName, string blobContainerUri, string clientId, string managedIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="sasUrlSettingName"> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobStorageTokenStore(string sasUrlSettingName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AzureBlobStorageSasUrlSettingName = azureBlobStorageSasUrlSettingName;
-            BlobContainerUri = blobContainerUri;
-            ClientId = clientId;
-            ManagedIdentityResourceId = managedIdentityResourceId;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            SasUrlSettingName = sasUrlSettingName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. Should not be used along with blobContainerUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobStorageTokenStore"/> for deserialization. </summary>
+        internal BlobStorageTokenStore()
+        {
+        }
+
+        /// <summary> The name of the app secrets containing the SAS URL of the blob storage containing the tokens. </summary>
         [WirePath("sasUrlSettingName")]
-        public string AzureBlobStorageSasUrlSettingName { get; set; }
-
-        /// <summary> The URI of the blob storage containing the tokens. Should not be used along with sasUrlSettingName. </summary>
-        [WirePath("blobContainerUri")]
-        public string BlobContainerUri { get; set; }
-
-        /// <summary> The Client ID of a User-Assigned Managed Identity. Should not be used along with managedIdentityResourceId. </summary>
-        [WirePath("clientId")]
-        public string ClientId { get; set; }
-
-        /// <summary> The Resource ID of a User-Assigned Managed Identity. Should not be used along with clientId. </summary>
-        [WirePath("managedIdentityResourceId")]
-        public string ManagedIdentityResourceId { get; set; }
+        public string SasUrlSettingName { get; set; }
     }
 }

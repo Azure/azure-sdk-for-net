@@ -33,29 +33,6 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
     }
 
     /// <summary>
-    /// Sends an HTTP request through the pipeline and validates the response,
-    /// tagging any unhandled transport/auth exception as a platform error.
-    /// </summary>
-    private async Task SendStorageRequestAsync(HttpMessage message, CancellationToken cancellationToken)
-    {
-        try
-        {
-            await _pipeline.SendAsync(message, cancellationToken);
-        }
-        catch (Exception ex) when (!ex.Data.Contains(StorageErrorMapper.PlatformErrorDataKey))
-        {
-            // Transport, auth, or other pipeline exception that our code didn't throw —
-            // this is a platform infrastructure failure (storage unreachable, creds expired, etc.).
-            ex.Data[StorageErrorMapper.PlatformErrorDataKey] = true;
-            throw;
-        }
-
-        // Validate outside the platform-tagging try/catch so that mapped 4xx exceptions
-        // (BadRequest, NotFound) are not incorrectly tagged as platform errors.
-        StorageErrorMapper.ThrowIfError(message.Response);
-    }
-
-    /// <summary>
     /// Creates an <see cref="HttpMessage"/> with the given method and path,
     /// applying the <c>api-version</c> query parameter.
     /// </summary>
@@ -120,7 +97,8 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
         message.Request.Headers.SetValue("Content-Type", JsonContentType);
         ApplyIsolationHeaders(message.Request, isolation);
 
-        await SendStorageRequestAsync(message, cancellationToken);
+        await _pipeline.SendAsync(message, cancellationToken);
+        StorageErrorMapper.ThrowIfError(message.Response);
     }
 
     /// <inheritdoc/>
@@ -133,7 +111,8 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
         message.Request.Headers.SetValue("Accept", "application/json");
         ApplyIsolationHeaders(message.Request, isolation);
 
-        await SendStorageRequestAsync(message, cancellationToken);
+        await _pipeline.SendAsync(message, cancellationToken);
+        StorageErrorMapper.ThrowIfError(message.Response);
 
         var body = message.Response.Content.ToString();
         return StorageEnvelopeSerializer.DeserializeResponse(body);
@@ -151,7 +130,8 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
         message.Request.Headers.SetValue("Content-Type", JsonContentType);
         ApplyIsolationHeaders(message.Request, isolation);
 
-        await SendStorageRequestAsync(message, cancellationToken);
+        await _pipeline.SendAsync(message, cancellationToken);
+        StorageErrorMapper.ThrowIfError(message.Response);
     }
 
     /// <inheritdoc/>
@@ -163,7 +143,8 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
         using var message = CreateRequest(RequestMethod.Delete, $"responses/{Uri.EscapeDataString(responseId)}");
         ApplyIsolationHeaders(message.Request, isolation);
 
-        await SendStorageRequestAsync(message, cancellationToken);
+        await _pipeline.SendAsync(message, cancellationToken);
+        StorageErrorMapper.ThrowIfError(message.Response);
     }
 
     /// <inheritdoc/>
@@ -187,7 +168,8 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
         message.Request.Headers.SetValue("Accept", "application/json");
         ApplyIsolationHeaders(message.Request, isolation);
 
-        await SendStorageRequestAsync(message, cancellationToken);
+        await _pipeline.SendAsync(message, cancellationToken);
+        StorageErrorMapper.ThrowIfError(message.Response);
 
         var body = message.Response.Content.ToString();
         return StorageEnvelopeSerializer.DeserializePagedItems(body);
@@ -207,7 +189,8 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
         message.Request.Headers.SetValue("Accept", "application/json");
         ApplyIsolationHeaders(message.Request, isolation);
 
-        await SendStorageRequestAsync(message, cancellationToken);
+        await _pipeline.SendAsync(message, cancellationToken);
+        StorageErrorMapper.ThrowIfError(message.Response);
 
         var body = message.Response.Content.ToString();
         return StorageEnvelopeSerializer.DeserializeItemsArray(body);
@@ -231,7 +214,8 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
         message.Request.Headers.SetValue("Accept", "application/json");
         ApplyIsolationHeaders(message.Request, isolation);
 
-        await SendStorageRequestAsync(message, cancellationToken);
+        await _pipeline.SendAsync(message, cancellationToken);
+        StorageErrorMapper.ThrowIfError(message.Response);
 
         var body = message.Response.Content.ToString();
         return StorageEnvelopeSerializer.DeserializeHistoryIds(body);

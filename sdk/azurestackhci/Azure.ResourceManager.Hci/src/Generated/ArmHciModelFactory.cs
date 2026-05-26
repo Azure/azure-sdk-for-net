@@ -1530,24 +1530,6 @@ namespace Azure.ResourceManager.Hci.Models
                     null));
         }
 
-        /// <summary> Status of Arc Extension for a particular node in HCI Cluster. </summary>
-        /// <param name="name"> Name of the node in HCI Cluster. </param>
-        /// <param name="extension"> Fully qualified resource ID for the particular Arc Extension on this node. </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="state"> State of Arc Extension in this node. Reflects the current lifecycle status of the extension on the individual node, such as whether it's being created, updated, deleted, or has encountered an error. </param>
-        /// <param name="extensionInstanceView"> The extension instance view. </param>
-        /// <returns> A new <see cref="Models.PerNodeExtensionState"/> instance for mocking. </returns>
-        public static PerNodeExtensionState PerNodeExtensionState(string name = default, string extension = default, string typeHandlerVersion = default, NodeExtensionState? state = default, ArcExtensionInstanceView extensionInstanceView = default)
-        {
-            return new PerNodeExtensionState(
-                name,
-                extension,
-                typeHandlerVersion,
-                state,
-                extensionInstanceView,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Describes the Extension Instance View. </summary>
         /// <param name="name"> The extension name. </param>
         /// <param name="extensionInstanceViewType"> Specifies the type of the extension; an example is "MicrosoftMonitoringAgent". </param>
@@ -2850,6 +2832,25 @@ namespace Azure.ResourceManager.Hci.Models
             userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
 
             return new HciClusterPatch(tags, default, cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && desiredProperties is null ? default : new ClusterPatchProperties(cloudManagementEndpoint, aadClientId, aadTenantId, desiredProperties, default), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PerNodeExtensionState"/>. </summary>
+        /// <param name="name"> Name of the node in HCI Cluster. </param>
+        /// <param name="extension"> Fully qualified resource ID for the particular Arc Extension on this node. </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="state"> State of Arc Extension in this node. </param>
+        /// <param name="extensionInstanceView"> The extension instance view. </param>
+        /// <returns> A new <see cref="Models.PerNodeExtensionState"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PerNodeExtensionState PerNodeExtensionState(string name, string extension, string typeHandlerVersion, NodeExtensionState? state, ArcExtensionInstanceView extensionInstanceView)
+        {
+            return new PerNodeExtensionState(
+                name,
+                extension,
+                typeHandlerVersion,
+                state,
+                extensionInstanceView,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Hci.HciClusterUpdateRunData"/>. </summary>

@@ -93,18 +93,6 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Unconditionally resets <see cref="State"/> to <see cref="TransferState.Queued"/>,
-        /// bypassing the normal state-machine guards. This is only used during transfer
-        /// resume to requeue parts that may have been checkpointed in a transient state
-        /// (e.g. process was interrupted without pausing/stopping/completing gracefully)
-        /// if the process exited before the state could settle.
-        /// </summary>
-        internal void ResetToQueued()
-        {
-            Volatile.Write(ref _stateValue, (int)TransferState.Queued);
-        }
-
-        /// <summary>
         /// Accordingly update the <see cref="State"/>. If the current State is the same as the parameter,
         /// then nothing will happen.
         ///
@@ -113,42 +101,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>True if <see cref="State"/> was changed from its original state. False otherwise.</returns>
         internal bool SetTransferStateChange(TransferState state)
         {
-            // Use compare-and-swap to prevent invalid state transitions.
-            // Once a transfer is in Pausing/Stopping, only specific terminal
-            // transitions are allowed (see guards below).
-            while (true)
-            {
-                int currentValue = Volatile.Read(ref _stateValue);
-                TransferState currentState = (TransferState)currentValue;
-
-                // Reject transitions that would skip the cancellation flow:
-                // - Pausing can only go to Paused or Completed (e.g. all parts may finish before pause takes effect)
-                // - Stopping can only go to Completed
-                if ((currentState == TransferState.Pausing &&
-                         state != TransferState.Paused &&
-                         state != TransferState.Completed) ||
-                    (currentState == TransferState.Stopping && state != TransferState.Completed))
-                {
-                    return false;
-                }
-
-                // Don't transition backwards from a final state
-                if ((currentState == TransferState.Paused || currentState == TransferState.Completed) &&
-                    state != TransferState.Queued)
-                {
-                    return false;
-                }
-
-                if (currentValue == (int)state)
-                {
-                    return false;
-                }
-
-                if (Interlocked.CompareExchange(ref _stateValue, (int)state, currentValue) == currentValue)
-                {
-                    return true;
-                }
-            }
+            return Interlocked.Exchange(ref _stateValue, (int)state) != (int)state;
         }
 
         /// <inheritdoc/>

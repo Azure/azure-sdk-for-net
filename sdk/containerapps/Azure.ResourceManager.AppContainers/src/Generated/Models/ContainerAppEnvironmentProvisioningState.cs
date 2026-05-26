@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -15,97 +14,62 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct ContainerAppEnvironmentProvisioningState : IEquatable<ContainerAppEnvironmentProvisioningState>
     {
         private readonly string _value;
-        /// <summary> Succeeded. </summary>
-        private const string SucceededValue = "Succeeded";
-        /// <summary> Failed. </summary>
-        private const string FailedValue = "Failed";
-        /// <summary> Canceled. </summary>
-        private const string CanceledValue = "Canceled";
-        /// <summary> Waiting. </summary>
-        private const string WaitingValue = "Waiting";
-        /// <summary> InitializationInProgress. </summary>
-        private const string InitializationInProgressValue = "InitializationInProgress";
-        /// <summary> InfrastructureSetupInProgress. </summary>
-        private const string InfrastructureSetupInProgressValue = "InfrastructureSetupInProgress";
-        /// <summary> InfrastructureSetupComplete. </summary>
-        private const string InfrastructureSetupCompleteValue = "InfrastructureSetupComplete";
-        /// <summary> ScheduledForDelete. </summary>
-        private const string ScheduledForDeleteValue = "ScheduledForDelete";
-        /// <summary> UpgradeRequested. </summary>
-        private const string UpgradeRequestedValue = "UpgradeRequested";
-        /// <summary> UpgradeFailed. </summary>
-        private const string UpgradeFailedValue = "UpgradeFailed";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppEnvironmentProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppEnvironmentProvisioningState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string SucceededValue = "Succeeded";
+        private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
+        private const string WaitingValue = "Waiting";
+        private const string InitializationInProgressValue = "InitializationInProgress";
+        private const string InfrastructureSetupInProgressValue = "InfrastructureSetupInProgress";
+        private const string InfrastructureSetupCompleteValue = "InfrastructureSetupComplete";
+        private const string ScheduledForDeleteValue = "ScheduledForDelete";
+        private const string UpgradeRequestedValue = "UpgradeRequested";
+        private const string UpgradeFailedValue = "UpgradeFailed";
 
         /// <summary> Succeeded. </summary>
         public static ContainerAppEnvironmentProvisioningState Succeeded { get; } = new ContainerAppEnvironmentProvisioningState(SucceededValue);
-
         /// <summary> Failed. </summary>
         public static ContainerAppEnvironmentProvisioningState Failed { get; } = new ContainerAppEnvironmentProvisioningState(FailedValue);
-
         /// <summary> Canceled. </summary>
         public static ContainerAppEnvironmentProvisioningState Canceled { get; } = new ContainerAppEnvironmentProvisioningState(CanceledValue);
-
         /// <summary> Waiting. </summary>
         public static ContainerAppEnvironmentProvisioningState Waiting { get; } = new ContainerAppEnvironmentProvisioningState(WaitingValue);
-
         /// <summary> InitializationInProgress. </summary>
         public static ContainerAppEnvironmentProvisioningState InitializationInProgress { get; } = new ContainerAppEnvironmentProvisioningState(InitializationInProgressValue);
-
         /// <summary> InfrastructureSetupInProgress. </summary>
         public static ContainerAppEnvironmentProvisioningState InfrastructureSetupInProgress { get; } = new ContainerAppEnvironmentProvisioningState(InfrastructureSetupInProgressValue);
-
         /// <summary> InfrastructureSetupComplete. </summary>
         public static ContainerAppEnvironmentProvisioningState InfrastructureSetupComplete { get; } = new ContainerAppEnvironmentProvisioningState(InfrastructureSetupCompleteValue);
-
         /// <summary> ScheduledForDelete. </summary>
         public static ContainerAppEnvironmentProvisioningState ScheduledForDelete { get; } = new ContainerAppEnvironmentProvisioningState(ScheduledForDeleteValue);
-
         /// <summary> UpgradeRequested. </summary>
         public static ContainerAppEnvironmentProvisioningState UpgradeRequested { get; } = new ContainerAppEnvironmentProvisioningState(UpgradeRequestedValue);
-
         /// <summary> UpgradeFailed. </summary>
         public static ContainerAppEnvironmentProvisioningState UpgradeFailed { get; } = new ContainerAppEnvironmentProvisioningState(UpgradeFailedValue);
-
         /// <summary> Determines if two <see cref="ContainerAppEnvironmentProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppEnvironmentProvisioningState left, ContainerAppEnvironmentProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ContainerAppEnvironmentProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppEnvironmentProvisioningState left, ContainerAppEnvironmentProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ContainerAppEnvironmentProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppEnvironmentProvisioningState"/>. </summary>
         public static implicit operator ContainerAppEnvironmentProvisioningState(string value) => new ContainerAppEnvironmentProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerAppEnvironmentProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppEnvironmentProvisioningState?(string value) => value == null ? null : new ContainerAppEnvironmentProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppEnvironmentProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ContainerAppEnvironmentProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

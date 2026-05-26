@@ -43,19 +43,6 @@ namespace Azure.ResourceManager.Fabric.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal FabricCapacityUpdateProperties Properties { get; set; }
-
-        /// <summary> Gets or sets the AdministrationMembers. </summary>
-        public IList<string> FabricCapacityUpdateAdministrationMembers
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new FabricCapacityUpdateProperties();
-                }
-                return Properties.AdministrationMembers;
-            }
-        }
+        public FabricCapacityUpdateProperties Properties { get; set; }
     }
 }

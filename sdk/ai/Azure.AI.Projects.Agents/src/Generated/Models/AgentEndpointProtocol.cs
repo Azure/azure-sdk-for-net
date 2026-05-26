@@ -14,7 +14,6 @@ namespace Azure.AI.Projects.Agents
         private const string ActivityValue = "activity";
         private const string ResponsesValue = "responses";
         private const string A2aValue = "a2a";
-        private const string McpValue = "mcp";
         private const string InvocationsValue = "invocations";
 
         /// <summary> Initializes a new instance of <see cref="AgentEndpointProtocol"/>. </summary>
@@ -35,9 +34,6 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the A2a. </summary>
         public static AgentEndpointProtocol A2a { get; } = new AgentEndpointProtocol(A2aValue);
-
-        /// <summary> Gets the Mcp. </summary>
-        public static AgentEndpointProtocol Mcp { get; } = new AgentEndpointProtocol(McpValue);
 
         /// <summary> Gets the Invocations. </summary>
         public static AgentEndpointProtocol Invocations { get; } = new AgentEndpointProtocol(InvocationsValue);

@@ -13,7 +13,7 @@ using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> Routing configuration for the model-router deployment. Specifies how requests are routed across multiple models. </summary>
+    /// <summary> Routing configuration for the deployment. Specifies how requests are routed across multiple models. </summary>
     public partial class CognitiveServicesDeploymentRouting : IJsonModel<CognitiveServicesDeploymentRouting>
     {
         /// <param name="data"> The data to parse. </param>

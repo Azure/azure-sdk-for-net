@@ -40,7 +40,10 @@ public static class ConfigurationExtensions
         where T : ClientSettings, new()
     {
         T settings = configuration.GetClientSettings<T>(sectionName);
-        settings.CredentialProvider ??= configuration.GetCredentialSettings($"{sectionName}:Credential", resolvers)?.TokenProvider;
+        if (settings.CredentialProvider is null)
+        {
+            settings.CredentialProvider = configuration.GetCredential($"{sectionName}:Credential", resolvers);
+        }
         return settings;
     }
 
@@ -59,7 +62,10 @@ public static class ConfigurationExtensions
         where T : ClientSettings, new()
     {
         T settings = configuration.GetClientSettings<T>(sectionName);
-        settings.CredentialProvider ??= configuration.GetCredentialSettings($"{sectionName}:Credential", resolvers, configureOverrides)?.TokenProvider;
+        if (settings.CredentialProvider is null)
+        {
+            settings.CredentialProvider = configuration.GetCredential($"{sectionName}:Credential", resolvers, configureOverrides);
+        }
         return settings;
     }
 
@@ -72,39 +78,28 @@ public static class ConfigurationExtensions
     }
 
     /// <summary>
-    /// Returns a <see cref="CredentialSettings"/> bound from the named
+    /// Resolves an <see cref="AuthenticationTokenProvider"/> for the named
     /// credential section. The supplied <paramref name="sectionName"/> is
     /// treated as the credential section itself (not a parent client
-    /// section). The returned settings expose the inline
-    /// <see cref="CredentialSettings.Key"/> (for ApiKey sections) and the
-    /// resolver-supplied <see cref="CredentialSettings.TokenProvider"/>
-    /// (for token sections, when a resolver matches), so standalone callers
-    /// can dispatch on either without binding a <see cref="ClientSettings"/>.
-    /// Returns <see langword="null"/> only when the named section does not
-    /// exist; when the section exists but no resolver claims it, returns a
-    /// populated <see cref="CredentialSettings"/> with
-    /// <see cref="CredentialSettings.TokenProvider"/> set to
-    /// <see langword="null"/>. Never throws.
+    /// section). This overload always returns <see langword="null"/>
+    /// because no <see cref="CredentialResolver"/> chain has been supplied —
+    /// use the overload that accepts resolvers to participate in resolution.
+    /// Never throws.
     /// </summary>
-    public static CredentialSettings? GetCredentialSettings(
+    public static AuthenticationTokenProvider? GetCredential(
         this IConfiguration configuration,
         string sectionName)
-        => configuration.GetCredentialSettings(sectionName, Array.Empty<CredentialResolver>());
+        => configuration.GetCredential(sectionName, Array.Empty<CredentialResolver>());
 
     /// <summary>
     /// Walks the supplied <see cref="CredentialResolver"/> chain in order
     /// (first match wins) against the named credential section and returns
-    /// a <see cref="CredentialSettings"/> populated with both the bound
-    /// metadata (<c>Key</c>, <c>CredentialSource</c>,
-    /// <c>AdditionalProperties</c>) and the resolver-supplied
-    /// <see cref="CredentialSettings.TokenProvider"/>. The supplied
-    /// <paramref name="sectionName"/> is treated as the credential section
-    /// itself. Returns <see langword="null"/> only when the named section
-    /// does not exist; when the section exists but no resolver claims it,
-    /// returns settings with <see cref="CredentialSettings.TokenProvider"/>
-    /// set to <see langword="null"/>. Never throws.
+    /// the produced <see cref="AuthenticationTokenProvider"/>, or
+    /// <see langword="null"/> if no resolver claimed the section. The
+    /// supplied <paramref name="sectionName"/> is treated as the credential
+    /// section itself. Never throws.
     /// </summary>
-    public static CredentialSettings? GetCredentialSettings(
+    public static AuthenticationTokenProvider? GetCredential(
         this IConfiguration configuration,
         string sectionName,
         params CredentialResolver[] resolvers)
@@ -121,21 +116,11 @@ public static class ConfigurationExtensions
     /// <summary>
     /// Applies <paramref name="configureOverrides"/> to a writable overlay of
     /// the named credential section, then walks the supplied
-    /// <see cref="CredentialResolver"/> chain to populate
-    /// <see cref="CredentialSettings.TokenProvider"/>. Unlike
-    /// <see cref="GetClientSettings{T}(IConfiguration, string, IEnumerable{CredentialResolver}, Action{IConfigurationSection})"/>
-    /// — which binds the surrounding <c>ClientSettings</c> from the original
-    /// (non-overlaid) configuration and only feeds the overlay to the
-    /// resolver chain — the returned <see cref="CredentialSettings"/> here
-    /// reflects the post-overlay merged view for <c>Key</c>,
-    /// <c>CredentialSource</c>, <c>AdditionalProperties</c>, and the
-    /// <see cref="CredentialSettings.this[string]"/> indexer. The supplied
+    /// <see cref="CredentialResolver"/> chain. The supplied
     /// <paramref name="sectionName"/> is treated as the credential section
-    /// itself. Returns <see langword="null"/> only when the original section
-    /// does not exist; overrides cannot synthesize a credential into a
-    /// missing section. Never throws.
+    /// itself. Never throws.
     /// </summary>
-    public static CredentialSettings? GetCredentialSettings(
+    public static AuthenticationTokenProvider? GetCredential(
         this IConfiguration configuration,
         string sectionName,
         IEnumerable<CredentialResolver> resolvers,
@@ -295,9 +280,10 @@ public static class ConfigurationExtensions
         {
             IEnumerable<CredentialResolver> resolvers = serviceProvider.GetServices<CredentialResolver>();
             IConfigurationSection credentialSection = builder.ConfigurationSection.GetSection("Credential");
-            settings.CredentialProvider = CredentialResolverEngine
-                .Resolve(credentialSection, resolvers, builder.ConfigureCredentialAction)
-                ?.TokenProvider;
+            settings.CredentialProvider = CredentialResolverEngine.Resolve(
+                credentialSection,
+                resolvers,
+                builder.ConfigureCredentialAction);
         }
 
         return settings;

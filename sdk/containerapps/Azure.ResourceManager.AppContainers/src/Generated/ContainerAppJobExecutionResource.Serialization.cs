@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary></summary>
     public partial class ContainerAppJobExecutionResource : IJsonModel<ContainerAppJobExecutionData>
     {
-        private static IJsonModel<ContainerAppJobExecutionData> s_dataDeserializationInstance;
+        private static ContainerAppJobExecutionData s_dataDeserializationInstance;
+        private static ContainerAppJobExecutionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<ContainerAppJobExecutionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ContainerAppJobExecutionData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerAppJobExecutionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppJobExecutionData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerAppJobExecutionData IJsonModel<ContainerAppJobExecutionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        ContainerAppJobExecutionData IJsonModel<ContainerAppJobExecutionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppJobExecutionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ContainerAppJobExecutionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerAppJobExecutionData>(Data, options, AzureResourceManagerAppContainersContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         ContainerAppJobExecutionData IPersistableModel<ContainerAppJobExecutionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerAppJobExecutionData>(data, options, AzureResourceManagerAppContainersContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerAppJobExecutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<ContainerAppJobExecutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppJobExecutionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -28,7 +28,8 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         DeploymentStackValidateResult IOperationSource<DeploymentStackValidateResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return DeploymentStackValidateResult.DeserializeDeploymentStackValidateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            DeploymentStackValidateResult result = DeploymentStackValidateResult.DeserializeDeploymentStackValidateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         async ValueTask<DeploymentStackValidateResult> IOperationSource<DeploymentStackValidateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return DeploymentStackValidateResult.DeserializeDeploymentStackValidateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            DeploymentStackValidateResult result = DeploymentStackValidateResult.DeserializeDeploymentStackValidateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

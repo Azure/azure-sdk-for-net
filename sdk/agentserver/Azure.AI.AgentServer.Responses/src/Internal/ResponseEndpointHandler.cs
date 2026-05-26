@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
 using System.Text.Json;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
@@ -182,9 +183,13 @@ internal sealed class ResponseEndpointHandler
         // Store resolved session ID for the response header filter (§8).
         httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = request.AgentSessionId;
 
-        // Propagate baggage for downstream correlation (no invoke_agent span —
-        // W3C context propagation is handled by ASP.NET Core automatically)
-        _activitySource.PropagateResponseBaggage(request, responseId, httpContext.Request.Headers);
+        // Start distributed tracing span — delegates all tag/baggage logic
+        // to ResponsesActivitySource.StartCreateResponseActivity (virtual, overridable).
+        // Do NOT use 'using' — for streaming, SseResult takes ownership and disposes
+        // the activity when the SSE stream completes so the span covers the full
+        // streaming duration. For non-streaming, disposed in the finally block below.
+        var activity = _activitySource.StartCreateResponseActivity(
+            request, responseId, httpContext.Request.Headers);
 
         // Structured log scope — matches Core's HostedAgentTelemetry.StartActivity
         // for parity: ResponseId, ConversationId, Streaming appear on all log lines.
@@ -256,14 +261,16 @@ internal sealed class ResponseEndpointHandler
 
                 var result = await _orchestrator.CreateAsync(request, execution, context, linkedCts.Token);
 
-                // SseResult takes ownership of linkedCts — it will dispose it when
-                // the SSE stream completes.
+                // SseResult takes ownership of linkedCts and activity — it will
+                // dispose both when the SSE stream completes, ensuring the tracing
+                // span covers the full streaming duration.
                 var sseResult = new SseResult(
-                    result.Events!, execution, linkedCts,
+                    result.Events!, execution, linkedCts, activity,
                     SharedJsonOptions.Instance, _logger, FoundryEnvironment.SseKeepAliveInterval);
 
                 // Ownership transferred — prevent the catch/finally from disposing.
                 linkedCts = null;
+                activity = null;
                 return sseResult;
             }
             catch
@@ -271,48 +278,63 @@ internal sealed class ResponseEndpointHandler
                 // If CreateAsync or SseResult construction fails, we still own
                 // the resources — dispose them before re-throwing.
                 linkedCts?.Dispose();
+                activity?.Dispose();
                 throw;
             }
         }
         else if (isBackground)
         {
-            // Background (non-streaming): run handler in background task.
-            // Wait for response.created before returning — the handler's response
-            // is the source of truth, not a SDK-constructed seed.
-            execution.ExecutionTask = Task.Run(async () =>
+            try
             {
-                using var bgLinkedCts = CancellationTokenSource.CreateLinkedTokenSource(
-                    providerCt, execution.CancellationTokenSource.Token);
-                await _orchestrator.CreateAsync(request, execution, context, bgLinkedCts.Token);
-            });
+                // Background (non-streaming): run handler in background task.
+                // Wait for response.created before returning — the handler's response
+                // is the source of truth, not a SDK-constructed seed.
+                execution.ExecutionTask = Task.Run(async () =>
+                {
+                    using var bgLinkedCts = CancellationTokenSource.CreateLinkedTokenSource(
+                        providerCt, execution.CancellationTokenSource.Token);
+                    await _orchestrator.CreateAsync(request, execution, context, bgLinkedCts.Token);
+                });
 
-            // Await the handler's response.created (or a pre-created error).
-            // If the handler fails before response.created, the signal faults
-            // and the exception propagates to the exception filter → HTTP 500.
-            // The signal delivers an independent snapshot — no re-snapshot needed.
-            var handlerResponse = await execution.ResponseCreatedSignal.Task;
-            _logger.LogInformation(
-                "Background response created signal received for {ResponseId}, status={Status}",
-                responseId, handlerResponse.Status);
-            return Results.Json(handlerResponse, SharedJsonOptions.Instance, statusCode: 200);
+                // Await the handler's response.created (or a pre-created error).
+                // If the handler fails before response.created, the signal faults
+                // and the exception propagates to the exception filter → HTTP 500.
+                // The signal delivers an independent snapshot — no re-snapshot needed.
+                var handlerResponse = await execution.ResponseCreatedSignal.Task;
+                _logger.LogInformation(
+                    "Background response created signal received for {ResponseId}, status={Status}",
+                    responseId, handlerResponse.Status);
+                return Results.Json(handlerResponse, SharedJsonOptions.Instance, statusCode: 200);
+            }
+            finally
+            {
+                activity?.Dispose();
+            }
         }
         else
         {
-            // Default (non-streaming, non-background): run to completion, return final response.
-            // Order matters: register linked CTS first, then ClientDisconnected flag.
-            // CancellationToken callbacks fire in LIFO order, so registering the flag
-            // second ensures it is set before the linked CTS propagates cancellation
-            // to the handler — matching the streaming path's registration order.
-            using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
-                providerCt, execution.CancellationTokenSource.Token, httpContext.RequestAborted);
-            httpContext.RequestAborted.Register(() => execution.ClientDisconnected = true);
+            try
+            {
+                // Default (non-streaming, non-background): run to completion, return final response.
+                // Order matters: register linked CTS first, then ClientDisconnected flag.
+                // CancellationToken callbacks fire in LIFO order, so registering the flag
+                // second ensures it is set before the linked CTS propagates cancellation
+                // to the handler — matching the streaming path's registration order.
+                using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
+                    providerCt, execution.CancellationTokenSource.Token, httpContext.RequestAborted);
+                httpContext.RequestAborted.Register(() => execution.ClientDisconnected = true);
 
-            await _orchestrator.CreateAsync(request, execution, context, linkedCts.Token);
+                await _orchestrator.CreateAsync(request, execution, context, linkedCts.Token);
 
-            _logger.LogInformation(
-                "Response {ResponseId} completed: Status={Status} OutputCount={OutputCount}",
-                responseId, execution.Response!.Status, execution.Response!.Output.Count);
-            return Results.Json(execution.Response!.Snapshot(), SharedJsonOptions.Instance, statusCode: 200);
+                _logger.LogInformation(
+                    "Response {ResponseId} completed: Status={Status} OutputCount={OutputCount}",
+                    responseId, execution.Response!.Status, execution.Response!.Output.Count);
+                return Results.Json(execution.Response!.Snapshot(), SharedJsonOptions.Instance, statusCode: 200);
+            }
+            finally
+            {
+                activity?.Dispose();
+            }
         }
     }
 

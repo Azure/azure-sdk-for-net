@@ -86,30 +86,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationVaultProperties(provisioningState, serviceResourceId, vaultType, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Vault model update. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Gets or sets the resource tags. </param>
-        /// <param name="properties"> Vault properties. </param>
-        /// <param name="identity"> Vault identity. </param>
-        /// <returns> A new <see cref="Models.DataReplicationVaultPatch"/> instance for mocking. </returns>
-        public static DataReplicationVaultPatch DataReplicationVaultPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, DataReplicationVaultProperties properties = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DataReplicationVaultPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                properties,
-                identity);
-        }
-
         /// <summary> Event model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -368,28 +344,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 fabricContainerId,
                 migrationSolutionId,
                 migrationHubUri);
-        }
-
-        /// <summary> Fabric model update. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Gets or sets the resource tags. </param>
-        /// <param name="properties"> Fabric model properties. </param>
-        /// <returns> A new <see cref="Models.DataReplicationFabricPatch"/> instance for mocking. </returns>
-        public static DataReplicationFabricPatch DataReplicationFabricPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, DataReplicationFabricProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DataReplicationFabricPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                properties);
         }
 
         /// <summary> Fabric agent model. </summary>
@@ -1277,23 +1231,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="customProperties"> Protected item model custom properties update. </param>
-        /// <returns> A new <see cref="Models.DataReplicationProtectedItemPatch"/> instance for mocking. </returns>
-        public static DataReplicationProtectedItemPatch DataReplicationProtectedItemPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationProtectedItemCustomPropertiesUpdate customProperties = default)
-        {
-            return new DataReplicationProtectedItemPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                customProperties is null ? default : new DataReplicationProtectedItemPropertiesUpdate(customProperties, null));
-        }
-
         /// <summary> HyperV to AzStackHCI Protected item model custom properties. </summary>
         /// <param name="nicsToInclude"> Gets or sets the list of VM NIC to replicate. </param>
         /// <param name="targetCpuCores"> Gets or sets the target CPU cores. </param>
@@ -1516,6 +1453,70 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             resources ??= new ChangeTrackingList<DeploymentPreflightResourceInfo>();
 
             return new DeploymentPreflight(resources.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataReplicationVaultPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> Gets or sets the resource tags. </param>
+        /// <param name="properties"> Vault properties. </param>
+        /// <param name="identity"> Vault identity. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <returns> A new <see cref="Models.DataReplicationVaultPatch"/> instance for mocking. </returns>
+        public static DataReplicationVaultPatch DataReplicationVaultPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, DataReplicationVaultProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DataReplicationVaultPatch(
+                id,
+                resourceType,
+                additionalBinaryDataProperties: null,
+                tags,
+                properties,
+                identity,
+                name,
+                systemData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataReplicationFabricPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> Gets or sets the resource tags. </param>
+        /// <param name="properties"> Fabric model properties. </param>
+        /// <returns> A new <see cref="Models.DataReplicationFabricPatch"/> instance for mocking. </returns>
+        public static DataReplicationFabricPatch DataReplicationFabricPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, DataReplicationFabricProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DataReplicationFabricPatch(
+                id,
+                resourceType,
+                additionalBinaryDataProperties: null,
+                tags,
+                properties,
+                name,
+                systemData);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataReplicationProtectedItemPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="customProperties"> Protected item model properties. </param>
+        /// <returns> A new <see cref="Models.DataReplicationProtectedItemPatch"/> instance for mocking. </returns>
+        public static DataReplicationProtectedItemPatch DataReplicationProtectedItemPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationProtectedItemCustomPropertiesUpdate customProperties = default)
+        {
+            return new DataReplicationProtectedItemPatch(
+                id,
+                resourceType,
+                additionalBinaryDataProperties: null,
+                default,
+                name,
+                systemData);
         }
     }
 }

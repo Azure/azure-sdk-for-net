@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.ElasticSan
     {
         private readonly ClientDiagnostics _elasticSansClientDiagnostics;
         private readonly ElasticSans _elasticSansRestClient;
+        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
 
         /// <summary> Initializes a new instance of ElasticSanCollection for mocking. </summary>
         protected ElasticSanCollection()
@@ -42,6 +44,8 @@ namespace Azure.ResourceManager.ElasticSan
             TryGetApiVersion(ElasticSanResource.ResourceType, out string elasticSanApiVersion);
             _elasticSansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ElasticSanResource.ResourceType.Namespace, Diagnostics);
             _elasticSansRestClient = new ElasticSans(_elasticSansClientDiagnostics, Pipeline, Endpoint, elasticSanApiVersion ?? "2025-09-01");
+            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ElasticSanResource.ResourceType.Namespace, Diagnostics);
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, elasticSanApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

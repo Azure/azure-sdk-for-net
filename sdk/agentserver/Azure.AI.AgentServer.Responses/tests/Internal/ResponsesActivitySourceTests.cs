@@ -2,31 +2,20 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Internal;
 
 /// <summary>
-/// Tests for <see cref="ResponsesActivitySource"/>: constants, the virtual
-/// <see cref="ResponsesActivitySource.PropagateResponseBaggage"/> method,
-/// and subclass composition patterns.
+/// Tests for <see cref="ResponsesActivitySource"/>: name defaults, the virtual
+/// <see cref="ResponsesActivitySource.StartCreateResponseActivity"/> method,
+/// and the composition pattern (call base → override specific tags).
 /// </summary>
 public sealed class ResponsesActivitySourceTests : IDisposable
 {
-    private readonly ActivitySource _testSource = new($"Test.ResponsesUnit.{Guid.NewGuid():N}");
     private readonly List<ActivityListener> _listeners = new();
-
-    public ResponsesActivitySourceTests()
-    {
-        var listener = new ActivityListener
-        {
-            ShouldListenTo = source => source.Name == _testSource.Name,
-            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
-        };
-        ActivitySource.AddActivityListener(listener);
-        _listeners.Add(listener);
-    }
 
     // ── Constants ────────────────────────────────────────────────────────
 
@@ -73,138 +62,271 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         Assert.That(source.Name, Is.EqualTo("Azure.AI.AgentServer.Responses"));
     }
 
-    // ── PropagateResponseBaggage — baggage on Activity.Current ──────────
+    // ── StartCreateResponseActivity — tags ───────────────────────────────
 
     [Test]
-    public void PropagateResponseBaggage_SetsBaggageOnCurrentActivity()
+    public void StartCreateResponseActivity_SetsGenAiTags()
     {
-        using var parent = _testSource.StartActivity("test-parent");
-        Assert.That(parent, Is.Not.Null);
-
-        var source = new ResponsesActivitySource();
+        var source = CreateListeningSource();
         var request = new CreateResponse { Model = "gpt-4o", Stream = true };
 
-        source.PropagateResponseBaggage(request, "caresp_123", EmptyHeaders());
+        using var activity = source.StartCreateResponseActivity(
+            request, "caresp_123", EmptyHeaders());
 
-        Assert.That(parent!.GetBaggageItem(ResponsesTracingConstants.Baggage.ResponseId), Is.EqualTo("caresp_123"));
-        Assert.That(parent.GetBaggageItem(ResponsesTracingConstants.Baggage.Streaming), Is.EqualTo("True"));
-        Assert.That(parent.GetBaggageItem(ResponsesTracingConstants.Baggage.ConversationId), Is.EqualTo(string.Empty));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.Kind, Is.EqualTo(ActivityKind.Server));
+        Assert.That(activity.DisplayName, Is.EqualTo("invoke_agent gpt-4o"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ResponseId), Is.EqualTo("caresp_123"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName), Is.EqualTo(ResponsesTracingConstants.ProviderName));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ServiceName), Is.EqualTo(ResponsesTracingConstants.ServiceName));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.OperationName), Is.EqualTo(ResponsesTracingConstants.OperationName));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.RequestModel), Is.EqualTo("gpt-4o"));
     }
 
-    [Test]
-    public void PropagateResponseBaggage_DoesNotCreateNewActivity()
-    {
-        using var parent = _testSource.StartActivity("test-parent");
-        var activityBefore = Activity.Current;
-
-        var source = new ResponsesActivitySource();
-        var request = new CreateResponse { Model = "test" };
-
-        source.PropagateResponseBaggage(request, "caresp_456", EmptyHeaders());
-
-        Assert.That(Activity.Current, Is.SameAs(activityBefore));
-    }
+    // ── Namespaced parity tags (azure.ai.agentserver.responses.*) ─────
 
     [Test]
-    public void PropagateResponseBaggage_SetsConversationId()
+    public void StartCreateResponseActivity_SetsNamespacedParityTags()
     {
-        using var parent = _testSource.StartActivity("test-parent");
-        Assert.That(parent, Is.Not.Null);
-
-        var source = new ResponsesActivitySource();
+        var source = CreateListeningSource();
         var request = new CreateResponse
         {
             Model = "test",
-            Conversation = BinaryData.FromString("\"conv_xyz\"")
+            Stream = true,
+            Conversation = BinaryData.FromString("\"conv_abc\"")
         };
 
-        source.PropagateResponseBaggage(request, "caresp_789", EmptyHeaders());
+        using var activity = source.StartCreateResponseActivity(
+            request, "caresp_parity", EmptyHeaders());
 
-        Assert.That(parent!.GetBaggageItem(ResponsesTracingConstants.Baggage.ConversationId), Is.EqualTo("conv_xyz"));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedResponseId), Is.EqualTo("caresp_parity"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedConversationId), Is.EqualTo("conv_abc"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedStreaming), Is.EqualTo(true));
     }
 
     [Test]
-    public void PropagateResponseBaggage_NonStreaming_SetsFalse()
+    public void StartCreateResponseActivity_NonStreaming_SetsStreamingFalse()
     {
-        using var parent = _testSource.StartActivity("test-parent");
-        Assert.That(parent, Is.Not.Null);
-
-        var source = new ResponsesActivitySource();
+        var source = CreateListeningSource();
         var request = new CreateResponse { Model = "test" };
 
-        source.PropagateResponseBaggage(request, "id", EmptyHeaders());
+        using var activity = source.StartCreateResponseActivity(
+            request, "caresp_ns", EmptyHeaders());
 
-        Assert.That(parent!.GetBaggageItem(ResponsesTracingConstants.Baggage.Streaming), Is.EqualTo("False"));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedStreaming), Is.EqualTo(false));
     }
 
     [Test]
-    public void PropagateResponseBaggage_XRequestId_SetsBaggage()
+    public void StartCreateResponseActivity_SetsFoundryProjectId_WhenEnvSet()
     {
-        using var parent = _testSource.StartActivity("test-parent");
-        Assert.That(parent, Is.Not.Null);
+        Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID",
+            "/subscriptions/1234/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/ws");
+        FoundryEnvironment.Reload();
 
-        var source = new ResponsesActivitySource();
+        try
+        {
+            var source = CreateListeningSource();
+            var request = new CreateResponse { Model = "test" };
+
+            using var activity = source.StartCreateResponseActivity(
+                request, "caresp_proj", EmptyHeaders());
+
+            Assert.That(activity, Is.Not.Null);
+            Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.FoundryProjectId),
+                Is.EqualTo("/subscriptions/1234/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/ws"));
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID", null);
+            FoundryEnvironment.Reload();
+        }
+    }
+
+    [Test]
+    public void StartCreateResponseActivity_SetsFoundryProjectId_EmptyWhenNoEnv()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID", null);
+        FoundryEnvironment.Reload();
+
+        var source = CreateListeningSource();
+        var request = new CreateResponse { Model = "test" };
+
+        using var activity = source.StartCreateResponseActivity(
+            request, "caresp_noproj", EmptyHeaders());
+
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.FoundryProjectId),
+            Is.EqualTo(string.Empty));
+    }
+
+    [Test]
+    public void StartCreateResponseActivity_NoConversation_SetsEmptyConversationId()
+    {
+        var source = CreateListeningSource();
+        var request = new CreateResponse { Model = "test" };
+
+        using var activity = source.StartCreateResponseActivity(
+            request, "id", EmptyHeaders());
+
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.NamespacedConversationId), Is.EqualTo(string.Empty));
+    }
+
+    [Test]
+    public void StartCreateResponseActivity_RemovedTags_NotPresent()
+    {
+        var source = CreateListeningSource();
+        var request = new CreateResponse { Model = "test", Stream = true };
+        var headers = new HeaderDictionary { ["X-Request-Id"] = "req-123" };
+
+        using var activity = source.StartCreateResponseActivity(
+            request, "id", headers);
+
+        Assert.That(activity, Is.Not.Null);
+        // response.mode and request.id tags were removed for parity
+        Assert.That(activity.GetTagItem("response.mode"), Is.Null);
+        Assert.That(activity.GetTagItem("request.id"), Is.Null);
+    }
+
+    [Test]
+    public void StartCreateResponseActivity_EmptyModel_OmitsModelTag()
+    {
+        var source = CreateListeningSource();
+        var request = new CreateResponse { Model = "" };
+
+        using var activity = source.StartCreateResponseActivity(
+            request, "id", EmptyHeaders());
+
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.DisplayName, Is.EqualTo("invoke_agent"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.RequestModel), Is.Null);
+    }
+
+    [Test]
+    public void StartCreateResponseActivity_AgentTags_WithVersion()
+    {
+        var source = CreateListeningSource();
+        var request = new CreateResponse
+        {
+            Model = "test",
+            AgentReference = new AgentReference("my-agent") { Version = "1.0" }
+        };
+
+        using var activity = source.StartCreateResponseActivity(
+            request, "id", EmptyHeaders());
+
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentName), Is.EqualTo("my-agent"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentId), Is.EqualTo("my-agent:1.0"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentVersion), Is.EqualTo("1.0"));
+    }
+
+    [Test]
+    public void StartCreateResponseActivity_AgentTags_WithoutVersion()
+    {
+        var source = CreateListeningSource();
+        var request = new CreateResponse
+        {
+            Model = "test",
+            AgentReference = new AgentReference("my-agent")
+        };
+
+        using var activity = source.StartCreateResponseActivity(
+            request, "id", EmptyHeaders());
+
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentName), Is.EqualTo("my-agent"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentId), Is.EqualTo("my-agent"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentVersion), Is.Null);
+    }
+
+    [Test]
+    public void StartCreateResponseActivity_NoAgent_SetsEmptyAgentId()
+    {
+        var source = CreateListeningSource();
+        var request = new CreateResponse { Model = "test" };
+
+        using var activity = source.StartCreateResponseActivity(
+            request, "id", EmptyHeaders());
+
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentName), Is.Null);
+        // Core parity: gen_ai.agent.id = "" when agent is null
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentId), Is.EqualTo(string.Empty));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.AgentVersion), Is.Null);
+    }
+
+    [Test]
+    public void StartCreateResponseActivity_XRequestId_SetsBaggageOnly()
+    {
+        var source = CreateListeningSource();
         var request = new CreateResponse { Model = "test" };
         var headers = new HeaderDictionary { ["X-Request-Id"] = "req-abc" };
 
-        source.PropagateResponseBaggage(request, "id", headers);
+        using var activity = source.StartCreateResponseActivity(
+            request, "id", headers);
 
-        Assert.That(parent!.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId), Is.EqualTo("req-abc"));
+        Assert.That(activity, Is.Not.Null);
+        // X-Request-Id is no longer a span tag — only baggage
+        Assert.That(activity.GetTagItem("request.id"), Is.Null);
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId), Is.EqualTo("req-abc"));
     }
 
     [Test]
-    public void PropagateResponseBaggage_NoXRequestId_OmitsRequestIdBaggage()
+    public void StartCreateResponseActivity_NoXRequestId_OmitsRequestIdBaggage()
     {
-        using var parent = _testSource.StartActivity("test-parent");
-        Assert.That(parent, Is.Not.Null);
-
-        var source = new ResponsesActivitySource();
+        var source = CreateListeningSource();
         var request = new CreateResponse { Model = "test" };
 
-        source.PropagateResponseBaggage(request, "id", EmptyHeaders());
+        using var activity = source.StartCreateResponseActivity(
+            request, "id", EmptyHeaders());
 
-        Assert.That(parent!.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId), Is.Null);
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId), Is.Null);
     }
 
     [Test]
-    public void PropagateResponseBaggage_LongXRequestId_TruncatedTo256()
+    public void StartCreateResponseActivity_LongXRequestId_BaggageTruncatedTo256()
     {
-        using var parent = _testSource.StartActivity("test-parent");
-        Assert.That(parent, Is.Not.Null);
-
-        var source = new ResponsesActivitySource();
+        var source = CreateListeningSource();
         var request = new CreateResponse { Model = "test" };
         var longId = new string('x', 512);
         var headers = new HeaderDictionary { ["X-Request-Id"] = longId };
 
-        source.PropagateResponseBaggage(request, "id", headers);
+        using var activity = source.StartCreateResponseActivity(
+            request, "id", headers);
 
-        var baggageValue = parent!.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId);
+        Assert.That(activity, Is.Not.Null);
+        var baggageValue = activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId);
         Assert.That(baggageValue, Is.Not.Null);
         Assert.That(baggageValue!.Length, Is.EqualTo(256));
     }
 
     [Test]
-    public void PropagateResponseBaggage_NoOp_WhenNoCurrentActivity()
+    public void StartCreateResponseActivity_ConversationId_SetsTag()
     {
-        // Ensure no current activity
-        Activity.Current = null;
+        var source = CreateListeningSource();
+        var request = new CreateResponse
+        {
+            Model = "test",
+            Conversation = BinaryData.FromString("\"conv_123\"")
+        };
 
-        var source = new ResponsesActivitySource();
-        var request = new CreateResponse { Model = "test" };
+        using var activity = source.StartCreateResponseActivity(
+            request, "id", EmptyHeaders());
 
-        // Should not throw
-        Assert.DoesNotThrow(() =>
-            source.PropagateResponseBaggage(request, "id", EmptyHeaders()));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ConversationId), Is.EqualTo("conv_123"));
     }
 
-    [Test]
-    public void PropagateResponseBaggage_RemovedShortKeyBaggage_NotPresent()
-    {
-        using var parent = _testSource.StartActivity("test-parent");
-        Assert.That(parent, Is.Not.Null);
+    // ── StartCreateResponseActivity — baggage ────────────────────────────
 
-        var source = new ResponsesActivitySource();
+    [Test]
+    public void StartCreateResponseActivity_SetsNamespacedBaggageItems()
+    {
+        var source = CreateListeningSource();
         var request = new CreateResponse
         {
             Model = "test",
@@ -213,35 +335,152 @@ public sealed class ResponsesActivitySourceTests : IDisposable
         };
         var headers = new HeaderDictionary { ["X-Request-Id"] = "req-999" };
 
-        source.PropagateResponseBaggage(request, "caresp_rm", headers);
+        using var activity = source.StartCreateResponseActivity(
+            request, "caresp_456", headers);
 
-        // Short-key baggage items should not be present
-        Assert.That(parent!.GetBaggageItem("response.id"), Is.Null);
-        Assert.That(parent.GetBaggageItem("streaming"), Is.Null);
-        Assert.That(parent.GetBaggageItem("provider.name"), Is.Null);
-        Assert.That(parent.GetBaggageItem("conversation.id"), Is.Null);
-        Assert.That(parent.GetBaggageItem("agent.name"), Is.Null);
-        Assert.That(parent.GetBaggageItem("agent.id"), Is.Null);
-        Assert.That(parent.GetBaggageItem("request.id"), Is.Null);
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.ResponseId), Is.EqualTo("caresp_456"));
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.ConversationId), Is.EqualTo("conv_xyz"));
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.Streaming), Is.EqualTo("True"));
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId), Is.EqualTo("req-999"));
     }
 
-    // ── Virtual override ─────────────────────────────────────────────────
-
     [Test]
-    public void VirtualOverride_CanAddExtraBaggage()
+    public void StartCreateResponseActivity_MinimalRequest_SetsRequiredBaggage()
     {
-        using var parent = _testSource.StartActivity("test-parent");
-        Assert.That(parent, Is.Not.Null);
-
-        var source = new ExtraBaggageActivitySource();
+        var source = CreateListeningSource();
         var request = new CreateResponse { Model = "test" };
 
-        source.PropagateResponseBaggage(request, "caresp_override", EmptyHeaders());
+        using var activity = source.StartCreateResponseActivity(
+            request, "caresp_789", EmptyHeaders());
 
-        // Base baggage present
-        Assert.That(parent!.GetBaggageItem(ResponsesTracingConstants.Baggage.ResponseId), Is.EqualTo("caresp_override"));
-        // Extra baggage from override
-        Assert.That(parent.GetBaggageItem("custom.baggage"), Is.EqualTo("custom-value"));
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.ResponseId), Is.EqualTo("caresp_789"));
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.ConversationId), Is.EqualTo(string.Empty));
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.Streaming), Is.EqualTo("False"));
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.RequestId), Is.Null);
+    }
+
+    [Test]
+    public void StartCreateResponseActivity_RemovedShortKeyBaggage_NotPresent()
+    {
+        var source = CreateListeningSource();
+        var request = new CreateResponse
+        {
+            Model = "test",
+            Stream = true,
+            AgentReference = new AgentReference("my-agent") { Version = "2.0" },
+            Conversation = BinaryData.FromString("\"conv_xyz\"")
+        };
+        var headers = new HeaderDictionary { ["X-Request-Id"] = "req-999" };
+
+        using var activity = source.StartCreateResponseActivity(
+            request, "caresp_rm", headers);
+
+        Assert.That(activity, Is.Not.Null);
+        // Short-key baggage items were removed for parity
+        Assert.That(activity.GetBaggageItem("response.id"), Is.Null);
+        Assert.That(activity.GetBaggageItem("streaming"), Is.Null);
+        Assert.That(activity.GetBaggageItem("provider.name"), Is.Null);
+        Assert.That(activity.GetBaggageItem("conversation.id"), Is.Null);
+        Assert.That(activity.GetBaggageItem("agent.name"), Is.Null);
+        Assert.That(activity.GetBaggageItem("agent.id"), Is.Null);
+        Assert.That(activity.GetBaggageItem("request.id"), Is.Null);
+    }
+
+    // ── Composition pattern: base + selective override ───────────────────
+
+    [Test]
+    public void SetTag_ReplacesExistingValue()
+    {
+        var source = CreateListeningSource();
+        var request = new CreateResponse { Model = "test" };
+
+        using var activity = source.StartCreateResponseActivity(
+            request, "id", EmptyHeaders());
+
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName), Is.EqualTo(ResponsesTracingConstants.ProviderName));
+
+        // SetTag replaces existing value
+        activity.SetTag(ResponsesTracingConstants.Tags.ProviderName, "my-custom-provider");
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName), Is.EqualTo("my-custom-provider"));
+    }
+
+    [Test]
+    public void AddBaggage_GetBaggageItem_ReturnsMostRecentValue()
+    {
+        var source = CreateListeningSource();
+        var request = new CreateResponse { Model = "test" };
+
+        using var activity = source.StartCreateResponseActivity(
+            request, "id", EmptyHeaders());
+
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.Streaming), Is.EqualTo("False"));
+
+        // AddBaggage prepends — GetBaggageItem returns most recent
+        activity.AddBaggage(ResponsesTracingConstants.Baggage.Streaming, "True");
+        Assert.That(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.Streaming), Is.EqualTo("True"));
+    }
+
+    [Test]
+    public void VirtualOverride_CanCompletelyReplaceBehaviour()
+    {
+        var source = CreateListeningSource<FullOverrideActivitySource>();
+        var request = new CreateResponse { Model = "test" };
+
+        using var activity = source.StartCreateResponseActivity(
+            request, "id", EmptyHeaders());
+
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.DisplayName, Is.EqualTo("custom-op"));
+        Assert.That(activity.GetTagItem("custom.tag"), Is.EqualTo("overridden"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName), Is.Null); // base not called
+    }
+
+    [Test]
+    public void VirtualOverride_CanCallBaseAndSelectively_OverrideTags()
+    {
+        var source = CreateListeningSource<SelectiveOverrideActivitySource>();
+        var request = new CreateResponse { Model = "test" };
+        var headers = new HeaderDictionary { ["X-Custom"] = "hello" };
+
+        using var activity = source.StartCreateResponseActivity(
+            request, "id", headers);
+
+        Assert.That(activity, Is.Not.Null);
+
+        // Base defaults present
+        Assert.That(activity.DisplayName, Is.EqualTo("invoke_agent test"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.OperationName), Is.EqualTo("invoke_agent"));
+
+        // Overridden tags
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ProviderName), Is.EqualTo("my-service"));
+        Assert.That(activity.GetTagItem(ResponsesTracingConstants.Tags.ServiceName), Is.EqualTo("my-service"));
+
+        // Extra tags from custom header
+        Assert.That(activity.GetTagItem("custom.header"), Is.EqualTo("hello"));
+        Assert.That(activity.GetTagItem("service.namespace"), Is.EqualTo("my.ns"));
+    }
+
+    [Test]
+    public void VirtualOverride_CanReadCustomHeaders()
+    {
+        var source = CreateListeningSource<HeaderReadingActivitySource>();
+        var request = new CreateResponse { Model = "test" };
+        var headers = new HeaderDictionary
+        {
+            ["X-Tenant-Id"] = "tenant-123",
+            ["X-Correlation-Id"] = "corr-456"
+        };
+
+        using var activity = source.StartCreateResponseActivity(
+            request, "id", headers);
+
+        Assert.That(activity, Is.Not.Null);
+        Assert.That(activity.GetTagItem("tenant.id"), Is.EqualTo("tenant-123"));
+        Assert.That(activity.GetTagItem("correlation.id"), Is.EqualTo("corr-456"));
     }
 
     // ── Test subclasses ──────────────────────────────────────────────────
@@ -255,25 +494,105 @@ public sealed class ResponsesActivitySourceTests : IDisposable
     }
 
     /// <summary>
-    /// Override that adds extra baggage after calling base.
+    /// Completely replaces default behaviour.
     /// </summary>
-    private sealed class ExtraBaggageActivitySource : ResponsesActivitySource
+    private sealed class FullOverrideActivitySource : TestActivitySource
     {
-        public override void PropagateResponseBaggage(
+        public FullOverrideActivitySource(string? name) : base(name) { }
+
+        public override Activity? StartCreateResponseActivity(
             CreateResponse request, string responseId, IHeaderDictionary headers)
         {
-            base.PropagateResponseBaggage(request, responseId, headers);
-            Activity.Current?.AddBaggage("custom.baggage", "custom-value");
+            var activity = Source.StartActivity("custom-op");
+            activity?.SetTag("custom.tag", "overridden");
+            return activity;
+        }
+    }
+
+    /// <summary>
+    /// Calls base, then selectively replaces service identity and reads a custom header.
+    /// Demonstrates the composition pattern with zero duplication of default logic.
+    /// </summary>
+    private sealed class SelectiveOverrideActivitySource : TestActivitySource
+    {
+        public SelectiveOverrideActivitySource(string? name) : base(name) { }
+
+        public override Activity? StartCreateResponseActivity(
+            CreateResponse request, string responseId, IHeaderDictionary headers)
+        {
+            var activity = base.StartCreateResponseActivity(request, responseId, headers);
+            if (activity is null)
+                return null;
+
+            // Replace service identity
+            activity.SetTag(ResponsesTracingConstants.Tags.ProviderName, "my-service");
+            activity.SetTag(ResponsesTracingConstants.Tags.ServiceName, "my-service");
+
+            // Add extra tags
+            activity.SetTag("service.namespace", "my.ns");
+            if (headers.TryGetValue("X-Custom", out var customVal))
+            {
+                activity.SetTag("custom.header", customVal.ToString());
+            }
+
+            return activity;
+        }
+    }
+
+    /// <summary>
+    /// Reads arbitrary custom headers to show the headers dict pattern.
+    /// </summary>
+    private sealed class HeaderReadingActivitySource : TestActivitySource
+    {
+        public HeaderReadingActivitySource(string? name) : base(name) { }
+
+        public override Activity? StartCreateResponseActivity(
+            CreateResponse request, string responseId, IHeaderDictionary headers)
+        {
+            var activity = base.StartCreateResponseActivity(request, responseId, headers);
+            if (activity is null)
+                return null;
+
+            if (headers.TryGetValue("X-Tenant-Id", out var tenantId))
+                activity.SetTag("tenant.id", tenantId.ToString());
+
+            if (headers.TryGetValue("X-Correlation-Id", out var corrId))
+                activity.SetTag("correlation.id", corrId.ToString());
+
+            return activity;
         }
     }
 
     // ── Helpers ──────────────────────────────────────────────────────────
 
+    private ResponsesActivitySource CreateListeningSource()
+    {
+        return CreateListeningSource<TestActivitySource>();
+    }
+
+    private T CreateListeningSource<T>() where T : TestActivitySource
+    {
+        var name = $"Test.{Guid.NewGuid():N}";
+        AddListener(name);
+        return (T)Activator.CreateInstance(typeof(T), name)!;
+    }
+
+    private void AddListener(string sourceName)
+    {
+        var listener = new ActivityListener
+        {
+            ShouldListenTo = source => source.Name == sourceName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) =>
+                ActivitySamplingResult.AllDataAndRecorded,
+        };
+        ActivitySource.AddActivityListener(listener);
+        _listeners.Add(listener);
+    }
+
     private static IHeaderDictionary EmptyHeaders() => new HeaderDictionary();
 
     public void Dispose()
     {
-        _testSource.Dispose();
         foreach (var l in _listeners)
             l.Dispose();
     }

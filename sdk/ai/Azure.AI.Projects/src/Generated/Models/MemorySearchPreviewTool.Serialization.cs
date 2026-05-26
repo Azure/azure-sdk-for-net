@@ -87,17 +87,6 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(ToolConfigs))
-            {
-                writer.WritePropertyName("tool_configs"u8);
-                writer.WriteStartObject();
-                foreach (var item in ToolConfigs)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
             writer.WritePropertyName("memory_store_name"u8);
             writer.WriteStringValue(MemoryStoreName);
             writer.WritePropertyName("scope"u8);
@@ -143,7 +132,6 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             string description = default;
-            IDictionary<string, ToolConfig> toolConfigs = default;
             string memoryStoreName = default;
             string scope = default;
             MemorySearchResultOptions searchOptions = default;
@@ -163,20 +151,6 @@ namespace Azure.AI.Projects
                 if (prop.NameEquals("description"u8))
                 {
                     description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("tool_configs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
-                    }
-                    toolConfigs = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("memory_store_name"u8))
@@ -217,7 +191,6 @@ namespace Azure.AI.Projects
                 additionalBinaryDataProperties,
                 name,
                 description,
-                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
                 memoryStoreName,
                 scope,
                 searchOptions,

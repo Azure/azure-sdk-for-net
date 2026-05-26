@@ -8,56 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.AppContainers;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Configuration properties that define the mutable settings of a Container App SourceControl. </summary>
-    public partial class ContainerAppGitHubActionConfiguration : IJsonModel<ContainerAppGitHubActionConfiguration>
+    public partial class ContainerAppGitHubActionConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppGitHubActionConfiguration>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContainerAppGitHubActionConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppGitHubActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeContainerAppGitHubActionConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppGitHubActionConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppGitHubActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContainerAppGitHubActionConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerAppGitHubActionConfiguration IPersistableModel<ContainerAppGitHubActionConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContainerAppGitHubActionConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerAppGitHubActionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +29,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppGitHubActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppGitHubActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(RegistryInfo))
             {
                 writer.WritePropertyName("registryInfo"u8);
@@ -88,11 +49,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
-            }
-            if (Optional.IsDefined(DockerfilePath))
-            {
-                writer.WritePropertyName("dockerfilePath"u8);
-                writer.WriteStringValue(DockerfilePath);
             }
             if (Optional.IsDefined(GitHubPersonalAccessToken))
             {
@@ -124,25 +80,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (Optional.IsCollectionDefined(BuildEnvironmentVariables))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("buildEnvironmentVariables"u8);
-                writer.WriteStartArray();
-                foreach (EnvironmentVariable item in BuildEnvironmentVariables)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -151,27 +97,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContainerAppGitHubActionConfiguration IJsonModel<ContainerAppGitHubActionConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContainerAppGitHubActionConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerAppGitHubActionConfiguration IJsonModel<ContainerAppGitHubActionConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppGitHubActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppGitHubActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeContainerAppGitHubActionConfiguration(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ContainerAppGitHubActionConfiguration DeserializeContainerAppGitHubActionConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerAppGitHubActionConfiguration DeserializeContainerAppGitHubActionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -179,107 +120,325 @@ namespace Azure.ResourceManager.AppContainers.Models
             ContainerAppRegistryInfo registryInfo = default;
             ContainerAppCredentials azureCredentials = default;
             string contextPath = default;
-            string dockerfilePath = default;
             string gitHubPersonalAccessToken = default;
             string image = default;
             string publishType = default;
             string os = default;
             string runtimeStack = default;
             string runtimeVersion = default;
-            IList<EnvironmentVariable> buildEnvironmentVariables = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("registryInfo"u8))
+                if (property.NameEquals("registryInfo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    registryInfo = ContainerAppRegistryInfo.DeserializeContainerAppRegistryInfo(prop.Value, options);
+                    registryInfo = ContainerAppRegistryInfo.DeserializeContainerAppRegistryInfo(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("azureCredentials"u8))
+                if (property.NameEquals("azureCredentials"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    azureCredentials = ContainerAppCredentials.DeserializeContainerAppCredentials(prop.Value, options);
+                    azureCredentials = ContainerAppCredentials.DeserializeContainerAppCredentials(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("contextPath"u8))
+                if (property.NameEquals("contextPath"u8))
                 {
-                    contextPath = prop.Value.GetString();
+                    contextPath = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("dockerfilePath"u8))
+                if (property.NameEquals("githubPersonalAccessToken"u8))
                 {
-                    dockerfilePath = prop.Value.GetString();
+                    gitHubPersonalAccessToken = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("githubPersonalAccessToken"u8))
+                if (property.NameEquals("image"u8))
                 {
-                    gitHubPersonalAccessToken = prop.Value.GetString();
+                    image = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("image"u8))
+                if (property.NameEquals("publishType"u8))
                 {
-                    image = prop.Value.GetString();
+                    publishType = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("publishType"u8))
+                if (property.NameEquals("os"u8))
                 {
-                    publishType = prop.Value.GetString();
+                    os = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("os"u8))
+                if (property.NameEquals("runtimeStack"u8))
                 {
-                    os = prop.Value.GetString();
+                    runtimeStack = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("runtimeStack"u8))
+                if (property.NameEquals("runtimeVersion"u8))
                 {
-                    runtimeStack = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("runtimeVersion"u8))
-                {
-                    runtimeVersion = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("buildEnvironmentVariables"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<EnvironmentVariable> array = new List<EnvironmentVariable>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(EnvironmentVariable.DeserializeEnvironmentVariable(item, options));
-                    }
-                    buildEnvironmentVariables = array;
+                    runtimeVersion = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppGitHubActionConfiguration(
                 registryInfo,
                 azureCredentials,
                 contextPath,
-                dockerfilePath,
                 gitHubPersonalAccessToken,
                 image,
                 publishType,
                 os,
                 runtimeStack,
                 runtimeVersion,
-                buildEnvironmentVariables ?? new ChangeTrackingList<EnvironmentVariable>(),
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistryInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  registryInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RegistryInfo))
+                {
+                    builder.Append("  registryInfo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RegistryInfo, options, 2, false, "  registryInfo: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureCredentials), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureCredentials: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureCredentials))
+                {
+                    builder.Append("  azureCredentials: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AzureCredentials, options, 2, false, "  azureCredentials: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContextPath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  contextPath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContextPath))
+                {
+                    builder.Append("  contextPath: ");
+                    if (ContextPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContextPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContextPath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubPersonalAccessToken), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  githubPersonalAccessToken: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GitHubPersonalAccessToken))
+                {
+                    builder.Append("  githubPersonalAccessToken: ");
+                    if (GitHubPersonalAccessToken.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GitHubPersonalAccessToken}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GitHubPersonalAccessToken}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Image), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  image: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Image))
+                {
+                    builder.Append("  image: ");
+                    if (Image.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Image}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Image}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublishType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  publishType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublishType))
+                {
+                    builder.Append("  publishType: ");
+                    if (PublishType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PublishType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PublishType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OS), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  os: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OS))
+                {
+                    builder.Append("  os: ");
+                    if (OS.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OS}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OS}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuntimeStack), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  runtimeStack: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuntimeStack))
+                {
+                    builder.Append("  runtimeStack: ");
+                    if (RuntimeStack.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RuntimeStack}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RuntimeStack}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuntimeVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  runtimeVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuntimeVersion))
+                {
+                    builder.Append("  runtimeVersion: ");
+                    if (RuntimeVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RuntimeVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RuntimeVersion}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ContainerAppGitHubActionConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppGitHubActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerAppGitHubActionConfiguration IPersistableModel<ContainerAppGitHubActionConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppGitHubActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeContainerAppGitHubActionConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerAppGitHubActionConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

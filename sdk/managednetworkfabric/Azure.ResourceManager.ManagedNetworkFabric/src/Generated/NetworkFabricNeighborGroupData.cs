@@ -53,16 +53,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricNeighborGroupData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="destination"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="destination"/> is null. </exception>
-        public NetworkFabricNeighborGroupData(AzureLocation location, NeighborGroupDestination destination) : base(location)
+        public NetworkFabricNeighborGroupData(AzureLocation location) : base(location)
         {
-            Argument.AssertNotNull(destination, nameof(destination));
-
-            Destination = destination;
             NetworkTapIds = new ChangeTrackingList<ResourceIdentifier>();
             NetworkTapRuleIds = new ChangeTrackingList<ResourceIdentifier>();
-            NetworkFabricIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricNeighborGroupData"/>. </summary>
@@ -72,27 +66,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="destination"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
         /// <param name="networkTapIds"> List of NetworkTap IDs where neighbor group is associated. </param>
         /// <param name="networkTapRuleIds"> List of Network Tap Rule IDs where neighbor group is associated. </param>
-        /// <param name="networkFabricIds"> Associated Network Fabric Resource IDs. </param>
-        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricNeighborGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, NeighborGroupDestination destination, IReadOnlyList<ResourceIdentifier> networkTapIds, IReadOnlyList<ResourceIdentifier> networkTapRuleIds, IReadOnlyList<ResourceIdentifier> networkFabricIds, LastOperationProperties lastOperation, NetworkFabricProvisioningState? provisioningState, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricNeighborGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NeighborGroupDestination destination, IReadOnlyList<ResourceIdentifier> networkTapIds, IReadOnlyList<ResourceIdentifier> networkTapRuleIds, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Identity = identity;
             Annotation = annotation;
             Destination = destination;
             NetworkTapIds = networkTapIds;
             NetworkTapRuleIds = networkTapRuleIds;
-            NetworkFabricIds = networkFabricIds;
-            LastOperation = lastOperation;
             ProvisioningState = provisioningState;
-            ConfigurationState = configurationState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -101,8 +87,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
         }
 
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> An array of destination IPv4 Addresses or IPv6 Addresses. </summary>
@@ -111,19 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public IReadOnlyList<ResourceIdentifier> NetworkTapIds { get; }
         /// <summary> List of Network Tap Rule IDs where neighbor group is associated. </summary>
         public IReadOnlyList<ResourceIdentifier> NetworkTapRuleIds { get; }
-        /// <summary> Associated Network Fabric Resource IDs. </summary>
-        public IReadOnlyList<ResourceIdentifier> NetworkFabricIds { get; }
-        /// <summary> Details of the last operation performed on the resource. </summary>
-        internal LastOperationProperties LastOperation { get; }
-        /// <summary> Details status of the last operation performed on the resource. </summary>
-        public string LastOperationDetails
-        {
-            get => LastOperation?.Details;
-        }
-
         /// <summary> The provisioning state of the resource. </summary>
         public NetworkFabricProvisioningState? ProvisioningState { get; }
-        /// <summary> Configuration state of the resource. </summary>
-        public NetworkFabricConfigurationState? ConfigurationState { get; }
     }
 }

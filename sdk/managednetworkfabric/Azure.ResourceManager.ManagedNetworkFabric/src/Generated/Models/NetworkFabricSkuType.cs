@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string SingleRackValue = "SingleRack";
         private const string MultiRackValue = "MultiRack";
 
-        /// <summary> FabricSkuType-SingleRack. </summary>
+        /// <summary> SingleRack. </summary>
         public static NetworkFabricSkuType SingleRack { get; } = new NetworkFabricSkuType(SingleRackValue);
-        /// <summary> FabricSkuType-MultiRack. </summary>
+        /// <summary> MultiRack. </summary>
         public static NetworkFabricSkuType MultiRack { get; } = new NetworkFabricSkuType(MultiRackValue);
         /// <summary> Determines if two <see cref="NetworkFabricSkuType"/> values are the same. </summary>
         public static bool operator ==(NetworkFabricSkuType left, NetworkFabricSkuType right) => left.Equals(right);

@@ -94,16 +94,6 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InternalTools))
-            {
-                writer.WritePropertyName("tools"u8);
-                writer.WriteStartArray();
-                foreach (InternalTool item in InternalTools)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -136,7 +126,6 @@ namespace Azure.AI.Projects.Evaluation
             string name = default;
             string version = default;
             IList<ToolDescription> toolDescriptions = default;
-            IList<InternalTool> internalTools = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -168,32 +157,12 @@ namespace Azure.AI.Projects.Evaluation
                     toolDescriptions = array;
                     continue;
                 }
-                if (prop.NameEquals("tools"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<InternalTool> array = new List<InternalTool>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(InternalTool.DeserializeInternalTool(item, options));
-                    }
-                    internalTools = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureAIAgentTarget(
-                @type,
-                additionalBinaryDataProperties,
-                name,
-                version,
-                toolDescriptions ?? new ChangeTrackingList<ToolDescription>(),
-                internalTools ?? new ChangeTrackingList<InternalTool>());
+            return new AzureAIAgentTarget(@type, additionalBinaryDataProperties, name, version, toolDescriptions ?? new ChangeTrackingList<ToolDescription>());
         }
     }
 }

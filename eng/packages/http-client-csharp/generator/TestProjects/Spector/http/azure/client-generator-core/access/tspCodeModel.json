@@ -22,7 +22,7 @@
     {
       "$id": "3",
       "kind": "constant",
-      "name": "NoDecoratorInPublicAccept",
+      "name": "noDecoratorInPublicContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -38,7 +38,7 @@
     {
       "$id": "5",
       "kind": "constant",
-      "name": "NoDecoratorInPublicAccept1",
+      "name": "publicDecoratorInPublicContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -54,7 +54,7 @@
     {
       "$id": "7",
       "kind": "constant",
-      "name": "NoDecoratorInPublicAccept2",
+      "name": "noDecoratorInInternalContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -70,7 +70,7 @@
     {
       "$id": "9",
       "kind": "constant",
-      "name": "NoDecoratorInPublicAccept3",
+      "name": "internalDecoratorInInternalContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -86,7 +86,7 @@
     {
       "$id": "11",
       "kind": "constant",
-      "name": "NoDecoratorInPublicAccept4",
+      "name": "publicDecoratorInInternalContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -102,7 +102,7 @@
     {
       "$id": "13",
       "kind": "constant",
-      "name": "NoDecoratorInPublicAccept5",
+      "name": "publicContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -118,7 +118,7 @@
     {
       "$id": "15",
       "kind": "constant",
-      "name": "NoDecoratorInPublicAccept6",
+      "name": "internalContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -134,7 +134,7 @@
     {
       "$id": "17",
       "kind": "constant",
-      "name": "NoDecoratorInPublicAccept7",
+      "name": "operationContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -150,7 +150,7 @@
     {
       "$id": "19",
       "kind": "constant",
-      "name": "NoDecoratorInPublicAccept8",
+      "name": "discriminatorContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {

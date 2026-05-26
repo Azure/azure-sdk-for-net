@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.HorizonDB
     {
         private readonly ClientDiagnostics _horizonDBClustersClientDiagnostics;
         private readonly HorizonDBClusters _horizonDBClustersRestClient;
+        private readonly ClientDiagnostics _horizonDBPrivateEndpointConnectionsClientDiagnostics;
+        private readonly HorizonDBPrivateEndpointConnections _horizonDBPrivateEndpointConnectionsRestClient;
         private readonly HorizonDBClusterData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HorizonDb/clusters";
@@ -54,6 +56,8 @@ namespace Azure.ResourceManager.HorizonDB
             TryGetApiVersion(ResourceType, out string horizonDBClusterApiVersion);
             _horizonDBClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
             _horizonDBClustersRestClient = new HorizonDBClusters(_horizonDBClustersClientDiagnostics, Pipeline, Endpoint, horizonDBClusterApiVersion ?? "2026-01-20-preview");
+            _horizonDBPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", ResourceType.Namespace, Diagnostics);
+            _horizonDBPrivateEndpointConnectionsRestClient = new HorizonDBPrivateEndpointConnections(_horizonDBPrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, horizonDBClusterApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 
@@ -211,12 +215,12 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<ArmOperation<HorizonDBClusterResource>> UpdateAsync(WaitUntil waitUntil, HorizonDBClusterForPatchUpdate properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<HorizonDBClusterResource>> UpdateAsync(WaitUntil waitUntil, HorizonDBClusterPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterResource.Update");
             scope.Start();
@@ -226,7 +230,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HorizonDBClusterForPatchUpdate.ToRequestContent(properties), context);
+                HttpMessage message = _horizonDBClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HorizonDBClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HorizonDBArmOperation<HorizonDBClusterResource> operation = new HorizonDBArmOperation<HorizonDBClusterResource>(
                     new HorizonDBClusterOperationSource(Client),
@@ -270,12 +274,12 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual ArmOperation<HorizonDBClusterResource> Update(WaitUntil waitUntil, HorizonDBClusterForPatchUpdate properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<HorizonDBClusterResource> Update(WaitUntil waitUntil, HorizonDBClusterPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterResource.Update");
             scope.Start();
@@ -285,7 +289,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HorizonDBClusterForPatchUpdate.ToRequestContent(properties), context);
+                HttpMessage message = _horizonDBClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HorizonDBClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HorizonDBArmOperation<HorizonDBClusterResource> operation = new HorizonDBArmOperation<HorizonDBClusterResource>(
                     new HorizonDBClusterOperationSource(Client),
@@ -405,6 +409,238 @@ namespace Azure.ResourceManager.HorizonDB
             }
         }
 
+        /// <summary>
+        /// Deletes a private endpoint connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HorizonDbPrivateEndpointConnections_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-20-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HorizonDBClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            using DiagnosticScope scope = _horizonDBPrivateEndpointConnectionsClientDiagnostics.CreateScope("HorizonDBClusterResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _horizonDBPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDBPrivateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a private endpoint connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HorizonDbPrivateEndpointConnections_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-20-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HorizonDBClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            using DiagnosticScope scope = _horizonDBPrivateEndpointConnectionsClientDiagnostics.CreateScope("HorizonDBClusterResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _horizonDBPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HorizonDBArmOperation operation = new HorizonDBArmOperation(_horizonDBPrivateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a private endpoint connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HorizonDbPrivateEndpointConnections_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-20-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HorizonDBClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<HorizonDBPrivateEndpointConnection>> UpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, HorizonDBPrivateEndpointConnectionPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _horizonDBPrivateEndpointConnectionsClientDiagnostics.CreateScope("HorizonDBClusterResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _horizonDBPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, HorizonDBPrivateEndpointConnectionPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HorizonDBArmOperation<HorizonDBPrivateEndpointConnection> operation = new HorizonDBArmOperation<HorizonDBPrivateEndpointConnection>(
+                    new HorizonDBPrivateEndpointConnectionOperationSource(),
+                    _horizonDBPrivateEndpointConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a private endpoint connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/clusters/{clusterName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HorizonDbPrivateEndpointConnections_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-20-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HorizonDBClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<HorizonDBPrivateEndpointConnection> Update(WaitUntil waitUntil, string privateEndpointConnectionName, HorizonDBPrivateEndpointConnectionPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _horizonDBPrivateEndpointConnectionsClientDiagnostics.CreateScope("HorizonDBClusterResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _horizonDBPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, HorizonDBPrivateEndpointConnectionPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HorizonDBArmOperation<HorizonDBPrivateEndpointConnection> operation = new HorizonDBArmOperation<HorizonDBPrivateEndpointConnection>(
+                    new HorizonDBPrivateEndpointConnectionOperationSource(),
+                    _horizonDBPrivateEndpointConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -436,7 +672,7 @@ namespace Azure.ResourceManager.HorizonDB
                 else
                 {
                     HorizonDBClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    HorizonDBClusterForPatchUpdate patch = new HorizonDBClusterForPatchUpdate();
+                    HorizonDBClusterPatch patch = new HorizonDBClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -484,7 +720,7 @@ namespace Azure.ResourceManager.HorizonDB
                 else
                 {
                     HorizonDBClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    HorizonDBClusterForPatchUpdate patch = new HorizonDBClusterForPatchUpdate();
+                    HorizonDBClusterPatch patch = new HorizonDBClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -531,7 +767,7 @@ namespace Azure.ResourceManager.HorizonDB
                 else
                 {
                     HorizonDBClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    HorizonDBClusterForPatchUpdate patch = new HorizonDBClusterForPatchUpdate();
+                    HorizonDBClusterPatch patch = new HorizonDBClusterPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<HorizonDBClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -574,7 +810,7 @@ namespace Azure.ResourceManager.HorizonDB
                 else
                 {
                     HorizonDBClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    HorizonDBClusterForPatchUpdate patch = new HorizonDBClusterForPatchUpdate();
+                    HorizonDBClusterPatch patch = new HorizonDBClusterPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<HorizonDBClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -616,7 +852,7 @@ namespace Azure.ResourceManager.HorizonDB
                 else
                 {
                     HorizonDBClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    HorizonDBClusterForPatchUpdate patch = new HorizonDBClusterForPatchUpdate();
+                    HorizonDBClusterPatch patch = new HorizonDBClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -662,7 +898,7 @@ namespace Azure.ResourceManager.HorizonDB
                 else
                 {
                     HorizonDBClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    HorizonDBClusterForPatchUpdate patch = new HorizonDBClusterForPatchUpdate();
+                    HorizonDBClusterPatch patch = new HorizonDBClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

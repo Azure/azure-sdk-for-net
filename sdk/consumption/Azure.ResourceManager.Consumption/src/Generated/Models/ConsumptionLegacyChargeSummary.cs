@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,89 +16,51 @@ namespace Azure.ResourceManager.Consumption.Models
     public partial class ConsumptionLegacyChargeSummary : ConsumptionChargeSummary
     {
         /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyChargeSummary"/>. </summary>
-        public ConsumptionLegacyChargeSummary() : base(ChargeSummaryKind.Legacy)
+        public ConsumptionLegacyChargeSummary()
         {
-
+            Kind = ChargeSummaryKind.Legacy;
         }
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyChargeSummary"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Specifies the kind of charge summary. </param>
-        /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <param name="properties"> Properties for legacy charge summary. </param>
-        internal ConsumptionLegacyChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ChargeSummaryKind kind, ETag? eTag, LegacyChargeSummaryProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="billingPeriodId"> The id of the billing period resource that the charge belongs to. </param>
+        /// <param name="usageStart"> Usage start date. </param>
+        /// <param name="usageEnd"> Usage end date. </param>
+        /// <param name="azureCharges"> Azure Charges. </param>
+        /// <param name="chargesBilledSeparately"> Charges Billed separately. </param>
+        /// <param name="marketplaceCharges"> Marketplace Charges. </param>
+        /// <param name="currency"> Currency Code. </param>
+        internal ConsumptionLegacyChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChargeSummaryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string billingPeriodId, string usageStart, string usageEnd, decimal? azureCharges, decimal? chargesBilledSeparately, decimal? marketplaceCharges, string currency) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
-            Properties = properties;
+            BillingPeriodId = billingPeriodId;
+            UsageStart = usageStart;
+            UsageEnd = usageEnd;
+            AzureCharges = azureCharges;
+            ChargesBilledSeparately = chargesBilledSeparately;
+            MarketplaceCharges = marketplaceCharges;
+            Currency = currency;
+            Kind = kind;
         }
-
-        /// <summary> Properties for legacy charge summary. </summary>
-        internal LegacyChargeSummaryProperties Properties { get; set; }
 
         /// <summary> The id of the billing period resource that the charge belongs to. </summary>
-        public string BillingPeriodId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.BillingPeriodId;
-            }
-        }
-
+        public string BillingPeriodId { get; }
         /// <summary> Usage start date. </summary>
-        public string UsageStart
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UsageStart;
-            }
-        }
-
+        public string UsageStart { get; }
         /// <summary> Usage end date. </summary>
-        public string UsageEnd
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UsageEnd;
-            }
-        }
-
+        public string UsageEnd { get; }
         /// <summary> Azure Charges. </summary>
-        public decimal? AzureCharges
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AzureCharges;
-            }
-        }
-
+        public decimal? AzureCharges { get; }
         /// <summary> Charges Billed separately. </summary>
-        public decimal? ChargesBilledSeparately
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ChargesBilledSeparately;
-            }
-        }
-
+        public decimal? ChargesBilledSeparately { get; }
         /// <summary> Marketplace Charges. </summary>
-        public decimal? MarketplaceCharges
-        {
-            get
-            {
-                return Properties is null ? default : Properties.MarketplaceCharges;
-            }
-        }
-
+        public decimal? MarketplaceCharges { get; }
         /// <summary> Currency Code. </summary>
-        public string Currency
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Currency;
-            }
-        }
+        public string Currency { get; }
     }
 }

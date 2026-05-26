@@ -14,7 +14,6 @@ using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary> Reference to another ARM resource. </summary>
     internal partial class SubResource : IJsonModel<SubResource>
     {
         /// <summary> Initializes a new instance of <see cref="SubResource"/> for deserialization. </summary>

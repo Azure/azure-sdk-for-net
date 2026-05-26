@@ -93,7 +93,6 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(FailOverProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MessageTimestampDescription))]
-    [ModelReaderWriterBuildable(typeof(NetworkRuleSetListResult))]
     [ModelReaderWriterBuildable(typeof(NetworkRuleSetProperties))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationList))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationProperties))]

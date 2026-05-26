@@ -11,13 +11,11 @@ using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> Control permission for data plane traffic coming from public networks. </summary>
+    /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
     public readonly partial struct AppConfigurationPublicNetworkAccess : IEquatable<AppConfigurationPublicNetworkAccess>
     {
         private readonly string _value;
-        /// <summary> Allow public network access to the data plane. </summary>
         private const string EnabledValue = "Enabled";
-        /// <summary> Disallow public network access to the data plane. </summary>
         private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationPublicNetworkAccess"/>. </summary>
@@ -30,10 +28,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             _value = value;
         }
 
-        /// <summary> Allow public network access to the data plane. </summary>
+        /// <summary> Gets the Enabled. </summary>
         public static AppConfigurationPublicNetworkAccess Enabled { get; } = new AppConfigurationPublicNetworkAccess(EnabledValue);
 
-        /// <summary> Disallow public network access to the data plane. </summary>
+        /// <summary> Gets the Disabled. </summary>
         public static AppConfigurationPublicNetworkAccess Disabled { get; } = new AppConfigurationPublicNetworkAccess(DisabledValue);
 
         /// <summary> Determines if two <see cref="AppConfigurationPublicNetworkAccess"/> values are the same. </summary>

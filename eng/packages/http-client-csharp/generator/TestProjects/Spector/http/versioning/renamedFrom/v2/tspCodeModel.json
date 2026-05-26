@@ -92,7 +92,7 @@
     {
       "$id": "8",
       "kind": "constant",
-      "name": "NewOpContentType",
+      "name": "newOpContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -108,7 +108,7 @@
     {
       "$id": "10",
       "kind": "constant",
-      "name": "NewOpContentType1",
+      "name": "newOpContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -124,7 +124,7 @@
     {
       "$id": "12",
       "kind": "constant",
-      "name": "NewOpContentType2",
+      "name": "newOpInNewInterfaceContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -140,7 +140,7 @@
     {
       "$id": "14",
       "kind": "constant",
-      "name": "NewOpContentType3",
+      "name": "newOpInNewInterfaceContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {

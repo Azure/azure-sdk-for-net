@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     {
         private readonly ClientDiagnostics _protectionContainersClientDiagnostics;
         private readonly ProtectionContainers _protectionContainersRestClient;
+        private readonly ClientDiagnostics _backupWorkloadItemsClientDiagnostics;
+        private readonly BackupWorkloadItems _backupWorkloadItemsRestClient;
 
         /// <summary> Initializes a new instance of BackupProtectionContainerCollection for mocking. </summary>
         protected BackupProtectionContainerCollection()
@@ -40,6 +42,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             TryGetApiVersion(BackupProtectionContainerResource.ResourceType, out string backupProtectionContainerApiVersion);
             _protectionContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionContainerResource.ResourceType.Namespace, Diagnostics);
             _protectionContainersRestClient = new ProtectionContainers(_protectionContainersClientDiagnostics, Pipeline, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-31-preview");
+            _backupWorkloadItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionContainerResource.ResourceType.Namespace, Diagnostics);
+            _backupWorkloadItemsRestClient = new BackupWorkloadItems(_backupWorkloadItemsClientDiagnostics, Pipeline, Endpoint, backupProtectionContainerApiVersion ?? "2026-01-31-preview");
             ValidateResourceId(id);
         }
 

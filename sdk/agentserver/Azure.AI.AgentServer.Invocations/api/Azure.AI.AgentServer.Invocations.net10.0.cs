@@ -40,10 +40,4 @@ namespace Azure.AI.AgentServer.Invocations
     {
         public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddInvocationsServer(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Action<Azure.AI.AgentServer.Invocations.InvocationsServerOptions>? configure = null) { throw null; }
     }
-    public abstract partial class InvocationWebSocketHandler : Azure.AI.AgentServer.Invocations.InvocationHandler
-    {
-        protected InvocationWebSocketHandler() { }
-        public override System.Threading.Tasks.Task HandleAsync(Microsoft.AspNetCore.Http.HttpRequest request, Microsoft.AspNetCore.Http.HttpResponse response, Azure.AI.AgentServer.Invocations.InvocationContext context, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public abstract System.Threading.Tasks.Task HandleWebSocketAsync(System.Net.WebSockets.WebSocket webSocket, Azure.AI.AgentServer.Invocations.InvocationContext context, System.Threading.CancellationToken cancellationToken);
-    }
 }

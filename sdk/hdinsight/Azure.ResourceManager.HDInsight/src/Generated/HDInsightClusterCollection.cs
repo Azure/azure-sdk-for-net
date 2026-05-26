@@ -29,6 +29,16 @@ namespace Azure.ResourceManager.HDInsight
     {
         private readonly ClientDiagnostics _hdInsightClusterClientDiagnostics;
         private readonly HDInsightCluster _hdInsightClusterRestClient;
+        private readonly ClientDiagnostics _configurationsClientDiagnostics;
+        private readonly Configurations _configurationsRestClient;
+        private readonly ClientDiagnostics _extensionsClientDiagnostics;
+        private readonly Extensions _extensionsRestClient;
+        private readonly ClientDiagnostics _scriptActionsClientDiagnostics;
+        private readonly ScriptActions _scriptActionsRestClient;
+        private readonly ClientDiagnostics _scriptExecutionHistoryClientDiagnostics;
+        private readonly ScriptExecutionHistory _scriptExecutionHistoryRestClient;
+        private readonly ClientDiagnostics _virtualMachinesClientDiagnostics;
+        private readonly VirtualMachines _virtualMachinesRestClient;
 
         /// <summary> Initializes a new instance of HDInsightClusterCollection for mocking. </summary>
         protected HDInsightClusterCollection()
@@ -43,6 +53,16 @@ namespace Azure.ResourceManager.HDInsight
             TryGetApiVersion(HDInsightClusterResource.ResourceType, out string hdInsightClusterApiVersion);
             _hdInsightClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightClusterResource.ResourceType.Namespace, Diagnostics);
             _hdInsightClusterRestClient = new HDInsightCluster(_hdInsightClusterClientDiagnostics, Pipeline, Endpoint, hdInsightClusterApiVersion ?? "2025-01-15-preview");
+            _configurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightClusterResource.ResourceType.Namespace, Diagnostics);
+            _configurationsRestClient = new Configurations(_configurationsClientDiagnostics, Pipeline, Endpoint, hdInsightClusterApiVersion ?? "2025-01-15-preview");
+            _extensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightClusterResource.ResourceType.Namespace, Diagnostics);
+            _extensionsRestClient = new Extensions(_extensionsClientDiagnostics, Pipeline, Endpoint, hdInsightClusterApiVersion ?? "2025-01-15-preview");
+            _scriptActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightClusterResource.ResourceType.Namespace, Diagnostics);
+            _scriptActionsRestClient = new ScriptActions(_scriptActionsClientDiagnostics, Pipeline, Endpoint, hdInsightClusterApiVersion ?? "2025-01-15-preview");
+            _scriptExecutionHistoryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightClusterResource.ResourceType.Namespace, Diagnostics);
+            _scriptExecutionHistoryRestClient = new ScriptExecutionHistory(_scriptExecutionHistoryClientDiagnostics, Pipeline, Endpoint, hdInsightClusterApiVersion ?? "2025-01-15-preview");
+            _virtualMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightClusterResource.ResourceType.Namespace, Diagnostics);
+            _virtualMachinesRestClient = new VirtualMachines(_virtualMachinesClientDiagnostics, Pipeline, Endpoint, hdInsightClusterApiVersion ?? "2025-01-15-preview");
             ValidateResourceId(id);
         }
 

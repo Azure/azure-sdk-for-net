@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppContainers
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppCollection : ArmCollection, IEnumerable<ContainerAppResource>, IAsyncEnumerable<ContainerAppResource>
     {
-        private readonly ClientDiagnostics _containerAppsClientDiagnostics;
-        private readonly ContainerApps _containerAppsRestClient;
+        private readonly ClientDiagnostics _containerAppClientDiagnostics;
+        private readonly ContainerAppsRestOperations _containerAppRestClient;
 
-        /// <summary> Initializes a new instance of ContainerAppCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppCollection"/> class for mocking. </summary>
         protected ContainerAppCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerAppCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ContainerAppCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _containerAppClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ContainerAppResource.ResourceType, out string containerAppApiVersion);
-            _containerAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppResource.ResourceType.Namespace, Diagnostics);
-            _containerAppsRestClient = new ContainerApps(_containerAppsClientDiagnostics, Pipeline, Endpoint, containerAppApiVersion ?? "2025-10-02-preview");
-            ValidateResourceId(id);
+            _containerAppRestClient = new ContainerAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or update a Container App.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerApps_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="data"> Properties used to create a container app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerAppResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string containerAppName, ContainerAppData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _containerAppsClientDiagnostics.CreateScope("ContainerAppCollection.CreateOrUpdate");
+            using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerAppName, ContainerAppData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AppContainersArmOperation<ContainerAppResource> operation = new AppContainersArmOperation<ContainerAppResource>(
-                    new ContainerAppOperationSource(Client),
-                    _containerAppsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _containerAppRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, containerAppName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation<ContainerAppResource>(new ContainerAppOperationSource(Client), _containerAppClientDiagnostics, Pipeline, _containerAppRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, containerAppName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Create or update a Container App.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerApps_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="data"> Properties used to create a container app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerAppResource> CreateOrUpdate(WaitUntil waitUntil, string containerAppName, ContainerAppData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _containerAppsClientDiagnostics.CreateScope("ContainerAppCollection.CreateOrUpdate");
+            using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerAppName, ContainerAppData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                AppContainersArmOperation<ContainerAppResource> operation = new AppContainersArmOperation<ContainerAppResource>(
-                    new ContainerAppOperationSource(Client),
-                    _containerAppsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _containerAppRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, containerAppName, data, cancellationToken);
+                var operation = new AppContainersArmOperation<ContainerAppResource>(new ContainerAppOperationSource(Client), _containerAppClientDiagnostics, Pipeline, _containerAppRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, containerAppName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.AppContainers
         /// Get the properties of a Container App.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerApps_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
         public virtual async Task<Response<ContainerAppResource>> GetAsync(string containerAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
 
-            using DiagnosticScope scope = _containerAppsClientDiagnostics.CreateScope("ContainerAppCollection.Get");
+            using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerAppName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ContainerAppData> response = Response.FromValue(ContainerAppData.FromResponse(result), result);
+                var response = await _containerAppRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, containerAppName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.AppContainers
         /// Get the properties of a Container App.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerApps_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
         public virtual Response<ContainerAppResource> Get(string containerAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
 
-            using DiagnosticScope scope = _containerAppsClientDiagnostics.CreateScope("ContainerAppCollection.Get");
+            using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerAppName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ContainerAppData> response = Response.FromValue(ContainerAppData.FromResponse(result), result);
+                var response = _containerAppRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, containerAppName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.AppContainers
         /// Get the Container Apps in a given resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerApps_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerAppResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ContainerAppData, ContainerAppResource>(new ContainerAppsGetByResourceGroupAsyncCollectionResultOfT(_containerAppsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppCollection.GetAll"), data => new ContainerAppResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppResource(Client, ContainerAppData.DeserializeContainerAppData(e)), _containerAppClientDiagnostics, Pipeline, "ContainerAppCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get the Container Apps in a given resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerApps_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ContainerAppData, ContainerAppResource>(new ContainerAppsGetByResourceGroupCollectionResultOfT(_containerAppsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ContainerAppCollection.GetAll"), data => new ContainerAppResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppResource(Client, ContainerAppData.DeserializeContainerAppData(e)), _containerAppClientDiagnostics, Pipeline, "ContainerAppCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerApps_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string containerAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
 
-            using DiagnosticScope scope = _containerAppsClientDiagnostics.CreateScope("ContainerAppCollection.Exists");
+            using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerAppName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ContainerAppData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerAppData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerAppData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _containerAppRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, containerAppName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.AppContainers
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerApps_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
         public virtual Response<bool> Exists(string containerAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
 
-            using DiagnosticScope scope = _containerAppsClientDiagnostics.CreateScope("ContainerAppCollection.Exists");
+            using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerAppName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ContainerAppData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerAppData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerAppData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _containerAppRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, containerAppName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.AppContainers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerApps_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerAppResource>> GetIfExistsAsync(string containerAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
 
-            using DiagnosticScope scope = _containerAppsClientDiagnostics.CreateScope("ContainerAppCollection.GetIfExists");
+            using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerAppName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ContainerAppData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerAppData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerAppData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _containerAppRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, containerAppName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ContainerAppResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.AppContainers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerApps_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerApps_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerAppName"> Name of the Container App. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerAppName"/> is null. </exception>
         public virtual NullableResponse<ContainerAppResource> GetIfExists(string containerAppName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerAppName, nameof(containerAppName));
 
-            using DiagnosticScope scope = _containerAppsClientDiagnostics.CreateScope("ContainerAppCollection.GetIfExists");
+            using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, containerAppName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ContainerAppData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerAppData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerAppData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _containerAppRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, containerAppName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ContainerAppResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerAppResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.AppContainers
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ContainerAppResource> IAsyncEnumerable<ContainerAppResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

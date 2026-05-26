@@ -145,24 +145,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Shared
             {
                 var serviceUriConfig = string.Format(CultureInfo.InvariantCulture, "{0}ServiceUri", ServiceUriSubDomain);
 
-                // Prefer an explicit {subdomain}ServiceUri when present. This allows callers in
-                // sovereign clouds (e.g. Azure US Government, Azure China) to provide the correct
-                // endpoint even when `accountName` is also configured (which the Azure Functions
-                // host injects automatically when managed-identity storage is used).
-                string uriStr;
-                if ((uriStr = configuration.GetValue<string>(serviceUriConfig)) is { Length: > 0 })
-                {
-                    serviceUri = new Uri(uriStr);
-                    return true;
-                }
-
                 string accountName;
+                string uriStr;
                 if ((accountName = configuration.GetValue<string>("accountName")) != null)
                 {
-                    var endpointSuffix = configuration.GetValue<string>("endpointSuffix");
-                    serviceUri = string.IsNullOrEmpty(endpointSuffix)
-                        ? FormatServiceUri(accountName)
-                        : FormatServiceUri(accountName, endpointSuffix: endpointSuffix);
+                    serviceUri = FormatServiceUri(accountName);
+                    return true;
+                }
+                else if ((uriStr = configuration.GetValue<string>(serviceUriConfig)) != null)
+                {
+                    serviceUri = new Uri(uriStr);
                     return true;
                 }
             }
