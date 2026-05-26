@@ -7,10 +7,6 @@
 - Added memory store item CRUD operations for management of memories inside the `MemoryStore`.
 
 ### Breaking Changes
-- Removed `DataGenerationJobs`, `DataGenerationJob`, `DataGenerationJobInputs`, `DataGenerationJobResult`, `DataGenerationModelOptions`, `DataGenerationTokenUsage`.
-- Removed `SimpleQnADataGenerationJobOptions`, `TaskDataGenerationJobOptions`, `ToolUseFineTuningDataGenerationJobOptions`, `TracesDataGenerationJobOptions`.
-- Removed `AgentDataGenerationJobSource`, `DatasetDataGenerationJobSource`, `FileDataGenerationJobSource`, `PromptDataGenerationJobSource`, `TracesDataGenerationJobSource`.
-- Removed `DatasetDataGenerationJobOutput`, `FileDataGenerationJobOutput`.
 
 ### Bugs Fixed
 

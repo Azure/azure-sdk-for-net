@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="corsRules"> The List of CORS rules. You can include up to five CorsRule elements in the request. </param>
         /// <param name="sku"> Sku name and tier. </param>
         /// <returns> A new <see cref="Storage.BlobServiceData"/> instance for mocking. </returns>
-        public static BlobServiceData BlobServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string defaultServiceVersion = default, DeleteRetentionPolicy deleteRetentionPolicy = default, StaticWebsite staticWebsite = default, bool? isVersioningEnabled = default, bool? isAutomaticSnapshotPolicyEnabled = default, BlobServiceChangeFeed changeFeed = default, RestorePolicy restorePolicy = default, DeleteRetentionPolicy containerDeleteRetentionPolicy = default, LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy = default, IEnumerable<StorageCorsRule> corsRules = default, StorageSku sku = default)
+        public static BlobServiceData BlobServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string defaultServiceVersion = default, DeleteRetentionPolicy deleteRetentionPolicy = default, BlobServiceStaticWebsite staticWebsite = default, bool? isVersioningEnabled = default, bool? isAutomaticSnapshotPolicyEnabled = default, BlobServiceChangeFeed changeFeed = default, RestorePolicy restorePolicy = default, DeleteRetentionPolicy containerDeleteRetentionPolicy = default, LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy = default, IEnumerable<StorageCorsRule> corsRules = default, StorageSku sku = default)
         {
             return new BlobServiceData(
                 id,
@@ -996,10 +996,10 @@ namespace Azure.ResourceManager.Storage.Models
                 metadata is null && approximateMessageCount is null ? default : new QueueProperties(metadata, approximateMessageCount, null));
         }
 
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="storageAccountResourceId"> Full resource id of the original storage account. </param>
         /// <param name="location"> Location of the deleted account. </param>
         /// <param name="restoreReference"> Can be used to attempt recovering this deleted account via PutStorageAccount API. </param>
@@ -1014,7 +1014,13 @@ namespace Azure.ResourceManager.Storage.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                default);
+                storageAccountResourceId is null && location is null && restoreReference is null && createdOn is null && deletedOn is null ? default : new DeletedAccountProperties(
+                    storageAccountResourceId,
+                    location,
+                    restoreReference,
+                    createdOn,
+                    deletedOn,
+                    null));
         }
 
         /// <summary> Filters limit rule actions to a subset of blobs within the storage account. If multiple filters are defined, a logical AND is performed on all filters. </summary>

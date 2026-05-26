@@ -342,7 +342,7 @@ public class FoundryEnrichmentProcessorTests
         using var activity = _activitySource.StartActivity("test")!;
         activity.Stop();
 
-        Assert.That(activity.GetTagItem("gen_ai.agent.blueprint.id"), Is.EqualTo("blueprint-xyz"));
+        Assert.That(activity.GetTagItem("microsoft.a365.agent.blueprint.id"), Is.EqualTo("blueprint-xyz"));
     }
 
     [Test]
@@ -354,7 +354,7 @@ public class FoundryEnrichmentProcessorTests
         using var activity = _activitySource.StartActivity("test")!;
         activity.Stop();
 
-        Assert.That(activity.GetTagItem("gen_ai.agent.blueprint.id"), Is.Null);
+        Assert.That(activity.GetTagItem("microsoft.a365.agent.blueprint.id"), Is.Null);
     }
 
     [Test]
@@ -393,7 +393,7 @@ public class FoundryEnrichmentProcessorTests
         Assert.That(activity.GetTagItem("gen_ai.agent.id"), Is.EqualTo("instance-id"));
         Assert.That(activity.GetTagItem("gen_ai.agent.name"), Is.EqualTo("my-agent"));
         Assert.That(activity.GetTagItem("gen_ai.agent.version"), Is.EqualTo("1.0"));
-        Assert.That(activity.GetTagItem("gen_ai.agent.blueprint.id"), Is.EqualTo("blueprint-id"));
+        Assert.That(activity.GetTagItem("microsoft.a365.agent.blueprint.id"), Is.EqualTo("blueprint-id"));
         Assert.That(activity.GetTagItem("microsoft.tenant.id"), Is.EqualTo("tenant-id"));
         Assert.That(activity.GetTagItem("microsoft.foundry.project.id"), Is.EqualTo("/sub/rg/proj"));
     }
