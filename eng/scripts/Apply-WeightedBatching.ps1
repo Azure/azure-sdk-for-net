@@ -18,10 +18,12 @@ Path to the folder containing PackageInfo JSON files.
 Path to the JSON weights file (package name → weight, e.g. LOC count).
 
 .PARAMETER Target
-Target maximum weight per bucket for direct packages. Default is 1800.
+Target average weight per bucket for direct packages. Default is 1800. Used to derive
+the bucket count via ceil(totalWeight / Target); individual buckets may exceed this
+after greedy LPT packing — it's a goal, not a hard cap.
 
 .PARAMETER IndirectTarget
-Target maximum weight per bucket for indirect packages. Defaults to Target if not specified.
+Target average weight per bucket for indirect packages. Defaults to Target if not specified.
 Indirect packages only run on Linux, so they can use a higher target than direct packages which run across all platforms.
 
 .PARAMETER DefaultWeight
