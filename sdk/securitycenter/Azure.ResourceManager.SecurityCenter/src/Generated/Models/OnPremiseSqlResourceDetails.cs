@@ -22,11 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="machineName"> The name of the machine. </param>
         /// <param name="serverName"> The Sql server name installed on the machine. </param>
         /// <param name="databaseName"> The Sql database name installed on the machine. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/>, <paramref name="vmuuid"/>, <paramref name="sourceComputerId"/>, <paramref name="machineName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
-        public OnPremiseSqlResourceDetails(ResourceIdentifier workspaceId, string vmuuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base("OnPremiseSql", workspaceId, vmuuid, sourceComputerId, machineName)
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/>, <paramref name="sourceComputerId"/>, <paramref name="machineName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
+        public OnPremiseSqlResourceDetails(ResourceIdentifier workspaceId, Guid vmuuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base("OnPremiseSql", workspaceId, vmuuid, sourceComputerId, machineName)
         {
             Argument.AssertNotNull(workspaceId, nameof(workspaceId));
-            Argument.AssertNotNull(vmuuid, nameof(vmuuid));
             Argument.AssertNotNull(sourceComputerId, nameof(sourceComputerId));
             Argument.AssertNotNull(machineName, nameof(machineName));
             Argument.AssertNotNull(serverName, nameof(serverName));
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="machineName"> The name of the machine. </param>
         /// <param name="serverName"> The Sql server name installed on the machine. </param>
         /// <param name="databaseName"> The Sql database name installed on the machine. </param>
-        internal OnPremiseSqlResourceDetails(Source source, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier workspaceId, string vmuuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base(source, additionalBinaryDataProperties, workspaceId, vmuuid, sourceComputerId, machineName)
+        internal OnPremiseSqlResourceDetails(Source source, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier workspaceId, Guid vmuuid, string sourceComputerId, string machineName, string serverName, string databaseName) : base(source, additionalBinaryDataProperties, workspaceId, vmuuid, sourceComputerId, machineName)
         {
             ServerName = serverName;
             DatabaseName = databaseName;

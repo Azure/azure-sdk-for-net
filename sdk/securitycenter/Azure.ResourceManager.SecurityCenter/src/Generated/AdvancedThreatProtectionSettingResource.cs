@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing a AdvancedThreatProtectionSetting along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AdvancedThreatProtectionSettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetAdvancedThreatProtectionSettings method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetAdvancedThreatProtectionSetting method.
     /// </summary>
     public partial class AdvancedThreatProtectionSettingResource : ArmResource
     {
@@ -72,10 +72,9 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="resourceId"> The resourceId. </param>
-        /// <param name="settingName"> The settingName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceId, string settingName)
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceId)
         {
-            string resourceId0 = $"{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName}";
+            string resourceId0 = $"{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/current";
             return new ResourceIdentifier(resourceId0);
         }
 
@@ -86,6 +85,118 @@ namespace Azure.ResourceManager.SecurityCenter
             if (id.ResourceType != ResourceType)
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates the Advanced Threat Protection settings on a specified resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AdvancedThreatProtectionSettings_Create. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AdvancedThreatProtectionSettingResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Advanced Threat Protection Settings. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<AdvancedThreatProtectionSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AdvancedThreatProtectionSettingData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _advancedThreatProtectionClientDiagnostics.CreateScope("AdvancedThreatProtectionSettingResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _advancedThreatProtectionRestClient.CreateCreateRequest(Id.Parent.ToString(), "current", AdvancedThreatProtectionSettingData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AdvancedThreatProtectionSettingData> response = Response.FromValue(AdvancedThreatProtectionSettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<AdvancedThreatProtectionSettingResource> operation = new SecurityCenterArmOperation<AdvancedThreatProtectionSettingResource>(Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates the Advanced Threat Protection settings on a specified resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AdvancedThreatProtectionSettings_Create. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AdvancedThreatProtectionSettingResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Advanced Threat Protection Settings. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<AdvancedThreatProtectionSettingResource> CreateOrUpdate(WaitUntil waitUntil, AdvancedThreatProtectionSettingData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _advancedThreatProtectionClientDiagnostics.CreateScope("AdvancedThreatProtectionSettingResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _advancedThreatProtectionRestClient.CreateCreateRequest(Id.Parent.ToString(), "current", AdvancedThreatProtectionSettingData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AdvancedThreatProtectionSettingData> response = Response.FromValue(AdvancedThreatProtectionSettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<AdvancedThreatProtectionSettingResource> operation = new SecurityCenterArmOperation<AdvancedThreatProtectionSettingResource>(Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -121,7 +232,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedThreatProtectionRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                HttpMessage message = _advancedThreatProtectionRestClient.CreateGetRequest(Id.Parent.ToString(), "current", context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvancedThreatProtectionSettingData> response = Response.FromValue(AdvancedThreatProtectionSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +280,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedThreatProtectionRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                HttpMessage message = _advancedThreatProtectionRestClient.CreateGetRequest(Id.Parent.ToString(), "current", context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvancedThreatProtectionSettingData> response = Response.FromValue(AdvancedThreatProtectionSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -177,118 +288,6 @@ namespace Azure.ResourceManager.SecurityCenter
                     throw new RequestFailedException(response.GetRawResponse());
                 }
                 return Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a AdvancedThreatProtectionSetting.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AdvancedThreatProtectionSettings_Create. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2019-01-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AdvancedThreatProtectionSettingResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Advanced Threat Protection Settings. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AdvancedThreatProtectionSettingResource>> UpdateAsync(WaitUntil waitUntil, AdvancedThreatProtectionSettingData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _advancedThreatProtectionClientDiagnostics.CreateScope("AdvancedThreatProtectionSettingResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _advancedThreatProtectionRestClient.CreateCreateRequest(Id.Parent.ToString(), AdvancedThreatProtectionSettingData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AdvancedThreatProtectionSettingData> response = Response.FromValue(AdvancedThreatProtectionSettingData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                SecurityCenterArmOperation<AdvancedThreatProtectionSettingResource> operation = new SecurityCenterArmOperation<AdvancedThreatProtectionSettingResource>(Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a AdvancedThreatProtectionSetting.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.Security/advancedThreatProtectionSettings/{settingName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AdvancedThreatProtectionSettings_Create. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2019-01-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AdvancedThreatProtectionSettingResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Advanced Threat Protection Settings. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AdvancedThreatProtectionSettingResource> Update(WaitUntil waitUntil, AdvancedThreatProtectionSettingData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _advancedThreatProtectionClientDiagnostics.CreateScope("AdvancedThreatProtectionSettingResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _advancedThreatProtectionRestClient.CreateCreateRequest(Id.Parent.ToString(), AdvancedThreatProtectionSettingData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AdvancedThreatProtectionSettingData> response = Response.FromValue(AdvancedThreatProtectionSettingData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                SecurityCenterArmOperation<AdvancedThreatProtectionSettingResource> operation = new SecurityCenterArmOperation<AdvancedThreatProtectionSettingResource>(Response.FromValue(new AdvancedThreatProtectionSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
             }
             catch (Exception e)
             {

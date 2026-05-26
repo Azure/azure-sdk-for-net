@@ -1069,30 +1069,12 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return new AdvancedThreatProtectionSettingResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="AdvancedThreatProtectionSettingCollection"/> objects within the specified scope. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="AdvancedThreatProtectionSettingResource"/> objects. </returns>
-        public virtual AdvancedThreatProtectionSettingCollection GetAdvancedThreatProtectionSettings(ResourceIdentifier scope)
+        /// <summary> Gets an object representing a <see cref="AdvancedThreatProtectionSettingResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource"/> object. </returns>
+        public virtual AdvancedThreatProtectionSettingResource GetAdvancedThreatProtectionSetting(ResourceIdentifier scope)
         {
-            return new AdvancedThreatProtectionSettingCollection(Client, scope);
-        }
-
-        /// <summary> Gets the Advanced Threat Protection settings for the specified resource. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<AdvancedThreatProtectionSettingResource> GetAdvancedThreatProtectionSetting(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            return GetAdvancedThreatProtectionSettings(scope).Get(cancellationToken);
-        }
-
-        /// <summary> Gets the Advanced Threat Protection settings for the specified resource. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AdvancedThreatProtectionSettingResource>> GetAdvancedThreatProtectionSettingAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            return await GetAdvancedThreatProtectionSettings(scope).GetAsync(cancellationToken).ConfigureAwait(false);
+            return new AdvancedThreatProtectionSettingResource(Client, scope.AppendProviderResource("Microsoft.Security", "advancedThreatProtectionSettings", "current"));
         }
 
         /// <summary> Gets an object representing a <see cref="DefenderForStorageSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>

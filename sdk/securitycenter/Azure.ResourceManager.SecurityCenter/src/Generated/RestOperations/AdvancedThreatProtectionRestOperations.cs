@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string resourceId, RequestContext context)
+        internal HttpMessage CreateGetRequest(string resourceId, string settingName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceId, false);
             uri.AppendPath("/providers/Microsoft.Security/advancedThreatProtectionSettings/", false);
-            uri.AppendPath("current", true);
+            uri.AppendPath(settingName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateRequest(string resourceId, string settingName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceId, false);
             uri.AppendPath("/providers/Microsoft.Security/advancedThreatProtectionSettings/", false);
-            uri.AppendPath("current", true);
+            uri.AppendPath(settingName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

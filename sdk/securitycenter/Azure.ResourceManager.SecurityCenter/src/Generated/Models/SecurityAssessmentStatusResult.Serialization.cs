@@ -13,7 +13,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The result of the assessment. </summary>
+    /// <summary> The SecurityAssessmentStatusResult. </summary>
     public partial class SecurityAssessmentStatusResult : SecurityAssessmentStatus, IJsonModel<SecurityAssessmentStatusResult>
     {
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentStatusResult"/> for deserialization. </summary>
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 throw new FormatException($"The model {nameof(SecurityAssessmentStatusResult)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(FirstEvaluationOn))
+            if (options.Format != "W" && Optional.IsDefined(FirstEvaluatedOn))
             {
                 writer.WritePropertyName("firstEvaluationDate"u8);
-                writer.WriteStringValue(FirstEvaluationOn.Value, "O");
+                writer.WriteStringValue(FirstEvaluatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(StatusChangeOn))
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string cause = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DateTimeOffset? firstEvaluationOn = default;
+            DateTimeOffset? firstEvaluatedOn = default;
             DateTimeOffset? statusChangeOn = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    firstEvaluationOn = prop.Value.GetDateTimeOffset("O");
+                    firstEvaluatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("statusChangeDate"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 cause,
                 description,
                 additionalBinaryDataProperties,
-                firstEvaluationOn,
+                firstEvaluatedOn,
                 statusChangeOn);
         }
     }

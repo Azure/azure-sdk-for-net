@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="vmuuid"> The unique Id of the machine. </param>
         /// <param name="sourceComputerId"> The oms agent Id installed on the machine. </param>
         /// <param name="machineName"> The name of the machine. </param>
-        internal UnknownOnPremiseResourceDetails(Source source, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier workspaceId, string vmuuid, string sourceComputerId, string machineName) : base(source != default ? source : "unknown", additionalBinaryDataProperties, workspaceId, vmuuid, sourceComputerId, machineName)
+        internal UnknownOnPremiseResourceDetails(Source source, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier workspaceId, Guid vmuuid, string sourceComputerId, string machineName) : base(source != default ? source : "unknown", additionalBinaryDataProperties, workspaceId, vmuuid, sourceComputerId, machineName)
         {
         }
     }
