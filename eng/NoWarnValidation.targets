@@ -107,7 +107,9 @@
 
     <!--
       Convert the NoWarn property to items so we can use Remove to subtract known codes.
-      The Trim metadata handles whitespace/newlines from multi-line property definitions.
+      MSBuild's property-to-item split (`Include="$(NoWarn)"`) tokenizes on `;` and trims
+      surrounding whitespace, so multi-line indented entries in eng/Directory.Build.Common.props
+      (e.g. CA1716, CA1308) yield clean item identities ready for comparison.
     -->
     <ItemGroup>
       <_NoWarnCode Include="$(NoWarn)" />
