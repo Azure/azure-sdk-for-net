@@ -58,9 +58,12 @@ import {
 } from "@typespec/compiler";
 import { resolveArmResources } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
-import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
+import {
+  getAllSdkClients,
+  isArmResourceCollectionAction,
+  traverseClient
+} from "./sdk-client-utils.js";
 import { $lib } from "./lib/lib.js";
-import { isArmResourceCollectionAction } from "./decorator-utils.js";
 
 export async function updateClients(
   codeModel: CodeModel,
@@ -524,15 +527,26 @@ function assignRemainingOperations(
       });
     } else if (actionTarget) {
       const scope = buildScopeInfoFromPath(operationPath);
-      actionTarget.metadata.methods.push({
+      const isCollectionAction = isArmResourceCollectionAction(sdkMethod);
+      const target = isCollectionAction
+        ? findCollectionActionTargetResource(
+            resources,
+            operationPath,
+            actionTarget
+          ) ?? actionTarget
+        : actionTarget;
+      target.metadata.methods.push({
         methodId,
-        kind: isArmResourceCollectionAction(sdkMethod)
+        kind: isCollectionAction
           ? ResourceOperationKind.CollectionAction
           : ResourceOperationKind.Action,
         operationPath,
         scope: {
           ...scope,
-          scopeIdPattern: actionTarget.metadata.resourceIdPattern
+          scopeIdPattern:
+            target !== actionTarget
+              ? getCollectionContextPath(target)
+              : actionTarget.metadata.resourceIdPattern
         }
       });
     } else {
@@ -545,11 +559,31 @@ function assignRemainingOperations(
     consumedMethodIds.add(methodId);
   }
 
-  relocateCollectionActions(resources);
-
   for (const resource of resources) {
     sortResourceMethods(resource.metadata.methods);
   }
+}
+
+function findCollectionActionTargetResource(
+  resources: ValidArmResourceSchema[],
+  operationPath: RequestPath,
+  actionTarget: ValidArmResourceSchema
+): ValidArmResourceSchema | undefined {
+  const collectionMatches = resources.filter((resource) => {
+    if (resource === actionTarget) return false;
+
+    const collectionPath = getResourceCollectionPath(
+      resource.metadata.resourceIdPattern
+    );
+    return (
+      (collectionPath?.isPrefixOf(operationPath) ?? false) &&
+      getCollectionContextPath(resource).equals(
+        actionTarget.metadata.resourceIdPattern
+      )
+    );
+  });
+
+  return longestResourcePath(collectionMatches);
 }
 
 function getResourceCollectionPath(
@@ -569,53 +603,6 @@ function getCollectionContextPath(
   return (
     resource.metadata.parentResourceId ?? resource.metadata.scope.scopeIdPattern
   );
-}
-
-function relocateCollectionActions(resources: ValidArmResourceSchema[]): void {
-  const relocations: Array<{
-    source: ValidArmResourceSchema;
-    target: ValidArmResourceSchema;
-    method: ResourceMethod;
-  }> = [];
-
-  for (const source of resources) {
-    for (const method of source.metadata.methods) {
-      if (method.kind !== ResourceOperationKind.CollectionAction) continue;
-
-      const target = longestResourcePath(
-        resources.filter((resource) => {
-          if (resource === source) return false;
-
-          const collectionPath = getResourceCollectionPath(
-            resource.metadata.resourceIdPattern
-          );
-          return (
-            (collectionPath?.isPrefixOf(method.operationPath) ?? false) &&
-            getCollectionContextPath(resource).equals(
-              source.metadata.resourceIdPattern
-            )
-          );
-        })
-      );
-
-      if (target) {
-        relocations.push({ source, target, method });
-      }
-    }
-  }
-
-  for (const { source, target, method } of relocations) {
-    source.metadata.methods = source.metadata.methods.filter(
-      (m) => m !== method
-    );
-    target.metadata.methods.push({
-      ...method,
-      scope: {
-        ...method.scope,
-        scopeIdPattern: getCollectionContextPath(target)
-      }
-    });
-  }
 }
 
 function longestResourcePath(

@@ -65,7 +65,10 @@ import {
   SdkHttpOperation,
   SdkMethod
 } from "@azure-tools/typespec-client-generator-core";
-import { getAllSdkClients } from "./sdk-client-utils.js";
+import {
+  getAllSdkClients,
+  isArmResourceCollectionAction
+} from "./sdk-client-utils.js";
 import {
   extensionResourceOperationName,
   legacyExtensionResourceOperationName,
@@ -76,7 +79,6 @@ import {
   buildScopeInfo,
   buildScopeInfoFromPath
 } from "./resource-detection.js";
-import { isArmResourceCollectionAction } from "./decorator-utils.js";
 
 /**
  * Resolves ARM resources from TypeSpec definitions using the standard resolveArmResources API

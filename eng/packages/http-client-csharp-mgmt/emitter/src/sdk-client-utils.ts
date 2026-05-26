@@ -11,8 +11,10 @@ import {
   SdkClientType,
   SdkContext,
   SdkHttpOperation,
+  SdkMethod,
   SdkServiceOperation
 } from "@azure-tools/typespec-client-generator-core";
+import { armResourceCollectionActionName } from "./sdk-context-options.js";
 
 /**
  * Recursively traverse a client and its children, adding all to the provided array.
@@ -41,4 +43,15 @@ export function getAllSdkClients(
   }
 
   return clients;
+}
+
+export function isArmResourceCollectionAction(
+  method: SdkMethod<SdkHttpOperation> | undefined
+): boolean {
+  return (
+    method?.__raw?.decorators?.some(
+      (decorator) =>
+        decorator.definition?.name === armResourceCollectionActionName
+    ) ?? false
+  );
 }
