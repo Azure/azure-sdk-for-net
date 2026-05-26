@@ -109,8 +109,6 @@ namespace Azure.Communication.CallAutomation
                     return ConnectFailed.Deserialize(eventData);
                 case nameof(ParticipantsUpdated):
                     return ParticipantsUpdated.Deserialize(eventData);
-                case nameof(RecordingStateChanged):
-                    return RecordingStateChanged.Deserialize(eventData);
                 case nameof(StartRecordingFailed):
                     return StartRecordingFailed.Deserialize(eventData);
                 case nameof(PlayCompleted):
@@ -177,6 +175,8 @@ namespace Azure.Communication.CallAutomation
                     return MediaStreamingStopped.Deserialize(eventData);
                 case nameof(MediaStreamingFailed):
                     return MediaStreamingFailed.Deserialize(eventData);
+                case nameof(MediaStreamingUpdate):
+                    return MediaStreamingUpdate.Deserialize(eventData);
                 case nameof(MoveParticipantFailed):
                     return MoveParticipantFailed.Deserialize(eventData);
                 case nameof(MoveParticipantSucceeded):

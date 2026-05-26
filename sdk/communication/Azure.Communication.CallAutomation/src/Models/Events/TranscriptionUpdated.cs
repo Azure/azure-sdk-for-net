@@ -6,10 +6,6 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary>
-    /// The TranscriptionUpdated event.
-    /// </summary>
-
     [CodeGenModel("TranscriptionUpdated", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class TranscriptionUpdated : CallAutomationEventBase
     {

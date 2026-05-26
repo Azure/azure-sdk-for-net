@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Determines the type of the dialog. </summary>
+    /// <summary> Defines the type of the dialog input. </summary>
     public readonly partial struct DialogInputType : IEquatable<DialogInputType>
     {
         private readonly string _value;

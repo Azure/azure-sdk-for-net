@@ -15,15 +15,15 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="MediaStreamingSubscriptionInternal"/>. </summary>
         internal MediaStreamingSubscriptionInternal()
         {
-            SubscribedContentTypes = new ChangeTrackingList<MediaStreamingContent>();
+            SubscribedContentTypes = new ChangeTrackingList<MediaStreamingContentTypeDto>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MediaStreamingSubscriptionInternal"/>. </summary>
         /// <param name="id"> Subscription Id. </param>
-        /// <param name="state"> Media streaming subscription state. </param>
+        /// <param name="state"> Current state of media streaming session. </param>
         /// <param name="subscribedContentTypes"> Subscribed media streaming content types. </param>
         /// <param name="streamUrl"> Media streaming subscription stream URL. </param>
-        internal MediaStreamingSubscriptionInternal(string id, MediaStreamingSubscriptionState? state, IReadOnlyList<MediaStreamingContent> subscribedContentTypes, string streamUrl)
+        internal MediaStreamingSubscriptionInternal(string id, MediaStreamingSubscriptionStateDto? state, IReadOnlyList<MediaStreamingContentTypeDto> subscribedContentTypes, string streamUrl)
         {
             Id = id;
             State = state;
@@ -33,10 +33,10 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Subscription Id. </summary>
         public string Id { get; }
-        /// <summary> Media streaming subscription state. </summary>
-        public MediaStreamingSubscriptionState? State { get; }
+        /// <summary> Current state of media streaming session. </summary>
+        public MediaStreamingSubscriptionStateDto? State { get; }
         /// <summary> Subscribed media streaming content types. </summary>
-        public IReadOnlyList<MediaStreamingContent> SubscribedContentTypes { get; }
+        public IReadOnlyList<MediaStreamingContentTypeDto> SubscribedContentTypes { get; }
         /// <summary> Media streaming subscription stream URL. </summary>
         public string StreamUrl { get; }
     }

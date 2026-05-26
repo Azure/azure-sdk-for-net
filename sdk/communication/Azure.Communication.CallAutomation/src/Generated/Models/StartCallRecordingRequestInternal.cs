@@ -20,12 +20,12 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="StartCallRecordingRequestInternal"/>. </summary>
-        /// <param name="callLocator"> The call locator. (Only one of callLocator or callConnectionId to be used). </param>
+        /// <param name="callLocator"> The locator used for joining or taking action on a call. </param>
         /// <param name="callConnectionId"> The call connection Id. (Only one of callLocator or callConnectionId to be used). </param>
         /// <param name="recordingStateCallbackUri"> The uri to send notifications to. </param>
-        /// <param name="recordingContentType"> The content type of call recording. </param>
-        /// <param name="recordingChannelType"> The channel type of call recording. </param>
-        /// <param name="recordingFormatType"> The format type of call recording. </param>
+        /// <param name="recordingContentType"></param>
+        /// <param name="recordingChannelType"> Defines the channel type of call recording. </param>
+        /// <param name="recordingFormatType"> Defines the format type of call recording. </param>
         /// <param name="audioChannelParticipantOrdering">
         /// The sequential order in which audio channels are assigned to participants in the unmixed recording.
         /// When 'recordingChannelType' is set to 'unmixed' and `audioChannelParticipantOrdering is not specified,
@@ -52,17 +52,17 @@ namespace Azure.Communication.CallAutomation
             PauseOnStart = pauseOnStart;
         }
 
-        /// <summary> The call locator. (Only one of callLocator or callConnectionId to be used). </summary>
+        /// <summary> The locator used for joining or taking action on a call. </summary>
         public CallLocatorInternal CallLocator { get; set; }
         /// <summary> The call connection Id. (Only one of callLocator or callConnectionId to be used). </summary>
         public string CallConnectionId { get; set; }
         /// <summary> The uri to send notifications to. </summary>
         public string RecordingStateCallbackUri { get; set; }
-        /// <summary> The content type of call recording. </summary>
+        /// <summary> Gets or sets the recording content type. </summary>
         public RecordingContent? RecordingContentType { get; set; }
-        /// <summary> The channel type of call recording. </summary>
+        /// <summary> Defines the channel type of call recording. </summary>
         public RecordingChannel? RecordingChannelType { get; set; }
-        /// <summary> The format type of call recording. </summary>
+        /// <summary> Defines the format type of call recording. </summary>
         public RecordingFormat? RecordingFormatType { get; set; }
         /// <summary>
         /// The sequential order in which audio channels are assigned to participants in the unmixed recording.

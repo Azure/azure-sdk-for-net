@@ -19,8 +19,8 @@ namespace Azure.Communication.CallAutomation
                 return null;
             }
             string id = default;
-            MediaStreamingSubscriptionState? state = default;
-            IReadOnlyList<MediaStreamingContent> subscribedContentTypes = default;
+            MediaStreamingSubscriptionStateDto? state = default;
+            IReadOnlyList<MediaStreamingContentTypeDto> subscribedContentTypes = default;
             string streamUrl = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    state = new MediaStreamingSubscriptionState(property.Value.GetString());
+                    state = new MediaStreamingSubscriptionStateDto(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subscribedContentTypes"u8))
@@ -44,10 +44,10 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    List<MediaStreamingContent> array = new List<MediaStreamingContent>();
+                    List<MediaStreamingContentTypeDto> array = new List<MediaStreamingContentTypeDto>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new MediaStreamingContent(item.GetString()));
+                        array.Add(new MediaStreamingContentTypeDto(item.GetString()));
                     }
                     subscribedContentTypes = array;
                     continue;
@@ -58,7 +58,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new MediaStreamingSubscriptionInternal(id, state, subscribedContentTypes ?? new ChangeTrackingList<MediaStreamingContent>(), streamUrl);
+            return new MediaStreamingSubscriptionInternal(id, state, subscribedContentTypes ?? new ChangeTrackingList<MediaStreamingContentTypeDto>(), streamUrl);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

@@ -19,7 +19,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="locale"> Defines the locale for the data e.g en-CA, en-AU. </param>
         /// <param name="startTranscription"> Determines if the transcription should be started immediately after call is answered or not. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transportUri"/> or <paramref name="locale"/> is null. </exception>
-        public TranscriptionOptions(Uri transportUri, TranscriptionTransport transportType, string locale, bool startTranscription)
+        public TranscriptionOptions(Uri transportUri, TranscriptionTransportTypeDto transportType, string locale, bool startTranscription)
         {
             Argument.AssertNotNull(transportUri, nameof(transportUri));
             Argument.AssertNotNull(locale, nameof(locale));
@@ -33,7 +33,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Transport URL for live transcription. </summary>
         public Uri TransportUrl { get; }
         /// <summary> The type of transport to be used for live transcription, eg. Websocket. </summary>
-        public TranscriptionTransport TranscriptionTransport { get; }
+        public TranscriptionTransportTypeDto TranscriptionTransport { get; }
         /// <summary> Defines the locale for the data e.g en-CA, en-AU. </summary>
         public string Locale { get; }
         /// <summary> Determines if the transcription should be started immediately after call is answered or not. </summary>
