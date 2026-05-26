@@ -1,21 +1,27 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!--
-    Pre-import PackageReference for Azure.Core. This must appear BEFORE the parent
-    Directory.Build.targets chain (which transitively imports eng/Directory.Build.Common.targets)
-    so it's visible to the UseProjectReferenceToAzureClients=true auto-conversion block in
-    eng/Directory.Build.Common.targets (~line 261). On CI (ProjectRef mode), that auto-conv
-    rewrites this PackageReference to a ProjectReference against the in-repo Azure.Core
-    (currently 1.58.0-beta.1 locally, 1.58.0-alpha.<date> on CI). Without this, the transitive
-    Azure.Core ProjectReference brought in by Azure.Core.Expressions.DataFactory below would
-    surface a higher Azure.Core version than the 1.57.0 PackageReference injected by the mgmt
-    template at the bottom of eng/Directory.Build.Common.targets, producing NU1605. In
-    non-ProjectRef builds, auto-conv doesn't run and this resolves to the published 1.57.0
-    (same as before), so the local dev path is unchanged.
+    Pre-import PackageReference for Azure.Core, scoped to the CI auto-conversion path.
+
+    This entry must appear BEFORE the parent Directory.Build.targets chain (which
+    transitively imports eng/Directory.Build.Common.targets) so it is visible to the
+    `UseProjectReferenceToAzureClients=true` auto-conversion block at the top of
+    eng/Directory.Build.Common.targets (~line 261). In that block, the item is removed
+    and replaced by a ProjectReference against the in-repo Azure.Core (1.58.0-beta.1
+    locally, 1.58.0-alpha.<date> on CI). The replacement matches the Azure.Core version
+    transitively surfaced by Azure.Core.Expressions.DataFactory's ProjectReference and
+    eliminates NU1605 (package downgrade) on the ProjectRef CI legs.
+
+    The `UseProjectReferenceToAzureClients` condition is essential: the mgmt template
+    block further down in eng/Directory.Build.Common.targets (~line 344) unconditionally
+    adds its own `<PackageReference Include="Azure.Core" />`. Adding ours unconditionally
+    here would produce two PackageReference items in non-auto-conv builds, tripping
+    NU1504 (duplicate PackageReference). Gating on `UseProjectReferenceToAzureClients=true`
+    ensures our entry only exists when the auto-conv block also runs to consume it.
 
     Remove once the central Azure.Core pin in eng/centralpackagemanagement/Directory.Packages.props
     advances to 1.58.0+.
   -->
-  <ItemGroup Condition="'$(MSBuildProjectName)' == 'Azure.ResourceManager.DataFactory'">
+  <ItemGroup Condition="'$(MSBuildProjectName)' == 'Azure.ResourceManager.DataFactory' and '$(UseProjectReferenceToAzureClients)' == 'true'">
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
