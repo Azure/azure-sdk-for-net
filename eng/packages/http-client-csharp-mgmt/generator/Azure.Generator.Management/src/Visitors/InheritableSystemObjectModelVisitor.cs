@@ -16,6 +16,8 @@ namespace Azure.Generator.Management.Visitors;
 
 internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 {
+    // TODO: Remove this visitor once MTG fully supports inheritable system model replacements.
+    // See https://github.com/microsoft/typespec/issues/10787.
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
         if (type is SystemObjectModelProvider systemType)
