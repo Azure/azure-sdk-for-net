@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Kubernetes.Models
     {
         private readonly string _value;
         private const string ProvisionedClusterValue = "ProvisionedCluster";
-        private const string AwsValue = "AWS";
+        private const string AWSValue = "AWS";
         /// <summary> Represents a connected cluster hosted on Google Cloud Platform (GCP). </summary>
-        private const string GcpValue = "GCP";
+        private const string GCPValue = "GCP";
 
         /// <summary> Initializes a new instance of <see cref="ConnectedClusterKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <summary> Gets the ProvisionedCluster. </summary>
         public static ConnectedClusterKind ProvisionedCluster { get; } = new ConnectedClusterKind(ProvisionedClusterValue);
 
-        /// <summary> Gets the Aws. </summary>
-        public static ConnectedClusterKind Aws { get; } = new ConnectedClusterKind(AwsValue);
+        /// <summary> Gets the AWS. </summary>
+        public static ConnectedClusterKind AWS { get; } = new ConnectedClusterKind(AWSValue);
 
         /// <summary> Represents a connected cluster hosted on Google Cloud Platform (GCP). </summary>
-        public static ConnectedClusterKind Gcp { get; } = new ConnectedClusterKind(GcpValue);
+        public static ConnectedClusterKind GCP { get; } = new ConnectedClusterKind(GCPValue);
 
         /// <summary> Determines if two <see cref="ConnectedClusterKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

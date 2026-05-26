@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
     {
         private readonly string _value;
         private const string TokenValue = "Token";
-        private const string AadValue = "AAD";
+        private const string AADValue = "AAD";
 
         /// <summary> Initializes a new instance of <see cref="AuthenticationMethod"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <summary> Gets the Token. </summary>
         public static AuthenticationMethod Token { get; } = new AuthenticationMethod(TokenValue);
 
-        /// <summary> Gets the Aad. </summary>
-        public static AuthenticationMethod Aad { get; } = new AuthenticationMethod(AadValue);
+        /// <summary> Gets the AAD. </summary>
+        public static AuthenticationMethod AAD { get; } = new AuthenticationMethod(AADValue);
 
         /// <summary> Determines if two <see cref="AuthenticationMethod"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

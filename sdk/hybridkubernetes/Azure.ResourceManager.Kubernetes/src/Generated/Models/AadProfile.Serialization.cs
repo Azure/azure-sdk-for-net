@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 throw new FormatException($"The model {nameof(AadProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EnableAzureRbac))
+            if (Optional.IsDefined(EnableAzureRBAC))
             {
                 writer.WritePropertyName("enableAzureRBAC"u8);
-                writer.WriteBooleanValue(EnableAzureRbac.Value);
+                writer.WriteBooleanValue(EnableAzureRBAC.Value);
             }
-            if (Optional.IsCollectionDefined(AdminGroupObjectIds))
+            if (Optional.IsCollectionDefined(AdminGroupObjectIDs))
             {
                 writer.WritePropertyName("adminGroupObjectIDs"u8);
                 writer.WriteStartArray();
-                foreach (string item in AdminGroupObjectIds)
+                foreach (string item in AdminGroupObjectIDs)
                 {
                     if (item == null)
                     {
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(TenantID))
             {
                 writer.WritePropertyName("tenantID"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantID);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 return null;
             }
-            bool? enableAzureRbac = default;
-            IList<string> adminGroupObjectIds = default;
-            string tenantId = default;
+            bool? enableAzureRBAC = default;
+            IList<string> adminGroupObjectIDs = default;
+            string tenantID = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    enableAzureRbac = prop.Value.GetBoolean();
+                    enableAzureRBAC = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("adminGroupObjectIDs"u8))
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.Kubernetes.Models
                             array.Add(item.GetString());
                         }
                     }
-                    adminGroupObjectIds = array;
+                    adminGroupObjectIDs = array;
                     continue;
                 }
                 if (prop.NameEquals("tenantID"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    tenantID = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AadProfile(enableAzureRbac, adminGroupObjectIds ?? new ChangeTrackingList<string>(), tenantId, additionalBinaryDataProperties);
+            return new AadProfile(enableAzureRBAC, adminGroupObjectIDs ?? new ChangeTrackingList<string>(), tenantID, additionalBinaryDataProperties);
         }
     }
 }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             writer.WritePropertyName("authenticationMethod"u8);
             writer.WriteStringValue(AuthenticationMethod.ToString());
             writer.WritePropertyName("clientProxy"u8);
-            writer.WriteBooleanValue(UseClientProxy);
+            writer.WriteBooleanValue(ClientProxy);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 return null;
             }
             AuthenticationMethod authenticationMethod = default;
-            bool useClientProxy = default;
+            bool clientProxy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 }
                 if (prop.NameEquals("clientProxy"u8))
                 {
-                    useClientProxy = prop.Value.GetBoolean();
+                    clientProxy = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ListClusterUserCredentialProperties(authenticationMethod, useClientProxy, additionalBinaryDataProperties);
+            return new ListClusterUserCredentialProperties(authenticationMethod, clientProxy, additionalBinaryDataProperties);
         }
     }
 }

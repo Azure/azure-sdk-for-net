@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Kubernetes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridConnectionConfig"/>. </summary>
-        /// <param name="expirationTimeInSeconds"> Timestamp when this token will be expired. </param>
+        /// <param name="expirationTime"> Timestamp when this token will be expired. </param>
         /// <param name="hybridConnectionName"> Name of the connection. </param>
         /// <param name="relay"> Name of the relay. </param>
         /// <param name="token"> Sender access token. </param>
         /// <param name="relayTid"> TenantID of the relay. </param>
         /// <param name="relayType"> Type of relay. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HybridConnectionConfig(long? expirationTimeInSeconds, string hybridConnectionName, string relay, string token, string relayTid, string relayType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HybridConnectionConfig(long? expirationTime, string hybridConnectionName, string relay, string token, string relayTid, string relayType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExpirationTimeInSeconds = expirationTimeInSeconds;
+            ExpirationTime = expirationTime;
             HybridConnectionName = hybridConnectionName;
             Relay = relay;
             Token = token;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         }
 
         /// <summary> Timestamp when this token will be expired. </summary>
-        public long? ExpirationTimeInSeconds { get; }
+        public long? ExpirationTime { get; }
 
         /// <summary> Name of the connection. </summary>
         public string HybridConnectionName { get; }

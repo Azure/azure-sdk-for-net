@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Kubernetes;
 
 namespace Azure.ResourceManager.Kubernetes.Models
@@ -177,10 +176,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 writer.WritePropertyName("oidcIssuerProfile"u8);
                 writer.WriteObjectValue(OidcIssuerProfile, options);
             }
-            if (Optional.IsDefined(IsGateway))
+            if (Optional.IsDefined(Gateway))
             {
                 writer.WritePropertyName("gateway"u8);
-                writer.WriteObjectValue(IsGateway, options);
+                writer.WriteObjectValue(Gateway, options);
             }
             if (Optional.IsCollectionDefined(ArcAgentryConfigurations))
             {
@@ -264,13 +263,13 @@ namespace Azure.ResourceManager.Kubernetes.Models
             DateTimeOffset? lastConnectivityOn = default;
             ConnectivityStatus? connectivityStatus = default;
             PrivateLinkState? privateLinkState = default;
-            ResourceIdentifier privateLinkScopeResourceId = default;
+            string privateLinkScopeResourceId = default;
             AzureHybridBenefit? azureHybridBenefit = default;
             AadProfile aadProfile = default;
             ArcAgentProfile arcAgentProfile = default;
             SecurityProfile securityProfile = default;
             OidcIssuerProfile oidcIssuerProfile = default;
-            Gateway isGateway = default;
+            Gateway gateway = default;
             IList<ArcAgentryConfigurations> arcAgentryConfigurations = default;
             IReadOnlyDictionary<string, string> miscellaneousProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -376,11 +375,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 }
                 if (prop.NameEquals("privateLinkScopeResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    privateLinkScopeResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    privateLinkScopeResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("azureHybridBenefit"u8))
@@ -432,10 +427,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        isGateway = null;
+                        gateway = null;
                         continue;
                     }
-                    isGateway = Gateway.DeserializeGateway(prop.Value, options);
+                    gateway = Gateway.DeserializeGateway(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("arcAgentryConfigurations"u8))
@@ -499,7 +494,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 arcAgentProfile,
                 securityProfile,
                 oidcIssuerProfile,
-                isGateway,
+                gateway,
                 arcAgentryConfigurations ?? new ChangeTrackingList<ArcAgentryConfigurations>(),
                 miscellaneousProperties ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);

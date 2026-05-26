@@ -64,13 +64,13 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="azureHybridBenefit"> Indicates whether Azure Hybrid Benefit is opted in. </param>
         /// <param name="aadProfile"> AAD profile for the connected cluster. </param>
         /// <param name="arcAgentProfile"> Arc agentry configuration for the provisioned cluster. </param>
-        /// <param name="isWorkloadIdentityEnabled"> Whether to enable or disable the workload identity Webhook. </param>
+        /// <param name="workloadIdentityEnabled"> Whether to enable or disable the workload identity Webhook. </param>
         /// <param name="oidcIssuerProfile"> Open ID Connect (OIDC) Issuer Profile for the connected cluster. </param>
-        /// <param name="isGatewayEnabled"> Indicates whether the gateway for arc router connectivity is enabled. </param>
+        /// <param name="gatewayEnabled"> Indicates whether the gateway for arc router connectivity is enabled. </param>
         /// <param name="arcAgentryConfigurations"> Configuration settings for customizing the behavior of the connected cluster. </param>
         /// <param name="miscellaneousProperties"> More properties related to the Connected Cluster. </param>
         /// <returns> A new <see cref="Models.ConnectedClusterProperties"/> instance for mocking. </returns>
-        public static ConnectedClusterProperties ConnectedClusterProperties(string agentPublicKeyCertificate = default, string kubernetesVersion = default, int? totalNodeCount = default, int? totalCoreCount = default, string agentVersion = default, ProvisioningState? provisioningState = default, string distribution = default, string distributionVersion = default, string infrastructure = default, string offering = default, DateTimeOffset? managedIdentityCertificateExpirationOn = default, DateTimeOffset? lastConnectivityOn = default, ConnectivityStatus? connectivityStatus = default, PrivateLinkState? privateLinkState = default, ResourceIdentifier privateLinkScopeResourceId = default, AzureHybridBenefit? azureHybridBenefit = default, AadProfile aadProfile = default, ArcAgentProfile arcAgentProfile = default, bool? isWorkloadIdentityEnabled = default, OidcIssuerProfile oidcIssuerProfile = default, bool? isGatewayEnabled = default, IEnumerable<ArcAgentryConfigurations> arcAgentryConfigurations = default, IReadOnlyDictionary<string, string> miscellaneousProperties = default)
+        public static ConnectedClusterProperties ConnectedClusterProperties(string agentPublicKeyCertificate = default, string kubernetesVersion = default, int? totalNodeCount = default, int? totalCoreCount = default, string agentVersion = default, ProvisioningState? provisioningState = default, string distribution = default, string distributionVersion = default, string infrastructure = default, string offering = default, DateTimeOffset? managedIdentityCertificateExpirationOn = default, DateTimeOffset? lastConnectivityOn = default, ConnectivityStatus? connectivityStatus = default, PrivateLinkState? privateLinkState = default, string privateLinkScopeResourceId = default, AzureHybridBenefit? azureHybridBenefit = default, AadProfile aadProfile = default, ArcAgentProfile arcAgentProfile = default, bool? workloadIdentityEnabled = default, OidcIssuerProfile oidcIssuerProfile = default, bool? gatewayEnabled = default, IEnumerable<ArcAgentryConfigurations> arcAgentryConfigurations = default, IReadOnlyDictionary<string, string> miscellaneousProperties = default)
         {
             arcAgentryConfigurations ??= new ChangeTrackingList<ArcAgentryConfigurations>();
             miscellaneousProperties ??= new ChangeTrackingDictionary<string, string>();
@@ -94,24 +94,24 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 azureHybridBenefit,
                 aadProfile,
                 arcAgentProfile,
-                isWorkloadIdentityEnabled is null ? default : new SecurityProfile(new SecurityProfileWorkloadIdentity(isWorkloadIdentityEnabled, null), null),
+                workloadIdentityEnabled is null ? default : new SecurityProfile(new SecurityProfileWorkloadIdentity(workloadIdentityEnabled, null), null),
                 oidcIssuerProfile,
-                isGatewayEnabled is null ? default : new Gateway(isGatewayEnabled, null),
+                gatewayEnabled is null ? default : new Gateway(gatewayEnabled, null),
                 arcAgentryConfigurations.ToList(),
                 miscellaneousProperties,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> AAD Profile specifies attributes for Azure Active Directory integration. </summary>
-        /// <param name="enableAzureRbac"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
-        /// <param name="adminGroupObjectIds"> The list of AAD group object IDs that will have admin role of the cluster. </param>
-        /// <param name="tenantId"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
+        /// <param name="enableAzureRBAC"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
+        /// <param name="adminGroupObjectIDs"> The list of AAD group object IDs that will have admin role of the cluster. </param>
+        /// <param name="tenantID"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
         /// <returns> A new <see cref="Models.AadProfile"/> instance for mocking. </returns>
-        public static AadProfile AadProfile(bool? enableAzureRbac = default, IEnumerable<string> adminGroupObjectIds = default, string tenantId = default)
+        public static AadProfile AadProfile(bool? enableAzureRBAC = default, IEnumerable<string> adminGroupObjectIDs = default, string tenantID = default)
         {
-            adminGroupObjectIds ??= new ChangeTrackingList<string>();
+            adminGroupObjectIDs ??= new ChangeTrackingList<string>();
 
-            return new AadProfile(enableAzureRbac, adminGroupObjectIds.ToList(), tenantId, additionalBinaryDataProperties: null);
+            return new AadProfile(enableAzureRBAC, adminGroupObjectIDs.ToList(), tenantID, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Defines the Arc Agent properties for the clusters. </summary>
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="message"> Agent error message. </param>
         /// <param name="severity"> Severity of the error message. </param>
         /// <param name="component"> Agent component where error message occured. </param>
-        /// <param name="occurredOn"> The timestamp of error occured (UTC). </param>
+        /// <param name="time"> The timestamp of error occured (UTC). </param>
         /// <returns> A new <see cref="Models.AgentError"/> instance for mocking. </returns>
-        public static AgentError AgentError(string message = default, string severity = default, string component = default, DateTimeOffset? occurredOn = default)
+        public static AgentError AgentError(string message = default, string severity = default, string component = default, DateTimeOffset? time = default)
         {
-            return new AgentError(message, severity, component, occurredOn, additionalBinaryDataProperties: null);
+            return new AgentError(message, severity, component, time, additionalBinaryDataProperties: null);
         }
 
         /// <summary> OIDC Issuer Profile specifies attributes for workload identity integration. </summary>
@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         /// <summary> The ListClusterUserCredentialProperties. </summary>
         /// <param name="authenticationMethod"> The mode of client authentication. </param>
-        /// <param name="useClientProxy"> Boolean value to indicate whether the request is for client side proxy or not. </param>
+        /// <param name="clientProxy"> Boolean value to indicate whether the request is for client side proxy or not. </param>
         /// <returns> A new <see cref="Models.ListClusterUserCredentialProperties"/> instance for mocking. </returns>
-        public static ListClusterUserCredentialProperties ListClusterUserCredentialProperties(AuthenticationMethod authenticationMethod = default, bool useClientProxy = default)
+        public static ListClusterUserCredentialProperties ListClusterUserCredentialProperties(AuthenticationMethod authenticationMethod = default, bool clientProxy = default)
         {
-            return new ListClusterUserCredentialProperties(authenticationMethod, useClientProxy, additionalBinaryDataProperties: null);
+            return new ListClusterUserCredentialProperties(authenticationMethod, clientProxy, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The list of credential result response. </summary>
@@ -199,17 +199,17 @@ namespace Azure.ResourceManager.Kubernetes.Models
         }
 
         /// <summary> Contains the REP (rendezvous endpoint) and “Sender” access token. </summary>
-        /// <param name="expirationTimeInSeconds"> Timestamp when this token will be expired. </param>
+        /// <param name="expirationTime"> Timestamp when this token will be expired. </param>
         /// <param name="hybridConnectionName"> Name of the connection. </param>
         /// <param name="relay"> Name of the relay. </param>
         /// <param name="token"> Sender access token. </param>
         /// <param name="relayTid"> TenantID of the relay. </param>
         /// <param name="relayType"> Type of relay. </param>
         /// <returns> A new <see cref="Models.HybridConnectionConfig"/> instance for mocking. </returns>
-        public static HybridConnectionConfig HybridConnectionConfig(long? expirationTimeInSeconds = default, string hybridConnectionName = default, string relay = default, string token = default, string relayTid = default, string relayType = default)
+        public static HybridConnectionConfig HybridConnectionConfig(long? expirationTime = default, string hybridConnectionName = default, string relay = default, string token = default, string relayTid = default, string relayType = default)
         {
             return new HybridConnectionConfig(
-                expirationTimeInSeconds,
+                expirationTime,
                 hybridConnectionName,
                 relay,
                 token,
