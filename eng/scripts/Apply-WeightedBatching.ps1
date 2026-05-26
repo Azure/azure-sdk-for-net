@@ -18,7 +18,8 @@ After this script runs, set PRJobBatchSize to 1 so each consolidated file become
 Path to the folder containing PackageInfo JSON files.
 
 .PARAMETER WeightsFile
-Path to the JSON weights file (package name → weight, e.g. LOC count).
+Path to the JSON weights file (artifact name -> weight, e.g. LOC count). The key must match
+the `ArtifactName` field of the corresponding PackageInfo JSON.
 
 .PARAMETER Target
 Target average weight per bucket for direct packages. Default is 1800. Used to derive
