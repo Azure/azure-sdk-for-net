@@ -295,7 +295,7 @@
     {
       "$id": "25",
       "kind": "constant",
-      "name": "CheckAvailabilityContentType",
+      "name": "checkAvailabilityContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -311,7 +311,7 @@
     {
       "$id": "27",
       "kind": "constant",
-      "name": "CheckAvailabilityContentType1",
+      "name": "checkAvailabilityContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -327,7 +327,7 @@
     {
       "$id": "29",
       "kind": "constant",
-      "name": "CheckAvailabilityContentType2",
+      "name": "getContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -343,7 +343,7 @@
     {
       "$id": "31",
       "kind": "constant",
-      "name": "CheckAvailabilityContentType3",
+      "name": "createOrUpdateContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -359,7 +359,7 @@
     {
       "$id": "33",
       "kind": "constant",
-      "name": "CheckAvailabilityContentType4",
+      "name": "createOrUpdateContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -375,7 +375,7 @@
     {
       "$id": "35",
       "kind": "constant",
-      "name": "CheckAvailabilityContentType5",
+      "name": "createOrUpdateContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -391,7 +391,7 @@
     {
       "$id": "37",
       "kind": "constant",
-      "name": "CheckAvailabilityContentType6",
+      "name": "createOrUpdateContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -407,7 +407,7 @@
     {
       "$id": "39",
       "kind": "constant",
-      "name": "CheckAvailabilityContentType7",
+      "name": "listContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -423,7 +423,7 @@
     {
       "$id": "41",
       "kind": "constant",
-      "name": "CheckAvailabilityContentType8",
+      "name": "listContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -439,7 +439,7 @@
     {
       "$id": "43",
       "kind": "constant",
-      "name": "CheckAvailabilityContentType9",
+      "name": "getContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -455,7 +455,7 @@
     {
       "$id": "45",
       "kind": "constant",
-      "name": "CheckAvailabilityContentType10",
+      "name": "createOrUpdateContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -471,7 +471,7 @@
     {
       "$id": "47",
       "kind": "constant",
-      "name": "CheckAvailabilityContentType11",
+      "name": "createOrUpdateContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -487,7 +487,7 @@
     {
       "$id": "49",
       "kind": "constant",
-      "name": "CheckAvailabilityContentType12",
+      "name": "createOrUpdateContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -503,7 +503,7 @@
     {
       "$id": "51",
       "kind": "constant",
-      "name": "CheckAvailabilityContentType13",
+      "name": "createOrUpdateContentType7",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -519,7 +519,7 @@
     {
       "$id": "53",
       "kind": "constant",
-      "name": "CheckAvailabilityContentType14",
+      "name": "listContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -2679,7 +2679,12 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "ServiceOne.checkAvailability",
-            "decorators": [],
+            "decorators": [
+              {
+                "name": "Azure.ResourceManager.@armResourceCollectionAction",
+                "arguments": {}
+              }
+            ],
             "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests"
           },
           "parameters": [
@@ -6356,7 +6361,7 @@
       "flows": [
         {
           "scopes": [
-            "https://management.azure.com/.default"
+            "user_impersonation"
           ],
           "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
         }
