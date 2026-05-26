@@ -387,8 +387,8 @@ namespace Azure.Generator.Management.Providers
                 var restClientInfo = _clientInfos[action.InputClient];
                 if (action.InputMethod is InputPagingServiceMethod pagingMethod)
                 {
-                    methods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, true, methodName: null));
-                    methods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, false, methodName: null));
+                    methods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, true, methodName: null, explicitResourceClient: _resource));
+                    methods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, false, methodName: null, explicitResourceClient: _resource));
                     continue;
                 }
 
