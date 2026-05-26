@@ -281,8 +281,23 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
                 Assert.AreEqual(1, jobDefinition.Data.Connections.Count);
 
                 // 10. Start the job and capture the resulting job-run id.
-                JobRunResourceId jobRunResourceId = (await jobDefinition.StartJobAsync()).Value;
-                Assert.IsNotNull(jobRunResourceId);
+                //     Even after Connection.Status flips to Approved, the StorageMover RP
+                //     may take additional time to propagate connection readiness to the
+                //     data plane. StartJob can briefly return NoValidConnectionFound during
+                //     that window. Retry up to ~5 min before giving up.
+                JobRunResourceId jobRunResourceId = null;
+                for (int attempt = 0; attempt < 10 && jobRunResourceId is null; attempt++)
+                {
+                    try
+                    {
+                        jobRunResourceId = (await jobDefinition.StartJobAsync()).Value;
+                    }
+                    catch (RequestFailedException ex) when (ex.Status == 400 && ex.ErrorCode == "NoValidConnectionFound")
+                    {
+                        await Delay(30_000);
+                    }
+                }
+                Assert.IsNotNull(jobRunResourceId, "StartJob did not succeed within ~5 minutes (NoValidConnectionFound).");
                 Assert.IsFalse(string.IsNullOrEmpty(jobRunResourceId.JobRunResourceIdValue));
 
                 // 11. Poll the job-run until it reaches a terminal state (Succeeded / Failed /
@@ -379,9 +394,10 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
                         // Connection.Delete returns when the LRO completes, but the shared PLS
                         // takes additional time to release the slot on its side. Without this
                         // delay the second fixture variant's StartJob fails with
-                        // NoValidConnectionFound. Delay() is recorded into the cassette so it
-                        // collapses to a no-op in Playback.
-                        await Delay(60_000);
+                        // NoValidConnectionFound. 60s was sometimes insufficient (observed
+                        // under Storage RM 1.7.0 timings); 180s is the conservative margin.
+                        // Delay() is recorded into the cassette so it collapses to a no-op in Playback.
+                        await Delay(180_000);
                     }
                     catch (Exception ex)
                     {
