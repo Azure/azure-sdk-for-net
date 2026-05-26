@@ -389,11 +389,12 @@ namespace Azure.Generator.Management.Providers
                 {
                     methods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, true, methodName: null, explicitResourceClient: _resource));
                     methods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, false, methodName: null, explicitResourceClient: _resource));
-                    continue;
                 }
-
-                methods.Add(BuildNonPagingGetAllMethod(action.InputMethod, restClientInfo, true, methodName: null));
-                methods.Add(BuildNonPagingGetAllMethod(action.InputMethod, restClientInfo, false, methodName: null));
+                else
+                {
+                    methods.Add(BuildNonPagingGetAllMethod(action.InputMethod, restClientInfo, true, methodName: null));
+                    methods.Add(BuildNonPagingGetAllMethod(action.InputMethod, restClientInfo, false, methodName: null));
+                }
             }
 
             return [.. methods];
