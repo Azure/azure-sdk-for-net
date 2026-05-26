@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// TODO: Fix the AOT incompatibility build error with custom code now. Tracked issue: https://github.com/Azure/azure-sdk-for-net/issues/59433
         public virtual async Task<Response<IDictionary<string, BinaryData>>> GetResourcesHistoryAsync(ResourcesHistoryRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -86,6 +87,7 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// TODO: Fix the AOT incompatibility build error with custom code now. Tracked issue: https://github.com/Azure/azure-sdk-for-net/issues/59433
         public virtual Response<IDictionary<string, BinaryData>> GetResourcesHistory(ResourcesHistoryRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
