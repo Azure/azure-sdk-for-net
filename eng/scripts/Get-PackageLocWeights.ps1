@@ -38,7 +38,12 @@ foreach ($file in $packageFiles) {
     continue
   }
 
-  $srcPath = Join-Path $dirPath "src"
+  if ([System.IO.Path]::IsPathRooted($dirPath)) {
+    $srcPath = Join-Path $dirPath "src"
+  }
+  else {
+    $srcPath = Join-Path $RepoRoot $dirPath "src"
+  }
   if (-not (Test-Path $srcPath)) {
     $weights[$name] = 1
     continue
