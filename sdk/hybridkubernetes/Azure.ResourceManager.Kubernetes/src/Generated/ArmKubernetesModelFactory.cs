@@ -178,13 +178,13 @@ namespace Azure.ResourceManager.Kubernetes.Models
             return new ConnectedClusterPatch(tags, properties, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The ListClusterUserCredentialProperties. </summary>
+        /// <summary> The GetClusterUserCredentialContent. </summary>
         /// <param name="authenticationMethod"> The mode of client authentication. </param>
         /// <param name="useClientProxy"> Boolean value to indicate whether the request is for client side proxy or not. </param>
-        /// <returns> A new <see cref="Models.ListClusterUserCredentialProperties"/> instance for mocking. </returns>
-        public static ListClusterUserCredentialProperties ListClusterUserCredentialProperties(ClusterUserCredentialAuthenticationMethod authenticationMethod = default, bool useClientProxy = default)
+        /// <returns> A new <see cref="Models.GetClusterUserCredentialContent"/> instance for mocking. </returns>
+        public static GetClusterUserCredentialContent GetClusterUserCredentialContent(ClusterUserCredentialAuthenticationMethod authenticationMethod = default, bool useClientProxy = default)
         {
-            return new ListClusterUserCredentialProperties(authenticationMethod, useClientProxy, additionalBinaryDataProperties: null);
+            return new GetClusterUserCredentialContent(authenticationMethod, useClientProxy, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The list of credential result response. </summary>

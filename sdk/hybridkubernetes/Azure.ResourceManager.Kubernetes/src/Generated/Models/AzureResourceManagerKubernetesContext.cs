@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Kubernetes
     [ModelReaderWriterBuildable(typeof(ConnectedClusterSystemComponent))]
     [ModelReaderWriterBuildable(typeof(ConnectedClusterWorkloadIdentityProfile))]
     [ModelReaderWriterBuildable(typeof(Gateway))]
-    [ModelReaderWriterBuildable(typeof(ListClusterUserCredentialProperties))]
+    [ModelReaderWriterBuildable(typeof(GetClusterUserCredentialContent))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

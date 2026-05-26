@@ -426,12 +426,12 @@ namespace Azure.ResourceManager.Kubernetes
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="properties"> ListClusterUserCredential properties. </param>
+        /// <param name="content"> ListClusterUserCredential properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<Response<ClusterUserCredentialsResult>> GetClusterUserCredentialAsync(ListClusterUserCredentialProperties properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ClusterUserCredentialsResult>> GetClusterUserCredentialAsync(GetClusterUserCredentialContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _connectedClusterClientDiagnostics.CreateScope("ConnectedClusterResource.GetClusterUserCredential");
             scope.Start();
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Kubernetes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedClusterRestClient.CreateGetClusterUserCredentialRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ListClusterUserCredentialProperties.ToRequestContent(properties), context);
+                HttpMessage message = _connectedClusterRestClient.CreateGetClusterUserCredentialRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GetClusterUserCredentialContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ClusterUserCredentialsResult> response = Response.FromValue(ClusterUserCredentialsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -478,12 +478,12 @@ namespace Azure.ResourceManager.Kubernetes
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="properties"> ListClusterUserCredential properties. </param>
+        /// <param name="content"> ListClusterUserCredential properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual Response<ClusterUserCredentialsResult> GetClusterUserCredential(ListClusterUserCredentialProperties properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ClusterUserCredentialsResult> GetClusterUserCredential(GetClusterUserCredentialContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _connectedClusterClientDiagnostics.CreateScope("ConnectedClusterResource.GetClusterUserCredential");
             scope.Start();
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Kubernetes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedClusterRestClient.CreateGetClusterUserCredentialRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ListClusterUserCredentialProperties.ToRequestContent(properties), context);
+                HttpMessage message = _connectedClusterRestClient.CreateGetClusterUserCredentialRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GetClusterUserCredentialContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ClusterUserCredentialsResult> response = Response.FromValue(ClusterUserCredentialsResult.FromResponse(result), result);
                 if (response.Value == null)
