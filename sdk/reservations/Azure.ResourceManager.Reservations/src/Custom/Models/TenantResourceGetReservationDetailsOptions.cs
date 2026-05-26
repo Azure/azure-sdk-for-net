@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     // Justification: GA exposed an options-bag overload for TenantResource.GetReservationDetails
