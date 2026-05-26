@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="ComplianceResultProperties"/>. </summary>
         /// <param name="resourceStatus"> The status of the resource regarding a single assessment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComplianceResultProperties(ResourceStatus? resourceStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComplianceResultProperties(SecurityAssessmentResourceStatus? resourceStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceStatus = resourceStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The status of the resource regarding a single assessment. </summary>
-        public ResourceStatus? ResourceStatus { get; }
+        public SecurityAssessmentResourceStatus? ResourceStatus { get; }
     }
 }

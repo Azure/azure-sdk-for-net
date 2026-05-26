@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            ResourceStatus? resourceStatus = default;
+            SecurityAssessmentResourceStatus? resourceStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    resourceStatus = new ResourceStatus(prop.Value.GetString());
+                    resourceStatus = new SecurityAssessmentResourceStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

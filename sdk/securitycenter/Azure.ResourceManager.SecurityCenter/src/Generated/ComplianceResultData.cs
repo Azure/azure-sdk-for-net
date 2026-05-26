@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         internal ComplianceResultProperties Properties { get; }
 
         /// <summary> The status of the resource regarding a single assessment. </summary>
-        public ResourceStatus? ResourceStatus
+        public SecurityAssessmentResourceStatus? ResourceStatus
         {
             get
             {

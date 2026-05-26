@@ -163,8 +163,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             string query = default;
             IList<RecommendationSupportedClouds> cloudProviders = default;
-            SeverityEnum? severity = default;
-            SecurityIssue? securityIssue = default;
+            CustomRecommendationSeverity? severity = default;
+            CustomRecommendationSecurityIssue? securityIssue = default;
             string displayName = default;
             string description = default;
             string remediationDescription = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    severity = new SeverityEnum(prop.Value.GetString());
+                    severity = new CustomRecommendationSeverity(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("securityIssue"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    securityIssue = new SecurityIssue(prop.Value.GetString());
+                    securityIssue = new CustomRecommendationSecurityIssue(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
