@@ -37,6 +37,7 @@ namespace Azure.Communication.CallAutomation
         private const string ForbiddenValue = "forbidden";
         private const string ServiceTimeoutValue = "serviceTimeout";
         private const string InitialWebSocketConnectionFailedValue = "initialWebSocketConnectionFailed";
+        private const string StreamUrlUpdatedValue = "streamUrlUpdated";
 
         /// <summary> subscriptionStarted. </summary>
         public static MediaStreamingStatusDetails SubscriptionStarted { get; } = new MediaStreamingStatusDetails(SubscriptionStartedValue);
@@ -68,6 +69,8 @@ namespace Azure.Communication.CallAutomation
         public static MediaStreamingStatusDetails ServiceTimeout { get; } = new MediaStreamingStatusDetails(ServiceTimeoutValue);
         /// <summary> initialWebSocketConnectionFailed. </summary>
         public static MediaStreamingStatusDetails InitialWebSocketConnectionFailed { get; } = new MediaStreamingStatusDetails(InitialWebSocketConnectionFailedValue);
+        /// <summary> streamUrlUpdated. </summary>
+        public static MediaStreamingStatusDetails StreamUrlUpdated { get; } = new MediaStreamingStatusDetails(StreamUrlUpdatedValue);
         /// <summary> Determines if two <see cref="MediaStreamingStatusDetails"/> values are the same. </summary>
         public static bool operator ==(MediaStreamingStatusDetails left, MediaStreamingStatusDetails right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaStreamingStatusDetails"/> values are not the same. </summary>

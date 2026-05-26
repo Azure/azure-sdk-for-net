@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="BaseDialog"/>. </summary>
-        /// <param name="kind"> Determines the type of the dialog. </param>
+        /// <param name="kind"> Defines the type of the dialog input. </param>
         /// <param name="context"> Dialog context. </param>
         internal BaseDialog(DialogInputType kind, IDictionary<string, object> context)
         {

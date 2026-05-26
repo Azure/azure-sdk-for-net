@@ -27,6 +27,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
+            if (Optional.IsDefined(DialogCnameOverride))
+            {
+                writer.WritePropertyName("dialogCnameOverride"u8);
+                writer.WriteStringValue(DialogCnameOverride);
+            }
             writer.WriteEndObject();
         }
 

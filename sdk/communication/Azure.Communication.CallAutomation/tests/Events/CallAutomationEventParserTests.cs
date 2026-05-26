@@ -1347,6 +1347,37 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         }
 
         [Test]
+        public void MediaStreamingUpdatedEventParsed_Test()
+        {
+            MediaStreamingUpdated @event = CallAutomationModelFactory.MediaStreamingUpdated(
+                operationContext: "operationContext",
+                resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
+                mediaStreamingUpdate: new MediaStreamingUpdate("contentType", MediaStreamingStatus.MediaStreamingUpdated, MediaStreamingStatusDetails.StreamUrlUpdated),
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                streamUrl: "https://streamurl/test");
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.MediaStreamingUpdated");
+            if (parsedEvent is MediaStreamingUpdated mediaStreamingUpdated)
+            {
+                Assert.That(mediaStreamingUpdated.CallConnectionId, Is.EqualTo("callConnectionId"));
+                Assert.That(mediaStreamingUpdated.CorrelationId, Is.EqualTo("correlationId"));
+                Assert.That(mediaStreamingUpdated.ServerCallId, Is.EqualTo("serverCallId"));
+                Assert.That(mediaStreamingUpdated.OperationContext, Is.EqualTo("operationContext"));
+                Assert.That(mediaStreamingUpdated.StreamUrl, Is.EqualTo("https://streamurl/test"));
+                Assert.That(mediaStreamingUpdated.ResultInformation?.Code, Is.EqualTo(200));
+                Assert.That(mediaStreamingUpdated.MediaStreamingUpdate.MediaStreamingStatus, Is.EqualTo(MediaStreamingStatus.MediaStreamingUpdated));
+                Assert.That(mediaStreamingUpdated.MediaStreamingUpdate.MediaStreamingStatusDetails, Is.EqualTo(MediaStreamingStatusDetails.StreamUrlUpdated));
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
         public void MediaStreamingStoppedEventParsed_Test()
         {
             MediaStreamingStopped @event = CallAutomationModelFactory.MediaStreamingStopped(

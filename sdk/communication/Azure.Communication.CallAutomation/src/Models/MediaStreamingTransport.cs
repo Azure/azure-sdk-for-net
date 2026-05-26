@@ -8,7 +8,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Media streaming transport type.
     /// </summary>
-    [CodeGenModel("MediaStreamingTransportType", Usage = new string[] { "input" }, Formats = new string[] { "json" })]
+    [CodeGenModel("MediaStreamingTransportTypeDto", Usage = new string[] { "input" }, Formats = new string[] { "json" })]
     public readonly partial struct MediaStreamingTransport
     {
     }

@@ -9,14 +9,16 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class PlayResumed
+    public partial class MediaStreamingUpdated
     {
-        internal static PlayResumed DeserializePlayResumed(JsonElement element)
+        internal static MediaStreamingUpdated DeserializeMediaStreamingUpdated(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            MediaStreamingUpdate mediaStreamingUpdate = default;
+            string streamUrl = default;
             string callConnectionId = default;
             string serverCallId = default;
             string correlationId = default;
@@ -24,6 +26,20 @@ namespace Azure.Communication.CallAutomation
             ResultInformation resultInformation = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("mediaStreamingUpdate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mediaStreamingUpdate = MediaStreamingUpdate.DeserializeMediaStreamingUpdate(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("streamUrl"u8))
+                {
+                    streamUrl = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
@@ -54,15 +70,22 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new PlayResumed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new MediaStreamingUpdated(
+                mediaStreamingUpdate,
+                streamUrl,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                resultInformation);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PlayResumed FromResponse(Response response)
+        internal static MediaStreamingUpdated FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePlayResumed(document.RootElement);
+            return DeserializeMediaStreamingUpdated(document.RootElement);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Media streaming content.
     /// </summary>
-    [CodeGenModel("MediaStreamingContentType", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
+    [CodeGenModel("MediaStreamingContentTypeDto", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     [JsonConverter(typeof(EquatableEnumJsonConverter<MediaStreamingContent>))]
     public readonly partial struct MediaStreamingContent : IEquatable<MediaStreamingContent>
     {
