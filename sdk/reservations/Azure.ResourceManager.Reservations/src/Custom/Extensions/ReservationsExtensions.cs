@@ -4,8 +4,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Reservations.Mocking;
+using Azure.ResourceManager.Reservations.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Reservations
@@ -15,27 +16,36 @@ namespace Azure.ResourceManager.Reservations
     // still forwarding through mockable resources for testability.
     public static partial class ReservationsExtensions
     {
-        /// <summary>
-        /// Get the details of a `ReservationOrder`.
+         /// <summary>
+        /// Get the details of the `ReservationOrder`.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ReservationOrder_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationOrderResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsTenantResource.GetReservationOrderAsync(Guid,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="expand"> May be used to expand planInformation. </param>
+        /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Task<Response<ReservationOrderResource>> GetReservationOrderAsync(this TenantResource tenantResource, Guid reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
         {
@@ -43,27 +53,36 @@ namespace Azure.ResourceManager.Reservations
             return GetMockableReservationsTenantResource(tenantResource).GetReservationOrderAsync(reservationOrderId, expand, cancellationToken);
         }
 
-        /// <summary>
-        /// Get the details of a `ReservationOrder`.
+       /// <summary>
+        /// Get the details of the `ReservationOrder`.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ReservationOrder_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ReservationOrder_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationOrderResource"/></description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableReservationsTenantResource.GetReservationOrder(Guid,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="expand"> May be used to expand planInformation. </param>
+        /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ReservationOrderResource> GetReservationOrder(this TenantResource tenantResource, Guid reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
         {
@@ -75,16 +94,12 @@ namespace Azure.ResourceManager.Reservations
         /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Reservations_GetCatalog. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-11-01. </description>
+        /// <term>Operation Id</term>
+        /// <description>GetCatalog</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -95,6 +110,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="offerId"> Offer id used to get the third party products. </param>
         /// <param name="planId"> Plan id used to get the third party products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
         /// <returns> An async collection of <see cref="Azure.ResourceManager.Reservations.Models.ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<Models.ReservationCatalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
@@ -106,16 +122,12 @@ namespace Azure.ResourceManager.Reservations
         /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Reservations_GetCatalog. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-11-01. </description>
+        /// <term>Operation Id</term>
+        /// <description>GetCatalog</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +138,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="offerId"> Offer id used to get the third party products. </param>
         /// <param name="planId"> Plan id used to get the third party products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Azure.ResourceManager.Reservations.Models.ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<Models.ReservationCatalog> GetCatalog(this SubscriptionResource subscriptionResource, string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
