@@ -10,10 +10,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Reservations.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Reservations
@@ -51,6 +53,210 @@ namespace Azure.ResourceManager.Reservations
             if (id.ResourceType != TenantResource.ResourceType)
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            }
+        }
+
+        /// <summary>
+        /// Purchase `ReservationOrder` and create resource under the specified URI.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderResponses_Purchase. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ReservationOrderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, Guid reservationOrderId, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _reservationOrderClientDiagnostics.CreateScope("ReservationOrderCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrderRestClient.CreateCreateOrUpdateRequest(reservationOrderId, ReservationPurchaseContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ReservationsArmOperation<ReservationOrderResource> operation = new ReservationsArmOperation<ReservationOrderResource>(
+                    new ReservationOrderOperationSource(Client),
+                    _reservationOrderClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Purchase `ReservationOrder` and create resource under the specified URI.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderResponses_Purchase. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ReservationOrderResource> CreateOrUpdate(WaitUntil waitUntil, Guid reservationOrderId, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _reservationOrderClientDiagnostics.CreateScope("ReservationOrderCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrderRestClient.CreateCreateOrUpdateRequest(reservationOrderId, ReservationPurchaseContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ReservationsArmOperation<ReservationOrderResource> operation = new ReservationsArmOperation<ReservationOrderResource>(
+                    new ReservationOrderOperationSource(Client),
+                    _reservationOrderClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the details of the `ReservationOrder`.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderResponses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="expand"> May be used to expand the planInformation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ReservationOrderResource>> GetAsync(Guid reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _reservationOrderClientDiagnostics.CreateScope("ReservationOrderCollection.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrderRestClient.CreateGetRequest(reservationOrderId, expand, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ReservationOrderData> response = Response.FromValue(ReservationOrderData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ReservationOrderResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the details of the `ReservationOrder`.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderResponses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="expand"> May be used to expand the planInformation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ReservationOrderResource> Get(Guid reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _reservationOrderClientDiagnostics.CreateScope("ReservationOrderCollection.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrderRestClient.CreateGetRequest(reservationOrderId, expand, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ReservationOrderData> response = Response.FromValue(ReservationOrderData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ReservationOrderResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -108,6 +314,230 @@ namespace Azure.ResourceManager.Reservations
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<ReservationOrderData, ReservationOrderResource>(new ReservationOrderGetAllCollectionResultOfT(_reservationOrderRestClient, context, "ReservationOrderCollection.GetAll"), data => new ReservationOrderResource(Client, data));
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderResponses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="expand"> May be used to expand the planInformation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<bool>> ExistsAsync(Guid reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _reservationOrderClientDiagnostics.CreateScope("ReservationOrderCollection.Exists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrderRestClient.CreateGetRequest(reservationOrderId, expand, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ReservationOrderData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ReservationOrderData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ReservationOrderData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderResponses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="expand"> May be used to expand the planInformation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<bool> Exists(Guid reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _reservationOrderClientDiagnostics.CreateScope("ReservationOrderCollection.Exists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrderRestClient.CreateGetRequest(reservationOrderId, expand, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ReservationOrderData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ReservationOrderData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ReservationOrderData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderResponses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="expand"> May be used to expand the planInformation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ReservationOrderResource>> GetIfExistsAsync(Guid reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _reservationOrderClientDiagnostics.CreateScope("ReservationOrderCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrderRestClient.CreateGetRequest(reservationOrderId, expand, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ReservationOrderData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ReservationOrderData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ReservationOrderData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
+                if (response.Value == null)
+                {
+                    return new NoValueResponse<ReservationOrderResource>(response.GetRawResponse());
+                }
+                return Response.FromValue(new ReservationOrderResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderResponses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
+        /// <param name="expand"> May be used to expand the planInformation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ReservationOrderResource> GetIfExists(Guid reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _reservationOrderClientDiagnostics.CreateScope("ReservationOrderCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrderRestClient.CreateGetRequest(reservationOrderId, expand, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ReservationOrderData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ReservationOrderData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ReservationOrderData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
+                if (response.Value == null)
+                {
+                    return new NoValueResponse<ReservationOrderResource>(response.GetRawResponse());
+                }
+                return Response.FromValue(new ReservationOrderResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<ReservationOrderResource> IEnumerable<ReservationOrderResource>.GetEnumerator()
