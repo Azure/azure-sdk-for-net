@@ -11,9 +11,9 @@ namespace Azure.ResourceManager.Monitor.Slis.Tests
     {
         public string ServiceGroupName => GetRecordedOptionalVariable("SERVICE_GROUP_NAME") ?? "arm-sdk-tests-sg";
 
-        public string AmwResourceId => GetRecordedOptionalVariable("AMW_RESOURCE_ID");
+        public string AmwResourceId => GetRecordedVariable("AMW_RESOURCE_ID");
 
-        public string ManagedIdentityResourceId => GetRecordedOptionalVariable("MANAGED_IDENTITY_RESOURCE_ID");
+        public string ManagedIdentityResourceId => GetRecordedVariable("MANAGED_IDENTITY_RESOURCE_ID");
 
         public string SourceAmwResourceId => GetRecordedOptionalVariable("SOURCE_AMW_RESOURCE_ID") ?? AmwResourceId;
 
