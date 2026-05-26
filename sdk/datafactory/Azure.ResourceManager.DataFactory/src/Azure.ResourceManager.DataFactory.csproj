@@ -9,4 +9,16 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
+
+  <!--
+    The MPG generator currently emits a handful of known-broken patterns (Deserialize* calls
+    against SDK-provided types, IDictionary<,>.ToRequestContent, additionalProperties /
+    additionalBinaryDataProperties variable-name mismatch, ETag/string parameter aliasing,
+    Unknown* discriminator naming and a few ApiCompat shape regressions). Until those are fixed
+    upstream, post-gen-fixups.ps1 mechanically patches the generated tree. Running it as an
+    AfterTargets hook keeps local builds and CI (`/t:GenerateCode` on service.proj) in sync.
+  -->
+  <Target Name="ApplyPostGenFixups" AfterTargets="GenerateCode" Condition="'$(TypeSpecInput)' != ''">
+    <Exec Command="pwsh -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildThisFileDirectory)post-gen-fixups.ps1&quot; -PackageRoot &quot;$(MSBuildThisFileDirectory)..&quot;" />
+  </Target>
 </Project>
