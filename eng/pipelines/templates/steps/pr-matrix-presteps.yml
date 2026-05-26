@@ -12,7 +12,7 @@ parameters:
   - name: EnableBuildWeighting
     type: boolean
     default: false
-  - name: LocTargetSeconds
+  - name: LocTarget
     type: number
     default: 474000
   - name: PublishArtifact
@@ -85,6 +85,6 @@ steps:
         eng/scripts/Apply-WeightedBatching.ps1 `
           -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
           -WeightsFile "$(Build.ArtifactStagingDirectory)/loc-weights.json" `
-          -TargetSeconds ${{ parameters.LocTargetSeconds }}
-      displayName: Apply LOC-weighted batching (target ${{ parameters.LocTargetSeconds }})
+          -Target ${{ parameters.LocTarget }}
+      displayName: Apply LOC-weighted batching (target ${{ parameters.LocTarget }})
       condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))

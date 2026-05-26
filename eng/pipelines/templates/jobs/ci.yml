@@ -79,7 +79,7 @@ jobs:
               ForceDirect: true
               ExcludePaths: ${{ parameters.ExcludePaths }}
               EnableBuildWeighting: true
-              LocTargetSeconds: 1200000
+              LocTarget: 1200000
               PublishArtifact: true
 
     # Analyze matrix - smaller LOC batches (300k) for more parallelism so analyze wall-clock matches build.
@@ -116,7 +116,7 @@ jobs:
               ForceDirect: true
               ExcludePaths: ${{ parameters.ExcludePaths }}
               EnableBuildWeighting: true
-              LocTargetSeconds: 300000
+              LocTarget: 300000
               PublishArtifact: true
 
   - ${{ else }}:
