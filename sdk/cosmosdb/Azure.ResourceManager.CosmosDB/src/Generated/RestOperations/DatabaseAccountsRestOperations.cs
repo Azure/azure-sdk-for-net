@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        internal HttpMessage CreateCheckNameExistsDatabaseAccountRequest(string accountName, string accept, RequestContext context)
+        internal HttpMessage CreateCheckNameExistsDatabaseAccountRequest(string accountName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -540,7 +540,6 @@ namespace Azure.ResourceManager.CosmosDB
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Head;
-            request.Headers.SetValue("Accept", accept);
             return message;
         }
     }

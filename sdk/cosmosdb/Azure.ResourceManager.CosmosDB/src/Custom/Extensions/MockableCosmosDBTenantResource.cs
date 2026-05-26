@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             scope.Start();
             try
             {
-                HttpMessage message = DatabaseAccountsRestClient.CreateCheckNameExistsDatabaseAccountRequest(accountName, "application/json", new RequestContext { CancellationToken = cancellationToken });
+                HttpMessage message = DatabaseAccountsRestClient.CreateCheckNameExistsDatabaseAccountRequest(accountName, new RequestContext { CancellationToken = cancellationToken });
                 await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 return message.Response.Status switch
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             scope.Start();
             try
             {
-                HttpMessage message = DatabaseAccountsRestClient.CreateCheckNameExistsDatabaseAccountRequest(accountName, "application/json", new RequestContext { CancellationToken = cancellationToken });
+                HttpMessage message = DatabaseAccountsRestClient.CreateCheckNameExistsDatabaseAccountRequest(accountName, new RequestContext { CancellationToken = cancellationToken });
                 Pipeline.Send(message, cancellationToken);
                 return message.Response.Status switch
                 {

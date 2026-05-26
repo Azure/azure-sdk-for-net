@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="documentEndpoint"> The connection endpoint for the Cosmos DB database account. </param>
@@ -75,11 +76,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="analyticalStorageSchemaType"> Describes the types of schema for analytical storage. </param>
         /// <param name="diagnosticLogEnableFullTextQuery"> Describe the level of detail with which queries are to be logged. </param>
         /// <param name="capacityTotalThroughputLimit"> The total throughput limit imposed on the account. A totalThroughputLimit of 2000 imposes a strict limit of max throughput that can be provisioned on that account to be 2000. A totalThroughputLimit of -1 indicates no limits on provisioning of throughput. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with \"defaultExperience\": \"Cassandra\". Current \"defaultExperience\" values also include \"Table\", \"Graph\", \"DocumentDB\", and \"MongoDB\". </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <param name="kind"> Indicates the type of database account. This can only be set at database account creation. </param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBAccountData"/> instance for mocking. </returns>
-        public static CosmosDBAccountData CosmosDBAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string provisioningState = default, string documentEndpoint = default, CosmosDBAccountOfferType? databaseAccountOfferType = default, IEnumerable<CosmosDBIPAddressOrRange> ipRules = default, bool? isVirtualNetworkFilterEnabled = default, bool? enableAutomaticFailover = default, ConsistencyPolicy consistencyPolicy = default, IEnumerable<CosmosDBAccountCapability> capabilities = default, IEnumerable<CosmosDBAccountLocation> writeLocations = default, IEnumerable<CosmosDBAccountLocation> readLocations = default, IEnumerable<CosmosDBAccountLocation> locations = default, IEnumerable<CosmosDBFailoverPolicy> failoverPolicies = default, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = default, IEnumerable<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections = default, bool? enableMultipleWriteLocations = default, bool? enableCassandraConnector = default, ConnectorOffer? connectorOffer = default, bool? disableKeyBasedMetadataWriteAccess = default, Uri keyVaultKeyUri = default, string defaultIdentity = default, CosmosDBPublicNetworkAccess? publicNetworkAccess = default, bool? isFreeTierEnabled = default, bool? isAnalyticalStorageEnabled = default, Guid? instanceId = default, CosmosDBAccountCreateMode? createMode = default, CosmosDBAccountRestoreParameters restoreParameters = default, CosmosDBAccountBackupPolicy backupPolicy = default, IEnumerable<CosmosDBAccountCorsPolicy> cors = default, NetworkAclBypass? networkAclBypass = default, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds = default, bool? disableLocalAuth = default, CapacityMode? capacityMode = default, CapacityModeChangeTransitionState capacityModeChangeTransitionState = default, bool? enableMaterializedViews = default, DatabaseAccountKeysMetadata keysMetadata = default, bool? enablePartitionMerge = default, bool? enableBurstCapacity = default, CosmosDBMinimalTlsVersion? minimalTlsVersion = default, string customerManagedKeyStatus = default, string keyVaultKeyUriVersion = default, bool? enablePriorityBasedExecution = default, DefaultPriorityLevel? defaultPriorityLevel = default, bool? enablePerRegionPerPartitionAutoscale = default, bool? enableAllVersionsAndDeletesChangeFeed = default, long? throughputPoolDedicatedRUs = default, long? throughputPoolMaxConsumableRUs = default, CosmosDBServerVersion? apiServerVersion = default, AnalyticalStorageSchemaType? analyticalStorageSchemaType = default, CosmosDBFullTextQueryState? diagnosticLogEnableFullTextQuery = default, int? capacityTotalThroughputLimit = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, CosmosDBAccountKind? kind = default)
+        public static CosmosDBAccountData CosmosDBAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string documentEndpoint = default, CosmosDBAccountOfferType? databaseAccountOfferType = default, IEnumerable<CosmosDBIPAddressOrRange> ipRules = default, bool? isVirtualNetworkFilterEnabled = default, bool? enableAutomaticFailover = default, ConsistencyPolicy consistencyPolicy = default, IEnumerable<CosmosDBAccountCapability> capabilities = default, IEnumerable<CosmosDBAccountLocation> writeLocations = default, IEnumerable<CosmosDBAccountLocation> readLocations = default, IEnumerable<CosmosDBAccountLocation> locations = default, IEnumerable<CosmosDBFailoverPolicy> failoverPolicies = default, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = default, IEnumerable<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections = default, bool? enableMultipleWriteLocations = default, bool? enableCassandraConnector = default, ConnectorOffer? connectorOffer = default, bool? disableKeyBasedMetadataWriteAccess = default, Uri keyVaultKeyUri = default, string defaultIdentity = default, CosmosDBPublicNetworkAccess? publicNetworkAccess = default, bool? isFreeTierEnabled = default, bool? isAnalyticalStorageEnabled = default, Guid? instanceId = default, CosmosDBAccountCreateMode? createMode = default, CosmosDBAccountRestoreParameters restoreParameters = default, CosmosDBAccountBackupPolicy backupPolicy = default, IEnumerable<CosmosDBAccountCorsPolicy> cors = default, NetworkAclBypass? networkAclBypass = default, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds = default, bool? disableLocalAuth = default, CapacityMode? capacityMode = default, CapacityModeChangeTransitionState capacityModeChangeTransitionState = default, bool? enableMaterializedViews = default, DatabaseAccountKeysMetadata keysMetadata = default, bool? enablePartitionMerge = default, bool? enableBurstCapacity = default, CosmosDBMinimalTlsVersion? minimalTlsVersion = default, string customerManagedKeyStatus = default, string keyVaultKeyUriVersion = default, bool? enablePriorityBasedExecution = default, DefaultPriorityLevel? defaultPriorityLevel = default, bool? enablePerRegionPerPartitionAutoscale = default, bool? enableAllVersionsAndDeletesChangeFeed = default, long? throughputPoolDedicatedRUs = default, long? throughputPoolMaxConsumableRUs = default, CosmosDBServerVersion? apiServerVersion = default, AnalyticalStorageSchemaType? analyticalStorageSchemaType = default, CosmosDBFullTextQueryState? diagnosticLogEnableFullTextQuery = default, int? capacityTotalThroughputLimit = default, ManagedServiceIdentity identity = default, CosmosDBAccountKind? kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -89,6 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 provisioningState is null && documentEndpoint is null && databaseAccountOfferType is null && ipRules is null && isVirtualNetworkFilterEnabled is null && enableAutomaticFailover is null && consistencyPolicy is null && capabilities is null && writeLocations is null && readLocations is null && locations is null && failoverPolicies is null && virtualNetworkRules is null && privateEndpointConnections is null && enableMultipleWriteLocations is null && enableCassandraConnector is null && connectorOffer is null && disableKeyBasedMetadataWriteAccess is null && keyVaultKeyUri is null && defaultIdentity is null && publicNetworkAccess is null && isFreeTierEnabled is null && isAnalyticalStorageEnabled is null && instanceId is null && createMode is null && restoreParameters is null && backupPolicy is null && cors is null && networkAclBypass is null && networkAclBypassResourceIds is null && disableLocalAuth is null && capacityMode is null && capacityModeChangeTransitionState is null && enableMaterializedViews is null && keysMetadata is null && enablePartitionMerge is null && enableBurstCapacity is null && minimalTlsVersion is null && customerManagedKeyStatus is null && keyVaultKeyUriVersion is null && enablePriorityBasedExecution is null && defaultPriorityLevel is null && enablePerRegionPerPartitionAutoscale is null && enableAllVersionsAndDeletesChangeFeed is null && throughputPoolDedicatedRUs is null && throughputPoolMaxConsumableRUs is null && apiServerVersion is null && analyticalStorageSchemaType is null && diagnosticLogEnableFullTextQuery is null && capacityTotalThroughputLimit is null ? default : new CosmosDBAccountProperties(
                     provisioningState,
@@ -142,7 +143,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     throughputPoolDedicatedRUs,
                     throughputPoolMaxConsumableRUs,
                     null),
-                tags,
                 identity,
                 kind);
         }
@@ -806,13 +806,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="options"> Gets the Options. </param>
         /// <param name="resourceGraphName"> Name of the Cosmos DB Graph. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with \"defaultExperience\": \"Cassandra\". Current \"defaultExperience\" values also include \"Table\", \"Graph\", \"DocumentDB\", and \"MongoDB\". </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBGraphData"/> instance for mocking. </returns>
-        public static CosmosDBGraphData CosmosDBGraphData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, CosmosDBGraphConfig options = default, string resourceGraphName = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static CosmosDBGraphData CosmosDBGraphData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CosmosDBGraphConfig options = default, string resourceGraphName = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -822,9 +822,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 options is null && resourceGraphName is null ? default : new GraphResourceGetProperties(new GraphResourceGetPropertiesResource(resourceGraphName, null), options, null),
-                tags,
                 identity);
         }
 
@@ -878,13 +878,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="resource"> Gets or sets the Resource. </param>
         /// <param name="options"> Gets or sets the Options. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with \"defaultExperience\": \"Cassandra\". Current \"defaultExperience\" values also include \"Table\", \"Graph\", \"DocumentDB\", and \"MongoDB\". </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBSqlDatabaseData"/> instance for mocking. </returns>
-        public static CosmosDBSqlDatabaseData CosmosDBSqlDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ExtendedCosmosDBSqlDatabaseResourceInfo resource = default, CosmosDBSqlDatabasePropertiesConfig options = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static CosmosDBSqlDatabaseData CosmosDBSqlDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedCosmosDBSqlDatabaseResourceInfo resource = default, CosmosDBSqlDatabasePropertiesConfig options = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -894,9 +894,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 resource is null && options is null ? default : new CosmosDBSqlDatabaseProperties(resource, options, null),
-                tags,
                 identity);
         }
 
@@ -971,12 +971,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="resource"> Gets or sets the Resource. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with \"defaultExperience\": \"Cassandra\". Current \"defaultExperience\" values also include \"Table\", \"Graph\", \"DocumentDB\", and \"MongoDB\". </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CosmosDB.ThroughputSettingData"/> instance for mocking. </returns>
-        public static ThroughputSettingData ThroughputSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ExtendedThroughputSettingsResourceInfo resource = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static ThroughputSettingData ThroughputSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedThroughputSettingsResourceInfo resource = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -986,9 +986,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 resource is null ? default : new ThroughputSettingsProperties(resource, null),
-                tags,
                 identity);
         }
 
@@ -1217,13 +1217,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="resource"> Gets or sets the Resource. </param>
         /// <param name="options"> Gets or sets the Options. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with \"defaultExperience\": \"Cassandra\". Current \"defaultExperience\" values also include \"Table\", \"Graph\", \"DocumentDB\", and \"MongoDB\". </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBSqlContainerData"/> instance for mocking. </returns>
-        public static CosmosDBSqlContainerData CosmosDBSqlContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ExtendedCosmosDBSqlContainerResourceInfo resource = default, CosmosDBSqlContainerPropertiesConfig options = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static CosmosDBSqlContainerData CosmosDBSqlContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedCosmosDBSqlContainerResourceInfo resource = default, CosmosDBSqlContainerPropertiesConfig options = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1233,9 +1233,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 resource is null && options is null ? default : new CosmosDBSqlContainerProperties(resource, options, null),
-                tags,
                 identity);
         }
 
@@ -1510,12 +1510,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="resource"> Gets or sets the Resource. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with \"defaultExperience\": \"Cassandra\". Current \"defaultExperience\" values also include \"Table\", \"Graph\", \"DocumentDB\", and \"MongoDB\". </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBSqlStoredProcedureData"/> instance for mocking. </returns>
-        public static CosmosDBSqlStoredProcedureData CosmosDBSqlStoredProcedureData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ExtendedCosmosDBSqlStoredProcedureResourceInfo resource = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static CosmosDBSqlStoredProcedureData CosmosDBSqlStoredProcedureData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedCosmosDBSqlStoredProcedureResourceInfo resource = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1525,9 +1525,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 resource is null ? default : new CosmosDBSqlStoredProcedureProperties(resource, null),
-                tags,
                 identity);
         }
 
@@ -1576,12 +1576,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="resource"> Gets or sets the Resource. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with \"defaultExperience\": \"Cassandra\". Current \"defaultExperience\" values also include \"Table\", \"Graph\", \"DocumentDB\", and \"MongoDB\". </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBSqlUserDefinedFunctionData"/> instance for mocking. </returns>
-        public static CosmosDBSqlUserDefinedFunctionData CosmosDBSqlUserDefinedFunctionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo resource = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static CosmosDBSqlUserDefinedFunctionData CosmosDBSqlUserDefinedFunctionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo resource = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1591,9 +1591,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 resource is null ? default : new CosmosDBSqlUserDefinedFunctionProperties(resource, null),
-                tags,
                 identity);
         }
 
@@ -1642,12 +1642,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="resource"> Gets or sets the Resource. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with \"defaultExperience\": \"Cassandra\". Current \"defaultExperience\" values also include \"Table\", \"Graph\", \"DocumentDB\", and \"MongoDB\". </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBSqlTriggerData"/> instance for mocking. </returns>
-        public static CosmosDBSqlTriggerData CosmosDBSqlTriggerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ExtendedCosmosDBSqlTriggerResourceInfo resource = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static CosmosDBSqlTriggerData CosmosDBSqlTriggerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedCosmosDBSqlTriggerResourceInfo resource = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1657,9 +1657,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 resource is null ? default : new CosmosDBSqlTriggerProperties(resource, null),
-                tags,
                 identity);
         }
 
@@ -1764,13 +1764,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="resource"> Gets or sets the Resource. </param>
         /// <param name="options"> Gets or sets the Options. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with \"defaultExperience\": \"Cassandra\". Current \"defaultExperience\" values also include \"Table\", \"Graph\", \"DocumentDB\", and \"MongoDB\". </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CosmosDB.MongoDBDatabaseData"/> instance for mocking. </returns>
-        public static MongoDBDatabaseData MongoDBDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ExtendedMongoDBDatabaseResourceInfo resource = default, MongoDBDatabasePropertiesConfig options = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static MongoDBDatabaseData MongoDBDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedMongoDBDatabaseResourceInfo resource = default, MongoDBDatabasePropertiesConfig options = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1780,9 +1780,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 resource is null && options is null ? default : new MongoDBDatabaseProperties(resource, options, null),
-                tags,
                 identity);
         }
 
@@ -1833,13 +1833,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="resource"> Gets or sets the Resource. </param>
         /// <param name="options"> Gets or sets the Options. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with \"defaultExperience\": \"Cassandra\". Current \"defaultExperience\" values also include \"Table\", \"Graph\", \"DocumentDB\", and \"MongoDB\". </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CosmosDB.MongoDBCollectionData"/> instance for mocking. </returns>
-        public static MongoDBCollectionData MongoDBCollectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ExtendedMongoDBCollectionResourceInfo resource = default, MongoDBCollectionPropertiesConfig options = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static MongoDBCollectionData MongoDBCollectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedMongoDBCollectionResourceInfo resource = default, MongoDBCollectionPropertiesConfig options = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1849,9 +1849,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 resource is null && options is null ? default : new MongoDBCollectionProperties(resource, options, null),
-                tags,
                 identity);
         }
 
@@ -2001,13 +2001,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="resource"> Gets or sets the Resource. </param>
         /// <param name="options"> Gets or sets the Options. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with \"defaultExperience\": \"Cassandra\". Current \"defaultExperience\" values also include \"Table\", \"Graph\", \"DocumentDB\", and \"MongoDB\". </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBTableData"/> instance for mocking. </returns>
-        public static CosmosDBTableData CosmosDBTableData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, CosmosDBTablePropertiesResource resource = default, CosmosDBTablePropertiesOptions options = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static CosmosDBTableData CosmosDBTableData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CosmosDBTablePropertiesResource resource = default, CosmosDBTablePropertiesOptions options = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2017,9 +2017,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 resource is null && options is null ? default : new CosmosDBTableProperties(resource, options, null),
-                tags,
                 identity);
         }
 
@@ -2117,13 +2117,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="resource"> Gets or sets the Resource. </param>
         /// <param name="options"> Gets or sets the Options. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with \"defaultExperience\": \"Cassandra\". Current \"defaultExperience\" values also include \"Table\", \"Graph\", \"DocumentDB\", and \"MongoDB\". </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CosmosDB.CassandraKeyspaceData"/> instance for mocking. </returns>
-        public static CassandraKeyspaceData CassandraKeyspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ExtendedCassandraKeyspaceResourceInfo resource = default, CassandraKeyspacePropertiesConfig options = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static CassandraKeyspaceData CassandraKeyspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedCassandraKeyspaceResourceInfo resource = default, CassandraKeyspacePropertiesConfig options = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2133,9 +2133,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 resource is null && options is null ? default : new CassandraKeyspaceProperties(resource, options, null),
-                tags,
                 identity);
         }
 
@@ -2153,13 +2153,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="resource"> Gets or sets the Resource. </param>
         /// <param name="options"> Gets or sets the Options. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with \"defaultExperience\": \"Cassandra\". Current \"defaultExperience\" values also include \"Table\", \"Graph\", \"DocumentDB\", and \"MongoDB\". </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CosmosDB.CassandraTableData"/> instance for mocking. </returns>
-        public static CassandraTableData CassandraTableData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ExtendedCassandraTableResourceInfo resource = default, CassandraTablePropertiesConfig options = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static CassandraTableData CassandraTableData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedCassandraTableResourceInfo resource = default, CassandraTablePropertiesConfig options = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2169,9 +2169,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 resource is null && options is null ? default : new CassandraTableProperties(resource, options, null),
-                tags,
                 identity);
         }
 
@@ -2238,13 +2238,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="resource"> Gets the Resource. </param>
         /// <param name="options"> Gets the Options. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with \"defaultExperience\": \"Cassandra\". Current \"defaultExperience\" values also include \"Table\", \"Graph\", \"DocumentDB\", and \"MongoDB\". </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CosmosDB.CassandraViewData"/> instance for mocking. </returns>
-        public static CassandraViewData CassandraViewData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, CassandraViewGetPropertiesResource resource = default, CassandraViewConfig options = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static CassandraViewData CassandraViewData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CassandraViewGetPropertiesResource resource = default, CassandraViewConfig options = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2254,9 +2254,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 resource is null && options is null ? default : new CassandraViewGetProperties(resource, options, null),
-                tags,
                 identity);
         }
 
@@ -2353,13 +2353,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="resource"> Gets or sets the Resource. </param>
         /// <param name="options"> Gets or sets the Options. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with \"defaultExperience\": \"Cassandra\". Current \"defaultExperience\" values also include \"Table\", \"Graph\", \"DocumentDB\", and \"MongoDB\". </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CosmosDB.GremlinDatabaseData"/> instance for mocking. </returns>
-        public static GremlinDatabaseData GremlinDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ExtendedGremlinDatabaseResourceInfo resource = default, GremlinDatabasePropertiesConfig options = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static GremlinDatabaseData GremlinDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedGremlinDatabaseResourceInfo resource = default, GremlinDatabasePropertiesConfig options = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2369,9 +2369,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 resource is null && options is null ? default : new GremlinDatabaseProperties(resource, options, null),
-                tags,
                 identity);
         }
 
@@ -2422,13 +2422,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="resource"> Gets or sets the Resource. </param>
         /// <param name="options"> Gets or sets the Options. </param>
-        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with \"defaultExperience\": \"Cassandra\". Current \"defaultExperience\" values also include \"Table\", \"Graph\", \"DocumentDB\", and \"MongoDB\". </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="CosmosDB.GremlinGraphData"/> instance for mocking. </returns>
-        public static GremlinGraphData GremlinGraphData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ExtendedGremlinGraphResourceInfo resource = default, GremlinGraphPropertiesConfig options = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        public static GremlinGraphData GremlinGraphData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedGremlinGraphResourceInfo resource = default, GremlinGraphPropertiesConfig options = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2438,9 +2438,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
+                tags,
                 location,
                 resource is null && options is null ? default : new GremlinGraphProperties(resource, options, null),
-                tags,
                 identity);
         }
 
@@ -3104,6 +3104,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 isSubscriptionRegionAccessAllowedForAz,
                 status,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Representation of a managed Cassandra cluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of a managed Cassandra cluster. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.CassandraClusterData"/> instance for mocking. </returns>
+        public static CassandraClusterData CassandraClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CassandraClusterProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CassandraClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties,
+                identity);
         }
 
         /// <param name="provisioningState"> The status of the resource at the time the operation was called. </param>
@@ -4264,7 +4290,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CosmosDBAccountData CosmosDBAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBAccountKind? kind, ManagedServiceIdentity identity, string provisioningState, string documentEndpoint, CosmosDBAccountOfferType? databaseAccountOfferType, IEnumerable<CosmosDBIPAddressOrRange> ipRules, bool? isVirtualNetworkFilterEnabled, bool? enableAutomaticFailover, ConsistencyPolicy consistencyPolicy, IEnumerable<CosmosDBAccountCapability> capabilities, IEnumerable<CosmosDBAccountLocation> writeLocations, IEnumerable<CosmosDBAccountLocation> readLocations, IEnumerable<CosmosDBAccountLocation> locations, IEnumerable<CosmosDBFailoverPolicy> failoverPolicies, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules, IEnumerable<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections, bool? enableMultipleWriteLocations, bool? enableCassandraConnector, ConnectorOffer? connectorOffer, bool? disableKeyBasedMetadataWriteAccess, Uri keyVaultKeyUri, string defaultIdentity, CosmosDBPublicNetworkAccess? publicNetworkAccess, bool? isFreeTierEnabled, CosmosDBServerVersion? apiServerVersion, bool? isAnalyticalStorageEnabled, AnalyticalStorageSchemaType? analyticalStorageSchemaType, Guid? instanceId, CosmosDBAccountCreateMode? createMode, CosmosDBAccountRestoreParameters restoreParameters, CosmosDBAccountBackupPolicy backupPolicy, IEnumerable<CosmosDBAccountCorsPolicy> cors, NetworkAclBypass? networkAclBypass, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds, bool? disableLocalAuth, int? capacityTotalThroughputLimit, DatabaseAccountKeysMetadata keysMetadata, bool? enablePartitionMerge, CosmosDBMinimalTlsVersion? minimalTlsVersion, bool? enableBurstCapacity, string customerManagedKeyStatus, bool? enablePerRegionPerPartitionAutoscale, string keyVaultKeyUriVersion, bool? enablePriorityBasedExecution, DefaultPriorityLevel? defaultPriorityLevel)
         {
-            return CosmosDBAccountData(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, provisioningState: provisioningState, documentEndpoint: documentEndpoint, databaseAccountOfferType: databaseAccountOfferType, ipRules: ipRules, isVirtualNetworkFilterEnabled: isVirtualNetworkFilterEnabled, enableAutomaticFailover: enableAutomaticFailover, consistencyPolicy: consistencyPolicy, capabilities: capabilities, writeLocations: writeLocations, readLocations: readLocations, locations: locations, failoverPolicies: failoverPolicies, virtualNetworkRules: virtualNetworkRules, privateEndpointConnections: privateEndpointConnections, enableMultipleWriteLocations: enableMultipleWriteLocations, enableCassandraConnector: enableCassandraConnector, connectorOffer: connectorOffer, disableKeyBasedMetadataWriteAccess: disableKeyBasedMetadataWriteAccess, keyVaultKeyUri: keyVaultKeyUri, defaultIdentity: defaultIdentity, publicNetworkAccess: publicNetworkAccess, isFreeTierEnabled: isFreeTierEnabled, isAnalyticalStorageEnabled: isAnalyticalStorageEnabled, instanceId: instanceId, createMode: createMode, restoreParameters: restoreParameters, backupPolicy: backupPolicy, cors: cors, networkAclBypass: networkAclBypass, networkAclBypassResourceIds: networkAclBypassResourceIds, disableLocalAuth: disableLocalAuth, capacityMode: default, capacityModeChangeTransitionState: default, enableMaterializedViews: default, keysMetadata: keysMetadata, enablePartitionMerge: enablePartitionMerge, enableBurstCapacity: enableBurstCapacity, minimalTlsVersion: minimalTlsVersion, customerManagedKeyStatus: customerManagedKeyStatus, keyVaultKeyUriVersion: keyVaultKeyUriVersion, enablePriorityBasedExecution: enablePriorityBasedExecution, defaultPriorityLevel: defaultPriorityLevel, enablePerRegionPerPartitionAutoscale: enablePerRegionPerPartitionAutoscale, enableAllVersionsAndDeletesChangeFeed: default, throughputPoolDedicatedRUs: default, throughputPoolMaxConsumableRUs: default, apiServerVersion: apiServerVersion, analyticalStorageSchemaType: analyticalStorageSchemaType, diagnosticLogEnableFullTextQuery: default, capacityTotalThroughputLimit: capacityTotalThroughputLimit, tags: tags, identity: identity, kind: kind);
+            return CosmosDBAccountData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, documentEndpoint: documentEndpoint, databaseAccountOfferType: databaseAccountOfferType, ipRules: ipRules, isVirtualNetworkFilterEnabled: isVirtualNetworkFilterEnabled, enableAutomaticFailover: enableAutomaticFailover, consistencyPolicy: consistencyPolicy, capabilities: capabilities, writeLocations: writeLocations, readLocations: readLocations, locations: locations, failoverPolicies: failoverPolicies, virtualNetworkRules: virtualNetworkRules, privateEndpointConnections: privateEndpointConnections, enableMultipleWriteLocations: enableMultipleWriteLocations, enableCassandraConnector: enableCassandraConnector, connectorOffer: connectorOffer, disableKeyBasedMetadataWriteAccess: disableKeyBasedMetadataWriteAccess, keyVaultKeyUri: keyVaultKeyUri, defaultIdentity: defaultIdentity, publicNetworkAccess: publicNetworkAccess, isFreeTierEnabled: isFreeTierEnabled, isAnalyticalStorageEnabled: isAnalyticalStorageEnabled, instanceId: instanceId, createMode: createMode, restoreParameters: restoreParameters, backupPolicy: backupPolicy, cors: cors, networkAclBypass: networkAclBypass, networkAclBypassResourceIds: networkAclBypassResourceIds, disableLocalAuth: disableLocalAuth, capacityMode: default, capacityModeChangeTransitionState: default, enableMaterializedViews: default, keysMetadata: keysMetadata, enablePartitionMerge: enablePartitionMerge, enableBurstCapacity: enableBurstCapacity, minimalTlsVersion: minimalTlsVersion, customerManagedKeyStatus: customerManagedKeyStatus, keyVaultKeyUriVersion: keyVaultKeyUriVersion, enablePriorityBasedExecution: enablePriorityBasedExecution, defaultPriorityLevel: defaultPriorityLevel, enablePerRegionPerPartitionAutoscale: enablePerRegionPerPartitionAutoscale, enableAllVersionsAndDeletesChangeFeed: default, throughputPoolDedicatedRUs: default, throughputPoolMaxConsumableRUs: default, apiServerVersion: apiServerVersion, analyticalStorageSchemaType: analyticalStorageSchemaType, diagnosticLogEnableFullTextQuery: default, capacityTotalThroughputLimit: capacityTotalThroughputLimit, identity: identity, kind: kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBPrivateEndpointConnectionData"/>. </summary>
@@ -4403,7 +4429,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CosmosDBSqlDatabaseData CosmosDBSqlDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCosmosDBSqlDatabaseResourceInfo resource, CosmosDBSqlDatabasePropertiesConfig options)
         {
-            return CosmosDBSqlDatabaseData(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, resource: resource, options: options, tags: tags, identity: default);
+            return CosmosDBSqlDatabaseData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, options: options, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedCosmosDBSqlDatabaseResourceInfo"/>. </summary>
@@ -4443,7 +4469,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ThroughputSettingData ThroughputSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedThroughputSettingsResourceInfo resource)
         {
-            return ThroughputSettingData(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, resource: resource, tags: tags, identity: default);
+            return ThroughputSettingData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedThroughputSettingsResourceInfo"/>. </summary>
@@ -4501,7 +4527,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CosmosDBSqlContainerData CosmosDBSqlContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCosmosDBSqlContainerResourceInfo resource, CosmosDBSqlContainerPropertiesConfig options)
         {
-            return CosmosDBSqlContainerData(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, resource: resource, options: options, tags: tags, identity: default);
+            return CosmosDBSqlContainerData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, options: options, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExtendedCosmosDBSqlContainerResourceInfo"/>. </summary>
@@ -4563,7 +4589,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CosmosDBSqlStoredProcedureData CosmosDBSqlStoredProcedureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCosmosDBSqlStoredProcedureResourceInfo resource)
         {
-            return CosmosDBSqlStoredProcedureData(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, resource: resource, tags: tags, identity: default);
+            return CosmosDBSqlStoredProcedureData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlUserDefinedFunctionData"/>. </summary>
@@ -4578,7 +4604,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CosmosDBSqlUserDefinedFunctionData CosmosDBSqlUserDefinedFunctionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo resource)
         {
-            return CosmosDBSqlUserDefinedFunctionData(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, resource: resource, tags: tags, identity: default);
+            return CosmosDBSqlUserDefinedFunctionData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlTriggerData"/>. </summary>
@@ -4593,7 +4619,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CosmosDBSqlTriggerData CosmosDBSqlTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCosmosDBSqlTriggerResourceInfo resource)
         {
-            return CosmosDBSqlTriggerData(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, resource: resource, tags: tags, identity: default);
+            return CosmosDBSqlTriggerData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.MongoDBDatabaseData"/>. </summary>
@@ -4609,7 +4635,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MongoDBDatabaseData MongoDBDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedMongoDBDatabaseResourceInfo resource, MongoDBDatabasePropertiesConfig options)
         {
-            return MongoDBDatabaseData(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, resource: resource, options: options, tags: tags, identity: default);
+            return MongoDBDatabaseData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, options: options, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.MongoDBCollectionData"/>. </summary>
@@ -4625,7 +4651,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MongoDBCollectionData MongoDBCollectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedMongoDBCollectionResourceInfo resource, MongoDBCollectionPropertiesConfig options)
         {
-            return MongoDBCollectionData(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, resource: resource, options: options, tags: tags, identity: default);
+            return MongoDBCollectionData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, options: options, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBTableData"/>. </summary>
@@ -4641,7 +4667,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CosmosDBTableData CosmosDBTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBTablePropertiesResource resource, CosmosDBTablePropertiesOptions options)
         {
-            return CosmosDBTableData(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, resource: resource, options: options, tags: tags, identity: default);
+            return CosmosDBTableData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, options: options, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CassandraKeyspaceData"/>. </summary>
@@ -4657,7 +4683,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CassandraKeyspaceData CassandraKeyspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCassandraKeyspaceResourceInfo resource, CassandraKeyspacePropertiesConfig options)
         {
-            return CassandraKeyspaceData(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, resource: resource, options: options, tags: tags, identity: default);
+            return CassandraKeyspaceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, options: options, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CassandraKeyspaceCreateOrUpdateContent"/>. </summary>
@@ -4698,7 +4724,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CassandraTableData CassandraTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCassandraTableResourceInfo resource, CassandraTablePropertiesConfig options)
         {
-            return CassandraTableData(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, resource: resource, options: options, tags: tags, identity: default);
+            return CassandraTableData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, options: options, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.GremlinDatabaseData"/>. </summary>
@@ -4714,7 +4740,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GremlinDatabaseData GremlinDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedGremlinDatabaseResourceInfo resource, GremlinDatabasePropertiesConfig options)
         {
-            return GremlinDatabaseData(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, resource: resource, options: options, tags: tags, identity: default);
+            return GremlinDatabaseData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, options: options, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDB.GremlinGraphData"/>. </summary>
@@ -4730,33 +4756,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GremlinGraphData GremlinGraphData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedGremlinGraphResourceInfo resource, GremlinGraphPropertiesConfig options)
         {
-            return GremlinGraphData(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, resource: resource, options: options, tags: tags, identity: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CassandraClusterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> Properties of a managed Cassandra cluster. </param>
-        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned, None. </param>
-        /// <returns> A new <see cref="CosmosDB.CassandraClusterData"/> instance for mocking. </returns>
-        public static CassandraClusterData CassandraClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CassandraClusterProperties properties = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CassandraClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                properties,
-                tags,
-                identity);
+            return GremlinGraphData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, resource: resource, options: options, identity: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CassandraClusterProperties"/>. </summary>
