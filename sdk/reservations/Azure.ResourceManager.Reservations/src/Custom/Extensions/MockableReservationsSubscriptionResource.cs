@@ -15,7 +15,8 @@ namespace Azure.ResourceManager.Reservations.Mocking
     // The TypeSpec generator emits collection or long-parameter methods, so these forwarders preserve
     // the GA convenience surface and mocking target.
     public partial class MockableReservationsSubscriptionResource
-    {    /// <summary>
+    {
+        /// <summary>
         /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
         /// <list type="bullet">
         /// <item>
