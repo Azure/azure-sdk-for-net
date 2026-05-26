@@ -1,7 +1,13 @@
 # Analyzer Allow-List
 
-This directory contains per-package analyzer allow-list files that govern which
-diagnostic suppressions are approved for each shipping client library.
+This directory contains per-package analyzer allow-list files that record SDK-team-**approved**
+diagnostic suppressions for shipping client libraries. Every file in this directory represents an
+explicit, reviewed approval with a justification.
+
+> **Not "approved" yet?** If a project has existing `<NoWarn>` entries that have **not** been
+> reviewed by the SDK team, the project should be listed in
+> [`eng/NoWarnSkipValidation.txt`](../NoWarnSkipValidation.txt) — the temporary backlog — rather
+> than getting a file here. See [Workflow](#workflow) below.
 
 ## File Naming
 
@@ -39,28 +45,53 @@ These entries will be consumed by a Roslyn analyzer to approve inline suppressio
 
 ## How It Works
 
-1. `eng/AnalyzerAllowList.targets` reads the per-package `.txt` file at build time
-2. It extracts `nowarn:` lines into the `_ProjectAllowedNoWarn` MSBuild property
+1. `eng/AnalyzerAllowList.targets` reads the per-package `.txt` file at build time.
+2. It extracts `nowarn:` lines into the `_ProjectAllowedNoWarn` MSBuild property.
 3. `eng/NoWarnValidation.targets` uses `_ProjectAllowedNoWarn` to validate that
-   the project's `<NoWarn>` codes are all approved
+   the project's `<NoWarn>` codes are all approved.
+4. Projects listed in `eng/NoWarnSkipValidation.txt` short-circuit the validator entirely
+   (temporary backlog escape hatch).
 
-## Adding a New Entry
+## Workflow
 
-If your project needs to suppress a diagnostic via `<NoWarn>`:
+### Adding an approved suppression
 
-1. Create or edit `eng/analyzerallowlist/<YourProjectName>.txt`
-2. Add a `nowarn:CODE` line for the diagnostic you need to suppress
-3. Include a comment explaining why the suppression is needed
-4. The PR adding the entry will be reviewed by the SDK team
+Use this only when the suppression is genuinely project-wide and the underlying warning
+cannot be fixed or narrowed:
 
-**Preferred alternative:** Instead of adding a `<NoWarn>` entry, use a scoped
-`#pragma warning disable CODE` with a justification comment, or
-`[SuppressMessage]` with a `Justification` parameter. These are more visible
-in code review and have narrower scope.
+1. Create or edit `eng/analyzerallowlist/<YourProjectName>.txt`.
+2. Add a `nowarn:CODE` line for the diagnostic you need to suppress.
+3. **Include a comment immediately above each entry** explaining *why* the suppression is
+   needed and why it can't be narrowed.
+4. The PR adding the entry will be reviewed by the SDK team.
+
+**Preferred alternatives:**
+
+- Fix the underlying warning so the suppression can be removed.
+- Use a scoped `#pragma warning disable CODE // justification` at the file or member level,
+  then remove the `<NoWarn>` entry from the csproj.
+- Use `[SuppressMessage]` with a `Justification` parameter for non-pragma-compatible scopes.
+
+### Removing a project from the skip list
+
+When picking a project out of `eng/NoWarnSkipValidation.txt`:
+
+1. Delete the project's line from `eng/NoWarnSkipValidation.txt`.
+2. Build the project. The validator will report each unapproved `<NoWarn>` code as an
+   `AZSDK0002` error.
+3. For each error, decide one of:
+   - **Fix:** make the underlying warning go away and delete the code from `<NoWarn>`.
+   - **Migrate:** convert to a scoped `#pragma warning disable` with a justification and
+     remove from `<NoWarn>`.
+   - **Approve:** add a `nowarn:CODE` entry to this directory's file for the project, with
+     a justification comment.
+4. Land in a per-project PR.
 
 ## Related
 
 - `eng/NoWarnValidation.targets` — The validation target that enforces NoWarn policy
 - `eng/AnalyzerAllowList.targets` — MSBuild logic that reads these files
+- `eng/NoWarnSkipValidation.txt` — Temporary backlog of unverified projects
 - [Issue #55312](https://github.com/Azure/azure-sdk-for-net/issues/55312) — NoWarn visibility
 - [Issue #57586](https://github.com/Azure/azure-sdk-for-net/issues/57586) — Suppression validation
+
