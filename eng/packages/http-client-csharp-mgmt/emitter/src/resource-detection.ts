@@ -569,21 +569,18 @@ function findCollectionActionTargetResource(
   operationPath: RequestPath,
   actionTarget: ValidArmResourceSchema
 ): ValidArmResourceSchema | undefined {
-  const collectionMatches = resources.filter((resource) => {
-    if (resource === actionTarget) return false;
-
-    const collectionPath = getResourceCollectionPath(
-      resource.metadata.resourceIdPattern
-    );
-    return (
-      (collectionPath?.isPrefixOf(operationPath) ?? false) &&
-      getCollectionContextPath(resource).equals(
+  return findLongestPrefixMatch(operationPath, resources, (resource) => {
+    if (
+      resource === actionTarget ||
+      !getCollectionContextPath(resource).equals(
         actionTarget.metadata.resourceIdPattern
       )
-    );
-  });
+    ) {
+      return undefined;
+    }
 
-  return longestResourcePath(collectionMatches);
+    return getResourceCollectionPath(resource.metadata.resourceIdPattern);
+  });
 }
 
 function getResourceCollectionPath(
@@ -603,18 +600,6 @@ function getCollectionContextPath(
   return (
     resource.metadata.parentResourceId ?? resource.metadata.scope.scopeIdPattern
   );
-}
-
-function longestResourcePath(
-  resources: ValidArmResourceSchema[]
-): ValidArmResourceSchema | undefined {
-  return resources
-    .slice()
-    .sort(
-      (a, b) =>
-        b.metadata.resourceIdPattern.length -
-        a.metadata.resourceIdPattern.length
-    )[0];
 }
 
 function findListTargetResource(
