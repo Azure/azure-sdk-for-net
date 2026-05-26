@@ -197,7 +197,7 @@ by default.
 
 | Property | Description |
 | --- | --- |
-| `CredentialSource` | Must be `BrokerCredential` (case-insensitive; `Broker` is also accepted). |
+| `CredentialSource` | Must be `BrokerCredential` (case-insensitive). |
 | `TenantId` | Azure Active Directory tenant ID. |
 | `ClientId` | Optional. Application (client) ID. Defaults to the Azure SDK developer sign-on client. |
 | `UseDefaultBrokerAccount` | When `true`, authenticates with the default broker account instead of prompting. |
@@ -221,6 +221,6 @@ by default.
 
 | Property | Description |
 | --- | --- |
-| `CredentialSource` | Must be `VisualStudioCodeCredential` (case-insensitive; `visualstudiocode` is also accepted). |
+| `CredentialSource` | Must be `VisualStudioCodeCredential` (case-insensitive). |
 | `TenantId` | Optional. Tenant ID to authenticate against. |
 | `AdditionallyAllowedTenants` | Additional tenants to allow token acquisition for. |
