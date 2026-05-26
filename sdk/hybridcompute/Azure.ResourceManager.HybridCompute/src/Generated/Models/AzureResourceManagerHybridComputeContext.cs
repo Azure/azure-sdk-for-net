@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.HybridCompute
     [ModelReaderWriterBuildable(typeof(LicenseProfileMachineInstanceViewSoftwareAssurance))]
     [ModelReaderWriterBuildable(typeof(LicenseProfileProperties))]
     [ModelReaderWriterBuildable(typeof(LicenseProfilePropertiesSoftwareAssurance))]
+    [ModelReaderWriterBuildable(typeof(LicenseProfilesListResult))]
     [ModelReaderWriterBuildable(typeof(LicenseProfileStorageModelEsuProperties))]
     [ModelReaderWriterBuildable(typeof(LicenseProfileUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(LicenseProfileUpdatePropertiesSoftwareAssurance))]

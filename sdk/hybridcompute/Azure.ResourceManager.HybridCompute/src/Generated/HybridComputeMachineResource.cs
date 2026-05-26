@@ -1323,11 +1323,27 @@ namespace Azure.ResourceManager.HybridCompute
             }
         }
 
-        /// <summary> Gets an object representing a <see cref="HybridComputeLicenseProfileResource"/> along with the instance operations that can be performed on it in the <see cref="HybridComputeMachineResource"/>. </summary>
-        /// <returns> Returns a <see cref="HybridComputeLicenseProfileResource"/> object. </returns>
-        public virtual HybridComputeLicenseProfileResource GetHybridComputeLicenseProfile()
+        /// <summary> Gets a collection of HybridComputeLicenseProfiles in the <see cref="HybridComputeMachineResource"/>. </summary>
+        /// <returns> An object representing collection of HybridComputeLicenseProfiles and their operations over a HybridComputeLicenseProfileResource. </returns>
+        public virtual HybridComputeLicenseProfileCollection GetHybridComputeLicenseProfiles()
         {
-            return new HybridComputeLicenseProfileResource(Client, Id.AppendChildResource("licenseProfiles", "default"));
+            return GetCachedClient(client => new HybridComputeLicenseProfileCollection(client, Id));
+        }
+
+        /// <summary> Retrieves information about the view of a license profile. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HybridComputeLicenseProfileResource>> GetHybridComputeLicenseProfileAsync(CancellationToken cancellationToken = default)
+        {
+            return await GetHybridComputeLicenseProfiles().GetAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieves information about the view of a license profile. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<HybridComputeLicenseProfileResource> GetHybridComputeLicenseProfile(CancellationToken cancellationToken = default)
+        {
+            return GetHybridComputeLicenseProfiles().Get(cancellationToken);
         }
 
         /// <summary> Gets a collection of HybridComputeMachineExtensions in the <see cref="HybridComputeMachineResource"/>. </summary>
