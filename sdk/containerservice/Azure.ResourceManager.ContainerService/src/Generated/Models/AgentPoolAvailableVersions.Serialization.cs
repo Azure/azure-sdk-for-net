@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             ResourceIdentifier id = default;
+            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string name = default;
             AgentPoolAvailableVersionsProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -135,6 +135,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -155,11 +160,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerServiceContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("properties"u8))
                 {
                     properties = AgentPoolAvailableVersionsProperties.DeserializeAgentPoolAvailableVersionsProperties(prop.Value, options);
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             return new AgentPoolAvailableVersions(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                name,
                 properties);
         }
     }

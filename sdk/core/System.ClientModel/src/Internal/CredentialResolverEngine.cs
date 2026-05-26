@@ -9,13 +9,24 @@ namespace System.ClientModel.Primitives;
 
 /// <summary>
 /// Internal core resolution logic shared by the public
-/// <c>GetCredential</c> overloads, <c>GetClientSettings&lt;T&gt;</c>
+/// <c>GetCredentialSettings</c> overloads, <c>GetClientSettings&lt;T&gt;</c>
 /// overloads, and the DI <c>AddClient</c> auto-resolve hook.
 /// </summary>
 [Experimental("SCME0002")]
 internal static class CredentialResolverEngine
 {
-    public static AuthenticationTokenProvider? Resolve(
+    /// <summary>
+    /// Walks the supplied <see cref="CredentialResolver"/> chain (after
+    /// optionally applying <paramref name="configureOverrides"/> to a
+    /// writable overlay of <paramref name="credentialSection"/>) and returns
+    /// a cached <see cref="CredentialSettings"/> bound to the section the
+    /// chain saw, with <see cref="CredentialSettings.TokenProvider"/>
+    /// populated when a resolver matches. When no resolver matches, returns
+    /// the cached inline-only settings for that section. Returns
+    /// <see langword="null"/> only when the section does not exist. The
+    /// returned instance is shared across callers — treat it as read-only.
+    /// </summary>
+    public static CredentialSettings? Resolve(
         IConfigurationSection credentialSection,
         IEnumerable<CredentialResolver>? resolvers,
         Action<IConfigurationSection>? configureOverrides)
@@ -35,17 +46,17 @@ internal static class CredentialResolverEngine
             configureOverrides(workingSection);
         }
 
-        // Per-resolver cache lookup: the cached provider depends on the
+        // Per-resolver cache lookup: the cached settings depend on the
         // (section, resolver-that-actually-produced-it) pair, not on the whole
         // chain. So callers with overlapping chains share entries whenever the
         // same resolver instance is the one that wins for a given section.
         //
         // For each resolver in order:
         //   1. Look up cache by (sectionHash, RuntimeHelpers.GetHashCode(resolver)).
-        //      If hit, return — that resolver previously produced a provider
-        //      for this exact section.
+        //      If hit, return — that resolver previously produced settings for
+        //      this exact section.
         //   2. Otherwise call TryResolve. If it succeeds, store the produced
-        //      provider under that key and return.
+        //      settings under that key and return.
         //   3. If it doesn't match, continue to the next resolver.
         //
         // Reference-identity (RuntimeHelpers.GetHashCode) is used so distinct
@@ -60,25 +71,19 @@ internal static class CredentialResolverEngine
                     continue;
                 }
 
-                AuthenticationTokenProvider? provider = CredentialCache.GetOrTryCreate(
-                    workingSection,
-                    resolver,
-                    static (section, r) =>
-                    {
-                        if (r.TryResolve(section, out AuthenticationTokenProvider? p) && p is not null)
-                        {
-                            return p;
-                        }
-                        return null;
-                    });
+                CredentialSettings? matched = CredentialCache.GetOrTryResolve(workingSection, resolver);
 
-                if (provider is not null)
+                if (matched is not null)
                 {
-                    return provider;
+                    return matched;
                 }
             }
         }
 
-        return null;
+        // No resolver matched. Return the cached inline-only settings for
+        // this section content — covers the inline ApiKey path, where the
+        // credential lives directly on the section as Key/CredentialSource
+        // rather than through a token provider.
+        return CredentialCache.GetOrCreateInline(workingSection);
     }
 }

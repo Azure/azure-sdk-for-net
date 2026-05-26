@@ -4,29 +4,31 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
 /// Writes <see cref="ResponseStreamEvent"/> objects to a stream as SSE
-/// with <c>event:</c> + <c>data:</c> lines and keep-alive comments.
-/// Thread-safe: serializes writes via a <see cref="SemaphoreSlim"/>.
+/// with <c>event:</c> + <c>data:</c> lines. Writes are serialized through a
+/// shared <see cref="SseKeepAliveSession"/> so that periodic keep-alive
+/// comments emitted by the session's timer never interleave with event
+/// frames.
 /// </summary>
-internal sealed class SseWriter : IDisposable
+internal sealed class SseWriter
 {
-    private readonly Stream _output;
+    private readonly SseKeepAliveSession _session;
     private readonly JsonSerializerOptions _jsonOptions;
-    private readonly SemaphoreSlim _writeLock = new(1, 1);
 
     /// <summary>
     /// Initializes a new instance of <see cref="SseWriter"/>.
     /// </summary>
-    /// <param name="output">The output stream to write SSE data to.</param>
+    /// <param name="session">The keep-alive session whose synchronized stream this writer uses.</param>
     /// <param name="jsonOptions">JSON serializer options for event data.</param>
-    public SseWriter(Stream output, JsonSerializerOptions jsonOptions)
+    public SseWriter(SseKeepAliveSession session, JsonSerializerOptions jsonOptions)
     {
-        _output = output;
+        _session = session;
         _jsonOptions = jsonOptions;
     }
 
@@ -50,36 +52,8 @@ internal sealed class SseWriter : IDisposable
         var sseBlock = $"event: {eventType}\ndata: {json}\n\n";
         var bytes = Encoding.UTF8.GetBytes(sseBlock);
 
-        await _writeLock.WaitAsync(cancellationToken);
-        try
-        {
-            await _output.WriteAsync(bytes, cancellationToken);
-            await _output.FlushAsync(cancellationToken);
-        }
-        finally
-        {
-            _writeLock.Release();
-        }
-    }
-
-    /// <summary>
-    /// Writes an SSE keep-alive comment (<c>: keep-alive</c>).
-    /// </summary>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    public async Task WriteKeepAliveAsync(CancellationToken cancellationToken)
-    {
-        var bytes = ": keep-alive\n\n"u8.ToArray();
-
-        await _writeLock.WaitAsync(cancellationToken);
-        try
-        {
-            await _output.WriteAsync(bytes, cancellationToken);
-            await _output.FlushAsync(cancellationToken);
-        }
-        finally
-        {
-            _writeLock.Release();
-        }
+        await _session.Stream.WriteAsync(bytes, cancellationToken).ConfigureAwait(false);
+        await _session.Stream.FlushAsync(cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -94,21 +68,7 @@ internal sealed class SseWriter : IDisposable
         var sseBlock = $"event: error\ndata: {errorJson}\n\n";
         var bytes = Encoding.UTF8.GetBytes(sseBlock);
 
-        await _writeLock.WaitAsync(CancellationToken.None);
-        try
-        {
-            await _output.WriteAsync(bytes, CancellationToken.None);
-            await _output.FlushAsync(CancellationToken.None);
-        }
-        finally
-        {
-            _writeLock.Release();
-        }
-    }
-
-    /// <inheritdoc/>
-    public void Dispose()
-    {
-        _writeLock.Dispose();
+        await _session.Stream.WriteAsync(bytes, CancellationToken.None).ConfigureAwait(false);
+        await _session.Stream.FlushAsync(CancellationToken.None).ConfigureAwait(false);
     }
 }

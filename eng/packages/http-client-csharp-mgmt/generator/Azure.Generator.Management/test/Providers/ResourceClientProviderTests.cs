@@ -16,6 +16,20 @@ namespace Azure.Generator.Management.Tests.Providers
     internal class ResourceClientProviderTests
     {
         [TestCase]
+        public void Verify_ResourceNameUsesIdentifierName()
+        {
+            var (client, models) = InputResourceData.ClientWithResource(resourceName: "deploymentStackWhatIfResult");
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .FirstOrDefault();
+            Assert.That(resourceProvider, Is.Not.Null);
+
+            Assert.That(resourceProvider!.ResourceName, Is.EqualTo("DeploymentStackWhatIfResult"));
+            Assert.That(resourceProvider.Name, Is.EqualTo("DeploymentStackWhatIfResultResource"));
+        }
+
+        [TestCase]
         public void Verify_ValidateIdMethod()
         {
             var validateIdMethod = GetResourceClientProviderMethodByName("ValidateResourceId");
@@ -160,6 +174,31 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(bodyStatements, Is.Not.Null);
             var exptected = Helpers.GetExpectedFromFile();
             Assert.That(bodyStatements, Is.EqualTo(exptected));
+        }
+
+        [TestCase]
+        public void Verify_CheckExistenceOperation_IsNotEmitted()
+        {
+            var (client, models) = InputResourceData.ClientWithResource(includeCheckExistence: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .FirstOrDefault();
+            Assert.That(resourceProvider, Is.Not.Null);
+            var collectionProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceCollectionClientProvider>()
+                .FirstOrDefault();
+            Assert.That(collectionProvider, Is.Not.Null);
+
+            var generatedMethodNames = resourceProvider!.Methods
+                .Concat(collectionProvider!.Methods)
+                .Select(m => m.Signature.Name)
+                .ToList();
+
+            Assert.That(
+                generatedMethodNames.Any(n => n.Contains("CheckExistence", StringComparison.OrdinalIgnoreCase)),
+                Is.False,
+                $"CheckExistence is detected in metadata but should not be emitted yet. Methods: {string.Join(", ", generatedMethodNames)}");
         }
 
         [TestCase]
