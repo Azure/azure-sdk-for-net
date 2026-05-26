@@ -7,16 +7,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class VirtualMachineScaleSetExtensionData
+    // Backward compatibility: the previously shipped SDK exposed this type as a direct ResourceData-derived model.
+    // Without restoring the direct base type, VMSS extension inline request bodies no longer serialize the extension name.
+    public partial class VirtualMachineScaleSetExtensionData : ResourceData
     {
         /// <summary> Initializes a new instance of VmssExtensionData. </summary>
         /// <param name="name"> The name. </param>
         // Backward compatibility: the previously shipped SDK exposed this name-only constructor.
-        // Without chaining to the generated ResourceData base constructor, the constructor cannot set the now read-only ResourceData.Name property.
-        public VirtualMachineScaleSetExtensionData(string name) : base(name, default, default, null, default)
+        // Without chaining to the ResourceData base constructor, the constructor cannot set the now read-only ResourceData.Name property.
+        public VirtualMachineScaleSetExtensionData(string name) : base(default, name, default, default)
         {
         }
 

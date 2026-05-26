@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -21,14 +20,11 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DiskRestorePointAttributes"/>. </summary>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> Resource Id. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="encryption"> Encryption at rest settings for disk restore point. It is an optional property that can be specified in the input while creating a restore point. </param>
         /// <param name="sourceDiskRestorePoint"> Resource Id of the source disk restore point. </param>
-        internal DiskRestorePointAttributes(string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier id, RestorePointEncryption encryption, ApiEntityReference sourceDiskRestorePoint) : base(name, resourceType, systemData, additionalBinaryDataProperties, id)
+        internal DiskRestorePointAttributes(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, RestorePointEncryption encryption, ApiEntityReference sourceDiskRestorePoint) : base(id, additionalBinaryDataProperties)
         {
             Encryption = encryption;
             SourceDiskRestorePoint = sourceDiskRestorePoint;

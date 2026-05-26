@@ -83,6 +83,21 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -111,11 +126,11 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             ResourceIdentifier id = default;
+            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ComputePrivateLinkResourceProperties properties = default;
-            string name = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -125,6 +140,11 @@ namespace Azure.ResourceManager.Compute.Models
                         continue;
                     }
                     id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -154,11 +174,6 @@ namespace Azure.ResourceManager.Compute.Models
                     properties = ComputePrivateLinkResourceProperties.DeserializeComputePrivateLinkResourceProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -166,11 +181,11 @@ namespace Azure.ResourceManager.Compute.Models
             }
             return new ComputePrivateLinkResourceData(
                 id,
+                name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 properties,
-                name);
+                additionalBinaryDataProperties);
         }
     }
 }

@@ -85,7 +85,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 sku,
@@ -95,7 +94,8 @@ namespace Azure.ResourceManager.Compute.Models
                 zones.ToList(),
                 extendedLocation,
                 etag,
-                placement);
+                placement,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="upgradePolicy"> The upgrade policy. </param>
@@ -427,9 +427,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineScaleSetExtensionProfile(extensions.ToList(), extensionsTimeBudget, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="id"> Resource Id. </param>
         /// <param name="forceUpdateTag"> If a value is provided and is different from the previous value, the extension handler will be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
@@ -444,16 +441,15 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
         /// <param name="keyVaultProtectedSettings"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
         /// <param name="parentName"> The name of the parent resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="name"> Resource name. </param>
         /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
         /// <returns> A new <see cref="Compute.VirtualMachineScaleSetExtensionData"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetExtensionData VirtualMachineScaleSetExtensionData(string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier id = default, string forceUpdateTag = default, string publisher = default, string extensionType = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, BinaryData settings = default, BinaryData protectedSettings = default, string provisioningState = default, IEnumerable<string> provisionAfterExtensions = default, bool? suppressFailures = default, KeyVaultSecretReference keyVaultProtectedSettings = default, string parentName = default, string vmssExtensionName = default)
+        public static VirtualMachineScaleSetExtensionData VirtualMachineScaleSetExtensionData(ResourceIdentifier id = default, string forceUpdateTag = default, string publisher = default, string extensionType = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, BinaryData settings = default, BinaryData protectedSettings = default, string provisioningState = default, IEnumerable<string> provisionAfterExtensions = default, bool? suppressFailures = default, KeyVaultSecretReference keyVaultProtectedSettings = default, string parentName = default, string @type = default, string name = default, string vmssExtensionName = default)
         {
             return new VirtualMachineScaleSetExtensionData(
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
                 id,
+                additionalBinaryDataProperties: null,
                 forceUpdateTag is null && publisher is null && extensionType is null && typeHandlerVersion is null && autoUpgradeMinorVersion is null && enableAutomaticUpgrade is null && settings is null && protectedSettings is null && provisioningState is null && provisionAfterExtensions is null && suppressFailures is null && keyVaultProtectedSettings is null ? default : new VirtualMachineScaleSetExtensionProperties(
                     forceUpdateTag,
                     publisher,
@@ -469,18 +465,17 @@ namespace Azure.ResourceManager.Compute.Models
                     keyVaultProtectedSettings,
                     null),
                 parentName,
+                @type,
+                name,
                 vmssExtensionName);
         }
 
         /// <summary> The ComputeSubResourceData. </summary>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="id"> Resource Id. </param>
         /// <returns> A new <see cref="Models.ComputeSubResourceData"/> instance for mocking. </returns>
-        public static ComputeSubResourceData ComputeSubResourceData(string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier id = default)
+        public static ComputeSubResourceData ComputeSubResourceData(ResourceIdentifier id = default)
         {
-            return new ComputeSubResourceData(name, resourceType, systemData, additionalBinaryDataProperties: null, id);
+            return new ComputeSubResourceData(id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Specifies VM Size Property settings on the virtual machine. </summary>
@@ -915,10 +910,10 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                policy is null && runningStatus is null && progress is null && error is null ? default : new VirtualMachineScaleSetRollingUpgradeProperties(policy, runningStatus, progress, error, null));
+                policy is null && runningStatus is null && progress is null && error is null ? default : new VirtualMachineScaleSetRollingUpgradeProperties(policy, runningStatus, progress, error, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Information about the current running state of the overall upgrade. </summary>
@@ -930,6 +925,40 @@ namespace Azure.ResourceManager.Compute.Models
         public static RollingUpgradeRunningStatus RollingUpgradeRunningStatus(RollingUpgradeStatusCode? code = default, DateTimeOffset? startOn = default, RollingUpgradeActionType? lastAction = default, DateTimeOffset? lastActionOn = default)
         {
             return new RollingUpgradeRunningStatus(code, startOn, lastAction, lastActionOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> The name of the extension. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="forceUpdateTag"> If a value is provided and is different from the previous value, the extension handler will be forced to update even if the extension configuration has not changed. </param>
+        /// <param name="publisher"> The name of the extension handler publisher. </param>
+        /// <param name="extensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
+        /// <param name="settings"> Json formatted public settings for the extension. </param>
+        /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
+        /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
+        /// <param name="keyVaultProtectedSettings"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetExtensionPatch"/> instance for mocking. </returns>
+        public static VirtualMachineScaleSetExtensionPatch VirtualMachineScaleSetExtensionPatch(ResourceIdentifier id = default, string name = default, string @type = default, string forceUpdateTag = default, string publisher = default, string extensionType = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, BinaryData settings = default, BinaryData protectedSettings = default, string provisioningState = default, IEnumerable<string> provisionAfterExtensions = default, bool? suppressFailures = default, KeyVaultSecretReference keyVaultProtectedSettings = default)
+        {
+            return new VirtualMachineScaleSetExtensionPatch(id, additionalBinaryDataProperties: null, name, @type, forceUpdateTag is null && publisher is null && extensionType is null && typeHandlerVersion is null && autoUpgradeMinorVersion is null && enableAutomaticUpgrade is null && settings is null && protectedSettings is null && provisioningState is null && provisionAfterExtensions is null && suppressFailures is null && keyVaultProtectedSettings is null ? default : new VirtualMachineScaleSetExtensionProperties(
+                forceUpdateTag,
+                publisher,
+                extensionType,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                enableAutomaticUpgrade,
+                settings,
+                protectedSettings,
+                provisioningState,
+                (provisionAfterExtensions ?? new ChangeTrackingList<string>()).ToList(),
+                suppressFailures,
+                keyVaultProtectedSettings,
+                null));
         }
 
         /// <summary> Defines a virtual machine scale set lifecycle hook event. </summary>
@@ -946,8 +975,8 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="type"> Defines the type or scenario for sending a virtual machine scale set lifecycle hook event to the customer. </param>
@@ -1312,7 +1341,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 forceUpdateTag is null && publisher is null && extensionType is null && typeHandlerVersion is null && autoUpgradeMinorVersion is null && enableAutomaticUpgrade is null && settings is null && protectedSettings is null && provisioningState is null && instanceView is null && suppressFailures is null && keyVaultProtectedSettings is null && provisionAfterExtensions is null ? default : new VirtualMachineExtensionProperties(
@@ -1329,7 +1357,8 @@ namespace Azure.ResourceManager.Compute.Models
                     suppressFailures,
                     keyVaultProtectedSettings,
                     (provisionAfterExtensions ?? new ChangeTrackingList<string>()).ToList(),
-                    null));
+                    null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Specifies the input for attaching and detaching a list of managed data disks. </summary>
@@ -1404,9 +1433,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineRunCommandResult(value.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="id"> Resource Id. </param>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
@@ -1423,16 +1449,15 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
         /// <param name="parentName"> The name of the parent resource. </param>
         /// <param name="location"> The location of the extension. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="name"> Resource name. </param>
         /// <param name="vmssExtensionName"> The name of the virtual machine extension. </param>
         /// <returns> A new <see cref="Compute.VirtualMachineScaleSetVmExtensionData"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetVmExtensionData VirtualMachineScaleSetVmExtensionData(string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier id = default, string forceUpdateTag = default, string publisher = default, string extensionType = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, BinaryData settings = default, BinaryData protectedSettings = default, string provisioningState = default, VirtualMachineExtensionInstanceView instanceView = default, bool? suppressFailures = default, KeyVaultSecretReference keyVaultProtectedSettings = default, IEnumerable<string> provisionAfterExtensions = default, string parentName = default, AzureLocation? location = default, string vmssExtensionName = default)
+        public static VirtualMachineScaleSetVmExtensionData VirtualMachineScaleSetVmExtensionData(ResourceIdentifier id = default, string forceUpdateTag = default, string publisher = default, string extensionType = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, BinaryData settings = default, BinaryData protectedSettings = default, string provisioningState = default, VirtualMachineExtensionInstanceView instanceView = default, bool? suppressFailures = default, KeyVaultSecretReference keyVaultProtectedSettings = default, IEnumerable<string> provisionAfterExtensions = default, string parentName = default, AzureLocation? location = default, string @type = default, string name = default, string vmssExtensionName = default)
         {
             return new VirtualMachineScaleSetVmExtensionData(
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
                 id,
+                additionalBinaryDataProperties: null,
                 forceUpdateTag is null && publisher is null && extensionType is null && typeHandlerVersion is null && autoUpgradeMinorVersion is null && enableAutomaticUpgrade is null && settings is null && protectedSettings is null && provisioningState is null && instanceView is null && suppressFailures is null && keyVaultProtectedSettings is null && provisionAfterExtensions is null ? default : new VirtualMachineExtensionProperties(
                     forceUpdateTag,
                     publisher,
@@ -1450,7 +1475,39 @@ namespace Azure.ResourceManager.Compute.Models
                     null),
                 parentName,
                 location,
+                @type,
+                name,
                 vmssExtensionName);
+        }
+
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> The name of the extension. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
+        /// <param name="publisher"> The name of the extension handler publisher. </param>
+        /// <param name="extensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
+        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
+        /// <param name="settings"> Json formatted public settings for the extension. </param>
+        /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
+        /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
+        /// <param name="keyVaultProtectedSettings"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
+        /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmExtensionPatch"/> instance for mocking. </returns>
+        public static VirtualMachineScaleSetVmExtensionPatch VirtualMachineScaleSetVmExtensionPatch(ResourceIdentifier id = default, string name = default, string @type = default, string forceUpdateTag = default, string publisher = default, string extensionType = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, BinaryData settings = default, BinaryData protectedSettings = default, bool? suppressFailures = default, KeyVaultSecretReference keyVaultProtectedSettings = default)
+        {
+            return new VirtualMachineScaleSetVmExtensionPatch(id, additionalBinaryDataProperties: null, name, @type, forceUpdateTag is null && publisher is null && extensionType is null && typeHandlerVersion is null && autoUpgradeMinorVersion is null && enableAutomaticUpgrade is null && settings is null && protectedSettings is null && suppressFailures is null && keyVaultProtectedSettings is null ? default : new VirtualMachineExtensionUpdateProperties(
+                forceUpdateTag,
+                publisher,
+                extensionType,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                enableAutomaticUpgrade,
+                settings,
+                protectedSettings,
+                suppressFailures,
+                keyVaultProtectedSettings,
+                null));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1507,7 +1564,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 hardwareProfile is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && priority is null && evictionPolicy is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && timeCreated is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && billingMaxPrice is null && hostId is null && hostGroupId is null && capacityReservationGroupId is null && galleryApplications is null && isEnabled is null ? default : new VirtualMachineProperties(
@@ -1547,7 +1603,8 @@ namespace Azure.ResourceManager.Compute.Models
                 extendedLocation,
                 managedBy,
                 eTag,
-                placement);
+                placement,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="platformUpdateDomain"> Specifies the update domain of the virtual machine. </param>
@@ -2004,7 +2061,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 operatingSystem is null && computeRole is null && handlerSchema is null && virtualMachineScaleSetEnabled is null && supportsMultipleExtensions is null ? default : new VirtualMachineExtensionImageProperties(
@@ -2013,7 +2069,8 @@ namespace Azure.ResourceManager.Compute.Models
                     handlerSchema,
                     virtualMachineScaleSetEnabled,
                     supportsMultipleExtensions,
-                    null));
+                    null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="defaultVirtualMachineScaleSetInfo"> Indicates the target Virtual Machine ScaleSet properties upon triggering a seamless migration without downtime of the VMs via the ConvertToVirtualMachineScaleSet API. </param>
@@ -2120,10 +2177,10 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                publicKey is null ? default : new SshPublicKeyResourceProperties(publicKey, null));
+                publicKey is null ? default : new SshPublicKeyResourceProperties(publicKey, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -2179,7 +2236,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 source is null && provisioningState is null && restorePointGroupId is null && restorePoints is null && instantAccess is null ? default : new RestorePointCollectionProperties(
@@ -2188,7 +2244,8 @@ namespace Azure.ResourceManager.Compute.Models
                     restorePointGroupId,
                     (restorePoints ?? new ChangeTrackingList<RestorePointData>()).ToList(),
                     instantAccess,
-                    null));
+                    null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The properties of the source resource that this restore point collection is created from. </summary>
@@ -2262,23 +2319,13 @@ namespace Azure.ResourceManager.Compute.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="id"> Resource Id. </param>
         /// <param name="encryption"> Encryption at rest settings for disk restore point. It is an optional property that can be specified in the input while creating a restore point. </param>
         /// <param name="sourceDiskRestorePointId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
         /// <returns> A new <see cref="Models.DiskRestorePointAttributes"/> instance for mocking. </returns>
-        public static DiskRestorePointAttributes DiskRestorePointAttributes(string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier id = default, RestorePointEncryption encryption = default, ResourceIdentifier sourceDiskRestorePointId = default)
+        public static DiskRestorePointAttributes DiskRestorePointAttributes(ResourceIdentifier id = default, RestorePointEncryption encryption = default, ResourceIdentifier sourceDiskRestorePointId = default)
         {
-            return new DiskRestorePointAttributes(
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                id,
-                encryption,
-                sourceDiskRestorePointId is null ? default : new ApiEntityReference(sourceDiskRestorePointId, null));
+            return new DiskRestorePointAttributes(id, additionalBinaryDataProperties: null, encryption, sourceDiskRestorePointId is null ? default : new ApiEntityReference(sourceDiskRestorePointId, null));
         }
 
         /// <summary> Describes a data disk. </summary>
@@ -2430,7 +2477,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 source is null && parameters is null && protectedParameters is null && asyncExecution is null && runAsUser is null && runAsPassword is null && timeoutInSeconds is null && outputBlobUri is null && errorBlobUri is null && outputBlobManagedIdentity is null && errorBlobManagedIdentity is null && provisioningState is null && instanceView is null && treatFailureAsDeploymentFailure is null ? default : new VirtualMachineRunCommandProperties(
@@ -2448,7 +2494,8 @@ namespace Azure.ResourceManager.Compute.Models
                     provisioningState,
                     instanceView,
                     treatFailureAsDeploymentFailure,
-                    null));
+                    null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The instance view of a virtual machine run command. </summary>
@@ -2835,6 +2882,25 @@ namespace Azure.ResourceManager.Compute.Models
             return new DiskAccessPatch(tags, additionalBinaryDataProperties: null);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource DNS zone name. </param>
+        /// <returns> A new <see cref="Models.ComputePrivateLinkResourceData"/> instance for mocking. </returns>
+        public static ComputePrivateLinkResourceData ComputePrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            return new ComputePrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new ComputePrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null),
+                additionalBinaryDataProperties: null);
+        }
+
         /// <param name="encryptionType"> The type of key used to encrypt the data of the disk. </param>
         /// <param name="activeKey"> Key Vault Key Url to be used for server side encryption of Managed Disks and Snapshots. </param>
         /// <param name="rotationToLatestKeyVersionEnabled"> Set this flag to true to enable auto-updating of this disk encryption set to the latest key version. </param>
@@ -2879,7 +2945,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 timeCreated is null && sourceResourceId is null && osType is null && hyperVGeneration is null && purchasePlan is null && supportedCapabilities is null && familyId is null && sourceUniqueId is null && encryption is null && supportsHibernation is null && networkAccessPolicy is null && publicNetworkAccess is null && diskAccessId is null && completionPercent is null && replicationState is null && sourceResourceLocation is null && securityProfile is null && logicalSectorSize is null ? default : new DiskRestorePointProperties(
                     timeCreated,
                     sourceResourceId,
@@ -2899,7 +2964,8 @@ namespace Azure.ResourceManager.Compute.Models
                     sourceResourceLocation,
                     securityProfile,
                     logicalSectorSize,
-                    null));
+                    null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS. This is an optional parameter for incremental snapshot and the default behavior is the SKU will be set to the same sku as the previous snapshot. </summary>
@@ -2979,22 +3045,22 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The Update Resource model definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="name"> Resource name. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.UpdateResourceDefinition"/> instance for mocking. </returns>
-        public static UpdateResourceDefinition UpdateResourceDefinition(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, string name = default, IDictionary<string, string> tags = default)
+        public static UpdateResourceDefinition UpdateResourceDefinition(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new UpdateResourceDefinition(
                 id,
+                name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                name,
-                tags);
+                tags,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Contains UEFI settings for the image version. </summary>
@@ -3053,10 +3119,10 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                resourceArmId is null && softDeletedArtifactType is null && softDeletedOn is null ? default : new GallerySoftDeletedResourceProperties(resourceArmId, softDeletedArtifactType, softDeletedOn, null));
+                resourceArmId is null && softDeletedArtifactType is null && softDeletedOn is null ? default : new GallerySoftDeletedResourceProperties(resourceArmId, softDeletedArtifactType, softDeletedOn, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Specifies information about the gallery sharing profile update. </summary>
@@ -3094,7 +3160,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && restore is null && validationsProfile is null && securityUefiSettings is null ? default : new GalleryImageVersionProperties(
@@ -3106,7 +3171,8 @@ namespace Azure.ResourceManager.Compute.Models
                     new ImageVersionSecurityProfile(securityUefiSettings, null),
                     restore,
                     validationsProfile,
-                    null));
+                    null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The publishing profile of a gallery image Version. </summary>
@@ -3343,7 +3409,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 description is null && eula is null && privacyStatementUri is null && releaseNoteUri is null && endOfLifeOn is null && supportedOSType is null && customActions is null ? default : new GalleryApplicationProperties(
@@ -3354,7 +3419,8 @@ namespace Azure.ResourceManager.Compute.Models
                     endOfLifeOn,
                     supportedOSType.GetValueOrDefault(),
                     (customActions ?? new ChangeTrackingList<GalleryApplicationCustomAction>()).ToList(),
-                    null));
+                    null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> A custom action that can be performed with a Gallery Application Version. </summary>
@@ -3431,10 +3497,10 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Describes the properties of a gallery script definition. </summary>
@@ -3477,10 +3543,10 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="publishingProfile"> The publishing profile of a gallery image version. </param>
@@ -3579,10 +3645,10 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Describes the properties of a gallery inVMAccessControlProfile. </summary>
@@ -3628,7 +3694,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 targetLocations is null && excludeFromLatest is null && publishedOn is null && provisioningState is null && replicationStatus is null && mode is null && defaultAccess is null && rules is null ? default : new GalleryInVmAccessControlProfileVersionProperties(
@@ -3640,7 +3705,8 @@ namespace Azure.ResourceManager.Compute.Models
                     null,
                     mode.GetValueOrDefault(),
                     defaultAccess.GetValueOrDefault(),
-                    rules));
+                    rules),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> This is the Access Control Rules specification for an inVMAccessControlProfile version. </summary>
@@ -4136,7 +4202,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 sku,
@@ -4173,7 +4238,8 @@ namespace Azure.ResourceManager.Compute.Models
                 zones.ToList(),
                 extendedLocation,
                 default,
-                default);
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.VirtualMachineScaleSetData"/>. </summary>
@@ -4222,7 +4288,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 sku,
@@ -4259,7 +4324,8 @@ namespace Azure.ResourceManager.Compute.Models
                 zones.ToList(),
                 extendedLocation,
                 etag,
-                default);
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.VirtualMachineScaleSetData"/>. </summary>
@@ -4307,7 +4373,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 sku,
@@ -4344,7 +4409,8 @@ namespace Azure.ResourceManager.Compute.Models
                 zones.ToList(),
                 extendedLocation,
                 etag,
-                default);
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"></param>
@@ -4393,7 +4459,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 sku,
@@ -4430,7 +4495,8 @@ namespace Azure.ResourceManager.Compute.Models
                 zones.ToList(),
                 extendedLocation,
                 etag,
-                default);
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"></param>
@@ -4454,7 +4520,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 capacityReservations is null && virtualMachinesAssociated is null && instanceViewCapacityReservations is null ? default : new CapacityReservationGroupProperties(
@@ -4464,7 +4529,8 @@ namespace Azure.ResourceManager.Compute.Models
                     default,
                     default,
                     default),
-                zones.ToList());
+                zones.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="publisherUri"></param>
@@ -4534,7 +4600,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 latestModelApplied is null && vmId is null && instanceView is null && hardwareProfile is null && resilientVmDeletionStatus is null && storageProfile is null && additionalCapabilities is null && osProfile is null && securityProfile is null && networkProfile is null && networkInterfaceConfigurations is null && bootDiagnostics is null && availabilitySetId is null && provisioningState is null && licenseType is null && modelDefinitionApplied is null && protectionPolicy is null && userData is null && timeCreated is null ? default : new VirtualMachineScaleSetVmProperties(
@@ -4565,7 +4630,8 @@ namespace Azure.ResourceManager.Compute.Models
                 resources.ToList(),
                 zones.ToList(),
                 identity,
-                etag);
+                etag,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"></param>
@@ -4594,7 +4660,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 properties,
@@ -4604,7 +4669,8 @@ namespace Azure.ResourceManager.Compute.Models
                 resources.ToList(),
                 zones.ToList(),
                 identity,
-                etag);
+                etag,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.VirtualMachineScaleSetVmData"/>. </summary>
@@ -4652,7 +4718,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 latestModelApplied is null && vmId is null && instanceView is null && hardwareProfile is null && storageProfile is null && additionalCapabilities is null && osProfile is null && securityProfile is null && networkProfile is null && networkInterfaceConfigurations is null && bootDiagnostics is null && availabilitySetId is null && provisioningState is null && licenseType is null && modelDefinitionApplied is null && protectionPolicy is null && userData is null && timeCreated is null ? default : new VirtualMachineScaleSetVmProperties(
@@ -4683,7 +4748,8 @@ namespace Azure.ResourceManager.Compute.Models
                 resources.ToList(),
                 zones.ToList(),
                 identity,
-                etag);
+                etag,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"></param>
@@ -4728,7 +4794,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 latestModelApplied is null && vmId is null && instanceView is null && hardwareProfile is null && storageProfile is null && additionalCapabilities is null && osProfile is null && securityProfile is null && networkProfile is null && networkInterfaceConfigurations is null && bootDiagnostics is null && availabilitySetId is null && provisioningState is null && licenseType is null && modelDefinitionApplied is null && protectionPolicy is null && userData is null && timeCreated is null ? default : new VirtualMachineScaleSetVmProperties(
@@ -4759,7 +4824,8 @@ namespace Azure.ResourceManager.Compute.Models
                 resources.ToList(),
                 zones.ToList(),
                 identity,
-                default);
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineDataDisk"/>. </summary>
@@ -4868,11 +4934,11 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 default,
-                sku);
+                sku,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.CapacityReservationGroupData"/>. </summary>
@@ -4902,20 +4968,11 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 default,
-                zones.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ComputeSubResourceData"/>. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <returns> A new <see cref="Models.ComputeSubResourceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ComputeSubResourceData ComputeSubResourceData(ResourceIdentifier id)
-        {
-            return ComputeSubResourceData(name: default, resourceType: default, systemData: default, id: id);
+                zones.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.DedicatedHostGroupData"/>. </summary>
@@ -4944,11 +5001,11 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 default,
-                zones.ToList());
+                zones.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.DiskImageData"/>. </summary>
@@ -4973,11 +5030,11 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 default,
-                extendedLocation);
+                extendedLocation,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineScaleSetProperties"/>. </summary>
@@ -5034,7 +5091,28 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualMachineScaleSetExtensionData VirtualMachineScaleSetExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, string provisioningState, IEnumerable<string> provisionAfterExtensions, bool? suppressFailures, KeyVaultSecretReference keyVaultProtectedSettings)
         {
-            return VirtualMachineScaleSetExtensionData(name: name, resourceType: resourceType, systemData: systemData, id: id, forceUpdateTag: forceUpdateTag, publisher: publisher, extensionType: extensionType, typeHandlerVersion: typeHandlerVersion, autoUpgradeMinorVersion: autoUpgradeMinorVersion, enableAutomaticUpgrade: enableAutomaticUpgrade, settings: settings, protectedSettings: protectedSettings, provisioningState: provisioningState, provisionAfterExtensions: provisionAfterExtensions, suppressFailures: suppressFailures, keyVaultProtectedSettings: keyVaultProtectedSettings, parentName: default, vmssExtensionName: default);
+
+            return new VirtualMachineScaleSetExtensionData(
+                id,
+                additionalBinaryDataProperties: null,
+                forceUpdateTag is null && publisher is null && extensionType is null && typeHandlerVersion is null && autoUpgradeMinorVersion is null && enableAutomaticUpgrade is null && settings is null && protectedSettings is null && provisioningState is null && provisionAfterExtensions is null && suppressFailures is null && keyVaultProtectedSettings is null ? default : new VirtualMachineScaleSetExtensionProperties(
+                    forceUpdateTag,
+                    publisher,
+                    extensionType,
+                    typeHandlerVersion,
+                    autoUpgradeMinorVersion,
+                    enableAutomaticUpgrade,
+                    settings,
+                    protectedSettings,
+                    provisioningState,
+                    (provisionAfterExtensions ?? new ChangeTrackingList<string>()).ToList(),
+                    suppressFailures,
+                    keyVaultProtectedSettings,
+                    default),
+                default,
+                default,
+                name,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.VirtualMachineData"/>. </summary>
@@ -5092,7 +5170,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 hardwareProfile is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservationGroupId is null && galleryApplications is null && timeCreated is null ? default : new VirtualMachineProperties(
@@ -5132,7 +5209,8 @@ namespace Azure.ResourceManager.Compute.Models
                 extendedLocation,
                 managedBy,
                 etag,
-                placement);
+                placement,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DiskInstanceView"/>. </summary>
@@ -5175,11 +5253,11 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 default,
-                zones.ToList());
+                zones.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.RestorePointData"/>. </summary>
@@ -5205,19 +5283,8 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DiskRestorePointAttributes"/>. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="encryption"> Encryption at rest settings for disk restore point. It is an optional property that can be specified in the input while creating a restore point. </param>
-        /// <param name="sourceDiskRestorePointId"> Resource Id of the source disk restore point. </param>
-        /// <returns> A new <see cref="Models.DiskRestorePointAttributes"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DiskRestorePointAttributes DiskRestorePointAttributes(ResourceIdentifier id, RestorePointEncryption encryption, ResourceIdentifier sourceDiskRestorePointId)
-        {
-            return DiskRestorePointAttributes(name: default, resourceType: default, systemData: default, id: id, encryption: encryption, sourceDiskRestorePointId: sourceDiskRestorePointId);
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailabilitySetPatch"/>. </summary>
@@ -5287,12 +5354,12 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 default,
                 sku,
-                zones.ToList());
+                zones.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CapacityReservationPatch"/>. </summary>
@@ -5368,11 +5435,11 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 default,
-                sku);
+                sku,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DedicatedHostPatch"/>. </summary>
@@ -5428,17 +5495,24 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
         /// <param name="keyVaultProtectedSettings"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetExtensionPatch"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetExtensionPatch VirtualMachineScaleSetExtensionPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string forceUpdateTag = default, string publisher = default, string extensionType = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, BinaryData settings = default, BinaryData protectedSettings = default, string provisioningState = default, IEnumerable<string> provisionAfterExtensions = default, bool? suppressFailures = default, KeyVaultSecretReference keyVaultProtectedSettings = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineScaleSetExtensionPatch VirtualMachineScaleSetExtensionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, string provisioningState, IEnumerable<string> provisionAfterExtensions, bool? suppressFailures, KeyVaultSecretReference keyVaultProtectedSettings)
         {
-            provisionAfterExtensions ??= new ChangeTrackingList<string>();
 
-            return new VirtualMachineScaleSetExtensionPatch(
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                id,
-                default);
+            return new VirtualMachineScaleSetExtensionPatch(id, additionalBinaryDataProperties: null, name, default, forceUpdateTag is null && publisher is null && extensionType is null && typeHandlerVersion is null && autoUpgradeMinorVersion is null && enableAutomaticUpgrade is null && settings is null && protectedSettings is null && provisioningState is null && provisionAfterExtensions is null && suppressFailures is null && keyVaultProtectedSettings is null ? default : new VirtualMachineScaleSetExtensionProperties(
+                forceUpdateTag,
+                publisher,
+                extensionType,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                enableAutomaticUpgrade,
+                settings,
+                protectedSettings,
+                provisioningState,
+                (provisionAfterExtensions ?? new ChangeTrackingList<string>()).ToList(),
+                suppressFailures,
+                keyVaultProtectedSettings,
+                default));
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineScaleSetVmProperties"/>. </summary>
@@ -5492,7 +5566,30 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualMachineScaleSetVmExtensionData VirtualMachineScaleSetVmExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, string provisioningState, VirtualMachineExtensionInstanceView instanceView, bool? suppressFailures, KeyVaultSecretReference keyVaultProtectedSettings, IEnumerable<string> provisionAfterExtensions)
         {
-            return VirtualMachineScaleSetVmExtensionData(name: name, resourceType: resourceType, systemData: systemData, id: id, forceUpdateTag: forceUpdateTag, publisher: publisher, extensionType: extensionType, typeHandlerVersion: typeHandlerVersion, autoUpgradeMinorVersion: autoUpgradeMinorVersion, enableAutomaticUpgrade: enableAutomaticUpgrade, settings: settings, protectedSettings: protectedSettings, provisioningState: provisioningState, instanceView: instanceView, suppressFailures: suppressFailures, keyVaultProtectedSettings: keyVaultProtectedSettings, provisionAfterExtensions: provisionAfterExtensions, parentName: default, location: location, vmssExtensionName: default);
+
+            return new VirtualMachineScaleSetVmExtensionData(
+                id,
+                additionalBinaryDataProperties: null,
+                forceUpdateTag is null && publisher is null && extensionType is null && typeHandlerVersion is null && autoUpgradeMinorVersion is null && enableAutomaticUpgrade is null && settings is null && protectedSettings is null && provisioningState is null && instanceView is null && suppressFailures is null && keyVaultProtectedSettings is null && provisionAfterExtensions is null ? default : new VirtualMachineExtensionProperties(
+                    forceUpdateTag,
+                    publisher,
+                    extensionType,
+                    typeHandlerVersion,
+                    autoUpgradeMinorVersion,
+                    enableAutomaticUpgrade,
+                    settings,
+                    protectedSettings,
+                    provisioningState,
+                    instanceView,
+                    suppressFailures,
+                    keyVaultProtectedSettings,
+                    (provisionAfterExtensions ?? new ChangeTrackingList<string>()).ToList(),
+                    default),
+                default,
+                location,
+                default,
+                name,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineScaleSetVmExtensionPatch"/>. </summary>
@@ -5511,15 +5608,21 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
         /// <param name="keyVaultProtectedSettings"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmExtensionPatch"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetVmExtensionPatch VirtualMachineScaleSetVmExtensionPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string forceUpdateTag = default, string publisher = default, string extensionType = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, BinaryData settings = default, BinaryData protectedSettings = default, bool? suppressFailures = default, KeyVaultSecretReference keyVaultProtectedSettings = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineScaleSetVmExtensionPatch VirtualMachineScaleSetVmExtensionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, bool? suppressFailures, KeyVaultSecretReference keyVaultProtectedSettings)
         {
-            return new VirtualMachineScaleSetVmExtensionPatch(
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                id,
-                default);
+            return new VirtualMachineScaleSetVmExtensionPatch(id, additionalBinaryDataProperties: null, name, default, forceUpdateTag is null && publisher is null && extensionType is null && typeHandlerVersion is null && autoUpgradeMinorVersion is null && enableAutomaticUpgrade is null && settings is null && protectedSettings is null && suppressFailures is null && keyVaultProtectedSettings is null ? default : new VirtualMachineExtensionUpdateProperties(
+                forceUpdateTag,
+                publisher,
+                extensionType,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                enableAutomaticUpgrade,
+                settings,
+                protectedSettings,
+                suppressFailures,
+                keyVaultProtectedSettings,
+                default));
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachinePatch"/>. </summary>
@@ -5583,11 +5686,11 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 default,
-                extendedLocation);
+                extendedLocation,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.ComputePrivateEndpointConnectionData"/>. </summary>
@@ -5606,8 +5709,8 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                default);
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.DiskEncryptionSetData"/>. </summary>
@@ -5637,11 +5740,11 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 default,
-                identity);
+                identity,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.ManagedDiskData"/>. </summary>
@@ -5702,7 +5805,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 default,
@@ -5710,7 +5812,8 @@ namespace Azure.ResourceManager.Compute.Models
                 managedByExtended.ToList(),
                 sku,
                 zones.ToList(),
-                extendedLocation);
+                extendedLocation,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.SnapshotData"/>. </summary>
@@ -5757,36 +5860,13 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 default,
                 managedBy,
                 sku,
-                extendedLocation);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ComputePrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource DNS zone name. </param>
-        /// <returns> A new <see cref="Models.ComputePrivateLinkResourceData"/> instance for mocking. </returns>
-        public static ComputePrivateLinkResourceData ComputePrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
-        {
-            requiredMembers ??= new ChangeTrackingList<string>();
-            requiredZoneNames ??= new ChangeTrackingList<string>();
-
-            return new ComputePrivateLinkResourceData(
-                id,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                default,
-                name);
+                extendedLocation,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedDiskPatch"/>. </summary>
@@ -5867,11 +5947,11 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 default,
-                identity);
+                identity,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.CommunityGalleryImageData"/>. </summary>
@@ -5981,11 +6061,11 @@ namespace Azure.ResourceManager.Compute.Models
 
             return new GalleryPatch(
                 id,
+                name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                name,
                 tags,
+                additionalBinaryDataProperties: null,
                 default,
                 identity);
         }
@@ -6011,11 +6091,11 @@ namespace Azure.ResourceManager.Compute.Models
 
             return new GalleryApplicationPatch(
                 id,
+                name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                name,
                 tags,
+                additionalBinaryDataProperties: null,
                 default);
         }
 
@@ -6040,10 +6120,10 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default);
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryApplicationVersionPatch"/>. </summary>
@@ -6063,11 +6143,11 @@ namespace Azure.ResourceManager.Compute.Models
 
             return new GalleryApplicationVersionPatch(
                 id,
+                name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                name,
                 tags,
+                additionalBinaryDataProperties: null,
                 default);
         }
 
@@ -6106,10 +6186,10 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                default);
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryImagePatch"/>. </summary>
@@ -6143,11 +6223,11 @@ namespace Azure.ResourceManager.Compute.Models
 
             return new GalleryImagePatch(
                 id,
+                name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                name,
                 tags,
+                additionalBinaryDataProperties: null,
                 default);
         }
 
@@ -6177,7 +6257,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityUefiSettings is null && validationsProfile is null ? default : new GalleryImageVersionProperties(
@@ -6189,7 +6268,8 @@ namespace Azure.ResourceManager.Compute.Models
                     new ImageVersionSecurityProfile(securityUefiSettings, default),
                     default,
                     validationsProfile,
-                    default));
+                    default),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryImageVersionPatch"/>. </summary>
@@ -6213,11 +6293,11 @@ namespace Azure.ResourceManager.Compute.Models
 
             return new GalleryImageVersionPatch(
                 id,
+                name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                name,
                 tags,
+                additionalBinaryDataProperties: null,
                 default);
         }
 
@@ -6235,11 +6315,11 @@ namespace Azure.ResourceManager.Compute.Models
 
             return new GalleryInVmAccessControlProfilePatch(
                 id,
+                name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                name,
                 tags,
+                additionalBinaryDataProperties: null,
                 properties);
         }
 
@@ -6265,11 +6345,11 @@ namespace Azure.ResourceManager.Compute.Models
 
             return new GalleryInVmAccessControlProfileVersionPatch(
                 id,
+                name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                name,
                 tags,
+                additionalBinaryDataProperties: null,
                 default);
         }
 
@@ -6293,11 +6373,11 @@ namespace Azure.ResourceManager.Compute.Models
 
             return new GalleryScriptPatch(
                 id,
+                name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                name,
                 tags,
+                additionalBinaryDataProperties: null,
                 default);
         }
 
@@ -6318,11 +6398,11 @@ namespace Azure.ResourceManager.Compute.Models
 
             return new GalleryScriptVersionPatch(
                 id,
+                name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                name,
                 tags,
+                additionalBinaryDataProperties: null,
                 default);
         }
 
@@ -6781,7 +6861,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 hardwareProfile is null && scheduledEventsPolicy is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservationGroupId is null && galleryApplications is null && timeCreated is null ? default : new VirtualMachineProperties(
@@ -6821,7 +6900,8 @@ namespace Azure.ResourceManager.Compute.Models
                 extendedLocation,
                 managedBy,
                 etag,
-                default);
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.AvailabilitySetData"/>. </summary>
@@ -7261,7 +7341,6 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 hardwareProfile is null && storageProfile is null && additionalCapabilities is null && osProfile is null && networkProfile is null && securityProfile is null && bootDiagnostics is null && availabilitySetId is null && virtualMachineScaleSetId is null && proximityPlacementGroupId is null && priority is null && evictionPolicy is null && billingMaxPrice is null && hostId is null && hostGroupId is null && provisioningState is null && instanceView is null && licenseType is null && vmId is null && extensionsTimeBudget is null && platformFaultDomain is null && scheduledEventsProfile is null && userData is null && capacityReservationGroupId is null && galleryApplications is null && timeCreated is null ? default : new VirtualMachineProperties(
@@ -7301,7 +7380,8 @@ namespace Azure.ResourceManager.Compute.Models
                 extendedLocation,
                 managedBy,
                 etag,
-                default);
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachinePatch"/>. </summary>

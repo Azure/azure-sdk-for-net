@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override UpdateResourceDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override UpdateResourceDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             ResourceIdentifier id = default;
+            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string name = default;
             IDictionary<string, string> tags = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             GalleryImageVersionProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,6 +136,11 @@ namespace Azure.ResourceManager.Compute.Models
                         continue;
                     }
                     id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -154,11 +159,6 @@ namespace Azure.ResourceManager.Compute.Models
                         continue;
                     }
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -198,11 +198,11 @@ namespace Azure.ResourceManager.Compute.Models
             }
             return new GalleryImageVersionPatch(
                 id,
+                name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
-                name,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties,
                 properties);
         }
     }
