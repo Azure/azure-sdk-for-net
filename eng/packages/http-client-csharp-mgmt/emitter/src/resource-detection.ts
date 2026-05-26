@@ -555,12 +555,11 @@ function findListTargetResource(
     (resource) => resource.resourceModelId === itemModelId
   );
 
-  const exactCollectionMatches = candidates.filter(
-    (resource) =>
-      resource.metadata.resourceIdPattern.trimLastSegment?.equals(operationPath)
+  const collectionMatches = candidates.filter((resource) =>
+    operationPath.isPrefixOf(resource.metadata.resourceIdPattern)
   );
-  if (exactCollectionMatches.length > 0) {
-    return shortestResourcePath(exactCollectionMatches);
+  if (collectionMatches.length > 0) {
+    return shortestResourcePath(collectionMatches);
   }
 
   const operationType = operationPath.resourceType;
