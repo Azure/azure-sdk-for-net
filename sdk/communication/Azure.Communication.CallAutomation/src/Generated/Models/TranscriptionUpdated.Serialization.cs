@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class TranscriptionUpdate
+    public partial class TranscriptionUpdated
     {
-        internal static TranscriptionUpdate DeserializeTranscriptionUpdate(JsonElement element)
+        internal static TranscriptionUpdated DeserializeTranscriptionUpdated(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -22,7 +22,7 @@ namespace Azure.Communication.CallAutomation
             string correlationId = default;
             string operationContext = default;
             ResultInformation resultInformation = default;
-            TranscriptionUpdate transcriptionUpdateResult = default;
+            TranscriptionUpdated transcriptionUpdateResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -60,11 +60,11 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    transcriptionUpdateResult = DeserializeTranscriptionUpdate(property.Value);
+                    transcriptionUpdateResult = DeserializeTranscriptionUpdated(property.Value);
                     continue;
                 }
             }
-            return new TranscriptionUpdate(
+            return new TranscriptionUpdated(
                 callConnectionId,
                 serverCallId,
                 correlationId,
@@ -75,10 +75,10 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TranscriptionUpdate FromResponse(Response response)
+        internal static TranscriptionUpdated FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTranscriptionUpdate(document.RootElement);
+            return DeserializeTranscriptionUpdated(document.RootElement);
         }
     }
 }

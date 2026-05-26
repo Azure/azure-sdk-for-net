@@ -223,7 +223,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="resultInformation"></param>
         /// <param name="transcriptionUpdateResult"></param>
         /// <returns> A new <see cref="CallAutomation.TranscriptionFailed"/> instance for mocking. </returns>
-        public static TranscriptionFailed TranscriptionFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdateResult = null)
+        public static TranscriptionFailed TranscriptionFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdated transcriptionUpdateResult = null)
         {
             return new TranscriptionFailed(
                 callConnectionId,
@@ -234,17 +234,17 @@ namespace Azure.Communication.CallAutomation
                 transcriptionUpdateResult);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionUpdated"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
         /// <param name="resultInformation"></param>
         /// <param name="transcriptionUpdateResult"></param>
-        /// <returns> A new <see cref="CallAutomation.TranscriptionUpdate"/> instance for mocking. </returns>
-        public static TranscriptionUpdate TranscriptionUpdate(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdateResult = null)
+        /// <returns> A new <see cref="CallAutomation.TranscriptionUpdated"/> instance for mocking. </returns>
+        public static TranscriptionUpdated TranscriptionUpdated(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdated transcriptionUpdateResult = null)
         {
-            return new TranscriptionUpdate(
+            return new TranscriptionUpdated(
                 callConnectionId,
                 serverCallId,
                 correlationId,
@@ -261,7 +261,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="resultInformation"></param>
         /// <param name="transcriptionUpdateResult"></param>
         /// <returns> A new <see cref="CallAutomation.TranscriptionStarted"/> instance for mocking. </returns>
-        public static TranscriptionStarted TranscriptionStarted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdateResult = null)
+        public static TranscriptionStarted TranscriptionStarted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdated transcriptionUpdateResult = null)
         {
             return new TranscriptionStarted(
                 callConnectionId,
@@ -280,7 +280,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="resultInformation"></param>
         /// <param name="transcriptionUpdateResult"></param>
         /// <returns> A new <see cref="CallAutomation.TranscriptionStopped"/> instance for mocking. </returns>
-        public static TranscriptionStopped TranscriptionStopped(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdateResult = null)
+        public static TranscriptionStopped TranscriptionStopped(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdated transcriptionUpdateResult = null)
         {
             return new TranscriptionStopped(
                 callConnectionId,

@@ -22,7 +22,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
         /// <param name="resultInformation"></param>
         /// <param name="transcriptionUpdateResult"></param>
-        internal TranscriptionFailed(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, TranscriptionUpdate transcriptionUpdateResult)
+        internal TranscriptionFailed(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, TranscriptionUpdated transcriptionUpdateResult)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -32,6 +32,6 @@ namespace Azure.Communication.CallAutomation
             TranscriptionUpdateResult = transcriptionUpdateResult;
         }
         /// <summary> Gets the transcription update result. </summary>
-        public TranscriptionUpdate TranscriptionUpdateResult { get; }
+        public TranscriptionUpdated TranscriptionUpdateResult { get; }
     }
 }

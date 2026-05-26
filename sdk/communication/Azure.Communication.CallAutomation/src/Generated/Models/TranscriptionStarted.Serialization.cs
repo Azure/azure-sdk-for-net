@@ -22,7 +22,7 @@ namespace Azure.Communication.CallAutomation
             string correlationId = default;
             string operationContext = default;
             ResultInformation resultInformation = default;
-            TranscriptionUpdate transcriptionUpdateResult = default;
+            TranscriptionUpdated transcriptionUpdateResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -60,7 +60,7 @@ namespace Azure.Communication.CallAutomation
                     {
                         continue;
                     }
-                    transcriptionUpdateResult = TranscriptionUpdate.DeserializeTranscriptionUpdate(property.Value);
+                    transcriptionUpdateResult = TranscriptionUpdated.DeserializeTranscriptionUpdated(property.Value);
                     continue;
                 }
             }

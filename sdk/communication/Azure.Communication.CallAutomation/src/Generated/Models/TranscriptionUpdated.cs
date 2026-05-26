@@ -7,22 +7,22 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The TranscriptionUpdate. </summary>
-    public partial class TranscriptionUpdate
+    /// <summary> The TranscriptionUpdated. </summary>
+    public partial class TranscriptionUpdated
     {
-        /// <summary> Initializes a new instance of <see cref="TranscriptionUpdate"/>. </summary>
-        internal TranscriptionUpdate()
+        /// <summary> Initializes a new instance of <see cref="TranscriptionUpdated"/>. </summary>
+        internal TranscriptionUpdated()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranscriptionUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranscriptionUpdated"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling answerCall action to correlate the request to the response event. </param>
         /// <param name="resultInformation"></param>
         /// <param name="transcriptionUpdateResult"></param>
-        internal TranscriptionUpdate(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, TranscriptionUpdate transcriptionUpdateResult)
+        internal TranscriptionUpdated(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, TranscriptionUpdated transcriptionUpdateResult)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -32,6 +32,6 @@ namespace Azure.Communication.CallAutomation
             TranscriptionUpdateResult = transcriptionUpdateResult;
         }
         /// <summary> Gets the transcription update result. </summary>
-        public TranscriptionUpdate TranscriptionUpdateResult { get; }
+        public TranscriptionUpdated TranscriptionUpdateResult { get; }
     }
 }
