@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Tests
             var projectInput = ResourceDataHelpers.GetTaskProject();
             var projectResource = (await projectCollection.CreateOrUpdateAsync(WaitUntil.Completed, projectName, projectInput)).Value;
             //Create — use the new TaskCollection API directly
-            DataMigrationServiceTaskCollection collection = projectResource.GetTasks();
+            DataMigrationServiceTaskCollection collection = projectResource.GetDataMigrationServiceTasks();
             var input = ResourceDataHelpers.GetProjectTaskData();
             var resource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, taskName, input)).Value;
             Assert.AreEqual(taskName, resource.Data.Name);

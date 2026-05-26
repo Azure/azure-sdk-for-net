@@ -19,68 +19,68 @@ namespace Azure.ResourceManager.DataMigration
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DatabaseMigrationSqlDBCollection GetDatabaseMigrationSqlDBs(this ResourceGroupResource resourceGroupResource)
-            => resourceGroupResource.GetCachedClient(client => new DatabaseMigrationSqlDBCollection(client, resourceGroupResource.Id));
+            => GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlDBs();
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public static Response<DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(this ResourceGroupResource resourceGroupResource, string sqlDBInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
-            => GetDatabaseMigrationSqlDBs(resourceGroupResource).Get(sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
+            => GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlDB(sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public static Task<Response<DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(this ResourceGroupResource resourceGroupResource, string sqlDBInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
-            => GetDatabaseMigrationSqlDBs(resourceGroupResource).GetAsync(sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
+            => GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlDBAsync(sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DatabaseMigrationSqlMICollection GetDatabaseMigrationSqlMIs(this ResourceGroupResource resourceGroupResource)
-            => resourceGroupResource.GetCachedClient(client => new DatabaseMigrationSqlMICollection(client, resourceGroupResource.Id));
+            => GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlMIs();
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public static Response<DatabaseMigrationSqlMIResource> GetDatabaseMigrationSqlMI(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
-            => GetDatabaseMigrationSqlMIs(resourceGroupResource).Get(managedInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
+            => GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlMI(managedInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public static Task<Response<DatabaseMigrationSqlMIResource>> GetDatabaseMigrationSqlMIAsync(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
-            => GetDatabaseMigrationSqlMIs(resourceGroupResource).GetAsync(managedInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
+            => GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlMIAsync(managedInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DatabaseMigrationSqlVmCollection GetDatabaseMigrationSqlVms(this ResourceGroupResource resourceGroupResource)
-            => resourceGroupResource.GetCachedClient(client => new DatabaseMigrationSqlVmCollection(client, resourceGroupResource.Id));
+            => GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlVms();
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public static Response<DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
-            => GetDatabaseMigrationSqlVms(resourceGroupResource).Get(sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken);
+            => GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlVm(sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public static Task<Response<DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
-            => GetDatabaseMigrationSqlVms(resourceGroupResource).GetAsync(sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken);
+            => GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlVmAsync(sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<DataMigrationServiceNameAvailabilityResult> CheckDataMigrationNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DataMigrationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
-            => GetMockableDataMigrationSubscriptionResource(subscriptionResource).CheckDataMigrationNameAvailability(location.Name, content, cancellationToken);
+            => GetMockableDataMigrationSubscriptionResource(subscriptionResource).CheckDataMigrationNameAvailability(location, content, cancellationToken);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Task<Response<DataMigrationServiceNameAvailabilityResult>> CheckDataMigrationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataMigrationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
-            => GetMockableDataMigrationSubscriptionResource(subscriptionResource).CheckDataMigrationNameAvailabilityAsync(location.Name, content, cancellationToken);
+            => GetMockableDataMigrationSubscriptionResource(subscriptionResource).CheckDataMigrationNameAvailabilityAsync(location, content, cancellationToken);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<DataMigrationSku> GetSkusResourceSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-            => GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetSkus(cancellationToken);
+            => GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetSkusResourceSkus(cancellationToken);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<DataMigrationSku> GetSkusResourceSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-            => GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetSkusAsync(cancellationToken);
+            => GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetSkusResourceSkusAsync(cancellationToken);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<DataMigrationQuota> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-            => GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetUsages(location.Name, cancellationToken);
+            => GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetUsages(location, cancellationToken);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<DataMigrationQuota> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-            => GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetUsagesAsync(location.Name, cancellationToken);
+            => GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetUsagesAsync(location, cancellationToken);
     }
 }
