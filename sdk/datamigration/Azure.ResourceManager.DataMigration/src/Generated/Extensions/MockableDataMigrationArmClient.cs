@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(ResourceIdentifier scope, string targetDbName, string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
 
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(ResourceIdentifier scope, string targetDbName, string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DatabaseMigrationSqlMIResource> GetDatabaseMigrationSqlMI(ResourceIdentifier scope, string targetDbName, string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseMigrationSqlMIResource> GetDatabaseMigrationSqlMI(ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
 
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DatabaseMigrationSqlMIResource>> GetDatabaseMigrationSqlMIAsync(ResourceIdentifier scope, string targetDbName, string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseMigrationSqlMIResource>> GetDatabaseMigrationSqlMIAsync(ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
 
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(ResourceIdentifier scope, string targetDbName, string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
 
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(ResourceIdentifier scope, string targetDbName, string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
 

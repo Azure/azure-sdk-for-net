@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DatabaseMigrationSqlVmResource>> GetAsync(string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseMigrationSqlVmResource>> GetAsync(Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _databaseMigrationsSqlVmClientDiagnostics.CreateScope("DatabaseMigrationSqlVmResource.Get");
             scope.Start();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatabaseMigrationSqlVmResource> Get(string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseMigrationSqlVmResource> Get(Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _databaseMigrationsSqlVmClientDiagnostics.CreateScope("DatabaseMigrationSqlVmResource.Get");
             scope.Start();

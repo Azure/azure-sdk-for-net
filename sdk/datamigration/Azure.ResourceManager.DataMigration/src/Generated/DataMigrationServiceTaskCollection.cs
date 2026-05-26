@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataMigration
     /// <summary>
     /// A class representing a collection of <see cref="DataMigrationServiceTaskResource"/> and their operations.
     /// Each <see cref="DataMigrationServiceTaskResource"/> in the collection will belong to the same instance of <see cref="DataMigrationProjectResource"/>.
-    /// To get a <see cref="DataMigrationServiceTaskCollection"/> instance call the GetTasks method from an instance of <see cref="DataMigrationProjectResource"/>.
+    /// To get a <see cref="DataMigrationServiceTaskCollection"/> instance call the GetDataMigrationServiceTasks method from an instance of <see cref="DataMigrationProjectResource"/>.
     /// </summary>
     public partial class DataMigrationServiceTaskCollection : ArmCollection, IEnumerable<DataMigrationServiceTaskResource>, IAsyncEnumerable<DataMigrationServiceTaskResource>
     {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataMigrationServiceTaskCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DataMigrationServiceTaskResource.ResourceType, out string taskApiVersion);
+            TryGetApiVersion(DataMigrationServiceTaskResource.ResourceType, out string dataMigrationServiceTaskApiVersion);
             _tasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", DataMigrationServiceTaskResource.ResourceType.Namespace, Diagnostics);
-            _tasksRestClient = new Tasks(_tasksClientDiagnostics, Pipeline, Endpoint, taskApiVersion ?? "2025-09-01-preview");
+            _tasksRestClient = new Tasks(_tasksClientDiagnostics, Pipeline, Endpoint, dataMigrationServiceTaskApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

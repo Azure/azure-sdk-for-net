@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    internal partial class DataMigrationServiceTasks
+    internal partial class ServiceServiceTasks
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of DataMigrationServiceTasks for mocking. </summary>
-        protected DataMigrationServiceTasks()
+        /// <summary> Initializes a new instance of ServiceServiceTasks for mocking. </summary>
+        protected ServiceServiceTasks()
         {
         }
 
-        /// <summary> Initializes a new instance of DataMigrationServiceTasks. </summary>
+        /// <summary> Initializes a new instance of ServiceServiceTasks. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal DataMigrationServiceTasks(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ServiceServiceTasks(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

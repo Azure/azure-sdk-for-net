@@ -1153,9 +1153,9 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
-        /// <summary> Gets a collection of DataMigrationServiceTasks in the <see cref="DataMigrationServiceResource"/>. </summary>
-        /// <returns> An object representing collection of DataMigrationServiceTasks and their operations over a ServiceServiceTaskResource. </returns>
-        public virtual ServiceServiceTaskCollection GetDataMigrationServiceTasks()
+        /// <summary> Gets a collection of ServiceServiceTasks in the <see cref="DataMigrationServiceResource"/>. </summary>
+        /// <returns> An object representing collection of ServiceServiceTasks and their operations over a ServiceServiceTaskResource. </returns>
+        public virtual ServiceServiceTaskCollection GetServiceServiceTasks()
         {
             return GetCachedClient(client => new ServiceServiceTaskCollection(client, Id));
         }
@@ -1167,11 +1167,11 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceServiceTaskResource>> GetDataMigrationServiceTaskAsync(string taskName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceServiceTaskResource>> GetServiceServiceTaskAsync(string taskName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            return await GetDataMigrationServiceTasks().GetAsync(taskName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetServiceServiceTasks().GetAsync(taskName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The service tasks resource is a nested, proxy-only resource representing work performed by a DMS (classic) instance. The GET method retrieves information about a service task. </summary>
@@ -1181,11 +1181,11 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceServiceTaskResource> GetDataMigrationServiceTask(string taskName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceServiceTaskResource> GetServiceServiceTask(string taskName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            return GetDataMigrationServiceTasks().Get(taskName, expand, cancellationToken);
+            return GetServiceServiceTasks().Get(taskName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DataMigrationProjects in the <see cref="DataMigrationServiceResource"/>. </summary>

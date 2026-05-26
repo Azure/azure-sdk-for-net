@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName, string migrationOperationId, string expand, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName, Guid? migrationOperationId, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataMigration
             }
             if (migrationOperationId != null)
             {
-                uri.AppendQuery("migrationOperationId", migrationOperationId, true);
+                uri.AppendQuery("migrationOperationId", TypeFormatters.ConvertToString(migrationOperationId), true);
             }
             if (expand != null)
             {

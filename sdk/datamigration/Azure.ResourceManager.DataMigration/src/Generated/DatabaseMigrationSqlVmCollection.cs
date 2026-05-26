@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DatabaseMigrationSqlVmResource>> GetAsync(string targetDbName, string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseMigrationSqlVmResource>> GetAsync(string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
 
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DatabaseMigrationSqlVmResource> Get(string targetDbName, string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseMigrationSqlVmResource> Get(string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
 
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string targetDbName, string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
 
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string targetDbName, string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
 
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<DatabaseMigrationSqlVmResource>> GetIfExistsAsync(string targetDbName, string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DatabaseMigrationSqlVmResource>> GetIfExistsAsync(string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
 
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<DatabaseMigrationSqlVmResource> GetIfExists(string targetDbName, string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DatabaseMigrationSqlVmResource> GetIfExists(string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
 

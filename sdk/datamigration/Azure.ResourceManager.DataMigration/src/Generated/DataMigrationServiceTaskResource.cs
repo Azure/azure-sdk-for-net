@@ -18,9 +18,9 @@ using Azure.ResourceManager.DataMigration.Models;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
-    /// A class representing a Task along with the instance operations that can be performed on it.
+    /// A class representing a DataMigrationServiceTask along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataMigrationServiceTaskResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataMigrationProjectResource"/> using the GetTasks method.
+    /// Otherwise you can get one from its parent resource <see cref="DataMigrationProjectResource"/> using the GetDataMigrationServiceTasks method.
     /// </summary>
     public partial class DataMigrationServiceTaskResource : ArmResource
     {
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataMigrationServiceTaskResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string taskApiVersion);
+            TryGetApiVersion(ResourceType, out string dataMigrationServiceTaskApiVersion);
             _tasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", ResourceType.Namespace, Diagnostics);
-            _tasksRestClient = new Tasks(_tasksClientDiagnostics, Pipeline, Endpoint, taskApiVersion ?? "2025-09-01-preview");
+            _tasksRestClient = new Tasks(_tasksClientDiagnostics, Pipeline, Endpoint, dataMigrationServiceTaskApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

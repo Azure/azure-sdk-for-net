@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.DataMigration
         /// Retrieve the Database Migration resource.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDatabaseMigrationSqlDB(ResourceIdentifier, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDatabaseMigrationSqlDB(ResourceIdentifier, string, Guid?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(this ArmClient client, ResourceIdentifier scope, string targetDbName, string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public static Response<DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(this ArmClient client, ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DataMigration
         /// Retrieve the Database Migration resource.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDatabaseMigrationSqlDBAsync(ResourceIdentifier, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDatabaseMigrationSqlDBAsync(ResourceIdentifier, string, Guid?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(this ArmClient client, ResourceIdentifier scope, string targetDbName, string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(this ArmClient client, ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.DataMigration
         /// Retrieve the specified database migration for a given SQL Managed Instance.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDatabaseMigrationSqlMI(ResourceIdentifier, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDatabaseMigrationSqlMI(ResourceIdentifier, string, Guid?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DatabaseMigrationSqlMIResource> GetDatabaseMigrationSqlMI(this ArmClient client, ResourceIdentifier scope, string targetDbName, string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public static Response<DatabaseMigrationSqlMIResource> GetDatabaseMigrationSqlMI(this ArmClient client, ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.DataMigration
         /// Retrieve the specified database migration for a given SQL Managed Instance.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDatabaseMigrationSqlMIAsync(ResourceIdentifier, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDatabaseMigrationSqlMIAsync(ResourceIdentifier, string, Guid?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DatabaseMigrationSqlMIResource>> GetDatabaseMigrationSqlMIAsync(this ArmClient client, ResourceIdentifier scope, string targetDbName, string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<DatabaseMigrationSqlMIResource>> GetDatabaseMigrationSqlMIAsync(this ArmClient client, ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.DataMigration
         /// Retrieve the specified database migration for a given SQL VM.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDatabaseMigrationSqlVm(ResourceIdentifier, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDatabaseMigrationSqlVm(ResourceIdentifier, string, Guid?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(this ArmClient client, ResourceIdentifier scope, string targetDbName, string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public static Response<DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(this ArmClient client, ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.DataMigration
         /// Retrieve the specified database migration for a given SQL VM.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDatabaseMigrationSqlVmAsync(ResourceIdentifier, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDatabaseMigrationSqlVmAsync(ResourceIdentifier, string, Guid?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(this ArmClient client, ResourceIdentifier scope, string targetDbName, string migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(this ArmClient client, ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
