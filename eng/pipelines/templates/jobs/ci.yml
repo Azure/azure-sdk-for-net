@@ -45,6 +45,7 @@ parameters:
 
 jobs:
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+    # Build matrix - larger LOC batches (1.2M) for fewer jobs and lower per-job overhead.
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
         GenerateJobName: generate_build_matrix
@@ -77,15 +78,16 @@ jobs:
               PublishingArtifactName: BuildPackagesArtifact
               ForceDirect: true
               ExcludePaths: ${{ parameters.ExcludePaths }}
-              EnableBuildWeighting: true
-              LocTargetSeconds: 1200000
+              EnableLocWeighting: true
+              LocTarget: 1200000
               PublishArtifact: true
 
+    # Analyze matrix - smaller LOC batches (300k) for more parallelism so analyze wall-clock matches build.
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
         GenerateJobName: generate_analyze_matrix
         JobTemplatePath: /eng/pipelines/templates/jobs/batched-analyze.yml
-        Pools: # build-matrix.json only contains Windows entries; analyze job overrides pool to Linux internally
+        Pools: # build-matrix.json only contains Windows entries; batched-analyze.yml overrides pool to Linux internally.
           - name: Windows
             filter: .*Windows.*Pool$
             os: windows
@@ -105,16 +107,17 @@ jobs:
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           SDKType: ${{ parameters.SDKType }}
           BuildSnippets: ${{ parameters.BuildSnippets }}
+          ArtifactName: AnalyzePackageInfoArtifact
         PreGenerationSteps:
           - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
             parameters:
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
-              PublishingArtifactName: BuildPackagesArtifact
+              PublishingArtifactName: AnalyzePackageInfoArtifact
               ForceDirect: true
               ExcludePaths: ${{ parameters.ExcludePaths }}
-              EnableBuildWeighting: true
-              LocTargetSeconds: 300000
-              PublishArtifact: false
+              EnableLocWeighting: true
+              LocTarget: 300000
+              PublishArtifact: true
 
   - ${{ else }}:
     - job: Build
@@ -222,10 +225,7 @@ jobs:
             - "!SessionRecords"
           EnablePRGeneration: true
           PRMatrixSetting: ProjectNames
-          PRJobBatchSize: 1
-          PRJobBatchSizeOverrides:
-            Linux: 3
-            Windows: 3
+          PRJobBatchSize: 10
           PRMatrixIndirectFilters:
             - 'AdditionalTestArguments=.*true'
             - 'Pool=.*LinuxPool$'
@@ -235,7 +235,6 @@ jobs:
                 ServiceDirectory: ${{ parameters.ServiceDirectory }}
                 PublishingArtifactName: TestPackagesArtifact
                 ExcludePaths: ${{ parameters.ExcludePaths }}
-                EnableWeightedBatching: true
 
         AdditionalParameters:
           SDKType: ${{ parameters.SDKType }}

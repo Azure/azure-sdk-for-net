@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             ResourceIdentifier id = default;
+            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ServiceFabricManagedVmSizeProperties properties = default;
-            string name = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -133,6 +133,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         continue;
                     }
                     id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -162,11 +167,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     properties = ServiceFabricManagedVmSizeProperties.DeserializeServiceFabricManagedVmSizeProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -174,11 +174,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             return new ServiceFabricManagedUnsupportedVmSize(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties,
-                name);
+                properties);
         }
     }
 }

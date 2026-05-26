@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationFabricPatch"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Gets or sets the resource tags. </param>
         /// <param name="properties"> Fabric model properties. </param>
-        /// <param name="name"> Gets or sets the name of the resource. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        internal DataReplicationFabricPatch(ResourceIdentifier id, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, DataReplicationFabricProperties properties, string name, SystemData systemData) : base(id, name, resourceType, systemData)
+        internal DataReplicationFabricPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, DataReplicationFabricProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Tags = tags;

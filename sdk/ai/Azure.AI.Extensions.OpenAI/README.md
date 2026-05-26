@@ -52,6 +52,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Add a data agent to the Fabric](#add-a-data-agent-to-the-fabric)
     - [Create a Fabric connection in Microsoft Foundry](#create-a-fabric-connection-in-microsoft-foundry)
     - [Using Microsoft Fabric tool](#using-microsoft-fabric-tool)
+  - [Fabric IQ tool](#fabric-iq-tool)
   - [A2APreviewTool](#a2atool)
     - [Create a connection to A2A agent](#create-a-connection-to-a2a-agent)
       - [Classic Microsoft Foundry](#classic-microsoft-foundry)
@@ -1673,6 +1674,27 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+### Fabric IQ tool (preview)<a id="fabric-iq-tool"></a>
+
+Fabric IQ is a layer above Microsoft Fabric. It orders and optimizes the data retrieval process. The Fabric IQ tool
+allows you to use These capabilities to get the data context for an Agent. To use it, please create the
+the Fabric IQ connection in Microsoft Foundry and use `FabricIQPreviewTool` in the Agent constructor:
+
+```C# Snippet:Sample_CreateAgent_FabricIQ_Async
+FabricIQPreviewTool fabricIQTool = new(projectConnectionId: fabricIQProjectConnectionId)
+{
+    RequireApproval = BinaryData.FromObjectAsJson("never"),
+};
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "Use the available Fabric IQ tools to answer questions and perform tasks.",
+    Tools = { fabricIQTool },
+};
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+    agentName: "myFabricIQAgent",
     options: new(agentDefinition));
 ```
 

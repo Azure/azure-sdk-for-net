@@ -40,12 +40,12 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The name of the skill. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> The description of the skill. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> Inline skill payload. </summary>
-        public InlineSkillSourceParam Source { get; }
+        public InlineSkillSourceParam Source { get; set; }
     }
 }

@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `BrokerCredentialResolver` and `AddBrokerCredentialResolver()` extensions for config- and DI-based resolution of `BrokerCredential` and `VisualStudioCodeCredential` sources. (Experimental, `SCME0002`.)
+
 ### Breaking Changes
 
 ### Bugs Fixed
