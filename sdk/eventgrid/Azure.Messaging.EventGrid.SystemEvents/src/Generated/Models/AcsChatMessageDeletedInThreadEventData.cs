@@ -29,11 +29,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="messageId"> The chat message id. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
         /// <param name="senderDisplayName"> The display name of the sender. </param>
+        /// <param name="sequenceId"> The Sequence id of the message. </param>
         /// <param name="composeTime"> The original compose time of the message. </param>
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
         /// <param name="deleteTime"> The time at which the message was deleted. </param>
-        internal AcsChatMessageDeletedInThreadEventData(string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string @type, long? version, DateTimeOffset? deleteTime) : base(transactionId, threadId, additionalBinaryDataProperties, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, @type, version)
+        internal AcsChatMessageDeletedInThreadEventData(string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, long? sequenceId, DateTimeOffset? composeTime, string @type, long? version, DateTimeOffset? deleteTime) : base(transactionId, threadId, additionalBinaryDataProperties, messageId, senderCommunicationIdentifier, senderDisplayName, sequenceId, composeTime, @type, version)
         {
             DeleteTime = deleteTime;
         }
