@@ -43,9 +43,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 properties,
-                identity);
+                identity,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Properties of a private link resource. </summary>
@@ -75,8 +75,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Properties of the private endpoint connection. </summary>
@@ -110,11 +110,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 storageSyncServiceLocation is null ? default : new StorageSyncServiceProperties(storageSyncServiceLocation, null),
-                identity);
+                identity,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -149,7 +149,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 new FooProperties(
@@ -169,7 +168,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     null),
                 extendedLocation,
                 identity,
-                plan);
+                plan,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="serviceUri"> the service url. </param>
@@ -248,8 +248,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="marketplace"> Marketplace details of the resource. </param>
@@ -298,10 +298,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -330,7 +330,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 isEnabled is null ? default : new BarSettingsProperties(isEnabled, null),
                 stringArray.ToList(),
                 new BarQuotaProperties(propertyLeft, null),
@@ -344,7 +343,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     (prop1 ?? new ChangeTrackingList<string>()).ToList(),
                     prop2),
                 optionalFlattenPropertyRandomCollectionProp is null ? default : new OptionalFlattenPropertyType((optionalFlattenPropertyRandomCollectionProp ?? new ChangeTrackingList<string>()).ToList(), null),
-                discriminatorProperty);
+                discriminatorProperty,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -360,8 +360,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                barQuotaLeft is null ? default : new BarQuotaProperties(barQuotaLeft, null));
+                barQuotaLeft is null ? default : new BarQuotaProperties(barQuotaLeft, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> An Employee resource. </summary>
@@ -382,10 +382,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Employee properties. </summary>
@@ -415,10 +415,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -452,7 +452,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 something is null && requiredInt is null && requiredFixedEnum is null && requiredExtensibleEnum is null && requiredString is null ? default : new ZooProperties(
@@ -462,7 +461,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     requiredExtensibleEnum.GetValueOrDefault(),
                     requiredString,
                     null),
-                extendedLocation);
+                extendedLocation,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The type used for update operations of the Zoo. </summary>
@@ -508,10 +508,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="displayName"> Simple property. </param>
@@ -562,8 +562,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                endpointProp is null ? default : new EndpointProperties(endpointProp, null));
+                endpointProp is null ? default : new EndpointProperties(endpointProp, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -579,8 +579,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                selfHelpId is null ? default : new SelfHelpResourceProperties(selfHelpId, null));
+                selfHelpId is null ? default : new SelfHelpResourceProperties(selfHelpId, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The CheckNameAvailabilityResponse. </summary>
@@ -607,8 +607,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Subscription-level location-based Playwright quota resource properties. </summary>
@@ -637,10 +637,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                new JobProperties(jobName, null));
+                new JobProperties(jobName, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="jobName"> Gets or sets the JobName. </param>
@@ -666,8 +666,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                hciVmInstanceSku is null ? default : new HciVmInstanceProperties(hciVmInstanceSku, null));
+                hciVmInstanceSku is null ? default : new HciVmInstanceProperties(hciVmInstanceSku, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The new quota limit request status. </summary>
@@ -684,8 +684,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="resourceName"> The resource name, such as SKU name. </param>
@@ -749,8 +749,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The SubscriptionQuotaAllocationsListProperties. </summary>
@@ -826,10 +826,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="name"></param>
@@ -857,10 +857,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                sapVirtualInstanceName is null ? default : new SAPVirtualInstanceProperties(sapVirtualInstanceName, null));
+                sapVirtualInstanceName is null ? default : new SAPVirtualInstanceProperties(sapVirtualInstanceName, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The SAPAvailabilityZoneDetailsRequest. </summary>
@@ -894,9 +894,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 properties,
-                extendedLocation);
+                extendedLocation,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Best practice properties. </summary>
@@ -926,10 +926,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -950,10 +950,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The scheduled action extension. </summary>
@@ -970,8 +970,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Scheduled action properties. </summary>
@@ -1001,10 +1001,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The WorkloadNetworksProperties. </summary>
@@ -1034,10 +1034,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The WorkloadNetworkVmGroupProperties. </summary>
@@ -1070,10 +1070,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The WorkloadNetworkSegmentProperties. </summary>
@@ -1104,9 +1104,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 properties,
-                location);
+                location,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1136,7 +1136,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 highAvailability is null && minimumTlsVersion is null && hostName is null && provisioningState is null && redundancyMode is null && resourceState is null && redisVersion is null && privateEndpointConnections is null && customerManagedKeyEncryption is null && maintenanceWindows is null && publicNetworkAccess is null ? default : new ClusterCreateProperties(
@@ -1151,7 +1150,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     redisVersion,
                     (privateEndpointConnections ?? new ChangeTrackingList<RedisPrivateEndpointConnection>()).ToList(),
                     null,
-                    publicNetworkAccess));
+                    publicNetworkAccess),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
@@ -1168,8 +1168,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="privateEndpointId"> Gets the Id. </param>
@@ -1212,10 +1212,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                baseOnlyProperty is null && overridableProperty is null ? default : new PropertyOverrideCreateProperties(baseOnlyProperty, overridableProperty, null));
+                baseOnlyProperty is null && overridableProperty is null ? default : new PropertyOverrideCreateProperties(baseOnlyProperty, overridableProperty, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Site at ServiceGroup scope. </summary>
@@ -1232,8 +1232,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Site properties. </summary>
@@ -1302,8 +1302,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Configuration assignment properties. </summary>
@@ -1329,8 +1329,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> HCRP Configuration assignment properties. </summary>
@@ -1357,8 +1357,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                disabled is null && innerSelectionType is null && channel is null ? default : new MultiFlattenProperties(channel, new SafeFlattenInner(innerSelectionType, null), disabled, null));
+                disabled is null && innerSelectionType is null && channel is null ? default : new MultiFlattenProperties(channel, new SafeFlattenInner(innerSelectionType, null), disabled, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1379,8 +1379,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1396,8 +1396,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                new TestCertificateProperties(testCertificateThumbprint, null));
+                new TestCertificateProperties(testCertificateThumbprint, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Shared configuration - used at both RG and Subscription scope. </summary>
@@ -1418,10 +1418,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> A shared configuration resource. </summary>
@@ -1459,8 +1459,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 eTag,
+                additionalBinaryDataProperties: null,
                 containerItemLikeSomething is null ? default : new ContainerItemLikeProperties(containerItemLikeSomething, null));
         }
 
@@ -1478,8 +1478,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                eTag);
+                eTag,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Paged collection of DerivedPatch items. </summary>
@@ -1510,8 +1510,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
+                additionalBinaryDataProperties: null,
                 derivedProp);
         }
 
@@ -1531,8 +1531,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags);
+                tags,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Paged collection of SiblingPatch items. </summary>
@@ -1560,8 +1560,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                siblingProp);
+                siblingProp,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1582,8 +1582,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                kind);
+                kind,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1599,8 +1599,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 "TypeA",
+                additionalBinaryDataProperties: null,
                 new TypeAPolyDeviceProperties(typeAPolyDeviceDescription, null));
         }
 
@@ -1629,8 +1629,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 identifierUniqueId is null ? default : new GrandparentFlattenIdentifier(identifierUniqueId, null),
+                additionalBinaryDataProperties: null,
                 grandparentFlattenLeafDisclaimer is null ? default : new GrandparentFlattenLeafProperties(grandparentFlattenLeafDisclaimer, null));
         }
 
@@ -1648,8 +1648,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 identifierUniqueId is null ? default : new GrandparentFlattenIdentifier(identifierUniqueId, null),
+                additionalBinaryDataProperties: null,
                 grandparentFlattenLeafDisclaimer is null ? default : new GrandparentFlattenLeafProperties(grandparentFlattenLeafDisclaimer, null));
         }
 
@@ -1666,8 +1666,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                identifierUniqueId is null ? default : new GrandparentFlattenIdentifier(identifierUniqueId, null));
+                identifierUniqueId is null ? default : new GrandparentFlattenIdentifier(identifierUniqueId, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -1688,10 +1688,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The CycleTestStoreProperties. </summary>
@@ -1706,21 +1706,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="name"> The name of the resource. </param>
         /// <param name="provisioningState"> The provisioning status. </param>
         /// <param name="description"> Description of the connection. </param>
         /// <returns> A new <see cref="Models.CycleTestConnectionReference"/> instance for mocking. </returns>
-        public static CycleTestConnectionReference CycleTestConnectionReference(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, string name = default, string provisioningState = default, string description = default)
+        public static CycleTestConnectionReference CycleTestConnectionReference(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, string description = default)
         {
             return new CycleTestConnectionReference(
                 id,
+                name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                name,
-                provisioningState is null && description is null ? default : new CycleTestConnectionProperties(provisioningState, description, null));
+                provisioningState is null && description is null ? default : new CycleTestConnectionProperties(provisioningState, description, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1740,10 +1740,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                eventGridTopicEndpoint is null ? default : new EventGridTopicProperties(eventGridTopicEndpoint, null));
+                eventGridTopicEndpoint is null ? default : new EventGridTopicProperties(eventGridTopicEndpoint, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1763,10 +1763,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                eventGridDomainEndpoint is null ? default : new EventGridDomainProperties(eventGridDomainEndpoint, null));
+                eventGridDomainEndpoint is null ? default : new EventGridDomainProperties(eventGridDomainEndpoint, null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> EventGrid private endpoint connection model. </summary>
@@ -1783,8 +1783,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ZooRecommendation. </summary>
