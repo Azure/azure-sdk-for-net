@@ -7,7 +7,6 @@
 - Added `SliSamplingType.Average` for average sampling.
 - Added `SliSamplingType.Count` for count sampling.
 - Added `SliSamplingType.Avg` as an obsolete alias that forwards to `SliSamplingType.Average`.
-- Added a strongly-typed `SliCondition.Values` (`IList<string>`) accessor and the `SliCondition.ForListOperator` factory that transparently join/split list values on the wire `^^` separator used by the `in` and `notin` operators.
 
 ### Breaking Changes
 
