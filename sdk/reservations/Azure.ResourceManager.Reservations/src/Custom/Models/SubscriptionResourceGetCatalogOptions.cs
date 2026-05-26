@@ -3,26 +3,34 @@
 
 using Azure.Core;
 
-#pragma warning disable CS1591
-
 namespace Azure.ResourceManager.Reservations.Models
 {
     // Justification: GA exposed an options-bag overload for SubscriptionResource.GetCatalog
     // (SubscriptionResourceGetCatalogOptions). The new TypeSpec generator emits long-form
     // parameters; this type and overloads preserve the GA options-bag surface.
+    /// <summary> The SubscriptionResourceGetCatalogOptions. </summary>
     public partial class SubscriptionResourceGetCatalogOptions
     {
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetCatalogOptions"/>. </summary>
         public SubscriptionResourceGetCatalogOptions()
         {
         }
 
+        /// <summary> The type of the resource for which the skus should be provided. </summary>
         public string ReservedResourceType { get; set; }
+        /// <summary> Filters the skus based on the location specified in this parameter. This can be an Azure region or global. </summary>
         public AzureLocation? Location { get; set; }
+        /// <summary> Publisher id used to get the third party products. </summary>
         public string PublisherId { get; set; }
+        /// <summary> Offer id used to get the third party products. </summary>
         public string OfferId { get; set; }
+        /// <summary> Plan id used to get the third party products. </summary>
         public string PlanId { get; set; }
+        /// <summary> May be used to filter by Catalog properties. The filter supports 'eq', 'or', and 'and'. </summary>
         public string Filter { get; set; }
+        /// <summary> The number of reservations to skip from the list before returning results. </summary>
         public float? Skip { get; set; }
+        /// <summary> To number of reservations to return. </summary>
         public float? Take { get; set; }
     }
 }
