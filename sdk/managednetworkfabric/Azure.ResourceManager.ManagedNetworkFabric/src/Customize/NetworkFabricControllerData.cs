@@ -12,7 +12,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     // Backward compatibility shim for the swagger upgrade from package-2023-06-15 to package-2025-07-15.
     // The new API version changed the IsWorkloadManagementNetwork property type from bool? to
     // an enum (IsWorkloadManagementNetworkEnabled). This shim preserves the v1.1.2 bool? property
-    // by converting the enum value.
+    // by converting the enum value. Removing it would also drop the shipped IPv4/IPv6 address-space
+    // aliases in favor of the generator's Ipv4/Ipv6 names.
     public partial class NetworkFabricControllerData
     {
         /// <summary> A workload management network is required for all the tenant (workload) traffic. This traffic is only dedicated for Tenant workloads which are required to access internet or any other MSFT/Public endpoints. This is used for the backward compatibility. </summary>

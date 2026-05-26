@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     // Backward compatibility shims for the TypeSpec migration. The previous SDK exposed
     // route policy IDs directly while the generated model now uses nested route policy objects.
+    // Removing these shims would drop the flat ExportRoutePolicyId/ImportRoutePolicyId patch properties.
     public partial class NetworkFabricExternalNetworkPatch
     {
         /// <summary> Import Route Policy either IPv4 or IPv6. </summary>

@@ -6,6 +6,8 @@
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The NetworkFabricPatchablePropertiesTerminalServerConfiguration. </summary>
+    // The base generated type uses Ipv4/Ipv6 casing, but this derived public type previously exposed
+    // IPv4/IPv6 aliases. Removing these aliases would drop the shipped properties from the patch model.
     public partial class NetworkFabricPatchablePropertiesTerminalServerConfiguration
     {
         /// <summary> IPv4 Address Prefix. </summary>

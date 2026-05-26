@@ -14,7 +14,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     // Backward compatibility shims for the swagger upgrade from package-2023-06-15 to package-2025-07-15.
     // The new API version removed the InternetGatewayType from the constructor and changed IPv4Address
-    // property type. These shims preserve the v1.1.2 constructor and property signatures.
+    // property type. These shims preserve the v1.1.2 constructor and property signatures; removing them
+    // would drop the old constructor and IPv4/IPV4 aliases.
     public partial class NetworkFabricInternetGatewayData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayData"/>. </summary>

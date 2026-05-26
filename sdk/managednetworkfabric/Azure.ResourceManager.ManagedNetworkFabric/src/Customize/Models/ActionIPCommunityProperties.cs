@@ -13,6 +13,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
+    // The shipped SDK exposed flat Add/Delete/Set IP community ID lists while the generated model now
+    // represents them as nested add/delete/set objects. These suppressions keep the custom flattened
+    // accessors and writer; removing them would reintroduce an incompatible generated add accessor and
+    // the custom delete/set lists would not be serialized into the request payload.
     [CodeGenSuppress("AddIPCommunityIds")]
     [CodeGenSuppress("JsonModelWriteCore")]
     public partial class ActionIPCommunityProperties : IPCommunityAddOperationProperties

@@ -8,6 +8,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
+    // This partial keeps the pre-migration VpnConfigurationProperties constructor and mutable property shape.
+    // Removing it would expose the generated shape instead and break callers that construct management
+    // network configuration with the shipped model.
     [CodeGenType("VpnConfigurationProperties")]
     public partial class VpnConfigurationProperties
     {

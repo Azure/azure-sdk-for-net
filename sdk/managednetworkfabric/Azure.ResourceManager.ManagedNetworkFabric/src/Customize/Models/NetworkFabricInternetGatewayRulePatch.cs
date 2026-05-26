@@ -10,6 +10,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
+    // This patch type reuses the NetworkRackPatch tag implementation. The generator would redeclare
+    // constructors and Tags on the derived type; suppressing them avoids duplicate/incompatible members.
+    // Removing these suppressions would change the shipped tag-update shape for gateway rule patches.
     [CodeGenSuppress("NetworkFabricInternetGatewayRulePatch")]
     [CodeGenSuppress("NetworkFabricInternetGatewayRulePatch", typeof(IDictionary<string, string>), typeof(IDictionary<string, BinaryData>))]
     [CodeGenSuppress("Tags")]

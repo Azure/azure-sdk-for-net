@@ -9,6 +9,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
+    // The generator places configurationType under Properties, but the shipped SDK exposed it on the data
+    // object. Removing this flattened member would be a public property removal.
     public partial class NetworkFabricAccessControlListData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAccessControlListData"/>. </summary>

@@ -10,6 +10,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
+    // The generated patch deserializer returns the base NetworkRackPatch shape for this hierarchy.
+    // These overrides deserialize the concrete patch type; removing them would make model reading
+    // produce the wrong type or invalid override code for the migrated patch model.
     [CodeGenSuppress("PersistableModelCreateCore")]
     [CodeGenSuppress("JsonModelCreateCore")]
     public partial class NetworkFabricL3IsolationDomainPatch

@@ -10,7 +10,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     // Backward compatibility shims for the TypeSpec migration. These preserve old acronym-cased
-    // members and pre-migration property types.
+    // members and pre-migration property types. Removing them would drop the shipped patch aliases and
+    // typed TerminalServerConfiguration/ManagementNetworkConfiguration accessors.
     public partial class NetworkFabricPatch
     {
         /// <summary> ASN of CE devices for CE/PE connectivity. </summary>

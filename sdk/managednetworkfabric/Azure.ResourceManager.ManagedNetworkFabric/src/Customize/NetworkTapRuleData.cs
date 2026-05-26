@@ -13,7 +13,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     // Backward compatibility shim for the TypeSpec migration. The generated constructor now requires
-    // configurationType because the service property is required.
+    // configurationType because the service property is required. Removing it would also drop the shipped
+    // flattened ConfigurationType/NetworkTapId/PollingIntervalInSeconds members.
     public partial class NetworkTapRuleData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkTapRuleData"/>. </summary>

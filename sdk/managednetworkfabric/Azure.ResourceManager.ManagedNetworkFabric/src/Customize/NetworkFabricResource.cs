@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     // (StateUpdateCommonPostActionResult / DeviceUpdateCommonPostActionResult / ValidateConfigurationResult)
     // to operation-specific types. The generated methods were renamed via operationId directives
     // (adding synonym-based renaming), and these shims preserve the original v1.1.2 method signatures.
+    // Removing them would drop the old method names/return types even though the REST actions still exist.
     public partial class NetworkFabricResource
     {
         /// <summary> Backward-compatible shim for CommitConfiguration. Preserves the previous SDK signature while calling the current REST action. </summary>

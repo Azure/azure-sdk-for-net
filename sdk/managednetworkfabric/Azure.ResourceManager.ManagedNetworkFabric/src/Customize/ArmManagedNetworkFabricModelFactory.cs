@@ -15,6 +15,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
+    // These factory overloads preserve the model factory signatures shipped before the TypeSpec migration.
+    // If the suppressions are removed, the generator emits overloads with incompatible required parameters
+    // or Ipv4/Ipv6 parameter casing, which either breaks ApiCompat or conflicts with the custom overloads.
     [CodeGenSuppress("NetworkToNetworkInterconnectOptionBLayer3Configuration", typeof(string), typeof(string), typeof(string), typeof(string), typeof(long?), typeof(int?), typeof(long?))]
     [CodeGenSuppress("NetworkFabricAccessControlListData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(string), typeof(NetworkFabricConfigurationType?), typeof(Uri), typeof(CommunityActionType?), typeof(IEnumerable<AccessControlListMatchConfiguration>), typeof(IEnumerable<CommonDynamicMatchConfiguration>), typeof(DateTimeOffset?), typeof(NetworkFabricConfigurationState?), typeof(NetworkFabricProvisioningState?), typeof(NetworkFabricAdministrativeState?))]
     [CodeGenSuppress("NetworkFabricAccessControlListData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(string), typeof(NetworkFabricConfigurationType?), typeof(Uri), typeof(IEnumerable<AccessControlListMatchConfiguration>), typeof(IEnumerable<CommonDynamicMatchConfiguration>), typeof(DateTimeOffset?), typeof(NetworkFabricConfigurationState?), typeof(NetworkFabricProvisioningState?), typeof(NetworkFabricAdministrativeState?))]

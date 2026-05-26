@@ -13,7 +13,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     // Backward compatibility shim for the swagger upgrade from package-2023-06-15 to package-2025-07-15.
     // The new API version added a required constructor parameter (networkDeviceSku). This preserves the
-    // old constructor signature from v1.1.2 that only required location.
+    // old constructor signature from v1.1.2 that only required location. Removing this file would also
+    // drop the shipped ManagementIPv4Address/ManagementIPv6Address aliases.
     public partial class NetworkDeviceData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceData"/>. </summary>

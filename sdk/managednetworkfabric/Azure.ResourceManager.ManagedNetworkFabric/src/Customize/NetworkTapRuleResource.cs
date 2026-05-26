@@ -15,7 +15,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     // Backward compatibility shims for the swagger upgrade from package-2023-06-15 to package-2025-07-15.
     // The new API version changed action operation return types from generic result types
     // (StateUpdateCommonPostActionResult) to operation-specific types.
-    // These shims preserve the original v1.1.2 method signatures.
+    // These shims preserve the original v1.1.2 method signatures. Removing them would drop the old
+    // method names/return types.
     public partial class NetworkTapRuleResource
     {
         /// <summary> Backward-compatible shim for Resync. Preserves the previous SDK signature while calling the current REST action. </summary>

@@ -10,6 +10,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
+    // TypeSpec generates IpExtendedCommunityIdList, but the shipped SDK exposed IPExtendedCommunityIdList
+    // and IPExtendedCommunityIds. Removing this customization would rename the public type/member and break callers.
     [CodeGenType("IpExtendedCommunityIdList")]
     public partial class IPExtendedCommunityIdList
     {

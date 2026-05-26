@@ -11,6 +11,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
+    // Backward compatibility shims for the TypeSpec migration. The generated model flattens some nested
+    // properties differently and normalizes acronym casing. Removing these members would drop the shipped
+    // constructor and public aliases such as FabricAsn/IPv4Prefix/IPv6Prefix.
     public partial class NetworkFabricData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricData"/>. </summary>

@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
+    // The generated model now uses Type/IPPrefixValues/IPGroupNames. The previous SDK exposed
+    // SourceDestinationType/IpPrefixValues/IpGroupNames, so these aliases prevent public property removals.
+    // Removing them would require callers to rename properties even though this migration should be API-neutral.
     public partial class IPMatchCondition
     {
         /// <summary> IP Address type that needs to be matched. </summary>

@@ -8,6 +8,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Option A properties object. </summary>
+    // The service model name is VpnOptionAProperties, but the shipped SDK exposed OptionAProperties.
+    // Removing this type customization would rename the public model and remove the old constructor/member shape.
     [CodeGenType("VpnOptionAProperties")]
     public partial class OptionAProperties
     {

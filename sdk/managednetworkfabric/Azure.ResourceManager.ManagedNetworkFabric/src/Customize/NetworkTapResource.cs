@@ -16,7 +16,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     // The new API version changed action operation return types from generic result types
     // (StateUpdateCommonPostActionResult / DeviceUpdateCommonPostActionResult) to operation-specific types.
     // The generated methods were renamed via operationId directives (adding synonym-based renaming),
-    // and these shims preserve the original v1.1.2 method signatures.
+    // and these shims preserve the original v1.1.2 method signatures. Removing them would drop the old
+    // method names/return types.
     public partial class NetworkTapResource
     {
         /// <summary> Backward-compatible shim for Resync. Preserves the previous SDK signature while calling the current REST action. </summary>

@@ -10,6 +10,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
+    // TagsUpdate is the shipped public patch type for updating resource tags. The generated type would
+    // redeclare constructors and the Tags property from NetworkRackPatch; suppressing them keeps one
+    // inherited implementation. Removing this would create duplicate/incompatible tag-update surface.
     [CodeGenSuppress("TagsUpdate")]
     [CodeGenSuppress("TagsUpdate", typeof(IDictionary<string, string>), typeof(IDictionary<string, BinaryData>))]
     [CodeGenSuppress("Tags")]

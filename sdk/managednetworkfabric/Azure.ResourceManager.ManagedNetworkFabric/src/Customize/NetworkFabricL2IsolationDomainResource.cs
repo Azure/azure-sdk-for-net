@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     // The new API version changed action operation return types from generic result types
     // (DeviceUpdateCommonPostActionResult) to operation-specific types. The generated methods were renamed
     // via operationId directives (adding synonym-based renaming), and these shims preserve the
-    // original v1.1.2 method signatures.
+    // original v1.1.2 method signatures. Removing them would drop the old method names/return types.
     public partial class NetworkFabricL2IsolationDomainResource
     {
         /// <summary> Backward-compatible shim for UpdateAdministrativeState. Preserves the previous SDK signature while calling the current REST action. </summary>

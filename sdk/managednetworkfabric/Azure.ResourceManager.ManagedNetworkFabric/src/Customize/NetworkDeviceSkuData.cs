@@ -8,6 +8,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
+    // The generated SKU model nests model/manufacturer under properties. The shipped SDK exposed them
+    // directly, so these members keep the old flattened surface; removing them would drop that public API.
     public partial class NetworkDeviceSkuData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkuData"/>. </summary>

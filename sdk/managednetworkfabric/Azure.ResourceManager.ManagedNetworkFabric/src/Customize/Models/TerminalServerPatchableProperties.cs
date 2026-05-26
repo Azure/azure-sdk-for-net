@@ -7,6 +7,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
+    // TypeSpec generates TerminalServerPatchConfiguration, but the shipped SDK exposed
+    // TerminalServerPatchableProperties. Removing this customization would rename the public patch model.
     [CodeGenType("TerminalServerPatchConfiguration")]
     public partial class TerminalServerPatchableProperties
     {
