@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
         public virtual AsyncPageable<Models.ReservationCatalog> GetCatalogAsync(string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
             => GetCatalogAsync(reservedResourceType, location, publisherId, offerId, planId, filter: default, skip: default, take: default, cancellationToken);
 
-         /// <summary>
+        /// <summary>
         /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
         /// <list type="bullet">
         /// <item>
@@ -61,12 +61,44 @@ namespace Azure.ResourceManager.Reservations.Mocking
         public virtual Pageable<Models.ReservationCatalog> GetCatalog(string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
             => GetCatalog(reservedResourceType, location, publisherId, offerId, planId, filter: default, skip: default, take: default, cancellationToken);
 
+        /// <summary>
+        /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetCatalog</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options to apply to the catalog request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Models.ReservationCatalog> GetCatalogAsync(Models.SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new Models.SubscriptionResourceGetCatalogOptions();
             return GetCatalogAsync(options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, options.Filter, options.Skip, options.Take, cancellationToken);
         }
 
+        /// <summary>
+        /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetCatalog</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options to apply to the catalog request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Models.ReservationCatalog> GetCatalog(Models.SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new Models.SubscriptionResourceGetCatalogOptions();
