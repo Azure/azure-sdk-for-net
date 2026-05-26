@@ -9,16 +9,6 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/ToolConfig.Serialization.cs
-    /// <summary> Per-tool configuration that controls tool visibility and search behavior. </summary>
-    public partial class ToolConfig : IJsonModel<ToolConfig>
-    {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ToolConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolConfig>)this).GetFormatFromOptions(options) : options.Format;
-========
     /// <summary> LLM model options for data generation jobs. </summary>
     public partial class DataGenerationModelOptions : IJsonModel<DataGenerationModelOptions>
     {
@@ -32,62 +22,32 @@ namespace Azure.AI.Projects
         protected virtual DataGenerationModelOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataGenerationModelOptions>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> 6f940c9abad31260061d80f66d142bcf6c50c407:sdk/ai/Azure.AI.Projects/src/Generated/Models/DataGenerationModelOptions.Serialization.cs
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/ToolConfig.Serialization.cs
-                        return DeserializeToolConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ToolConfig)} does not support reading '{options.Format}' format.");
-========
                         return DeserializeDataGenerationModelOptions(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataGenerationModelOptions)} does not support reading '{options.Format}' format.");
->>>>>>>> 6f940c9abad31260061d80f66d142bcf6c50c407:sdk/ai/Azure.AI.Projects/src/Generated/Models/DataGenerationModelOptions.Serialization.cs
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/ToolConfig.Serialization.cs
-            string format = options.Format == "W" ? ((IPersistableModel<ToolConfig>)this).GetFormatFromOptions(options) : options.Format;
-========
             string format = options.Format == "W" ? ((IPersistableModel<DataGenerationModelOptions>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> 6f940c9abad31260061d80f66d142bcf6c50c407:sdk/ai/Azure.AI.Projects/src/Generated/Models/DataGenerationModelOptions.Serialization.cs
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/ToolConfig.Serialization.cs
-                    throw new FormatException($"The model {nameof(ToolConfig)} does not support writing '{options.Format}' format.");
-========
                     throw new FormatException($"The model {nameof(DataGenerationModelOptions)} does not support writing '{options.Format}' format.");
->>>>>>>> 6f940c9abad31260061d80f66d142bcf6c50c407:sdk/ai/Azure.AI.Projects/src/Generated/Models/DataGenerationModelOptions.Serialization.cs
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/ToolConfig.Serialization.cs
-        BinaryData IPersistableModel<ToolConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ToolConfig IPersistableModel<ToolConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ToolConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ToolConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-========
         BinaryData IPersistableModel<DataGenerationModelOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
@@ -100,7 +60,6 @@ namespace Azure.AI.Projects
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataGenerationModelOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
->>>>>>>> 6f940c9abad31260061d80f66d142bcf6c50c407:sdk/ai/Azure.AI.Projects/src/Generated/Models/DataGenerationModelOptions.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -111,23 +70,6 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/ToolConfig.Serialization.cs
-            string format = options.Format == "W" ? ((IPersistableModel<ToolConfig>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ToolConfig)} does not support writing '{format}' format.");
-            }
-            if (Optional.IsDefined(Pin))
-            {
-                writer.WritePropertyName("pin"u8);
-                writer.WriteBooleanValue(Pin.Value);
-            }
-            if (Optional.IsDefined(AdditionalSearchText))
-            {
-                writer.WritePropertyName("additional_search_text"u8);
-                writer.WriteStringValue(AdditionalSearchText);
-            }
-========
             string format = options.Format == "W" ? ((IPersistableModel<DataGenerationModelOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
@@ -135,7 +77,6 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
->>>>>>>> 6f940c9abad31260061d80f66d142bcf6c50c407:sdk/ai/Azure.AI.Projects/src/Generated/Models/DataGenerationModelOptions.Serialization.cs
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -155,21 +96,6 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/ToolConfig.Serialization.cs
-        ToolConfig IJsonModel<ToolConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ToolConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolConfig>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ToolConfig)} does not support reading '{format}' format.");
-            }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeToolConfig(document.RootElement, options);
-========
         DataGenerationModelOptions IJsonModel<DataGenerationModelOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -183,40 +109,16 @@ namespace Azure.AI.Projects
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataGenerationModelOptions(document.RootElement, options);
->>>>>>>> 6f940c9abad31260061d80f66d142bcf6c50c407:sdk/ai/Azure.AI.Projects/src/Generated/Models/DataGenerationModelOptions.Serialization.cs
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/ToolConfig.Serialization.cs
-        internal static ToolConfig DeserializeToolConfig(JsonElement element, ModelReaderWriterOptions options)
-========
         internal static DataGenerationModelOptions DeserializeDataGenerationModelOptions(JsonElement element, ModelReaderWriterOptions options)
->>>>>>>> 6f940c9abad31260061d80f66d142bcf6c50c407:sdk/ai/Azure.AI.Projects/src/Generated/Models/DataGenerationModelOptions.Serialization.cs
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/ToolConfig.Serialization.cs
-            bool? pin = default;
-            string additionalSearchText = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("pin"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    pin = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("additional_search_text"u8))
-                {
-                    additionalSearchText = prop.Value.GetString();
-========
             string model = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -224,7 +126,6 @@ namespace Azure.AI.Projects
                 if (prop.NameEquals("model"u8))
                 {
                     model = prop.Value.GetString();
->>>>>>>> 6f940c9abad31260061d80f66d142bcf6c50c407:sdk/ai/Azure.AI.Projects/src/Generated/Models/DataGenerationModelOptions.Serialization.cs
                     continue;
                 }
                 if (options.Format != "W")
@@ -232,11 +133,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Extensions.OpenAI/src/Generated/Models/ToolConfig.Serialization.cs
-            return new ToolConfig(pin, additionalSearchText, additionalBinaryDataProperties);
-========
             return new DataGenerationModelOptions(model, additionalBinaryDataProperties);
->>>>>>>> 6f940c9abad31260061d80f66d142bcf6c50c407:sdk/ai/Azure.AI.Projects/src/Generated/Models/DataGenerationModelOptions.Serialization.cs
         }
     }
 }
