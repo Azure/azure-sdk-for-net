@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+#nullable disable
+
 using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Reservations.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Reservations.Mocking
 {
@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
     // mockable subscription extension resource, including shorter and options-bag catalog overloads.
     // The TypeSpec generator emits collection or long-parameter methods, so these forwarders preserve
     // the GA convenience surface and mocking target.
-    public partial class MockableReservationsSubscriptionResource
+    public partial class MockableReservationsSubscriptionResource : ArmResource
     {
         /// <summary>
         /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
