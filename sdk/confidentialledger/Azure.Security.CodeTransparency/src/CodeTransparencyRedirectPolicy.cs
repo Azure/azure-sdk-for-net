@@ -25,7 +25,7 @@ namespace Azure.Security.CodeTransparency
     /// </para>
     /// <para>
     /// Redirects to untrusted targets are refused by throwing <see cref="InvalidOperationException"/>
-    /// to prevent credential and request-body leakage (MSRC #116673).
+    /// to prevent credential and request-body leakage to attacker-controlled hosts.
     /// </para>
     /// <para>
     /// Cache writes are staged per-call and only committed after a successful trusted chain
@@ -136,34 +136,25 @@ namespace Azure.Security.CodeTransparency
 
                 Uri redirectUri = BuildRedirectUri(message.Request.Uri.ToUri(), location);
 
-                // SECURITY: validate trust BEFORE touching request URI or cache.
-                // Untrusted targets are refused to prevent credential and request-body
-                // leakage to attacker-controlled hosts (MSRC #116673).
+                // Validate trust before modifying the request URI or staging a cache write.
                 if (!IsTrustedRedirectTarget(redirectUri))
                 {
                     string origin = FormatOrigin(redirectUri);
-                    // Invalidate any existing cached primary — the node that issued this
-                    // untrusted redirect is misbehaving and must not receive further traffic.
                     InvalidateCachedPrimaryNode();
                     message.Response.Dispose();
                     throw new InvalidOperationException(
                         $"Confidential Ledger refused to follow redirect to untrusted target origin: {origin}");
                 }
 
-                // Stage (do not commit) cache candidate for non-GET trusted hops.
-                // GET requests may be redirected for other reasons (e.g., historical queries
-                // routed to backup nodes), so their redirect targets should not be cached.
+                // Stage cache candidate for non-GET trusted hops.
                 if (message.Request.Method != RequestMethod.Get)
                 {
                     pendingCacheUri = GetPrimaryNodeBaseUri(redirectUri);
                 }
 
-                // Update the request URI to the trusted redirect target.
-                // The Authorization header is intentionally preserved because CTS redirects
-                // within the trust boundary are between nodes of the same ledger.
+                // Preserve the Authorization header on trusted redirects.
                 message.Request.Uri.Reset(redirectUri);
 
-                // Dispose of the redirect response before re-sending.
                 message.Response.Dispose();
 
                 try
@@ -179,17 +170,13 @@ namespace Azure.Security.CodeTransparency
                 }
                 catch
                 {
-                    // Transport error mid-chain: discard staged cache and invalidate any
-                    // prior cached value as a safety net.
+                    // Transport error mid-chain: invalidate cache for clean retry.
                     InvalidateCachedPrimaryNode();
                     throw;
                 }
             }
 
-            // Commit the staged cache only when the redirect chain reached a terminal
-            // non-redirect, non-5xx response. If the chain ended on a 3xx (e.g., max-retries
-            // exhausted, malformed Location, or no Location header), we do not know the
-            // staged URL is reachable, so the cache is discarded.
+            // Commit staged cache only on a terminal non-redirect, non-5xx response.
             if (pendingCacheUri != null
                 && !s_redirectStatusCodes.Contains(message.Response.Status)
                 && message.Response.Status < 500)
@@ -202,8 +189,6 @@ namespace Azure.Security.CodeTransparency
                 InvalidateCachedPrimaryNode();
             }
         }
-
-        // ---------- Trust check ----------
 
         private static string CanonicalHostname(string host)
         {
@@ -270,8 +255,6 @@ namespace Azure.Security.CodeTransparency
                 : $"{uri.Scheme}://{uri.Host}:{uri.Port}";
         }
 
-        // ---------- Redirect helpers ----------
-
         private static bool IsRedirectResponse(int statusCode)
         {
             return statusCode == 307 || statusCode == 308;
@@ -288,8 +271,6 @@ namespace Azure.Security.CodeTransparency
 
             return redirectUri;
         }
-
-        // ---------- Cache helpers ----------
 
         private bool TryApplyCachedPrimaryNode(Request request)
         {

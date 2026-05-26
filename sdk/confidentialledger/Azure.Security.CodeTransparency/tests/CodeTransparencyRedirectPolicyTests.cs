@@ -368,7 +368,7 @@ namespace Azure.Security.CodeTransparency.Tests
             Assert.AreEqual("https://myledger.confidential-ledger.azure.com/ledger", mockTransport.Requests[2].Uri.ToString());
         }
 
-        // ==================== Security regression tests (MSRC #116673) ====================
+        // ==================== Security regression tests ====================
 
         [Test]
         public async Task ThrowsOnCrossOriginHttpsRedirect()
