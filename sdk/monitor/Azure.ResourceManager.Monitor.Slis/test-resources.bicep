@@ -26,7 +26,7 @@ resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-
   location: location
 }
 
-// Monitoring Reader role (43d0d8ad-25c7-4714-9337-8ba259a2fe2e)
+// Monitoring Reader role (43d0d8ad-25c7-4714-9337-8ba259a9fe05)
 // Grants the test SP read access for getting metrics and AMW accounts
 var monitoringReaderRoleId = '43d0d8ad-25c7-4714-9337-8ba259a9fe05'
 
