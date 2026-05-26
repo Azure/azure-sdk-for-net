@@ -303,24 +303,21 @@ For each remaining operation `O`:
 2. If `O`'s response is not a collection of some item model `T`,
    skip — it cannot be a `List`.
 3. Otherwise, look for a resource `R` in the **detected resource set**
-   such that `R.model == T` and `O.path` identifies a collection of
-   `R`. A path identifies a collection of `R` when either:
-   - `O.path` is exactly `R.instancePath` with the trailing name segment
-     removed. This is the normal list-by-parent/list-by-resource-group
-     shape. Singleton resources are handled the same way: the collection
-     path is the singleton instance path with its constant singleton name
-     removed.
-   - `O.path` has the same ARM resource type as `R` and ends on that
-     resource type. This covers scope-level list operations whose path
-     intentionally omits part of the instance path, such as a
-     subscription-level list of resource-group-scoped resources.
+   such that `R.model == T` and `O.path` is a prefix of
+   `R.instancePath`. This covers normal list-by-parent/list-by-resource-group
+   operations, singleton resources, and tuple-resource list operations at
+   intermediate collection paths.
 
-   Exact collection-path matches take precedence over scope-level
-   resource-type matches. If multiple resources still match, attach `O`
-   to the resource with the **shortest** matching `instancePath` as
-   `R.List`. (The shortest match is the closest containing resource
-   whose model is `T` — i.e. `R` itself, not some deeper resource that
-   happens to also be of model `T`.)
+   If no prefix match is found, a scope-level list can still match when
+   `O.path` has the same ARM resource type as `R`, has compatible scope
+   nesting, and ends on that resource type. This covers scope-level list
+   operations whose path intentionally omits part of the instance path, such as
+   a subscription-level list of resource-group-scoped resources.
+
+   If multiple resources match, attach `O` to the resource with the
+   **shortest** matching `instancePath` as `R.List`. (The shortest match is
+   the closest containing resource whose model is `T` — i.e. `R` itself,
+   not some deeper resource that happens to also be of model `T`.)
 4. If no such `R` exists, `O` falls through to Pass 2.
 
 #### Pass 2 — Everything else is an `Action`
