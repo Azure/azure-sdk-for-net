@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("prefixType"u8);
                 writer.WriteStringValue(PrefixType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IpPrefixValues))
+            if (Optional.IsCollectionDefined(IPPrefixValues))
             {
                 writer.WritePropertyName("ipPrefixValues"u8);
                 writer.WriteStartArray();
-                foreach (string item in IpPrefixValues)
+                foreach (string item in IPPrefixValues)
                 {
                     if (item == null)
                     {
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpGroupNames))
+            if (Optional.IsCollectionDefined(IPGroupNames))
             {
                 writer.WritePropertyName("ipGroupNames"u8);
                 writer.WriteStartArray();
-                foreach (string item in IpGroupNames)
+                foreach (string item in IPGroupNames)
                 {
                     if (item == null)
                     {

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         continue;
                     }
                     IPCommunityIdList add = IPCommunityIdList.DeserializeIPCommunityIdList(prop.Value, options);
-                    foreach (string id in add.IpCommunityIds)
+                    foreach (string id in add.IPCommunityIds)
                     {
                         result.AddIPCommunityIds.Add(id is null ? null : new ResourceIdentifier(id));
                     }

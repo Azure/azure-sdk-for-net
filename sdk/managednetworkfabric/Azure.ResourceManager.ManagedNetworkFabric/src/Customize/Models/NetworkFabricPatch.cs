@@ -27,8 +27,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("IPv4Prefix is deprecated, use Ipv4Prefix instead.")]
         public string IPv4Prefix
         {
-            get => Ipv4Prefix;
-            set => Ipv4Prefix = value;
+            get => Properties is null ? default : Properties.Ipv4Prefix;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkFabricPatchProperties();
+                }
+                Properties.Ipv4Prefix = value;
+            }
         }
 
         /// <summary> IPv6Prefix for Management Network. </summary>
@@ -36,8 +43,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("IPv6Prefix is deprecated, use Ipv6Prefix instead.")]
         public string IPv6Prefix
         {
-            get => Ipv6Prefix;
-            set => Ipv6Prefix = value;
+            get => Properties is null ? default : Properties.Ipv6Prefix;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkFabricPatchProperties();
+                }
+                Properties.Ipv6Prefix = value;
+            }
         }
 
         /// <summary> Network and credentials configuration already applied to terminal server. </summary>

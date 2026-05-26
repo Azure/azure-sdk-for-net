@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 Mtu = value.Mtu,
                 BfdConfiguration = value.BfdConfiguration,
-                PrimaryIpv4Prefix = value.PrimaryIpv4Prefix,
-                PrimaryIpv6Prefix = value.PrimaryIpv6Prefix,
-                SecondaryIpv4Prefix = value.SecondaryIpv4Prefix,
-                SecondaryIpv6Prefix = value.SecondaryIpv6Prefix
+                PrimaryIPv4Prefix = value.PrimaryIPv4Prefix,
+                PrimaryIPv6Prefix = value.PrimaryIPv6Prefix,
+                SecondaryIPv4Prefix = value.SecondaryIPv4Prefix,
+                SecondaryIPv6Prefix = value.SecondaryIPv6Prefix
             };
         }
     }

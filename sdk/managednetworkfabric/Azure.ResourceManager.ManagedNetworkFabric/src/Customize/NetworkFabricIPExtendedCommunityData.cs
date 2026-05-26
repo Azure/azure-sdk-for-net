@@ -11,6 +11,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     public partial class NetworkFabricIPExtendedCommunityData
     {
         /// <summary> List of IP Extended Community Rules. </summary>
-        public IList<IPExtendedCommunityRule> IPExtendedCommunityRules => IpExtendedCommunityRules;
+        public IList<IPExtendedCommunityRule> IPExtendedCommunityRules => Properties?.IpExtendedCommunityRules;
     }
 }

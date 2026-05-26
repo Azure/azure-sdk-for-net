@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityIdList"/>. </summary>
         public IPExtendedCommunityIdList()
         {
-            IPExtendedCommunityIds = new ChangeTrackingList<ResourceIdentifier>();
+            IpExtendedCommunityIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         internal IPExtendedCommunityIdList(IList<ResourceIdentifier> ipExtendedCommunityIds)
         {
-            IPExtendedCommunityIds = ipExtendedCommunityIds;
+            IpExtendedCommunityIds = ipExtendedCommunityIds;
         }
 
         /// <summary> List of IP Extended Community resource IDs. </summary>
-        public IList<ResourceIdentifier> IPExtendedCommunityIds { get; internal set; }
+        public IList<ResourceIdentifier> IPExtendedCommunityIds => IpExtendedCommunityIds;
     }
 }

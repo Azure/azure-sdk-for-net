@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-        private protected IList<ResourceIdentifier> _ipCommunityIds;
 
         /// <summary> Initializes a new instance of <see cref="IPCommunityIdList"/>. </summary>
         /// <param name="ipCommunityIds"> List of IP Community resource IDs. </param>

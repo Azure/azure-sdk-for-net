@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateUpdateNpbStaticRouteBfdAdministrativeStateRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateSetNpbStaticRouteBfdAdministrativeStateRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

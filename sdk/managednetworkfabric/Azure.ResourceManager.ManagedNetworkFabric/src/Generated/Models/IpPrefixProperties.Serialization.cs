@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("ipPrefixRules"u8);
             writer.WriteStartArray();
-            foreach (IPPrefixRule item in IpPrefixRules)
+            foreach (IPPrefixRule item in IPPrefixRules)
             {
                 writer.WriteObjectValue(item, options);
             }

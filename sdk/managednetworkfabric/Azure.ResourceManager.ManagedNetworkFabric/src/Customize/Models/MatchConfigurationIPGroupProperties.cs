@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class MatchConfigurationIPGroupProperties
@@ -15,6 +17,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of IP Prefixes. </summary>
-        public System.Collections.Generic.IList<string> IPPrefixes => IpPrefixes;
+        public IList<string> IPPrefixes => IpPrefixes;
     }
 }

@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticRouteRoutePolicy"/>. </summary>
-        /// <param name="exportRoutePolicy"> Array of ARM Resource ID of the RoutePolicies. </param>
+        /// <param name="staticExportRoutePolicy"> Array of ARM Resource ID of the RoutePolicies. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticRouteRoutePolicy(L3ExportRoutePolicy exportRoutePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StaticRouteRoutePolicy(L3ExportRoutePolicy staticExportRoutePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExportRoutePolicy = exportRoutePolicy;
+            StaticExportRoutePolicy = staticExportRoutePolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
-        public L3ExportRoutePolicy ExportRoutePolicy { get; set; }
+        public L3ExportRoutePolicy StaticExportRoutePolicy { get; set; }
     }
 }

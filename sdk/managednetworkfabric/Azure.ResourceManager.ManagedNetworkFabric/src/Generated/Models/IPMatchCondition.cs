@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="IPMatchCondition"/>. </summary>
         public IPMatchCondition()
         {
-            IpPrefixValues = new ChangeTrackingList<string>();
-            IpGroupNames = new ChangeTrackingList<string>();
+            IPPrefixValues = new ChangeTrackingList<string>();
+            IPGroupNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IPMatchCondition"/>. </summary>
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             Type = @type;
             PrefixType = prefixType;
-            IpPrefixValues = ipPrefixValues;
-            IpGroupNames = ipGroupNames;
+            IPPrefixValues = ipPrefixValues;
+            IPGroupNames = ipGroupNames;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public IPMatchConditionPrefixType? PrefixType { get; set; }
 
         /// <summary> The list of IP Prefixes that need to be matched. </summary>
-        public IList<string> IpPrefixValues { get; }
+        public IList<string> IPPrefixValues { get; }
 
         /// <summary> The List of IP Group Names that need to be matched. </summary>
-        public IList<string> IpGroupNames { get; }
+        public IList<string> IPGroupNames { get; }
     }
 }

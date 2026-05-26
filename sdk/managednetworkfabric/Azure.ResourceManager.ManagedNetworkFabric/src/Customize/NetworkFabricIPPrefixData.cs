@@ -25,6 +25,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> List of IP Prefix Rules. </summary>
-        public IList<IPPrefixRule> IPPrefixRules => IpPrefixRules;
+        public IList<IPPrefixRule> IpPrefixRules => IPPrefixRules;
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         /// <summary> ARM Resource ID of the RoutePolicy. This is used for backward compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIPv4RoutePolicyId instead.")]
+        [Obsolete("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIpv4RoutePolicyId instead.")]
         public ResourceIdentifier ExportRoutePolicyId
         {
             get => ExportRoutePolicy?.ExportIPv4RoutePolicyId;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> ARM Resource ID of the RoutePolicy. This is used for backward compatibility. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIPv4RoutePolicyId instead.")]
+        [Obsolete("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIpv4RoutePolicyId instead.")]
         public ResourceIdentifier ImportRoutePolicyId
         {
             get => ImportRoutePolicy?.ImportIPv4RoutePolicyId;

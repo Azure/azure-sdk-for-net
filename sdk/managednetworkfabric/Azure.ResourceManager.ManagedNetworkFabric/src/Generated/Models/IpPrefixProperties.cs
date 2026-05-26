@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             Argument.AssertNotNull(ipPrefixRules, nameof(ipPrefixRules));
 
-            IpPrefixRules = ipPrefixRules.ToList();
+            IPPrefixRules = ipPrefixRules.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="IpPrefixProperties"/>. </summary>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             Annotation = annotation;
             NetworkFabricId = networkFabricId;
-            IpPrefixRules = ipPrefixRules;
+            IPPrefixRules = ipPrefixRules;
             LastOperation = lastOperation;
             ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public ResourceIdentifier NetworkFabricId { get; }
 
         /// <summary> The list of IP Prefix Rules. </summary>
-        public IList<IPPrefixRule> IpPrefixRules { get; } = new ChangeTrackingList<IPPrefixRule>();
+        public IList<IPPrefixRule> IPPrefixRules { get; } = new ChangeTrackingList<IPPrefixRule>();
 
         /// <summary> Details of the last operation performed on the resource. </summary>
         internal LastOperationProperties LastOperation { get; }

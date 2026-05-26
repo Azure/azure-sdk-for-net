@@ -25,6 +25,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> List of IP Community Rules. </summary>
-        public IList<IPCommunityRule> IPCommunityRules => IpCommunityRules;
+        public IList<IPCommunityRule> IpCommunityRules => IPCommunityRules;
     }
 }

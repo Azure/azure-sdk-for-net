@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary> List of IP Community Rules. </summary>
-        public IList<IPCommunityRule> IpCommunityRules
+        public IList<IPCommunityRule> IPCommunityRules
         {
             get
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     Properties = new IpCommunityProperties();
                 }
-                return Properties.IpCommunityRules;
+                return Properties.IPCommunityRules;
             }
         }
 

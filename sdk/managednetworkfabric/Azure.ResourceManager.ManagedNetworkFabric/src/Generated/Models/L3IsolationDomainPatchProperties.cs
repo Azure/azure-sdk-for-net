@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             get
             {
-                return StaticRouteRoutePolicy is null ? default : StaticRouteRoutePolicy.ExportRoutePolicy;
+                return StaticRouteRoutePolicy is null ? default : StaticRouteRoutePolicy.StaticExportRoutePolicy;
             }
             set
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     StaticRouteRoutePolicy = new StaticRouteRoutePolicyPatch();
                 }
-                StaticRouteRoutePolicy.ExportRoutePolicy = value;
+                StaticRouteRoutePolicy.StaticExportRoutePolicy = value;
             }
         }
 

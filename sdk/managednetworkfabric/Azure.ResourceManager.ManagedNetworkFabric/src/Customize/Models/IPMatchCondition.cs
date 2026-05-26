@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> The list of IP Prefixes that need to be matched. </summary>
-        public IList<string> IPPrefixValues => IpPrefixValues;
+        public IList<string> IpPrefixValues => IPPrefixValues;
 
         /// <summary> The List of IP Group Names that need to be matched. </summary>
-        public IList<string> IPGroupNames => IpGroupNames;
+        public IList<string> IpGroupNames => IPGroupNames;
     }
 }

@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -11,9 +12,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public partial class NetworkFabricControllerServices
     {
         /// <summary> The IPv4 address spaces. </summary>
-        public IReadOnlyList<string> IPv4AddressSpaces => (IReadOnlyList<string>)Ipv4AddressSpaces;
+        public IReadOnlyList<string> IPv4AddressSpaces => Ipv4AddressSpaces as IReadOnlyList<string> ?? new ReadOnlyCollection<string>(Ipv4AddressSpaces);
 
         /// <summary> The IPv6 address spaces. </summary>
-        public IReadOnlyList<string> IPv6AddressSpaces => (IReadOnlyList<string>)Ipv6AddressSpaces;
+        public IReadOnlyList<string> IPv6AddressSpaces => Ipv6AddressSpaces as IReadOnlyList<string> ?? new ReadOnlyCollection<string>(Ipv6AddressSpaces);
     }
 }

@@ -9,14 +9,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class ImportRoutePolicy
     {
-        /// <summary> ARM Resource ID of the IPv4 RoutePolicy. </summary>
+        /// <summary> ARM resource ID of RoutePolicy. </summary>
         public ResourceIdentifier ImportIPv4RoutePolicyId
         {
             get => ImportIpv4RoutePolicyId;
             set => ImportIpv4RoutePolicyId = value;
         }
 
-        /// <summary> ARM Resource ID of the IPv6 RoutePolicy. </summary>
+        /// <summary> ARM resource ID of RoutePolicy. </summary>
         public ResourceIdentifier ImportIPv6RoutePolicyId
         {
             get => ImportIpv6RoutePolicyId;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             Argument.AssertNotNull(ipCommunityRules, nameof(ipCommunityRules));
 
-            IpCommunityRules = ipCommunityRules.ToList();
+            IPCommunityRules = ipCommunityRules.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="IpCommunityProperties"/>. </summary>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             Annotation = annotation;
             NetworkFabricId = networkFabricId;
-            IpCommunityRules = ipCommunityRules;
+            IPCommunityRules = ipCommunityRules;
             LastOperation = lastOperation;
             ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public ResourceIdentifier NetworkFabricId { get; }
 
         /// <summary> List of IP Community Rules. </summary>
-        public IList<IPCommunityRule> IpCommunityRules { get; } = new ChangeTrackingList<IPCommunityRule>();
+        public IList<IPCommunityRule> IPCommunityRules { get; } = new ChangeTrackingList<IPCommunityRule>();
 
         /// <summary> Details of the last operation performed on the resource. </summary>
         internal LastOperationProperties LastOperation { get; }

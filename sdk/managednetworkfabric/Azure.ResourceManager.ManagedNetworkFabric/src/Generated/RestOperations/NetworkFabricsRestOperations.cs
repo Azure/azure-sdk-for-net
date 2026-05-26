@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateProvisionRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContext context)
+        internal HttpMessage CreateActivateRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateDeprovisionRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContext context)
+        internal HttpMessage CreateDeactivateRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return message;
         }
 
-        internal HttpMessage CreateRefreshConfigurationRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContext context)
+        internal HttpMessage CreateReloadConfigurationRequest(Guid subscriptionId, string resourceGroupName, string networkFabricName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

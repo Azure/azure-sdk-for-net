@@ -11,8 +11,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    // Backward compatibility shims for the TypeSpec migration. These preserve old acronym-cased
-    // members that now generate with .NET-standard Ipv4/Ipv6/ASN casing.
     public partial class NetworkFabricData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkFabricData"/>. </summary>

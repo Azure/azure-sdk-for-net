@@ -11,6 +11,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public partial class NetworkFabricIPPrefixPatch
     {
         /// <summary> The list of IP Prefix Rules. </summary>
-        public IList<IPPrefixRule> IPPrefixRules => IpPrefixRules;
+        public IList<IPPrefixRule> IPPrefixRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new IpPrefixPatchProperties();
+                }
+                return Properties.IpPrefixRules;
+            }
+        }
     }
 }

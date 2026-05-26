@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 throw new FormatException($"The model {nameof(StaticRouteRoutePolicy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ExportRoutePolicy))
+            if (Optional.IsDefined(StaticExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue(ExportRoutePolicy, options);
+                writer.WriteObjectValue(StaticExportRoutePolicy, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            L3ExportRoutePolicy exportRoutePolicy = default;
+            L3ExportRoutePolicy staticExportRoutePolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    exportRoutePolicy = L3ExportRoutePolicy.DeserializeL3ExportRoutePolicy(prop.Value, options);
+                    staticExportRoutePolicy = L3ExportRoutePolicy.DeserializeL3ExportRoutePolicy(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StaticRouteRoutePolicy(exportRoutePolicy, additionalBinaryDataProperties);
+            return new StaticRouteRoutePolicy(staticExportRoutePolicy, additionalBinaryDataProperties);
         }
     }
 }

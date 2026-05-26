@@ -13,6 +13,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
+    [CodeGenSuppress("AddIPCommunityIds")]
     [CodeGenSuppress("JsonModelWriteCore")]
     public partial class ActionIPCommunityProperties : IPCommunityAddOperationProperties
     {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Delete = new IPCommunityIdList();
                 }
-                return Delete.IpCommunityIds;
+                return Delete.IPCommunityIds;
             }
         }
 
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 {
                     Set = new IPCommunityIdList();
                 }
-                return Set.IpCommunityIds;
+                return Set.IPCommunityIds;
             }
         }
 

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Response for Network Tap Rule resync operation. </summary>
-    internal partial class NetworkTapRuleResyncResult
+    public partial class NetworkTapRuleResyncResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

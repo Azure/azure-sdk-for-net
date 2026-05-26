@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIpv4RoutePolicyId instead.")]
         public ResourceIdentifier ExportRoutePolicyId
         {
-            get => ExportRoutePolicy?.ExportIpv4RoutePolicyId;
+            get => ExportRoutePolicy?.ExportIPv4RoutePolicyId;
             set
             {
                 if (ExportRoutePolicy == null)
                     ExportRoutePolicy = new ExportRoutePolicy();
-                ExportRoutePolicy.ExportIpv4RoutePolicyId = value;
+                ExportRoutePolicy.ExportIPv4RoutePolicyId = value;
             }
         }
 
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIpv4RoutePolicyId instead.")]
         public ResourceIdentifier ImportRoutePolicyId
         {
-            get => ImportRoutePolicy?.ImportIpv4RoutePolicyId;
+            get => ImportRoutePolicy?.ImportIPv4RoutePolicyId;
             set
             {
                 if (ImportRoutePolicy == null)
                     ImportRoutePolicy = new ImportRoutePolicy();
-                ImportRoutePolicy.ImportIpv4RoutePolicyId = value;
+                ImportRoutePolicy.ImportIPv4RoutePolicyId = value;
             }
         }
     }
