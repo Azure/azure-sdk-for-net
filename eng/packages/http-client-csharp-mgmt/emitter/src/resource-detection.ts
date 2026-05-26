@@ -40,7 +40,6 @@ import {
 import pluralize from "pluralize";
 import {
   armProviderSchema,
-  armResourceCollectionActionName,
   armResourceInternal,
   armResourceWithParameter,
   builtInResourceOperationName,
@@ -61,6 +60,7 @@ import { resolveArmResources } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
 import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
 import { $lib } from "./lib/lib.js";
+import { isArmResourceCollectionAction } from "./decorator-utils.js";
 
 export async function updateClients(
   codeModel: CodeModel,
@@ -550,17 +550,6 @@ function assignRemainingOperations(
   for (const resource of resources) {
     sortResourceMethods(resource.metadata.methods);
   }
-}
-
-function isArmResourceCollectionAction(
-  method: SdkMethod<SdkHttpOperation> | undefined
-): boolean {
-  return (
-    method?.__raw?.decorators?.some(
-      (decorator) =>
-        decorator.definition?.name === armResourceCollectionActionName
-    ) ?? false
-  );
 }
 
 function getResourceCollectionPath(

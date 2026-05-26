@@ -67,7 +67,6 @@ import {
 } from "@azure-tools/typespec-client-generator-core";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
-  armResourceCollectionActionName,
   extensionResourceOperationName,
   legacyExtensionResourceOperationName,
   legacyResourceOperationName,
@@ -77,6 +76,7 @@ import {
   buildScopeInfo,
   buildScopeInfoFromPath
 } from "./resource-detection.js";
+import { isArmResourceCollectionAction } from "./decorator-utils.js";
 
 /**
  * Resolves ARM resources from TypeSpec definitions using the standard resolveArmResources API
@@ -518,17 +518,6 @@ function getMethodIdFromOperation(
   // Use TCGC's utility to get the cross-language definition ID directly
   // CSharpEmitterContext extends SdkContext which extends TCGCContext
   return getCrossLanguageDefinitionId(sdkContext, operation);
-}
-
-function isArmResourceCollectionAction(
-  method: SdkMethod<SdkHttpOperation> | undefined
-): boolean {
-  return (
-    method?.__raw?.decorators?.some(
-      (decorator) =>
-        decorator.definition?.name === armResourceCollectionActionName
-    ) ?? false
-  );
 }
 
 /**
