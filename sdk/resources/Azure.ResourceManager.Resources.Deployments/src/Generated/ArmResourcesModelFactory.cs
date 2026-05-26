@@ -274,21 +274,21 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Information from validate template deployment response. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="error"> The deployment validation error. </param>
-        /// <param name="name"> The name of the deployment. </param>
         /// <param name="properties"> The template deployment properties. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentValidateResult"/> instance for mocking. </returns>
-        public static ArmDeploymentValidateResult ArmDeploymentValidateResult(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, ResponseError error = default, string name = default, ArmDeploymentPropertiesExtended properties = default)
+        public static ArmDeploymentValidateResult ArmDeploymentValidateResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResponseError error = default, ArmDeploymentPropertiesExtended properties = default)
         {
             return new ArmDeploymentValidateResult(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
                 error,
-                name,
                 properties);
         }
 

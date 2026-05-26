@@ -168,12 +168,16 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDeleteAgentRequest(string agentName, RequestOptions options)
+        internal PipelineMessage CreateDeleteAgentRequest(string agentName, bool? force, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
+            if (force != null)
+            {
+                uri.AppendQuery("force", TypeFormatters.ConvertToString(force), true);
+            }
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -284,7 +288,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDeleteAgentVersionRequest(string agentName, string agentVersion, RequestOptions options)
+        internal PipelineMessage CreateDeleteAgentVersionRequest(string agentName, string agentVersion, bool? force, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -292,6 +296,10 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath(agentName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(agentVersion, true);
+            if (force != null)
+            {
+                uri.AppendQuery("force", TypeFormatters.ConvertToString(force), true);
+            }
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -385,15 +393,17 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDownloadAgentVersionCodeRequest(string agentName, string agentVersion, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateDownloadAgentCodeRequest(string agentName, string foundryFeatures, string agentVersion, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
-            uri.AppendPath("/versions/", false);
-            uri.AppendPath(agentVersion, true);
             uri.AppendPath("/code:download", false);
+            if (agentVersion != null)
+            {
+                uri.AppendQuery("agent_version", agentVersion, true);
+            }
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -409,29 +419,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDownloadAgentCodeRequest(string agentName, string foundryFeatures, RequestOptions options)
-        {
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/agents/", false);
-            uri.AppendPath(agentName, true);
-            uri.AppendPath("/code:download", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
-            request.Headers.Set("Accept", "application/zip");
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateCreateSessionRequest(string agentName, BinaryContent content, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateCreateSessionRequest(string agentName, BinaryContent content, string foundryFeatures, string userIsolationKey, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -448,6 +436,10 @@ namespace Azure.AI.Projects.Agents
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
+            if (userIsolationKey != null)
+            {
+                request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
+            }
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
@@ -455,7 +447,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetSessionRequest(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateGetSessionRequest(string agentName, string sessionId, string foundryFeatures, string userIsolationKey, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -473,12 +465,16 @@ namespace Azure.AI.Projects.Agents
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
+            if (userIsolationKey != null)
+            {
+                request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
+            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateDeleteSessionRequest(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateDeleteSessionRequest(string agentName, string sessionId, string foundryFeatures, string userIsolationKey, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -496,11 +492,15 @@ namespace Azure.AI.Projects.Agents
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
             }
+            if (userIsolationKey != null)
+            {
+                request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
+            }
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateGetSessionsRequest(string agentName, string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
+        internal PipelineMessage CreateGetSessionsRequest(string agentName, string foundryFeatures, string userIsolationKey, int? limit, string order, string after, string before, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -532,6 +532,10 @@ namespace Azure.AI.Projects.Agents
             if (foundryFeatures != null)
             {
                 request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
+            if (userIsolationKey != null)
+            {
+                request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
             }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
