@@ -39,7 +39,9 @@ enum FooStatusEnum
 
 ### 4. Model Renamed
 
-**Detection:** TypeSpec diff shows model name changed between versions.
+**Detection:** TypeSpec diff shows a model definition's name changed while its structure remains the same or similar. This is distinct from Pattern 5 (Model Removed) — a rename has a clear old→new mapping, while a removal has no replacement.
+
+**How to distinguish from Pattern 5:** If a model disappears from the changelog AND a new model with similar properties appears, this is a rename (Pattern 4). If a model disappears with no replacement, that's a removal (Pattern 5).
 
 **TypeSpec pattern**
 ```
@@ -67,7 +69,7 @@ model NewModelName {
 
 ### 5. Model Removed
 
-**Detection:** TypeSpec diff shows model definition deleted with no replacement, or changelog shows model no longer available. If a replacement model exists, this is a rename — see Pattern 4 (Model Renamed) instead.
+**Detection:** TypeSpec diff shows model definition deleted with no replacement. If a replacement model with similar properties exists, this is a rename — see Pattern 4 (Model Renamed) instead.
 
 **Per-Language Impact:**
 - **All languages:** ❌ Breaking — any code referencing the model fails to compile
@@ -80,11 +82,6 @@ model NewModelName {
 model DeprecatedModel {
   // ...
 }
-```
-
-If the model was intentionally removed and replacement exists, use `@@clientName` to alias:
-```typespec
-@@clientName(MyService.ReplacementModel, "OldModelName");
 ```
 
 ---
@@ -146,7 +143,9 @@ If the model was intentionally removed and replacement exists, use `@@clientName
 
 ### 8. Operation Renamed
 
-**Detection:** TypeSpec diff shows operation name changed, or changelog shows method renamed.
+**Detection:** TypeSpec diff shows operation name changed, or changelog shows paired method removal + addition. This is distinct from Pattern 10 (Operation Removed) — a rename has a clear old→new mapping, while a removal has no replacement.
+
+**How to distinguish from Pattern 10:** If a method disappears from the changelog AND a new method with similar parameters/return type appears, this is a rename (Pattern 8). If a method disappears with no replacement, that's a removal (Pattern 10).
 
 **Per-Language Changelog Pattern:**
 - **Python:** `Removed operation StorageTaskAssignmentOperations.list` / `Added operation StorageTaskAssignmentOperations.storage_task_assignment_list`
@@ -200,7 +199,7 @@ op MyCustomOp(
 
 ### 10. Operation Removed or Hidden
 
-**Detection:** TypeSpec diff shows operation deleted or `@removed` decorator added.
+**Detection:** TypeSpec diff shows operation deleted or `@removed` decorator added, with no replacement operation. If a replacement operation with similar parameters exists, this is a rename — see Pattern 8 (Operation Renamed) instead.
 
 **Per-Language Impact:**
 - **All languages:** ❌ Breaking — method no longer exists in client
@@ -237,7 +236,7 @@ op oldOperation(): void;
 
 **Mitigation:**
 ```typespec
-// In client.tsp — restore the original operation name
+// In client.tsp — restore the original interface name
 @@clientName(MyService.newInterfaceName, "oldInterfaceName");
 ```
 
