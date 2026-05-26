@@ -13,8 +13,8 @@
 ### Other Changes
 
 ### Sample Updates
-- Added a sample for Fabric IQ.
-- Added sample for Work IQ.
+- Added a sample for Fabric IQ preview tool.
+- Added a sample for Work IQ preview tool.
 
 ## 2.1.0-beta.2 (2026-05-14)
 

@@ -52,7 +52,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Add a data agent to the Fabric](#add-a-data-agent-to-the-fabric)
     - [Create a Fabric connection in Microsoft Foundry](#create-a-fabric-connection-in-microsoft-foundry)
     - [Using Microsoft Fabric tool](#using-microsoft-fabric-tool)
-  - [Fabric IQ tool](#fabric-iq-tool)
+  - [Fabric IQ preview tool](#fabric-iq-tool)
   - [A2APreviewTool](#a2atool)
     - [Create a connection to A2A agent](#create-a-connection-to-a2a-agent)
       - [Classic Microsoft Foundry](#classic-microsoft-foundry)
@@ -60,7 +60,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Using A2A Tool](#using-a2a-tool)
   - [Memory search tool](#memory-search-tool)
   - [Azure Function tool](#azure-function-tool)
-  - [Work IQ tool](#work-iq-tool)
+  - [Work IQ preview tool](#work-iq-preview-tool)
 - [Tracing](#tracing)
   - [Enabling GenAI Tracing](#enabling-genai-tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
@@ -1678,9 +1678,9 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     options: new(agentDefinition));
 ```
 
-### Fabric IQ tool (preview)<a id="fabric-iq-tool"></a>
+### Fabric IQ preview tool<a id="fabric-iq-tool"></a>
 
-Fabric IQ is a layer above Microsoft Fabric. It orders and optimizes the data retrieval process. The Fabric IQ tool
+Fabric IQ is a layer above Microsoft Fabric. It orders and optimizes the data retrieval process. The Fabric IQ preview tool
 allows you to use These capabilities to get the data context for an Agent. To use it, please create the
 the Fabric IQ connection in Microsoft Foundry and use `FabricIQPreviewTool` in the Agent constructor:
 
@@ -1929,9 +1929,9 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     options: new(agentDefinition));
 ```
 
-### Work IQ tool
+### Work IQ preview tool
 
-Work IQ tool allows Agent to access data from [Microsoft 365 Copilot](https://learn.microsoft.com/microsoft-agent-365/tooling-servers-overview).
+Work IQ preview tool allows Agent to access data from [Microsoft 365 Copilot](https://learn.microsoft.com/microsoft-agent-365/tooling-servers-overview).
 To create the Agent, capable of returning the responses grounded by these data, create the `WorkIQPreviewTool` using the ID of connection to Work IQ Teams
 as shown below.
 

@@ -1,4 +1,4 @@
-# Sample for use of an Agent with Work IQ in Azure.AI.Projets.OpenAI.
+# Sample for use of an Agent with Work IQ in Azure.AI.Extensions.OpenAI.
 
 Work IQ tool allows Agent to access data from [Microsoft 365 Copilot](https://learn.microsoft.com/microsoft-agent-365/tooling-servers-overview). In this example we will create the connection to teams and ask Agent to list all meetings for today.
 
