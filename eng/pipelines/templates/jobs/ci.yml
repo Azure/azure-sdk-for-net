@@ -107,16 +107,17 @@ jobs:
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           SDKType: ${{ parameters.SDKType }}
           BuildSnippets: ${{ parameters.BuildSnippets }}
+          ArtifactName: AnalyzePackageInfoArtifact
         PreGenerationSteps:
           - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
             parameters:
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
-              PublishingArtifactName: BuildPackagesArtifact
+              PublishingArtifactName: AnalyzePackageInfoArtifact
               ForceDirect: true
               ExcludePaths: ${{ parameters.ExcludePaths }}
               EnableBuildWeighting: true
               LocTargetSeconds: 300000
-              PublishArtifact: false
+              PublishArtifact: true
 
   - ${{ else }}:
     - job: Build
