@@ -69,7 +69,7 @@ end up in the chain with broker first.
 ```
 
 **Program.cs:**
-```csharp
+```C# Snippet:Azure_Identity_Broker_Samples_DependencyInjection
 HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
 // Register broker first so it claims BrokerCredential sections.
@@ -81,13 +81,6 @@ builder.AddAzureClient<MyClient, MyClientSettings>("MyClient");
 IHost host = builder.Build();
 ```
 
-The same pattern works on a plain `IServiceCollection`:
-
-```csharp
-services.AddBrokerCredentialResolver();
-services.AddAzureClient<MyClient, MyClientSettings>(configuration, "MyClient");
-```
-
 `AddBrokerCredentialResolver()` is idempotent — calling it multiple times
 produces a single registration.
 
@@ -97,7 +90,7 @@ If you are not using a DI container, pass a `BrokerCredentialResolver`
 instance to `GetAzureClientSettings`. The built-in `AzureCredentialResolver`
 is auto-appended as the fallback, so a single new-up wires both resolvers.
 
-```csharp
+```C# Snippet:Azure_Identity_Broker_Samples_GetAzureClientSettings
 ConfigurationManager configuration = new();
 configuration.AddJsonFile("appsettings.json");
 
@@ -114,7 +107,7 @@ When you want just the credential (no client settings binding), use
 `GetAzureCredentialSettings`. It behaves the same way — your resolver
 runs first, the built-in Azure resolver is appended as the fallback.
 
-```csharp
+```C# Snippet:Azure_Identity_Broker_Samples_GetAzureCredentialSettings
 ConfigurationManager configuration = new();
 configuration.AddJsonFile("appsettings.json");
 
@@ -122,7 +115,10 @@ CredentialSettings credential = configuration.GetAzureCredentialSettings(
     "MyClient:Credential",
     new BrokerCredentialResolver());
 
-TokenCredential tokenCredential = (TokenCredential)credential.TokenProvider;
+if (credential.TokenProvider is TokenCredential tokenCredential)
+{
+    // Use the resolved TokenCredential.
+}
 ```
 
 ## Direct `System.ClientModel` `GetCredentialSettings` Call
@@ -131,11 +127,22 @@ If you are not using any of the Azure wrappers, you can compose the chain
 yourself by passing both resolvers explicitly to the base
 `System.ClientModel` `GetCredentialSettings` method:
 
-```csharp
-CredentialSettings credential = configuration.GetCredentialSettings(
+```C# Snippet:Azure_Identity_Broker_Samples_GetCredentialSettings
+CredentialSettings? credential = configuration.GetCredentialSettings(
     "MyClient:Credential",
     new BrokerCredentialResolver(),
     new AzureCredentialResolver()); // omit if you don't need non-broker sources
+
+if (credential is null)
+{
+    // No matching credential section was found (or no resolver claimed it).
+    throw new InvalidOperationException("MyClient:Credential is not configured.");
+}
+
+if (credential.TokenProvider is TokenCredential tokenCredential)
+{
+    // Use the resolved TokenCredential.
+}
 ```
 
 In this flow there is no auto-append — you control the chain order yourself.
@@ -155,7 +162,7 @@ sources it knows about:
 
 Recommended composition today:
 
-```csharp
+```C# Snippet:Azure_Identity_Broker_Samples_ResolverOrdering
 services.AddBrokerCredentialResolver(); // first — claims BrokerCredential / VisualStudioCodeCredential
 services.AddAzureCredentialResolver();  // second — fallback for everything else
 ```
