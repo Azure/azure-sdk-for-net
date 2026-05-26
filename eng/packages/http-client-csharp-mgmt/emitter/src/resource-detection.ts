@@ -45,6 +45,7 @@ import {
   builtInResourceOperationName,
   customAzureResource,
   extensionResourceOperationName,
+  isArmResourceCollectionAction,
   legacyExtensionResourceOperationName,
   legacyResourceOperationName
 } from "./sdk-context-options.js";
@@ -58,11 +59,7 @@ import {
 } from "@typespec/compiler";
 import { resolveArmResources } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
-import {
-  getAllSdkClients,
-  isArmResourceCollectionAction,
-  traverseClient
-} from "./sdk-client-utils.js";
+import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
 import { $lib } from "./lib/lib.js";
 
 export async function updateClients(

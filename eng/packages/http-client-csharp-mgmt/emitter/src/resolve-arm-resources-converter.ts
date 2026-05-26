@@ -65,12 +65,10 @@ import {
   SdkHttpOperation,
   SdkMethod
 } from "@azure-tools/typespec-client-generator-core";
-import {
-  getAllSdkClients,
-  isArmResourceCollectionAction
-} from "./sdk-client-utils.js";
+import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
   extensionResourceOperationName,
+  isArmResourceCollectionAction,
   legacyExtensionResourceOperationName,
   legacyResourceOperationName,
   builtInResourceOperationName
