@@ -97,5 +97,30 @@ namespace Azure.Identity.Broker.Tests.Samples.DocSnippets
             services.AddAzureCredentialResolver();  // second — fallback for everything else
             #endregion
         }
+
+        // Placeholder client + settings types used by the snippets above.
+        // Kept nested because they exist only to make the snippet bodies
+        // type-check; no test consumes them.
+        private class MyClient
+        {
+            public MyClient(MyClientSettings settings)
+            {
+                Settings = settings;
+            }
+
+            public MyClientSettings Settings { get; }
+        }
+
+        private class MyClientSettings : ClientSettings
+        {
+            public string? Endpoint { get; set; }
+
+            public ClientPipelineOptions Options { get; } = new ClientPipelineOptions();
+
+            protected override void BindCore(IConfigurationSection section)
+            {
+                Endpoint = section["Endpoint"];
+            }
+        }
     }
 }
