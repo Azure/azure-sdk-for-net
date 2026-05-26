@@ -199,3 +199,4 @@ Microsoft.Azure.WebJobs.Extensions.WebPubSub
 Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
 Microsoft.Azure.WebPubSub.AspNetCore
 Microsoft.Azure.WebPubSub.Common
+Microsoft.ClientModel.TestFramework
