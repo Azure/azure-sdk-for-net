@@ -3,6 +3,7 @@ namespace Azure.Identity.Broker
     public sealed partial class BrokerCredentialResolver : System.ClientModel.Primitives.CredentialResolver
     {
         public BrokerCredentialResolver() { }
+        public static Azure.Identity.Broker.BrokerCredentialResolver Default { get { throw null; } }
         public override bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, out System.ClientModel.AuthenticationTokenProvider? provider) { throw null; }
     }
     public static partial class ConfigurationExtensions

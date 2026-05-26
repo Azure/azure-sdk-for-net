@@ -96,7 +96,7 @@ configuration.AddJsonFile("appsettings.json");
 
 MyClientSettings settings = configuration.GetAzureClientSettings<MyClientSettings>(
     "MyClient",
-    new BrokerCredentialResolver());
+    BrokerCredentialResolver.Default);
 
 MyClient client = new(settings);
 ```
@@ -113,7 +113,7 @@ configuration.AddJsonFile("appsettings.json");
 
 CredentialSettings credential = configuration.GetAzureCredentialSettings(
     "MyClient:Credential",
-    new BrokerCredentialResolver());
+    BrokerCredentialResolver.Default);
 
 if (credential.TokenProvider is TokenCredential tokenCredential)
 {
@@ -130,7 +130,7 @@ yourself by passing both resolvers explicitly to the base
 ```C# Snippet:Azure_Identity_Broker_Samples_GetCredentialSettings
 CredentialSettings? credential = configuration.GetCredentialSettings(
     "MyClient:Credential",
-    new BrokerCredentialResolver(),
+    BrokerCredentialResolver.Default,
     new AzureCredentialResolver()); // omit if you don't need non-broker sources
 
 if (credential is null)

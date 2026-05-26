@@ -46,7 +46,7 @@ namespace Azure.Identity.Broker.Tests.Samples.DocSnippets
 
             MyClientSettings settings = configuration.GetAzureClientSettings<MyClientSettings>(
                 "MyClient",
-                new BrokerCredentialResolver());
+                BrokerCredentialResolver.Default);
 
             MyClient client = new(settings);
             #endregion
@@ -60,7 +60,7 @@ namespace Azure.Identity.Broker.Tests.Samples.DocSnippets
 
             CredentialSettings credential = configuration.GetAzureCredentialSettings(
                 "MyClient:Credential",
-                new BrokerCredentialResolver());
+                BrokerCredentialResolver.Default);
 
             if (credential.TokenProvider is TokenCredential tokenCredential)
             {
@@ -74,7 +74,7 @@ namespace Azure.Identity.Broker.Tests.Samples.DocSnippets
             #region Snippet:Azure_Identity_Broker_Samples_GetCredentialSettings
             CredentialSettings? credential = configuration.GetCredentialSettings(
                 "MyClient:Credential",
-                new BrokerCredentialResolver(),
+                BrokerCredentialResolver.Default,
                 new AzureCredentialResolver()); // omit if you don't need non-broker sources
 
             if (credential is null)

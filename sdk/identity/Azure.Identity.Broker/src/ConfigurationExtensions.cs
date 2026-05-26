@@ -31,14 +31,14 @@ namespace Azure.Identity.Broker
                 throw new ArgumentNullException(nameof(services));
             }
 
-            // Register the static singleton instance so DI shares resolver
-            // identity with the standalone path that uses
-            // BrokerCredentialResolver.Instance directly. SCM's CredentialCache
-            // keys entries by (sectionHash, resolver reference), so sharing
-            // the instance lets both paths reuse cached credentials when their
-            // bound sections are content-identical. TryAddEnumerable dedupes
-            // by implementation type.
-            services.TryAddEnumerable(ServiceDescriptor.Singleton<CredentialResolver>(BrokerCredentialResolver.Instance));
+            // Register the shared singleton so DI registrations share resolver
+            // identity with standalone callers that pass
+            // BrokerCredentialResolver.Default into a hand-built resolver chain.
+            // SCM's CredentialCache keys entries by (sectionHash, resolver
+            // reference), so sharing the instance lets both paths reuse cached
+            // credentials when their bound sections are content-identical.
+            // TryAddEnumerable dedupes by implementation type.
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<CredentialResolver>(BrokerCredentialResolver.Default));
             return services;
         }
 

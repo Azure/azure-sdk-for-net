@@ -38,12 +38,15 @@ namespace Azure.Identity.Broker
     public sealed class BrokerCredentialResolver : CredentialResolver
     {
         /// <summary>
-        /// A shared singleton used by the
-        /// <see cref="ConfigurationExtensions.AddBrokerCredentialResolver(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/>
-        /// helpers so DI registrations share resolver identity (SCM's
-        /// credential cache keys entries by resolver reference).
+        /// A shared singleton instance suitable for both standalone and DI usage.
+        /// SCM's credential cache keys cached providers by resolver reference, so
+        /// passing this instance into a standalone <c>GetCredential</c> call (or any
+        /// resolver chain you build by hand) lets that path share cached credentials
+        /// with code paths that resolved through DI via
+        /// <see cref="ConfigurationExtensions.AddBrokerCredentialResolver(Microsoft.Extensions.DependencyInjection.IServiceCollection)"/>.
+        /// Stateless; safe to share across threads.
         /// </summary>
-        internal static BrokerCredentialResolver Instance { get; } = new BrokerCredentialResolver();
+        public static BrokerCredentialResolver Default { get; } = new BrokerCredentialResolver();
 
         /// <summary>
         /// Initializes a new instance of <see cref="BrokerCredentialResolver"/>.
