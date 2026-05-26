@@ -4,6 +4,7 @@
 import {
   CreateSdkContextOptions,
   DecoratorInfo,
+  getClientOptions,
   getClientNameOverride,
   SdkHttpOperation,
   SdkMethod
@@ -49,20 +50,16 @@ export const armResourceAction = "Azure.ResourceManager.@armResourceAction";
 export const armResourceActionName = "@armResourceAction";
 const armResourceActionRegex = "Azure\\.ResourceManager\\.@armResourceAction";
 
-// https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armResourceCollectionAction
-export const armResourceCollectionActionName = "@armResourceCollectionAction";
-const armResourceCollectionActionRegex =
-  "Azure\\.ResourceManager\\.@armResourceCollectionAction";
+export const resourceOperationKindKey = "resource-operation-kind";
+const collectionActionKind = "CollectionAction";
 
-export function isArmResourceCollectionAction(
+export function isResourceCollectionAction(
   method: SdkMethod<SdkHttpOperation> | undefined
 ): boolean {
-  return (
-    method?.__raw?.decorators?.some(
-      (decorator) =>
-        decorator.definition?.name === armResourceCollectionActionName
-    ) ?? false
-  );
+  return method
+    ? getClientOptions(method, resourceOperationKindKey) ===
+        collectionActionKind
+    : false;
 }
 
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armResourceList
@@ -165,7 +162,6 @@ export const azureSDKContextOptions: CreateSdkContextOptions = {
     nonResourceMethodMetadataRegex,
     armProviderNamespaceRegex,
     armResourceActionRegex,
-    armResourceCollectionActionRegex,
     armResourceCreateOrUpdateRegex,
     armResourceDeleteRegex,
     armResourceInternalRegex,

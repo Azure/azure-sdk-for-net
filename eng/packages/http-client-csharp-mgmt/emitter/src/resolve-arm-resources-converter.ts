@@ -68,7 +68,7 @@ import {
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
   extensionResourceOperationName,
-  isArmResourceCollectionAction,
+  isResourceCollectionAction,
   legacyExtensionResourceOperationName,
   legacyResourceOperationName,
   builtInResourceOperationName
@@ -420,7 +420,7 @@ function convertResolvedResourceToMetadata(
           methodId,
           kind: isResourceList
             ? ResourceOperationKind.List
-            : isArmResourceCollectionAction(sdkMethod)
+            : isResourceCollectionAction(sdkMethod)
             ? ResourceOperationKind.CollectionAction
             : ResourceOperationKind.Action,
           operationPath: opPath,

@@ -3015,7 +3015,7 @@ interface Widgets {
     );
   });
 
-  it("places armResourceCollectionAction on the child collection resource", async () => {
+  it("places clientOption collection action on the child collection resource", async () => {
     const program = await typeSpecCompile(
       `
 @subscriptionResource
@@ -3050,7 +3050,6 @@ interface Alerts {
 
 interface AlertActions {
   @post
-  @armResourceCollectionAction
   @route("/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{locationName}/alerts/default/simulate")
   simulate(
     ...ApiVersionParameter,
@@ -3058,6 +3057,10 @@ interface AlertActions {
     @path locationName: string
   ): ArmAcceptedLroResponse;
 }
+
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Mark collection action placement"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Mark collection action placement"
+@@clientOption(AlertActions.simulate, "resource-operation-kind", "CollectionAction", "csharp");
 `,
       runner,
       { providerNamespace: "Microsoft.Security" }

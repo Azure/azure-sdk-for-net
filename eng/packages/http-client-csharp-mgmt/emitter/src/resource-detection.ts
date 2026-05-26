@@ -45,7 +45,7 @@ import {
   builtInResourceOperationName,
   customAzureResource,
   extensionResourceOperationName,
-  isArmResourceCollectionAction,
+  isResourceCollectionAction,
   legacyExtensionResourceOperationName,
   legacyResourceOperationName
 } from "./sdk-context-options.js";
@@ -524,7 +524,7 @@ function assignRemainingOperations(
       });
     } else if (actionTarget) {
       const scope = buildScopeInfoFromPath(operationPath);
-      const isCollectionAction = isArmResourceCollectionAction(sdkMethod);
+      const isCollectionAction = isResourceCollectionAction(sdkMethod);
       const target = isCollectionAction
         ? findCollectionActionTargetResource(
             resources,
