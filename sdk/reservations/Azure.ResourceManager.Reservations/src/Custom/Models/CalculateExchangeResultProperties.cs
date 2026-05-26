@@ -4,8 +4,6 @@
 using System.Collections.Generic;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS1591
-
 namespace Azure.ResourceManager.Reservations.Models
 {
     // Justification: GA exposed PolicyErrors as IReadOnlyList<ExchangePolicyError>. The new

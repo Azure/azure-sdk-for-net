@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.Reservations.Models
     // Justification: GA exposed AvailableScopesProperties.Scopes as IReadOnlyList<ScopeProperties>.
     // The new generator emits IList<T> for the flattened inner SubscriptionScopeProperties; this
     // shim restores the read-only collection surface.
+    [CodeGenSuppress("Scopes")]
     public partial class AvailableScopesProperties
     {
         /// <summary> Gets the scopes. </summary>
