@@ -3907,7 +3907,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -4018,7 +4023,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -4027,7 +4037,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -4174,7 +4185,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -4285,7 +4301,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -4294,7 +4315,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -4441,7 +4463,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -4552,7 +4579,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -4561,7 +4593,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -4708,7 +4741,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -4819,7 +4857,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -4828,7 +4871,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -4975,7 +5019,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -5086,7 +5135,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -5095,7 +5149,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -5242,7 +5297,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -5353,7 +5413,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -5362,7 +5427,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -5509,7 +5575,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -5620,7 +5691,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -5629,7 +5705,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -5776,7 +5853,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -5887,7 +5969,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -5896,7 +5983,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -6043,7 +6131,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -6154,7 +6247,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -6163,7 +6261,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -6310,7 +6409,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -6421,7 +6525,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -6430,7 +6539,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -6577,7 +6687,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -6688,7 +6803,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -6697,7 +6817,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -6844,7 +6965,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -6955,7 +7081,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -6964,7 +7095,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -7111,7 +7243,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -7222,7 +7359,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -7231,7 +7373,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -7378,7 +7521,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -7489,7 +7637,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -7498,7 +7651,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -7645,7 +7799,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -7756,7 +7915,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -7765,7 +7929,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -7912,7 +8077,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -8023,7 +8193,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -8032,7 +8207,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -8179,7 +8355,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -8290,7 +8471,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -8299,7 +8485,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -8446,7 +8633,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -8557,7 +8749,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -8566,7 +8763,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -8713,7 +8911,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -8824,7 +9027,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -8833,7 +9041,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -8980,7 +9189,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -9091,7 +9305,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -9100,7 +9319,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -9247,7 +9467,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -9358,7 +9583,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -9367,7 +9597,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -9514,7 +9745,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -9625,7 +9861,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -9634,7 +9875,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -9781,7 +10023,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -9892,7 +10139,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -9901,7 +10153,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -10048,7 +10301,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -10159,7 +10417,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -10168,7 +10431,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -10315,7 +10579,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -10426,7 +10695,12 @@
                         "access": "public",
                         "decorators": []
                       }
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": "input"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -10435,7 +10709,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -10582,7 +10857,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/xml"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "xml": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
