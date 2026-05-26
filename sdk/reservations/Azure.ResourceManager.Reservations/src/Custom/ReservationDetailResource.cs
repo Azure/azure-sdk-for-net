@@ -4,8 +4,6 @@
 using System;
 using Azure.Core;
 
-#pragma warning disable CS1591
-
 namespace Azure.ResourceManager.Reservations
 {
     // Justification: GA exposed CreateResourceIdentifier for direct construction of this resource
@@ -13,6 +11,9 @@ namespace Azure.ResourceManager.Reservations
     // public API and keeps the canonical ARM ID format in one place.
     public partial class ReservationDetailResource
     {
+        /// <summary> Generate the resource identifier of a <see cref="ReservationDetailResource"/> instance. </summary>
+        /// <param name="reservationOrderId"> The reservationOrderId. </param>
+        /// <param name="reservationId"> The reservationId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(Guid reservationOrderId, Guid reservationId)
             => new ResourceIdentifier($"/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}");
     }
