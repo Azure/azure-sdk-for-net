@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -29,8 +29,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             CallRecording callRecording = getMockCallRecording(200, responseContent: DummyRecordingStatusResponse);
 
             RecordingStateResult result = operation(callRecording);
-            Assert.AreEqual("dummyRecordingId", result.RecordingId);
-            Assert.AreEqual(RecordingState.Active, result.RecordingState);
+            Assert.That(result.RecordingId, Is.EqualTo("dummyRecordingId"));
+            Assert.That(result.RecordingState, Is.EqualTo(RecordingState.Active));
         }
 
         [TestCaseSource(nameof(TestData_OperationsAsyncWithStatus))]
@@ -39,8 +39,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             CallRecording callRecording = getMockCallRecording(200, responseContent: DummyRecordingStatusResponse);
 
             Response<RecordingStateResult> result = await operation(callRecording);
-            Assert.AreEqual("dummyRecordingId", result.Value.RecordingId);
-            Assert.AreEqual(RecordingState.Active, result.Value.RecordingState);
+            Assert.That(result.Value.RecordingId, Is.EqualTo("dummyRecordingId"));
+            Assert.That(result.Value.RecordingState, Is.EqualTo(RecordingState.Active));
         }
 
         [TestCaseSource(nameof(TestData_OperationsWithCallConnectionIdWithStatus))]
@@ -49,8 +49,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             CallRecording callRecording = getMockCallRecording(200, responseContent: DummyRecordingStatusResponse);
 
             RecordingStateResult result = operation(callRecording);
-            Assert.AreEqual("dummyRecordingId", result.RecordingId);
-            Assert.AreEqual(RecordingState.Active, result.RecordingState);
+            Assert.That(result.RecordingId, Is.EqualTo("dummyRecordingId"));
+            Assert.That(result.RecordingState, Is.EqualTo(RecordingState.Active));
         }
 
         [TestCaseSource(nameof(TestData_OperationsAsyncWithCallConnectionIdWithStatus))]
@@ -59,8 +59,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             CallRecording callRecording = getMockCallRecording(200, responseContent: DummyRecordingStatusResponse);
 
             Response<RecordingStateResult> result = await operation(callRecording);
-            Assert.AreEqual("dummyRecordingId", result.Value.RecordingId);
-            Assert.AreEqual(RecordingState.Active, result.Value.RecordingState);
+            Assert.That(result.Value.RecordingId, Is.EqualTo("dummyRecordingId"));
+            Assert.That(result.Value.RecordingState, Is.EqualTo(RecordingState.Active));
         }
 
         [TestCaseSource(nameof(TestData_OperationsSuccess))]
@@ -69,7 +69,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             CallRecording callRecording = getMockCallRecording(expectedStatusCode);
 
             Response response = operation(callRecording);
-            Assert.AreEqual(expectedStatusCode, response.Status);
+            Assert.That(response.Status, Is.EqualTo(expectedStatusCode));
         }
 
         [TestCaseSource(nameof(TestData_OperationsAsyncSuccess))]
@@ -78,7 +78,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             CallRecording callRecording = getMockCallRecording(expectedStatusCode);
 
             Response response = await operation(callRecording);
-            Assert.AreEqual(expectedStatusCode, response.Status);
+            Assert.That(response.Status, Is.EqualTo(expectedStatusCode));
         }
 
         [TestCaseSource(nameof(TestData_Operations404))]
@@ -86,8 +86,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         {
             CallRecording callRecording = getMockCallRecording(404);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(operation(callRecording));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(404, Is.EqualTo(ex?.Status));
         }
 
         [TestCaseSource(nameof(TestData_OperationsAsync404))]
@@ -96,8 +96,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             CallRecording callRecording = getMockCallRecording(404);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(operation(callRecording));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(404, Is.EqualTo(ex?.Status));
         }
 
         private CallRecording getMockCallRecording(int statusCode, string? responseContent = null)

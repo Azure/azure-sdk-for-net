@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -71,8 +71,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
         {
             _callDialog = GetCallDialog(201, responseContent: DummyDialogStatusResponse);
             var result = await operation(_callDialog);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Created, result.GetRawResponse().Status);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Created));
         }
 
         [TestCaseSource(nameof(TestData_StartDialog))]
@@ -80,8 +80,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
         {
             _callDialog = GetCallDialog(201, responseContent: DummyDialogStatusResponse);
             var result = operation(_callDialog);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Created, result.GetRawResponse().Status);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Created));
         }
 
         [TestCaseSource(nameof(TestData_StartDialogWithIdAsync))]
@@ -89,9 +89,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
         {
             _callDialog = GetCallDialog(201, responseContent: DummyDialogStatusResponse);
             var result = await operation(_callDialog);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Created, result.GetRawResponse().Status);
-            Assert.AreEqual(result.Value.DialogId, dialogId);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Created));
+            Assert.That(dialogId, Is.EqualTo(result.Value.DialogId));
         }
 
         [TestCaseSource(nameof(TestData_StartDialogWithId))]
@@ -99,9 +99,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
         {
             _callDialog = GetCallDialog(201, responseContent: DummyDialogStatusResponse);
             var result = operation(_callDialog);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.Created, result.GetRawResponse().Status);
-            Assert.AreEqual(result.Value.DialogId, dialogId);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Created));
+            Assert.That(dialogId, Is.EqualTo(result.Value.DialogId));
         }
 
         [TestCaseSource(nameof(TestData_StopDialogAsync))]
@@ -109,8 +109,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
         {
             _callDialog = GetCallDialog(204);
             var result = await operation(_callDialog);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.NoContent, result.GetRawResponse().Status);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.NoContent));
         }
 
         [TestCaseSource(nameof(TestData_StopDialog))]
@@ -118,8 +118,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
         {
             _callDialog = GetCallDialog(204);
             var result = operation(_callDialog);
-            Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.NoContent, result.GetRawResponse().Status);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.NoContent));
         }
 
         private static IEnumerable<object?[]> TestData_StartDialogAsync()

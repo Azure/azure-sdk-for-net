@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -68,11 +68,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             CreateCallResult response = await client.CreateCallAsync(invite, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
 
             string callConnectionId = response.CallConnectionProperties.CallConnectionId;
-            Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+            Assert.That(response.CallConnectionProperties.CallConnectionId, Is.Not.Empty);
 
             // wait for incomingcall context
             string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
-            Assert.IsNotNull(incomingCallContext);
+            Assert.That(incomingCallContext, Is.Not.Null);
 
             // answer the call
             var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
@@ -81,13 +81,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
 
             // wait for callConnected
             var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
-            Assert.IsNotNull(connectedEvent);
-            Assert.IsTrue(connectedEvent is CallConnected);
-            Assert.IsTrue(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId);
+            Assert.That(connectedEvent, Is.Not.Null);
+            Assert.That(connectedEvent is CallConnected, Is.True);
+            Assert.That(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId, Is.True);
 
             // test get properties
             Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-            Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
+            Assert.That(properties.Value.CallConnectionState, Is.EqualTo(CallConnectionState.Connected));
 
             try
             {
@@ -100,25 +100,25 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                     OperationContext = "context"
                 };
                 var dialogResponse = await callDialog.StartDialogAsync(dialogOptions).ConfigureAwait(false);
-                Assert.AreEqual(StatusCodes.Status201Created, dialogResponse.GetRawResponse().Status);
+                Assert.That(dialogResponse.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status201Created));
 
                 var checkedDialogId = dialogResponse.Value.DialogId;
-                Assert.NotNull(dialogResponse.Value.DialogId);
-                Assert.IsTrue(Guid.TryParse(checkedDialogId, out var result));
-                Assert.AreEqual(checkedDialogId, dialogId);
+                Assert.That(dialogResponse.Value.DialogId, Is.Not.Null);
+                Assert.That(Guid.TryParse(checkedDialogId, out var result), Is.True);
+                Assert.That(dialogId, Is.EqualTo(checkedDialogId));
 
                 // wait for DialogStarted event
                 var dialogStartedReceived = await WaitForEvent<DialogStarted>(targetCallConnectionId, TimeSpan.FromSeconds(20));
-                Assert.NotNull(dialogStartedReceived);
-                Assert.IsTrue(dialogStartedReceived is DialogStarted);
+                Assert.That(dialogStartedReceived, Is.Not.Null);
+                Assert.That(dialogStartedReceived is DialogStarted, Is.True);
 
                 // stop the dialog
                 var stopDialogResponse = await callDialog.StopDialogAsync(checkedDialogId).ConfigureAwait(false);
-                Assert.AreEqual(StatusCodes.Status204NoContent, stopDialogResponse.GetRawResponse().Status);
+                Assert.That(stopDialogResponse.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status204NoContent));
 
                 var dialogStoppedReceived = await WaitForEvent<DialogCompleted>(targetCallConnectionId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(dialogStoppedReceived);
-                Assert.IsTrue(dialogStoppedReceived is DialogCompleted);
+                Assert.That(dialogStoppedReceived, Is.Not.Null);
+                Assert.That(dialogStoppedReceived is DialogCompleted, Is.True);
             }
             catch (RequestFailedException ex)
             {
@@ -178,11 +178,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             CreateCallResult response = await client.CreateCallAsync(invite, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
 
             string callConnectionId = response.CallConnectionProperties.CallConnectionId;
-            Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+            Assert.That(response.CallConnectionProperties.CallConnectionId, Is.Not.Empty);
 
             // wait for incomingcall context
             string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
-            Assert.IsNotNull(incomingCallContext);
+            Assert.That(incomingCallContext, Is.Not.Null);
 
             // answer the call
             var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
@@ -191,13 +191,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
 
             // wait for callConnected
             var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
-            Assert.IsNotNull(connectedEvent);
-            Assert.IsTrue(connectedEvent is CallConnected);
-            Assert.IsTrue(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId);
+            Assert.That(connectedEvent, Is.Not.Null);
+            Assert.That(connectedEvent is CallConnected, Is.True);
+            Assert.That(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId, Is.True);
 
             // test get properties
             Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-            Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
+            Assert.That(properties.Value.CallConnectionState, Is.EqualTo(CallConnectionState.Connected));
 
             try
             {
@@ -210,14 +210,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                     OperationContext = "context"
                 };
                 var dialogResponse = await callDialog.StartDialogAsync(dialogOptions).ConfigureAwait(false);
-                Assert.AreEqual(StatusCodes.Status201Created, dialogResponse.GetRawResponse().Status);
+                Assert.That(dialogResponse.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status201Created));
 
-                Assert.AreEqual(dialogId, dialogResponse.Value.DialogId);
+                Assert.That(dialogResponse.Value.DialogId, Is.EqualTo(dialogId));
 
                 // wait for DialogStarted event
                 var dialogStartedReceived = await WaitForEvent<DialogStarted>(targetCallConnectionId, TimeSpan.FromSeconds(20));
-                Assert.NotNull(dialogStartedReceived);
-                Assert.IsTrue(dialogStartedReceived is DialogStarted);
+                Assert.That(dialogStartedReceived, Is.Not.Null);
+                Assert.That(dialogStartedReceived is DialogStarted, Is.True);
 
                 // send a new dialog with same ID but different context, should fail
                 dialogOptions = new StartDialog(dialogId, new PowerVirtualAgentsDialog(botAppId, dialogContext))
@@ -236,11 +236,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
 
                 // stop the dialog
                 var stopDialogResponse = await callDialog.StopDialogAsync(dialogId).ConfigureAwait(false);
-                Assert.AreEqual(StatusCodes.Status204NoContent, stopDialogResponse.GetRawResponse().Status);
+                Assert.That(stopDialogResponse.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status204NoContent));
 
                 var dialogStoppedReceived = await WaitForEvent<DialogCompleted>(targetCallConnectionId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(dialogStoppedReceived);
-                Assert.IsTrue(dialogStoppedReceived is DialogCompleted);
+                Assert.That(dialogStoppedReceived, Is.Not.Null);
+                Assert.That(dialogStoppedReceived is DialogCompleted, Is.True);
             }
             catch (RequestFailedException ex)
             {
@@ -300,11 +300,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             CreateCallResult response = await client.CreateCallAsync(invite, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
 
             string callConnectionId = response.CallConnectionProperties.CallConnectionId;
-            Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+            Assert.That(response.CallConnectionProperties.CallConnectionId, Is.Not.Empty);
 
             // wait for incomingcall context
             string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
-            Assert.IsNotNull(incomingCallContext);
+            Assert.That(incomingCallContext, Is.Not.Null);
 
             // answer the call
             var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
@@ -313,13 +313,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
 
             // wait for callConnected
             var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
-            Assert.IsNotNull(connectedEvent);
-            Assert.IsTrue(connectedEvent is CallConnected);
-            Assert.IsTrue(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId);
+            Assert.That(connectedEvent, Is.Not.Null);
+            Assert.That(connectedEvent is CallConnected, Is.True);
+            Assert.That(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId, Is.True);
 
             // test get properties
             Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-            Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
+            Assert.That(properties.Value.CallConnectionState, Is.EqualTo(CallConnectionState.Connected));
 
             try
             {
@@ -332,26 +332,26 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                     OperationContext = "context"
                 };
                 var dialogResponse = await callDialog.StartDialogAsync(dialogOptions).ConfigureAwait(false);
-                Assert.AreEqual(StatusCodes.Status201Created, dialogResponse.GetRawResponse().Status);
+                Assert.That(dialogResponse.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status201Created));
 
-                Assert.AreEqual(dialogId, dialogResponse.Value.DialogId);
+                Assert.That(dialogResponse.Value.DialogId, Is.EqualTo(dialogId));
 
                 // wait for DialogStarted event
                 var dialogStartedReceived = await WaitForEvent<DialogStarted>(targetCallConnectionId, TimeSpan.FromSeconds(20));
-                Assert.NotNull(dialogStartedReceived);
-                Assert.IsTrue(dialogStartedReceived is DialogStarted);
+                Assert.That(dialogStartedReceived, Is.Not.Null);
+                Assert.That(dialogStartedReceived is DialogStarted, Is.True);
 
                 // send the start dialog again, should succeed
                 dialogResponse = await callDialog.StartDialogAsync(dialogOptions).ConfigureAwait(false);
-                Assert.AreEqual(StatusCodes.Status201Created, dialogResponse.GetRawResponse().Status);
+                Assert.That(dialogResponse.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status201Created));
 
                 // stop the dialog
                 var stopDialogResponse = await callDialog.StopDialogAsync(dialogId).ConfigureAwait(false);
-                Assert.AreEqual(StatusCodes.Status204NoContent, stopDialogResponse.GetRawResponse().Status);
+                Assert.That(stopDialogResponse.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status204NoContent));
 
                 var dialogStoppedReceived = await WaitForEvent<DialogCompleted>(targetCallConnectionId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(dialogStoppedReceived);
-                Assert.IsTrue(dialogStoppedReceived is DialogCompleted);
+                Assert.That(dialogStoppedReceived, Is.Not.Null);
+                Assert.That(dialogStoppedReceived is DialogCompleted, Is.True);
             }
             catch (RequestFailedException ex)
             {
@@ -411,11 +411,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             CreateCallResult response = await client.CreateCallAsync(invite, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
 
             string callConnectionId = response.CallConnectionProperties.CallConnectionId;
-            Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+            Assert.That(response.CallConnectionProperties.CallConnectionId, Is.Not.Empty);
 
             // wait for incomingcall context
             string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
-            Assert.IsNotNull(incomingCallContext);
+            Assert.That(incomingCallContext, Is.Not.Null);
 
             // answer the call
             var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
@@ -424,13 +424,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
 
             // wait for callConnected
             var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
-            Assert.IsNotNull(connectedEvent);
-            Assert.IsTrue(connectedEvent is CallConnected);
-            Assert.IsTrue(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId);
+            Assert.That(connectedEvent, Is.Not.Null);
+            Assert.That(connectedEvent is CallConnected, Is.True);
+            Assert.That(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId, Is.True);
 
             // test get properties
             Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-            Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
+            Assert.That(properties.Value.CallConnectionState, Is.EqualTo(CallConnectionState.Connected));
 
             try
             {
@@ -443,23 +443,23 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                     OperationContext = "context"
                 };
                 var dialogResponse = await callDialog.StartDialogAsync(dialogOptions).ConfigureAwait(false);
-                Assert.AreEqual(StatusCodes.Status201Created, dialogResponse.GetRawResponse().Status);
+                Assert.That(dialogResponse.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status201Created));
 
-                Assert.NotNull(dialogResponse.Value.DialogId);
-                Assert.AreEqual(dialogId, dialogResponse.Value.DialogId);
+                Assert.That(dialogResponse.Value.DialogId, Is.Not.Null);
+                Assert.That(dialogResponse.Value.DialogId, Is.EqualTo(dialogId));
 
                 // wait for DialogStarted event
                 var dialogStartedReceived = await WaitForEvent<DialogStarted>(targetCallConnectionId, TimeSpan.FromSeconds(20));
-                Assert.NotNull(dialogStartedReceived);
-                Assert.IsTrue(dialogStartedReceived is DialogStarted);
+                Assert.That(dialogStartedReceived, Is.Not.Null);
+                Assert.That(dialogStartedReceived is DialogStarted, Is.True);
 
                 // stop the dialog
                 var stopDialogResponse = await callDialog.StopDialogAsync(dialogId).ConfigureAwait(false);
-                Assert.AreEqual(StatusCodes.Status204NoContent, stopDialogResponse.GetRawResponse().Status);
+                Assert.That(stopDialogResponse.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status204NoContent));
 
                 var dialogStoppedReceived = await WaitForEvent<DialogCompleted>(targetCallConnectionId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(dialogStoppedReceived);
-                Assert.IsTrue(dialogStoppedReceived is DialogCompleted);
+                Assert.That(dialogStoppedReceived, Is.Not.Null);
+                Assert.That(dialogStoppedReceived is DialogCompleted, Is.True);
 
                 string secondDialogId = "de7fcbc8-1803-4ec1-80ed-2c9c087587fd";
                 dialogOptions = new StartDialog(secondDialogId, new PowerVirtualAgentsDialog(botAppId, dialogContext))
@@ -469,13 +469,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
 
                 // Start and stop the dialog again, it should work fine
                 dialogResponse = await callDialog.StartDialogAsync(dialogOptions).ConfigureAwait(false);
-                Assert.AreEqual(StatusCodes.Status201Created, dialogResponse.GetRawResponse().Status);
+                Assert.That(dialogResponse.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status201Created));
 
-                Assert.NotNull(dialogResponse.Value.DialogId);
-                Assert.AreEqual(secondDialogId, dialogResponse.Value.DialogId);
+                Assert.That(dialogResponse.Value.DialogId, Is.Not.Null);
+                Assert.That(dialogResponse.Value.DialogId, Is.EqualTo(secondDialogId));
 
                 stopDialogResponse = await callDialog.StopDialogAsync(dialogId).ConfigureAwait(false);
-                Assert.AreEqual(StatusCodes.Status204NoContent, stopDialogResponse.GetRawResponse().Status);
+                Assert.That(stopDialogResponse.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status204NoContent));
             }
             catch (RequestFailedException ex)
             {
@@ -535,11 +535,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             CreateCallResult response = await client.CreateCallAsync(invite, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
 
             string callConnectionId = response.CallConnectionProperties.CallConnectionId;
-            Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+            Assert.That(response.CallConnectionProperties.CallConnectionId, Is.Not.Empty);
 
             // wait for incomingcall context
             string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
-            Assert.IsNotNull(incomingCallContext);
+            Assert.That(incomingCallContext, Is.Not.Null);
 
             // answer the call
             var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
@@ -548,13 +548,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
 
             // wait for callConnected
             var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
-            Assert.IsNotNull(connectedEvent);
-            Assert.IsTrue(connectedEvent is CallConnected);
-            Assert.IsTrue(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId);
+            Assert.That(connectedEvent, Is.Not.Null);
+            Assert.That(connectedEvent is CallConnected, Is.True);
+            Assert.That(((CallConnected)connectedEvent!).CallConnectionId == callConnectionId, Is.True);
 
             // test get properties
             Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
-            Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
+            Assert.That(properties.Value.CallConnectionState, Is.EqualTo(CallConnectionState.Connected));
 
             try
             {
@@ -563,7 +563,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
 
                 // stop a non-existing dialog, should pass without event
                 var stopDialogResponse = await callDialog.StopDialogAsync(unusedDialogId).ConfigureAwait(false);
-                Assert.AreEqual(StatusCodes.Status204NoContent, stopDialogResponse.GetRawResponse().Status);
+                Assert.That(stopDialogResponse.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status204NoContent));
             }
             catch (RequestFailedException ex)
             {

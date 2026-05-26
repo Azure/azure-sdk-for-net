@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -79,39 +79,39 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 
         private static void ValidateAudioMetadata(AudioMetadata streamingAudioMetadata)
         {
-            Assert.IsNotNull(streamingAudioMetadata);
-            Assert.AreEqual("subscriptionId", streamingAudioMetadata.MediaSubscriptionId);
-            Assert.AreEqual("encodingType", streamingAudioMetadata.Encoding);
-            Assert.AreEqual(8, streamingAudioMetadata.SampleRate);
-            Assert.AreEqual(2, (int)streamingAudioMetadata.Channels);
-            Assert.AreEqual(640, streamingAudioMetadata.Length);
+            Assert.That(streamingAudioMetadata, Is.Not.Null);
+            Assert.That(streamingAudioMetadata.MediaSubscriptionId, Is.EqualTo("subscriptionId"));
+            Assert.That(streamingAudioMetadata.Encoding, Is.EqualTo("encodingType"));
+            Assert.That(streamingAudioMetadata.SampleRate, Is.EqualTo(8));
+            Assert.That((int)streamingAudioMetadata.Channels, Is.EqualTo(2));
+            Assert.That(streamingAudioMetadata.Length, Is.EqualTo(640));
         }
 
         private static void ValidateAudioData(AudioData streamingAudio)
         {
-            Assert.IsNotNull(streamingAudio);
-            Assert.AreEqual(Convert.FromBase64String("AQIDBAU="), streamingAudio.Data);
-            Assert.AreEqual(2022, streamingAudio.Timestamp.Year);
-            Assert.IsTrue(streamingAudio.Participant is CommunicationIdentifier);
-            Assert.AreEqual("participantId", streamingAudio.Participant.RawId);
-            Assert.AreEqual("mark123", streamingAudio.Mark.Id);
-            Assert.IsFalse(streamingAudio.IsSilent);
+            Assert.That(streamingAudio, Is.Not.Null);
+            Assert.That(streamingAudio.Data, Is.EqualTo(Convert.FromBase64String("AQIDBAU=")));
+            Assert.That(streamingAudio.Timestamp.Year, Is.EqualTo(2022));
+            Assert.That(streamingAudio.Participant is CommunicationIdentifier, Is.True);
+            Assert.That(streamingAudio.Participant.RawId, Is.EqualTo("participantId"));
+            Assert.That(streamingAudio.Mark.Id, Is.EqualTo("mark123"));
+            Assert.That(streamingAudio.IsSilent, Is.False);
         }
         private static void ValidateAudioDataNoParticipant(AudioData streamingAudio)
         {
-            Assert.IsNotNull(streamingAudio);
-            Assert.AreEqual(Convert.FromBase64String("AQIDBAU="), streamingAudio.Data);
-            Assert.AreEqual(2022, streamingAudio.Timestamp.Year);
-            Assert.IsNull(streamingAudio.Participant);
-            Assert.IsFalse(streamingAudio.IsSilent);
+            Assert.That(streamingAudio, Is.Not.Null);
+            Assert.That(streamingAudio.Data, Is.EqualTo(Convert.FromBase64String("AQIDBAU=")));
+            Assert.That(streamingAudio.Timestamp.Year, Is.EqualTo(2022));
+            Assert.That(streamingAudio.Participant, Is.Null);
+            Assert.That(streamingAudio.IsSilent, Is.False);
         }
 
         private static void ValidateMarkData(MarkData streamingAudio, bool emptyStatus = false)
         {
-            Assert.IsNotNull(streamingAudio);
-            Assert.AreEqual("test", streamingAudio.Id);
+            Assert.That(streamingAudio, Is.Not.Null);
+            Assert.That(streamingAudio.Id, Is.EqualTo("test"));
             if (!emptyStatus)
-                Assert.AreEqual(MarkStatus.Cancelled, streamingAudio.Status);
+                Assert.That(streamingAudio.Status, Is.EqualTo(MarkStatus.Cancelled));
         }
         #endregion
 
@@ -131,8 +131,8 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         }
         private static void ValidateDtmfData(DtmfData streamingDtmf)
         {
-            Assert.IsNotNull(streamingDtmf);
-            Assert.AreEqual("5", streamingDtmf.Data);
+            Assert.That(streamingDtmf, Is.Not.Null);
+            Assert.That(streamingDtmf.Data, Is.EqualTo("5"));
         }
         #endregion
         #region Transcription
@@ -193,36 +193,36 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 
         private static void ValidateTranscriptionMetadata(TranscriptionMetadata transcriptionMetadata)
         {
-            Assert.IsNotNull(transcriptionMetadata);
-            Assert.AreEqual("subscriptionId", transcriptionMetadata.TranscriptionSubscriptionId);
-            Assert.AreEqual("en-US", transcriptionMetadata.Locale);
-            Assert.AreEqual("callConnectionId", transcriptionMetadata.CallConnectionId);
-            Assert.AreEqual("correlationId", transcriptionMetadata.CorrelationId);
+            Assert.That(transcriptionMetadata, Is.Not.Null);
+            Assert.That(transcriptionMetadata.TranscriptionSubscriptionId, Is.EqualTo("subscriptionId"));
+            Assert.That(transcriptionMetadata.Locale, Is.EqualTo("en-US"));
+            Assert.That(transcriptionMetadata.CallConnectionId, Is.EqualTo("callConnectionId"));
+            Assert.That(transcriptionMetadata.CorrelationId, Is.EqualTo("correlationId"));
         }
 
         private static void ValidateTranscriptionData(TranscriptionData transcription)
         {
-            Assert.IsNotNull(transcription);
-            Assert.AreEqual("Hello World!", transcription.Text);
-            Assert.AreEqual(TextFormat.Display, transcription.Format);
-            Assert.AreEqual(0.98d, transcription.Confidence);
-            Assert.AreEqual(1, transcription.Offset);
-            Assert.AreEqual(2, transcription.Duration);
+            Assert.That(transcription, Is.Not.Null);
+            Assert.That(transcription.Text, Is.EqualTo("Hello World!"));
+            Assert.That(transcription.Format, Is.EqualTo(TextFormat.Display));
+            Assert.That(transcription.Confidence, Is.EqualTo(0.98d));
+            Assert.That(transcription.Offset, Is.EqualTo(1));
+            Assert.That(transcription.Duration, Is.EqualTo(2));
 
             // validate individual words
             IList<WordData> words = transcription.Words.ToList();
-            Assert.AreEqual(2, words.Count);
-            Assert.AreEqual("Hello", words[0].Text);
-            Assert.AreEqual(1, words[0].Offset);
-            Assert.AreEqual(1, words[0].Duration);
-            Assert.AreEqual("World", words[1].Text);
-            Assert.AreEqual(6, words[1].Offset);
-            Assert.AreEqual(1, words[1].Duration);
+            Assert.That(words.Count, Is.EqualTo(2));
+            Assert.That(words[0].Text, Is.EqualTo("Hello"));
+            Assert.That(words[0].Offset, Is.EqualTo(1));
+            Assert.That(words[0].Duration, Is.EqualTo(1));
+            Assert.That(words[1].Text, Is.EqualTo("World"));
+            Assert.That(words[1].Offset, Is.EqualTo(6));
+            Assert.That(words[1].Duration, Is.EqualTo(1));
 
-            Assert.IsTrue(transcription.Participant is CommunicationIdentifier);
-            Assert.AreEqual("abc12345", transcription.Participant.RawId);
+            Assert.That(transcription.Participant is CommunicationIdentifier, Is.True);
+            Assert.That(transcription.Participant.RawId, Is.EqualTo("abc12345"));
             Console.WriteLine(transcription.ResultStatus.ToString());
-            Assert.AreEqual(ResultStatus.Final, transcription.ResultStatus);
+            Assert.That(transcription.ResultStatus, Is.EqualTo(ResultStatus.Final));
         }
         #endregion
 
@@ -363,7 +363,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(jsonData.ToString());
             TranscriptionData parsedPackage = (TranscriptionData)StreamingDataParser.Parse(receivedBytes);
 
-            Assert.NotNull(parsedPackage);
+            Assert.That(parsedPackage, Is.Not.Null);
             ValidateTranscriptionData(parsedPackage);
         }
         #endregion
