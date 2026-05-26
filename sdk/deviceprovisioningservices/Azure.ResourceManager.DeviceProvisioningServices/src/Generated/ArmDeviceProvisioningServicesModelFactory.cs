@@ -60,23 +60,22 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Description of the response of the verification code. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="name"> Name of certificate. </param>
-        /// <param name="eTag"> Request etag. </param>
+        /// <param name="etag"> Request etag. </param>
         /// <param name="properties"></param>
         /// <returns> A new <see cref="Models.CertificateVerificationCodeResult"/> instance for mocking. </returns>
-        public static CertificateVerificationCodeResult CertificateVerificationCodeResult(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, string name = default, ETag? eTag = default, CertificateVerificationCodeProperties properties = default)
+        public static CertificateVerificationCodeResult CertificateVerificationCodeResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, CertificateVerificationCodeProperties properties = default)
         {
             return new CertificateVerificationCodeResult(
                 id,
+                name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                name,
-                eTag,
+                etag,
                 properties);
         }
 
@@ -348,27 +347,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static DeviceProvisioningServiceProperties DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess, IEnumerable<DeviceProvisioningServicesIPFilterRule> ipFilterRules, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, IEnumerable<IotHubDefinitionDescription> iotHubs, DeviceProvisioningServicesAllocationPolicy? allocationPolicy, string serviceOperationsHostName, string deviceProvisioningHostName, string idScope, IEnumerable<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies, bool? isDataResidencyEnabled)
         {
             return DeviceProvisioningServiceProperties(state: state, publicNetworkAccess: publicNetworkAccess, ipFilterRules: ipFilterRules, privateEndpointConnections: privateEndpointConnections, provisioningState: provisioningState, iotHubs: iotHubs, deviceRegistryNamespace: default, allocationPolicy: allocationPolicy, serviceOperationsHostName: serviceOperationsHostName, deviceProvisioningHostName: deviceProvisioningHostName, idScope: idScope, authorizationPolicies: authorizationPolicies, isDataResidencyEnabled: isDataResidencyEnabled, portalOperationsHostName: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CertificateVerificationCodeResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> Request etag. </param>
-        /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.CertificateVerificationCodeResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CertificateVerificationCodeResult CertificateVerificationCodeResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, CertificateVerificationCodeProperties properties)
-        {
-            return new CertificateVerificationCodeResult(
-                id,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                name,
-                etag,
-                properties);
         }
     }
 }

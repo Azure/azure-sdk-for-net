@@ -17,6 +17,7 @@ namespace OpenAI
         {
             ServerLabel = serverLabel;
             Headers = new ChangeTrackingDictionary<string, string>();
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalMCPTool"/>. </summary>
@@ -45,7 +46,12 @@ namespace OpenAI
         /// <param name="requireApproval"></param>
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
-        internal InternalMCPTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, MCPToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, bool? deferLoading, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        internal InternalMCPTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, MCPToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;
@@ -57,10 +63,11 @@ namespace OpenAI
             RequireApproval = requireApproval;
             DeferLoading = deferLoading;
             ProjectConnectionId = projectConnectionId;
+            ToolConfigs = toolConfigs;
         }
 
         /// <summary> A label for this MCP server, used to identify it in tool calls. </summary>
-        public string ServerLabel { get; }
+        public string ServerLabel { get; set; }
 
         /// <summary>
         /// The URL for the MCP server. One of `server_url` or `connector_id` must be
@@ -180,5 +187,12 @@ namespace OpenAI
 
         /// <summary> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </summary>
         public string ProjectConnectionId { get; set; }
+
+        /// <summary>
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

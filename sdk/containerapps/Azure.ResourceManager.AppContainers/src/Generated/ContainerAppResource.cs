@@ -1466,6 +1466,13 @@ namespace Azure.ResourceManager.AppContainers
             return GetContainerAppDetectorPropertyRevisions().Get(revisionName, cancellationToken);
         }
 
+        /// <summary> Gets an object representing a <see cref="ContainerAppDetectorPropertyResource"/> along with the instance operations that can be performed on it in the <see cref="ContainerAppResource"/>. </summary>
+        /// <returns> Returns a <see cref="ContainerAppDetectorPropertyResource"/> object. </returns>
+        public virtual ContainerAppDetectorPropertyResource GetContainerAppDetectorProperty()
+        {
+            return new ContainerAppDetectorPropertyResource(Client, Id.AppendChildResource("detectorProperties", "rootApi"));
+        }
+
         /// <summary> Gets a collection of ContainerAppDetectors in the <see cref="ContainerAppResource"/>. </summary>
         /// <returns> An object representing collection of ContainerAppDetectors and their operations over a ContainerAppDetectorResource. </returns>
         public virtual ContainerAppDetectorCollection GetContainerAppDetectors()
