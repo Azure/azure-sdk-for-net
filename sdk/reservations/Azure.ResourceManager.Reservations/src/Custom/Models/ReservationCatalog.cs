@@ -1,14 +1,21 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#pragma warning disable CS1591
+#nullable disable
+
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    // The new generator preserves the msrp envelope as ReservationCatalog.Msrp.P1Y;
-    // this shim restores the GA-flat ReservationCatalog.MsrpP1Y property for compatibility.
+    /// <summary> The ReservationCatalog. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class ReservationCatalog
     {
-        public PurchasePrice MsrpP1Y => Msrp?.P1Y;
+        /// <summary> Amount in pricing currency. Tax not included. </summary>
+        public PurchasePrice MsrpP1Y
+        {
+            get => Msrp?.P1Y;
+        }
     }
 }
