@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Reservations.Mocking
     // the GA convenience surface and mocking target.
     public partial class MockableReservationsSubscriptionResource
     {
-        public virtual AsyncPageable<Models.ReservationCatalog> GetCatalogAsync(string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Models.ReservationCatalog> GetCatalogAsync(string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
             => GetCatalogAsync(reservedResourceType, location, publisherId, offerId, planId, filter: default, skip: default, take: default, cancellationToken);
 
-        public virtual Pageable<Models.ReservationCatalog> GetCatalog(string reservedResourceType, AzureLocation? location, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
+        public virtual Pageable<Models.ReservationCatalog> GetCatalog(string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
             => GetCatalog(reservedResourceType, location, publisherId, offerId, planId, filter: default, skip: default, take: default, cancellationToken);
 
         public virtual AsyncPageable<Models.ReservationCatalog> GetCatalogAsync(Models.SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
