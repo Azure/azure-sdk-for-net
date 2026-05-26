@@ -124,9 +124,11 @@ namespace Azure.Identity
             if (isTokenBindingAvailable)
             {
                 builder.WithMtlsProofOfPossession();
+                AzureIdentityEventSource.Singleton.LogMsal(LogLevel.Verbose, $"MsalManagedIdentityClient called builder.WithMtlsProofOfPossession()");
             }
 
             _beforeTokenAcquisition?.Invoke(builder);
+            AzureIdentityEventSource.Singleton.LogMsal(LogLevel.Verbose, $"MsalManagedIdentityClient called _beforeTokenAcquisition?.Invoke(builder) and the _beforeTokenAcquisition is not null: {_beforeTokenAcquisition is not null}");
 
             if (_isForceRefreshEnabled)
             {
@@ -139,9 +141,9 @@ namespace Azure.Identity
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
 
-        public virtual async ValueTask<Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySourceResult> GetManagedIdentitySourceAsync(CancellationToken cancellationToken)
+        public virtual async ValueTask<Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySourceResult> GetManagedIdentitySourceAsync(TokenRequestContext context, CancellationToken cancellationToken)
         {
-            IManagedIdentityApplication client = await GetClientAsync(true, false, false, cancellationToken).ConfigureAwait(false);
+            IManagedIdentityApplication client = await GetClientAsync(true, context.IsCaeEnabled, context.IsProofOfPossessionEnabled, cancellationToken).ConfigureAwait(false);
             ManagedIdentityApplication app = client as ManagedIdentityApplication;
             return await app.GetManagedIdentitySourceAsync(cancellationToken).ConfigureAwait(false);
         }
