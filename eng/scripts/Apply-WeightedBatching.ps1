@@ -1,13 +1,16 @@
 <#
 .SYNOPSIS
-Applies weighted LPT bin-packing to PackageInfo files for balanced CI test batching.
+Applies weighted LPT bin-packing to PackageInfo files for balanced CI job batching.
 
 .DESCRIPTION
-Reads PackageInfo JSON files and a test weights file, performs LPT (Longest Processing Time)
+Reads PackageInfo JSON files and a weights file, performs LPT (Longest Processing Time)
 bin-packing to create balanced batches, then consolidates the PackageInfo files so that each
 batch becomes a single representative file. The ArtifactName of each consolidated file contains
 the comma-separated names of all packages in that batch, which flows through to the
 ProjectNames parameter in the matrix generation.
+
+Used by the Build and Analyze pre-steps with LOC-derived weights, but the script itself is
+weight-source-agnostic — any numeric weight file (package name -> integer) will work.
 
 After this script runs, set PRJobBatchSize to 1 so each consolidated file becomes its own job.
 
