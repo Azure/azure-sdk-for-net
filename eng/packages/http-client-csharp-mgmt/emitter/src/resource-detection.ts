@@ -507,14 +507,9 @@ function assignRemainingOperations(
       itemModelId && identifiedResourceModelIds.has(itemModelId)
         ? findListTargetResource(resources, operationPath, itemModelId)
         : undefined;
-    const collectionActionTarget =
-      !listTarget && isArmResourceCollectionAction(sdkMethod)
-        ? findCollectionActionTargetResource(resources, operationPath)
-        : undefined;
     const actionTarget = listTarget
       ? undefined
-      : collectionActionTarget ??
-        findLongestPrefixMatch(
+      : findLongestPrefixMatch(
           operationPath,
           resources,
           (resource) => resource.metadata.resourceIdPattern
@@ -527,26 +522,27 @@ function assignRemainingOperations(
         operationPath,
         scope: buildListOperationScope(resources, operationPath)
       });
-    } else if (collectionActionTarget) {
-      const scope = buildScopeInfoFromPath(operationPath);
-      collectionActionTarget.metadata.methods.push({
-        methodId,
-        kind: ResourceOperationKind.CollectionAction,
-        operationPath,
-        scope: {
-          ...scope,
-          scopeIdPattern: getCollectionContextPath(collectionActionTarget)
-        }
-      });
     } else if (actionTarget) {
+      const collectionActionTarget = isArmResourceCollectionAction(sdkMethod)
+        ? findCollectionActionTargetResource(
+            resources,
+            operationPath,
+            actionTarget
+          )
+        : undefined;
+      const target = collectionActionTarget ?? actionTarget;
       const scope = buildScopeInfoFromPath(operationPath);
-      actionTarget.metadata.methods.push({
+      target.metadata.methods.push({
         methodId,
-        kind: ResourceOperationKind.Action,
+        kind: collectionActionTarget
+          ? ResourceOperationKind.CollectionAction
+          : ResourceOperationKind.Action,
         operationPath,
         scope: {
           ...scope,
-          scopeIdPattern: actionTarget.metadata.resourceIdPattern
+          scopeIdPattern: collectionActionTarget
+            ? getCollectionContextPath(collectionActionTarget)
+            : actionTarget.metadata.resourceIdPattern
         }
       });
     } else {
@@ -577,13 +573,19 @@ function isArmResourceCollectionAction(
 
 function findCollectionActionTargetResource(
   resources: ValidArmResourceSchema[],
-  operationPath: RequestPath
+  operationPath: RequestPath,
+  actionTarget: ValidArmResourceSchema
 ): ValidArmResourceSchema | undefined {
   const collectionMatches = resources.filter((resource) => {
     const collectionPath = getResourceCollectionPath(
       resource.metadata.resourceIdPattern
     );
-    return collectionPath?.isPrefixOf(operationPath) ?? false;
+    return (
+      (collectionPath?.isPrefixOf(operationPath) ?? false) &&
+      getCollectionContextPath(resource).equals(
+        actionTarget.metadata.resourceIdPattern
+      )
+    );
   });
 
   return longestResourcePath(collectionMatches);
