@@ -23,11 +23,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of ProjectAgentSkills. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ProjectAgentSkills(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ProjectAgentSkills(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -35,6 +37,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Creates a skill.
@@ -51,10 +56,20 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateSkill(BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectAgentSkills.CreateSkill");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateSkillRequest(content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateCreateSkillRequest(content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -72,10 +87,20 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> CreateSkillAsync(BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectAgentSkills.CreateSkill");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateSkillRequest(content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateCreateSkillRequest(content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a skill. </summary>
@@ -141,10 +166,20 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateSkillFromPackage(BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectAgentSkills.CreateSkillFromPackage");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateSkillFromPackageRequest(content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateCreateSkillFromPackageRequest(content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -162,10 +197,20 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> CreateSkillFromPackageAsync(BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectAgentSkills.CreateSkillFromPackage");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateSkillFromPackageRequest(content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateCreateSkillFromPackageRequest(content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a skill from a zip package. </summary>
@@ -210,10 +255,20 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetSkill(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectAgentSkills.GetSkill");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetSkillRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetSkillRequest(name, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -232,10 +287,20 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetSkillAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectAgentSkills.GetSkill");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetSkillRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetSkillRequest(name, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves a skill. </summary>
@@ -282,10 +347,20 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DownloadSkill(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectAgentSkills.DownloadSkill");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDownloadSkillRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDownloadSkillRequest(name, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -304,10 +379,20 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DownloadSkillAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectAgentSkills.DownloadSkill");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDownloadSkillRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDownloadSkillRequest(name, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Downloads a skill package. </summary>
@@ -369,13 +454,23 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetSkills(int? limit, string order, string after, string before, RequestOptions options)
         {
-            return new ProjectAgentSkillsGetSkillsCollectionResult(
-                this,
-                limit,
-                order,
-                after,
-                before,
-                options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectAgentSkills.GetSkills");
+            scope.Start();
+            try
+            {
+                return new ProjectAgentSkillsGetSkillsCollectionResult(
+                    this,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -409,13 +504,23 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetSkillsAsync(int? limit, string order, string after, string before, RequestOptions options)
         {
-            return new ProjectAgentSkillsGetSkillsAsyncCollectionResult(
-                this,
-                limit,
-                order,
-                after,
-                before,
-                options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectAgentSkills.GetSkills");
+            scope.Start();
+            try
+            {
+                return new ProjectAgentSkillsGetSkillsAsyncCollectionResult(
+                    this,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Returns the list of all skills. </summary>
@@ -467,11 +572,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult UpdateSkill(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectAgentSkills.UpdateSkill");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateSkillRequest(name, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateUpdateSkillRequest(name, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -491,11 +606,21 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> UpdateSkillAsync(string name, BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectAgentSkills.UpdateSkill");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateUpdateSkillRequest(name, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateUpdateSkillRequest(name, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Updates an existing skill. </summary>
@@ -562,10 +687,20 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteSkill(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectAgentSkills.DeleteSkill");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteSkillRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateDeleteSkillRequest(name, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -584,10 +719,20 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DeleteSkillAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ProjectAgentSkills.DeleteSkill");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateDeleteSkillRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateDeleteSkillRequest(name, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes a skill. </summary>

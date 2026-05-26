@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.IO;
 using Azure.Generator.Visitors;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
@@ -26,6 +27,10 @@ namespace Client.Plugin
                 scmGenerator.ConfigurationSchema.OptionsRef = "azureOptions";
                 scmGenerator.ConfigurationSchema.GenerateNuGetTargets = false;
             }
+
+            // Include shared source from System.ClientModel (internal tracing types)
+            var sharedSourceDirectory = Path.Combine(Path.GetDirectoryName(typeof(ClientPlugin).Assembly.Location)!, "Shared", "SystemClientModel");
+            generator.AddSharedSourceDirectory(sharedSourceDirectory);
 
             // Visitors that do any renaming must be added first so that any visitors relying on custom code view will have the CustomCodeView set.
             generator.AddVisitor(new ModelFactoryRenamerVisitor());

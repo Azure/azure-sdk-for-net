@@ -20,16 +20,21 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Initializes a new instance of Conversations. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        internal Conversations(ClientPipeline pipeline, Uri endpoint)
+        internal Conversations(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Create a conversation.
@@ -45,8 +50,18 @@ namespace Azure.AI.Extensions.OpenAI
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult CreateConversation(BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateConversationRequest(content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Conversations.CreateConversation");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateConversationRequest(content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -63,8 +78,18 @@ namespace Azure.AI.Extensions.OpenAI
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> CreateConversationAsync(BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateConversationRequest(content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Conversations.CreateConversation");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateConversationRequest(content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -82,8 +107,18 @@ namespace Azure.AI.Extensions.OpenAI
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult UpdateConversation(string conversationId, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Conversations.UpdateConversation");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -101,8 +136,18 @@ namespace Azure.AI.Extensions.OpenAI
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> UpdateConversationAsync(string conversationId, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Conversations.UpdateConversation");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Update a conversation. </summary>

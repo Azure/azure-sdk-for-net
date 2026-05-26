@@ -3,6 +3,8 @@
 
 using System.Diagnostics;
 
+#nullable enable
+
 namespace System.ClientModel.Primitives;
 
 /// <summary>
@@ -14,7 +16,7 @@ namespace System.ClientModel.Primitives;
 /// This class is intended to be used by client library authors only.
 /// Applications should use the System.Diagnostics package directly for custom tracing.
 /// </remarks>
-public class ClientDiagnostics : DiagnosticScopeFactory
+internal class ClientDiagnostics : DiagnosticScopeFactory
 {
     /// <summary>
     /// Creates a new instance of <see cref="ClientDiagnostics"/>.

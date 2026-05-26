@@ -6,7 +6,6 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
@@ -70,7 +69,7 @@ namespace Azure.AI.Speech.Transcription
                 Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(TranscriptionClient).Assembly) }, Array.Empty<PipelinePolicy>());
             }
             _apiVersion = options.Version;
-            _options = options;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> Initializes a new instance of TranscriptionClient. </summary>
@@ -91,11 +90,6 @@ namespace Azure.AI.Speech.Transcription
         {
         }
 
-            _endpoint = endpoint;
-            _tokenProvider = tokenProvider;
-            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(TranscriptionClient).Assembly), new BearerTokenPolicy(_tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
-            _apiVersion = options.Version;
-            _options = options;
         /// <summary> Initializes a new instance of TranscriptionClient from a <see cref="TranscriptionClientSettings"/>. </summary>
         /// <param name="settings"> The settings for TranscriptionClient. </param>
         [Experimental("SCME0002")]
@@ -106,11 +100,8 @@ namespace Azure.AI.Speech.Transcription
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
-        /// <summary> The ActivitySource used for distributed tracing for the TranscriptionClient client. </summary>
-        internal static ActivitySource ActivitySource { get; } = new ActivitySource("Azure.AI.Speech.Transcription.TranscriptionClient");
-
-        /// <summary> The options for configuring the TranscriptionClient client. </summary>
-        internal ClientPipelineOptions _options { get; }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Transcribes the provided audio stream.
@@ -127,7 +118,8 @@ namespace Azure.AI.Speech.Transcription
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult Transcribe(BinaryContent content, string contentType, RequestOptions options = null)
         {
-            using Activity activity = ActivitySource.StartClientActivity(_options, "TranscriptionClient.Transcribe");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TranscriptionClient.Transcribe");
+            scope.Start();
             try
             {
                 using PipelineMessage message = CreateTranscribeRequest(content, contentType, options);
@@ -135,7 +127,7 @@ namespace Azure.AI.Speech.Transcription
             }
             catch (Exception e)
             {
-                activity?.MarkClientActivityFailed(e);
+                scope.Failed(e);
                 throw;
             }
         }
@@ -155,7 +147,8 @@ namespace Azure.AI.Speech.Transcription
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> TranscribeAsync(BinaryContent content, string contentType, RequestOptions options = null)
         {
-            using Activity activity = ActivitySource.StartClientActivity(_options, "TranscriptionClient.Transcribe");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("TranscriptionClient.Transcribe");
+            scope.Start();
             try
             {
                 using PipelineMessage message = CreateTranscribeRequest(content, contentType, options);
@@ -163,7 +156,7 @@ namespace Azure.AI.Speech.Transcription
             }
             catch (Exception e)
             {
-                activity?.MarkClientActivityFailed(e);
+                scope.Failed(e);
                 throw;
             }
         }
