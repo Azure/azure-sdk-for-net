@@ -31,13 +31,9 @@ public sealed class MultiPartFormContent : BinaryContent
     /// Initializes a new instance of <see cref="MultiPartFormContent"/> with a
     /// randomly generated boundary.
     /// </summary>
-    public MultiPartFormContent() : this(CreateBoundary()) { }
-
-    internal MultiPartFormContent(string boundary)
+    public MultiPartFormContent()
     {
-        Argument.AssertNotNullOrEmpty(boundary, nameof(boundary));
-
-        _multipartContent = new MultipartFormDataContent(boundary);
+        _multipartContent = new MultipartFormDataContent(Guid.NewGuid().ToString());
         MediaType = _multipartContent.Headers.ContentType?.ToString();
     }
 
@@ -531,8 +527,6 @@ public sealed class MultiPartFormContent : BinaryContent
             _multipartContent.Add(content, name);
         }
     }
-
-    private static string CreateBoundary() => Guid.NewGuid().ToString();
 
     private static MemoryStream CreateJsonStream(object value)
     {
