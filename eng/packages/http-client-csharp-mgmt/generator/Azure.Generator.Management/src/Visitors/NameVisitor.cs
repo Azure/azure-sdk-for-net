@@ -64,14 +64,16 @@ internal class NameVisitor : ScmLibraryVisitor
             return null;
         }
 
-        if (TryTransformUrlToUri(model.Name, out var newName))
+        if (TryTransformUrlToUri(type.Name, out var newName))
         {
             type.Update(name: newName);
         }
 
         if (_knownTypes.Contains(model.Name))
         {
-            newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{model.Name}";
+            // Compose with type.Name (not model.Name) so any prior provider-level rename
+            // (e.g. ResourceDataModelProvider's "Data" suffix) is preserved.
+            newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{type.Name}";
             type.Update(name: newName);
         }
 
