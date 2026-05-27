@@ -123,6 +123,32 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(serializationContent, Does.Contain("base.JsonModelWriteCore(writer, options);"));
         }
 
+        [Test]
+        public void ResourceDataReferencesUseRootNamespaceForEquivalentInputModelInstances()
+        {
+            var (client, models) = InputResourceData.ClientWithResource();
+            var resourceModel = models.Single();
+            var equivalentResourceModel = InputFactory.Model(resourceModel.Name);
+            var referencingModel = InputFactory.Model(
+                "ApplicableScheduleProperties",
+                properties: [InputFactory.Property("labVmsShutdown", equivalentResourceModel)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [resourceModel, referencingModel],
+                clients: () => [client]);
+
+            var referencingModelProvider = plugin.Object.TypeFactory.CreateModel(referencingModel);
+
+            Assert.That(referencingModelProvider, Is.Not.Null);
+            var modelContent = new TypeProviderWriter(referencingModelProvider!).Write().Content;
+            Assert.That(modelContent, Does.Contain("global::Samples.ResponseTypeData"));
+            Assert.That(modelContent, Does.Not.Contain("global::Samples.Models.ResponseTypeData"));
+
+            var serialization = referencingModelProvider!.SerializationProviders.OfType<MrwSerializationTypeDefinition>().Single();
+            var serializationContent = new TypeProviderWriter(serialization).Write().Content;
+            Assert.That(serializationContent, Does.Contain("global::Samples.ResponseTypeData"));
+            Assert.That(serializationContent, Does.Not.Contain("global::Samples.Models.ResponseTypeData"));
+        }
+
         private class TestableInheritableSystemObjectModelVisitor : InheritableSystemObjectModelVisitor
         {
             public ModelProvider? InvokePreVisitModel(InputModelType inputType, ModelProvider? type)
